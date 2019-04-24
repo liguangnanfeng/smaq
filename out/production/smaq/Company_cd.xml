@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="company">
+  <!-- 根据三级region id查询市区街道镇地址 -->
+  <select id="queryForListId" parameterType="java.lang.Integer" resultType="com.spring.web.ibatis.DynamicParameter">
+    select * from global_region_view
+    where id=#{regionId}
+  </select>
+  
+  <update id="update_demo">
+    ${sql}
+  </update>
+  
+</mapper>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.web.dao.TSensorsMapper">
+  <resultMap id="BaseResultMap" type="com.spring.web.model.TSensors">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sensor_sn" jdbcType="VARCHAR" property="sensorSn" />
+    <result column="sensorname" jdbcType="VARCHAR" property="sensorname" />
+    <result column="device_sn" jdbcType="VARCHAR" property="deviceSn" />
+    <result column="site" jdbcType="VARCHAR" property="site" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_name" jdbcType="INTEGER" property="updateName" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="sensor_type" jdbcType="INTEGER" property="sensorType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sensor_sn, sensorname, device_sn, site, company_id, creator, create_time, update_name, 
+    update_time,sensor_type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sensors
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_sensors
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.spring.web.model.TSensors">
+    insert into t_sensors (id, sensor_sn, sensorname, 
+      device_sn, site, company_id, 
+      creator, create_time, update_name, 
+      update_time,sensor_type)
+    values (#{id,jdbcType=INTEGER}, #{sensorSn,jdbcType=VARCHAR}, #{sensorname,jdbcType=VARCHAR}, 
+      #{deviceSn,jdbcType=VARCHAR}, #{site,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER}, 
+      #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateName,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP},#{sensorType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.spring.web.model.TSensors">
+    insert into t_sensors
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sensorSn != null">
+        sensor_sn,
+      </if>
+      <if test="sensorname != null">
+        sensorname,
+      </if>
+      <if test="deviceSn != null">
+        device_sn,
+      </if>
+      <if test="site != null">
+        site,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="sensorType != null">
+      	sensor_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sensorSn != null">
+        #{sensorSn,jdbcType=VARCHAR},
+      </if>
+      <if test="sensorname != null">
+        #{sensorname,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceSn != null">
+        #{deviceSn,jdbcType=VARCHAR},
+      </if>
+      <if test="site != null">
+        #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sensorType != null">
+      	#{sensorType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.spring.web.model.TSensors">
+    update t_sensors
+    <set>
+      <if test="sensorSn != null">
+        sensor_sn = #{sensorSn,jdbcType=VARCHAR},
+      </if>
+      <if test="sensorname != null">
+        sensorname = #{sensorname,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceSn != null">
+        device_sn = #{deviceSn,jdbcType=VARCHAR},
+      </if>
+      <if test="site != null">
+        site = #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sensorType != null">
+      	sensor_type = #{sensorType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.spring.web.model.TSensors">
+    update t_sensors
+    set sensor_sn = #{sensorSn,jdbcType=VARCHAR},
+      sensorname = #{sensorname,jdbcType=VARCHAR},
+      device_sn = #{deviceSn,jdbcType=VARCHAR},
+      site = #{site,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=INTEGER},
+      sensor_type = #{sensorType,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getCompanyDevice" parameterType="java.lang.Integer" resultType="java.util.Map">
+  	SELECT 
+	  td.`device_sn` AS deviceSn,
+	  td.`name` AS deviceName 
+	FROM
+	  `t_device` td 
+	WHERE td.`company_id` = #{companyId}
+  </select>
+  
+  <select id="checkSensorSnExsist" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	SELECT 
+	  ts.id 
+	FROM
+	  `t_sensors` ts 
+	WHERE ts.`company_id` = #{map.companyId}
+	  AND ts.`sensor_sn` = #{map.sensorSn}
+	  limit 0,1
+  </select>
+  
+  <select id="getSensorType" resultType="java.util.Map">
+  	SELECT 
+	  sl.`name`,
+	  sl.`code` 
+	FROM
+	  `sensors_lib` sl
+  </select>
+  
+  <select id="getSensorsList" parameterType="java.util.Map" resultType="java.util.Map">
+  	SELECT 
+	  ts.`sensorname` AS sensorName,
+	  ts.id AS id,
+	  ts.`sensor_sn` AS sensorSn,
+	  ts.`site` AS site,
+	  td.name AS deviceName,
+	  ts.`create_time` as createTime,
+	  sl.`name` AS typeName
+	FROM
+	  `t_sensors` ts 
+	  LEFT JOIN `t_device` td 
+	    ON ts.`device_sn` = td.`device_sn` 
+	  LEFT JOIN `sensors_lib` sl 
+	    ON ts.`sensor_type` = sl.`code` 
+	    <where>
+	    ts.`company_id` = #{map.companyId}
+	    <if test="map.sensorName != null">
+	     	AND ts.`sensorname` LIKE CONCAT('%', #{map.sensorName},'%')
+	    </if>
+	    <if test="map.deviceSn != null">
+	    	AND ts.`device_sn` = #{map.deviceSn}
+	    </if>
+	    </where>
+	    ORDER BY ts.`create_time` DESC
+	    limit #{map.page},#{map.limit}
+  </select>
+  
+  <select id="getSensorsListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	SELECT 
+	  count(*)
+	FROM
+	  `t_sensors` ts 
+	  LEFT JOIN `t_device` td 
+	    ON ts.`device_sn` = td.`device_sn` 
+	  LEFT JOIN `sensors_lib` sl 
+	    ON ts.`sensor_type` = sl.`code` 
+	    <where>
+	     ts.`company_id` = #{map.companyId}
+	    <if test="map.sensorName != null">
+	     	AND ts.`sensorname` LIKE CONCAT('%', #{map.sensorName},'%')
+	    </if>
+	    <if test="map.deviceSn != null">
+	    	AND ts.`device_sn` = #{map.deviceSn}
+	    </if>
+	    </where>
+  </select>
+  
+  <select id="getDeviceListBySensor" parameterType="java.lang.Integer" resultType="java.util.Map">
+  	SELECT 
+	  ts.`device_sn` AS deviceSn,
+	  td.name AS deviceName
+	FROM
+	  `t_sensors` ts 
+	  LEFT JOIN `t_device` td 
+	  ON td.`device_sn` = ts.`device_sn`
+	WHERE ts.`company_id` = #{companyId}
+	group by ts.`device_sn`
+  </select>
+</mapper>

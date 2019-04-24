@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/static/h-ui/css/H-ui.css" />
+<link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/lib/icheck/icheck.css" />
+<link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/lib/lightbox2/2.8.1/css/lightbox.css" />
+<link href="/js/H-ui.admin_v3.0/static/h-ui.admin/css/H-ui.login.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/styles/universal.css" />
+<link rel="stylesheet" type="text/css" href="/styles/common.css" />
+<link rel="stylesheet" type="text/css" href="/styles/fore.css" />
+
+
+<!--[if lt IE 9]>
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/html5.js"></script>
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/respond.min.js"></script>
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/PIE_IE678.js"></script>
+<![endif]-->
+<!--[if IE 6]>
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/layer/2.4/layer.js"></script> 
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script> 
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/static/h-ui.admin/js/H-ui.admin.js"></script> 
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/icheck/jquery.icheck.min.js"></script> 
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/hcharts/Highcharts/5.0.6/js/highcharts.js"></script>
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/hcharts/Highcharts/5.0.6/js/themes/grid-light.js"></script> 
+<script type="text/javascript" src="/js/util/utils.js"></script>
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"/>
+<script type="text/javascript" src="/js/localresizeimg/lrz.all.bundle.js"></script>
+<script type="text/javascript" src="/js/util/jquery.md5.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/js/jquery.SuperSlide.2.1.1.js"></script>
+<link rel="stylesheet" type="text/css" href="/styles/imgUpload.css" />
+<script type="text/javascript" src="/js/util/ll-numberbox.js"></script>
+<title>安全风险管控   隐患排查治理智能化信息平台</title><meta name="keyword" content="安全风险管控   隐患排查治理智能化信息平台"/>
+<link rel="stylesheet" type="text/css" href="/styles/print-tab.css"/>
+<link rel="stylesheet" type="text/css" href="/styles/print-tab.css" media="print" />
+<link rel="stylesheet" type="text/css" media="print"  href="/js/H-ui.admin_v3.0/static/h-ui/css/H-ui.css" />
+<script type="text/javascript" src="/js/print.js"></script>
+<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/js/jquery.jqprint-0.3.js"></script>
+<script type="text/javascript">
+function pr_() {
+  $("#div_container").jqprint();
+}
+</script>
+<style type="text/css" media="print">
+.div-print{width:90%;margin:auto;padding:30px 0 0 0;}
+</style>
+<style type="text/css">
+.div-print{width:60%;margin:auto;padding:30px 0 0 0;}
+</style>
+</head>
+<body>
+  <div class="text-c mt-20">
+    <button onClick="pr_()" class="btn btn-primary radius" type="button">
+        <i class="Hui-iconfont">&#xe652;</i>打印
+    </button>
+  </div>
+  <div class="page-container" id="div_container">
+    <div class="div-print">
+      <table class="table table-border table-bordered table-sort tab-harm">
+        <thead>
+          <tr class="text-c">
+            <th colspan="3"><h3>职业病危害告知牌</h3></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="text-c"><td colspan="3" class="bj-red"><h4>作业场所存在振动,对人体有损害,请注意防护</h4></td></tr>
+          <tr class="text-c">
+            <td rowspan="2">
+              <font>振动</font>
+              <font>Vibration</font>
+            </td>
+            <td class="bj-blue" style="width:40%">健康危害</td>
+            <td class="bj-blue">理化特性</td>
+          </tr>
+          <tr class="text-c">
+            <!-- 健康危害 -->
+            <td><p class="text-l">对人体全身性的影响，长期接触较强的局部振动，可能引起外周和中枢神经系统的功能改变，外周血管发生痉挛，出现典型的雷诺现象。典型临床表现为振动性白指（VWF）。</p>
+			</td>
+            <!-- 理化特性 -->
+            <td><p>手传振动4h等能量频率计权振动加速度限值5m/s2</p></td>
+          </tr>
+          <tr class="text-c">
+            <td rowspan="4">
+              <img alt="" src="../../images/harm/h10.jpg" class="img-l"/>
+            </td>
+            <td class="bj-blue" colspan="2">应急处理</td>
+          </tr>
+          <tr class="text-c">
+            <td colspan="2">
+              <p class="text-l">根据病情进行综合性治疗，应用扩张血管及营养神经的药物，改善末梢循环。必要时进行外科治疗。患者应加强个人防护，注意手部和全身保障，减少白指的发生。</p>
+            </td>
+          </tr>
+          <tr class="text-c">
+            <td class="bj-blue" colspan="2">注意防护</td>
+          </tr>
+          <tr class="text-c">
+            <td colspan="2">
+              <p class="text-l">在可能的条件下以液压、焊接、粘接代替铆接；设计自动、半自动操作或操纵装置防止直接接触振动；机器设置隔振地基，墙壁装设隔振材料；调整劳动休息制度，减少接触振动时间。就业前体检，处理禁忌症。</p>
+              <img alt="" src="../../images/harm/hh6.jpg" class="img-b"/>
+              <img alt="" src="../../images/harm/hh10.jpg" class="img-b"/>
+              <img alt="" src="../../images/harm/hh15.jpg" class="img-b"/>
+              <img alt="" src="../../images/harm/hh16.jpg" class="img-b"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="bj-red" colspan="3">
+              <label>急救：120</label>
+              <label>消防电话：119</label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

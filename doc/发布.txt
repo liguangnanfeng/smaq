@@ -1,0 +1,8 @@
+后台数据服务程序部署说明
+
+1、程序基本功能，接收上传的报警数据，并插入数据库。
+2、程序warnserver.c
+3、部署，任意目录
+4、环境要求：mysql支持C客户程序读写数据库功能
+5、编译方法  gcc warnserver.c -o warn -lmysqlclient
+6、运行 ./warn &  （最好放置在自动启动中）

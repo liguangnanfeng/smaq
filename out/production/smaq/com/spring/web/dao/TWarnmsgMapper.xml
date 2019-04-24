@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.web.dao.TWarnmsgMapper">
+  <resultMap id="BaseResultMap" type="com.spring.web.model.TWarnmsg">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="device_sn" jdbcType="VARCHAR" property="deviceSn" />
+    <result column="sensor_sn" jdbcType="VARCHAR" property="sensorSn" />
+    <result column="warn" jdbcType="TINYINT" property="warn" />
+    <result column="warntime" jdbcType="TIMESTAMP" property="warntime" />
+    <result column="cleantime" jdbcType="TIMESTAMP" property="cleantime" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_name" jdbcType="INTEGER" property="updateName" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, device_sn, sensor_sn, warn, warntime, cleantime, operator, creator, create_time, 
+    update_name, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_warnmsg
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_warnmsg
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.spring.web.model.TWarnmsg">
+    insert into t_warnmsg (id, device_sn, sensor_sn, 
+      warn, warntime, cleantime, 
+      operator, creator, create_time, 
+      update_name, update_time)
+    values (#{id,jdbcType=INTEGER}, #{deviceSn,jdbcType=VARCHAR}, #{sensorSn,jdbcType=VARCHAR}, 
+      #{warn,jdbcType=TINYINT}, #{warntime,jdbcType=TIMESTAMP}, #{cleantime,jdbcType=TIMESTAMP}, 
+      #{operator,jdbcType=VARCHAR}, #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateName,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.spring.web.model.TWarnmsg">
+    insert into t_warnmsg
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="deviceSn != null">
+        device_sn,
+      </if>
+      <if test="sensorSn != null">
+        sensor_sn,
+      </if>
+      <if test="warn != null">
+        warn,
+      </if>
+      <if test="warntime != null">
+        warntime,
+      </if>
+      <if test="cleantime != null">
+        cleantime,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deviceSn != null">
+        #{deviceSn,jdbcType=VARCHAR},
+      </if>
+      <if test="sensorSn != null">
+        #{sensorSn,jdbcType=VARCHAR},
+      </if>
+      <if test="warn != null">
+        #{warn,jdbcType=TINYINT},
+      </if>
+      <if test="warntime != null">
+        #{warntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cleantime != null">
+        #{cleantime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.spring.web.model.TWarnmsg">
+    update t_warnmsg
+    <set>
+      <if test="deviceSn != null">
+        device_sn = #{deviceSn,jdbcType=VARCHAR},
+      </if>
+      <if test="sensorSn != null">
+        sensor_sn = #{sensorSn,jdbcType=VARCHAR},
+      </if>
+      <if test="warn != null">
+        warn = #{warn,jdbcType=TINYINT},
+      </if>
+      <if test="warntime != null">
+        warntime = #{warntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cleantime != null">
+        cleantime = #{cleantime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.spring.web.model.TWarnmsg">
+    update t_warnmsg
+    set device_sn = #{deviceSn,jdbcType=VARCHAR},
+      sensor_sn = #{sensorSn,jdbcType=VARCHAR},
+      warn = #{warn,jdbcType=TINYINT},
+      warntime = #{warntime,jdbcType=TIMESTAMP},
+      cleantime = #{cleantime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getZdAndGwTotal" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	SELECT 
+	  count(*)
+	FROM `t_warnmsg` tw 
+	INNER JOIN `t_sensors` ts 
+	  ON tw.`sensor_sn` = ts.`sensor_sn` 
+	  AND tw.`device_sn` = ts.`device_sn` 
+	LEFT JOIN `t_device` td 
+	  ON td.`device_sn` = ts.`device_sn` 
+	  LEFT JOIN `sensors_lib` sl 
+	    ON sl.`code` =  ts.`sensor_type`
+	WHERE sl.`type` != 1
+	AND tw.cleantime is NULL
+	<if test="map.utp == null">
+	 AND ts.`company_id` IN 
+	  (SELECT 
+	    cv.`user_id` 
+	  FROM
+	    `company_view` cv 
+	 <where>
+	  <if test="map.districtId != null">
+	  	AND cv.`district_id` = #{map.districtId}
+	  </if>
+	  <if test="map.villageId != null">
+	  	AND cv.`village_id` = #{map.villageId}
+	  </if>
+	  <if test="map.townId != null">
+	  	AND cv.`town_id` = #{map.townId}
+	  </if>
+	  <if test="map.userId != null">
+	  	AND cv.`user_id` = #{map.userId}
+	  </if>
+	  </where>
+	  )
+	  </if>
+  </select>
+  
+  <select id="getWarnMsgListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	SELECT 
+	  count(*)
+	FROM `t_warnmsg` tw 
+	INNER JOIN `t_sensors` ts 
+	  ON tw.`sensor_sn` = ts.`sensor_sn` 
+	  AND tw.`device_sn` = ts.`device_sn` 
+	LEFT JOIN `t_device` td 
+	  ON td.`device_sn` = ts.`device_sn` 
+	    LEFT JOIN `sensors_lib` sl 
+	    ON sl.`code` =  ts.`sensor_type`
+	  LEFT JOIN `company_tbl` cvs 
+	    ON cvs.`user_id` = ts.`company_id` 
+	<where>
+	tw.cleantime is NULL
+	<if test="map.utp == null">
+		<if test="map.tradeId == null">
+		AND ts.`company_id` IN 
+	  (SELECT 
+	    cv.`user_id` 
+	  FROM
+	    `company_view` cv 
+	    <where>
+	    	<if test="map.districtId != null">
+			  	cv.`district_id` = #{map.districtId}
+			  </if>
+			  <if test="map.villageId != null">
+			  	AND cv.`village_id` = #{map.villageId}
+			  </if>
+			  <if test="map.townId != null">
+			  	AND cv.`town_id` = #{map.townId}
+			  </if>
+			  <if test="map.userId != null">
+			  	AND cv.`user_id` = #{map.userId}
+			  </if>
+	    </where>
+	   )
+	   </if>
+	   <if test="map.tradeId != null">
+	   AND ts.`company_id` IN 
+	  (SELECT 
+	   tct.`uid` 
+	  FROM
+	    `trade_company_tbl` tct 
+	    <where>
+	    	<if test="map.tradeId != null">
+			  	tct.`tid` = #{map.tradeId}
+			  </if>
+	    </where>
+	   )
+	</if>
+	</if>
+		<if test="map.sensorType != null">
+	   	AND sl.`code` = #{map.sensorType}
+	   </if>
+	   <if test="map.type != null">
+	   	AND sl.`type` = #{map.type}
+	   </if>
+	   <if test="map.companyName != null">
+	   	AND cvs.`name` LIKE CONCAT('%', #{map.companyName},'%')
+	   </if>
+	   </where>
+  </select>
+  
+  <select id="getWarnMsgList" parameterType="java.util.Map" resultType="java.util.Map">
+  	SELECT 
+  	  td.`site` AS site,
+  	  sl.`name` AS typeName,
+	  cvs.`name` AS companyName,
+	  cvs.`user_id` AS companyId,
+	  tw.warn AS warn,
+	  ts.`sensorname` AS tsName,
+	  td.`name` AS deviceName,
+	  tw.`warntime` AS warnTime
+	FROM `t_warnmsg` tw 
+	INNER JOIN `t_sensors` ts 
+	  ON tw.`sensor_sn` = ts.`sensor_sn` 
+	  AND tw.`device_sn` = ts.`device_sn` 
+	LEFT JOIN `t_device` td 
+	  ON td.`device_sn` = ts.`device_sn` 
+	    LEFT JOIN `sensors_lib` sl 
+	    ON sl.`code` =  ts.`sensor_type`
+	  LEFT JOIN `company_tbl` cvs 
+	    ON cvs.`user_id` = ts.`company_id` 
+	<where>
+	tw.cleantime is NULL
+	<if test="map.utp == null">
+		AND ts.`company_id` IN 
+	  (SELECT 
+	    cv.`user_id` 
+	  FROM
+	    `company_view` cv 
+	    <where>
+	    	<if test="map.districtId != null">
+			  	cv.`district_id` = #{map.districtId}
+			  </if>
+			  <if test="map.villageId != null">
+			  	AND cv.`village_id` = #{map.villageId}
+			  </if>
+			  <if test="map.townId != null">
+			  	AND cv.`town_id` = #{map.townId}
+			  </if>
+			  <if test="map.userId != null">
+			  	AND cv.`user_id` = #{map.userId}
+			  </if>
+	    </where>
+	   )
+	</if>
+		<if test="map.sensorType != null">
+	   	AND sl.`code` = #{map.sensorType}
+	   </if>
+	   <if test="map.type != null">
+	   	AND sl.`type` = #{map.type}
+	   </if>
+	   <if test="map.companyName != null">
+	   	AND cvs.`name` LIKE CONCAT('%', #{map.companyName},'%')
+	   </if>
+	   </where> 
+	    ORDER BY tw.`warntime` DESC
+	    limit #{map.page},#{map.limit}
+  </select>
+  
+  <select id="getWarnMsgCompanyList" parameterType="java.util.Map" resultType="java.util.Map">
+  	SELECT 
+	  cvs.`name` AS companyName,
+	  cvs.`user_id` AS companyId,
+	  COUNT(tw.warn) AS warnCount
+	FROM `t_warnmsg` tw 
+	INNER JOIN `t_sensors` ts 
+	  ON tw.`sensor_sn` = ts.`sensor_sn` 
+	  AND tw.`device_sn` = ts.`device_sn` 
+	LEFT JOIN `t_device` td 
+	  ON td.`device_sn` = ts.`device_sn` 
+	    LEFT JOIN `sensors_lib` sl 
+	    ON sl.`code` =  ts.`sensor_type`
+	  LEFT JOIN `company_tbl` cvs
+	    ON cvs.`user_id` = ts.`company_id` 
+	<where>
+	tw.cleantime is NULL
+	<if test="map.utp == null">
+		<if test="map.tradeId == null">
+			AND ts.`company_id` IN 
+		  (SELECT 
+		    cv.`user_id` 
+		  FROM
+		    `company_view` cv 
+		    <where>
+		    	<if test="map.districtId != null">
+				  	cv.`district_id` = #{map.districtId}
+				  </if>
+				  <if test="map.villageId != null">
+				  	AND cv.`village_id` = #{map.villageId}
+				  </if>
+				  <if test="map.townId != null">
+				  	AND cv.`town_id` = #{map.townId}
+				  </if>
+				  <if test="map.userId != null">
+				  	AND cv.`user_id` = #{map.userId}
+				  </if>
+		    </where>
+	   		)
+		</if>
+		<if test="map.tradeId != null">
+				AND ts.`company_id` IN 
+			  (SELECT 
+			   tct.`uid` 
+			  FROM
+			    `trade_company_tbl` tct 
+			    <where>
+			    	<if test="map.tradeId != null">
+					  	tct.`tid` = #{map.tradeId}
+					  </if>
+			    </where>
+		   		)
+			</if>
+		</if>
+	
+	   <if test="map.type != null">
+	   	AND sl.`type` = #{map.type}
+	   </if>
+	   <if test="map.companyName != null">
+	   	AND cvs.`name` LIKE CONCAT('%', #{map.companyName},'%')
+	   </if>
+	   </where> 
+	   GROUP BY td.company_id
+	    ORDER BY tw.`warntime` DESC
+	    limit #{map.page},#{map.limit}
+  </select>
+  
+  <select id="getWarnMsgCompanyListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	SELECT 
+	  count(*)
+	FROM `t_warnmsg` tw 
+	INNER JOIN `t_sensors` ts 
+	  ON tw.`sensor_sn` = ts.`sensor_sn` 
+	  AND tw.`device_sn` = ts.`device_sn` 
+	LEFT JOIN `t_device` td 
+	  ON td.`device_sn` = ts.`device_sn` 
+	    LEFT JOIN `sensors_lib` sl 
+	    ON sl.`code` =  ts.`sensor_type`
+	  LEFT JOIN `company_tbl` cvs 
+	    ON cvs.`user_id` = ts.`company_id` 
+	<where>
+	tw.cleantime is NULL
+	<if test="map.utp == null">
+		<if test="map.tradeId == null">
+			AND ts.`company_id` IN 
+		  (SELECT 
+		    cv.`user_id` 
+		  FROM
+		    `company_view` cv 
+		    <where>
+		    	<if test="map.districtId != null">
+				  	cv.`district_id` = #{map.districtId}
+				  </if>
+				  <if test="map.villageId != null">
+				  	AND cv.`village_id` = #{map.villageId}
+				  </if>
+				  <if test="map.townId != null">
+				  	AND cv.`town_id` = #{map.townId}
+				  </if>
+				  <if test="map.userId != null">
+				  	AND cv.`user_id` = #{map.userId}
+				  </if>
+		    </where>
+		   )
+		  </if>
+		  <if test="map.tradeId != null">
+				AND ts.`company_id` IN 
+			  (SELECT 
+			   tct.`uid` 
+			  FROM
+			    `trade_company_tbl` tct 
+			    <where>
+			    	<if test="map.tradeId != null">
+					  	tct.`tid` = #{map.tradeId}
+					  </if>
+			    </where>
+		   		)
+			</if>
+		</if>
+	   <if test="map.type != null">
+	   	AND sl.`type` = #{map.type}
+	   </if>
+	   <if test="map.companyName != null">
+	   	AND cvs.`name` LIKE CONCAT('%', #{map.companyName},'%')
+	   </if>
+	   </where>
+	   GROUP BY td.company_id
+  </select>
+  
+  <update id="updateCleanTimeByMonth" parameterType="java.util.Date">
+  UPDATE 
+	  `t_warnmsg` tw 
+	SET
+	  tw.cleantime = NOW() 
+	  WHERE tw.cleantime is NULL 
+	 <![CDATA[
+          AND tw.warntime <= #{wareTime}
+     ]]>
+  </update>
+  
+  <select id="getSensorTypes" parameterType="java.lang.Integer" resultType="java.util.Map">
+  	SELECT 
+	  sl.code AS typeCode,
+	  sl.name AS typeName
+	FROM
+	  `sensors_lib` sl 
+	WHERE sl.type = #{type}
+  </select>
+  
+  <select id="getWaterWarnCompanyList" parameterType="java.util.Map" resultType="java.util.Map">
+  	SELECT 
+	  cvs.`name` AS companyName,
+	  cvs.`user_id` AS companyId,
+	  COUNT(tc.collect) AS warnCount
+	FROM `t_collection` tc
+	INNER JOIN `t_sensors` ts 
+	  ON tc.`sensor_sn` = ts.`sensor_sn` 
+	  AND tc.`device_sn` = ts.`device_sn` 
+	LEFT JOIN `t_device` td 
+	  ON td.`device_sn` = ts.`device_sn` 
+	    LEFT JOIN `sensors_lib` sl 
+	    ON sl.`code` =  ts.`sensor_type`
+	  LEFT JOIN `company_tbl` cvs 
+	    ON cvs.`user_id` = ts.`company_id` 
+	<where>
+	<if test="map.utp == null">
+	<if test="map.tradeId == null">
+		 ts.`company_id` IN 
+	  (SELECT 
+	    cv.`user_id` 
+	  FROM
+	    `company_view` cv 
+	    <where>
+	    	<if test="map.districtId != null">
+			  	cv.`district_id` = #{map.districtId}
+			  </if>
+			  <if test="map.villageId != null">
+			  	AND cv.`village_id` = #{map.villageId}
+			  </if>
+			  <if test="map.townId != null">
+			  	AND cv.`town_id` = #{map.townId}
+			  </if>
+			  <if test="map.userId != null">
+			  	AND cv.`user_id` = #{map.userId}
+			  </if>
+	    </where>
+	   )
+	   </if>
+	   <if test="map.tradeId != null">
+		   AND ts.`company_id` IN 
+		  (SELECT 
+		   tct.`uid` 
+		  FROM
+		    `trade_company_tbl` tct 
+		    <where>
+		    	<if test="map.tradeId != null">
+				  	tct.`tid` = #{map.tradeId}
+				  </if>
+		    </where>
+		   )
+		</if>
+	</if>
+	
+	   <if test="map.type != null">
+	   	AND sl.`type` = #{map.type}
+	   </if>
+	   <if test="map.companyName != null">
+	   	AND cvs.`name` LIKE CONCAT('%', #{map.companyName},'%')
+	   </if>
+	   </where> 
+	   GROUP BY td.company_id
+	    ORDER BY tc.`colltime` DESC
+	    limit #{map.page},#{map.limit}
+  </select>
+  
+  <select id="getWaterWarnCompanyListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	SELECT 
+	  count(*)
+	FROM `t_collection` tc
+	INNER JOIN `t_sensors` ts 
+	  ON tc.`sensor_sn` = ts.`sensor_sn` 
+	  AND tc.`device_sn` = ts.`device_sn` 
+	LEFT JOIN `t_device` td 
+	  ON td.`device_sn` = ts.`device_sn` 
+	    LEFT JOIN `sensors_lib` sl 
+	    ON sl.`code` =  ts.`sensor_type`
+	  LEFT JOIN `company_tbl` cvs 
+	    ON cvs.`user_id` = ts.`company_id` 
+	<where>
+	<if test="map.utp == null">
+		<if test="map.tradeId == null">
+		 ts.`company_id` IN 
+	  (SELECT 
+	    cv.`user_id` 
+	  FROM
+	    `company_view` cv 
+	    <where>
+	    	<if test="map.districtId != null">
+			  	cv.`district_id` = #{map.districtId}
+			  </if>
+			  <if test="map.villageId != null">
+			  	AND cv.`village_id` = #{map.villageId}
+			  </if>
+			  <if test="map.townId != null">
+			  	AND cv.`town_id` = #{map.townId}
+			  </if>
+			  <if test="map.userId != null">
+			  	AND cv.`user_id` = #{map.userId}
+			  </if>
+	    </where>
+	   )
+	   </if>
+	   <if test="map.tradeId != null">
+		   AND ts.`company_id` IN 
+		  (SELECT 
+		   tct.`uid` 
+		  FROM
+		    `trade_company_tbl` tct 
+		    <where>
+		    	<if test="map.tradeId != null">
+				  	tct.`tid` = #{map.tradeId}
+				  </if>
+		    </where>
+		   )
+		</if>
+	</if>
+	
+	   <if test="map.type != null">
+	   	AND sl.`type` = #{map.type}
+	   </if>
+	   <if test="map.companyName != null">
+	   	AND cvs.`name` LIKE CONCAT('%', #{map.companyName},'%')
+	   </if>
+	   </where> 
+	   GROUP BY td.company_id
+  </select>
+  
+  <select id="getWaterWarnListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	SELECT 
+	  count(*)
+	FROM `t_collection` tc 
+	INNER JOIN `t_sensors` ts 
+	  ON tc.`sensor_sn` = ts.`sensor_sn` 
+	  AND tc.`device_sn` = ts.`device_sn` 
+	LEFT JOIN `t_device` td 
+	  ON td.`device_sn` = ts.`device_sn` 
+	    LEFT JOIN `sensors_lib` sl 
+	    ON sl.`code` =  ts.`sensor_type`
+	    LEFT JOIN `company_tbl` cvs 
+	    ON cvs.`user_id` = ts.`company_id` 
+	<where>
+	<if test="map.utp == null">
+		ts.`company_id` IN 
+	  (SELECT 
+	    cv.`user_id` 
+	  FROM
+	    `company_view` cv 
+	    <where>
+	    	<if test="map.districtId != null">
+			  	cv.`district_id` = #{map.districtId}
+			  </if>
+			  <if test="map.villageId != null">
+			  	AND cv.`village_id` = #{map.villageId}
+			  </if>
+			  <if test="map.townId != null">
+			  	AND cv.`town_id` = #{map.townId}
+			  </if>
+			  <if test="map.userId != null">
+			  	AND cv.`user_id` = #{map.userId}
+			  </if>
+	    </where>
+	   )
+	</if>
+		<if test="map.sensorType != null">
+	   	AND sl.`code` = #{map.sensorType}
+	   </if>
+	   <if test="map.type != null">
+	   	AND sl.`type` = #{map.type}
+	   </if>
+	   <if test="map.companyName != null">
+	   	AND cvs.`name` LIKE CONCAT('%', #{map.companyName},'%')
+	   </if>
+	   </where>
+  </select>
+  
+  <select id="getWaterWarnMsgList" parameterType="java.util.Map" resultType="java.util.Map">
+  	SELECT 
+  	  td.`site` AS site,
+  	  sl.`name` AS typeName,
+	  cvs.`name` AS companyName,
+	  cvs.`user_id` AS companyId,
+	  tc.collect AS collect,
+	  ts.`sensorname` AS tsName,
+	  td.`name` AS deviceName,
+	  tc.`colltime` AS collectTime
+	FROM `t_collection` tc 
+	INNER JOIN `t_sensors` ts 
+	  ON tc.`sensor_sn` = ts.`sensor_sn` 
+	  AND tc.`device_sn` = ts.`device_sn` 
+	LEFT JOIN `t_device` td 
+	  ON td.`device_sn` = ts.`device_sn` 
+	    LEFT JOIN `sensors_lib` sl 
+	    ON sl.`code` =  ts.`sensor_type`
+	  LEFT JOIN `company_tbl` cvs 
+	    ON cvs.`user_id` = ts.`company_id` 
+	<where>
+	<if test="map.utp == null">
+		 ts.`company_id` IN 
+	  (SELECT 
+	    cv.`user_id` 
+	  FROM
+	    `company_view` cv 
+	    <where>
+	    	<if test="map.districtId != null">
+			  	cv.`district_id` = #{map.districtId}
+			  </if>
+			  <if test="map.villageId != null">
+			  	AND cv.`village_id` = #{map.villageId}
+			  </if>
+			  <if test="map.townId != null">
+			  	AND cv.`town_id` = #{map.townId}
+			  </if>
+			  <if test="map.userId != null">
+			  	AND cv.`user_id` = #{map.userId}
+			  </if>
+	    </where>
+	   )
+	</if>
+		<if test="map.sensorType != null">
+	   	AND sl.`code` = #{map.sensorType}
+	   </if>
+	   <if test="map.type != null">
+	   	AND sl.`type` = #{map.type}
+	   </if>
+	   <if test="map.companyName != null">
+	   	AND cvs.`name` LIKE CONCAT('%', #{map.companyName},'%')
+	   </if>
+	   </where> 
+	    ORDER BY tc.`colltime` DESC
+	    limit #{map.page},#{map.limit}
+  </select>
+  
+</mapper>

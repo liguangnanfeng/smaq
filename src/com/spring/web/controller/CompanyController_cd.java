@@ -2284,7 +2284,7 @@ public class CompanyController_cd extends BaseController {
 //        }
 //        return "village/danger/check-list";
 //    }
-    /**
+  /**
  *
  * TODO   企业自查 -->  整改复查
  * TODO   title  type  compantName status 的传递

@@ -87,6 +87,7 @@ public class AppController_village_xlb extends BaseController {
         AppResult result = new AppResultImpl();
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> m = new HashMap<String, Object>();
+        // 返回userId
         Integer userId = getAppUserId(request);
         if (null == userId) {
             result.setStatus("2");
@@ -94,6 +95,7 @@ public class AppController_village_xlb extends BaseController {
             return result;
         }
         setUserId(userId, m);
+
         m.put("companyName", companyName);
         User user = userMapper.selectByPrimaryKey(userId);
         List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);

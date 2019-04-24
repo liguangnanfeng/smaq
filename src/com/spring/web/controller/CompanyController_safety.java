@@ -1269,6 +1269,7 @@ public class CompanyController_safety extends BaseController {
 
     /**
      * 企业风险辨识-保存,从指导书中选择的
+     * TODO 保存风险
      */
     @RequestMapping(value = "aCompanyManual-save1")
     public @ResponseBody Result aCompanyManualSave1(HttpServletRequest request, Integer[] ids,

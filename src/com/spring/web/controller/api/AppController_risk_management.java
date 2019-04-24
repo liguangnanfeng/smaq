@@ -36,20 +36,23 @@ import com.spring.web.result.AppResultImpl;
 
 @Controller
 @RequestMapping(value = "api/risk/manage")
-public class AppController_risk_management extends BaseController
-{
+public class AppController_risk_management extends BaseController{
+
     /**
      * (获取体系文件)
+     * TODO 登陆
      */
     @RequestMapping("A001")
     public @ResponseBody AppResult getTixiwenjian(HttpServletRequest request) {
         AppResult result = new AppResultImpl();
+        // baseController
         Integer userId = getAppUserId(request);
         if (null == userId) {
             result.setStatus("2");
             result.setMessage("登录超时");
             return result;
         }
+
         Company company = companyMapper.selectByPrimaryKey(userId);
         if (null == company || StringUtils.isBlank(company.getIndustry())) {
             result.setData(null);

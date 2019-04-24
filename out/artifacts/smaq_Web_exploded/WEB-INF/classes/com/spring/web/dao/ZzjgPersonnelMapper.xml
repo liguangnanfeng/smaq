@@ -328,4 +328,11 @@
 	    </if>
 	</where>
 </select>
+
+    <select id="selectById" resultType="com.spring.web.model.ZzjgPersonnel">
+        select * from zzjg_personnel_tbl where id=#{userId ,jdbcType=INTEGER };
+    </select>
+
+
+
 </mapper>

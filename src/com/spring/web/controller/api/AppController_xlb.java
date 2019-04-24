@@ -1322,11 +1322,17 @@ public class AppController_xlb extends BaseController {
         return result;
     }
 
+    /**
+     * 判断用户的身份, 企业 政府
+     * @param userId
+     * @param m
+     */
     void setUserId(Integer userId, Map<String, Object> m) {
         User user = userMapper.selectByPrimaryKey(userId);
         if (user.getUserType() == 4) {
             m.put("villageId", user.getId());
         }
+        // 政府
         if (user.getUserType() == 5) {
             m.put("userId", user.getId());
         }

@@ -6,8 +6,37 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="15acc64b-aef1-4c26-8041-4c37facd26d6" name="Default Changelist" comment="第一次提交">
-      <change beforePath="$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_cd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_cd.java" afterDir="false" />
+    <list default="true" id="15acc64b-aef1-4c26-8041-4c37facd26d6" name="Default Changelist" comment="第三次提交,添加根据用户查询相应企业,根据企业查询相关的部门">
+      <change afterPath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Custom_Check.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/Zzjg_CompanyService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/Zzjg_PersonnelService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/Zzjg_CompanyServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/Zzjg_PersonnelServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebContent/WEB-INF/views/company/safety-system/risk-list1-load.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/views/company/safety-system/risk-list1-load.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/controller/CompanyController_safety.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/controller/CompanyController_safety.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/controller/api/AppController_risk_management.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/controller/api/AppController_risk_management.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/controller/api/AppController_village_xlb.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/controller/api/AppController_village_xlb.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/controller/api/AppController_xlb.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/controller/api/AppController_xlb.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/CompanyMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/CompanyMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/ZzjgPersonnelMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/ZzjgPersonnelMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/ZzjgPersonnelMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/ZzjgPersonnelMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/views/company/safety-system/risk-list1-load.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/views/company/safety-system/risk-list1-load.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/CompanyController_safety.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/CompanyController_safety.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/api/AppController_risk_management.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/api/AppController_risk_management.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/api/AppController_village_xlb.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/api/AppController_village_xlb.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/api/AppController_xlb.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/api/AppController_xlb.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/CompanyMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/CompanyMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ZzjgPersonnelMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ZzjgPersonnelMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ZzjgPersonnelMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ZzjgPersonnelMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_safety.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_safety.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_newAddxlb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_newAddxlb.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_risk_management.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_risk_management.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_village_xlb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_village_xlb.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_xlb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_xlb.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/dao/CompanyMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/dao/CompanyMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,61 +65,91 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/danger/check-add-cho.jsp">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Custom_Check.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="598">
+              <caret line="35" column="23" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/Zzjg_CompanyService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="44">
+              <caret line="2" column="36" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/Zzjg_CompanyServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="9" column="69" lean-forward="true" selection-start-line="9" selection-start-column="69" selection-end-line="9" selection-end-column="69" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/Zzjg_PersonnelService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_cd.java">
+        <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/Zzjg_PersonnelServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="2286" column="2" selection-start-line="2286" selection-start-column="2" selection-end-line="2286" selection-end-column="2" />
+            <state relative-caret-position="76">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/danger/check-fuadd.jsp">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_system.java">
+        <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="880">
-              <caret line="64" column="41" selection-start-line="64" selection-start-column="41" selection-end-line="64" selection-end-column="41" />
+            <state relative-caret-position="694">
+              <caret line="67" column="28" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/system/department-listLoad1.jsp">
+        <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
-              <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
+            <state relative-caret-position="606">
+              <caret line="332" column="79" selection-start-line="332" selection-start-column="79" selection-end-line="332" selection-end-column="79" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/system/department-listLoad2.jsp">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/system/department-list.jsp">
+        <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_newAddVillage_xlb.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1056">
-              <caret line="48" column="24" selection-start-line="48" selection-start-column="24" selection-end-line="48" selection-end-column="24" />
+            <state relative-caret-position="-154">
+              <caret line="42" column="9" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/VillageController.java">
+        <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_newAddxlb.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34870">
-              <caret line="1653" column="18" selection-start-line="1653" selection-start-column="18" selection-end-line="1653" selection-end-column="18" />
+            <state relative-caret-position="438">
+              <caret line="419" column="4" selection-start-line="419" selection-start-column="4" selection-end-line="423" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -107,13 +166,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>department-list</find>
-      <find>组织架构</find>
-      <find>user-list</find>
-      <find>selectAll</find>
-      <find>selectByCompanyId</find>
-      <find>隐患统计汇总</find>
-      <find>village</find>
       <find>check</find>
       <find>/village/trouble-set?url=/company/check-list?flag=4%26type=3</find>
       <find>企业自</find>
@@ -137,6 +189,13 @@
       <find>department-list-bumen</find>
       <find>save_btn</find>
       <find>trouble-set</find>
+      <find>A040</find>
+      <find>A001</find>
+      <find>article_save_submit_1()</find>
+      <find>save_1()</find>
+      <find>aCompanyManual-save1</find>
+      <find>selectByPrimaryKey</find>
+      <find>l_(1)</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -149,14 +208,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/spring/web/controller/LoginController.java" />
-        <option value="$PROJECT_DIR$/resources/resources.properties" />
-        <option value="$PROJECT_DIR$/WebContent/WEB-INF/applicationContext.xml" />
-        <option value="$PROJECT_DIR$/WebContent/WEB-INF/ehcache.xml" />
-        <option value="$PROJECT_DIR$/WebContent/js/util/utils.js" />
-        <option value="$PROJECT_DIR$/WebContent/WEB-INF/views/company/blogin-gang.jsp" />
-        <option value="$PROJECT_DIR$/doc/发布.txt" />
-        <option value="$PROJECT_DIR$/src/resources/resources.properties" />
         <option value="$PROJECT_DIR$/src/com/spring/web/result/ResultImpl.java" />
         <option value="$PROJECT_DIR$/src/com/spring/web/controller/ForeController.java" />
         <option value="$PROJECT_DIR$/src/com/spring/web/util/EncacheUtil.java" />
@@ -192,6 +243,22 @@
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/views/company/system/department-list.jsp" />
         <option value="$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_system.java" />
         <option value="$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_cd.java" />
+        <option value="$PROJECT_DIR$/版本控制.txt" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_newAddxlb.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_xlb.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_village_xlb.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/result/AppResult.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_risk_management.java" />
+        <option value="$PROJECT_DIR$/WebContent/WEB-INF/views/company/safety-system/risk-list1-load.jsp" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_safety.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/dao/ZzjgDepartmentMapper.xml" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/dao/CompanyMapper.xml" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.xml" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/Zzjg_PersonnelServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/Zzjg_PersonnelService.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/Zzjg_CompanyServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Custom_Check.java" />
       </list>
     </option>
   </component>
@@ -208,11 +275,11 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="342" />
-    <option name="y" value="99" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="156" />
+    <option name="y" value="181" />
     <option name="width" value="1320" />
-    <option name="height" value="870" />
+    <option name="height" value="855" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -220,7 +287,79 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smaq" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smaq" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smaq" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smaq" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smaq" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smaq" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smaq" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smaq" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="CheckCompany" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smaq" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="CheckCompany" type="462c0819:PsiDirectoryNode" />
+              <item name="impl" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
@@ -241,7 +380,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.265" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/WebContent/WEB-INF/views/company/danger/check-list.jsp" />
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/WebContent/WEB-INF/views/company/danger" />
   </component>
@@ -420,14 +559,22 @@
       <workItem from="1555979339066" duration="29722000" />
       <workItem from="1556065240771" duration="6443000" />
       <workItem from="1556074434516" duration="1525000" />
-      <workItem from="1556076308527" duration="780000" />
+      <workItem from="1556076308527" duration="15237000" />
     </task>
+    <task id="LOCAL-00001" summary="第二次提交,写出版本">
+      <created>1556077308188</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1556077308188</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60189000" />
+    <option name="totallyTimeSpent" value="74646000" />
   </component>
-  <component name="TodoView">
+  <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
     </todo-panel>
@@ -437,9 +584,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="342" y="99" width="1320" height="870" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15396826" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16577825" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -450,19 +597,19 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.051167965" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.06896552" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49946696" weight="0.22494432" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.516129" />
+      <window_info active="true" anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" visible="true" weight="0.6904232" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32850778" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50053304" side_tool="true" weight="0.5222717" />
       <window_info anchor="bottom" id="Java Enterprise" order="10" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="12" />
+      <window_info anchor="bottom" id="Version Control" order="12" weight="0.32962137" />
       <window_info anchor="bottom" id="Application Servers" order="13" weight="0.28938547" />
       <window_info anchor="bottom" id="Spring" order="14" />
-      <window_info anchor="bottom" id="Messages" order="15" weight="0.19354838" />
+      <window_info anchor="bottom" id="Messages" order="15" weight="0.033407573" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -516,7 +663,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="第一次提交" />
-    <option name="LAST_COMMIT_MESSAGE" value="第一次提交" />
+    <MESSAGE value="第二次提交,写出版本" />
+    <MESSAGE value="第三次提交,添加根据用户查询相应企业,根据企业查询相关的部门" />
+    <option name="LAST_COMMIT_MESSAGE" value="第三次提交,添加根据用户查询相应企业,根据企业查询相关的部门" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -575,6 +724,12 @@
           <properties />
           <option name="timeStamp" value="31" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_safety.java</url>
+          <line>100</line>
+          <properties />
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_cd.java</url>
           <line>2228</line>
@@ -595,267 +750,6 @@
     <SUITE FILE_PATH="coverage/smaq$tomcat7.ic" NAME="tomcat7 Coverage Results" MODIFIED="1555917268166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/mybatis-3.2.2.jar!/org/apache/ibatis/binding/MapperProxy.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/mybatis-3.2.2.jar!/org/apache/ibatis/binding/MapperMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="118" selection-start-line="118" selection-end-line="118" />
-          <folding>
-            <element signature="e#9410#9411#0" expanded="true" />
-            <element signature="e#9468#9469#0" expanded="true" />
-            <element signature="e#10115#10116#0" expanded="true" />
-            <element signature="e#10162#10163#0" expanded="true" />
-            <element signature="e#10287#10288#0" expanded="true" />
-            <element signature="e#10334#10335#0" expanded="true" />
-            <element signature="e#14248#14249#0" expanded="true" />
-            <element signature="e#14288#14289#0" expanded="true" />
-            <element signature="e#14331#14332#0" expanded="true" />
-            <element signature="e#14371#14372#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/mybatis-spring-1.2.0.jar!/org/mybatis/spring/SqlSessionTemplate.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="173" selection-start-line="173" selection-end-line="173" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/mybatis-spring-1.2.0.jar!/org/mybatis/spring/SqlSessionUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-tx-3.2.1.RELEASE.jar!/org/springframework/transaction/support/TransactionSynchronizationManager.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="44" selection-start-line="44" selection-end-line="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-tx-3.2.1.RELEASE.jar!/org/springframework/transaction/support/TransactionSynchronizationUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="35" selection-start-line="35" selection-end-line="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/log4j-1.2.17.jar!/org/apache/log4j/Priority.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="55" selection-start-line="55" selection-end-line="55" />
-          <folding>
-            <element signature="e#1771#1772#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-web-3.2.1.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-web-3.2.1.RELEASE.jar!/org/springframework/web/method/support/ModelAndViewContainer.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="48" selection-start-line="48" selection-end-line="48" />
-          <folding>
-            <element signature="e#1357#1358#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-core-3.2.1.RELEASE.jar!/org/springframework/util/Assert.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-core-3.2.1.RELEASE.jar!/org/springframework/core/MethodParameter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="35" selection-start-line="35" selection-end-line="35" />
-          <folding>
-            <element signature="e#1100#1101#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-web-3.2.1.RELEASE.jar!/org/springframework/web/method/HandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="99" selection-start-line="99" selection-end-line="99" />
-          <folding>
-            <element signature="e#5571#5572#0" expanded="true" />
-            <element signature="e#5641#5642#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-webmvc-3.2.1.RELEASE.jar!/org/springframework/web/servlet/mvc/method/annotation/ServletInvocableHandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="67" selection-start-line="67" selection-end-line="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-web-3.2.1.RELEASE.jar!/org/springframework/web/method/support/HandlerMethodReturnValueHandlerComposite.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="48" selection-start-line="48" selection-end-line="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/commons-logging-1.1.3.jar!/org/apache/commons/logging/impl/Log4JLogger.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="116" column="19" selection-start-line="116" selection-start-column="19" selection-end-line="116" selection-end-column="19" />
-          <folding>
-            <element signature="e#3316#3317#0" expanded="true" />
-            <element signature="e#3380#3381#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/log4j-1.2.17.jar!/org/apache/log4j/Category.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="145" lean-forward="true" selection-start-line="145" selection-end-line="145" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-core-3.2.1.RELEASE.jar!/org/springframework/util/StringUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
-          <folding>
-            <element signature="e#1004#1005#0" expanded="true" />
-            <element signature="e#1058#1059#0" expanded="true" />
-            <element signature="e#1643#1644#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/log4j-1.2.17.jar!/org/apache/log4j/Hierarchy.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-858">
-          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-          <folding>
-            <element signature="e#5477#5478#0" expanded="true" />
-            <element signature="e#5525#5526#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/CommonController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3718">
-          <caret line="194" column="9" selection-start-line="194" selection-start-column="9" selection-end-line="194" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/danger/model-list-cx.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5984">
-          <caret line="272" column="112" selection-start-line="272" selection-start-column="100" selection-end-line="272" selection-end-column="112" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/BackController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="68" column="35" selection-start-line="68" selection-start-column="35" selection-end-line="68" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/WebSocketController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/WebSocketDangerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/security/StringKeyGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/security/KeyGenerators.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/security/BytesKeyGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/BaseController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="45" column="6" selection-start-line="45" selection-start-column="6" selection-end-line="45" selection-end-column="6" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#10319#10320#0" expanded="true" />
-            <element signature="e#10346#10347#0" expanded="true" />
-            <element signature="e#11434#11435#0" expanded="true" />
-            <element signature="e#11501#11502#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/TradeController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="46" column="29" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/UploadController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="29" column="7" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
-          <folding>
-            <element signature="e#4280#4281#0" expanded="true" />
-            <element signature="e#4341#4342#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/META-INF/MANIFEST.MF">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/upload/20170906152811_240.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/upload/20170905101343_292.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/upload/20170905100715_873.jpeg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -918,6 +812,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/版本控制.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="14" selection-start-column="14" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_cd.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="2286" column="2" selection-start-line="2286" selection-start-column="2" selection-end-line="2286" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/danger/check-add-cho.jsp">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -926,7 +834,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_system.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="880">
+        <state relative-caret-position="618">
           <caret line="64" column="41" selection-start-line="64" selection-start-column="41" selection-end-line="64" selection-end-column="41" />
         </state>
       </provider>
@@ -943,22 +851,240 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/system/department-list.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1056">
+        <state relative-caret-position="618">
           <caret line="48" column="24" selection-start-line="48" selection-start-column="24" selection-end-line="48" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/VillageController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34870">
+        <state relative-caret-position="618">
           <caret line="1653" column="18" selection-start-line="1653" selection-start-column="18" selection-end-line="1653" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_cd.java">
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="2286" column="2" selection-start-line="2286" selection-start-column="2" selection-end-line="2286" selection-end-column="2" />
+        <state relative-caret-position="-20418" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.classpath">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_zhangcl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="49" column="13" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_xlb.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="1204" column="16" selection-start-line="1204" selection-start-column="16" selection-end-line="1204" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/tobject/DTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/result/ResultImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/result/Result.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="650">
+          <caret line="50" column="28" selection-start-line="50" selection-start-column="28" selection-end-line="50" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_village_xlb.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="81" column="11" selection-start-line="81" selection-start-column="11" selection-end-line="81" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/result/AppResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/result/AppResultImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-300">
+          <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
+          <folding>
+            <element signature="e#1188#1189#0" expanded="true" />
+            <element signature="e#1220#1221#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/danger/model-add3.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="412">
+          <caret line="259" column="8" selection-start-line="259" selection-start-column="8" selection-end-line="259" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_risk_management.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="404">
+          <caret line="229" column="8" selection-start-line="229" selection-start-column="8" selection-end-line="229" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/model/ZzjgDepartment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ZzjgDepartmentMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="7" column="37" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ZzjgDepartmentMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="33" column="36" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7062" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/safety-system/risk-list1-load.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="191" column="57" selection-start-line="191" selection-start-column="57" selection-end-line="191" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/CompanyMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1672">
+          <caret line="118" column="13" lean-forward="true" selection-start-line="118" selection-start-column="13" selection-end-line="118" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/CompanyMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/BaseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="63" column="20" selection-start-line="63" selection-start-column="20" selection-end-line="63" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_safety.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="99" column="33" selection-start-line="99" selection-start-column="33" selection-end-line="99" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_newAddxlb.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="419" column="4" selection-start-line="419" selection-start-column="4" selection-end-line="423" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_newAddVillage_xlb.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-154">
+          <caret line="42" column="9" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="606">
+          <caret line="332" column="79" selection-start-line="332" selection-start-column="79" selection-end-line="332" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="694">
+          <caret line="67" column="28" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/Zzjg_CompanyServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="69" lean-forward="true" selection-start-line="9" selection-start-column="69" selection-end-line="9" selection-end-column="69" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/Zzjg_CompanyService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="36" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Custom_Check.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="35" column="23" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/Zzjg_PersonnelService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/Zzjg_PersonnelServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

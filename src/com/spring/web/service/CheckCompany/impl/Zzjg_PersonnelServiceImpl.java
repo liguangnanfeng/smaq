@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author 桃红梨白
- * TODO 根据用户Id进行部门的查询
+ * TODO 进行登陆
+ * TODO 根据用户Id进行响应的数据的查询
  */
 @Service
 public class Zzjg_PersonnelServiceImpl implements Zzjg_PersonnelService {
@@ -19,17 +20,28 @@ public class Zzjg_PersonnelServiceImpl implements Zzjg_PersonnelService {
 
 
     /**
-     *  根据用户ID查询所属的一级公司 在根据一级公司查询所属的二级公司
-     *  Uid => 查询的总公司
+     * 进行登陆的的验证工作
+     * @param username
+     * @param password
+     * @return
+     */
+    @Override
+    public ZzjgPersonnel selectPersonnelByNameAndPwd(String username, String password) {
+        ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectPersonnelByNameAndPwd(username, password);
+
+
+        return zzjgPersonnel;
+    }
+
+    /**
+     * 根据用户id查询对应的分公司的id
      * @param userId
      * @return
      */
     @Override
     public Integer selectCompanyIdByuserId(Integer userId) {
+
         ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectById(userId);
-        if(null != zzjgPersonnel ){
-            return zzjgPersonnel.getUid();
-        }
-        return null;
+        return zzjgPersonnel.getCid();
     }
 }

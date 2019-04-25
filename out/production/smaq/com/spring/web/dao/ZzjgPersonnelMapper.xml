@@ -328,11 +328,14 @@
 	    </if>
 	</where>
 </select>
-
+<!--查询用户所对应的分工-->
     <select id="selectById" resultType="com.spring.web.model.ZzjgPersonnel">
         select * from zzjg_personnel_tbl where id=#{userId ,jdbcType=INTEGER };
     </select>
-
+<!--查询用户并进行登陆-->
+    <select id="selectPersonnelByNameAndPwd" resultType="com.spring.web.model.ZzjgPersonnel">
+        select * from zzjg_personnel_tbl where name=#{param1} and mobile= #{param2} limit 0,1;
+    </select>
 
 
 </mapper>

@@ -73,4 +73,6 @@ public interface ZzjgDepartmentMapper {
      * @return
      */
     List<Map<Object, Object>> selectNameParnameById(@Param("id")Integer id);//zhangcl 2018.10.27
+
+    List<ZzjgDepartment> selectDepartmentByCompidAndLEvel(Integer companyId);
 }

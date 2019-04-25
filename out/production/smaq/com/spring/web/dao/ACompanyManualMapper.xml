@@ -835,4 +835,18 @@
     </set>
     where id = #{id}
   </update>
+
+<!--  获取level2 岗位和工位-->
+  <select id="selectDangerAndManual"  resultType="String"  >
+    select  level2 from a_company_manual_tbl where  uid= #{uid} and level1 =#{name} group by level2;
+  </select>
+
+<!--  <select id="selectDangerByLevel2" resultType="String" >-->
+<!--    select  level3 from a_company_manual_tbl where  uid= #{uid} and level2 =#{name} group by level3;-->
+<!--  </select>-->
+
+<!--  <select id="selectDangerByLevel3" resultType="MeasuresBean">-->
+<!--    select id, measures from a_company_manual_tbl where uid=#{uid} and level3=#{name};-->
+<!--  </select>-->
+
 </mapper>

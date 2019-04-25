@@ -28,7 +28,13 @@ public class AppController_Login {
     @Autowired
     private Zzjg_PersonnelService zzjgPersonnelService;
 
-
+    /**
+     * 企业端用户登陆功能
+     * @param request
+     * @param username
+     * @param password
+     * @return
+     */
     @RequestMapping(value = "A250",method = RequestMethod.POST  )
     @ResponseBody
     public AppResult userLogin(HttpServletRequest request, String username ,String password){
@@ -68,5 +74,11 @@ public class AppController_Login {
 
        return  result;
     }
+
+
+
+
+
+
 
 }

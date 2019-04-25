@@ -20,7 +20,7 @@ public class Zzig_departmentImpl implements Zzig_departmentService {
     private ZzjgDepartmentMapper zzjgDepartmentMapper;
 
     /**
-     * TODO 根据分公司id查询所有的的分公司
+     * TODO 根据总公司id查询所有的的分公司
      * @param companyId
      * @return
      */

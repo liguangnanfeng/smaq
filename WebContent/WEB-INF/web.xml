@@ -74,7 +74,7 @@
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
     <multipart-config>
-      <location></location>
+      <location>/</location>
       <max-file-size>20971520</max-file-size>
       <max-request-size>26214400</max-request-size>
       <file-size-threshold>1048576</file-size-threshold>

@@ -48,17 +48,17 @@ public class AppController_message extends BaseController {
     /**
      * 获取检查记录列表
      */
-    @RequestMapping(value = "findMessageList", method = RequestMethod.POST)
-    public @ResponseBody
-    AppResult findCheckList(HttpServletRequest request,String userId) {
-
-
-        // 1.获取userId
-        // 2. 查询此用户属于哪个部门，哪个企业id
-        // 3. 展示此企业，此部门，的检查数据(check表有企业id,被检查部门id(根据这两个条件查询))
-
-        return null;
-    }
+//    @RequestMapping(value = "findMessageList", method = RequestMethod.POST)
+//    public @ResponseBody
+//    AppResult findCheckList(HttpServletRequest request,String userId) {
+//
+//
+//        // 1.获取userId
+//        // 2. 查询此用户属于哪个部门，哪个企业id
+//        // 3. 展示此企业，此部门，的检查数据(check表有企业id,被检查部门id(根据这两个条件查询))
+//
+//        return null;
+//    }
 
 
 

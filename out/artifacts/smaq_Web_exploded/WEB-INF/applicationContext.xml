@@ -23,6 +23,10 @@
        http://www.springframework.org/schema/task/spring-task.xsd
   ">
 
+
+
+
+
   <!--spring 全局配置文件，用来控制spring 特性  对应的是系统级别的配置，作用范围是系统上下文-->
 
   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

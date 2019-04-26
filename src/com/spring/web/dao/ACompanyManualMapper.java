@@ -3,6 +3,7 @@ package com.spring.web.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.web.model.request.CheckLevel;
 import com.spring.web.model.response.MeasuresBean;
 import org.apache.ibatis.annotations.Param;
 
@@ -103,14 +104,6 @@ public interface ACompanyManualMapper {
      */
     List<String> selectDangerAndManual(@Param("uid") Integer uid, @Param("name") String name);
 
-    /**
-     * 根据level2 查询所有的level3和各种数据
-     * @param uid
-     * @param
-     * @return
-     */
-    List<MeasuresBean> selectDangerBy( @Param("n") String name,@Param("i") Integer uid);
-
-
+    List<CheckLevel> selectLevel3AndId(CheckLevel check);
 }
 

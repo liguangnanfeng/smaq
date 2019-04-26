@@ -839,34 +839,14 @@
     where id = #{id}
   </update>
 
-<!--  获取level2 岗位和工位-->
+<!--  开始检查 获取level2 岗位和工位-->
   <select id="selectDangerAndManual"  resultType="String"  >
-    select  level2 from a_company_manual_tbl where  uid= #{uid} and level1 =#{name} group by level2;
-  </select>
-<!--注意封装对象的正确性-->
-
-  <resultMap id="Measures1" type="com.spring.web.model.response.MeasuresBean">
-    <id column="id" property="id" javaType="Integer" ></id>
-    <result property="uid" column="uid" javaType="Integer"></result>
-    <result property="dmid" column="dmid" javaType="Integer"></result>
-    <result property="factors" column="factors" javaType="String"></result>
-    <result property="measures" column="measures" javaType="String"></result>
-   <result property="type" column="type" javaType="String"></result>
-    <result property="reference" column="reference" javaType="String"></result>
-  </resultMap>
-
-
-  <select id="selectDangerBy"  resultMap="Measures1">
-    select
-    id,uid,dmid,factors,measures,type, reference
-    from
-    a_company_manual_tbl
-    where
-     uid= #{i} and level2 =#{n} ;
+select level2  from a_company_manual_tbl where uid=#{uid} and level1 = #{name} group by  level1, level2;
   </select>
 
-<!--  <select id="selectDangerByLevel3" resultType="MeasuresBean">-->
-<!--    select id, measures from a_company_manual_tbl where uid=#{uid} and level3=#{name};-->
-<!--  </select>-->
+
+  <select id="selectLevel3AndId" resultType="com.spring.web.model.request.CheckLevel">
+select id, uid , level1,level2, level3 ,measures as level4 from a_company_manual_tbl where uid=#{uid} and level1 = #{level1} and level2=#{level2};
+  </select>
 
 </mapper>

@@ -10,6 +10,9 @@ import com.spring.web.model.TModel;
 import com.spring.web.service.cgf.CgfService;
 import com.spring.web.util.DateConvertUtil;
 
+/**
+ * 定时任务 => 主要是做企业自动检查表,
+ */
 @Component
 public class Scheduled {
     @Autowired

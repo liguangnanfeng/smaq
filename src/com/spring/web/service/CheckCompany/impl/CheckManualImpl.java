@@ -49,5 +49,25 @@ public class CheckManualImpl implements ICheckManual {
         return map;
     }
 
+    /**
+     * 根据条件进行查询
+     * @param uid
+     * @param names
+     * @return
+     */
+    @Override
+    public List<MeasuresBean> selectmeasures(Integer uid, List<String> names) {
+
+        List<MeasuresBean> measuresBeans=new ArrayList<>();
+
+        for (String name : names) {
+            measuresBeans = companyManualMapper.selectDangerBy( name,uid);
+
+        }
+        System.out.println(measuresBeans);
+
+        return measuresBeans;
+    }
+
 
 }

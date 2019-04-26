@@ -56,54 +56,61 @@ public interface ACompanyManualMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(ACompanyManual record);
-    
-    List<Map<String, Object>> selectByMap(Map<String, Object> m);
-    
-    List<Map<String, Object>> selectByMapGroupByLevel1Level2(Map<String, Object> m);
-    
-    List<Map<String, Object>> selectByMap2(Map<String, Object> m);
-    
-    List<Map<String, Object>> selectByMap3(Map<String, Object> m);//add wz 20190119 政府端_风险分级管控_企业页面查询
-    
-    /** 
-    * @param level
-    * @param uid
-    * @return 风险评估后自动设置值
-    */
-    int updateLevel(@Param("level")String level, @Param("uid")Integer uid);
-    
-    int insertBath(Map<String, Object> m);
-    
-    int deleteFlag2(@Param("uid")Integer uid);
-    
-    List<Map<String, Object>> selectByMap2Limit(Map<String, Object>m);
 
-    Integer selectByMap2LimitCount(Map<String, Object>m);
-    
-    List<Map<String, Object>> selectDangerCompanyList(Map<String, Object>m);
+    List<Map<String, Object>> selectByMap(Map<String, Object> m);
+
+    List<Map<String, Object>> selectByMapGroupByLevel1Level2(Map<String, Object> m);
+
+    List<Map<String, Object>> selectByMap2(Map<String, Object> m);
+
+    List<Map<String, Object>> selectByMap3(Map<String, Object> m);//add wz 20190119 政府端_风险分级管控_企业页面查询
+
+    /**
+     * @param level
+     * @param uid
+     * @return 风险评估后自动设置值
+     */
+    int updateLevel(@Param("level") String level, @Param("uid") Integer uid);
+
+    int insertBath(Map<String, Object> m);
+
+    int deleteFlag2(@Param("uid") Integer uid);
+
+    List<Map<String, Object>> selectByMap2Limit(Map<String, Object> m);
+
+    Integer selectByMap2LimitCount(Map<String, Object> m);
+
+    List<Map<String, Object>> selectDangerCompanyList(Map<String, Object> m);
 
     int updateByL1L2(ACompanyManual ac);
-    
-    int updateLnglat(@Param("id")Integer id,@Param("lnglat")String lnglat);
-    /** 
-    * @param userId
-    * @return a_company_manual 变动时 处理企业风险等级，取最大值（红-橙-黄-蓝）
-    */
-    int updateCompanyDlevel(@Param("userId")Integer userId);
-    
-    int updateDelByIds(@Param("ids")String ids);
+
+    int updateLnglat(@Param("id") Integer id, @Param("lnglat") String lnglat);
+
+    /**
+     * @param userId
+     * @return a_company_manual 变动时 处理企业风险等级，取最大值（红-橙-黄-蓝）
+     */
+    int updateCompanyDlevel(@Param("userId") Integer userId);
+
+    int updateDelByIds(@Param("ids") String ids);
 
     /**
      * 查询level2 工位和岗位
+     *
      * @param uid
      * @param name
      * @return
      */
-   List<String> selectDangerAndManual(@Param("uid")Integer uid,@Param("name") String name);
+    List<String> selectDangerAndManual(@Param("uid") Integer uid, @Param("name") String name);
 
-//   List<String> selectDangerByLevel2(@Param("uid")Integer uid, @Param("name") String s);
-//
-//   List<MeasuresBean> selectDangerByLevel3(@Param("uid")Integer uid, @Param("name")String s);
+    /**
+     * 根据level2 查询所有的level3和各种数据
+     * @param uid
+     * @param
+     * @return
+     */
+    List<MeasuresBean> selectDangerBy( @Param("n") String name,@Param("i") Integer uid);
+
 
 }
 

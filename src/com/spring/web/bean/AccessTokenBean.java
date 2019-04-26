@@ -5,9 +5,17 @@ import java.io.Serializable;
 public class AccessTokenBean implements Serializable {
     /**
      * @Fields serialVersionUID
+     * ??
      */
+
     private static final long serialVersionUID = -503761506219547958L;
+    /**
+     * 令牌
+     */
     private String access_token;
+    /**
+     * 到期时间
+     */
     private Integer expires_in;
 
     public String getAccess_token() {

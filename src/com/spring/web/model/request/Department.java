@@ -12,38 +12,8 @@ import java.util.List;
  */
 @Data
 public class Department implements Serializable {
-    public Integer cid;
+    public Integer uid;
     public List<String> names;
 
-    public Integer getCid() {
-        return cid;
-    }
 
-    public void setCid(Integer cid) {
-        this.cid = cid;
-    }
-
-    public List<String> getNames() {
-        return names;
-    }
-
-    public void setNames(List<String> names) {
-        this.names = names;
-    }
-
-    public Department(Integer cid, List<String> names) {
-        this.cid = cid;
-        this.names = names;
-    }
-
-    public Department() {
-    }
-
-    @Override
-    public String toString() {
-        return "Department{" +
-                "cid=" + cid +
-                ", names=" + names +
-                '}';
-    }
 }

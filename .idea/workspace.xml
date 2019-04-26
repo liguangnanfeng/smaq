@@ -6,23 +6,490 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="15acc64b-aef1-4c26-8041-4c37facd26d6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/WebContent/WEB-INF/lib/lombok-1.12.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/spring/web/model/request/Department.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/spring/web/model/response/MeasuresBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/spring/web/model/response/UserItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/ICheckManual.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/CheckManualImpl.java" afterDir="false" />
+    <list default="true" id="15acc64b-aef1-4c26-8041-4c37facd26d6" name="Default Changelist" comment="第五次提交,添加企业端检查人员对风险信息的查询">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/META-INF/smaq.kotlin_module" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/ACompanyManualMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/ACompanyManualMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/ACompanyManualMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/ACompanyManualMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ACompanyManualMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ACompanyManualMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/resources/resources.properties" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/resources/resources.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/upload/file/20190424/20190424092537_665.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/upload/file/20190424/20190424095347_402.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/ActionEnter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/ConfigManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/Encoder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/PathFormat.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/define/ActionMap$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/define/ActionMap.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/define/ActionState.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/define/AppInfo$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/define/AppInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/define/BaseState.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/define/FileType$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/define/FileType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/define/MIMEType$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/define/MIMEType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/define/MultiState.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/define/State.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/hunter/FileManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/hunter/ImageHunter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/upload/Base64Uploader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/upload/BinaryUploader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/upload/StorageManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/baidu/ueditor/upload/Uploader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/junit/Junit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/BaseController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/bean/AccessTokenBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/bean/GlobalRegionNameBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/bean/PickingListAllToExcelBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/bean/WebAccessTokenBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/bean/WebWechatMessageBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/bean/WebWechatUserDetailBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/bean/WechatUserDetailBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/BackController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/CommonController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/CompanyController_cd.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/CompanyController_safety.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/CompanyController_source.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/CompanyController_study.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/CompanyController_system.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/CountryController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/DistrictController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/DownLoadController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/FileDownloadController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/ForeController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/LoginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/MessagesController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/TownController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/TownController_cx.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/TradeCliqueController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/TradeController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/UploadController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/UserController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/VillageController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/VillageController_AddNew.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/VillageSettingController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/VillageSettingController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/WebSocketController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/WebSocketDangerController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/api/AppController_newAddVillage_xlb.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/api/AppController_newAddxlb.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/api/AppController_risk_management.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/api/AppController_village_xlb.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/api/AppController_xlb.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/controller/api/AppController_zhangcl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ACompanyManualMapper.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ACompanyManualMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ACompanyManualMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ACompanyManualZpMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ADangerManualMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ADangerTypeMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/AFxgzpMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/AFxjzMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/AGwyjMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/AGwyjShMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/AGyMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/AGzkMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/AHxysgzkMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/AImplementationMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/AMaterialMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/AWhpMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/AZytjfxcdpjMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/AppTokenMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/CompanyIskeyMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/CompanyMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/CompanyRegMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/CyryjkjhMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/DangerLibMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/DetectionMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/DistrictMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/EvaluationMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ExaminationMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FacilitiesMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcBlindplatePermitMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcBrokenlandPermitMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcContractorOperationMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcFireworkPermitMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcGreatDangerStudyMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcHighsafetyPermitMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcHoistingPermitMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcLandworkPermitMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcLimitspacePermitMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcNaturalDangerItemMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcNaturalDangerStudyMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcOverhaulOperationMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcPowersafetyPermitMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcPromiseMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcTargetAssessmentMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcTemporaryDangerCensusMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcTemporaryDangerItemMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcTemporaryDangerMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FcTemporaryDangerStudyMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/FengMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/GlobalRegionMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/HuaMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ImportRecordMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/LawDocMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/LibraryMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/LightningProtectionMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/MaterialMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/MequipmentMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/MessageToUserMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/MessagesMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/MonitorMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/NoticeMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/OfficialsMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/PequipmentMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/PingMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ProductMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ProductionProcessDiagramMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/PushMessMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/PushMessageMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/PushMessageUserMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/QccDataMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/RegulationMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/SafetyFacilitiesMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/SequipmentMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/SpersonMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/StandardMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TAccidentMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TCheckDocumentMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TCheckItemMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TCheckMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TCheckPartMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TCleanWarnSettingMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TCollectionMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TCompanyMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TContingencyPlanMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TDeviceMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TDrillMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TIndustryMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TItemMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TItemSeriousMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TLevelMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TModelMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TModelPartMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TRecheckItemMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TRecheckMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TRectificationMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TSensorsMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TTindustryMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TWarnmsgMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TWaterparamterMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/Table2Mapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/Table3Mapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/Table4Mapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/Table5Mapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/Table6Mapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TableMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TownMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TradeCliqueMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TradeCompanyMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/TradeMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/UserGroupListMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/UserGroupMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/UserMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/VideoInfoMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/VillageMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/YzHighTemperatureMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/YzLiquidAmmoniaMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/YzMajorEquipmentMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/YzMetallurgyMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/YzSafetyFacilitiesMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/YzSpecialEquipmentMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/YzStaffMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/YzStiveExplosionMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/YzTradeArderMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ZzjgCompanyMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ZzjgDepartmentMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ZzjgPersonnelMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/exception/LlApplicationException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/exception/LlExceptionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/exception/LlSQLException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/exception/LlSystemException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/filter/LoginFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/filter/RolesAuthorizationFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/ibatis/BaseDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/ibatis/DynamicDBExecuter$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/ibatis/DynamicDBExecuter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/ibatis/DynamicDBValues.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/ibatis/DynamicParameter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/ibatis/LlHashMap.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/ibatis/PaginationResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/interceptor/ControllerInterceptor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/listener/RequestListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/listener/SessionListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/ACompanyManual.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/ACompanyManualZp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/ADangerManual.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/ADangerType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/AFxgzp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/AFxjz.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/AGwyj.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/AGwyjSh.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/AGy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/AGzk.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/AHxysgzk.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/AImplementation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/AMaterial.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/AWhp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/AZytjfxcdpj.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/AppToken.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Company.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/CompanyIskey.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/CompanyReg.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Cyryjkjh.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/DangerLib.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Detection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/District.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Evaluation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Examination.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Facilities.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcBlindplatePermit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcBrokenlandPermit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcContractorOperation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcFireworkPermit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcGreatDangerStudy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcHighsafetyPermit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcHoistingPermit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcLandworkPermit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcLimitspacePermit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcNaturalDangerItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcNaturalDangerStudy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcOverhaulOperation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcPowersafetyPermit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcPromise.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcTargetAssessment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcTemporaryDanger.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcTemporaryDangerCensus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcTemporaryDangerItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/FcTemporaryDangerStudy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Feng.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/GlobalRegion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/HarmfulFactor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Hua.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/ImportRecord.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/LawDoc.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Library.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/LightningProtection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Material.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Mequipment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/MessageToUser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Messages.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Monitor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Notice.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Officials.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Pequipment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Ping.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Product.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/ProductionProcessDiagram.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/PushMess.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/PushMessage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/PushMessageUser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/QccData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/QccJson$ChangeRecordsBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/QccJson$ContactInfoBean$WebSiteBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/QccJson$ContactInfoBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/QccJson$EmployeesBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/QccJson$IndustryBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/QccJson$PartnersBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/QccJson.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Regulation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/SafetyFacilities.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/SecuritySetting.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Sequipment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Sperson.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Standard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TAccident.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TCheck.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TCheckDocument.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TCheckItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TCheckPart.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TCleanWarnSetting.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TCollection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TCompany.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TContingencyPlan.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TDevice.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TDrill.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TIndustry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TItemSerious.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TLevel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TModel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TModelPart.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TRecheck.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TRecheckItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TRectification.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TSensors.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TTindustry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TWarnmsg.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TWaterparamter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Table.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Table2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Table3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Table4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Table5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Table6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Town.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Trade.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TradeClique.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TradeCompany.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Trouble.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/TroubleshootDoc.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/UserGroup.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/UserGroupList.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/VideoInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/Village.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/YzHighTemperature.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/YzLiquidAmmonia.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/YzMajorEquipment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/YzMetallurgy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/YzSafetyFacilities.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/YzSpecialEquipment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/YzStaff.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/YzStiveExplosion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/YzTradeArder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/ZzjgCompany.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/ZzjgDepartment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/model/ZzjgPersonnel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/result/AppDyResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/result/AppDyResultImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/result/AppListResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/result/AppListResultImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/result/AppResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/result/AppResultImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/result/Mess.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/result/Message.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/result/Result.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/result/ResultImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/schedule/Scheduled.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/security/BytesKeyGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/security/Digester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/security/Hex.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/security/HexEncodingStringKeyGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/security/KeyGenerators.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/security/LanlinRealm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/security/SecureRandomBytesKeyGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/security/SharedKeyGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/security/StandardPasswordEncoder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/security/StringKeyGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/buy/BuyService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/buy/BuyServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/cgf/CgfService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/cgf/CgfServiceImpl$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/cgf/CgfServiceImpl$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/cgf/CgfServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/common/CommonService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/common/CommonServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/company_cd/RegionnameGetService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/company_cd/RegionnameGetServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/envir_params_setting/EnvirParamsSettingService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/envir_params_setting/EnvirParamsSettingServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/export/ExportService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/export/ExportServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/trouble/TroubleService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/trouble/TroubleServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/user/UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/user/UserServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/zzjgCompany/IzzjgCompanyService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/service/zzjgCompany/impl/zzjgCompanyImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/servlet/AjaxUpload.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/servlet/AjaxUploadBase64.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/servlet/AjaxUploadBase64_video.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/servlet/AjaxUploadFile.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/servlet/ImageServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/servlet/UploadServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tag/ConstainsTag.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tag/LlLoopTag.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tag/OutputTextTag.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tag/SetContainsTag.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/DTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/DetailviewResDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/cgf/CheckSaveReqDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/cgf/CompanyListReqDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/cgf/GreatdangerSaveReqDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/cgf/ModelSaveReqDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/cgf/NaturaldangerSaveReqDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/cgf/RecheckSaveReqDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/cgf/TemporaryDangerSaveReqDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/cgf/ThreePartReqDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/cgf/ThreeSaveReqDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/user/CompanyMapReqDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/user/ListUserReqDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/user/LoginReqDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/tobject/user/ModifyPwdReqDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/AccessTokenUtil$Xx.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/AccessTokenUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/AmountUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/ChineseCharToEnUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/ColorUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/ConstantsUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/ConvertUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/CookieUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/DateConvertUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/EncacheUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/EncodingUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/EncryptUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/ExcelUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/ImageForBarChartUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/ImageForLineChartUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/ImageForPieChartUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/ImageForStackedChartUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/ImageToolsUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/JsonConvertUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/ListToExcelUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/LoggerUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/MailUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/MessageConstantsUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/MyAuthenticatorUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/NumberCharToChineseUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/OrderNumberUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/OutPrintUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/PinyinUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/QuickStartUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/RandomUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/SendSmsUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/SessionUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/SqlBackUpUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/StackTraceUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/StringOperUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/TableEditUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/TokenUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/TxtUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/Utf8EncodeOrDecodeUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/WeixinUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/XlsLead.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/ZcInit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/util/getIpUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/utils/MIPushServerUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/utils/Sersocket843$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/utils/Sersocket843.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/utils/SocketClient.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/utils/SpringApplicationContextHolder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/utils/quartz/WarnCleanJob.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/utils/quartz/WarnMainScheduler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/validator/Email.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/validator/EmailValidator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/validator/Fax.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/validator/FaxValidator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/validator/MobilePhone.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/validator/MobilePhoneValidator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/validator/Money.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/validator/MoneyValidator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/websocket/GetHttpSessionConfigurator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/imgsrv/SynImgByFTP$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/imgsrv/SynImgByFTP.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/smaq/resources/resources.properties" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/smaq/resources/resources.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/bean/AccessTokenBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/bean/AccessTokenBean.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Custom_Check.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Custom_Check.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Login.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/Zzig_departmentImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/Zzig_departmentImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/model/request/Department.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/model/request/Department.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/model/response/MeasuresBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/model/response/MeasuresBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/schedule/Scheduled.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/schedule/Scheduled.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/ICheckManual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/ICheckManual.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/CheckManualImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/CheckManualImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spring/web/util/AccessTokenUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/util/AccessTokenUtil.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,63 +515,11 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="smaq" />
+  </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Login.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="488">
-              <caret line="77" selection-start-line="77" selection-end-line="77" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Custom_Check.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="422">
-              <caret line="119" column="24" selection-start-line="119" selection-start-column="24" selection-end-line="119" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/CheckManualImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="458">
-              <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1980">
-              <caret line="96" column="21" lean-forward="true" selection-start-line="96" selection-start-column="21" selection-end-line="96" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="838" column="23" lean-forward="true" selection-start-line="838" selection-start-column="23" selection-end-line="838" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -116,19 +531,12 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>user-list</find>
-      <find>selectAll</find>
-      <find>selectByCompanyId</find>
-      <find>隐患统计汇总</find>
-      <find>village</find>
-      <find>check</find>
       <find>/village/trouble-set?url=/company/check-list?flag=4%26type=3</find>
       <find>企业自</find>
       <find>检查表</find>
       <find>选择添加-行政检查</find>
       <find>查看检查记录</find>
       <find>model-list</find>
-      <find>添加综合检查表</find>
       <find>Hui_admin_tab(this)</find>
       <find>model-list-cx</find>
       <find>检查表名称</find>
@@ -145,7 +553,14 @@
       <find>save_btn</find>
       <find>trouble-set</find>
       <find>save_1()</find>
+      <find>cid</find>
+      <find>selectDangerByLevel2</find>
       <find>aCompanyManual-save1</find>
+      <find>nformation/user-save</find>
+      <find>insertBath</find>
+      <find>article_save_submit()</find>
+      <find>添加综合检查表</find>
+      <find>Scheduled</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -158,9 +573,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/spring/web/websocket/MyWebSocket.java" />
-        <option value="$PROJECT_DIR$/src/com/spring/web/filter/RolesAuthorizationFilter.java" />
-        <option value="$PROJECT_DIR$/src/com/spring/web/security/BytesKeyGenerator.java" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/views/town/main.jsp" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/views/company/system/user-list.jsp" />
         <option value="$PROJECT_DIR$/src/com/spring/web/service/departmentUser/IdepartmentUser.java" />
@@ -189,7 +601,6 @@
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/views/company/system/department-list.jsp" />
         <option value="$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_system.java" />
         <option value="$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_cd.java" />
-        <option value="$PROJECT_DIR$/src/resources/resources.properties" />
         <option value="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/Zzig_departmentService.java" />
         <option value="$PROJECT_DIR$/src/com/spring/web/dao/ZzjgDepartmentMapper.java" />
         <option value="$PROJECT_DIR$/src/com/spring/web/dao/ZzjgDepartmentMapper.xml" />
@@ -199,15 +610,19 @@
         <option value="$PROJECT_DIR$/src/com/spring/web/model/ZzjgPersonnel.java" />
         <option value="$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.xml" />
         <option value="$PROJECT_DIR$/src/com/spring/web/model/response/UserItem.java" />
-        <option value="$PROJECT_DIR$/src/com/spring/web/model/request/Department.java" />
         <option value="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/Zzig_departmentImpl.java" />
         <option value="$PROJECT_DIR$/src/com/spring/web/model/response/Measures.java" />
-        <option value="$PROJECT_DIR$/src/com/spring/web/model/response/MeasuresBean.java" />
-        <option value="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/ICheckManual.java" />
-        <option value="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/CheckManualImpl.java" />
-        <option value="$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.java" />
-        <option value="$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.xml" />
         <option value="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Login.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/ICheckManual.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/CheckManualImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.xml" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/schedule/Scheduled.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/util/AccessTokenUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/bean/AccessTokenBean.java" />
+        <option value="$PROJECT_DIR$/src/resources/resources.properties" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/model/request/Department.java" />
+        <option value="$PROJECT_DIR$/src/com/spring/web/model/response/MeasuresBean.java" />
         <option value="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Custom_Check.java" />
       </list>
     </option>
@@ -226,10 +641,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="614" />
-    <option name="y" value="144" />
+    <option name="x" value="967" />
+    <option name="y" value="152" />
     <option name="width" value="1320" />
-    <option name="height" value="879" />
+    <option name="height" value="761" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -243,142 +658,6 @@
             <path>
               <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
               <item name="smaq" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="spring" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="spring" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="spring" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="spring" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="spring" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="spring" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="spring" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="request" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="spring" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="response" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="spring" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="spring" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-              <item name="CheckCompany" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="spring" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-              <item name="CheckCompany" type="462c0819:PsiDirectoryNode" />
-              <item name="impl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="imgsrv" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="WebContent" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smaq" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smaq" type="462c0819:PsiDirectoryNode" />
-              <item name="WebContent" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -405,16 +684,16 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.265" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="terminal" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/WebContent/WEB-INF/views/company/danger/check-list.jsp" />
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/WebContent/WEB-INF/views/company/danger" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\IdeaProjects\smaq\WebContent\WEB-INF\lib" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\ideaWorkSpace\smaq\src" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\IdeaProjects\smaq\WebContent\WEB-INF\lib" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -589,7 +868,11 @@
       <workItem from="1556074434516" duration="1525000" />
       <workItem from="1556076308527" duration="780000" />
       <workItem from="1556150602229" duration="8955000" />
-      <workItem from="1556160130260" duration="19813000" />
+      <workItem from="1556160130260" duration="20238000" />
+      <workItem from="1556193853801" duration="8762000" />
+      <workItem from="1556237111732" duration="685000" />
+      <workItem from="1556237823725" duration="3022000" />
+      <workItem from="1556241952796" duration="1584000" />
     </task>
     <task id="LOCAL-00001" summary="第四次提交,添加企业端用户登陆功能">
       <created>1556158278257</created>
@@ -598,11 +881,18 @@
       <option name="project" value="LOCAL" />
       <updated>1556158278257</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="第五次提交,添加企业端检查人员对风险信息的查询">
+      <created>1556188208845</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1556188208845</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88957000" />
+    <option name="totallyTimeSpent" value="103435000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -614,31 +904,30 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="1014" y="284" width="1320" height="761" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19329074" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49859154" weight="0.15867944" />
+      <window_info id="Structure" order="1" sideWeight="0.50140846" side_tool="true" weight="0.15867944" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="UI Designer" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Favorites" order="6" sideWeight="0.50140846" side_tool="true" weight="0.15867944" />
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49893504" visible="true" weight="0.32925472" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.051167965" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49946752" visible="true" weight="0.23025584" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49893504" weight="0.90878755" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.516129" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5005325" side_tool="true" weight="0.18020022" />
-      <window_info anchor="bottom" id="Java Enterprise" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50106496" side_tool="true" weight="0.2781457" />
+      <window_info anchor="bottom" id="Java Enterprise" order="10" weight="0.3294702" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="12" weight="0.32925472" />
-      <window_info anchor="bottom" id="Application Servers" order="13" weight="0.28938547" />
+      <window_info anchor="bottom" id="Version Control" order="12" weight="0.74860954" />
+      <window_info anchor="bottom" id="Application Servers" order="13" weight="0.28807947" />
       <window_info anchor="bottom" id="Spring" order="14" />
       <window_info anchor="bottom" id="Messages" order="15" weight="0.37486094" />
       <window_info anchor="bottom" id="FindBugs-IDEA" order="16" />
@@ -654,37 +943,38 @@
       <window_info anchor="right" id="Bean Validation" order="9" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20309168" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49859154" visible="true" weight="0.15867944" />
+      <window_info id="Structure" order="1" sideWeight="0.50140846" side_tool="true" weight="0.15867944" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="UI Designer" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Favorites" order="6" sideWeight="0.50140846" side_tool="true" weight="0.15867944" />
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.39154616" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.12235817" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49893504" visible="true" weight="0.32925472" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.051167965" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49893504" weight="0.90878755" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32925472" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.516129" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Java Enterprise" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50106496" side_tool="true" weight="0.2781457" />
+      <window_info anchor="bottom" id="Java Enterprise" order="10" weight="0.3294702" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="12" />
-      <window_info anchor="bottom" id="Application Servers" order="13" weight="0.28938547" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="12" visible="true" weight="0.74860954" />
+      <window_info anchor="bottom" id="Application Servers" order="13" weight="0.28807947" />
       <window_info anchor="bottom" id="Spring" order="14" />
-      <window_info anchor="bottom" id="Messages" order="15" weight="0.19354838" />
+      <window_info anchor="bottom" id="Messages" order="15" weight="0.37486094" />
+      <window_info anchor="bottom" id="FindBugs-IDEA" order="16" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Maven" order="3" weight="0.32977587" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Database" order="6" weight="0.32960597" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info anchor="right" id="Bean Validation" order="9" />
@@ -693,10 +983,37 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="第一次提交" />
     <MESSAGE value="第四次提交,添加企业端用户登陆功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="第四次提交,添加企业端用户登陆功能" />
+    <MESSAGE value="第五次提交,添加企业端检查人员对风险信息的查询" />
+    <option name="LAST_COMMIT_MESSAGE" value="第五次提交,添加企业端检查人员对风险信息的查询" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -768,6 +1085,7 @@
     <watches-manager>
       <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
         <watch expression="this" />
+        <watch expression="((Mequipment)measuresBeans.get(0)).remark" custom="com.spring.web.model.Mequipment" />
       </configuration>
     </watches-manager>
   </component>
@@ -775,172 +1093,6 @@
     <SUITE FILE_PATH="coverage/smaq$tomcat7.ic" NAME="tomcat7 Coverage Results" MODIFIED="1555917268166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/WebContent/upload/20170818144704_334.jpeg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/upload/20170818144306_713.jpeg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/imgsrv/SynImgByFTP.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="22" column="30" lean-forward="true" selection-start-line="22" selection-start-column="30" selection-end-line="22" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#15639#16252#0" expanded="true" />
-            <element signature="e#16251#16252#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/trouble/TroubleServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="46" column="80" lean-forward="true" selection-start-line="46" selection-start-column="80" selection-end-line="46" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/trouble/TroubleService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/cgf/CgfService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="33" column="17" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/left.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="218" selection-start-line="218" selection-end-line="218" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/legacy.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-24578">
-          <caret line="297" column="22" selection-start-line="297" selection-start-column="22" selection-end-line="297" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/danger/check-add-cho.jsp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/danger/check-fuadd.jsp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_system.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="880">
-          <caret line="64" column="41" selection-start-line="64" selection-start-column="41" selection-end-line="64" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/system/department-listLoad1.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/system/department-listLoad2.jsp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/system/department-list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1056">
-          <caret line="48" column="24" selection-start-line="48" selection-start-column="24" selection-end-line="48" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/VillageController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34870">
-          <caret line="1653" column="18" selection-start-line="1653" selection-start-column="18" selection-end-line="1653" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_cd.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="2286" column="2" selection-start-line="2286" selection-start-column="2" selection-end-line="2286" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resources/log4j.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/WebSocketController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-308">
-          <caret line="16" column="47" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resources/resources.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="24" lean-forward="true" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ZzjgDepartmentMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="761">
-          <caret line="256" lean-forward="true" selection-start-line="256" selection-end-line="256" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ZzjgDepartmentMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="719">
-          <caret line="76" column="75" selection-start-line="76" selection-start-column="66" selection-end-line="76" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_newAddVillage_xlb.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="65" column="63" selection-start-line="65" selection-start-column="34" selection-end-line="65" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-web-3.2.1.RELEASE.jar!/org/springframework/web/bind/annotation/RequestMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/Zzig_departmentService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="4" selection-start-column="4" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-web-3.2.1.RELEASE.jar!/org/springframework/web/bind/annotation/RequestMapping.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="20" column="11" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-17">
-          <caret line="38" column="7" lean-forward="true" selection-start-line="38" selection-start-column="7" selection-end-line="38" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/spring/web/websocket/GetHttpSessionConfigurator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="506">
@@ -1044,13 +1196,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_safety.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-412">
-          <caret line="1270" column="25" selection-start-line="1270" selection-start-column="25" selection-end-line="1270" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/spring/web/model/AGy.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
@@ -1089,37 +1234,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/model/request/Department.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#334#335#0" expanded="true" />
-            <element signature="e#360#361#0" expanded="true" />
-            <element signature="e#399#400#0" expanded="true" />
-            <element signature="e#429#430#0" expanded="true" />
-            <element signature="e#467#468#0" expanded="true" />
-            <element signature="e#495#496#0" expanded="true" />
-            <element signature="e#543#544#0" expanded="true" />
-            <element signature="e#577#578#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/result/AppResultImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="e#679#680#0" expanded="true" />
-            <element signature="e#715#716#0" expanded="true" />
-            <element signature="e#943#944#0" expanded="true" />
-            <element signature="e#981#982#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/Zzjg_CompanyServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
@@ -1144,50 +1258,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/model/response/MeasuresBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="25" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/ICheckManual.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/CheckManualImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="838" column="23" lean-forward="true" selection-start-line="838" selection-start-column="23" selection-end-line="838" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1980">
-          <caret line="96" column="21" lean-forward="true" selection-start-line="96" selection-start-column="21" selection-end-line="96" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Login.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
+        <state>
           <caret line="77" selection-start-line="77" selection-end-line="77" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1195,13 +1268,272 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Custom_Check.java">
+    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/mybatis-3.2.2.jar!/org/apache/ibatis/binding/MapperProxy.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="119" column="24" selection-start-line="119" selection-start-column="24" selection-end-line="119" selection-end-column="24" />
+        <state relative-caret-position="167">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/mybatis-spring-1.2.0.jar!/org/mybatis/spring/SqlSessionUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="79" selection-start-line="79" selection-end-line="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/mybatis-spring-1.2.0.jar!/org/mybatis/spring/SqlSessionTemplate.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="85" selection-start-line="85" selection-end-line="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/mybatis-3.2.2.jar!/org/apache/ibatis/binding/MapperMethod.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="124" selection-start-line="124" selection-end-line="124" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-beans-3.2.1.RELEASE.jar!/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="1007" selection-start-line="1007" selection-end-line="1007" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/result/AppResultImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="e#679#680#0" expanded="true" />
+            <element signature="e#715#716#0" expanded="true" />
+            <element signature="e#943#944#0" expanded="true" />
+            <element signature="e#981#982#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/ICheckManual.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_safety.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="621">
+          <caret line="1306" column="32" lean-forward="true" selection-start-line="1306" selection-start-column="32" selection-end-line="1306" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="613">
+          <caret line="74" column="18" selection-start-line="74" selection-start-column="8" selection-end-line="74" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/CheckManualImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="63" column="72" selection-start-line="63" selection-start-column="72" selection-end-line="63" selection-end-column="72" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/TradeCliqueController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-17">
+          <caret line="300" column="45" lean-forward="true" selection-start-line="300" selection-start-column="45" selection-end-line="300" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/ACompanyManualMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="599" column="2" lean-forward="true" selection-start-line="599" selection-start-column="2" selection-end-line="599" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/tradeclique/information/user-add.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1317">
+          <caret line="130" column="4" lean-forward="true" selection-start-line="130" selection-start-column="4" selection-end-line="130" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/danger/three-window.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#td#4;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#1;n#td#4;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/tradeclique/danger/model-list-cx.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="489">
+          <caret line="178" column="109" selection-start-line="178" selection-start-column="109" selection-end-line="178" selection-end-column="109" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/views/company/source/model-list-cx.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1237">
+          <caret line="201" column="19" lean-forward="true" selection-start-line="201" selection-start-column="19" selection-end-line="201" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/TownMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/dao/TownMapper.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/schedule/Scheduled.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/servlet/UploadServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="40" column="13" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/servlet/AjaxUploadFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/servlet/ImageServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/servlet/AjaxUploadBase64_video.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/servlet/AjaxUploadBase64.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/servlet/AjaxUpload.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/tag/ConstainsTag.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/bean/AccessTokenBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="18" column="31" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/tag/SetContainsTag.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/util/AccessTokenUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="110" column="15" selection-start-line="110" selection-start-column="15" selection-end-line="110" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/tag/OutputTextTag.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/tag/LlLoopTag.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resources/resources.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="20" lean-forward="true" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Custom_Check.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="445">
+          <caret line="169" column="8" lean-forward="true" selection-start-line="169" selection-start-column="8" selection-end-line="169" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/model/request/Department.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/spring/web/model/response/MeasuresBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="14" column="23" lean-forward="true" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
         </state>
       </provider>
     </entry>

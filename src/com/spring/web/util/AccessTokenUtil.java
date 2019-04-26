@@ -17,11 +17,15 @@ import com.spring.web.bean.WebWechatMessageBean;
 import com.spring.web.bean.WebWechatUserDetailBean;
 import com.spring.web.bean.WechatUserDetailBean;
 
+/**
+ * 微信验证,通过token
+ */
 public class AccessTokenUtil {
     private static Gson gson = new GsonBuilder().serializeNulls().create();
 
     /**
      * @param 获取微信公众号access_token ，接口有数目限制，存入全局变量中
+     *        并判断是否失效
      * @return
      */
     public static AccessTokenBean getGZHAccessToken(HttpServletRequest request) {
@@ -45,6 +49,7 @@ public class AccessTokenUtil {
                 isOn = false;
             }
         }
+        // TODO 失效的话在重新查询token,并进行ServletContext域中,并返回
         if (!isOn) {
             access_token_str = WeixinUtil
                     .doGet("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx8f7d4dface233627&secret=c358d925d22da3b8f82a8b45fd89c7aa",

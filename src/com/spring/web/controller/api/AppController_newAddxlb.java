@@ -77,7 +77,7 @@ import com.spring.web.util.RandomUtil;
 public class AppController_newAddxlb extends BaseController {
     
     private static final long serialVersionUID = 1L;
-    
+
     @Autowired
     CgfService cgfService;
     @Autowired

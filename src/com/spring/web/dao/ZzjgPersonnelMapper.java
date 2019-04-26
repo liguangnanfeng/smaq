@@ -65,4 +65,7 @@ public interface ZzjgPersonnelMapper {
     
     Map<String, Object> selectCountForClique(Map<String, Object> m);
 
+    ZzjgPersonnel selectById(Integer userId);
+
+    ZzjgPersonnel selectPersonnelByNameAndPwd(String username, String password);
 }

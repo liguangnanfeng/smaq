@@ -3,6 +3,7 @@ package com.spring.web.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.web.model.response.MeasuresBean;
 import org.apache.ibatis.annotations.Param;
 
 import com.spring.web.model.ACompanyManual;
@@ -91,5 +92,18 @@ public interface ACompanyManualMapper {
     int updateCompanyDlevel(@Param("userId")Integer userId);
     
     int updateDelByIds(@Param("ids")String ids);
+
+    /**
+     * 查询level2 工位和岗位
+     * @param uid
+     * @param name
+     * @return
+     */
+   List<String> selectDangerAndManual(@Param("uid")Integer uid,@Param("name") String name);
+
+//   List<String> selectDangerByLevel2(@Param("uid")Integer uid, @Param("name") String s);
+//
+//   List<MeasuresBean> selectDangerByLevel3(@Param("uid")Integer uid, @Param("name")String s);
+
 }
 

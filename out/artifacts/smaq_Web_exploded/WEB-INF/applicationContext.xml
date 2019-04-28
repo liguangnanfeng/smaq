@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans 
-  xmlns="http://www.springframework.org/schema/beans" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xmlns:context="http://www.springframework.org/schema/context" 
-  xmlns:tx="http://www.springframework.org/schema/tx"
-  xmlns:aop="http://www.springframework.org/schema/aop" 
-  xmlns:p="http://www.springframework.org/schema/p" 
-  xmlns:cache="http://www.springframework.org/schema/cache"
-  xmlns:task="http://www.springframework.org/schema/task"
-  xsi:schemaLocation="
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:cache="http://www.springframework.org/schema/cache"
+        xmlns:task="http://www.springframework.org/schema/task"
+        xsi:schemaLocation="
        http://www.springframework.org/schema/beans 
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context   
@@ -23,139 +23,141 @@
        http://www.springframework.org/schema/task/spring-task.xsd
   ">
 
+    <!--事务支持-->
+    <tx:annotation-driven/>
 
 
+    <!--spring 全局配置文件，用来控制spring 特性  对应的是系统级别的配置，作用范围是系统上下文-->
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:resources/resources.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- druid 监控统计功能 -->
+    <!-- <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+      <property name="slowSqlMillis" value="10000" />
+      <property name="logSlowSql" value="true" />
+    </bean>
+    <bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter">
+      <property name="statementExecutableSqlLogEnable" value="true" />
+      <property name="resultSetLogEnabled" value="false" />
+    </bean>
+
+    <bean id="wall-filter-config" class="com.alibaba.druid.wall.WallConfig" init-method="init">
+      指定配置装载的目录
+      <property name="dir" value="META-INF/druid/wall/mysql" />
+      <property name="truncateAllow" value="false" />
+    </bean>
+    <bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
+      <property name="dbType" value="mysql" />
+      <property name="logViolation" value="true" />
+      <property name="throwException" value="false" />
+      <property name="config" ref="wall-filter-config" />
+    </bean> -->
+
+    <!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+      <property name="url" value="${jdbc.url}" />
+      <property name="username" value="${jdbc.username}" />
+      <property name="password" value="${jdbc.password}" />
+      <property name="driverClassName" value="${jdbc.driverClassName}" />
+
+      <property name="initialSize" value="1" />  初始化时建立物理连接的个数
+      <property name="minIdle" value="1" />    已经不再使用，配置了也没效果
+      <property name="maxActive" value="20" /> 最大连接池数量
+      <property name="maxWait" value="60000" /> 配置获取连接等待超时的时间
+
+      是否缓存preparedStatement，也就是PSCache。 在mysql5.5以下的版本中没有PSCache功能，建议关闭掉 要启用PSCache，maxOpenPreparedStatements必须配置大于0，当大于0时， poolPreparedStatements自动触发修改为true
+      <property name="poolPreparedStatements" value="true" />
+      <property name="maxOpenPreparedStatements" value="100" />
+      <property name="maxPoolPreparedStatementPerConnectionSize" value="50" />指定每个连接上PSCache的大小
+
+      <property name="validationQuery" value="SELECT 'x'" />  检测连接是否有效的sql
+      <property name="testOnBorrow" value="false" />  申请连接时执行validationQuery检测连接是否有效，会降低性能。
+      <property name="testOnReturn" value="false" />  归还连接时执行validationQuery检测连接是否有效，会降低性能
+      建议配置为true，不影响性能，并且保证安全性。 申请连接的时候检测，如果空闲时间大于 timeBetweenEvictionRunsMillis， 执行validationQuery检测连接是否有效。
+      <property name="testWhileIdle" value="true" />
+
+      1) Destroy线程会检测连接的间隔时间 2) testWhileIdle的判断依据，详细看testWhileIdle属性的说明
+      <property name="timeBetweenEvictionRunsMillis" value="60000" />
+      配置一个连接在池中最小生存的时间，单位是毫秒
+      <property name="minEvictableIdleTimeMillis" value="300000" />
+
+      <property name="removeAbandoned" value="true" />超过时间限制是否回收
+      <property name="removeAbandonedTimeout" value="1800" />超时时间；单位为秒。1800秒=30分钟
+      <property name="logAbandoned" value="true" />关闭abanded连接时输出错误日志
 
 
-  <!--spring 全局配置文件，用来控制spring 特性  对应的是系统级别的配置，作用范围是系统上下文-->
+      配置监控统计拦截的filters，去掉后监控界面sql无法统计
+      <property name="proxyFilters">
+        <list>
+          <ref bean="stat-filter" />
+          <ref bean="log-filter" />
+          <ref bean="wall-filter" />
+        </list>
+      </property>
+    </bean> -->
 
-  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    <property name="locations">
-      <list>
-        <value>classpath:resources/resources.properties</value>
-      </list>
-    </property>
-  </bean>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbc.driverClassName}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="minPoolSize" value="${jdbc.miniPoolSize}"/>
+        <property name="maxPoolSize" value="${jdbc.maxPoolSize}"/>
+        <property name="initialPoolSize" value="${jdbc.initialPoolSize}"/>
+        <property name="maxIdleTime" value="${jdbc.maxIdleTime}"/>
+        <property name="acquireIncrement" value="${jdbc.acquireIncrement}"/>
+        <property name="acquireRetryAttempts" value="${jdbc.acquireRetryAttempts}"/>
+        <property name="acquireRetryDelay" value="${jdbc.acquireRetryDelay}"/>
+        <property name="testConnectionOnCheckin" value="${jdbc.testConnectionOnCheckin}"/>
+        <property name="automaticTestTable" value="${jdbc.automaticTestTable}"/>
+        <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}"/>
+        <property name="checkoutTimeout" value="${jdbc.checkoutTimeout}"/>
+    </bean>
 
-  <!-- druid 监控统计功能 -->
-  <!-- <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
-    <property name="slowSqlMillis" value="10000" />
-    <property name="logSlowSql" value="true" />
-  </bean>
-  <bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter">
-    <property name="statementExecutableSqlLogEnable" value="true" />
-    <property name="resultSetLogEnabled" value="false" />
-  </bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:resources/sqlMapConfig.xml"></property>
+    </bean>
 
-  <bean id="wall-filter-config" class="com.alibaba.druid.wall.WallConfig" init-method="init">
-    指定配置装载的目录
-    <property name="dir" value="META-INF/druid/wall/mysql" />
-    <property name="truncateAllow" value="false" />
-  </bean>
-  <bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
-    <property name="dbType" value="mysql" />
-    <property name="logViolation" value="true" />
-    <property name="throwException" value="false" />
-    <property name="config" ref="wall-filter-config" />
-  </bean> -->
+    <!-- mybatis 通用 sqlSession -->
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+    <bean id="baseDao" class="com.spring.web.ibatis.DynamicDBExecuter">
+        <property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+    </bean>
 
-  <!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-    <property name="url" value="${jdbc.url}" />
-    <property name="username" value="${jdbc.username}" />
-    <property name="password" value="${jdbc.password}" />
-    <property name="driverClassName" value="${jdbc.driverClassName}" />
+    <!-- 自动扫描mybatis mapper接口 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.spring.web.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
 
-    <property name="initialSize" value="1" />  初始化时建立物理连接的个数
-    <property name="minIdle" value="1" />    已经不再使用，配置了也没效果
-    <property name="maxActive" value="20" /> 最大连接池数量
-    <property name="maxWait" value="60000" /> 配置获取连接等待超时的时间
+    <!-- 事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    是否缓存preparedStatement，也就是PSCache。 在mysql5.5以下的版本中没有PSCache功能，建议关闭掉 要启用PSCache，maxOpenPreparedStatements必须配置大于0，当大于0时， poolPreparedStatements自动触发修改为true
-    <property name="poolPreparedStatements" value="true" />
-    <property name="maxOpenPreparedStatements" value="100" />
-    <property name="maxPoolPreparedStatementPerConnectionSize" value="50" />指定每个连接上PSCache的大小
+    <!-- 定时器 -->
+    <task:executor id="executor" pool-size="5"/>
+    <task:scheduler id="scheduler" pool-size="10"/>
+    <task:annotation-driven executor="executor" scheduler="scheduler"/>
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 
-    <property name="validationQuery" value="SELECT 'x'" />  检测连接是否有效的sql
-    <property name="testOnBorrow" value="false" />  申请连接时执行validationQuery检测连接是否有效，会降低性能。
-    <property name="testOnReturn" value="false" />  归还连接时执行validationQuery检测连接是否有效，会降低性能
-    建议配置为true，不影响性能，并且保证安全性。 申请连接的时候检测，如果空闲时间大于 timeBetweenEvictionRunsMillis， 执行validationQuery检测连接是否有效。
-    <property name="testWhileIdle" value="true" />
+    <!-- 扫描service层 baseDao 定时器 -->
+    <context:annotation-config/>
+    <context:component-scan base-package="com.spring" annotation-config="true"/>
 
-    1) Destroy线程会检测连接的间隔时间 2) testWhileIdle的判断依据，详细看testWhileIdle属性的说明
-    <property name="timeBetweenEvictionRunsMillis" value="60000" />
-    配置一个连接在池中最小生存的时间，单位是毫秒
-    <property name="minEvictableIdleTimeMillis" value="300000" />
-
-    <property name="removeAbandoned" value="true" />超过时间限制是否回收
-    <property name="removeAbandonedTimeout" value="1800" />超时时间；单位为秒。1800秒=30分钟
-    <property name="logAbandoned" value="true" />关闭abanded连接时输出错误日志
-
-
-    配置监控统计拦截的filters，去掉后监控界面sql无法统计
-    <property name="proxyFilters">
-      <list>
-        <ref bean="stat-filter" />
-        <ref bean="log-filter" />
-        <ref bean="wall-filter" />
-      </list>
-    </property>
-  </bean> -->
-  
-  <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-    <property name="driverClass" value="${jdbc.driverClassName}" />
-    <property name="jdbcUrl" value="${jdbc.url}" />
-    <property name="user" value="${jdbc.username}" />
-    <property name="password" value="${jdbc.password}" />
-    <property name="minPoolSize" value="${jdbc.miniPoolSize}" />
-    <property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
-    <property name="initialPoolSize" value="${jdbc.initialPoolSize}" />
-    <property name="maxIdleTime" value="${jdbc.maxIdleTime}" />
-    <property name="acquireIncrement" value="${jdbc.acquireIncrement}" />
-    <property name="acquireRetryAttempts" value="${jdbc.acquireRetryAttempts}" />
-    <property name="acquireRetryDelay" value="${jdbc.acquireRetryDelay}" />
-    <property name="testConnectionOnCheckin" value="${jdbc.testConnectionOnCheckin}" />
-    <property name="automaticTestTable" value="${jdbc.automaticTestTable}" />
-    <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}" />
-    <property name="checkoutTimeout" value="${jdbc.checkoutTimeout}" />
-  </bean>
-
-  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-    <property name="dataSource" ref="dataSource" />
-    <property name="configLocation" value="classpath:resources/sqlMapConfig.xml"></property>
-  </bean>
-
-  <!-- mybatis 通用 sqlSession -->
-  <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-    <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
-  </bean>
-  <bean id="baseDao" class="com.spring.web.ibatis.DynamicDBExecuter">
-    <property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
-  </bean>
-
-  <!-- 自动扫描mybatis mapper接口 -->
-  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-    <property name="basePackage" value="com.spring.web.dao" />
-    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
-  </bean>
-
-  <!-- 事务管理器 -->
-  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-    <property name="dataSource" ref="dataSource" />
-  </bean>
-  <tx:annotation-driven transaction-manager="transactionManager" />
-
-  <!-- 定时器 -->
-  <task:executor id="executor" pool-size="5" />
-  <task:scheduler id="scheduler" pool-size="10" />
-  <task:annotation-driven executor="executor" scheduler="scheduler" />
-  <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
-
-  <!-- 扫描service层 baseDao 定时器 -->
-  <context:annotation-config />
-  <context:component-scan base-package="com.spring" annotation-config="true" />
-
-  <!-- 声明缓存cacheManager -->
-  <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:configLocation="/WEB-INF/ehcache.xml"
-    p:shared="false" />
-  <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cacheManager-ref="cacheManagerFactory" />
+    <!-- 声明缓存cacheManager -->
+    <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
+          p:configLocation="/WEB-INF/ehcache.xml"
+          p:shared="false"/>
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
+          p:cacheManager-ref="cacheManagerFactory"/>
 </beans>

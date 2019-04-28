@@ -1,6 +1,9 @@
 package com.spring.web.model.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -11,6 +14,9 @@ import java.util.logging.Level;
  * TODO 查询的风险点 对数据进行统一的封装
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class CheckLevel implements Serializable {
 
     /**

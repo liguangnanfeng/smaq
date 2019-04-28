@@ -1,5 +1,6 @@
 package com.spring.web.dao;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -105,5 +106,7 @@ public interface ACompanyManualMapper {
     List<String> selectDangerAndManual(@Param("uid") Integer uid, @Param("name") String name);
 
     List<CheckLevel> selectLevel3AndId(CheckLevel check);
+
+    List<CheckLevel> selectLevel4AndId(CheckLevel checkLevel);
 }
 

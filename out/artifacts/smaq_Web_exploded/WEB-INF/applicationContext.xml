@@ -155,9 +155,9 @@
     <context:component-scan base-package="com.spring" annotation-config="true"/>
 
     <!-- 声明缓存cacheManager -->
-    <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
-          p:configLocation="/WEB-INF/ehcache.xml"
-          p:shared="false"/>
-    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
-          p:cacheManager-ref="cacheManagerFactory"/>
+<!--    <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"-->
+<!--          p:configLocation="/WEB-INF/ehcache.xml"-->
+<!--          p:shared="false"/>-->
+<!--    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"-->
+<!--          p:cacheManager-ref="cacheManagerFactory"/>-->
 </beans>

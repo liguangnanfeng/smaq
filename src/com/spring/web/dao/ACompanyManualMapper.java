@@ -108,5 +108,7 @@ public interface ACompanyManualMapper {
     List<CheckLevel> selectLevel3AndId(CheckLevel check);
 
     List<CheckLevel> selectLevel4AndId(CheckLevel checkLevel);
+
+    int selectDmidById(String name);
 }
 

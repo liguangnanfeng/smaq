@@ -172,7 +172,7 @@ public class AppController_Custom_Check  {
      */
     @ResponseBody
     @RequestMapping(value="A204",method=RequestMethod.POST)
-    public AppResult saveCheck(HttpServletRequest request, CheckItem checkItem){
+    public AppResult saveCheck(HttpServletRequest request, @RequestBody CheckItem checkItem){
         AppResult result = new AppResultImpl();
 
         if(null==checkItem){

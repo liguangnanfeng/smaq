@@ -31,29 +31,28 @@ public class TestCheckItem {
     @Test
     public void saveCheckTest(){
         List<CheckLevel> list = new  ArrayList<>();
-         list.add(new CheckLevel(7927,37097,"1","原料仓库","卸货","现场管理","应急照明"));
-         list.add(new CheckLevel(7927,37097,"1","反应釜","卸货","现场管理","应急照明"));
-         list.add(new CheckLevel(7927,37097,"1","车间","卸货","现场管理","应急照明"));
-         list.add(new CheckLevel(7927,37097,"1","应用车间","卸货","现场管理","应急照明"));
-
+         list.add(new CheckLevel(7927,37097,"1","原料仓库","工厂","现场管理 / 特种设备（ 压力管道） / 安全附件及安全保护装置","不应存在介质泄漏现象。"));
+         list.add(new CheckLevel(7927,37097,"1","反应釜","工厂","现场管理 / 特种设备（ 压力管道） / 运行情况","不应存在介质泄漏现象。"));
+         list.add(new CheckLevel(7927,37097,"1","车间","卸货","现场管理 / 特种设备（ 压力管道） / 运行情况","不应存在介质泄漏现象。"));
+         list.add(new CheckLevel(7927,37097,"1","应用车间","卸货","现场管理 / 特种设备（ 压力管道） / 运行情况","不应存在介质泄漏现象。"));
 
 
 
         // 创建一个对象
         CheckItem checkItem = new CheckItem();
         checkItem.setTemplate("随机检查表1");
-        checkItem.setTitle(1);
+        checkItem.setTitle(2);
         checkItem.setCheckLevels(list);
 
         ZzjgPersonnel zzjg = new ZzjgPersonnel();
+        zzjg.setId(777777);
+        zzjg.setUid(37097);
+        zzjg.setMobile("15137970728");
+        zzjg.setName("777777");
 
-
-        checkManual.saveCheck(checkItem,  zzjg);
-
-
+        Integer integer = checkManual.saveCheck(checkItem, zzjg);
+        System.out.println(integer);
 
     }
-
-
 
 }

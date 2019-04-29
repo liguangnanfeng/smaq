@@ -54,6 +54,11 @@ public class CheckLevel implements Serializable {
      */
     public String level4;
 
+    /**
+     * 检查参照
+     */
+    public String reference;
+
 
 
 }

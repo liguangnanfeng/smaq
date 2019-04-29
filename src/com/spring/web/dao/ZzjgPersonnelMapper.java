@@ -67,5 +67,5 @@ public interface ZzjgPersonnelMapper {
 
     ZzjgPersonnel selectById(Integer userId);
 
-    ZzjgPersonnel selectPersonnelByNameAndPwd(String username, String password);
+    ZzjgPersonnel selectPersonnelByNameAndPwd(String name);
 }

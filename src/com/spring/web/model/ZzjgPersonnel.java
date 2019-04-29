@@ -99,6 +99,11 @@ public class ZzjgPersonnel implements Serializable {
      */
     private String status;
 
+    /**
+     *密码
+     */
+    private String password;
+
     public ZzjgPersonnel(Integer id, Date ctime, Date utime, Integer del, String name, String mobile, String position, Integer cid, Integer dpid, Integer did, Integer uid, String status) {
         this.id = id;
         this.ctime = ctime;
@@ -112,6 +117,14 @@ public class ZzjgPersonnel implements Serializable {
         this.did = did;
         this.uid = uid;
         this.status = status;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public ZzjgPersonnel() {

@@ -44,7 +44,7 @@ public class MD5Test {
     @Test
     public void  Test02() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         boolean b1 = MyMD5Util.validPassword("123456", "8EC3E9FF327D6772D0E280EC2935C7F2DAC566F0D8433D26970C1278");
-        boolean b2 = MyMD5Util.validPassword("123456", "62065F54D05351EF36EEBA05C337A84F5B8CA0FB8A21CD3F37787960");
+        boolean b2 = MyMD5Util.validPassword("123", "62065F54D05351EF36EEBA05C337A84F5B8CA0FB8A21CD3F37787960");
         boolean b3 = MyMD5Util.validPassword("123456", "118A13946763A57CF2FCE6B1EA4B70FFE99929ECAC88D6809ECFB537");
         boolean b4 = MyMD5Util.validPassword("123456", "72D22D68998B66D4125B824669BA2725D0A566E8DBF9203EC63BEB5A");
         System.out.println(b1);

@@ -12,12 +12,17 @@ import javax.servlet.http.HttpSessionListener;
  * @version V1.0
  */
 public class SessionListener implements HttpSessionListener {
-    public void sessionCreated(HttpSessionEvent event) {
+    private MySessionContext myc = MySessionContext.getInstance();
+    public void sessionCreated(HttpSessionEvent httpSessionEvent) {
+        HttpSession session = httpSessionEvent.getSession();
+        myc.addSession(session);
     }
 
-    public void sessionDestroyed(HttpSessionEvent event) {
-        HttpSession session = event.getSession();
-        if (null != session.getAttribute("session_user")) {
-        }
+    public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+//        HttpSession session = event.getSession();
+//        if (null != session.getAttribute("session_user")) {
+//        }
+        HttpSession session = httpSessionEvent.getSession();
+        myc.delSession(session);
     }
 }

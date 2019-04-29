@@ -18,16 +18,31 @@ public class CheckItem {
     public String template;
 
     /**
-     * 检查类型
+     *
+     * 检查危险程度
      */
     public Integer title;
 
     /**
-     * 身份验证 token
+     * 检查类型 定期检查,日常检查 随机检查
+     */
+    public Integer checkType;
+
+    /**
+     * 检查时间
      */
 
-    public String token;
+    public Integer cycle;
 
+
+    /**
+     * sessionId
+     */
+    public String SessionId;
+    /**
+     * 身份验证
+     */
+    public String token;
 
     /**
      * 封装的危险点信息

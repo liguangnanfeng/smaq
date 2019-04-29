@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 /**
@@ -37,12 +39,12 @@ public class AppController_Login {
      */
     @RequestMapping(value = "A250", method = RequestMethod.POST)
     @ResponseBody
-    public AppResult userLogin(HttpServletRequest request, String username, String password, Integer type) {
+    public AppResult userLogin(HttpServletRequest request, String username, String password, Integer type)  {
 
         AppResult result = new AppResultImpl();
 
         // 空数据
-               if (username == null || "".equals(username) || password == null || "".equals(password) || null == type) {
+        if (username == null || "".equals(username) || password == null || "".equals(password) || null == type) {
             result.setStatus("1");
             result.setMessage("请输入账号或密码");
             return result;
@@ -65,74 +67,78 @@ public class AppController_Login {
 
     private AppResult CommonLogin(HttpServletRequest request, String username, String password) {
         AppResult result = new AppResultImpl();
-        ZzjgPersonnel zzjgPersonnel = zzjgPersonnelService.selectPersonnelByNameAndPwd(username, password);
-
-        // 是否有此账号
-        if (zzjgPersonnel == null) {
-            result.setStatus("1");
-            result.setMessage("账号或者密码错误");
-            return result;
-        }
-
-        if (!"1".equals(zzjgPersonnel.getStatus()) && !"2".equals(zzjgPersonnel.getStatus())  ) {
-            result.setStatus("1");
-            result.setMessage("没有权限");
-            return result;
-        }else if(null == zzjgPersonnel.getStatus() || "".equals(zzjgPersonnel.getStatus())){
-            result.setStatus("1");
-            result.setMessage("没有权限");
-            return result;
-        }
-
-        String token = String.valueOf(UUID.randomUUID()).replaceAll("-", "");
-        System.out.println(token);
-        // 登陆组合实体类
-        UserItem userItem = new UserItem();
-        userItem.setType(5);
-        userItem.setZzjgPersonnel(zzjgPersonnel);
-
-        userItem.setToken(token);
-        result.setStatus("0");
-        result.setMessage("登陆成功");
-
-
-        result.setData(userItem);
-
-        // 存入session中
         try {
-            saveAttribute(request, zzjgPersonnel,token);
+            ZzjgPersonnel zzjgPersonnel = zzjgPersonnelService.selectPersonnelByNameAndPwd(username, password);
+
+            // 数据库是否有此账号
+            if (zzjgPersonnel == null) {
+                result.setStatus("1");
+                result.setMessage("没有此用户");
+                return result;
+            }
+
+            if (!"1".equals(zzjgPersonnel.getStatus()) && !"2".equals(zzjgPersonnel.getStatus())) {
+                result.setStatus("1");
+                result.setMessage("没有权限");
+                return result;
+            } else if (null == zzjgPersonnel.getStatus() || "".equals(zzjgPersonnel.getStatus())) {
+                result.setStatus("1");
+                result.setMessage("没有权限");
+                return result;
+            }
+
+            // 设置token
+            String token = String.valueOf(UUID.randomUUID()).replaceAll("-", "");
+
+            // 登陆组合实体类
+            UserItem userItem = new UserItem();
+
+            userItem.setType(5);
+            userItem.setZzjgPersonnel(zzjgPersonnel);
+            userItem.setToken(token);
+
+            result.setStatus("0");
+            result.setMessage("登陆成功");
+            result.setData(userItem);
+
+            // 存入域中
+            String sessionId = saveAttribute(request, zzjgPersonnel, token);
+            userItem.setSessionId(sessionId);
+
         } catch (Exception e) {
-            e.printStackTrace();
-            saveAttribute(request, zzjgPersonnel,token);
+            // 表示密码不正确
+            result.setStatus("1");
+            result.setMessage("密码不正确");
+
         }
 
         return result;
     }
 
-
     /**
      * 将数据放入session中
      */
-    private void saveAttribute(HttpServletRequest request, ZzjgPersonnel zzjgPersonnel,String token) {
-        request.getSession().getServletContext().setAttribute(token,zzjgPersonnel );
+    private String saveAttribute(HttpServletRequest request, ZzjgPersonnel zzjgPersonnel, String token) {
+        //request.getSession().getServletContext().setAttribute(token, zzjgPersonnel);
 
-        //request.getSession().setAttribute(token, zzjgPersonnel);
-        //String id = request.getSession().getId();
-        //System.out.println(id);
+        request.getSession().setAttribute(token, zzjgPersonnel);
+        String sessionId = request.getSession().getId();
+        return sessionId;
     }
 
     /**
      * 注销
+     *
      * @param token
      * @return AppResult
      */
     @ResponseBody
-    @RequestMapping(value= "A251", method= RequestMethod.POST)
-    public AppResult LogionOut(String token ,HttpServletRequest request){
-        AppResult result =new AppResultImpl();
+    @RequestMapping(value = "A251", method = RequestMethod.POST)
+    public AppResult LogionOut(String token, HttpServletRequest request) {
+        AppResult result = new AppResultImpl();
 
         Object object = request.getSession().getServletContext().getAttribute(token);
-        if(null == object){
+        if (null == object) {
             result.setStatus("1");
             result.setMessage("已经退出");
             return result;

@@ -14,7 +14,15 @@ public class UserItem {
      */
     public  Integer type;
 
+    /**
+     * token信息
+     */
     public String token;
+
+    /**
+     * session id
+     */
+    public String sessionId;
 
     public ZzjgPersonnel zzjgPersonnel;
 

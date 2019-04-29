@@ -1,6 +1,7 @@
 package com.spring.web.controller.api;
 
 
+import com.spring.web.listener.MySessionContext;
 import com.spring.web.model.ZzjgDepartment;
 import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.model.request.CheckItem;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -26,6 +28,7 @@ import java.util.*;
  *
  */
 @Controller
+@SuppressWarnings("all")
 @RequestMapping(value = "api/custom/check")
 public class AppController_Custom_Check  {
 
@@ -42,7 +45,7 @@ public class AppController_Custom_Check  {
     private ICheckManual checkManual;
 
     /**
-     * 根据uuid查询pageContext 并进行数据的查询
+     * 根据sessionId查询对应的session,并通过token获取响应的对象
      * @param request
      * @param
      * @param
@@ -50,17 +53,26 @@ public class AppController_Custom_Check  {
      */
     @ResponseBody
     @RequestMapping(value = "A200", method = RequestMethod.POST)
-    public AppResult checkCompany(HttpServletRequest request,  String token) {
+    public AppResult checkCompany(HttpServletRequest request, String sessionId, String token) {
 
         AppResult result = new AppResultImpl();
 
-        if (token == null) {
+        if (token == null || sessionId == null) {
             result.setStatus("1");
             result.setMessage("查询失败");
             return result;
         }
 
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) request.getSession().getServletContext().getAttribute(token);
+        // 从session中获取
+        MySessionContext myc= MySessionContext.getInstance();
+        HttpSession sess = myc.getSession(sessionId);
+        if(null == sess){
+            result.setStatus("1");
+            result.setMessage("登陆时间过长");
+            return result;
+        }
+
+        ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(token);
 
         if (null == zzjg || !"1".equals(zzjg.getStatus())) {
             result.setStatus("1");
@@ -96,7 +108,7 @@ public class AppController_Custom_Check  {
     }
 
     /**
-     * 根据部门岗位查询风险点
+     * 根据部门岗位查询风险点  直接查询 并不需要session id和 token
      * @param request
      * @param checkLevel
      * @return AppResult
@@ -138,6 +150,12 @@ public class AppController_Custom_Check  {
         return result;
     }
 
+    /**
+     * 查询level4
+     * @param request
+     * @param checkLevel
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "A203", method = RequestMethod.POST/*,
             headers = {"Content-type: application/json"}*/)
@@ -181,7 +199,15 @@ public class AppController_Custom_Check  {
             return result;
         }
 
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) request.getSession().getServletContext().getAttribute(checkItem.token);
+        MySessionContext myc= MySessionContext.getInstance();
+        HttpSession sess = myc.getSession(checkItem.getSessionId());
+        if(null == sess){
+            result.setStatus("1");
+            result.setMessage("登陆时间过长");
+            return result;
+        }
+
+        ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(checkItem.getToken());
         if (null == zzjg || !"1".equals(zzjg.getStatus())) {
             result.setStatus("1");
             result.setMessage("还未登陆,请重新登陆");
@@ -189,7 +215,10 @@ public class AppController_Custom_Check  {
         }
 
         Integer checkId = checkManual.saveCheck(checkItem,zzjg);
-
+        result.setStatus("0");
+        result.setMessage("查询成功");
+        result.setData(checkId);
+        System.out.println(checkId);
         return result;
 
     }

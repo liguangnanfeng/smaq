@@ -63,12 +63,20 @@
   <listener>
     <listener-class>com.spring.web.listener.RequestListener</listener-class>
   </listener> -->
+<!--微信小程序端session监听器, 勿删 单位分钟 session的过期时间 7 天-->
+  <session-config>
+    <session-timeout>70560</session-timeout>
+  </session-config>
+  <listener>
+    <listener-class>com.spring.web.listener.SessionListener</listener-class>
+  </listener>
+
   <listener>
     <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
   </listener>
-  <session-config>
+<!--  <session-config>
     <session-timeout>30</session-timeout>
-  </session-config>
+  </session-config>-->
   <servlet>
     <servlet-name>spring</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

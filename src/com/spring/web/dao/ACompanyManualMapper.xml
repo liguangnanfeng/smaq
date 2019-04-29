@@ -861,7 +861,7 @@ select level2  from a_company_manual_tbl where uid=#{uid} and level1 = #{name} g
   </select>
 <!--获取风险点及其id-->
     <select id="selectLevel4AndId" resultType="com.spring.web.model.request.CheckLevel">
-    select id, uid , level1,level2, level3 ,measures as level4
+    select id, uid , level1,level2, level3 ,measures as level4 ,reference
     from a_company_manual_tbl
     where uid=#{uid}
     and level1 = #{level1}

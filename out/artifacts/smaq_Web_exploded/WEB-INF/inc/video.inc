@@ -1,9 +1,0 @@
-<link rel="stylesheet" type="text/css" href="${ly}/js/videoapi/utility/mini-easyui/themes/gray/easyui.css"  />
-<link rel="stylesheet" type="text/css" href="${ly}/js/videoapi/utility/mini-easyui/themes/icon.css"  />
-<link rel="stylesheet" type="text/css" href="${ly}/js/videoapi/demo.css" />
-<script src="${ly}/js/videoapi/conf.js" type="text/javascript"></script>
-<script src="${ly}/js/videoapi/lib/plugin.iface.js" type="text/javascript"></script> 
-<script src="${ly}/js/videoapi/lib/plugin.layer.js" type="text/javascript"></script>
-<script src="${ly}/js/videoapi/utility/json2.js" type="text/javascript"></script>
-<!--<script src="${ly}/js/videoapi/utility/mini-easyui/jquery.min.js" type="text/javascript"></script>-->
-<script src="${ly}/js/videoapi/utility/mini-easyui/jquery.easyui.min.js" type="text/javascript"></script>

@@ -1,36 +1,49 @@
 package com.spring.web.controller.api;
 
 
-import com.spring.web.listener.MySessionContext;
+import com.spring.web.BaseController;
+import com.spring.web.model.ACompanyManual;
 import com.spring.web.model.ZzjgDepartment;
-import com.spring.web.model.ZzjgPersonnel;
-import com.spring.web.model.request.CheckItem;
-import com.spring.web.model.request.CheckLevel;
+import com.spring.web.model.request.Department;
+import com.spring.web.model.response.MeasuresBean;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
 
+
 import com.spring.web.service.CheckCompany.ICheckManual;
 import com.spring.web.service.CheckCompany.Zzig_departmentService;
+import com.spring.web.service.CheckCompany.Zzjg_PersonnelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * @author 桃红梨白
- * TODO 发起检查功能
- * 状态码类型: 0 成功  1 失败
- * 保留方法:
- *  查询员工信息 private Zzjg_PersonnelService zzjg_personnelService;
+ * @author  桃红梨白
+ * TODO 自定义检查模块
+ * 1. 根据传递的用户id查询企业
+ * 2. 根据企业查询相应的部门
+ * 3. 根据部门查询相应的岗位
+ * 4. 根据岗位查询响应的风险
  *
  */
 @Controller
-@SuppressWarnings("all")
 @RequestMapping(value = "api/custom/check")
-public class AppController_Custom_Check  {
+public class AppController_Custom_Check  extends BaseController {
+
+    /**
+     * 查询员工
+     */
+    @Autowired
+    private Zzjg_PersonnelService zzjg_personnelService;
 
     /**
      * 查询部门
@@ -44,232 +57,126 @@ public class AppController_Custom_Check  {
     @Autowired
     private ICheckManual checkManual;
 
+
     /**
-     * 根据sessionId查询对应的session,并通过token获取响应的对象
-     * @param request
-     * @param
-     * @param
+     * 根据用户id 查询 => 公司的Uid 和部门和岗位
+     * zppResult 状态  1: 检查人员  2. 被检查人员  3. 表示查询失败
+     *
+     *
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "A200", method = RequestMethod.POST)
-    public AppResult checkCompany(HttpServletRequest request, String sessionId, String token) {
-
+    @RequestMapping(value="A200", method = RequestMethod.POST )
+    public AppResult checkCompany(HttpServletRequest request, Integer id){
         AppResult result = new AppResultImpl();
 
-        if (token == null || sessionId == null) {
-            result.setStatus("1");
+        if(id == null){
+            result.setStatus("3");
             result.setMessage("查询失败");
             return result;
         }
 
-        // 从session中获取
-        MySessionContext myc= MySessionContext.getInstance();
-        HttpSession sess = myc.getSession(sessionId);
-        if(null == sess){
-            result.setStatus("1");
-            result.setMessage("登陆时间过长");
-            return result;
-        }
+        // 根据用户id查询所属公司 获取该员工对应的分公司的名称
+        Integer companyId = zzjg_personnelService.selectCompanyIdByuserId(id);
+        //Integer companyId = zzjg_personnelService.selectCompanyIdByuserId(847);
 
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(token);
+        // 获取这家公司对应的所有的部门
+        List <ZzjgDepartment> list = zzig_departmentService.selectDepartmentByCid(companyId);
 
-        if (null == zzjg || !"1".equals(zzjg.getStatus())) {
-            result.setStatus("1");
-            result.setMessage("还未登陆,请重新登陆");
-            return result;
-        }
-
-        // 使用总公司 获取这家公司对应的所有的部门
-        List<ZzjgDepartment> list = zzig_departmentService.selectDepartmentByCid(zzjg.getCid());
-
-        // 对数据进行判断是否存在
-        if (null == list || list.size() == 0) {
-            result.setStatus("1");
+        if (null == list){
+            result.setStatus("3");
             result.setMessage("未查询出数据");
             return result;
         }
 
+        // 获取uid :总公司的id
+        Integer uid = list.get(0).getUid();
+
         // 获取所有的部门 使用list集合
         List<String> names = new ArrayList<>();
-
         for (ZzjgDepartment zzjgDepartment : list) {
-            names.add(zzjgDepartment.getName());
+             names.add(zzjgDepartment.getName());
         }
-
         // 根据公司id 和部门获取所有的岗位并进行数据你对比添加
-        Map<String, List> stringListMap = checkManual.selectDangerAndManual(zzjg.getUid(), names);
+        checkManual.selectDangerAndManual(uid,names);
 
-        result.setStatus("0");
+        // 获取所有的岗位及其风险点名称
+        Map<String, List> stringListMap = checkManual.selectDangerAndManual(uid, names);
+
+        if(null == stringListMap){
+            result.setStatus("3");
+            result.setMessage("未查询出数据");
+            return result;
+        }
+        result.setStatus("1");
         result.setMessage("查询成功");
         result.setData(stringListMap);
 
         return result;
+
     }
 
     /**
-     * 查询所有的安全责任人 对象数据
-     * @param request
+     * 查询level3和measures 进行组装
+     * 进行组装的时候,对数据进行覆盖重写
+     *  通过岗位名称和id信息获取对应的
+     *  cid: 表示的是总公司的id
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "A201", method = RequestMethod.POST)
-    public AppResult checkLevel2(HttpServletRequest request, String sessionId, String token){
-
-        AppResult result = new AppResultImpl();
-        if(sessionId == null || token ==null){
-            result.setMessage("未成功请求,请重新选择");
-            result.setStatus("1");
-            return result;
-        }
-
-        // 获取session集合中的域对象
-        MySessionContext myc= MySessionContext.getInstance();
-        HttpSession sess = myc.getSession(sessionId);
-        if (sess ==null){
-            result.setMessage("未登陆");
-            result.setStatus("1");
-            return result;
-        }
-
-        // 获取域中的用户信息
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(token);
-        if(zzjg==null ){
-            result.setMessage("未登陆");
-            result.setStatus("1");
-            return result;
-        }
-
-        // 调用service层数据返回安全责任人
-        List<Map<Integer,String>> list =  checkManual.findUserByIdAndStatus(zzjg);
-
-        if(list ==null){
-            result.setMessage("查询失败");
-            result.setStatus("1");
-            return result;
-        }
-        result.setData(list);
-
-        return result;
-    }
-
-
-
-
-    /**
-     * 根据部门岗位查询风险点  直接查询 并不需要session id和 token
-     * @param request
-     * @param checkLevel
-     * @return AppResult
-     * 保留方法:
-     * @RequestParam(value="checkLevel", required=true)
-     * headers = {"Content-type: application/json"}
-     */
-    @ResponseBody
-    @RequestMapping(value = "A202", method = RequestMethod.POST/*,
-            headers = {"Content-type: application/json"}*/)
-    public AppResult checkLevel3(HttpServletRequest request, /*@RequestBody*/ CheckLevel checkLevel) {
-
-        AppResult result = new AppResultImpl();
-        if (checkLevel == null) {
+    @RequestMapping(value="A201", method = RequestMethod.POST )
+    public AppResult checkLevel2(HttpServletRequest request,@RequestBody Department department){
+        AppResult result = new AppResultImpl( );
+        // 对前端请求的参数进行判断
+        if(null ==department){
             result.setStatus("3");
             result.setMessage("请进行选择部门及其岗位");
             return result;
         }
-
-        // 调用方法进行查询
-        List<CheckLevel> list = checkManual.selectLevel4AndId(checkLevel);
-
-        if(null == list || list.size()==0){
-            result.setStatus("1");
-            result.setMessage("未查询到数据");
+        if(null==department.getUid()||null==department.getNames()){
+            result.setStatus("3");
+            result.setMessage("请进行选择部门及其岗位");
             return result;
         }
+        List<MeasuresBean> list = checkManual.selectmeasures(department.getUid(),department.getNames());
 
-        result.setStatus("0");
-        result.setMessage("查询成功");
-
-        //result.setData(list);
-        Set<String> set = new HashSet<>();
-        for (CheckLevel level : list) {
-
-            set.add(level.level3);
-        }
-        result.setData(set);
-        return result;
-    }
-
-    /**
-     * 查询level4
-     * @param request
-     * @param checkLevel
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "A203", method = RequestMethod.POST/*,
-            headers = {"Content-type: application/json"}*/)
-    public AppResult checkLevel4(HttpServletRequest request, /*@RequestBody*/ CheckLevel checkLevel) {
-        AppResult result = new AppResultImpl();
-        if (checkLevel == null) {
-            result.setStatus("1");
-            result.setMessage("请进行选择风险点");
-            return result;
-        }
-
-        // 调用方法进行查询
-        List<CheckLevel> list = checkManual.selectLevel5AndId(checkLevel);
-        if (null== list || list.size()==0){
-            result.setStatus("1");
-            result.setMessage("未查询到数据");
-            return result;
-        }
-
-        result.setStatus("0");
+        result.setStatus("1");
         result.setMessage("查询成功");
         result.setData(list);
+
+
         return result;
     }
+
 
     /**
-     * 传选择参数,然后进行保存,
-     * 先保存模版, 然后保存其他的数据
-     * 检查类型 => 日常 周  还是 其他的
-     * 会传递一个数据结构就是传递的就是一个list集合的形式,和这个token 从这个
+     * TODO 根据传递的公司的uid 和 岗位 ,获取对应的level3 检查点
+     * 并进行返回level3和对应的id
+     * @param request
+     * @param departments
      * @return
      */
+    @RequestMapping(value = "A202",method=RequestMethod.POST)
     @ResponseBody
-    @RequestMapping(value="A204",method=RequestMethod.POST)
-    public AppResult saveCheck(HttpServletRequest request, @RequestBody CheckItem checkItem){
-        AppResult result = new AppResultImpl();
-
-        if(null==checkItem){
-            result.setStatus("1");
-            result.setMessage("数据格式错误,请从新输入");
+    public AppResult checkLevel3(HttpServletRequest request,@RequestBody List<Department> departments){
+        AppResult result =new AppResultImpl();
+        if( departments.size()==0 || departments==null){
+            result.setStatus("3");
+            result.setMessage("查询失败");
             return result;
         }
 
-        MySessionContext myc= MySessionContext.getInstance();
-        HttpSession sess = myc.getSession(checkItem.getSessionId());
-        if(null == sess){
-            result.setStatus("1");
-            result.setMessage("登陆时间过长");
-            return result;
-        }
+        // 调用方法进行查询
 
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(checkItem.getToken());
-        if (null == zzjg || !"1".equals(zzjg.getStatus())) {
-            result.setStatus("1");
-            result.setMessage("还未登陆,请重新登陆");
-            return result;
-        }
 
-        Integer checkId = checkManual.saveCheck(checkItem,zzjg);
-        result.setStatus("0");
-        result.setMessage("查询成功");
-        result.setData(checkId);
-        System.out.println(checkId);
+
+
+
         return result;
 
+
+
     }
+
 
 }

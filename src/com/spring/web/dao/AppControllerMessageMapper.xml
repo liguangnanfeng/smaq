@@ -31,12 +31,11 @@
 <!--    </resultMap>-->
 
     <resultMap id="ResultMapMessages" type="com.spring.web.model.Messages" >
-
         <result column="id"  property="id" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
         <result column="user_id" property="userId" javaType="java.lang.Integer" jdbcType="INTEGER" />
         <result column="title"  property="title" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
         <result column="descr" property="descr" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
-        <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="DATE" />
+        <result column="create_time" property="createTime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
         <result column="send_flag" property="sendFlag" javaType="java.lang.Byte" jdbcType="TINYINT" />
         <result column="send_total" property="sendTotal" javaType="java.lang.Integer" jdbcType="INTEGER" />
         <result column="del_flag" property="delFlag" javaType="java.lang.Byte" jdbcType="TINYINT" />
@@ -45,11 +44,57 @@
         <result column="create_utp" property="createUtp" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </resultMap>
 
+
+
     <select id="findMessageList" parameterType="java.lang.String" resultMap="ResultMapMessages">
         select
         *
         from messages
         where user_id = #{userId}
+        limit #{pageNo},#{pageSize}
+    </select>
+
+    <select id="findMessageDetail" parameterType="java.lang.String" resultMap="ResultMapMessages">
+        select
+        *
+        from messages
+        where id = #{id}
+    </select>
+
+    <select id="findTCheckList" parameterType="java.lang.String" resultType="com.spring.web.model.TCheck">
+        select
+        *
+        from t_check_tbl
+        where user_id = #{cid}
+        ORDER BY create_time DESC
+        LIMIT #{pageNo},#{pageSize}
+    </select>
+
+    <select id="findCheckById" parameterType="java.lang.String" resultType="com.spring.web.model.TCheck">
+        select
+        *
+        from t_check_tbl
+        where id = #{checkId}
+    </select>
+
+    <select id="findPersonnel" parameterType="java.lang.String" resultType="com.spring.web.model.ZzjgPersonnel">
+        select
+        *
+        from zzjg_personnel_tbl
+        where id = #{userId}
+    </select>
+
+    <select id="findRectificationList" parameterType="java.lang.String" resultType="java.util.Map">
+        select a.*,b.`name`
+        from t_check_item_tbl a left JOIN t_check_part_tbl b ON a.part_id = b.id
+        WHERE a.check_id = #{checkId} and status = 2
+    </select>
+
+    <select id="findTRectification" parameterType="java.lang.String" resultType="com.spring.web.model.TRectification">
+        select
+        *
+        from t_rectification_tbl
+        where check_id = #{checkId}
     </select>
 
 </mapper>

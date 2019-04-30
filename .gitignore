@@ -261,3 +261,11 @@ src/com/spring/web/service/TRectiflcationConfirm/
 .settings
 doc
 out
+*.sql
+.project
+checkstyle_checks.xml
+code_template.xml
+codeStyle.xml
+smaq.iml
+checkstyle_checks.xml
+.idea

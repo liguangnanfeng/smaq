@@ -34,6 +34,11 @@ public class CheckItem {
 
     public Integer cycle;
 
+    /**
+     * 对应的负责人id
+     */
+    public Integer departmentId;
+
 
     /**
      * sessionId

@@ -1,3 +1,258 @@
-/bin/
-/build/classes
-.classpath
+# Created by .ignore support plugin (hsz.mobi)
+### My template template
+# Created by .ignore support plugin (hsz.mobi)
+### JetBrains template
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
+
+*.iml
+.project
+checkstyle_checks.xml
+code_template.xml
+codeStyle.xml
+smaq.iml
+smaq.sql
+serve_file_back
+## Directory-based project format:
+.idea/
+# if you remove the above rule, at least ignore the following:
+
+# User-specific stuff:
+# .idea/workspace.xml
+# .idea/tasks.xml
+# .idea/dictionaries
+
+# Sensitive or high-churn files:
+# .idea/dataSources.ids
+# .idea/dataSources.xml
+# .idea/sqlDataSources.xml
+# .idea/dynamic.xml
+# .idea/uiDesigner.xml
+
+# Gradle:
+# .idea/gradle.xml
+# .idea/libraries
+*.log
+
+# Mongo Explorer plugin:
+# .idea/mongoSettings.xml
+
+## File-based project format:
+*.ipr
+*.iws
+
+## Plugin-specific files:
+
+# IntelliJ
+/out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+### Maven template
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+.gitignore
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/META-INF/
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/junit/cn/
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/controller/api/AppController_Company_Model.class
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/controller/api/AppController_Custom_Check.class
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/controller/api/AppController_Login.class
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/AppControllerMessageMapper.class
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/AppControllerMessageMapper.xml
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/PersonnelMapper.class
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/PersonnelMapper.xml
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/TRectificationConfirmMapper.class
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/TRectificationConfirmMapper.xml
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/filter/HaderModifierAdvice.class
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/listener/MySessionContext.class
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/model/TRectificationConfirm.class
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/model/UserItem.class
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/model/request/
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/model/response/
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/service/AppMessage/
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/service/CheckCompany/
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/service/Personnel/
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/service/TRectiflcationConfirm/
+out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/util/MyMD5Util.class
+out/artifacts/smaq_Web_exploded/WEB-INF/lib/fastjson-1.2.9-sources.jar
+out/artifacts/smaq_Web_exploded/WEB-INF/lib/fastjson-1.2.9.jar
+out/artifacts/smaq_Web_exploded/WEB-INF/lib/lombok-1.12.2.jar
+out/artifacts/smaq_Web_exploded/WEB-INF/views/ehcache.xml
+out/production/smaq/META-INF/
+out/production/smaq/com/baidu/
+out/production/smaq/com/junit/
+out/production/smaq/com/spring/web/BaseController.class
+out/production/smaq/com/spring/web/bean/
+out/production/smaq/com/spring/web/controller/
+out/production/smaq/com/spring/web/dao/ACompanyManualMapper.class
+out/production/smaq/com/spring/web/dao/ACompanyManualZpMapper.class
+out/production/smaq/com/spring/web/dao/ADangerManualMapper.class
+out/production/smaq/com/spring/web/dao/ADangerTypeMapper.class
+out/production/smaq/com/spring/web/dao/AFxgzpMapper.class
+out/production/smaq/com/spring/web/dao/AFxjzMapper.class
+out/production/smaq/com/spring/web/dao/AGwyjMapper.class
+out/production/smaq/com/spring/web/dao/AGwyjShMapper.class
+out/production/smaq/com/spring/web/dao/AGyMapper.class
+out/production/smaq/com/spring/web/dao/AGzkMapper.class
+out/production/smaq/com/spring/web/dao/AHxysgzkMapper.class
+out/production/smaq/com/spring/web/dao/AImplementationMapper.class
+out/production/smaq/com/spring/web/dao/AMaterialMapper.class
+out/production/smaq/com/spring/web/dao/AWhpMapper.class
+out/production/smaq/com/spring/web/dao/AZytjfxcdpjMapper.class
+out/production/smaq/com/spring/web/dao/AppControllerMessageMapper.class
+out/production/smaq/com/spring/web/dao/AppControllerMessageMapper.xml
+out/production/smaq/com/spring/web/dao/AppTokenMapper.class
+out/production/smaq/com/spring/web/dao/CompanyIskeyMapper.class
+out/production/smaq/com/spring/web/dao/CompanyMapper.class
+out/production/smaq/com/spring/web/dao/CompanyRegMapper.class
+out/production/smaq/com/spring/web/dao/CyryjkjhMapper.class
+out/production/smaq/com/spring/web/dao/DangerLibMapper.class
+out/production/smaq/com/spring/web/dao/DetectionMapper.class
+out/production/smaq/com/spring/web/dao/DistrictMapper.class
+out/production/smaq/com/spring/web/dao/EvaluationMapper.class
+out/production/smaq/com/spring/web/dao/ExaminationMapper.class
+out/production/smaq/com/spring/web/dao/FacilitiesMapper.class
+out/production/smaq/com/spring/web/dao/FcBlindplatePermitMapper.class
+out/production/smaq/com/spring/web/dao/FcBrokenlandPermitMapper.class
+out/production/smaq/com/spring/web/dao/FcContractorOperationMapper.class
+out/production/smaq/com/spring/web/dao/FcFireworkPermitMapper.class
+out/production/smaq/com/spring/web/dao/FcGreatDangerStudyMapper.class
+out/production/smaq/com/spring/web/dao/FcHighsafetyPermitMapper.class
+out/production/smaq/com/spring/web/dao/FcHoistingPermitMapper.class
+out/production/smaq/com/spring/web/dao/FcLandworkPermitMapper.class
+out/production/smaq/com/spring/web/dao/FcLimitspacePermitMapper.class
+out/production/smaq/com/spring/web/dao/FcNaturalDangerItemMapper.class
+out/production/smaq/com/spring/web/dao/FcNaturalDangerStudyMapper.class
+out/production/smaq/com/spring/web/dao/FcOverhaulOperationMapper.class
+out/production/smaq/com/spring/web/dao/FcPowersafetyPermitMapper.class
+out/production/smaq/com/spring/web/dao/FcPromiseMapper.class
+out/production/smaq/com/spring/web/dao/FcTargetAssessmentMapper.class
+out/production/smaq/com/spring/web/dao/FcTemporaryDangerCensusMapper.class
+out/production/smaq/com/spring/web/dao/FcTemporaryDangerItemMapper.class
+out/production/smaq/com/spring/web/dao/FcTemporaryDangerMapper.class
+out/production/smaq/com/spring/web/dao/FcTemporaryDangerStudyMapper.class
+out/production/smaq/com/spring/web/dao/FengMapper.class
+out/production/smaq/com/spring/web/dao/GlobalRegionMapper.class
+out/production/smaq/com/spring/web/dao/HuaMapper.class
+out/production/smaq/com/spring/web/dao/ImportRecordMapper.class
+out/production/smaq/com/spring/web/dao/LawDocMapper.class
+out/production/smaq/com/spring/web/dao/LibraryMapper.class
+out/production/smaq/com/spring/web/dao/LightningProtectionMapper.class
+out/production/smaq/com/spring/web/dao/MaterialMapper.class
+out/production/smaq/com/spring/web/dao/MequipmentMapper.class
+out/production/smaq/com/spring/web/dao/MessageToUserMapper.class
+out/production/smaq/com/spring/web/dao/MessagesMapper.class
+out/production/smaq/com/spring/web/dao/MonitorMapper.class
+out/production/smaq/com/spring/web/dao/NoticeMapper.class
+out/production/smaq/com/spring/web/dao/OfficialsMapper.class
+out/production/smaq/com/spring/web/dao/PequipmentMapper.class
+out/production/smaq/com/spring/web/dao/PersonnelMapper.class
+out/production/smaq/com/spring/web/dao/PersonnelMapper.xml
+out/production/smaq/com/spring/web/dao/PingMapper.class
+out/production/smaq/com/spring/web/dao/ProductMapper.class
+out/production/smaq/com/spring/web/dao/ProductionProcessDiagramMapper.class
+out/production/smaq/com/spring/web/dao/PushMessMapper.class
+out/production/smaq/com/spring/web/dao/Pu
+shMessageMapper.class
+out/production/smaq/com/spring/web/dao/PushMessageUserMapper.class
+out/production/smaq/com/spring/web/dao/QccDataMapper.class
+out/production/smaq/com/spring/web/dao/RegulationMapper.class
+out/production/smaq/com/spring/web/dao/SafetyFacilitiesMapper.class
+out/production/smaq/com/spring/web/dao/SequipmentMapper.class
+out/production/smaq/com/spring/web/dao/SpersonMapper.class
+out/production/smaq/com/spring/web/dao/StandardMapper.class
+out/production/smaq/com/spring/web/dao/TAccidentMapper.class
+out/production/smaq/com/spring/web/dao/TCheckDocumentMapper.class
+out/production/smaq/com/spring/web/dao/TCheckItemMapper.class
+out/production/smaq/com/spring/web/dao/TCheckMapper.class
+out/production/smaq/com/spring/web/dao/TCheckPartMapper.class
+out/production/smaq/com/spring/web/dao/TCleanWarnSettingMapper.class
+out/production/smaq/com/spring/web/dao/TCollectionMapper.class
+out/production/smaq/com/spring/web/dao/TCompanyMapper.class
+out/production/smaq/com/spring/web/dao/TContingencyPlanMapper.class
+out/production/smaq/com/spring/web/dao/TDeviceMapper.class
+out/production/smaq/com/spring/web/dao/TDrillMapper.class
+out/production/smaq/com/spring/web/dao/TIndustryMapper.class
+out/production/smaq/com/spring/web/dao/TItemMapper.class
+out/production/smaq/com/spring/web/dao/TItemSeriousMapper.class
+out/production/smaq/com/spring/web/dao/TLevelMapper.class
+out/production/smaq/com/spring/web/dao/TModelMapper.class
+out/production/smaq/com/spring/web/dao/TModelPartMapper.class
+out/production/smaq/com/spring/web/dao/TRecheckItemMapper.class
+out/production/smaq/com/spring/web/dao/TRecheckMapper.class
+out/production/smaq/com/spring/web/dao/TRectificationConfirmMapper.class
+out/production/smaq/com/spring/web/dao/TRectificationConfirmMapper.xml
+out/production/smaq/com/spring/web/dao/TRectificationMapper.class
+out/production/smaq/com/spring/web/dao/TSensorsMapper.class
+out/production/smaq/com/spring/web/dao/TTindustryMapper.class
+out/production/smaq/com/spring/web/dao/TWarnmsgMapper.class
+out/production/smaq/com/spring/web/dao/TWaterparamterMapper.class
+out/production/smaq/com/spring/web/dao/Table2Mapper.class
+out/production/smaq/com/spring/web/dao/Table3Mapper.class
+out/production/smaq/com/spring/web/dao/Table4Mapper.class
+out/production/smaq/com/spring/web/dao/Table5Mapper.class
+out/production/smaq/com/spring/web/dao/Table6Mapper.class
+out/production/smaq/com/spring/web/dao/TableMapper.class
+out/production/smaq/com/spring/web/dao/TownMapper.class
+out/production/smaq/com/spring/web/dao/TradeCliqueMapper.class
+out/production/smaq/com/spring/web/dao/TradeCompanyMapper.class
+out/production/smaq/com/spring/web/dao/TradeMapper.class
+out/production/smaq/com/spring/web/dao/UserGroupListMapper.class
+out/production/smaq/com/spring/web/dao/UserGroupMapper.class
+out/production/smaq/com/spring/web/dao/UserMapper.class
+out/production/smaq/com/spring/web/dao/VideoInfoMapper.class
+out/production/smaq/com/spring/web/dao/VillageMapper.class
+out/production/smaq/com/spring/web/dao/YzHighTemperatureMapper.class
+out/production/smaq/com/spring/web/dao/YzLiquidAmmoniaMapper.class
+out/production/smaq/com/spring/web/dao/YzMajorEquipmentMapper.class
+out/production/smaq/com/spring/web/dao/YzMetallurgyMapper.class
+out/production/smaq/com/spring/web/dao/YzSafetyFacilitiesMapper.class
+out/production/smaq/com/spring/web/dao/YzSpecialEquipmentMapper.class
+Would remo
+ve out/production/smaq/com/spring/web/dao/YzStaffMapper.class
+out/production/smaq/com/spring/web/dao/YzStiveExplosionMapper.class
+out/production/smaq/com/spring/web/dao/YzTradeArderMapper.class
+out/production/smaq/com/spring/web/dao/ZzjgCompanyMapper.class
+out/production/smaq/com/spring/web/dao/ZzjgDepartmentMapper.class
+out/production/smaq/com/spring/web/dao/ZzjgPersonnelMapper.class
+out/production/smaq/com/spring/web/exception/
+out/production/smaq/com/spring/web/filter/
+out/production/smaq/com/spring/web/ibatis/
+out/production/smaq/com/spring/web/interceptor/
+out/production/smaq/com/spring/web/listener/
+out/production/smaq/com/spring/web/model/
+out/production/smaq/com/spring/web/result/
+out/production/smaq/com/spring/web/schedule/
+out/production/smaq/com/spring/web/security/
+out/production/smaq/com/spring/web/service/
+out/production/smaq/com/spring/web/servlet/
+out/production/smaq/com/spring/web/tag/
+out/production/smaq/com/spring/web/tobject/
+out/production/smaq/com/spring/web/util/
+out/production/smaq/com/spring/web/utils/
+out/production/smaq/com/spring/web/validator/
+out/production/smaq/com/spring/web/websocket/
+out/production/smaq/generated/
+out/production/smaq/imgsrv/
+src/com/spring/web/dao/PersonnelMapper.java
+src/com/spring/web/dao/PersonnelMapper.xml
+src/com/spring/web/dao/TRectificationConfirmMapper.java
+src/com/spring/web/dao/TRectificationConfirmMapper.xml
+src/com/spring/web/model/TRectificationConfirm.java
+src/com/spring/web/service/Personnel/
+src/com/spring/web/service/TRectiflcationConfirm/

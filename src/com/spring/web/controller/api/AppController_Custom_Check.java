@@ -154,8 +154,6 @@ public class AppController_Custom_Check  {
     }
 
 
-
-
     /**
      * 根据部门岗位查询风险点  直接查询 并不需要session id和 token
      * @param request

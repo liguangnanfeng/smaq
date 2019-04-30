@@ -23,4 +23,6 @@ public interface ICheckManual {
     List<CheckLevel> selectLevel5AndId(CheckLevel checkLevel);
 
     Integer saveCheck(CheckItem checkItem,ZzjgPersonnel zzjg);
+
+    List<Map<Integer, String>> findUserByIdAndStatus(ZzjgPersonnel zzjg);
 }

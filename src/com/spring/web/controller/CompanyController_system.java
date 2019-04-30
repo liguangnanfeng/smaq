@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.service.zzjgCompany.IzzjgCompanyService;
+import com.spring.web.util.MyMD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -146,7 +147,6 @@ public class CompanyController_system extends BaseController {
             throws Exception {
         User user = getLoginUser(request);
 
-
         LlHashMap<Object, Object> m = getLlMap();
         m.put("cid", cid);
         m.put("uid", user.getId());
@@ -154,11 +154,11 @@ public class CompanyController_system extends BaseController {
         m.put("dpid", dpid);
         m.put("did", did);
 
-
         //List<LlHashMap<Object, Object>> userList = zzjgPersonnelMapper.selectByMap(m);  TODO 1
         List<LlHashMap<Object, Object>> userList=zzjgCompanyService.selectByMap(m);
 
         model.addAttribute("list", userList);
+        System.out.println(userList);
         model.addAttribute("m", m);
         //model.addAttribute("companyL", zzjgCompanyMapper.selectAll(user.getId()));    TODO 2
         model.addAttribute("companyL", zzjgCompanyService.selectAll(user.getId()));
@@ -183,6 +183,7 @@ public class CompanyController_system extends BaseController {
         User user = getLoginUser(request);
         if (null != id) {
             ZzjgPersonnel p = zzjgPersonnelMapper.selectByPrimaryKey(id);
+
             model.addAttribute("user", p);
         }
         model.addAttribute("companyL", zzjgCompanyMapper.selectAll(user.getId()));
@@ -206,9 +207,12 @@ public class CompanyController_system extends BaseController {
         Date d = new Date();
         dto.setUtime(d);
         dto.setUid(user.getId());
+        // TODO 调用工具类生成密码 微信小程序端进行用户登陆密码请勿删除
+        String encryptedPwd = MyMD5Util.getEncryptedPwd(dto.getPassword());
+        dto.setCtime(d);
+        dto.setDel(0);
+        dto.setPassword(encryptedPwd);
         if (null == dto.getId()) {
-            dto.setCtime(d);
-            dto.setDel(0);
             zzjgPersonnelMapper.insertSelective(dto);
         } else {
             zzjgPersonnelMapper.updateByPrimaryKeySelective(dto);

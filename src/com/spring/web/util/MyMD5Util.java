@@ -96,7 +96,7 @@ public class MyMD5Util {
      * @throws NoSuchAlgorithmException
      * @throws UnsupportedEncodingException
      */
-    public static String getEncryptedPwd(int password)
+    public static String getEncryptedPwd(String password)
             throws NoSuchAlgorithmException, UnsupportedEncodingException {
         //声明加密后的口令数组变量
         byte[] pwd = null;

@@ -104,32 +104,6 @@ public class ZzjgPersonnel implements Serializable {
      */
     private String password;
 
-    public ZzjgPersonnel(Integer id, Date ctime, Date utime, Integer del, String name, String mobile, String position, Integer cid, Integer dpid, Integer did, Integer uid, String status) {
-        this.id = id;
-        this.ctime = ctime;
-        this.utime = utime;
-        this.del = del;
-        this.name = name;
-        this.mobile = mobile;
-        this.position = position;
-        this.cid = cid;
-        this.dpid = dpid;
-        this.did = did;
-        this.uid = uid;
-        this.status = status;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public ZzjgPersonnel() {
-    }
-
     public Integer getId() {
         return id;
     }
@@ -226,6 +200,14 @@ public class ZzjgPersonnel implements Serializable {
         this.status = status;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -242,12 +224,13 @@ public class ZzjgPersonnel implements Serializable {
                 Objects.equals(dpid, that.dpid) &&
                 Objects.equals(did, that.did) &&
                 Objects.equals(uid, that.uid) &&
-                Objects.equals(status, that.status);
+                Objects.equals(status, that.status) &&
+                Objects.equals(password, that.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, ctime, utime, del, name, mobile, position, cid, dpid, did, uid, status);
+        return Objects.hash(id, ctime, utime, del, name, mobile, position, cid, dpid, did, uid, status, password);
     }
 
     @Override
@@ -265,6 +248,26 @@ public class ZzjgPersonnel implements Serializable {
                 ", did=" + did +
                 ", uid=" + uid +
                 ", status='" + status + '\'' +
+                ", password='" + password + '\'' +
                 '}';
+    }
+
+    public ZzjgPersonnel() {
+    }
+
+    public ZzjgPersonnel(Integer id, Date ctime, Date utime, Integer del, String name, String mobile, String position, Integer cid, Integer dpid, Integer did, Integer uid, String status, String password) {
+        this.id = id;
+        this.ctime = ctime;
+        this.utime = utime;
+        this.del = del;
+        this.name = name;
+        this.mobile = mobile;
+        this.position = position;
+        this.cid = cid;
+        this.dpid = dpid;
+        this.did = did;
+        this.uid = uid;
+        this.status = status;
+        this.password = password;
     }
 }

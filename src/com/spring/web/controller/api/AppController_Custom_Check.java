@@ -108,6 +108,55 @@ public class AppController_Custom_Check  {
     }
 
     /**
+     * 查询所有的安全责任人 对象数据
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "A201", method = RequestMethod.POST)
+    public AppResult checkLevel2(HttpServletRequest request, String sessionId, String token){
+
+        AppResult result = new AppResultImpl();
+        if(sessionId == null || token ==null){
+            result.setMessage("未成功请求,请重新选择");
+            result.setStatus("1");
+            return result;
+        }
+
+        // 获取session集合中的域对象
+        MySessionContext myc= MySessionContext.getInstance();
+        HttpSession sess = myc.getSession(sessionId);
+        if (sess ==null){
+            result.setMessage("未登陆");
+            result.setStatus("1");
+            return result;
+        }
+
+        // 获取域中的用户信息
+        ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(token);
+        if(zzjg==null ){
+            result.setMessage("未登陆");
+            result.setStatus("1");
+            return result;
+        }
+
+        // 调用service层数据返回安全责任人
+        List<Map<Integer,String>> list =  checkManual.findUserByIdAndStatus(zzjg);
+
+        if(list ==null){
+            result.setMessage("查询失败");
+            result.setStatus("1");
+            return result;
+        }
+        result.setData(list);
+
+        return result;
+    }
+
+
+
+
+    /**
      * 根据部门岗位查询风险点  直接查询 并不需要session id和 token
      * @param request
      * @param checkLevel

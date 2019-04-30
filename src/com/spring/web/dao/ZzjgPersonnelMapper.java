@@ -68,4 +68,6 @@ public interface ZzjgPersonnelMapper {
     ZzjgPersonnel selectById(Integer userId);
 
     ZzjgPersonnel selectPersonnelByNameAndPwd(String name);
+
+    List<Map<Integer, String>> findUserByIdAndSTatus(Integer uid);
 }

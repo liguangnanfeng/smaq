@@ -1,5 +1,6 @@
 package com.spring.web.controller.api;
 
+import com.spring.web.listener.MySessionContext;
 import com.spring.web.model.UserItem;
 import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.result.AppResult;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
@@ -121,28 +123,34 @@ public class AppController_Login {
     private String saveAttribute(HttpServletRequest request, ZzjgPersonnel zzjgPersonnel, String token) {
         //request.getSession().getServletContext().setAttribute(token, zzjgPersonnel);
 
-        request.getSession().setAttribute(token, zzjgPersonnel);
+        // 获取session对象
+        HttpSession session = request.getSession();
+
+        session.setAttribute(token, zzjgPersonnel);
+        // 并存入map集合中
+        MySessionContext myc= MySessionContext.getInstance();
+        myc.addSession(session);
+
         String sessionId = request.getSession().getId();
         return sessionId;
     }
 
     /**
-     * 注销
+     * 注销,并删除session
+     *  但是session的过期时间,延长到七天是不是有点长
      *
      * @param token
      * @return AppResult
      */
     @ResponseBody
     @RequestMapping(value = "A251", method = RequestMethod.POST)
-    public AppResult LogionOut(String token, HttpServletRequest request) {
-        AppResult result = new AppResultImpl();
+    public AppResult LogionOut(String sessionId, String token, HttpServletRequest request) {
 
-        Object object = request.getSession().getServletContext().getAttribute(token);
-        if (null == object) {
-            result.setStatus("1");
-            result.setMessage("已经退出");
-            return result;
-        }
+        MySessionContext myc= MySessionContext.getInstance();
+        HttpSession sess = myc.getSession(sessionId);
+        myc.delSession(sess); //删除session
+        sess.removeAttribute(token);  //删除session
+        AppResult result = new AppResultImpl();
 
         request.getSession().removeAttribute(token);
         result.setStatus("0");

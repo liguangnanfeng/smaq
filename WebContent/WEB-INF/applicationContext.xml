@@ -26,7 +26,6 @@
     <!--事务支持-->
     <tx:annotation-driven/>
 
-
     <!--spring 全局配置文件，用来控制spring 特性  对应的是系统级别的配置，作用范围是系统上下文-->
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -138,7 +137,7 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
 
-    <!-- 事务管理器 -->
+<!--     事务管理器 简单事务由必要吗-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
@@ -160,4 +159,5 @@
 <!--          p:shared="false"/>-->
 <!--    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"-->
 <!--          p:cacheManager-ref="cacheManagerFactory"/>-->
+
 </beans>

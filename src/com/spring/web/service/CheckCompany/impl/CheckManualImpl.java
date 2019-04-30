@@ -65,6 +65,13 @@ public class CheckManualImpl implements ICheckManual {
     private TCheckItemMapper tCheckItemMapper;
 
     /**
+     * 企业人员表
+     */
+    @Autowired
+    private  ZzjgPersonnelMapper zzjgPersonnelMapper;
+
+
+    /**
      * 根据公司id和部门id查询部门下面的岗位
      * 根据可以进行传递
      *
@@ -140,30 +147,29 @@ public class CheckManualImpl implements ICheckManual {
         try {
             // 1. 保存model信息并返回id
             TModel tModel = saveTmodel(checkItem,zzjg);
-            int modelId = modelMapper.insertSelective(tModel);
-
+            modelMapper.insertSelective(tModel);
+            Integer modelId = tModel.getId(); //获取模版id
 
             // 2. 保存check表数据并返回id
             TCheck tCheck = saveCheckTbl(checkItem, zzjg,modelId);
-           Integer  tCheckId = tCheckMapper.insertSelective(tCheck);
-            Integer id = tCheck.getId();
+            tCheckMapper.insertSelective(tCheck);
+            Integer checkId = tCheck.getId();  //获取检查表id
 
             // 3. 保存并获取检查分类id
             List<Integer> list = saveTLevel(checkItem);
 
             // 4. 保存checkPart数据并返回id
-            TCheckPart tCheckPart = saveCheckPart(checkItem,list,tCheckId);
-             tCheckPartMapper.insertSelective(tCheckPart);
+            TCheckPart tCheckPart = saveCheckPart(checkItem,list,checkId);
+            tCheckPartMapper.insertSelective(tCheckPart);
             int tCheckPartId = tCheckPart.getId(); // 获取checkPartId
 
-
             // 保存Check_item 表数据并返回id TODO
-              saveCheckTtem(checkItem, zzjg, id,tCheckPartId);
+              saveCheckTtem(checkItem, zzjg, checkId,tCheckPartId);
 
             // 保存model_part() 计划检查模块表
             saveTmodelPath(modelId,checkItem,list);
 
-            System.out.println(id);
+            System.out.println(checkId);
             return modelId; // 数据返回 TODO 添加功能结束
 
         } catch (Exception e) {
@@ -173,6 +179,25 @@ public class CheckManualImpl implements ICheckManual {
 
         }
 
+    }
+
+    /**
+     * 查询该企业所有的安全责任人
+     * 先使用cid ,不行在使用uid
+     * @param zzjg
+     * @return
+     */
+    @Override
+    public List<Map<Integer, String>> findUserByIdAndStatus(ZzjgPersonnel zzjg) {
+
+        Integer uid = zzjg.getCid();
+        List<Map<Integer,String>> list =  zzjgPersonnelMapper.findUserByIdAndSTatus(uid);
+
+
+
+
+
+        return list;
     }
 
     /**
@@ -262,7 +287,7 @@ public class CheckManualImpl implements ICheckManual {
      *     del             '1 删除',
      *     check_company   '检查单位',
      *
-     *      t_check_part_tbl
+     *     t_check_part_tbl
      *     levels   varchar(500) null comment '检查分类s',
      *     name     varchar(50)  null comment '部位或装置名称',
      *     part_img varchar(200) null comment '部门照片'
@@ -310,7 +335,7 @@ public class CheckManualImpl implements ICheckManual {
     }
 
     /**
-     * 装置设施表
+     *  装置设施表
      *  check_id int          null,
      *  levels   varchar(500) null comment '检查分类s',
      *  name     varchar(50)  null comment '部位或装置名称',
@@ -339,7 +364,7 @@ public class CheckManualImpl implements ICheckManual {
 
     }
     /**
-     * 检查项目表
+     *     检查项目表
      *     t_check_item_tbl
      *     content       '检查标准详情',
      *     level_id      '检查分类',
@@ -384,14 +409,14 @@ public class CheckManualImpl implements ICheckManual {
     }
 
     /**
-     * 添加检查分类表
-     *level1      varchar(50)  null comment 'Ⅱ级隐患自查标准',
-     *level2      varchar(50)  null comment 'Ⅲ级隐患自查标准',
-     *level3      varchar(100) null,
-     *industry_id int          null comment '所属行业',
+     *    添加检查分类表
+     *    level1      varchar(50)  null comment 'Ⅱ级隐患自查标准',
+     *    level2      varchar(50)  null comment 'Ⅲ级隐患自查标准',
+     *    level3      varchar(100) null,
+     *    industry_id int          null comment '所属行业',
      *
-     * 出现的类型 type 进行判断 1, 按类型进行检查, 2. 自定义进行检查
-     * 是自定义检查还是随机检查,
+     *    出现的类型 type 进行判断 1, 按类型进行检查, 2. 自定义进行检查
+     *    是自定义检查还是随机检查,
      *
      * @return
      */
@@ -423,7 +448,8 @@ public class CheckManualImpl implements ICheckManual {
             tLevel.setLevel3(checkLevel.getLevel3());
         }
             tLevel.setIndustryId(IndustryId);
-            int tLevelId = tLevelMapper.insertSelective(tLevel);
+            tLevelMapper.insertSelective(tLevel);
+            Integer tLevelId = tLevel.getId(); //获取检查分类的id
             list.add(tLevelId);
         }
 
@@ -431,14 +457,11 @@ public class CheckManualImpl implements ICheckManual {
 
     }
 
-
-
-
     /**
-     * 检查计划模板 模块表
-     *name     varchar(30)   null comment '部门 或装置',
-     *model_id int           null comment '模板id',
-     *levels   varchar(2000) null comment '检查分类s',
+     *    检查计划模板 模块表
+     *    name     varchar(30)   null comment '部门 或装置',
+     *    model_id int           null comment '模板id',
+     *   levels   varchar(2000) null comment '检查分类s',
      *
      */
     private void saveTmodelPath(Integer Tmodel,CheckItem checkItem,List<Integer> list ) {
@@ -460,6 +483,8 @@ public class CheckManualImpl implements ICheckManual {
         tModelPart.setName(departmentNametr);   // 检查的部门
 
     }
+
+
 
 }
 

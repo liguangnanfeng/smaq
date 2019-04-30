@@ -74,7 +74,9 @@ $(function() {
             <th>联系手机</th>
             <th>所属部门/车间</th>
             <th>职务</th>
+            <th>权限</th>
             <th>操作</th>
+
           </tr>
         </thead>
         <tbody>
@@ -86,9 +88,18 @@ $(function() {
             <td>${be.dpname }${be.dname }</td>
             <td>${be.position }</td>
             <td>
+              <%-- test里面是布尔值
+                   eq方法可以进行字符串的比较
+              --%>
+              <c:if test="${ be.status eq '1'}" >安全检查员</c:if>
+              <c:if test="${ be.status eq '2'}" >安全负责人</c:if>
+              <c:if test="${ be.status eq '0'}" >无</c:if>
+            </td>
+            <td>
               <a style="text-decoration: none" class="ml-5" onClick="showadd(${be.id})" href="javascript:;" title="编辑">编辑</a>
               <a style="text-decoration: none" class="ml-5" onClick="del_(${be.id})" href="javascript:;" title="删除">删除</a>
             </td>
+
           </tr>
           </c:forEach>
         </tbody>

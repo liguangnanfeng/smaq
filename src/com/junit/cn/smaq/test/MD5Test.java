@@ -23,10 +23,10 @@ public class MD5Test {
     @Test
     public void  Test01(){
         try {
-            String encryptedPwd = MyMD5Util.getEncryptedPwd(123456);
+            String encryptedPwd = MyMD5Util.getEncryptedPwd("123456");
             System.out.println(encryptedPwd);
 
-            String encryptedPwd1 = MyMD5Util.getEncryptedPwd(123456);
+            String encryptedPwd1 = MyMD5Util.getEncryptedPwd("123456");
             System.out.println(encryptedPwd1);
 
             int length = encryptedPwd.length();

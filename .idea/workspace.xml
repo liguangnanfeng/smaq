@@ -7,30 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="15acc64b-aef1-4c26-8041-4c37facd26d6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Company_Model.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebContent/WEB-INF/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/applicationContext.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebContent/WEB-INF/views/company/system/user-add.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/views/company/system/user-add.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebContent/WEB-INF/views/company/system/user-list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/views/company/system/user-list.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/applicationContext.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/controller/CompanyController_system.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/controller/CompanyController_system.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/ZzjgPersonnelMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/ZzjgPersonnelMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/ZzjgPersonnelMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/dao/ZzjgPersonnelMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/model/ZzjgPersonnel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/classes/com/spring/web/model/ZzjgPersonnel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/views/company/system/user-add.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/views/company/system/user-add.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/views/company/system/user-list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smaq_Web_exploded/WEB-INF/views/company/system/user-list.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ZzjgPersonnelMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/smaq/com/spring/web/dao/ZzjgPersonnelMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/junit/cn/smaq/test/MD5Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/junit/cn/smaq/test/MD5Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_system.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/controller/CompanyController_system.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Custom_Check.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Custom_Check.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/controller/api/AppController_Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/dao/ZzjgPersonnelMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spring/web/ibatis/LlHashMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/ibatis/LlHashMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spring/web/model/ZzjgPersonnel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/model/ZzjgPersonnel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/ICheckManual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/ICheckManual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/CheckManualImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/service/CheckCompany/impl/CheckManualImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spring/web/util/MyMD5Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spring/web/util/MyMD5Util.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -711,7 +688,7 @@
       <workItem from="1556516433770" duration="17856000" />
       <workItem from="1556539206216" duration="609000" />
       <workItem from="1556543483291" duration="5148000" />
-      <workItem from="1556583119773" duration="7685000" />
+      <workItem from="1556583119773" duration="8747000" />
     </task>
     <task id="LOCAL-00001" summary="第四次提交,添加企业端用户登陆功能">
       <created>1556158278257</created>
@@ -762,7 +739,14 @@
       <option name="project" value="LOCAL" />
       <updated>1556523786679</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="第十一次提交,对自定义检查表内容结束,">
+      <created>1556591186503</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1556591186503</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -798,7 +782,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="235038000" />
+    <option name="totallyTimeSpent" value="236100000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -813,7 +797,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49859154" visible="true" weight="0.21086262" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49859154" visible="true" weight="0.21086262" />
       <window_info id="Structure" order="1" sideWeight="0.50140846" side_tool="true" weight="0.15867944" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -939,7 +923,8 @@
     <MESSAGE value="第八次提交,对登陆功能进行相关的改进," />
     <MESSAGE value="第九次提交,对登陆功能进行相关的改进," />
     <MESSAGE value="第十次提交,对自定义检查表内容结束," />
-    <option name="LAST_COMMIT_MESSAGE" value="第十次提交,对自定义检查表内容结束," />
+    <MESSAGE value="第十一次提交,对自定义检查表内容结束," />
+    <option name="LAST_COMMIT_MESSAGE" value="第十一次提交,对自定义检查表内容结束," />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

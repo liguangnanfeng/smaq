@@ -258,3 +258,6 @@ src/com/spring/web/dao/TRectificationConfirmMapper.xml
 src/com/spring/web/model/TRectificationConfirm.java
 src/com/spring/web/service/Personnel/
 src/com/spring/web/service/TRectiflcationConfirm/
+.settings
+doc
+out

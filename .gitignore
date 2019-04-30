@@ -12,6 +12,8 @@ codeStyle.xml
 smaq.iml
 smaq.sql
 serve_file_back
+doc
+.settings
 ## Directory-based project format:
 .idea/
 # if you remove the above rule, at least ignore the following:

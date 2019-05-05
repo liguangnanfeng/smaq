@@ -27,7 +27,7 @@ public class Zzjg_PersonnelServiceImpl implements Zzjg_PersonnelService {
      */
     @Override
     public ZzjgPersonnel selectPersonnelByNameAndPwd(String username, String password) {
-        ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectPersonnelByNameAndPwd(username, password);
+        ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectPersonnelByNameAndPwd(username);
 
 
         return zzjgPersonnel;

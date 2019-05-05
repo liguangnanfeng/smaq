@@ -57,6 +57,4 @@ public interface ADangerManualMapper {
     List<ADangerManual> selectByIndustry(@Param("industry")String industry);
     
     List<ACompanyManual> selectByIds(@Param("ids")Integer[] ids);
-
-    String selectIndustryByid(Integer id);
 }

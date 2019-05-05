@@ -7,12 +7,12 @@ import java.util.Map;
 
 public interface AppMessageService {
 
-    List<Messages> findMessageList(String userId, Integer pageNo, Integer pageSize);
+    List<Messages> findMessageList(String userId,Integer pageNo,Integer pageSize);
 
     Messages findMessageDetail(String id);
 
     // 检查表，同一个企业可见
-    List<TCheck>  findTCheckList(String cid, Integer pageNo, Integer pageSize);
+    List<TCheck>  findTCheckList(String cid,Integer pageNo,Integer pageSize);
 
     // 根据checkId获取单条检查记录
     TCheck findCheckById(String checkId);

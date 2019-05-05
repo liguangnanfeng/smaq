@@ -1,10 +1,6 @@
 package com.spring.web.dao;
 
-
-import com.spring.web.model.Messages;
-import com.spring.web.model.TCheck;
-import com.spring.web.model.TRectification;
-import com.spring.web.model.ZzjgPersonnel;
+import com.spring.web.model.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -18,7 +14,7 @@ public interface AppControllerMessageMapper {
 
     Messages findMessageDetail(String id);
 
-    List<TCheck>  findTCheckList(@Param("cid") String cid, @Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize);
+    List<TCheck>  findTCheckList(@Param("cid") String cid,@Param("pageNo") Integer pageNo,@Param("pageSize") Integer pageSize);
 
     ZzjgPersonnel findPersonnel(String userId);
 

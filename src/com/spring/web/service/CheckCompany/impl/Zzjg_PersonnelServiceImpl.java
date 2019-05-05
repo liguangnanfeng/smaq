@@ -4,14 +4,8 @@ package com.spring.web.service.CheckCompany.impl;
 import com.spring.web.dao.ZzjgPersonnelMapper;
 import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.service.CheckCompany.Zzjg_PersonnelService;
-import com.spring.web.util.MailUtil;
-import com.spring.web.util.MyMD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.security.provider.MD5;
-
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * @author 桃红梨白
@@ -27,28 +21,16 @@ public class Zzjg_PersonnelServiceImpl implements Zzjg_PersonnelService {
 
     /**
      * 进行登陆的的验证工作
-     * 使用工具类进行验证
      * @param username
      * @param password
      * @return
      */
     @Override
-    public ZzjgPersonnel selectPersonnelByNameAndPwd(String username, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public ZzjgPersonnel selectPersonnelByNameAndPwd(String username, String password) {
+        ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectPersonnelByNameAndPwd(username, password);
 
-        ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectPersonnelByNameAndPwd(username);
-        if(null == zzjgPersonnel || "".equals(zzjgPersonnel.getPassword()) || zzjgPersonnel.getPassword()== null){
-            // 表示没有查询的数据,并返回为空 表示没有数据
-            return null;
-        }
 
-        boolean flag = MyMD5Util.validPassword(password, zzjgPersonnel.getPassword());
-
-        if(flag){
-            return zzjgPersonnel;
-        }else{
-            throw  new RuntimeException("密码错误");
-        }
-
+        return zzjgPersonnel;
     }
 
     /**

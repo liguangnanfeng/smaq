@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.web.dao.TCheckItemMapper">
   <resultMap id="BaseResultMap" type="com.spring.web.model.TCheckItem">
@@ -830,5 +830,10 @@
     </if>
     order by t1.id desc, t2.real_time desc
   </select>
-  
+
+    <select id="selectAllByCheckId" resultType="com.spring.web.model.TCheckItem">
+        select * from t_check_item_tbl where checkId =#{checkId} and path_id=#{pathId};
+    </select>
+
+
 </mapper>

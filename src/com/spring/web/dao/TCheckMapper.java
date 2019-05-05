@@ -2,6 +2,8 @@ package com.spring.web.dao;
 
 import java.util.List;
 import java.util.Map;
+
+import com.spring.web.model.TCheckItem;
 import org.apache.ibatis.annotations.Param;
 import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.TCheck;
@@ -64,4 +66,6 @@ public interface TCheckMapper {
     DynamicParameter<String, Object> selectCompany(@Param("id")Integer id);
     
     int deleteById(@Param("sql")String sql);
+
+    TCheck  selectByModelId(Integer modelId);
 }

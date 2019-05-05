@@ -137,4 +137,6 @@ public interface TCheckItemMapper {
     List<Map<String, Object>> selectCount2(Map<String, Object> m);
     
     List<Map<String, Object>> selectNeedDangerIndexList(Map<String, Object> m);
+
+    List<TCheckItem> selectAllByCheckId(@Param("checkId") Integer checkId,@Param("pathId") Integer pathId);
 }

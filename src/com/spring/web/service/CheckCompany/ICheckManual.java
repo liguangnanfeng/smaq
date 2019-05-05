@@ -4,6 +4,7 @@ import com.spring.web.model.ACompanyManual;
 import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.model.request.CheckItem;
 import com.spring.web.model.request.CheckLevel;
+import com.spring.web.model.response.CheckItemS;
 import com.spring.web.model.response.MeasuresBean;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public interface ICheckManual {
 
     List<Map<Integer, String>> findModelByUid(Integer uid);
 
-    void findCheckItemByModelId(Integer modelId);
+    CheckItemS findCheckItemByModelId(Integer modelId);
 
     Map<String, List> findLevel2ByPersonnelId(Integer personnelId,Integer uId);
 }

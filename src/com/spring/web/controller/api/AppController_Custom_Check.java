@@ -6,6 +6,7 @@ import com.spring.web.model.ZzjgDepartment;
 import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.model.request.CheckItem;
 import com.spring.web.model.request.CheckLevel;
+import com.spring.web.model.response.CheckItemS;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
 
@@ -319,7 +320,7 @@ public class AppController_Custom_Check {
     }
 
     /**
-     * 根据用户点击查询模版
+     * TODO 根据用户点击查询模版
      *
      * @return
      */
@@ -407,8 +408,15 @@ public class AppController_Custom_Check {
 
         // 判断完成, 根据id查询并进行封装数据
 
-        checkManual.findCheckItemByModelId(modelId);
-
+        CheckItemS checkItemByModelId = checkManual.findCheckItemByModelId(modelId);
+        if(checkItemByModelId==null){
+            result.setMessage("查询失败");
+            result.setStatus("1");
+            return result;
+        }
+        result.setStatus("0");
+        result.setMessage("查询成功");
+        result.setData(checkItemByModelId);
         return result;
 
 

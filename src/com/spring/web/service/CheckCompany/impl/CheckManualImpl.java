@@ -5,6 +5,7 @@ import com.spring.web.dao.*;
 import com.spring.web.model.*;
 import com.spring.web.model.request.CheckItem;
 import com.spring.web.model.request.CheckLevel;
+import com.spring.web.model.response.CheckItemS;
 import com.spring.web.service.CheckCompany.ICheckManual;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,8 +72,10 @@ public class CheckManualImpl implements ICheckManual {
     private  ZzjgPersonnelMapper zzjgPersonnelMapper;
 
 
+
+
     /**
-     * 根据公司id和部门id查询部门下面的岗位
+     * TODO 根据公司id和部门id查询部门下面的岗位
      * 根据可以进行传递
      *
      * @param uid
@@ -121,7 +124,7 @@ public class CheckManualImpl implements ICheckManual {
     }
 
     /**
-     * 根据level3 查询level4及其危险点
+     * TODO 根据level3 查询level4及其危险点
      */
     @Override
     public List<CheckLevel> selectLevel5AndId(CheckLevel checkLevel) {
@@ -193,15 +196,11 @@ public class CheckManualImpl implements ICheckManual {
         Integer uid = zzjg.getCid();
         List<Map<Integer,String>> list =  zzjgPersonnelMapper.findUserByIdAndSTatus(uid);
 
-
-
-
-
         return list;
     }
 
     /**
-     *
+     *  TODO 根据公司id查询所有的模版信息
      * @param uid
      * @return
      */
@@ -217,12 +216,31 @@ public class CheckManualImpl implements ICheckManual {
      * 但是现在出现这种问题真的是十分难办的, 主要是之前的就是一个部门检查,现在是多个部门, 部门和风险点之间对应的关系无法进行正确的连接
      * 如果说存储的是id 但是只能查询到本来已经有的风险点 而现在的自定义的风险点根本无法进行关系的对应
      * 无论是创建新表还是新的字段的话,旧的数据根本就无法查询?????
-     *
+     * ------------------------------------------------
+     * 一个模版对应一个部门信息,就是相当于查询一条记录
      * @param modelId
      */
     @Override
-    public void findCheckItemByModelId(Integer modelId) {
-            
+    public CheckItemS findCheckItemByModelId(Integer modelId) {
+        CheckItemS checkItemS = new CheckItemS();
+
+        // 获取checkId 和部门信息
+        TCheck tCheck = tCheckMapper.selectByModelId(modelId);
+
+        // 部门或设施
+        List<TCheckPart> tCheckParts = tCheckPartMapper.selectByCheckId(modelId);
+
+        //TODO 待定
+        checkItemS.setLevle1(tCheckParts.get(0).getName()); //部门信息
+
+        // 查询风险点数据
+       List<TCheckItem> list = tCheckItemMapper.selectAllByCheckId(tCheck.getId(),tCheckParts.get(0).getId());
+
+        checkItemS.setTCheckItems(list);
+
+        return checkItemS;
+
+
     }
 
     /**
@@ -274,7 +292,7 @@ public class CheckManualImpl implements ICheckManual {
         tModel.setTitle(checkItem.getTemplate()); // 检查名称
         tModel.setUserId(zzjg.getUid()); // 公司id
         tModel.setFlag(1); // 检查类型
-        tModel.setPart(departmentNametr);              // 被检查的部门
+        tModel.setPart(checkLevels.get(0).level1);              // 被检查的部门
         tModel.setIndustryId(IndustryId);         // 被检查的行业id
         if(checkItem.getCheckType()==null){
             checkItem.setCheckType(1);
@@ -363,7 +381,7 @@ public class CheckManualImpl implements ICheckManual {
         TCheck tCheck = new TCheck();
         tCheck.setFlag(1);       //企业自查
         tCheck.setTitle(checkItem.getTemplate());     //被检查的标题
-        tCheck.setDepart(departmentNametr);    // 被检查的部门
+        tCheck.setDepart(checkLevels.get(0).level1);    // 被检查的部门
         tCheck.setUserId(zzjg.getUid());     // 被检查的企业
         tCheck.setCreateUser(zzjg.getId()); //创建人(检查人员的id)
         tCheck.setModelId(modelId);    // 模版id

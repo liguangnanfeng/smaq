@@ -201,6 +201,50 @@ public class CheckManualImpl implements ICheckManual {
     }
 
     /**
+     *
+     * @param uid
+     * @return
+     */
+    @Override
+    public List<Map<Integer, String>> findModelByUid(Integer uid) {
+        List<Map<Integer,String>> list =  modelMapper.selectModelByUid(uid);
+        return list;
+    }
+
+    /**
+     * 根据模版id查询检查信息并进行返回
+     * 但是现在出现的问题就是数据无法进行封装,无法通过部门和风险点一一对应
+     * 但是现在出现这种问题真的是十分难办的, 主要是之前的就是一个部门检查,现在是多个部门, 部门和风险点之间对应的关系无法进行正确的连接
+     * 如果说存储的是id 但是只能查询到本来已经有的风险点 而现在的自定义的风险点根本无法进行关系的对应
+     * 无论是创建新表还是新的字段的话,旧的数据根本就无法查询?????
+     *
+     * @param modelId
+     */
+    @Override
+    public void findCheckItemByModelId(Integer modelId) {
+            
+    }
+
+    /**
+     * 根据安全责任人的id,查询对应的部门,以及岗位
+     * @param personnelId
+     * @return
+     */
+    @Override
+    public Map<String, List> findLevel2ByPersonnelId(Integer personnelId,Integer Uid) {
+
+        // 首先查询所在的部门
+        String name =  zzjgPersonnelMapper.selectdpidById(personnelId);
+        // 根据部门和 公司总id查询所有level2
+        List<String> list =  companyManualMapper.findLevel2ByPersonelId(name,Uid);
+
+        Map<String,List> map = new HashMap<>();
+        map.put(name, list);
+
+        return map;
+    }
+
+    /**
      * 检查计划模板表
      * 传递的模块信息进行保存括其他的数据进行保存
      * 保存数据到检查表,并获取检查表id信息,
@@ -292,6 +336,9 @@ public class CheckManualImpl implements ICheckManual {
      *     name     varchar(50)  null comment '部位或装置名称',
      *     part_img varchar(200) null comment '部门照片'
      *
+     *
+     *
+     *
      * @param checkItem  用户返回数据
      * @param zzjg      用户登陆信息
      * @param modelId  模版表id
@@ -381,6 +428,9 @@ public class CheckManualImpl implements ICheckManual {
      *     recheck_time  '实际复查时间',
      *     recheck_file  '复查图片s',
      *     recheck_memo  '复查描述'
+     *
+     *
+     *
      * @return
      */
     private TCheckItem saveCheckTtem(CheckItem checkItem, ZzjgPersonnel zzjg,Integer CheckId, Integer CheckPartId){

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.ZzjgPersonnel;
+import org.apache.ibatis.annotations.Param;
 
 public interface ZzjgPersonnelMapper {
     /**
@@ -70,4 +71,12 @@ public interface ZzjgPersonnelMapper {
     ZzjgPersonnel selectPersonnelByNameAndPwd(String name);
 
     List<Map<Integer, String>> findUserByIdAndSTatus(Integer uid);
+
+    /**
+     * 根据安全责任人的id查询部门和对应的岗位
+     * @param personnelId
+     * @return
+     */
+    String selectdpidById( Integer personnelId);
+
 }

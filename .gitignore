@@ -44,6 +44,13 @@ doc
 
 ## Plugin-specific files:
 
+#图片
+/WebContent/images/
+#sql
+/WebContent/sql/
+#styles
+/WebContent/styles/
+
 # IntelliJ
 /out/
 

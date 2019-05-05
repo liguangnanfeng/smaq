@@ -25,4 +25,10 @@ public interface ICheckManual {
     Integer saveCheck(CheckItem checkItem,ZzjgPersonnel zzjg);
 
     List<Map<Integer, String>> findUserByIdAndStatus(ZzjgPersonnel zzjg);
+
+    List<Map<Integer, String>> findModelByUid(Integer uid);
+
+    void findCheckItemByModelId(Integer modelId);
+
+    Map<String, List> findLevel2ByPersonnelId(Integer personnelId,Integer uId);
 }

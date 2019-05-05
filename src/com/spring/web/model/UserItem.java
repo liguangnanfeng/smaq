@@ -26,4 +26,7 @@ public class UserItem {
 
     public ZzjgPersonnel zzjgPersonnel;
 
+
+    public User user;
+
 }

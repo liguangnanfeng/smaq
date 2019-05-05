@@ -60,4 +60,6 @@ public interface TModelMapper {
     List<Map<String, Object>> selectByMap2(Map<String, Object> m);//检索条件增加，检查周期不为1
     
     List<TModel> selectAuto();
+
+    List<Map<Integer, String>> selectModelByUid(Integer uid);
 }

@@ -85,32 +85,32 @@
             </div>
         </c:if>
 
-        <c:if test="${ not empty user.password}">
+        <c:if test="${ not empty user.password }">
 
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>密码：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <button id="pwd_submit" class="btn btn-primary radius" type="button"
-                            style="padding: 0 70px;">
-                            是否重置密码
-                    </button>
-
+                    <button  class="btn btn-primary radius" type="button" onclick="addpwd()"
+                             style="padding: 0 70px;">是否重置密码</button>
                 </div>
             </div>
         </c:if>
-
+            
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>安全岗位:</label>
-            <div class="formControls col-xs-8 col-sm-9">
-        <span class="select-box inline">
-            <%--   <select name="dpid" class="select" id="statusId" value="${user.statusId}" >
-                <option value="0">请选择</option>
-                <option value="1">安全检查员</option>
-                <option value="2">安全责任人</option>
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>安全岗位:</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <span class="select-box inline">
+              <%--  <label><input type="radio"/>无</label>
+                <label><input type="radio"/>安全检查员</label>
+                <label><input type="radio"/>安全责任人</label>--%>
+                   <select name="dpid" class="select" id="statusId" value="${user.status}" >
+                    <option value="0">请选择</option>
+                    <option value="1">安全检查员</option>
+                    <option value="2">安全责任人</option>
 
-              </select>--%>
-        </span>
-            </div>
+                  </select>
+            </span>
+        </div>
         </div>
 
         <div class="row cl">
@@ -153,45 +153,63 @@
 </div>
 
 <!-- TODO  弹窗添加 进行添加数据 -->
-<div id="win-add" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+<div id="win-add" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content radius">
-
+            <div class="modal-header">
+                <h3 class="modal-title">修改新密码</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+            </div>
             <div class="modal-body">
                 <div class="row cl row1">
-                    <label class="form-label col-xs-4 col-sm-2" style="width:120px;" id="label_"></label>
-                    <div class="formControls col-xs-8 col-sm-9" style="text-align:left;width:320px;">新密码
-                        <input type="text" value="${user.password}" name="name" id="pwd" class="input-text">
+                    <label class="form-label col-xs-4 col-sm-2" style="width:120px;"  id="label_">新密码 ：</label>
+                    <div class="formControls col-xs-8 col-sm-9" style="text-align:left;width:320px;">
+                        <input type="text" value="" name="name" id="addpw" class="input-text">
                     </div>
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-primary" id="save_btn">确定</button>
+                <button class="btn btn-primary" onclick="save_btn()">确定</button>
                 <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
             </div>
         </div>
     </div>
 </div>
 
-
 </body>
 <script type="text/javascript">
     var id = '${user.id}';
     var userType = '${session_user.userType}';
 
+    // 保存的方法
     function article_save_submit() {
 
-        var user = {
-            name: $("#name").val(),
-            position: $("#position").val(),
-            mobile: $("#mobile").val(),
-            cid: $("#cid").val(),
-            dpid: $("#dpid").val(),
-            did: $("#did").val(),
-            password: $("#pwd").val(),
-            status: $("#statusId").val()
+        if($("#addpw").val()){
+            user = {
+
+                name: $("#name").val(),
+                position: $("#position").val(),
+                mobile: $("#mobile").val(),
+                cid: $("#cid").val(),
+                dpid: $("#dpid").val(),
+                did: $("#did").val(),
+                password:$("#addpw").val(),
+                status: $("#statusId").val()
+            }
+        }else {
+            user = {
+                name: $("#name").val(),
+                position: $("#position").val(),
+                mobile: $("#mobile").val(),
+                cid: $("#cid").val(),
+                dpid: $("#dpid").val(),
+                did: $("#did").val(),
+                password: $("#pwd").val(),
+                status: $("#statusId").val()
+            }
         }
+
         if (id != '') {
             user.id = id;
         }
@@ -203,10 +221,10 @@
             $("#mobile").focus();
             return false;
         }
-        // if(user.password == '') {
-        //   $("#pwd").focus();
-        //   return false;
-        // }
+        if (user.password == '') {
+            $("#pwd").focus();
+            return false;
+        }
         // if(user.status == '') {
         //   $("#statusId").focus();
         //   return false;
@@ -228,6 +246,7 @@
             return false;
         }
         var i = layer.load();
+        // 添加数据
         $.post("/company/system/user-save", user, function (result) {
             layer.close(i);
             if (result.status == 1) {
@@ -239,9 +258,9 @@
                     parent.location.reload();
                 }
             }
-        })
+        });
     }
-
+    // ------
     var dep1 = ${dep1};
     var dep2 = ${dep2};
     var cid = '${user.cid}', dpid = '${user.dpid}', did = '${user.did}';
@@ -294,13 +313,29 @@
             $("#did").val(did);
             did = '';
         }
+    };
+
+
+    // TODO  修改密码的方法
+    function addpwd(){
+
+        var titles = "新密码 : ";
+
+            $("#label_").text(titles);
+            $("#type").val(1);
+            $("#win-add").modal("show");
+            $("#pwd").focus();
+        ;
+
     }
 
-    // 单击输入新密码
-    $("#pwd_submit").on("click",function () {
-        $("#win-add").attr("aria-hidden",false);
-    } )
 
+
+    // 调用这个方法的话,进行赋值
+    function save_btn(){
+
+        $("#win-add").modal("hide");
+    }
 
 </script>
 </html>

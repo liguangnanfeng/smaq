@@ -354,9 +354,6 @@ public class CheckManualImpl implements ICheckManual {
      *     name     varchar(50)  null comment '部位或装置名称',
      *     part_img varchar(200) null comment '部门照片'
      *
-     *
-     *
-     *
      * @param checkItem  用户返回数据
      * @param zzjg      用户登陆信息
      * @param modelId  模版表id

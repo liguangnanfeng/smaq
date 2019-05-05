@@ -229,4 +229,10 @@
         #{item}
         </foreach>
   </select>
+
+  <select id="selectIndustryByid" resultType="String">
+     select industry as name from  a_danger_manual_tbl where  id =  (select dmid  from a_company_manual_tbl where id = #{id});
+
+     </select>
+
 </mapper>

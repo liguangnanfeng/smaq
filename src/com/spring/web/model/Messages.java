@@ -1,8 +1,12 @@
 package com.spring.web.model;
 
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 public class Messages implements Serializable{
     
     private static final long serialVersionUID = 1L;
@@ -15,6 +19,7 @@ public class Messages implements Serializable{
 
     private String descr;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private Byte sendFlag;

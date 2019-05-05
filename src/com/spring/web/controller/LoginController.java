@@ -97,6 +97,7 @@ public class LoginController extends BaseController {
                 result.setMap("message", "该账号被冻结。");
                 return result;
             }
+            // 对登陆数据进行验证信息
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             token.setRememberMe(true);
             Subject currentUser = SecurityUtils.getSubject();

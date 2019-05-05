@@ -382,4 +382,10 @@
     from t_model_tbl
     where del = 0 and open = 1 and next_time &lt; now();
   </select>
+
+  <!--根据uid查询表-->
+  <select id="selectModelByUid" resultType="Map" >
+    select id, title from t_model_tbl where  user_id =#{uid};
+  </select>
+
 </mapper>

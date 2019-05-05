@@ -110,5 +110,13 @@ public interface ACompanyManualMapper {
     List<CheckLevel> selectLevel4AndId(CheckLevel checkLevel);
 
     int selectDmidById(String name);
+
+    /**
+     * 根据公司总id和部门名称(level1) 查询level2
+     * @param name
+     * @param uid
+     * @return
+     */
+    List<String> findLevel2ByPersonelId(@Param("name") String name, @Param("uid") Integer uid);
 }
 

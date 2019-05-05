@@ -197,7 +197,7 @@ public class CompanyController_system extends BaseController {
     
     /**
      * @param dto
-     * @return 员工保存
+     * @return 员工保存 当没有数据的时候,也要进行存储
      * @throws Exception
      */
     @RequestMapping(value = "user-save")
@@ -206,6 +206,14 @@ public class CompanyController_system extends BaseController {
         Result result = new ResultImpl();
         Date d = new Date();
         dto.setUtime(d);
+        // 对前端页面进行判断
+        if(dto.getStatus()==null){
+            dto.setStatus("0");
+        }
+        if(dto.getPassword()!=null){
+            dto.setPassword("123456");
+
+        }
         dto.setUid(user.getId());
         // TODO 调用工具类生成密码 微信小程序端进行用户登陆密码请勿删除
         String encryptedPwd = MyMD5Util.getEncryptedPwd(dto.getPassword());
@@ -216,6 +224,7 @@ public class CompanyController_system extends BaseController {
             zzjgPersonnelMapper.insertSelective(dto);
         } else {
             zzjgPersonnelMapper.updateByPrimaryKeySelective(dto);
+
         }
         return result;
     }

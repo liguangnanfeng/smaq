@@ -851,7 +851,7 @@
 select level2  from a_company_manual_tbl where uid=#{uid} and level1 = #{name} group by  level1, level2;
   </select>
 
-<!--查询风险点-->
+    <!--查询风险点-->
     <select id="selectLevel3AndId" resultType="com.spring.web.model.request.CheckLevel">
     select id, uid , level1,level2, level3 ,measures as level4
     from a_company_manual_tbl
@@ -859,7 +859,7 @@ select level2  from a_company_manual_tbl where uid=#{uid} and level1 = #{name} g
     and level1 = #{level1}
     and level2=#{level2};
   </select>
-<!--获取风险点及其id-->
+    <!--获取风险点及其id-->
     <select id="selectLevel4AndId" resultType="com.spring.web.model.request.CheckLevel">
     select id, uid , level1,level2, level3 ,measures as level4 ,reference
     from a_company_manual_tbl
@@ -868,8 +868,8 @@ select level2  from a_company_manual_tbl where uid=#{uid} and level1 = #{name} g
     and level2=#{level2}
     and level3=#{level3};
   </select>
-<!--查询行业id-->
-    <select id="selectDmidById" resultType="Integer" >
+    <!--查询行业id-->
+    <select id="selectDmidById" resultType="Integer">
     -- 查询行业id
 select id
 
@@ -877,4 +877,8 @@ from a_industry_tbl where
 name =#{name};
     </select>
 
+    <!--根据总公司的id和部门名称查询level2-->
+    <select id="findLevel2ByPersonelId"  resultType="List">
+        select level2 from a_company_manual_tbl where level1=#{name} and uid=#{uid};
+    </select>
 </mapper>

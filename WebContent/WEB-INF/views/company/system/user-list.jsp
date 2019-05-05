@@ -98,6 +98,12 @@ $(function() {
             <td>
               <a style="text-decoration: none" class="ml-5" onClick="showadd(${be.id})" href="javascript:;" title="编辑">编辑</a>
               <a style="text-decoration: none" class="ml-5" onClick="del_(${be.id})" href="javascript:;" title="删除">删除</a>
+             <%-- <c:if test="${ be.status eq '1' || be.status eq '2'}" >
+                <a style="text-decoration: none" class="ml-5" onClick="(${be.id})" href="javascript:;" title="编辑">编辑</a>
+
+
+              </c:if>--%>
+
             </td>
 
           </tr>

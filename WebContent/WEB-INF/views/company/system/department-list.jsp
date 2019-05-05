@@ -95,39 +95,44 @@
       </table>
     </div>
   </div>
-  
+
   <!-- TODO  弹窗添加 进行添加数据 -->
   <div id="win-add" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content radius">
-            <div class="modal-header">
-                <h3 class="modal-title">添加</h3>
-                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
-            </div>
-            <div class="modal-body">
-              <div class="row cl row1">
-                <label class="form-label col-xs-4 col-sm-2" style="width:120px;" id="label_">公司/车间/岗位/部位名称：</label>
-                <div class="formControls col-xs-8 col-sm-9" style="text-align:left;width:320px;">
-                  <input type="text" value="" name="name" id="name" class="input-text">
-                </div>
+      <div class="modal-dialog">
+          <div class="modal-content radius">
+              <div class="modal-header">
+                  <h3 class="modal-title">添加</h3>
+                  <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
               </div>
-                <%--四个隐藏域 将域中的数据进行传递 --%>
-              <input type="hidden" id="type" /><!-- 1 添加企业 2添加部门 3添加班组 -->
-              <input type="hidden" id="pid" /><!-- 添加班组时保存父级id -->
-              <input type="hidden" id="id" />
-              <input type="hidden" id="cid" />
-            </div>
+              <div class="modal-body">
+                  <div class="row cl row1">
+                      <label class="form-label col-xs-4 col-sm-2" style="width:120px;" id="label_">公司/车间/岗位/部位名称：</label>
+                      <div class="formControls col-xs-8 col-sm-9" style="text-align:left;width:320px;">
+                          <input type="text" value="" name="name" id="name" class="input-text">
+                      </div>
+                  </div>
+                  <%--四个隐藏域 将域中的数据进行传递 --%>
+                  <input type="hidden" id="type" /><!-- 1 添加企业 2添加部门 3添加班组 -->
+                  <input type="hidden" id="pid" /><!-- 添加班组时保存父级id -->
+                  <input type="hidden" id="id" />
+                  <input type="hidden" id="cid" />
+              </div>
 
-            <div class="modal-footer">
-                <button class="btn btn-primary" id="save_btn">确定</button>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-            </div>
-        </div>
-    </div>
-</div>
+              <div class="modal-footer">
+                  <button class="btn btn-primary" id="save_btn">确定</button>
+                  <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+              </div>
+          </div>
+      </div>
+  </div>
 </body>
 
 <script type="text/javascript">
+
+
+
+
+
 $(function() {
   var userType = '${session_user.userType}';
   // 点击确定的时候进行数据的添加

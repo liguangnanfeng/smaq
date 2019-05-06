@@ -138,5 +138,19 @@ public interface TCheckItemMapper {
     
     List<Map<String, Object>> selectNeedDangerIndexList(Map<String, Object> m);
 
-    List<TCheckItem> selectAllByCheckId(@Param("checkId") Integer checkId,@Param("pathId") Integer pathId);
+    List<TCheckItem> selectAllByCheckId(@Param("checkId") Integer checkId,@Param("partId") Integer partId);
+
+    /**
+     * 根据id查询数据
+     * @param id
+     * @return
+     */
+    TCheckItem selectAllById(Integer id);
+
+    /**
+     * 查询有几个不合格项
+     * @param id
+     * @return
+     */
+    Integer selectNumBytCheckId(Integer id);
 }

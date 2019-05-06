@@ -16,7 +16,7 @@ public class CheckItemS {
 
     public String levle1;
 
-    public List<TCheckItem> tCheckItems;
+    public List<TCheckItem> items;
 
 
 }

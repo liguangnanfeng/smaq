@@ -62,4 +62,11 @@ public interface TCheckPartMapper {
     int deleteByCheckId(@Param("checkId") Integer checkId);
     
     List<Map<String,Object>> selectByIds(@Param("checkIds") String checkIds);
+
+    /**
+     * 根据检查表id信息,查询所有的分类
+     * @param checkId
+     * @return
+     */
+    List<TCheckPart> findAllByCheckId(Integer checkId);
 }

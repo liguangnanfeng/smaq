@@ -67,5 +67,18 @@ public interface TCheckMapper {
     
     int deleteById(@Param("sql")String sql);
 
+    /**
+     * 根据modelId查询所有的检查表
+     * @param modelId
+     * @return
+     */
     TCheck  selectByModelId(Integer modelId);
+
+    /**
+     * 根据用户登陆的信息查询所有的表信息
+     * @param id
+     * @param uid
+     * @return
+     */
+    List<TCheck> findAllByUidAndUserId(@Param("id") Integer id, @Param("Uid") Integer uid);
 }

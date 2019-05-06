@@ -151,4 +151,11 @@
     from t_check_part_tbl
     where id in (#{checkIds})
   </select>
+
+
+    <select id="findAllByCheckId" resultType="com.spring.web.model.TCheckPart">
+        select * from t_check_part_tbl where check_id =#{checkId}
+    </select>
+
+
 </mapper>

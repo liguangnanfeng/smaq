@@ -99,7 +99,7 @@ public class AppController_message extends BaseController {
 //
         System.out.println("获取检查记录列表==============");
 //        // 3. 展示此企业，此部门，的检查数据(check表有企业id,被检查部门名称(根据这两个条件查询))
-        List<TCheck> list = appMessageService.findTCheckList(String.valueOf(personnel.getCid()),pageNo,10);
+        List<TCheck> list = appMessageService.findTCheckList(String.valueOf(personnel.getUid()),pageNo,10);
         AppResult result = new AppResultImpl();
         result.setData(list);
 

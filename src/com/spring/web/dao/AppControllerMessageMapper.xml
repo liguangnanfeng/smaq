@@ -97,4 +97,26 @@
         where check_id = #{checkId}
     </select>
 
+
+    <select id="selectRecheckByCheckId" resultType="java.util.Map">
+    select
+       T1.id, T1.content, T1.reference, T0.status, T1.files, T0.file recheckFile, T0.deadline, T0.recheck_id recheckId,
+       T1.memo,
+       T2.level1, T2.level2, T2.level3, (select name from t_check_part_tbl where id = T1.part_id) partName,
+       T0.memo recheckMemo,T3.next_time as nextTime
+    from
+      t_recheck_item_tbl T0
+    left join
+      t_check_item_tbl T1 on T0.check_item_id = T1.id
+    left join
+      t_level_tbl T2 on T1.level_id = T2.id
+    left join
+      t_recheck_tbl T3 on T0.recheck_id = T3.id
+    where
+      T0.status = 2
+      and
+      T3.check_id = #{checkId}
+
+  </select>
+
 </mapper>

@@ -22,4 +22,7 @@ public interface AppControllerMessageMapper {
 
     TRectification findTRectification(String checkId);
 
+    // 复查
+    List<Map<String, Object>> selectRecheckByCheckId(@Param("checkId")Integer checkId);
+
 }

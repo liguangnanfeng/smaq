@@ -2,6 +2,7 @@ package com.spring.web.controller.api;
 
 import com.spring.web.BaseController;
 import com.spring.web.ibatis.DynamicParameter;
+import com.spring.web.listener.MySessionContext;
 import com.spring.web.model.*;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
@@ -52,7 +53,7 @@ public class AppController_message extends BaseController {
         //企业自查，传进来的是个人id，先通过个人id找到企业id，定位到企业,
 //        ZzjgPersonnel person = appMessageService.findPersonnel(userId);
 //        List<Messages> list = appMessageService.findMessageList(String.valueOf(person.getCid()),pageNo,"10");
-
+        System.out.println("获取通知列表==============");
         // 测试用
         List<Messages> list = appMessageService.findMessageList(userId,pageNo,10);
 
@@ -72,6 +73,7 @@ public class AppController_message extends BaseController {
 
         String id  = String.valueOf(params.get("id"));
         Messages message = appMessageService.findMessageDetail(id);
+        System.out.println("获取通知详情==============");
         AppResult result = new AppResultImpl();
         result.setData(message);
 
@@ -95,7 +97,7 @@ public class AppController_message extends BaseController {
         // 2. 查询此用户属于哪个部门，哪个企业id
         ZzjgPersonnel personnel = personnerService.findPersonnel(userId);
 //
-        System.out.println("11111111111111111111111111");
+        System.out.println("获取检查记录列表==============");
 //        // 3. 展示此企业，此部门，的检查数据(check表有企业id,被检查部门名称(根据这两个条件查询))
         List<TCheck> list = appMessageService.findTCheckList(String.valueOf(personnel.getCid()),pageNo,10);
         AppResult result = new AppResultImpl();
@@ -114,6 +116,7 @@ public class AppController_message extends BaseController {
 
         String checkId  = String.valueOf(params.get("checkId"));
         List<Map<String, Object>> detailList = tCheckItemMapper.selectByCheckId(Integer.valueOf(checkId));
+        System.out.println("获取检查记录详情==============");
         AppResult result = new AppResultImpl();
         result.setData(detailList);
         return result;
@@ -145,6 +148,7 @@ public class AppController_message extends BaseController {
 //        List<TCheckPart> checkParts = tCheckPartMapper.selectByCheckId(Integer.valueOf(checkId));
 //        map.put("checkParts",checkParts);
 
+        System.out.println("整改意见列表==============");
         // 意见详情
         List<Map> list = appMessageService.findRectificationList(checkId);
         map.put("details",list);
@@ -167,15 +171,21 @@ public class AppController_message extends BaseController {
 
         String confirmText = String.valueOf(params.get("confirmText"));
         String checkId = String.valueOf(params.get("checkId"));
+        String name = String.valueOf(params.get("name"));
 
         TRectificationConfirm confirm = new TRectificationConfirm();
+        TCheck check = appMessageService.findCheckById(checkId);
+
 
         // 组装数据  数据要求： checkId, 被检查人Id，检查人id（具体回复给谁），正文，时间，查看状态
-
+        System.out.println("整改意见回复(存储) ==============");
 //        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        confirm.setChecker(check.getCreateUser());
         confirm.setCheckId(Integer.valueOf(checkId));
         confirm.setConfirm(confirmText);
         confirm.setCreateTime(new Date());
+        confirm.setSender(name);
+        confirm.setStatus(0);
 
         tRectificationConfirmService.saveTRectificationConfirm(confirm);
 
@@ -193,6 +203,7 @@ public class AppController_message extends BaseController {
     AppResult findTRectificationConfirm(@RequestBody Map<String, Object> params, HttpServletRequest request){
 
         String userId  = String.valueOf(params.get("userId"));
+        String checkId  = String.valueOf(params.get("checkId"));
 
         List<TRectificationConfirm> confirmList = tRectificationConfirmService.findTRectificationConfirm(userId);
 
@@ -215,11 +226,13 @@ public class AppController_message extends BaseController {
         String checkId  = String.valueOf(params.get("checkId"));
         Integer id = Integer.valueOf(checkId);
         LinkedHashMap<String,Object> listMap = new LinkedHashMap<>();
-        DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
+//        DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
 //        listMap.put("check", check);
 //        listMap.put("company", companyMapper.selectByPrimaryKey(Integer.parseInt(String.valueOf(check.get("userId")))));
 //        listMap.put("recheckList", tRecheckMapper.selectByCheckId(id));
-        listMap.put("itemList", tRecheckItemMapper.selectByCheckId(id));
+//        listMap.put("itemList", tRecheckItemMapper.selectByCheckId(id));
+        listMap.put("itemList", appMessageService.selectRecheckByCheckId(id));
+        System.out.println("复查 ==============");
 
         AppResult result = new AppResultImpl();
         result.setData(listMap);

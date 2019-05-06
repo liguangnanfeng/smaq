@@ -49,5 +49,10 @@ public class AppMessageServiceImpl implements AppMessageService {
         return appControllerMessageMapper.findTRectification(checkId);
     }
 
+    @Override
+    public List<Map<String, Object>> selectRecheckByCheckId(Integer checkId) {
+        return appControllerMessageMapper.selectRecheckByCheckId(checkId);
+    }
+
 
 }

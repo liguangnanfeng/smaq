@@ -1,6 +1,7 @@
 package com.spring.web.service.AppMessage;
 
 import com.spring.web.model.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -26,5 +27,8 @@ public interface AppMessageService {
 
     // 根据checkId获取整改意见时限
     TRectification findTRectification(String checkId);
+
+    // 复查
+    List<Map<String, Object>> selectRecheckByCheckId(@Param("checkId")Integer checkId);
 
 }

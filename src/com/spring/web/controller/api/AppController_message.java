@@ -165,12 +165,16 @@ public class AppController_message extends BaseController {
     public @ResponseBody
     AppResult saveTRectificationConfirm(@RequestBody Map<String, Object> params, HttpServletRequest request){
 
-        Object obj = params.get("TRectificationConfirm");
+        String confirmText = String.valueOf(params.get("confirmText"));
+        String checkId = String.valueOf(params.get("checkId"));
 
         TRectificationConfirm confirm = new TRectificationConfirm();
 
-        // 组装数据
+        // 组装数据  数据要求： checkId, 被检查人Id，检查人id（具体回复给谁），正文，时间，查看状态
+
 //        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        confirm.setCheckId(Integer.valueOf(checkId));
+        confirm.setConfirm(confirmText);
         confirm.setCreateTime(new Date());
 
         tRectificationConfirmService.saveTRectificationConfirm(confirm);

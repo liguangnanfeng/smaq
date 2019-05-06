@@ -447,8 +447,7 @@
         select
         <include refid="Base_Column_List"/>
         from t_check_tbl
-        where user_id =#{Uid} and create_user=#{id} group by real_time ,id ;
+        where user_id =#{Uid} and create_user=#{id} order by real_time ,id desc ;
     </select>
-
 
 </mapper>

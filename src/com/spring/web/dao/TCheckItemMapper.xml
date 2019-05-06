@@ -837,7 +837,7 @@
         select * from t_check_item_tbl where check_id =#{checkId} and part_id=#{partId};
     </select>
     <!--根据id查询部门数据  -->
-    <select id="selectAllById" resultType="com.spring.web.model.TCheckItem">
+    <select id="selectAllById" resultMap="BaseResultMap">
         select * from t_check_item_tbl where id=#{id};
     </select>
 

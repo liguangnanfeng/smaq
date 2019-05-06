@@ -219,12 +219,12 @@ public class CheckManualImpl implements ICheckManual {
 
     /**
      * 根据模版id查询检查信息并进行返回
-     * 但是现在出现的问题就是数据无法进行封装,无法通过部门和风险点一一对应
-     * 但是现在出现这种问题真的是十分难办的, 主要是之前的就是一个部门检查,现在是多个部门, 部门和风险点之间对应的关系无法进行正确的连接
-     * 如果说存储的是id 但是只能查询到本来已经有的风险点 而现在的自定义的风险点根本无法进行关系的对应
-     * 无论是创建新表还是新的字段的话,旧的数据根本就无法查询?????
+     * 注: 5/6 还是单部门进行插入数据
      * ------------------------------------------------
      * 一个模版对应一个部门信息,就是相当于查询一条记录
+     *
+     * 在进行模版查询的时候,一直查询的check的一条对应数据,
+     * 应该是在进行模版查询的时候,进行check数据的复制,并且
      *
      * @param modelId
      */
@@ -242,7 +242,6 @@ public class CheckManualImpl implements ICheckManual {
             // 部门或设施
             List<TCheckPart> tCheckParts = tCheckPartMapper.findAllByCheckId(tCheck.getId());
 
-            //TODO 待定
             checkItemS.setLevle1(tCheckParts.get(0).getName()); //部门信息
 
             // 查询风险点数据
@@ -495,7 +494,6 @@ public class CheckManualImpl implements ICheckManual {
      * level2      varchar(50)  null comment 'Ⅲ级隐患自查标准',
      * level3      varchar(100) null,
      * industry_id int          null comment '所属行业',
-     * <p>
      * 出现的类型 type 进行判断 1, 按类型进行检查, 2. 自定义进行检查
      * 是自定义检查还是随机检查,
      *

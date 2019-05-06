@@ -29,7 +29,18 @@ public interface ICheckManual {
 
     List<Map<Integer, String>> findModelByUid(Integer uid);
 
+    /**
+     * 根据模版查询检查表信息
+     * @param modelId
+     * @return
+     */
     CheckItemS findCheckItemByModelId(Integer modelId);
 
+    /**
+     * 根据检查人员id查询部门对应的level2
+     * @param personnelId
+     * @param uId
+     * @return
+     */
     Map<String, List> findLevel2ByPersonnelId(Integer personnelId,Integer uId);
 }

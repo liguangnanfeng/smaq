@@ -1,9 +1,6 @@
 package com.spring.web.service.CheckCompany.impl;
 
-import com.spring.web.dao.TCheckDocumentMapper;
-import com.spring.web.dao.TCheckItemMapper;
-import com.spring.web.dao.TCheckMapper;
-import com.spring.web.dao.TRectificationMapper;
+import com.spring.web.dao.*;
 import com.spring.web.model.*;
 import com.spring.web.model.request.SaveDataMessage;
 import com.spring.web.model.request.SaveDataMessageItem;
@@ -41,12 +38,34 @@ public class SaveDataImpl implements SaveMessageService {
     private TCheckMapper tCheckMapper;
 
     /**
+     * 复查意见表主表
+     */
+    @Autowired
+    private TRecheckMapper tRecheckMapper;
+
+    /**
+     * 复查意见表
+     */
+    @Autowired
+    private TRecheckItemMapper tRecheckItemMapper;
+
+    /**
+     * 主账号
+     */
+    @Autowired
+    private UserMapper userMapper;
+    /**
+     * 用户表
+     */
+    @Autowired
+    private ZzjgPersonnelMapper zzjgPersonnelMapper;
+
+
+    /**
      * 保存检查信息,并进行返回结果消息
      * valve   1 :合格  2 : 不合格
-     *
      * @param
      */
-
     @Override
     public String saveCheckMessage(SaveDataMessageItem saveDataMessageItem, ZzjgPersonnel zzjg) {
 
@@ -61,6 +80,8 @@ public class SaveDataImpl implements SaveMessageService {
                     // 表示没有数据 直接返回
                     return null;
                 }
+
+
                 // 对前端用户状态进行判断 1 :合格 2 :不合格
                 if ("1".equals(saveDataMessage.getValue())) {
                     item.setStatus(1); // 状态 合格
@@ -79,9 +100,9 @@ public class SaveDataImpl implements SaveMessageService {
                     if (saveDataMessageItem.getType() == null) { // 立即整改
 
                         long time = new Date().getTime();
-                        long i = 24 * 60 * 60; //
+                        long i = 24 * 60 * 60; //一天
                         long l = time + i; //
-                        Date date = new Date(l);
+                        Date date = new Date(l); // 一天后的时间
                         item.setSuggest(1);  // 1.立即整改 2. 限期整改
                         item.setPlanTime(date); //预期检查时间
                         tRectification.setDeadline(date); // 限期时间
@@ -103,7 +124,7 @@ public class SaveDataImpl implements SaveMessageService {
                         tRectification.setItem2(item.getContent()); //限期整改项
 
                     }
-
+                    // 保存检查结果整改意见表
                     tRectificationMapper.insertSelective(tRectification);
 
                 } else {
@@ -114,7 +135,7 @@ public class SaveDataImpl implements SaveMessageService {
                 tCheckItemMapper.updateByPrimaryKey(item);
                 // 直接将check表数据进行更新
                 TCheck tCheck = tCheckMapper.selectByPrimaryKey(item.getCheckId());
-                tCheck.setStatus(2); // 以检查
+                tCheck.setStatus(2); // 已检查
                 tCheckMapper.updateByPrimaryKey(tCheck);
 
             }
@@ -152,6 +173,7 @@ public class SaveDataImpl implements SaveMessageService {
      *
      * @param zzjg
      */
+
     @Override
     public List<Map> findCheckItemById(ZzjgPersonnel zzjg) {
         Integer id = zzjg.getId();  //当前登陆用户的id
@@ -199,20 +221,70 @@ public class SaveDataImpl implements SaveMessageService {
     public String saveReviewData(SaveDataMessageItem saveDataMessageItem, ZzjgPersonnel zzjg) {
         try {
 
+            // id查询CheckItem
+            TCheckItem item1 = tCheckItemMapper.selectAllById(saveDataMessageItem.getList().get(0).getId());
+
+            // --------------------------------------------------------------------------------------------------
+            // 复查意见表=> 主表
+            TRecheck tRecheck = new TRecheck();
+            tRecheck.setCheckId(item1.getCheckId()); // 检查表id
+            tRecheck.setUserId(zzjg.getUid()); // 总公司id
+            tRecheck.setCreateUser(zzjg.getId());  //检查人员id
+            tRecheck.setCreateTime(new Date());    // 创建时间
+
+            User user = userMapper.selectByPrimaryKey(zzjg.getUid());
+            tRecheck.setCheckCompany(user.getUserName()); //检查的公司名称
+
+            for (SaveDataMessage saveDataMessage :saveDataMessageItem.getList()) {
+                TCheckItem item = tCheckItemMapper.selectAllById(saveDataMessage.getId());
+                if ("1".equals(saveDataMessage.getValue())) {
+                    tRecheck.setStatus(1);       // 1 未全部整改  2 全部整改
+                } else if ("2".equals(saveDataMessage.getValue())) {
+
+                    tRecheck.setStatus(2);       // 1 未全部整改  2 全部整改
+                    break;
+                }
+
+            }
+            //表示限期整改
+            int i = 7 * 24 * 60 * 60; // 限期时间
+            long time = new Date().getTime();
+            long l = time + i; //
+            Date date = new Date(l);
+            tRecheck.setNextTime(date);      // 未合格项 限期检查时间
+            tRecheck.setChecker(zzjg.getName());       // 检查人员名称
+
+            //ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectByPrimaryKey(saveDataMessageItem.zrrId);
+           // tRecheck.setDapartContact(zzjgPersonnel.getName());             // 被检查部门的负责人
+            int i1 = tRecheckMapper.insertSelective(tRecheck);
+            Integer id = tRecheck.getId(); // 获取到主表id
+
+            // --------------------------------------------------------------------------------------------------
+
             List<SaveDataMessage> list = saveDataMessageItem.getList();
             for (SaveDataMessage saveDataMessage : list) {
                 TCheckItem item = tCheckItemMapper.selectAllById(saveDataMessage.getId());
                 if ("1".equals(saveDataMessage.getValue())) {
-                    item.setStatus(3);
+                    item.setStatus(3); // 复查成功
                 } else if ("2".equals(saveDataMessage.getValue())) {
+
                     item.setStatus(2);
 
                 }
+
+                TRecheckItem tRecheckItem =new TRecheckItem();
+                tRecheckItem.setCheckItemId(item.getCheckId()); // 检查项目表id
+                tRecheckItem.setRecheckId(id);                  // 复查主表id
+                tRecheckItem.setDeadline(new Date());           // 创建时间
+
+                tRecheckItemMapper.insertSelective(tRecheckItem);
+
                 tCheckItemMapper.updateByPrimaryKey(item);// 进行更新
 
             }
             return "成功";
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
 

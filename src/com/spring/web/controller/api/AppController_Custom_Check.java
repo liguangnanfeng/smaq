@@ -333,7 +333,6 @@ public class AppController_Custom_Check {
 
     /**
      * 根据模版id查询详细信息
-     *
      * @param request
      * @param modelId
      * @param sessionId
@@ -433,6 +432,8 @@ public class AppController_Custom_Check {
 
     /**
      * TODO 根据前端传递的合格不合格信息进行数据的存储
+     * 进行数据的时候,就生成新一轮的检查记录表,
+     * 还使用 modelId => 返回
      *
      * @param request
      * @param sessionId
@@ -583,11 +584,11 @@ public class AppController_Custom_Check {
         }
         String message = saveMessageService.saveReviewData(saveDataMessageItem, zzjg);
         if (message == null) {
-            result.setStatus("2");
+            result.setStatus("1");
             result.setMessage("保存失败");
             return result;
         }
-        result.setStatus("1");
+        result.setStatus("0");
         result.setMessage("保存成功");
         return result;
     }

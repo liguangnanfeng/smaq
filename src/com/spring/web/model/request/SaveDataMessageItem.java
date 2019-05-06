@@ -22,6 +22,11 @@ public class SaveDataMessageItem {
     public String sessionId;
 
     /**
+     * 责任人id
+     */
+    public Integer zrrId;
+
+    /**
      * 立即整改/限时整改
      *  为空表示立即整改
      *  不为空表示限期整改

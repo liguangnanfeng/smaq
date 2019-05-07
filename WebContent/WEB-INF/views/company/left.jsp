@@ -229,7 +229,8 @@
             <li><a data-href="${ly }/village/evaluate/lawDoc-list?flag=4" data-title="上传图片视频资料" href="javascript:void(0)">上传图片视频资料</a></li>
             <li><a data-href="${ly }/village/rectification-list?flag=1" data-title="隐患治理复查" href="javascript:void(0)">隐患治理复查</a></li> --%>
 <%-- TODO 通过data-href  可以在域中通过getAttrbute 来进行获取内容--%>
-            <li><a data-href="${ly }/village/check-list?flag=1" data-title="排查治理记录" href="javascript:void(0)">排查治理记录</a></li>
+            <li><a data-href="${ly }/village/check-list?flag=1" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
+            <li><a data-href="${ly }/village/recheck-list?flag=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
             <li><a data-href="${ly }/village/danger-index-list?flag=1" data-title="隐患统计汇总" href="javascript:void(0)">隐患统计汇总</a></li>
             <li><a data-href="${ly }/village/danger-chart" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
             <%-- <li><a data-href="${ly }/html/about.html" data-title="新手指南" href="javascript:void(0)">新手指南</a></li> --%>

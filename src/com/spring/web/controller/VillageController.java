@@ -1830,7 +1830,7 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 隐患汇总 cId 企业id
+     * 隐患汇总 cId 企业id  隐患排查记录
      */
     @RequestMapping(value = "danger-index-list")
     public String modelList(HttpServletRequest request, Model model, Integer flag, Integer cId, Integer d,
@@ -1876,6 +1876,24 @@ public class VillageController extends BaseController {
         model.addAttribute("cId", cId);
         return "village/company/danger-index-list";
     }
+
+    @RequestMapping(value = "recheck-list")
+    public String modelList(HttpServletRequest request, Model model,Integer flag) throws Exception {
+        User user = getLoginUser(request);
+        model.addAttribute("flag", flag);
+
+
+
+        List<Map> list = tCheckItemMapper.selectRecheckList();
+        model.addAttribute("list", list);
+
+
+
+
+
+        return "company/danger/recheck-list";
+    }
+
 
     /**
      * 隐患汇总 cId 企业id

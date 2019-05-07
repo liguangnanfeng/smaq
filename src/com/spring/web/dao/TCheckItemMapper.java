@@ -153,4 +153,10 @@ public interface TCheckItemMapper {
      * @return
      */
     Integer selectNumBytCheckId(Integer id);
+
+    /**
+     * 2019-05-07  新增隐患治理记录(复查记录)
+     */
+    List<Map> selectRecheckList();
+
 }

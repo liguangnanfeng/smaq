@@ -22,11 +22,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.web.BaseController;
@@ -481,10 +477,16 @@ public class AppController_xlb extends BaseController {
      */
     @RequestMapping(value = "A015", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult noticeDetail(HttpServletRequest request, Integer id) {
+    AppResult noticeDetail(HttpServletRequest request, Integer id,@RequestBody Map<String, Object> params) {
         AppResult result = new AppResultImpl();
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("notice", noticeMapper.selectByPrimaryKey(id));
+        String basic = String.valueOf(params.get("basic"));
+        if(null == basic){
+            map.put("notice", noticeMapper.selectByPrimaryKey(id));
+        }else{
+            map.put("notice", noticeMapper.selectByPrimaryKey(Integer.valueOf(basic)));
+        }
+
         result.setData(map);
         return result;
     }

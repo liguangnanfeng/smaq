@@ -157,6 +157,6 @@ public interface TCheckItemMapper {
     /**
      * 2019-05-07  新增隐患治理记录(复查记录)
      */
-    List<Map> selectRecheckList();
+    List<Map> selectRecheckList(Integer userId);
 
 }

@@ -23,7 +23,11 @@
     <!--</select>-->
 
     <insert id="saveTRectificationConfirm" parameterType="com.spring.web.model.TRectificationConfirm">
+<<<<<<< HEAD
     INSERT INTO t_rectification_confirm(confirm,sender,checker,status,check_id,create_time) VALUES (#{confirm},#{sender},#{checker},#{status},#{check_id},#{create_time})
+=======
+    INSERT INTO t_rectification_confirm(confirm,sender,checker,status,check_id,create_time) VALUES (#{confirm},#{sender},#{checker},#{status},#{checkId},#{createTime})
+>>>>>>> 06f36303afb2e820a3edf4c502db6960b1634b5c
     </insert>
 
     <select id="findTRectificationConfirm" parameterType="java.lang.String" resultMap="ResultMap">

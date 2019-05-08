@@ -32,4 +32,9 @@ public class Zzig_departmentImpl implements Zzig_departmentService {
 
         return list;
     }
+
+    @Override
+    public List<ZzjgDepartment> selectDepByCompanyIdandSome(Integer companyId, Integer depId) {
+        return zzjgDepartmentMapper.selectDepByCompanyIdandSome(companyId,depId);
+    }
 }

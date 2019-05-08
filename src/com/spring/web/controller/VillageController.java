@@ -1883,11 +1883,11 @@ public class VillageController extends BaseController {
         model.addAttribute("flag", flag);
 
 
-
-        List<Map> list = tCheckItemMapper.selectRecheckList();
-        model.addAttribute("list", list);
-
-
+        // 企业登录
+//        if(1==flag){
+            List<Map> list = tCheckItemMapper.selectRecheckList(user.getId());
+            model.addAttribute("list", list);
+//        }
 
 
 

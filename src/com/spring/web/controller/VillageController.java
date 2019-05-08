@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.spring.web.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.json.simple.JSONArray;
@@ -39,26 +40,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.spring.web.BaseController;
 import com.spring.web.ibatis.DynamicParameter;
-import com.spring.web.model.ACompanyManual;
-import com.spring.web.model.ADangerManual;
-import com.spring.web.model.Company;
-import com.spring.web.model.LawDoc;
-import com.spring.web.model.Library;
-import com.spring.web.model.Notice;
-import com.spring.web.model.Regulation;
-import com.spring.web.model.Standard;
-import com.spring.web.model.TCheck;
-import com.spring.web.model.TCheckDocument;
-import com.spring.web.model.TCheckPart;
-import com.spring.web.model.TCompany;
-import com.spring.web.model.TIndustry;
-import com.spring.web.model.TRectification;
-import com.spring.web.model.TTindustry;
-import com.spring.web.model.Table2;
-import com.spring.web.model.Trade;
-import com.spring.web.model.TradeClique;
-import com.spring.web.model.TradeCompany;
-import com.spring.web.model.User;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
 import com.spring.web.result.Result;
@@ -89,6 +70,7 @@ public class VillageController extends BaseController {
     private UserService userService;
     @Autowired
     private CgfService cgfService;
+
 
     /**
      * 政府登录
@@ -1643,7 +1625,6 @@ public class VillageController extends BaseController {
     }
 
     /**
-     *
      * 企业自查 侧边栏点击企业自查的
      * TODO 点击行政检查 /village/trouble-set?url=/company/check-list?flag=4%26type=3
      */
@@ -2638,7 +2619,7 @@ public class VillageController extends BaseController {
      * 资源导入持证上岗人员名单
      * 
      * @param file
-     * @param contractCode
+     * @param
      * @throws Exception
      */
     @RequestMapping(value = "importSpersonExcel", produces = "text/html;charset=utf-8")
@@ -2663,4 +2644,43 @@ public class VillageController extends BaseController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * TODO 添加检查模版
+     * 添加检查模版 ==> 就是要进行数据的传递
+     * 1. 根据总公司的id查询所有的部门
+     * 2. 根据 总Id 和部门查询所有的岗位
+     *
+     */
+    @RequestMapping(value = "addCheckModel")
+    public String addCheckModel( Model model, HttpServletRequest request){
+        User user = getLoginUser(request);
+
+        /**
+         * 里面包含部门的id  部门的信息部门的等级
+         */
+        List<Map<Object, Object>> maps = zzjgDepartmentMapper.selectByUid(user.getId());
+
+        // 获取所有的部门 使用list集合
+        List<String> names = new ArrayList<>();
+        for (Map<Object, Object> map : maps) {
+            if(1==map.get("level")){ //表示是一级目录
+                String name = (String) map.get("name");
+                names.add(name);
+
+            }
+        }
+
+        Map<String,Object> map = new HashMap<>();
+
+        for (String name : names) {
+            List<String> list = aCompanyManualMapper.selectDangerAndManual(user.getId(), name);
+            map.put(name,list );
+        }
+
+        model.addAttribute("map", map);
+
+        return "company/checkModel/model-add";
+    }
+
 }

@@ -33,6 +33,4 @@
         where checker = #{userId}
     </select>
 
-
-
 </mapper>

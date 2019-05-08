@@ -192,10 +192,10 @@
                 uid = #{uid,jdbcType=INTEGER},
             </if>
             <if test="password != null">
-                #{password,jdbcType=VARCHAR},
+                password =#{password,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
-                #{status,jdbcType=VARCHAR},
+                status = #{status,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}

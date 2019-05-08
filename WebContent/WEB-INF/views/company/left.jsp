@@ -213,10 +213,10 @@
         <dd>
         
         <div class="div_omenu">
-            <div  class="div_otop">检查设置与实施<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
+            <div  class="div_otop">检查模版设置<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
             <ul>
-              <li><a data-href="${ly }/village/trouble-set?url=/company/model-list-cx?flag=1%26type=1" data-title="企业自查" href="javascript:void(0)">企业自查</a></li>
-              <li><a data-href="${ly }/village/trouble-set?url=/company/check-list?flag=4%26type=3" data-title="行政检查" href="javascript:void(0)">行政检查</a></li>
+              <%--<li><a data-href="${ly }/village/trouble-set?url=/company/model-list-cx?flag=1%26type=1" data-title="企业自查" href="javascript:void(0)">企业自查</a></li>--%>
+              <li><a data-href="${ly }/village/addCheckModel" data-title="添加检查模版" href="javascript:void(0)">添加检查模版</a></li>
               <%--<li><a data-href="${ly }/company/model-list-cx?flag=1&type=1" data-title="企业自查" href="javascript:void(0)">企业自查</a></li>
               <li><a data-href="${ly }/company/check-list?flag=4&type=3" data-title="行政检查" href="javascript:void(0)">行政检查</a></li>
               <li><a data-href="${ly }/village/trouble-set" data-title="排查内容设置" href="javascript:void(0)">排查内容设置</a></li> --%>

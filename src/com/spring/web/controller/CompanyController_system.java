@@ -211,10 +211,6 @@ public class CompanyController_system extends BaseController {
         if(dto.getStatus()==null){
             dto.setStatus("0");
         }
-        if(dto.getPassword()!=null){
-            dto.setPassword("123456");
-
-        }
         dto.setUid(user.getId());
         // TODO 调用工具类生成密码 微信小程序端进行用户登陆密码请勿删除
         String encryptedPwd = EncryptUtil.encrypt(dto.getPassword());

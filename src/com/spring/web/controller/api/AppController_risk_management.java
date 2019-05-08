@@ -16,6 +16,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.spring.web.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,12 +26,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.spring.web.BaseController;
 import com.spring.web.ibatis.LlHashMap;
-import com.spring.web.model.AImplementation;
-import com.spring.web.model.Company;
-import com.spring.web.model.Library;
-import com.spring.web.model.User;
-import com.spring.web.model.ZzjgCompany;
-import com.spring.web.model.ZzjgDepartment;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
 
@@ -502,7 +497,59 @@ public class AppController_risk_management extends BaseController{
         result.setData(array);
         return result;
     }
-    
+
+
+
+    /**
+     *
+     * getOrgPart(获取组织架构)
+     */
+    @RequestMapping("organization")
+    public @ResponseBody AppResult organization(HttpServletRequest request,Integer userId) {
+        AppResult result = new AppResultImpl();
+        Integer userIds = getAppUserId(request);
+        if (null == userIds) {
+            result.setStatus("2");
+            result.setMessage("登录超时");
+            return result;
+        }
+        if(null == userId){
+            userId = userIds;
+        }
+        JSONArray array = new JSONArray();
+        ZzjgPersonnel   zzjgPersonnel  = zzjgPersonnelMapper.selectByPrimaryKey(userId);
+        List<ZzjgCompany> list = zzjgCompanyMapper.selectAll(zzjgPersonnel.getCid());
+        if(!list.isEmpty()){
+            for(ZzjgCompany company : list){
+                JSONObject object = new JSONObject();
+                ZzjgDepartment zzjgDepartment = new ZzjgDepartment();
+                object.put("company", company);
+                zzjgDepartment.setCid(company.getId());
+                zzjgDepartment.setLevel(1);
+                List<ZzjgDepartment> bumenList = zzjgDepartmentMapper.selectByCompanyId(zzjgDepartment);
+                if(!bumenList.isEmpty()){
+                    JSONArray bumenArr = new JSONArray();
+                    for(ZzjgDepartment department : bumenList){
+                        JSONObject bObject = new JSONObject();
+                        bObject.put("department", department);
+                        ZzjgDepartment zzjgDepartment2 = new ZzjgDepartment();
+                        zzjgDepartment2.setPid(department.getId());
+                        zzjgDepartment2.setLevel(2);
+                        List<ZzjgDepartment> banzuList = zzjgDepartmentMapper.selectByCompanyId(zzjgDepartment2);
+                        bObject.put("banzuList", banzuList);
+                        bumenArr.add(bObject);
+                    }
+                    object.put("departmentList", bumenArr);
+                }
+
+                array.add(object);
+            }
+        }
+        result.setData(array);
+        return result;
+    }
+
+
     /**
      * 
      * getUserList(获取部门人员列表)

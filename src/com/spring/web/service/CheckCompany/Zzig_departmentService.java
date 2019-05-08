@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface Zzig_departmentService {
     List<ZzjgDepartment> selectDepartmentByCid(Integer companyId);
+    List<ZzjgDepartment> selectDepByCompanyIdandSome(Integer companyId,Integer depId);
 }

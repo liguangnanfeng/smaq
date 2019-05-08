@@ -1,6 +1,4 @@
-/**  
- * Copyright(c)2017 Wuxi Lanlin Co.,Ltd. 
- * All right reserved. 
+
  */
 package com.spring.web.controller;
 
@@ -53,11 +51,11 @@ import com.spring.web.util.DateConvertUtil;
 import com.spring.web.util.OutPrintUtil;
 
 /**
+ * @author CGF
+ * @version V1.0
  * @Title: VillageController
  * @Description: TODO(village:  /'vɪlɪdʒ/ 村庄)
- * @author CGF
  * @date 2017年7月21日 下午12:42:42
- * @version V1.0
  */
 @Controller
 @RequestMapping("/village")
@@ -91,7 +89,7 @@ public class VillageController extends BaseController {
     public String main(HttpServletRequest request, Model model) throws Exception {
         User user = getLoginUser(request);
         model.addAttribute("name_", villageMapper.selectByPrimaryKey(user.getId()).getName());
-        if(user.getUserName().equals("港口")) {//港口特殊账号
+        if (user.getUserName().equals("港口")) {//港口特殊账号
             return "gang/main";
         }
         model.addAttribute("loginUserId", user.getId());
@@ -106,40 +104,40 @@ public class VillageController extends BaseController {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
-        
-        String userIds = (String)m.get("userIds");
-        
+
+        String userIds = (String) m.get("userIds");
+
         CompanyListReqDTO dto = new CompanyListReqDTO();
         dto.setUserIds(userIds);
         List<Integer> count = userService.selectCount(dto, user);
 
-        log.error("countVillage："+count.toString());
-        
+        log.error("countVillage：" + count.toString());
+
         model.addAttribute("number", "-1".equals(userIds) ? 0 : userIds.split(",").length);//企业数量
-        
+
         model.addAttribute("dangerC", tCheckItemMapper.selectCount(m));// 隐患情况汇总
         model.addAttribute("dangerC2", tCheckItemMapper.selectZhongCount(m));// 隐患情况汇总
-        
+
         model.addAttribute("count", count);
         model.addAttribute("mc", monitorMapper.selectCount(m));
-        if(user.getUserType() == 10){
+        if (user.getUserType() == 10) {
             model.addAttribute("h", tradeMapper.selectByPrimaryKey(user.getId()));
         } else {
             model.addAttribute("v", villageMapper.selectByPrimaryKey(user.getId()));
         }
         model.addAttribute("loginUserId", user.getId());
-        
+
         //add wz 2019-02-22
         HttpSession session = request.getSession();
-        User moveBeforeUser =  (User)session.getAttribute("moveBefore");
-        if(moveBeforeUser != null){
-            model.addAttribute("moveD",1);
+        User moveBeforeUser = (User) session.getAttribute("moveBefore");
+        if (moveBeforeUser != null) {
+            model.addAttribute("moveD", 1);
             model.addAttribute("nameBefore", townMapper.selectByPrimaryKey(moveBeforeUser.getId()).getName());
-        }       
-        
+        }
+
         return "village/welcome";
     }
-    
+
     /**
      * 企业行业汇总
      */
@@ -155,7 +153,7 @@ public class VillageController extends BaseController {
         setUserId(user, m);
         result.setMap("list", companyMapper.selectIndustry2(m));
         result.setMap("list5", companyMapper.selectIndustry2AndScore(m));
-        
+
         //危险等级汇总
         List<Library> da = libraryMapper.selectLibraryList(2);
         List<DynamicParameter<String, Object>> d = companyMapper.selectDlevel(m);
@@ -187,9 +185,9 @@ public class VillageController extends BaseController {
                 dL.set(0, (String) dL.get(0) + "(" + x + ")");
             }
         }
-        
+
         result.setMap("dataD", dataD);
-        
+
         //监管行业汇总
         List<Library> lib = libraryMapper.selectLibraryList(1);
         List<DynamicParameter<String, Object>> l = companyMapper.selectIndustry(m);
@@ -213,7 +211,7 @@ public class VillageController extends BaseController {
                     List<Object> x = dataL.get(i);
                     x.set(1, c);
                     x.set(0, (String) x.get(0));
-                    
+
                     for (DynamicParameter<String, Object> d2 : l_scale) {
                         String i2 = d2.getString("industry");
                         Integer c2 = d2.getInteger("c");
@@ -246,16 +244,16 @@ public class VillageController extends BaseController {
         //log.error("zhangcl 2018.11.8 companyList start1 userid:"+user.getId());
         cgfService.selectCompanyWithPage(dto, user, model);
         //log.error("zhangcl 2018.11.8 companyList end1:"+ System.currentTimeMillis());    
-        if(user.getUserType().intValue() == 3) {
+        if (user.getUserType().intValue() == 3) {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("townId", dto.getTownId());
             m.put("districtId", dto.getDistrictId());
             List<DynamicParameter<String, Object>> villagelist = villageMapper.selectListByTown(m);
             model.addAttribute("villagelist", villagelist);
-        }    
+        }
         model.addAttribute("lib", libraryMapper.selectLibraryList(1));
         model.addAttribute("sk", request.getParameter("sk"));
-        
+
 
 //        CompanyListReqDTO dto2 = new CompanyListReqDTO();
 //        dto2.setDistrictId(dto.getDistrictId());
@@ -289,7 +287,7 @@ public class VillageController extends BaseController {
                 totalzc = companyMapper.selectIdsByCompany_view_count(dto2);
             }
         }*/
-        
+
 //        CompanyListReqDTO dto2 = new CompanyListReqDTO();
 //        dto2.setDistrictId(dto.getDistrictId());
 //        dto2.setTownId(dto.getTownId());
@@ -299,7 +297,7 @@ public class VillageController extends BaseController {
 //        model.addAttribute("totalwyx", companyMapper.selectIdsByCompany_view_count(dto2));
 //        dto2.setIsFreeze("1");
 //        model.addAttribute("totalzc", companyMapper.selectIdsByCompany_view_count(dto2));
-        
+
         model.addAttribute("totalzc", totalzc);
         model.addAttribute("totalwyx", totalwyx);
         model.addAttribute("dto", dto);
@@ -313,12 +311,13 @@ public class VillageController extends BaseController {
         //log.error("zhangcl 2018.11.8 companyList end5:"+ System.currentTimeMillis());
         return "village/company/company-list";
     }
-    
+
     /**
      * 企业列表 正常与未运行企业数量统计
      */
     @RequestMapping(value = "company-list-tj")
-    public @ResponseBody Result companylisttj(HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result companylisttj(HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         CompanyListReqDTO dto2 = new CompanyListReqDTO();
@@ -329,13 +328,7 @@ public class VillageController extends BaseController {
         result.setMap("totalzc", companyMapper.selectIdsByCompany_view_count(dto2));
         return result;
     }
-
-    /**
-     * 判断user是什么用户
-     * @param user
-     * @param dto
-     */
-    protected void setUserId2(User user, CompanyListReqDTO dto) {
+        protected void setUserId2(User user, CompanyListReqDTO dto) {
         if (user.getUserType() == 4) {
             dto.setVillageId(user.getId());
         }
@@ -349,10 +342,10 @@ public class VillageController extends BaseController {
             dto.setDistrictId(user.getId());
         }
         if (user.getUserType() == 9) {
-            
+
         }
         if (user.getUserType() == 10) {
-           dto.setTradeId(user.getId());
+            dto.setTradeId(user.getId());
         }
     }
 
@@ -371,15 +364,15 @@ public class VillageController extends BaseController {
     @RequestMapping(value = "company/company-add")
     public String toAddCompany(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
-        if(user.getUserType().intValue() == 3) {
+        if (user.getUserType().intValue() == 3) {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("townId", user.getId());
             List<DynamicParameter<String, Object>> list = villageMapper.selectListByTown(m);
             model.addAttribute("list", list);
             return "town/company/company-add";
         }
-        
-        if(user.getUserType().intValue() == 6) {
+
+        if (user.getUserType().intValue() == 6) {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("districtId", user.getId());
             List<Map<String, Object>> list = townMapper.selectListByDistrict(m);
@@ -388,7 +381,7 @@ public class VillageController extends BaseController {
         }
         return "village/company/company-add";
     }
-    
+
     /**
      * to企业行业添加页面
      */
@@ -396,7 +389,7 @@ public class VillageController extends BaseController {
     public String toAddCompanyTrade(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         Integer userId = user.getId();
-        
+
         //获取选中企业
         if (tradeCompanyMapper.selectByUserId(userId).size() == 0) {
             model.addAttribute("tradeCompany", "[]");
@@ -457,7 +450,7 @@ public class VillageController extends BaseController {
         companyMapper.updateByPrimaryKeySelective(company);
         return result;
     }
-    
+
     /**
      * 是否行业重点企业
      */
@@ -531,7 +524,7 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value = "warning/detection-list")
     public String detectionList(Model model, HttpServletRequest request, Integer isTime, String companyName,
-            String deType) throws Exception {
+                                String deType) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
@@ -577,7 +570,7 @@ public class VillageController extends BaseController {
      */
     @RequestMapping("evaluate/evaluation-list")
     public String evatList(Model model, HttpServletRequest request, String reportName, String evaType, Integer isTime,
-            String companyName, String flag) throws Exception {
+                           String companyName, String flag) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
@@ -656,7 +649,7 @@ public class VillageController extends BaseController {
         model.addAttribute("list", sequipmentMapper.selectSequipmentList(m));
         model.addAttribute("isTime", isTime);
         model.addAttribute("companyName", companyName);
-        model.addAttribute("home",home);
+        model.addAttribute("home", home);
         return "village/warning/sequipment-list";
     }
 
@@ -665,7 +658,7 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value = "warning/sperson-list")
     public String spersonList(HttpServletRequest request, Model model, Integer isTime, Integer spFlag, Integer home,
-            String companyName) throws Exception {
+                              String companyName) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
@@ -682,7 +675,7 @@ public class VillageController extends BaseController {
         model.addAttribute("spFlag", spFlag);
         model.addAttribute("isTime", isTime);
         model.addAttribute("companyName", companyName);
-        model.addAttribute("home",home);
+        model.addAttribute("home", home);
         return "village/warning/sperson-list";
     }
 
@@ -783,6 +776,7 @@ public class VillageController extends BaseController {
 //        model.addAttribute("user", userStr);
 //        return "village/company/company-map1";
 //    }
+
     /**
      * 企业分布页面
      */
@@ -794,26 +788,26 @@ public class VillageController extends BaseController {
         setUserId(user, m);
         m.put("page", 0);
         m.put("limit", 20);
-        
+
         Integer count = companyMapper.selectCountMap(m);
         //log.error("count:"+count);
-        
+
         List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyMap(m);
         //log.error("list:"+list.toString());
         //
-		Trade trade = tradeMapper.selectByPrimaryKey(user.getId());//行业端集团型企业 add 190131
+        Trade trade = tradeMapper.selectByPrimaryKey(user.getId());//行业端集团型企业 add 190131
         if (trade != null && trade.getIsClique() == 1) {
-        	TradeClique tc = tradeCliqueMapper.selectByPrimaryKey(user.getId());
-        	 if (tc != null) {
-        		 m.clear();
-        		 m.put("userId",user.getId());
-        		 List<DynamicParameter<String, Object>> list1 = companyMapper.selectCompanyMapTC(m);
-        		 //log.error("list1:"+list1.toString());
-        		 list.addAll(list1);
-        	 }
+            TradeClique tc = tradeCliqueMapper.selectByPrimaryKey(user.getId());
+            if (tc != null) {
+                m.clear();
+                m.put("userId", user.getId());
+                List<DynamicParameter<String, Object>> list1 = companyMapper.selectCompanyMapTC(m);
+                //log.error("list1:"+list1.toString());
+                list.addAll(list1);
+            }
         }
-    	//log.error("list:"+list.toString());
-    	//
+        //log.error("list:"+list.toString());
+        //
         for (int i = 0; i < list.size(); i++) {
             DynamicParameter<String, Object> item = list.get(i);
             item.put("id", i + 1 + "");
@@ -821,10 +815,10 @@ public class VillageController extends BaseController {
 
         String listStr = JSONArray.toJSONString(list);
         //log.error("listStr:"+listStr.toString());
-        
+
         String userStr = JSONObject.toJSONString(user);
         //log.error("userStr:"+userStr.toString());
-        
+
         model.addAttribute("count", count);
         model.addAttribute("companyList", listStr);
         model.addAttribute("user", userStr);
@@ -991,7 +985,7 @@ public class VillageController extends BaseController {
      */
     @RequestMapping("train/special-list")
     public String spersonList(Model model, HttpServletRequest request, String companyName, String spFlag,
-            String spName, String spType, Integer isTime) throws Exception {
+                              String spName, String spType, Integer isTime) throws Exception {
         if (StringUtils.isBlank(spFlag)) {
             spFlag = "1";
         }
@@ -1119,13 +1113,13 @@ public class VillageController extends BaseController {
         model.addAttribute("danger", danger);*/
         return "village/company/company-tab";
     }
-    
+
     /**
      * 企业统计详情
      */
     @RequestMapping(value = "company/company-tab-detail")
     public String companyTab(Model model, HttpServletRequest request, CompanyListReqDTO dto,
-            String scale) throws Exception {
+                             String scale) throws Exception {
         User user = getLoginUser(request);
         /*Map<String, Object> m = new HashMap<String, Object>();
         m.put("districtId", districtId);
@@ -1149,18 +1143,18 @@ public class VillageController extends BaseController {
         dto.setDlevel(utf8Str(dto.getDlevel()));
         dto.setIndustry(utf8Str(dto.getIndustry()));
         cgfService.selectCompanyWithPage(dto, user, model);
-        
-        if(user.getUserType().intValue() == 3) {
+
+        if (user.getUserType().intValue() == 3) {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("townId", dto.getTownId());
             m.put("districtId", dto.getDistrictId());
             List<DynamicParameter<String, Object>> villagelist = villageMapper.selectListByTown(m);
             model.addAttribute("villagelist", villagelist);
         }
-        
+
         model.addAttribute("lib", libraryMapper.selectLibraryList(1));
         model.addAttribute("sk", request.getParameter("sk"));
-        
+
         return "village/company/company-tab-detail";
     }
 
@@ -1168,13 +1162,11 @@ public class VillageController extends BaseController {
      * 隐患排查 检查历史
      * TODO 排查治理记录
      * user. userType : 管理类型  1 超管 2普管 3镇 4 村 5 企业 6区县 7市 8省
-     *
-     *
      */
     @RequestMapping(value = "check-list")//flag:3 部门抽查
     public String troubleList1(HttpServletRequest request, String title, Integer type, String companyName,
-            Integer townId, Integer villageId,
-            Integer status, Integer flag, Model model) throws Exception {
+                               Integer townId, Integer villageId,
+                               Integer status, Integer flag, Model model) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         if (user.getUserType() == 3) {//镇
@@ -1192,7 +1184,7 @@ public class VillageController extends BaseController {
         m.put("companyName", companyName); // null
         m.put("status", status); //状态  null
         // 进行判断
-        if(setUserId(user, m)) {
+        if (setUserId(user, m)) {
             clearVillageTown(m);
             List<Map<String, Object>> list = tCheckMapper.selectList(m);
             model.addAttribute("list", list);
@@ -1221,7 +1213,7 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value = "check-list-cx")
     public String troubleList2(HttpServletRequest request, String title, Integer type, String companyName,
-            Integer status, Integer flag, Model model) throws Exception {
+                               Integer status, Integer flag, Model model) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("type", type);
@@ -1229,12 +1221,12 @@ public class VillageController extends BaseController {
         m.put("title", title);
         m.put("companyName", companyName);
         m.put("status", status);
-        if(setUserId(user, m)) {
+        if (setUserId(user, m)) {
             clearVillageTown(m);
             List<Map<String, Object>> list = tCheckMapper.selectList(m);
             model.addAttribute("list", list);
         }
-        
+
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
         model.addAttribute("companyName", companyName);
@@ -1249,7 +1241,7 @@ public class VillageController extends BaseController {
         }
         return "village/danger/check-list-cx";
     }
-    
+
     /**
      * 添加行政、委托检查表 flag 2 行政执法 3 委托 4 行政检查 userId 企业id
      */
@@ -1257,7 +1249,7 @@ public class VillageController extends BaseController {
     public String checkAdd(Integer flag, Integer industryId, Integer userId, Model model, HttpServletRequest request)
             throws Exception {
         User user = getLoginUser(request);
-        if(user.getUserType().intValue() == 5) {
+        if (user.getUserType().intValue() == 5) {
             userId = user.getId();
         }
         model.addAttribute("type", 3);// 默认临时检查
@@ -1272,13 +1264,13 @@ public class VillageController extends BaseController {
         }
         model.addAttribute("company", companyMapper.selectByPrimaryKey(userId));
 //        if (null == industryId) {// 确认检查标准
-            model.addAttribute("ind1", tIndustryMapper.selectByPrimaryKey(tc.getIndustry1()));// 基础检查类别
-            if(StringUtils.isNotEmpty(tc.getIndustry2())) {
-                model.addAttribute("ind2L", tIndustryMapper.selectByIds(tc.getIndustry2()));// 现场检查类别
-            }
-            if (StringUtils.isNotBlank(tc.getIndustry3())) {
-                model.addAttribute("ind3L", tIndustryMapper.selectByIds(tc.getIndustry3()));// 高危检查类别
-            }
+        model.addAttribute("ind1", tIndustryMapper.selectByPrimaryKey(tc.getIndustry1()));// 基础检查类别
+        if (StringUtils.isNotEmpty(tc.getIndustry2())) {
+            model.addAttribute("ind2L", tIndustryMapper.selectByIds(tc.getIndustry2()));// 现场检查类别
+        }
+        if (StringUtils.isNotBlank(tc.getIndustry3())) {
+            model.addAttribute("ind3L", tIndustryMapper.selectByIds(tc.getIndustry3()));// 高危检查类别
+        }
 //            return "village/danger/check-add1";
 //        }
         // 确定标题等
@@ -1287,7 +1279,7 @@ public class VillageController extends BaseController {
 //        model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
         return "village/danger/check-add2";
     }
-    
+
     /**
      * 选择企业
      */
@@ -1327,6 +1319,7 @@ public class VillageController extends BaseController {
 
     /**
      * TODO 生成检查表数据
+     *
      * @param id
      * @param type
      * @param model
@@ -1335,59 +1328,59 @@ public class VillageController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "plan-next")//生成检查表，modify by zhangcl 2018.10.27
-    public String checkNext(Integer id,Integer type, Model model, HttpServletRequest request) throws Exception {
-    	//log.error("checkNext checkid : "+id);
-    	User user = getLoginUser(request);
+    public String checkNext(Integer id, Integer type, Model model, HttpServletRequest request) throws Exception {
+        //log.error("checkNext checkid : "+id);
+        User user = getLoginUser(request);
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
-        
+
         //log.error("tCheckMapper检查表信息:"+tc.toString());
         type = tc.getType();// add wz 190110
-        
+
         List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(id);
         //log.error("tCheckPartMapper条目信息:"+partL.toString());
-        for(TCheckPart a : partL) {
+        for (TCheckPart a : partL) {
             String levels = a.getLevels();
             //log.error("levels:"+levels);
         }
-          
+
         model.addAttribute("check", tc);
         model.addAttribute("partL", partL);
         //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
         List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(id);
         //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
-        
-        if(type!=null&&type==9){
-        	for(Map<String,Object> a: iteml){
-            	//log.error("checkNext:"+1);
-            	Integer[] ids = new Integer[1];
-            	ids[0] = (Integer) a.get("levelId");
-            	//log.error("ids:"+ids[0]);
-            	//log.error("a:"+a.toString());
-            	List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
-            	String dangertype="";
-            	String factors="";
-            	String measures="";
-            	String level1="";
-            	String level2="";
-            	String level3="";
-            	for(ACompanyManual aa: rets){
-            		//log.error("checkNext:"+2);
-            		dangertype = aa.getType();
-            		factors = aa.getFactors();
-            		measures = aa.getMeasures();
-            		level1 = aa.getLevel1();
-            		level2 = aa.getLevel2();
-            		level3 = aa.getLevel3();
-            		//log.error("type:"+dangertype);
-            		break;
-            	}
-            	a.put("dangerType",dangertype);
-            	a.put("factors",factors);
-            	a.put("measures",measures);
-            	a.put("level1",level1);
-            	a.put("level2",level2);
-            	a.put("level3",level3);
-            	//log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
+
+        if (type != null && type == 9) {
+            for (Map<String, Object> a : iteml) {
+                //log.error("checkNext:"+1);
+                Integer[] ids = new Integer[1];
+                ids[0] = (Integer) a.get("levelId");
+                //log.error("ids:"+ids[0]);
+                //log.error("a:"+a.toString());
+                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
+                String dangertype = "";
+                String factors = "";
+                String measures = "";
+                String level1 = "";
+                String level2 = "";
+                String level3 = "";
+                for (ACompanyManual aa : rets) {
+                    //log.error("checkNext:"+2);
+                    dangertype = aa.getType();
+                    factors = aa.getFactors();
+                    measures = aa.getMeasures();
+                    level1 = aa.getLevel1();
+                    level2 = aa.getLevel2();
+                    level3 = aa.getLevel3();
+                    //log.error("type:"+dangertype);
+                    break;
+                }
+                a.put("dangerType", dangertype);
+                a.put("factors", factors);
+                a.put("measures", measures);
+                a.put("level1", level1);
+                a.put("level2", level2);
+                a.put("level3", level3);
+                //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
             }
         }
         //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
@@ -1398,15 +1391,15 @@ public class VillageController extends BaseController {
         }
         model.addAttribute("now", new Date());
         model.addAttribute("company", companyMapper.selectByPrimaryKey(tc.getUserId()));
-        
+
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("userId", user.getId());
         model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
-        log.error("plan-next："+6);
-        if(type==9)
-        	return "village/danger/plan-next1";
+        log.error("plan-next：" + 6);
+        if (type == 9)
+            return "village/danger/plan-next1";
         else
-        	return "village/danger/plan-next";
+            return "village/danger/plan-next";
     }
 
 //    /**
@@ -1425,13 +1418,13 @@ public class VillageController extends BaseController {
 //        model.addAttribute("listM", tCheckMapper.selectCompany(id));
 //        return "village/danger/opinion-detail";
 //    }
-    
+
     /**
      * 检查表隐患 整改  update wz 190111
      */
     @RequestMapping(value = "check-rectification")
     public String checkRectification(Integer id, Model model, Integer flag) throws Exception {
-    	//log.error("checkId："+id);
+        //log.error("checkId："+id);
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
         Integer type = tc.getType();
         //log.error("检查表type："+type);
@@ -1441,64 +1434,64 @@ public class VillageController extends BaseController {
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
         model.addAttribute("check", check);
         //model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(id, null));
-        
+
         List<Map<String, Object>> iteml = tCheckItemMapper.selectDangerByCheckId(id, null);
         //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
-        if(type!=null&&type==9){
-        	for(Map<String,Object> a: iteml){
-            	//log.error("checkNext:"+1);
-            	Integer[] ids = new Integer[1];
-            	ids[0] = (Integer) a.get("levelId");
-            	//log.error("ids:"+ids[0]);
-            	//log.error("a:"+a.toString());
-            	List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
-            	String dangertype="";
-            	String factors="";
-            	String measures="";
-            	String level1="";
-            	String level2="";
-            	String level3="";
-            	for(ACompanyManual aa: rets){
-            		//log.error("checkNext:"+2);
-            		dangertype = aa.getType();
-            		factors = aa.getFactors();
-            		measures = aa.getMeasures();
-            		level1 = aa.getLevel1();
-            		level2 = aa.getLevel2();
-            		level3 = aa.getLevel3();
-            		//log.error("type:"+dangertype);
-            		break;
-            	}
-            	a.put("dangerType",dangertype);
-            	a.put("factors",factors);
-            	a.put("measures",measures);
-            	a.put("level1",level1);
-            	a.put("level2",level2);
-            	a.put("level3",level3);
-            	//log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
+        if (type != null && type == 9) {
+            for (Map<String, Object> a : iteml) {
+                //log.error("checkNext:"+1);
+                Integer[] ids = new Integer[1];
+                ids[0] = (Integer) a.get("levelId");
+                //log.error("ids:"+ids[0]);
+                //log.error("a:"+a.toString());
+                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
+                String dangertype = "";
+                String factors = "";
+                String measures = "";
+                String level1 = "";
+                String level2 = "";
+                String level3 = "";
+                for (ACompanyManual aa : rets) {
+                    //log.error("checkNext:"+2);
+                    dangertype = aa.getType();
+                    factors = aa.getFactors();
+                    measures = aa.getMeasures();
+                    level1 = aa.getLevel1();
+                    level2 = aa.getLevel2();
+                    level3 = aa.getLevel3();
+                    //log.error("type:"+dangertype);
+                    break;
+                }
+                a.put("dangerType", dangertype);
+                a.put("factors", factors);
+                a.put("measures", measures);
+                a.put("level1", level1);
+                a.put("level2", level2);
+                a.put("level3", level3);
+                //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
             }
         }
         //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
         model.addAttribute("itemL", iteml);
-        
+
         model.addAttribute("rectification", rectification);
         model.addAttribute("company", companyMapper.selectByPrimaryKey(check.getInteger("userId")));
         model.addAttribute("flag", flag);
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
-        log.error("check-rectification："+6);
-        if(type==9){
-        	return "village/danger/opinion-detailrjcb";
-    	}else{
-    		return "village/danger/opinion-detail";
-    	}	
+        log.error("check-rectification：" + 6);
+        if (type == 9) {
+            return "village/danger/opinion-detailrjcb";
+        } else {
+            return "village/danger/opinion-detail";
+        }
     }
 
     /**
      * 整改指令书
      */
     @RequestMapping(value = "check-document")
-    public String checkDocument(Integer checkId, Integer flag, Model model,TRectification tr) throws Exception {
+    public String checkDocument(Integer checkId, Integer flag, Model model, TRectification tr) throws Exception {
         if (null == flag) {
             flag = 8;// 现场检查记录
         }
@@ -1509,7 +1502,7 @@ public class VillageController extends BaseController {
         TCheck check = tCheckMapper.selectByPrimaryKey(checkId);
         model.addAttribute("timenow", new Date());
         int count = tRecheckMapper.selectByCheckId(checkId).size();
-        model.addAttribute("count",count);
+        model.addAttribute("count", count);
         if (null == doc) {// 第一次
             /*if(check.getFlag() == 3){
             cgfService.rectificationSave(tr);
@@ -1529,7 +1522,7 @@ public class VillageController extends BaseController {
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
         model.addAttribute("userId", check.getUserId());
         model.addAttribute("checkId", checkId);
-        log.error("checkid:"+checkId+",flag:"+flag+",checkflag:"+check.getFlag());
+        log.error("checkid:" + checkId + ",flag:" + flag + ",checkflag:" + check.getFlag());
         return "village/danger/opinion-add" + flag + check.getFlag();
     }
 
@@ -1565,6 +1558,7 @@ public class VillageController extends BaseController {
 
     /**
      * 现场记录保存
+     *
      * @param checkId
      * @param userId
      * @param copy
@@ -1578,7 +1572,7 @@ public class VillageController extends BaseController {
     @RequestMapping(value = "check-document-save8")
     public @ResponseBody
     Result checkDocumentSave8(Integer checkId, Integer userId, String copy, Integer flag2, String itms, String checkCompany,
-            HttpServletRequest request) throws Exception {
+                              HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         checkId = cgfService.checkDocumentSave8(checkId, userId, copy, flag2, itms, getLoginUser(request).getId(), checkCompany);
         result.setMap("checkId", checkId);
@@ -1605,17 +1599,17 @@ public class VillageController extends BaseController {
      * c 0 表示过滤未整改的 1已整改的
      */
     @RequestMapping(value = "rectification-list")
-    public String checkDangerList(Integer flag, String title, Integer c,String companyName, Model model,
-            HttpServletRequest request) throws Exception {
+    public String checkDangerList(Integer flag, String title, Integer c, String companyName, Model model,
+                                  HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("flag", flag);
         m.put("title", title);
         m.put("companyName", companyName);
-        if(null != c) {
+        if (null != c) {
             m.put("c", c);
         }
-        if(setUserId(user, m)) {
+        if (setUserId(user, m)) {
             clearVillageTown(m);
             model.addAttribute("list", tRectificationMapper.selectRectificationList(m));
         }
@@ -1638,7 +1632,7 @@ public class VillageController extends BaseController {
         // TODO 获取登陆的用户的信息
         User user = getLoginUser(request);
         // 判断是否为企业
-        if(user.getUserType().intValue() == 5) {
+        if (user.getUserType().intValue() == 5) {
             userId = user.getId();
         }
         // 查询产业表的所有字段
@@ -1783,12 +1777,13 @@ public class VillageController extends BaseController {
         result.setData(tCheckDocument);
         return result;
     }
-    
+
     /**
      * 行政文书保存
      */
     @RequestMapping("getVillageByTown")
-    public @ResponseBody Result getVillageByTown(Model model, Integer townId) {
+    public @ResponseBody
+    Result getVillageByTown(Model model, Integer townId) {
         Result result = new ResultImpl();
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("townId", townId);
@@ -1805,7 +1800,7 @@ public class VillageController extends BaseController {
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("userId", user.getId());
         TCheckDocument d = tCheckDocumentMapper.selectByPrimaryKey(id);
-        if(null != d.getCheckId()) {
+        if (null != d.getCheckId()) {
             model.addAttribute("check", tCheckMapper.selectByPrimaryKey(d.getCheckId()));
             model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(d.getCheckId(), null));
             model.addAttribute("itemL1", tCheckItemMapper.selectDangerByCheckId(d.getCheckId(), 1));
@@ -1820,16 +1815,16 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value = "danger-index-list")
     public String modelList(HttpServletRequest request, Model model, Integer flag, Integer cId, Integer d,
-            String partName, String companyName, Integer status,  
-            String startTime, String endTime) throws Exception {
+                            String partName, String companyName, Integer status,
+                            String startTime, String endTime) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
         //企业自查显示——未整改	wz 18/12/20
-        if(status == null){
-        	status =2;  	
-        }else if(status == 1){
-        	status =null;
+        if (status == null) {
+            status = 2;
+        } else if (status == 1) {
+            status = null;
         }
         m.put("flag", flag);
         m.put("status", status);
@@ -1837,7 +1832,7 @@ public class VillageController extends BaseController {
         m.put("companyName", companyName);
         m.put("startTime", startTime);
         m.put("endTime", endTime);
-        if(null != cId) {
+        if (null != cId) {
             m.put("userId", cId);
         }
         m.put("partName", partName);
@@ -1864,17 +1859,16 @@ public class VillageController extends BaseController {
     }
 
     @RequestMapping(value = "recheck-list")
-    public String modelList(HttpServletRequest request, Model model,Integer flag) throws Exception {
+    public String modelList(HttpServletRequest request, Model model, Integer flag) throws Exception {
         User user = getLoginUser(request);
         model.addAttribute("flag", flag);
 
 
         // 企业登录
 //        if(1==flag){
-            List<Map> list = tCheckItemMapper.selectRecheckList(user.getId());
-            model.addAttribute("list", list);
+        List<Map> list = tCheckItemMapper.selectRecheckList(user.getId());
+        model.addAttribute("list", list);
 //        }
-
 
 
         return "company/danger/recheck-list";
@@ -1933,27 +1927,27 @@ public class VillageController extends BaseController {
                 a = new Object[]{userId, name, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             }
             //处理数据
-            int index = (flag -1) * 4 + 2;
-            if(status == 2) {
-                a[index] = (Integer)a[index] + c;
+            int index = (flag - 1) * 4 + 2;
+            if (status == 2) {
+                a[index] = (Integer) a[index] + c;
             } else {
-                a[index + 1] = (Integer)a[index + 1] + c;
+                a[index + 1] = (Integer) a[index + 1] + c;
             }
             //重大隐患
-            if(d == 1) {
-                if(status == 2) {
-                    a[index + 2] = (Integer)a[index + 2] + c;
+            if (d == 1) {
+                if (status == 2) {
+                    a[index + 2] = (Integer) a[index + 2] + c;
                 } else {
-                    a[index + 3] = (Integer)a[index + 3] + c;
-                } 
+                    a[index + 3] = (Integer) a[index + 3] + c;
+                }
             }
-            if(!has) {
+            if (!has) {
                 ll.add(a);
             }
         }
         model.addAttribute("m", m);
         model.addAttribute("list", ll);
-        
+
         m.put("d", 1);
         Integer d = tCheckItemMapper.selectDangerIndexListCount(m);
         List<Map<String, Object>> lll = tCheckItemMapper.selectDangerCollectGroup(m);
@@ -1962,7 +1956,7 @@ public class VillageController extends BaseController {
         model.addAttribute("libL", libraryMapper.selectLibraryList(1));// 行业
         return "village/danger/danger-collect";
     }
-    
+
     /**
      * 隐患汇总 cId 企业id
      */
@@ -2015,27 +2009,27 @@ public class VillageController extends BaseController {
                 a = new Object[]{userId, name, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             }
             //处理数据
-            int index = (flag -1) * 4 + 2;
-            if(status == 2) {
-                a[index] = (Integer)a[index] + c;
+            int index = (flag - 1) * 4 + 2;
+            if (status == 2) {
+                a[index] = (Integer) a[index] + c;
             } else {
-                a[index + 1] = (Integer)a[index + 1] + c;
+                a[index + 1] = (Integer) a[index + 1] + c;
             }
             //重大隐患
-            if(d == 1) {
-                if(status == 2) {
-                    a[index + 2] = (Integer)a[index + 2] + c;
+            if (d == 1) {
+                if (status == 2) {
+                    a[index + 2] = (Integer) a[index + 2] + c;
                 } else {
-                    a[index + 3] = (Integer)a[index + 3] + c;
-                } 
+                    a[index + 3] = (Integer) a[index + 3] + c;
+                }
             }
-            if(!has) {
+            if (!has) {
                 ll.add(a);
             }
         }
         model.addAttribute("m", m);
         model.addAttribute("list", ll);
-        
+
         m.put("d", 1);
         Integer d = tCheckItemMapper.selectDangerIndexListCount(m);
         List<Map<String, Object>> lll = tCheckItemMapper.selectDangerCollectGroup(m);
@@ -2071,7 +2065,7 @@ public class VillageController extends BaseController {
         model.addAttribute("companyName", companyName);
         return "village/company/danger-index3";
     }
-    
+
     /**
      * 摄像头监管段
      */
@@ -2085,7 +2079,7 @@ public class VillageController extends BaseController {
         model.addAttribute("companyName", companyName);
         return "village/system/monitor-list-supervise";
     }
-    
+
     /**
      * 摄像头企业端
      */
@@ -2119,7 +2113,7 @@ public class VillageController extends BaseController {
 
     /**
      * 执法文档页面列表
-     * 
+     *
      * @throws Exception
      */
     @RequestMapping("evaluate/lawDoc-list")
@@ -2184,7 +2178,7 @@ public class VillageController extends BaseController {
 
     /**
      * 防雷防静电设施页面列表
-     * 
+     *
      * @throws Exception
      */
     @RequestMapping("warning/lightning-list")
@@ -2220,7 +2214,7 @@ public class VillageController extends BaseController {
     }
     /**
      * 监管端行政检查添加
-     * 
+     *
      * @throws Exception
      */
     // @RequestMapping("company/model-add")
@@ -2239,14 +2233,14 @@ public class VillageController extends BaseController {
     // model.addAttribute("timenow", new Date());
     // return "village/company/model-add";
     // }
-    
+
     /**
      * 安全监察监管——高危作业/重大危险源
      */
     @RequestMapping(value = "company/company-list-zg")
     public String companyListZg(Integer townId, Integer villageId, Integer userId, Model model,
-            HttpServletRequest request, String companyName, String state, String isFreeze,
-            Integer cisDanger,Integer chemic, String dlevel, Integer isKey, String doubleDanger, Integer danger) throws Exception {
+                                HttpServletRequest request, String companyName, String state, String isFreeze,
+                                Integer cisDanger, Integer chemic, String dlevel, Integer isKey, String doubleDanger, Integer danger) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         if (null != townId) {
@@ -2260,19 +2254,19 @@ public class VillageController extends BaseController {
         m.put("isFreeze", isFreeze);
         m.put("cisDanger", cisDanger);//1 含有重大危险源
         m.put("chemic", chemic);// 含有危险化学品
-        if(null != dlevel) {
+        if (null != dlevel) {
             dlevel = utf8Str(dlevel);
         }
         m.put("dlevel", dlevel);
         if (user.getUserType() == 10) {
             m.put("isTradeKey", isKey);
-        }else{
+        } else {
             m.put("isKey", isKey);
         }
         m.put("doubleDanger", doubleDanger);
         m.put("danger", danger);
-        List<DynamicParameter<String, Object>> list = new ArrayList<DynamicParameter<String,Object>>();
-        if(cisDanger != null){//重大危险源
+        List<DynamicParameter<String, Object>> list = new ArrayList<DynamicParameter<String, Object>>();
+        if (cisDanger != null) {//重大危险源
 //	        List<Map<String, Object>> mList = monitorMapper.selectGroupByMap(m);//在线监控有内容的企业
 //	        if(mList.size()==0){
 //	        	m.put("userIds", -1);
@@ -2283,15 +2277,15 @@ public class VillageController extends BaseController {
 //	            }
 //	            m.put("userIds", StringUtils.join(userIds, ","));
 //	        }
-	        list = companyMapper.selectCompanyList(m);
-            for(DynamicParameter<String, Object> l : list) {
+            list = companyMapper.selectCompanyList(m);
+            for (DynamicParameter<String, Object> l : list) {
                 String dangerMaterial = l.getString("dangerMaterial");
-                if(StringUtils.isNotBlank(dangerMaterial)) {
+                if (StringUtils.isNotBlank(dangerMaterial)) {
                     l.put("dangerMaterials", dangerMaterial.split(","));
                 }
             }
-        }else{
-        	list = companyMapper.selectCompanyList(m);
+        } else {
+            list = companyMapper.selectCompanyList(m);
         }
         model.addAttribute("list", list);
         model.addAttribute("lib", libraryMapper.selectLibraryList(1));
@@ -2300,28 +2294,28 @@ public class VillageController extends BaseController {
         model.addAttribute("isFreeze", isFreeze);
         if (user.getUserType() == 10) {
             model.addAttribute("isTradeKey", isKey);
-        }else{
+        } else {
             model.addAttribute("isKey", isKey);
         }
         model.addAttribute("sk", request.getParameter("sk"));
-        
-        if(danger != null){//高危作业
+
+        if (danger != null) {//高危作业
             return "village/warning/company-list-gwzy";
         }
-        if(cisDanger != null){//重大危险源
+        if (cisDanger != null) {//重大危险源
             return "village/warning/company-list-zdwxy";
         }
         return "village/company/company-list";
     }
-    
+
     /**
      * 安全风险管控
      */
     @RequestMapping(value = "safety-system/control-list")
-    public String controlList(HttpServletRequest request, 
-            Integer townId, Integer villageId, Integer userId, Model model,
-            String companyName, String level) throws Exception {
-    	//log.error("2018.12.4 debug 0 zhangcl");
+    public String controlList(HttpServletRequest request,
+                              Integer townId, Integer villageId, Integer userId, Model model,
+                              String companyName, String level) throws Exception {
+        //log.error("2018.12.4 debug 0 zhangcl");
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         if (null != townId) {
@@ -2331,7 +2325,7 @@ public class VillageController extends BaseController {
             m.put("villageId", villageId);
         }
         setUserId(user, m);
-        if(StringUtils.isNotBlank(level)) {
+        if (StringUtils.isNotBlank(level)) {
             level = utf8Str(level);
         }
         m.put("companyName", companyName);
@@ -2345,20 +2339,21 @@ public class VillageController extends BaseController {
         }
         model.addAttribute("m", m);
         //log.error("2018.12.4 debug 10 zhangcl");
-        log.error("level："+level.toString());
-        if(level.equals("红色")){
-        	return "village/safety-system/control-list";
-        }else{
-        	return "village/safety-system/control-list1";
+        log.error("level：" + level.toString());
+        if (level.equals("红色")) {
+            return "village/safety-system/control-list";
+        } else {
+            return "village/safety-system/control-list1";
         }
     }
+
     /**
-     * 安全风险管控-企业列表 
+     * 安全风险管控-企业列表
      */
     @RequestMapping(value = "safety-system/control-listmenu")
-    public String controlListmenu(HttpServletRequest request, 
-            Integer townId, Integer villageId, Integer userId, Model model,
-            String companyName, String level) throws Exception {
+    public String controlListmenu(HttpServletRequest request,
+                                  Integer townId, Integer villageId, Integer userId, Model model,
+                                  String companyName, String level) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         if (null != townId) {
@@ -2368,24 +2363,24 @@ public class VillageController extends BaseController {
             m.put("villageId", villageId);
         }
         setUserId(user, m);
-        if(StringUtils.isNotBlank(level)) {
+        if (StringUtils.isNotBlank(level)) {
             level = utf8Str(level);
         }
         m.put("companyName", companyName);
         m.put("level", level);
         //model.addAttribute("list", aCompanyManualMapper.selectByMap3(m));
         List<Map<String, Object>> list = aCompanyManualMapper.selectByMap3(m);
-        model.addAttribute("list",list);
+        model.addAttribute("list", list);
         //log.error("list："+list.toString());
         //统计隐患总数
         Long totalyh = (long) 0;
-        for(int i = 0 ; i < list.size() ; i++ ){
-        	Long num = (Long)list.get(i).get("companyNum");
-        	totalyh = totalyh + num;
+        for (int i = 0; i < list.size(); i++) {
+            Long num = (Long) list.get(i).get("companyNum");
+            totalyh = totalyh + num;
         }
         //log.error("totalyh："+totalyh);
-        model.addAttribute("totalyh",totalyh);
-        
+        model.addAttribute("totalyh", totalyh);
+
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
         }
@@ -2394,11 +2389,11 @@ public class VillageController extends BaseController {
         }
         model.addAttribute("m", m);
         //log.error("list："+aCompanyManualMapper.selectByMap3(m));  
-        if(level.equals("红色")){
-        	return "village/safety-system/control-listmenu";
-        }else{
-        	return "village/safety-system/control-listmenu1";
-        }  
+        if (level.equals("红色")) {
+            return "village/safety-system/control-listmenu";
+        } else {
+            return "village/safety-system/control-listmenu1";
+        }
     }
 
     /**
@@ -2410,43 +2405,43 @@ public class VillageController extends BaseController {
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
         List<Map<String, Object>> list = aCompanyManualMapper.selectByMap2(m);
-        
+
         List<Library> ll = libraryMapper.selectLibraryList(1);//行业
-        
+
         String[] industrys = new String[ll.size()];
         Integer[] gg1 = new Integer[ll.size()];//红
         Integer[] gg2 = new Integer[ll.size()];//橙
         Integer[] gg3 = new Integer[ll.size()];//黄
         Integer[] gg4 = new Integer[ll.size()];//蓝
-        for(int i=0;i<ll.size();i++) {
+        for (int i = 0; i < ll.size(); i++) {
             industrys[i] = ll.get(i).getName();
             gg1[i] = 0;
             gg2[i] = 0;
             gg3[i] = 0;
             gg4[i] = 0;
         }
-        
-        Integer[] flag1 = new Integer[]{0,0,0,0};//部位 数值顺序对应 红橙黄蓝
-        for(Map<String, Object> l : list) {
+
+        Integer[] flag1 = new Integer[]{0, 0, 0, 0};//部位 数值顺序对应 红橙黄蓝
+        for (Map<String, Object> l : list) {
             String level = "";
-            if(null != l.get("level")) {
-                level = (String)l.get("level");
+            if (null != l.get("level")) {
+                level = (String) l.get("level");
             }
             setcompany_manualCount(level, flag1);
             String industry = null;
-            if(null != l.get("industry")) {
+            if (null != l.get("industry")) {
                 industry = l.get("industry").toString();
             }
-            if(null != industry && !"".equals(industry)) {
-                for(int i=0;i<industrys.length;i++) {
-                    if(industry.equals(industrys[i])) {
-                        if("红色".equals(level)) {
+            if (null != industry && !"".equals(industry)) {
+                for (int i = 0; i < industrys.length; i++) {
+                    if (industry.equals(industrys[i])) {
+                        if ("红色".equals(level)) {
                             gg1[i] = gg1[i] + 1;
-                        } else if("橙色".equals(level)) {
+                        } else if ("橙色".equals(level)) {
                             gg2[i] = gg2[i] + 1;
-                        } else if("黄色".equals(level)) {
+                        } else if ("黄色".equals(level)) {
                             gg3[i] = gg3[i] + 1;
-                        } else if("蓝色".equals(level)) {
+                        } else if ("蓝色".equals(level)) {
                             gg4[i] = gg4[i] + 1;
                         }
                         break;
@@ -2462,26 +2457,25 @@ public class VillageController extends BaseController {
         model.addAttribute("gg4", gson.toJson(gg4));
         return "village/safety-system/statistics-list";
     }
-    
+
     void setcompany_manualCount(String level, Integer[] arr) {
-        if("红色".equals(level)) {
+        if ("红色".equals(level)) {
             arr[0] = arr[0] + 1;
-        } else if("橙色".equals(level)) {
+        } else if ("橙色".equals(level)) {
             arr[1] = arr[1] + 1;
-        } else if("黄色".equals(level)) {
+        } else if ("黄色".equals(level)) {
             arr[2] = arr[2] + 1;
-        } else if("蓝色".equals(level)) {
+        } else if ("蓝色".equals(level)) {
             arr[3] = arr[3] + 1;
         }
     }
-    
-    
-    
+
+
     /**
      * 领导关注系统 隐患汇总 cId 企业id
      */
     @RequestMapping(value = "danger-collect-guanzhu")
-    public String modelLists(HttpServletRequest request, Integer industryType, Integer townId, Integer villageId, String companyName, Model model, String startTime, String endTime , Integer isZhongDa) throws Exception {
+    public String modelLists(HttpServletRequest request, Integer industryType, Integer townId, Integer villageId, String companyName, Model model, String startTime, String endTime, Integer isZhongDa) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
@@ -2530,31 +2524,31 @@ public class VillageController extends BaseController {
                 a = new Object[]{userId, name, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             }
             //处理数据
-            int index = (flag -1) * 4 + 2;
-            if(status == 2) {
-                a[index] = (Integer)a[index] + c;
+            int index = (flag - 1) * 4 + 2;
+            if (status == 2) {
+                a[index] = (Integer) a[index] + c;
             } else {
-                a[index + 1] = (Integer)a[index + 1] + c;
+                a[index + 1] = (Integer) a[index + 1] + c;
             }
             //重大隐患
-            if(d == 1) {
-                if(status == 2) {
-                    a[index + 2] = (Integer)a[index + 2] + c;
+            if (d == 1) {
+                if (status == 2) {
+                    a[index + 2] = (Integer) a[index + 2] + c;
                 } else {
-                    a[index + 3] = (Integer)a[index + 3] + c;
-                } 
-            }else{
-                if(isZhongDa == 2){
+                    a[index + 3] = (Integer) a[index + 3] + c;
+                }
+            } else {
+                if (isZhongDa == 2) {
                     continue;
                 }
             }
-            if(!has) {
+            if (!has) {
                 ll.add(a);
             }
         }
         model.addAttribute("m", m);
         model.addAttribute("list", ll);
-        
+
         m.put("d", 1);
         Integer d = tCheckItemMapper.selectDangerIndexListCount(m);
         List<Map<String, Object>> lll = tCheckItemMapper.selectDangerCollectGroup(m);
@@ -2563,19 +2557,19 @@ public class VillageController extends BaseController {
         model.addAttribute("libL", libraryMapper.selectLibraryList(1));// 行业
         return "village/danger/danger-collect-guanzhu";
     }
-    
+
     /**
      * 一周监管动态
      */
     @RequestMapping("notice-list")
-    public String noticeList(HttpServletRequest request,Model model) {
+    public String noticeList(HttpServletRequest request, Model model) {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("districtId", user.getId());
         model.addAttribute("list", pushMessMapper.selectNotice(m));
         return "village/notice-list";
     }
-    
+
     /**
      * 公告详情
      */
@@ -2585,7 +2579,7 @@ public class VillageController extends BaseController {
         model.addAttribute("n", n);
         return "village/notice-show";
     }
-    
+
     /**
      * 下载资料
      */
@@ -2593,7 +2587,7 @@ public class VillageController extends BaseController {
     public void hedownload(String filename, String fileurl, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         File realPath = new File(request.getServletContext().getRealPath("/"), fileurl.replace("/smaq", ""));
-        if(!realPath.exists()) {
+        if (!realPath.exists()) {
             response.setHeader("Content-type", "text/html;charset=UTF-8");
             response.setContentType("text/html;charset=utf-8");
             PrintWriter out = response.getWriter();
@@ -2602,11 +2596,11 @@ public class VillageController extends BaseController {
             out.close();
             return;
         }
-        
+
         filename = URLEncoder.encode(new String(filename.getBytes("ISO-8859-1"), "UTF-8"), "UTF-8");
         response.setContentType(request.getServletContext().getMimeType(filename));
         response.setHeader("Content-Disposition", "attachment;filename=" + filename);
-        
+
         InputStream in = new FileInputStream(realPath);
         OutputStream out = response.getOutputStream();
         try {
@@ -2619,23 +2613,23 @@ public class VillageController extends BaseController {
             out.close();
         }
     }
-    
+
     /**
      * 资源导入持证上岗人员名单
-     * 
+     *
      * @param file
      * @param
      * @throws Exception
      */
     @RequestMapping(value = "importSpersonExcel", produces = "text/html;charset=utf-8")
-    public void importSpersonExcel(Model model, Integer flag,HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {
+    public void importSpersonExcel(Model model, Integer flag, HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {
         Result result = new ResultImpl();
         userService.spersonImportSave(result, flag, file);
         writeResponse(result, response);//该方法调用如下
     }
-    
+
     /**
-     *  为response提供Json格式的返回数据
+     * 为response提供Json格式的返回数据
      */
     public void writeResponse(Object obj, HttpServletResponse response) {
         try {
@@ -2655,10 +2649,9 @@ public class VillageController extends BaseController {
      * 添加检查模版 ==> 就是要进行数据的传递
      * 1. 根据总公司的id查询所有的部门
      * 2. 根据 总Id 和部门查询所有的岗位
-     *
      */
     @RequestMapping(value = "addCheckModel")
-    public String addCheckModel( Model model, HttpServletRequest request){
+    public String addCheckModel(Model model, HttpServletRequest request) {
         User user = getLoginUser(request);
 
         /**
@@ -2667,25 +2660,32 @@ public class VillageController extends BaseController {
         List<Map<Object, Object>> maps = zzjgDepartmentMapper.selectByUid(user.getId());
 
         // 获取所有的部门 使用list集合
-        List<String> names = new ArrayList<>();
+        Map<String, Integer> names = new HashMap<>();
         for (Map<Object, Object> map : maps) {
-            if(1==map.get("level")){ //表示是一级目录
-                String name = (String) map.get("name");
-                names.add(name);
+            if (1 == map.get("level")) { //表示是一级目录
+                String name = (String) map.get("name");//部门名称
+                Integer id = (Integer) map.get("id");//部门id
+                names.put(name, id);
 
             }
         }
 
-        Map<String,Object> map = new HashMap<>();
-
-        for (String name : names) {
-            List<String> list = aCompanyManualMapper.selectDangerAndManual(user.getId(), name);
-            map.put(name,list );
-        }
-
-        model.addAttribute("map", map);
-
+        model.addAttribute("map", names);
         return "company/checkModel/model-add";
     }
 
+    /**
+     * 根据公司和部门获取对应岗位
+     *
+     * @return
+     */
+    @RequestMapping(value = "selectDep")
+    @ResponseBody
+    public List<ZzjgDepartment> findStation(Integer depId, HttpServletRequest request) {
+        User user = getLoginUser(request);
+
+        //根据公司和部门获取岗位
+        List<ZzjgDepartment> zzjgDepartmentList = zzjgDepartmentMapper.selectDepByCompanyIdandSome(user.getId(), depId);
+        return zzjgDepartmentList;
+    }
 }

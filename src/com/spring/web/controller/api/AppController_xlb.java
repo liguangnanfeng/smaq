@@ -15,6 +15,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.spring.web.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,21 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.web.BaseController;
 import com.spring.web.ibatis.DynamicParameter;
-import com.spring.web.model.ACompanyManual;
-import com.spring.web.model.ADangerManual;
-import com.spring.web.model.AppToken;
-import com.spring.web.model.Company;
-import com.spring.web.model.HarmfulFactor;
-import com.spring.web.model.LawDoc;
-import com.spring.web.model.Notice;
-import com.spring.web.model.Regulation;
-import com.spring.web.model.TCheck;
-import com.spring.web.model.TCheckItem;
-import com.spring.web.model.TCheckPart;
-import com.spring.web.model.TModel;
-import com.spring.web.model.TRectification;
-import com.spring.web.model.User;
-import com.spring.web.model.Village;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
 import com.spring.web.service.cgf.CgfService;
@@ -182,6 +168,30 @@ public class AppController_xlb extends BaseController {
         result.setMessage("修改失败");
         return result;
     }
+
+    /**
+     * 小程序用户修改密码
+     */
+    @RequestMapping(value = "updatePassword", method = RequestMethod.POST)
+    public @ResponseBody
+    AppResult updatePassword(HttpServletRequest request,String userId,String oldPsw, String newPsw,@RequestBody Map<String,Object> param) {
+
+        String uid = String.valueOf(param.get("userId"));
+        String oldPassword = String.valueOf(param.get("oldPsw"));
+        String newPassword = String.valueOf(param.get("newPsw"));
+        AppResult result = new AppResultImpl();
+            ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectByPrimaryKey(Integer.valueOf(uid));
+            if(!EncryptUtil.match(zzjgPersonnel.getPassword(), oldPassword)){
+                result.setStatus("1");
+                result.setMessage("原密码不正确");
+                return result;
+            }
+            zzjgPersonnel.setPassword(EncryptUtil.encrypt(newPassword));
+            zzjgPersonnelMapper.updateByPrimaryKey(zzjgPersonnel);
+        return result;
+    }
+
+
 
     /**
      * 基本信息

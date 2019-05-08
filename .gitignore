@@ -258,13 +258,7 @@ out/production/smaq/com/spring/web/validator/
 out/production/smaq/com/spring/web/websocket/
 out/production/smaq/generated/
 out/production/smaq/imgsrv/
-src/com/spring/web/dao/PersonnelMapper.java
-src/com/spring/web/dao/PersonnelMapper.xml
-src/com/spring/web/dao/TRectificationConfirmMapper.java
-src/com/spring/web/dao/TRectificationConfirmMapper.xml
-src/com/spring/web/model/TRectificationConfirm.java
-src/com/spring/web/service/Personnel/
-src/com/spring/web/service/TRectiflcationConfirm/
+
 .settings
 doc
 out

@@ -348,7 +348,6 @@ public class BaseController implements Serializable {
         return ip;
     }
 
-
     /**
      * 取得上传绝对路径
      * 
@@ -388,7 +387,8 @@ public class BaseController implements Serializable {
         }
         String x = DateFormatUtils.format(date, "yyyy-MM-dd");
         String y = DateFormatUtils.format(at.getLastLoginTime(), "yyyy-MM-dd");
-        if (!x.equals(y)) {// 一天登陆多次的，只记录第一次登陆时间
+        if (!x.equals(y)) {
+            // 一天登陆多次的，只记录第一次登陆时间
             at.setLastLoginTime(date);
             appTokenMapper.updateByPrimaryKeySelective(at);
         }

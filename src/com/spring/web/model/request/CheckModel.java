@@ -11,5 +11,5 @@ import lombok.Data;
 public class CheckModel {
     public Integer modelId;
     public String sessionId;
-    public String token;
+    public String access_token;
 }

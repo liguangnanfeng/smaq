@@ -47,7 +47,7 @@ public class CheckItem {
     /**
      * 身份验证
      */
-    public String token;
+    public String access_token;
 
     /**
      * 封装的危险点信息

@@ -4,6 +4,7 @@ package com.spring.web.service.CheckCompany.impl;
 import com.spring.web.dao.ZzjgPersonnelMapper;
 import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.service.CheckCompany.Zzjg_PersonnelService;
+import com.spring.web.util.EncryptUtil;
 import com.spring.web.util.MailUtil;
 import com.spring.web.util.MyMD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,13 @@ public class Zzjg_PersonnelServiceImpl implements Zzjg_PersonnelService {
     public ZzjgPersonnel selectPersonnelByNameAndPwd(String username, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectPersonnelByNameAndPwd(username);
+
         if(null == zzjgPersonnel || "".equals(zzjgPersonnel.getPassword()) || zzjgPersonnel.getPassword()== null){
             // 表示没有查询的数据,并返回为空 表示没有数据
             return null;
         }
-
-        boolean flag = MyMD5Util.validPassword(password, zzjgPersonnel.getPassword());
+        // 1 : 加密后的密码   2: 未加密的密码
+        boolean flag = EncryptUtil.match(zzjgPersonnel.getPassword(), password);
 
         if(flag){
             return zzjgPersonnel;

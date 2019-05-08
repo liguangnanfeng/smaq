@@ -68,7 +68,7 @@ public interface TCheckMapper {
     int deleteById(@Param("sql")String sql);
 
     /**
-     * 根据modelId查询所有的检查表
+     * 根据modelId查询所有的检查表 只有未检查的才能给它
      * @param modelId
      * @return
      */

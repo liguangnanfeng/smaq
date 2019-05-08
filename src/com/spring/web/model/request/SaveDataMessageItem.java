@@ -17,7 +17,7 @@ public class SaveDataMessageItem {
      */
     public String checkId;
 
-    public String token;
+    public String access_token;
 
     public String sessionId;
 

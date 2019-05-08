@@ -85,11 +85,13 @@ public class AppController_xlb extends BaseController {
             result.setMessage("用户不存在");
             return result;
         }
+
         if (!EncryptUtil.match(db_user.getPsw(), user.getPsw())) {
             result.setStatus("1");
             result.setMessage("密码不正确");
             return result;
         }
+
         map.put("user", db_user);
         String indexName = "";
         String charge = "";

@@ -390,6 +390,7 @@
                 and T1.status &gt; 1
             </otherwise>
         </choose>
+
     </select>
 
     <update id="updSuggest">
@@ -833,8 +834,10 @@
         order by t1.id desc, t2.real_time desc
     </select>
 
+
+    <!--根据模版id和partId查询详细信息-->
     <select id="selectAllByCheckId" resultType="com.spring.web.model.TCheckItem">
-        select * from t_check_item_tbl where check_id =#{checkId} and part_id=#{partId};
+        select * from t_check_item_tbl where check_id =#{checkId} and part_id=#{partId} order by id;
     </select>
     <!--根据id查询部门数据  -->
     <select id="selectAllById" resultMap="BaseResultMap">

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.service.zzjgCompany.IzzjgCompanyService;
+import com.spring.web.util.EncryptUtil;
 import com.spring.web.util.MyMD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -216,7 +217,7 @@ public class CompanyController_system extends BaseController {
         }
         dto.setUid(user.getId());
         // TODO 调用工具类生成密码 微信小程序端进行用户登陆密码请勿删除
-        String encryptedPwd = MyMD5Util.getEncryptedPwd(dto.getPassword());
+        String encryptedPwd = EncryptUtil.encrypt(dto.getPassword());
         dto.setCtime(d);
         dto.setDel(0);
         dto.setPassword(encryptedPwd);

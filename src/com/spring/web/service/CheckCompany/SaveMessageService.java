@@ -4,6 +4,7 @@ import com.spring.web.model.TCheckItem;
 import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.model.request.SaveDataMessage;
 import com.spring.web.model.request.SaveDataMessageItem;
+import com.spring.web.model.response.CheckItemS;
 
 import java.util.List;
 import java.util.Map;
@@ -38,8 +39,17 @@ public interface SaveMessageService {
     String saveReviewData(SaveDataMessageItem saveDataMessageItem, ZzjgPersonnel zzjg);
 
     /**
-     * 根据当前的登陆用户,查询检查表
+     * 根据当前的登陆用户,查询检查记录
      * @param zzjg
      */
     List<Map> findCheckItemById(ZzjgPersonnel zzjg);
+
+
+    /**
+     * 根据模版查询检查表信息
+     * @param modelId
+     * @return
+     */
+    CheckItemS findCheckItemByModelId(Integer modelId);
+
 }

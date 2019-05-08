@@ -384,6 +384,7 @@ public class ForeController extends BaseController {
                 result.setMap("message", "该账号不存在。");
                 return result;
             }
+
             // 判断前后台登录
             if (!"0".equals(user.getIsFreeze())) {
                 result.setStatus("1");

@@ -1143,7 +1143,7 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("v", userMapper.selectByPrimaryKey(company.getVillageId()));
         List<Map<String, Object>> list = aCompanyManualMapper.selectByMap(m);
         model.addAttribute("list", list);
- 
+
         Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();    
         for(Map<String, Object> m1 : list) {
             String level1 = null == m1.get("level1") ? "" : m1.get("level1").toString();

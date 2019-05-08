@@ -44,7 +44,7 @@ import com.spring.web.tobject.cgf.CompanyListReqDTO;
 
 /**
  * @Title: AppController
- * @Description: TODO(用一句话描述该文件做什么)
+ * @Description: TODO(登陆信息)
  * @author FL
  * @date 2017年9月21日 下午3:56:10
  * @version V1.0
@@ -53,7 +53,7 @@ import com.spring.web.tobject.cgf.CompanyListReqDTO;
 @RequestMapping(value = "api/village/xlb")
 public class AppController_village_xlb extends BaseController {
     /**
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
+     * @Fields serialVersionUID : TODO(这个是可序列化变量)
      */
     private static final long serialVersionUID = 3074066448546610745L;
     @Autowired

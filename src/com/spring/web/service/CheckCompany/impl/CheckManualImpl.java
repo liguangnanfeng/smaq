@@ -217,46 +217,6 @@ public class CheckManualImpl implements ICheckManual {
         return list;
     }
 
-    /**
-     * 根据模版id查询检查信息并进行返回
-     * 注: 5/6 还是单部门进行插入数据
-     * ------------------------------------------------
-     * 一个模版对应一个部门信息,就是相当于查询一条记录
-     *
-     * 在进行模版查询的时候,一直查询的check的一条对应数据,
-     * 应该是在进行模版查询的时候,进行check数据的复制,并且
-     *
-     * @param modelId
-     */
-    @Override
-    public CheckItemS findCheckItemByModelId(Integer modelId) {
-        try {
-            CheckItemS checkItemS = new CheckItemS();
-
-            // 获取model所有数据进行测试
-            TModel tModel = modelMapper.selectByPrimaryKey(modelId);
-
-            // 获取checkId 和部门信息
-            TCheck tCheck = tCheckMapper.selectByModelId(tModel.getId());
-
-            // 部门或设施
-            List<TCheckPart> tCheckParts = tCheckPartMapper.findAllByCheckId(tCheck.getId());
-
-            checkItemS.setLevle1(tCheckParts.get(0).getName()); //部门信息
-
-            // 查询风险点数据
-            List<TCheckItem> list = tCheckItemMapper.selectAllByCheckId(tCheck.getId(), tCheckParts.get(0).getId());
-            System.out.println(list);
-            checkItemS.setItems(list);
-
-            return checkItemS;
-
-        } catch (Exception e) {
-
-            return null;
-        }
-
-    }
 
     /**
      * 根据安全责任人的id,查询对应的部门,以及岗位
@@ -405,6 +365,7 @@ public class CheckManualImpl implements ICheckManual {
         tCheck.setRealTime(new Date());  // 实际检查时间
         tCheck.setCheker(zzjg.getName());            // 检查人
         tCheck.setContact(zzjg.getMobile());            // 检查人的联系方式
+        tCheck.setDapartContact(String.valueOf(checkItem.getDepartmentId()));      // 被检查人的id
         tCheck.setStatus(1);              // 1. 未检查
         tCheck.setCreateTime(new Date()); // 创建时间
 

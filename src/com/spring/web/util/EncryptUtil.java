@@ -10,6 +10,7 @@ import com.spring.web.security.StandardPasswordEncoder;
  * @date 2016年1月12日 下午4:47:09
  * @version V1.0
  */
+
 public class EncryptUtil {
     private static final StandardPasswordEncoder encoder = new StandardPasswordEncoder();
 

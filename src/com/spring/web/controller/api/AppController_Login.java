@@ -1,7 +1,9 @@
 package com.spring.web.controller.api;
 
+import com.spring.web.dao.AppTokenMapper;
 import com.spring.web.dao.UserMapper;
 import com.spring.web.listener.MySessionContext;
+import com.spring.web.model.AppToken;
 import com.spring.web.model.User;
 import com.spring.web.model.UserItem;
 import com.spring.web.model.ZzjgPersonnel;
@@ -9,6 +11,8 @@ import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
 import com.spring.web.service.CheckCompany.LoginService;
 import com.spring.web.service.CheckCompany.Zzjg_PersonnelService;
+import com.spring.web.util.EncryptUtil;
+import com.spring.web.util.RandomUtil;
 import com.spring.web.util.SessionUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -19,10 +23,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.print.DocFlavor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -33,19 +41,31 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "api/custom/login")
+@SuppressWarnings("all")
 public class AppController_Login {
 
     /**
-     * 企业端登陆
+     * 企业端
      */
     @Autowired
     private Zzjg_PersonnelService zzjgPersonnelService;
 
     /**
-     * 政府端登陆
+     * 政府端
      */
     @Autowired
     private UserMapper userMapper;
+
+    /**
+     * token验证
+     */
+    @Autowired
+    private AppTokenMapper appTokenMapper;
+
+    /**
+     *
+     */
+    private AppTokenData appTokenData;
 
     /**
      * 用户登陆功能
@@ -57,7 +77,7 @@ public class AppController_Login {
      */
     @RequestMapping(value = "A250", method = RequestMethod.POST)
     @ResponseBody
-    public AppResult userLogin(HttpServletRequest request, String username, String password, Integer type)  {
+    public AppResult userLogin(HttpServletRequest request, String username, String password, Integer type) {
 
         AppResult result = new AppResultImpl();
 
@@ -70,23 +90,19 @@ public class AppController_Login {
         // 企业
         if ("1".equals(Integer.toString(type))) {
             result = CommonLogin(request, username, password);
-
         }
-
         // 政府
         if ("2".equals(Integer.toString(type))) {
             //政府端登陆 写一个登陆接口
             result = countryLogin(request, username, password);
-
         }
-
         return result;
     }
 
     /**
      * 政府端登陆
      */
-    private AppResult countryLogin(HttpServletRequest request, String username, String password){
+    private AppResult countryLogin(HttpServletRequest request, String username, String password) {
         AppResult result = new AppResultImpl();
 
         try {
@@ -98,39 +114,53 @@ public class AppController_Login {
                 return result;
             }
             // 判断前后台登录
-/*            if (user.getUserType() > 2) {
-                result.setStatus("1");
-                result.setMessage("请用管理员账号登录。");
-                return result;
-            }*/
-            // 判断前后台登录
             if (!"0".equals(user.getIsFreeze())) {
                 result.setStatus("1");
                 result.setMessage("该账号被冻结。");
                 return result;
             }
-            // 对登陆数据进行验证信息
-            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-            token.setRememberMe(true);
-        /*    Subject currentUser = SecurityUtils.getSubject();
-            currentUser.login(token);
-            SessionUtil.setUser(request, user);*/
+            // 判断密码是否错误
+            if (!EncryptUtil.match(user.getPsw(), password)) {
+                result.setStatus("1");
+                result.setMessage("密码不正确");
+                return result;
+            }
+            // 之后就表示登陆成功
+            result.setStatus("2");
+            result.setMessage("登陆成功");
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("user", user);
+            AppToken db_appToken = appTokenMapper.selectByUserId(String.valueOf(user.getId()));
+            if (db_appToken == null) {
+                AppToken appToken = new AppToken();
+                appToken.setAccessToken(RandomUtil.generateUpperString(10));
+                appToken.setLastLoginTime(new Date());
+                appToken.setExpires(7);
+                appToken.setUserId(user.getId());
 
-            // 设置token
-            String tokenStr = String.valueOf(UUID.randomUUID()).replaceAll("-", "");
+                if (appTokenMapper.insertSelective(appToken) == 1) {
+                    map.put("appToken", appToken);
+                    map.put("type", user.getUserType());
+                    String sessionId = saveAttribute(request, user, appToken.getAccessToken());
+                    map.put("sessionId", sessionId);
+                    result.setData(map);
 
-            // 将数据存储Dao组合实体类中
-            UserItem userItem = new UserItem();
+                }
+            } else {
+                db_appToken.setLastLoginTime((new Date()));
+                db_appToken.setExpires(7);
 
-            userItem.setType(user.getUserType());  //类型进行判断
-            userItem.setUser(user);
-            userItem.setToken(tokenStr);
-            // 将数据存储到返回数据中
-            result.setData(userItem);
+                if (appTokenMapper.updateByPrimaryKeySelective(db_appToken) == 1) {
+                    String sessionId = saveAttribute(request, user, db_appToken.getAccessToken());
+                    map.put("type", 5);
+                    map.put("appToken", user.getUserType());
+                    map.put("sessionId", sessionId);
+                    result.setData(map);
+                }
 
-            //将获取到的用户信息存储到session中
-            String sessionId = saveAttribute(request, user, tokenStr);
-            userItem.setSessionId(sessionId);
+
+            }
+            return result;
 
         } catch (Exception uae) {
             uae.printStackTrace();
@@ -140,12 +170,13 @@ public class AppController_Login {
 
         }
 
-        return result;
+
     }
 
 
     /**
      * 企业端登陆
+     *
      * @param request
      * @param username
      * @param password
@@ -173,32 +204,47 @@ public class AppController_Login {
                 return result;
             }
 
-            // 设置token
-            String token = String.valueOf(UUID.randomUUID()).replaceAll("-", "");
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("user", zzjgPersonnel);
+            AppToken db_appToken = appTokenMapper.selectByUserId(String.valueOf(zzjgPersonnel.getId()));
+            if (db_appToken == null) {
+                AppToken appToken = new AppToken();
+                appToken.setAccessToken(RandomUtil.generateUpperString(10));
+                appToken.setLastLoginTime(new Date());
+                appToken.setExpires(7);
+                appToken.setUserId(zzjgPersonnel.getId());
 
-            // 登陆组合实体类
-            UserItem userItem = new UserItem();
+                if (appTokenMapper.insertSelective(appToken) == 1) {
+                    map.put("appToken", appToken);
+                    map.put("type", 5);
+                    String sessionId = saveAttribute(request, zzjgPersonnel, appToken.getAccessToken());
+                    map.put("sessionId", sessionId);
+                    result.setData(map);
 
-            userItem.setType(5);
-            userItem.setZzjgPersonnel(zzjgPersonnel);
-            userItem.setToken(token);
+                }
 
-            result.setStatus("0");
-            result.setMessage("登陆成功");
-            result.setData(userItem);
+            } else {
+                db_appToken.setLastLoginTime((new Date()));
+                db_appToken.setExpires(7);
 
-            // 存入域中
-            String sessionId = saveAttribute(request, zzjgPersonnel, token);
-            userItem.setSessionId(sessionId);
+                if (appTokenMapper.updateByPrimaryKeySelective(db_appToken) == 1) {
+                    String sessionId = saveAttribute(request, zzjgPersonnel, db_appToken.getAccessToken());
+                    map.put("type", 5);
+                    map.put("appToken", db_appToken);
+                    map.put("sessionId", sessionId);
+                    result.setData(map);
+                }
+            }
+
+            return result;
 
         } catch (Exception e) {
             // 表示密码不正确
             result.setStatus("1");
             result.setMessage("密码不正确");
-
+            return result;
         }
 
-        return result;
     }
 
     /**
@@ -212,7 +258,7 @@ public class AppController_Login {
 
         session.setAttribute(token, zzjgPersonnel);
         // 并存入map集合中
-        MySessionContext myc= MySessionContext.getInstance();
+        MySessionContext myc = MySessionContext.getInstance();
         myc.addSession(session);
 
         String sessionId = request.getSession().getId();
@@ -220,31 +266,24 @@ public class AppController_Login {
     }
 
     /**
-     *  注销,并删除session
-     *  但是session的过期时间,延长到七天是不是有点长
+     * 注销
      *
      * @param token
      * @return AppResult
      */
     @ResponseBody
     @RequestMapping(value = "A251", method = RequestMethod.POST)
-    public AppResult LogionOut(String sessionId, String token, HttpServletRequest request) {
+    public AppResult LogionOut(HttpServletRequest request) {
         AppResult result = new AppResultImpl();
 
-        if(token==null || sessionId==null){
-            result.setStatus("0");
-            result.setMessage("已退出");
+        Object o = appTokenData.delectUserId(request);
+        if (null == o) {
+            result.setStatus("1");
+            result.setMessage("出现退出错误");
 
             return result;
-
         }
 
-        MySessionContext myc= MySessionContext.getInstance();
-        HttpSession sess = myc.getSession(sessionId);
-        sess.removeAttribute(token);  //删除session
-        myc.delSession(sess); //删除session
-
-        request.getSession().removeAttribute(token);
         result.setStatus("0");
         result.setMessage("退出成功");
 

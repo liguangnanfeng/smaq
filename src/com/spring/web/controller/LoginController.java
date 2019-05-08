@@ -245,4 +245,5 @@ public class LoginController extends BaseController {
         model.addAttribute("list", monitorMapper.selectGroupByMap(m));
         return "/company/gang-list";
     }
+
 }

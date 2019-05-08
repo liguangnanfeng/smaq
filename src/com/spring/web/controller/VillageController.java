@@ -329,7 +329,12 @@ public class VillageController extends BaseController {
         result.setMap("totalzc", companyMapper.selectIdsByCompany_view_count(dto2));
         return result;
     }
-    
+
+    /**
+     * 判断user是什么用户
+     * @param user
+     * @param dto
+     */
     protected void setUserId2(User user, CompanyListReqDTO dto) {
         if (user.getUserType() == 4) {
             dto.setVillageId(user.getId());

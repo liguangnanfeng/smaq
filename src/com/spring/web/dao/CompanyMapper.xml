@@ -1833,4 +1833,10 @@
 			</if>
 		</where>
 	</select>
+
+	<!--根据村查询所有的部门-->
+	<select id="selectByVillageId" resultType="java.util.Map" parameterType="Integer">
+		select user_id as id ,name where company_tbl where village_id=#{id};
+	</select>
+
 </mapper>

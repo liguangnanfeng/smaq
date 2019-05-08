@@ -1,19 +1,19 @@
 package com.spring.web.controller.api;
 
 import com.spring.web.dao.AppTokenMapper;
+import com.spring.web.dao.OfficialsMapper;
 import com.spring.web.dao.UserMapper;
 import com.spring.web.listener.MySessionContext;
-import com.spring.web.model.AppToken;
-import com.spring.web.model.User;
-import com.spring.web.model.UserItem;
-import com.spring.web.model.ZzjgPersonnel;
+import com.spring.web.model.*;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
 import com.spring.web.service.CheckCompany.LoginService;
 import com.spring.web.service.CheckCompany.Zzjg_PersonnelService;
+import com.spring.web.util.DateConvertUtil;
 import com.spring.web.util.EncryptUtil;
 import com.spring.web.util.RandomUtil;
 import com.spring.web.util.SessionUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -63,9 +63,16 @@ public class AppController_Login {
     private AppTokenMapper appTokenMapper;
 
     /**
-     *
+     * 验证apptoken
      */
     private AppTokenData appTokenData;
+
+    /**
+     * 政府检查人员进行登陆
+     */
+    @Autowired
+    private OfficialsMapper officialsMapper;
+
 
     /**
      * 用户登陆功能
@@ -106,7 +113,8 @@ public class AppController_Login {
         AppResult result = new AppResultImpl();
 
         try {
-            User user = userMapper.selectUserByUserName(username);
+            // 根据编号进行查询
+            Officials user = officialsMapper.selectByCode(username);
             // 判断前后台登录
             if (user == null) {
                 result.setStatus("1");
@@ -114,19 +122,19 @@ public class AppController_Login {
                 return result;
             }
             // 判断前后台登录
-            if (!"0".equals(user.getIsFreeze())) {
+          /*  if (!"1".equals(user.getDel())) {
                 result.setStatus("1");
                 result.setMessage("该账号被冻结。");
                 return result;
-            }
+            }*/
             // 判断密码是否错误
-            if (!EncryptUtil.match(user.getPsw(), password)) {
+            if (!EncryptUtil.match(user.getPassword(), password)) {
                 result.setStatus("1");
                 result.setMessage("密码不正确");
                 return result;
             }
             // 之后就表示登陆成功
-            result.setStatus("2");
+            result.setStatus("0");
             result.setMessage("登陆成功");
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("user", user);
@@ -140,7 +148,7 @@ public class AppController_Login {
 
                 if (appTokenMapper.insertSelective(appToken) == 1) {
                     map.put("appToken", appToken);
-                    map.put("type", user.getUserType());
+                    map.put("type", user.getFlag());
                     String sessionId = saveAttribute(request, user, appToken.getAccessToken());
                     map.put("sessionId", sessionId);
                     result.setData(map);
@@ -152,12 +160,11 @@ public class AppController_Login {
 
                 if (appTokenMapper.updateByPrimaryKeySelective(db_appToken) == 1) {
                     String sessionId = saveAttribute(request, user, db_appToken.getAccessToken());
-                    map.put("type", 5);
-                    map.put("appToken", user.getUserType());
+                    map.put("type", user.getFlag());
+                    map.put("appToken",db_appToken );
                     map.put("sessionId", sessionId);
                     result.setData(map);
                 }
-
 
             }
             return result;
@@ -170,9 +177,7 @@ public class AppController_Login {
 
         }
 
-
     }
-
 
     /**
      * 企业端登陆
@@ -276,8 +281,18 @@ public class AppController_Login {
     public AppResult LogionOut(HttpServletRequest request) {
         AppResult result = new AppResultImpl();
 
-        Object o = appTokenData.delectUserId(request);
-        if (null == o) {
+       // Object o = appTokenData.delectUserId(request);
+        String access_token = request.getParameter("access_token");
+        String sessionId = request.getParameter("sessionId");
+        // 没有传递数据
+        if (StringUtils.isEmpty(access_token)||StringUtils.isEmpty(sessionId)) {
+            return null;
+        }
+        // 登陆已经超时
+        AppToken at = appTokenMapper.selectByPrimaryKey(access_token);
+        Date date = new Date();
+        Date end = DateConvertUtil.addDays(at.getLastLoginTime(), at.getExpires());
+        if (null == at || end.before(date)) {// 超时 或 不存在
             result.setStatus("1");
             result.setMessage("出现退出错误");
 

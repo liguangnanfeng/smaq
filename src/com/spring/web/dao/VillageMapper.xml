@@ -301,4 +301,12 @@
         and town_id = #{townId}
         </if>
   </select>
+
+  <!--
+      根据镇级查询所有的村级
+  -->
+  <select id="selectByTownId" resultType="java.util.Map" parameterType="Integer">
+        select user_id as id ,name where company_tbl where town_id=#{id};
+  </select>
+
 </mapper>

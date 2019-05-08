@@ -54,4 +54,11 @@ public interface OfficialsMapper {
     int updateByPrimaryKey(Officials record);
     
     List<Map<String, Object>> selectList(Map<String, Object> m);
+
+    /**
+     * 根据编号进行查询 所有的数据
+     * @param username
+     * @return
+     */
+    Officials selectByCode(String username);
 }

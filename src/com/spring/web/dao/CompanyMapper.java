@@ -191,4 +191,14 @@ public interface CompanyMapper {
     List<Map<String, Object>> selectByDTO(CompanyListReqDTO dto);
     
     List<Integer> selectUseridsForSource(Map<String, Object> m);
+
+    /**
+     * 根据村级查询所有对应的企业
+     * @param id
+     * @return
+     */
+    List<Map<String, Object>> selectByVillageId(Integer id);
+
+
+
 }

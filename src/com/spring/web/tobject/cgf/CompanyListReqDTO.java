@@ -10,15 +10,15 @@ import com.spring.web.util.ConstantsUtil;
 
 /** 
  * @Title: ModelSaveReqDTO 
- * @Description: TODO(用一句话描述该文件做什么) 
- * @author CGF   
+ * @Description:
+ * @author CGF
  * @date 2017年9月13日 上午9:29:45 
  * @version V1.0   
  */
 public class CompanyListReqDTO implements DTO {
 
     /** 
-    * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+    * @Fields serialVersionUID :
     */ 
     
     private static final long serialVersionUID = 6462838326959302623L;

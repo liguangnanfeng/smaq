@@ -213,4 +213,9 @@
     WHERE
         b.is_del = 0 and a.district_id is not null
   </select>
+  <!--根据区级id查询所有的镇-->
+  <select id="selectByDistrictId" resultType="java.util.Map" parameterType="Integer">
+    select user_id as id ,name from town_tbl where district_id=#{id};
+  </select>
+
 </mapper>

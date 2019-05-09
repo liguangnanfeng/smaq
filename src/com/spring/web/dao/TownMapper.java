@@ -72,8 +72,15 @@ public interface TownMapper {
     List<Map<String, Object>> selectListByDistrict(Map<String, Object> m);
     
     /** 
-     * @param m 获取镇/街道
+     * @param
      * @return 
      */
     List<Map<String, Object>> selectTown();
+
+    /**
+     * 更据区获取镇
+     * @param id
+     * @return
+     */
+    List<Map<String, Object>> selectByDistrictId(Integer id);
 }

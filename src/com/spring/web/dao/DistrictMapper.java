@@ -53,8 +53,15 @@ public interface DistrictMapper {
     List<DynamicParameter<String, Object>> selectList(Map<String, Object> m);
     
     /** 
-     * @param m 获取区域
+     * @param
      * @return 
      */
     List<DynamicParameter<String, Object>> selectDistrict();
+
+    /**
+     * 根据区级id查询所有的镇
+     * @param
+     * @return
+     */
+    List<Map<String, Object>> selectByDistrivtId();
 }

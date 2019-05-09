@@ -170,4 +170,9 @@
         c.is_del = 0 
         AND b.city_id = 222
   </select>
+  <!--查询的所有的区-->
+  <select id="selectByDistrivtId" parameterType="Integer" resultType="java.util.Map">
+    select user_id as id ,name  from district_tbl;
+  </select>
+
 </mapper>

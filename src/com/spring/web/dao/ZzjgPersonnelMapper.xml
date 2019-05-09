@@ -368,8 +368,13 @@
     <!--查询相应企业所有的安全责任人-->
     <select id="findUserByIdAndSTatus" resultType="MAP">
         select id,name from zzjg_personnel_tbl where cid=#{cid} and status="2";
-
     </select>
+
+    <!--政府端查询企业所有的安全责任人-->
+    <select id="findUserByIdAndStatus1" resultType="java.util.Map">
+         select id,name from zzjg_personnel_tbl where uid=#{id} and status="1";
+    </select>
+
     <!--根据id查询部门名称-->
     <select id="selectdpidById" resultType="String">
         select name from zzjg_department_tbl where id=(select dpid  from zzjg_personnel_tbl where id = #{personnelId});

@@ -79,4 +79,10 @@ public interface ZzjgPersonnelMapper {
      */
     String selectdpidById( Integer personnelId);
 
+    /**
+     * 政府端
+     * @param id
+     * @return
+     */
+    List<Map<Integer, String>> findUserByIdAndStatus1(Integer id);
 }

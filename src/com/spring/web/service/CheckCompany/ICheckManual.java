@@ -1,9 +1,11 @@
 package com.spring.web.service.CheckCompany;
 
 import com.spring.web.model.ACompanyManual;
+import com.spring.web.model.Officials;
 import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.model.request.CheckItem;
 import com.spring.web.model.request.CheckLevel;
+import com.spring.web.model.request.SaveDataMessageItem;
 import com.spring.web.model.response.CheckItemS;
 import com.spring.web.model.response.MeasuresBean;
 
@@ -38,5 +40,8 @@ public interface ICheckManual {
      * @return
      */
     Map<String, List> findLevel2ByPersonnelId(Integer personnelId,Integer uId);
+
+
+
 
 }

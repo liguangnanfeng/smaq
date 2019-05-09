@@ -171,10 +171,10 @@ public class CheckManualImpl implements ICheckManual {
             tCheckPartMapper.insertSelective(tCheckPart);
             int tCheckPartId = tCheckPart.getId(); // 获取checkPartId
 
-            // 保存Check_item 表数据并返回id TODO
+            // 5. 保存Check_item 表数据并返回id TODO
             saveCheckTtem(checkItem, zzjg, checkId, tCheckPartId);
 
-            // 保存model_part() 计划检查模块表
+            // 6. 保存model_part() 计划检查模块表
             saveTmodelPath(modelId, checkItem, list);
 
             System.out.println(checkId);

@@ -1,5 +1,9 @@
 package com.spring.web.service.CheckCompany;
 
+import com.spring.web.model.Officials;
+import com.spring.web.model.request.CheckItem;
+import com.spring.web.model.request.SaveDataMessageItem;
+
 import java.util.List;
 import java.util.Map;
 
@@ -23,4 +27,33 @@ public interface CountryCheck {
      * @return
      */
     List<Map<String, Object>> selectVillageBytownId(Integer id);
+
+    /**
+     * 根据区级id查询所有的镇
+     * @param id
+     * @return
+     */
+    List<Map<String, Object>> selectTownByDistrictId(Integer id);
+
+    /**
+     * 查询所有的区
+     */
+    List<Map<String, Object>> selectDistrict();
+
+    /**
+     * 根据政府端传递的查询条件进行数据的包存并返回一个模版id
+     * @param checkItem
+     * @param officials
+     * @return
+     */
+    Integer saveCheck(CheckItem checkItem, Officials officials,Integer id);
+
+    /**
+     * 政府账号保存检查信息
+     * @param saveDataMessageItem
+     * @param officials
+     * @param id
+     * @return
+     */
+    String saveCheckMessage(SaveDataMessageItem saveDataMessageItem, Officials officials, Integer id);
 }

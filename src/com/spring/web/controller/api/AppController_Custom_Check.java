@@ -213,7 +213,7 @@ public class AppController_Custom_Check {
 
     /**
      *
-     * TODO 保存自定义的检查模版, 并返回模版 Id 待定
+     * TODO 保存自定义的检查模版, 并返回模版 Id
      *
      * @return
      */

@@ -82,4 +82,11 @@ public interface ZzjgDepartmentMapper {
      * @return
      */
     List<ZzjgDepartment> selectDepByCompanyIdandSome(Integer companyId,Integer depId);
+
+    /**
+     * 根据总公司id查询所有的部门 level
+     * @param id
+     * @return
+     */
+    List<String> selectNameByUid(Integer id);
 }

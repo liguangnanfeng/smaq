@@ -12,14 +12,22 @@ import java.util.List;
  */
 @Data
 public class CheckItem {
+
     /**
-     * 检查表信息
+     * 公司id
+     */
+    public Integer id;
+
+
+    /**
+     * 检查表标题
      */
     public String template;
 
     /**
      *
      * 检查危险程度
+     * 现场 危险
      */
     public Integer title;
 

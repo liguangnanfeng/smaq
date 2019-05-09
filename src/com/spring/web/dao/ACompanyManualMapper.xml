@@ -881,4 +881,9 @@ name =#{name};
     <select id="findLevel2ByPersonelId"  resultType="List">
         select level2 from a_company_manual_tbl where level1=#{name} and uid=#{uid};
     </select>
+
+    <!--根根据公司id，部门，岗位名-->
+    <select id="findInspection"  parameterType="java.lang.String" resultMap="BaseResultMap">
+        select  * from a_company_manual_tbl WHERE uid=#{id} and level1 like CONCAT('%',#{dept},'%') and level2 like #{station}CONCAT('%',#{station},'%')
+    </select>
 </mapper>

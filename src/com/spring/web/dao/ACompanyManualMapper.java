@@ -118,5 +118,8 @@ public interface ACompanyManualMapper {
      * @return
      */
     List<String> findLevel2ByPersonelId(@Param("name") String name, @Param("uid") Integer uid);
+
+    // 根据公司id，部门名，岗位名
+    List<ACompanyManual> findInspection(@Param("id") String id,@Param("dept") String dept,@Param("station") String station);
 }
 

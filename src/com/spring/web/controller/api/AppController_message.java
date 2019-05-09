@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * 通知消息controller
+ * 企业自查controller
  */
 
 @Controller
@@ -224,6 +224,12 @@ public class AppController_message extends BaseController {
     AppResult findReCheckList(@RequestBody Map<String, Object> params,HttpServletRequest request) {
 
         String checkId  = String.valueOf(params.get("checkId"));
+
+        AppResult result = new AppResultImpl();
+        if(null == checkId){
+            result.setMessage("检查表id不能为空");
+            return result;
+        }
         Integer id = Integer.valueOf(checkId);
         LinkedHashMap<String,Object> listMap = new LinkedHashMap<>();
 //        DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
@@ -234,7 +240,7 @@ public class AppController_message extends BaseController {
         listMap.put("itemList", appMessageService.selectRecheckByCheckId(id));
         System.out.println("复查 ==============");
 
-        AppResult result = new AppResultImpl();
+
         result.setData(listMap);
 
         return result;

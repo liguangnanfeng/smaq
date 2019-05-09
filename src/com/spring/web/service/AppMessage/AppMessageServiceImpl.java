@@ -54,5 +54,10 @@ public class AppMessageServiceImpl implements AppMessageService {
         return appControllerMessageMapper.selectRecheckByCheckId(checkId);
     }
 
+    @Override
+    public List<Map> selectCheckByFlag() {
+        return appControllerMessageMapper.selectCheckByFlag();
+    }
+
 
 }

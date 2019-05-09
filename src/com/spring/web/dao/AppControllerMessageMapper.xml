@@ -119,4 +119,17 @@
 
   </select>
 
+
+    <select id="selectCheckByFlag" resultType="java.util.Map">
+      select  a.user_id as userId,u.user_name,
+
+    a.title,a.create_time as time,a.status,count(b.id) as count,a.check_company as checkCompany
+
+    from user_tbl u JOIN t_check_tbl a ON u.id = a.user_id LEFT JOIN t_check_item_tbl b ON a.id = b.check_id
+
+    WHERE u.user_type = 5
+
+    GROUP BY a.id
+  </select>
+
 </mapper>

@@ -2695,13 +2695,32 @@ public class VillageController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "selectDep")
+    @RequestMapping(value = "findInspection")
     @ResponseBody
     public List<ACompanyManual> findInspection(Integer depId,String sName, HttpServletRequest request) {
         User user = getLoginUser(request);
 
-//        List<ACompanyManual> ACompanyManual = aCompanyManualMapper.findInspection();
+        ZzjgDepartment zzjgDepartment =  zzjgDepartmentMapper.selectByPrimaryKey(depId);
+        List<ACompanyManual> ACompanyManual = aCompanyManualMapper.findInspection(String.valueOf(user.getId()),zzjgDepartment.getName(),sName);
 
-        return null;
+        return ACompanyManual;
     }
+
+
+    /**
+     * 保存检查模板 2019-05
+     *
+     * @return
+     */
+    @RequestMapping(value = "saveCheckMenu")
+    @ResponseBody
+    public Result saveCheckMenu(String title,Integer depId,String sName,String[] checkVal,String cycle,String nextTime, HttpServletRequest request) {
+        User user = getLoginUser(request);
+        Result result = new ResultImpl();
+
+
+        result.setMess("添加成功");
+        return result;
+    }
+
 }

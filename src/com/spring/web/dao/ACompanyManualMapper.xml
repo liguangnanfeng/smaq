@@ -884,6 +884,6 @@ name =#{name};
 
     <!--根根据公司id，部门，岗位名-->
     <select id="findInspection"  parameterType="java.lang.String" resultMap="BaseResultMap">
-        select  * from a_company_manual_tbl WHERE uid=#{id} and level1 like CONCAT('%',#{dept},'%') and level2 like #{station}CONCAT('%',#{station},'%')
+        select  * from a_company_manual_tbl WHERE uid=#{id} and level1 like CONCAT('%',#{dept},'%') and level2 like CONCAT('%',#{station},'%')
     </select>
 </mapper>

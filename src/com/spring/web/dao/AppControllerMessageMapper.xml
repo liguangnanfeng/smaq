@@ -61,12 +61,13 @@
         where id = #{id}
     </select>
 
-    <select id="findTCheckList"  resultType="com.spring.web.model.TCheck">
+    <select id="findTCheckList"  resultType="java.util.Map">
         select
-        *
-        from t_check_tbl
-        where user_id = #{cid}
-        ORDER BY create_time DESC
+        a.*,count(b.id) as count
+        from t_check_tbl a LEFT JOIN t_check_item_tbl b ON a.id = b.check_id
+        where a.user_id = #{cid}
+		group BY a.id
+        ORDER BY a.create_time DESC
         LIMIT #{pageNo},#{pageSize}
     </select>
 

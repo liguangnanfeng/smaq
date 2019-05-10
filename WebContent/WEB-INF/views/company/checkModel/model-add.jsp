@@ -68,7 +68,6 @@
                     $.each(result, function (index, item) {
                         var station = item.name;//岗位
                         var id = item.id;//岗位id
-                        alert(id);
                         $("#department2Id").append("<option value='"+station+"'>" + station + "</option>")
                     })
                 },
@@ -82,7 +81,6 @@
         }
 
         function findCheck() {
-            alert("进入findCheck")
             var doc = document.getElementById("departmentId");
             var doc2 = document.getElementById("department2Id");
             obj = {
@@ -97,11 +95,9 @@
                 dataType: "json",
                 success: function (result) {
                     $.each(result, function (index, item) {
-                        var isp = item.level3;//岗位
-                        var content = item.level4;//岗位id
-                        alert(isp);
-                        console.log(content);
-                        $("#inspection").append("<p><input type='checkbox' name='category' value='isp' />"+isp+"</p>")
+                        var isp = item.level3;
+                        var manuId = item.id;
+                        $("#inspection").append("<p><input type='checkbox' id='checkBox' name='checkBox' value='"+manuId+"'/>"+isp+"</p>")
                     })
                 },
                 complete: function (XMLHttpRequest, textStatus) {
@@ -109,6 +105,47 @@
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("查询失败")
+                }
+            });
+
+        }
+
+        function saveCheckMenu(){
+            alert("进入saveCheckMenu");
+            obj = document.getElementsByName("checkBox");
+            check_val = [];
+            for(c in obj){
+                if(obj[c].checked){
+                    check_val.push(obj[c].value)
+                }
+            }
+            var title = document.getElementById("title");
+            var doc = document.getElementById("departmentId");
+            var doc2 = document.getElementById("department2Id");
+            var cycle = document.getElementById("cycle");
+            var nextTime = document.getElementById("nextTime");
+            var params = {
+                "title": title.value,
+                "depId": doc.value,
+                "sName": doc2.value,
+                "checkVal": check_val,
+                "cycle": cycle.value,
+                "nextTime": nextTime.value,
+            }
+            $.ajax({
+                type: "POST",
+                url: getRootPath() + '/village/saveCheckMenu',
+                data: params,
+                async: false,
+                dataType: "json",
+                success: function () {
+                    alert("添加成功");
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    layer.close(index);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("添加失败")
                 }
             });
 
@@ -163,7 +200,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">检查表名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" id="title" value="${companyname }企业定期检查表" style="width:350px" class="input-text"
+                <input type="text" id="title"  style="width:350px" class="input-text"
                        maxlength="50" placeholder="根据检查需要填写或空缺"/>
             </div>
         </div>
@@ -221,15 +258,15 @@
             </div>
         </div>
 
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">自动预警设置：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="radio" name="open" value="1" <c:if test="${model.open != 0}">checked="checked"</c:if>/>开启
-                <input type="radio" name="open" value="0" class="ml-20"
-                       <c:if test="${model.open == 0}">checked="checked"</c:if>/>关闭
-                <span class="ml-20">开启后，逾期不填写检查记录，系统自动预警！</span>
-            </div>
-        </div>
+        <%--<div class="row cl">--%>
+            <%--<label class="form-label col-xs-4 col-sm-2">自动预警设置：</label>--%>
+            <%--<div class="formControls col-xs-8 col-sm-9">--%>
+                <%--<input type="radio" name="open" value="1" <c:if test="${model.open != 0}">checked="checked"</c:if>/>开启--%>
+                <%--<input type="radio" name="open" value="0" class="ml-20"--%>
+                       <%--<c:if test="${model.open == 0}">checked="checked"</c:if>/>关闭--%>
+                <%--<span class="ml-20">开启后，逾期不填写检查记录，系统自动预警！</span>--%>
+            <%--</div>--%>
+        <%--</div>--%>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">检查周期(天)：</label>
@@ -253,10 +290,10 @@
           </div>
         </div> --%>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">岗位/部位：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" id="jcbw" value="${name}" style="width:350px" class="input-text"/>
-            </div>
+            <%--<label class="form-label col-xs-4 col-sm-2">岗位/部位：</label>--%>
+            <%--<div class="formControls col-xs-8 col-sm-9">--%>
+                <%--<input type="text" id="jcbw" value="${name}" style="width:350px" class="input-text"/>--%>
+            <%--</div>--%>
             <div class="div_model mt-20">
                 <ul class="div_fold">
                     <li class="item" data-n="">
@@ -303,14 +340,14 @@
             </div>
             <div class="row cl">
                 <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
-                    <button onClick="article_save_submit_1()" class="btn btn-primary radius" type="button"
+                    <button onClick="saveCheckMenu()" class="btn btn-primary radius" type="button"
                             style="padding: 0 70px;">
                         <i class="Hui-iconfont">&#xe632;</i>保存检查表
                     </button>
-                    <button onClick="giveup_save_submit()" class="btn btn-primary radius" type="button"
-                            style="padding: 0 70px;">
-                        放弃添加
-                    </button>
+                    <%--<button onClick="giveup_save_submit()" class="btn btn-primary radius" type="button"--%>
+                            <%--style="padding: 0 70px;">--%>
+                        <%--放弃添加--%>
+                    <%--</button>--%>
                 </div>
             </div>
         </div>
@@ -433,6 +470,9 @@
              tbody.closest("li").remove();
          }
      }*/
+
+
+
 
 </script>
 </html>

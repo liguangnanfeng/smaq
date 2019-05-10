@@ -111,10 +111,9 @@ public class SaveDataImpl implements SaveMessageService {
                     tRectification.setUserId(zzjg.getUid()); // 企业id
                     tRectification.setCreateUser(zzjg.getId()); // 创建人的id
                     tRectification.setCreateTime(new Date()); //生成时间
+                    item.setStatus(2); // 状态 不合格
                     item.setMemo(saveDataMessage.getMemo()); //不合格描述
                     item.setFiles(saveDataMessage.getFile()); //不合规照片
-
-                    item.setStatus(2); // 状态 不合格
 
                     if (saveDataMessageItem.getType() == null) { // 立即整改
 
@@ -146,6 +145,8 @@ public class SaveDataImpl implements SaveMessageService {
                     // 保存检查结果整改意见表
                     tRectificationMapper.insertSelective(tRectification);
 
+                }else{
+                    return null;
                 }
 
                 // 保存checkItem表数据

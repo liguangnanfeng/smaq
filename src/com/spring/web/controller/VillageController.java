@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.spring.web.dao.ACompanyManualMapper;
 import com.spring.web.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -2687,5 +2688,20 @@ public class VillageController extends BaseController {
         //根据公司和部门获取岗位
         List<ZzjgDepartment> zzjgDepartmentList = zzjgDepartmentMapper.selectDepByCompanyIdandSome(user.getId(), depId);
         return zzjgDepartmentList;
+    }
+
+    /**
+     * 根据公司和部门,岗位获取检查项
+     *
+     * @return
+     */
+    @RequestMapping(value = "selectDep")
+    @ResponseBody
+    public List<ACompanyManual> findInspection(Integer depId,String sName, HttpServletRequest request) {
+        User user = getLoginUser(request);
+
+//        List<ACompanyManual> ACompanyManual = aCompanyManualMapper.findInspection();
+
+        return null;
     }
 }

@@ -31,4 +31,7 @@ public interface AppMessageService {
     // 复查
     List<Map<String, Object>> selectRecheckByCheckId(@Param("checkId")Integer checkId);
 
+    // 政府端检查表
+    List<Map> selectCheckByFlag();
+
 }

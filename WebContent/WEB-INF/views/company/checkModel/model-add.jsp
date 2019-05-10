@@ -68,7 +68,40 @@
                     $.each(result, function (index, item) {
                         var station = item.name;//岗位
                         var id = item.id;//岗位id
-                        $("#department2Id").append("<option>" + station + "</option>")
+                        alert(id);
+                        $("#department2Id").append("<option value='"+station+"'>" + station + "</option>")
+                    })
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    layer.close(index);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("查询失败")
+                }
+            });
+        }
+
+        function findCheck() {
+            alert("进入findCheck")
+            var doc = document.getElementById("departmentId");
+            var doc2 = document.getElementById("department2Id");
+            obj = {
+                "depId": doc.value,
+                "sName": doc2.value
+            }
+            $.ajax({
+                type: "POST",
+                url: getRootPath() + '/village/findInspection',
+                data: obj,
+                async: false,
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (index, item) {
+                        var isp = item.level3;//岗位
+                        var content = item.level4;//岗位id
+                        alert(isp);
+                        console.log(content);
+                        $("#inspection").append("<p><input type='checkbox' name='category' value='isp' />"+isp+"</p>")
                     })
                 },
                 complete: function (XMLHttpRequest, textStatus) {
@@ -157,13 +190,23 @@
             <div class="formControls col-xs-8 col-sm-9">
             <span class="select-box inline">
 
-                   <select name="department2Id" class="select" id="department2Id">
+                   <select name="department2Id" class="select" id="department2Id" onchange="findCheck()">
                              <option value="0">请选择岗位</option>
                   </select>
             </span>
 
             </div>
         </div>
+
+            <!-- 检查项目 -->
+
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查项目 :</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <p id="inspection"></p>
+                    <%--<p id="xiangmu"><input type="checkbox" name="category" value="今日话题" />今日话题 </p>--%>
+                </div>
+            </div>
 
         <div class="row cl" style="display: none;">
             <label class="form-label col-xs-4 col-sm-2" style="line-height:50px;">检查类型：</label>
@@ -217,13 +260,13 @@
             <div class="div_model mt-20">
                 <ul class="div_fold">
                     <li class="item" data-n="">
-                        <div class="title_item">
-                            <h4><b>+</b></h4>
-                            <!--
-                            <a class="btn_ejc" style="text-decoration:none" onclick="part_edit(this)" href="javascript:;" title="编辑检查项">编辑检查项</a>
-                            <a class="btn_djc" style="text-decoration:none" onclick="part_del(this)" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe609;</i></a>
-                              -->
-                        </div>
+                        <%--<div class="title_item">--%>
+                            <%--<h4><b>+</b></h4>--%>
+                            <%--<!----%>
+                            <%--<a class="btn_ejc" style="text-decoration:none" onclick="part_edit(this)" href="javascript:;" title="编辑检查项">编辑检查项</a>--%>
+                            <%--<a class="btn_djc" style="text-decoration:none" onclick="part_del(this)" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe609;</i></a>--%>
+                              <%---->--%>
+                        <%--</div>--%>
                         <div class="info">
                             <table class="table table-border table-bordered table-bg table-hover table-sort">
                                 <thead>

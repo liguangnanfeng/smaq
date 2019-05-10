@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.spring.web.dao.ACompanyManualMapper;
+import com.spring.web.dao.ZzjgDepartmentMapper;
 import com.spring.web.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -2708,15 +2709,41 @@ public class VillageController extends BaseController {
 
 
     /**
-     * 保存检查模板 2019-05
+     *  企业端保存保存检查模板 2019-05
+     *  title : 检查表名称
+     *  depId:  部门id
+     *  sName :岗位名称
+     *  checkVal: 多选的检查项
+     *  cycle :  检查周期
+     *  nextTime : 开始日期
      *
      * @return
      */
     @RequestMapping(value = "saveCheckMenu")
     @ResponseBody
-    public Result saveCheckMenu(String title,Integer depId,String sName,String[] checkVal,String cycle,String nextTime, HttpServletRequest request) {
-        User user = getLoginUser(request);
+    public Result saveCheckMenu(String title,Integer depId,String sName,String[] checkVal,String cycle,String nextTime,String checkType,
+String checkNature ,HttpServletRequest request) {
         Result result = new ResultImpl();
+
+        User user = getLoginUser(request); // 主账号登陆
+        if(user==null){
+            result.setMess("登陆失败");
+            result.setStatus("1");
+            return result;
+        }
+
+        // 创建model方法
+        TModel model = new TModel();
+        model.setTitle(title);
+        model.setUserId(user.getId());
+        model.setFlag(1); //自查
+        model.setType(1); //
+        //根据部门id查询部门
+        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectByPrimaryKey(depId);
+        model.setPart(zzjgDepartment.getName());
+        model.setCycle(Integer.parseInt(cycle)); // 定期天数
+        model.setCreateTime(new Date());  // 创建时间
+
 
 
         result.setMess("添加成功");

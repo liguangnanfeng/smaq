@@ -5,6 +5,7 @@ import com.spring.web.dao.*;
 import com.spring.web.model.*;
 import com.spring.web.model.request.CheckItem;
 import com.spring.web.model.request.CheckLevel;
+import com.spring.web.model.request.SaveDataMessage;
 import com.spring.web.model.request.SaveDataMessageItem;
 import com.spring.web.service.CheckCompany.CountryCheck;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.*;
 /**
  * @Author: 桃红梨白
  * @Date: 2019/05/08 18:02
- *
+ * <p>
  * 小程序政府端进行检查,获取数据
  */
 @Service
@@ -32,7 +33,9 @@ public class CountryCheckImpl implements CountryCheck {
     @Autowired
     private VillageMapper villageMapper;
 
-    /**镇级数据*/
+    /**
+     * 镇级数据
+     */
     @Autowired
     private TownMapper townMapper;
 
@@ -79,66 +82,71 @@ public class CountryCheckImpl implements CountryCheck {
 
     /**
      * 村级查询企业
+     *
      * @param id
      * @return
      */
     @Override
-    public List<Map<String,Object>> selectCompanyByVillageId(Integer id) {
-        List<Map<String,Object>>  list =  companyMapper.selectByVillageId(id);
+    public List<Map<String, Object>> selectCompanyByVillageId(Integer id) {
+        List<Map<String, Object>> list = companyMapper.selectByVillageId(id);
 
         return list;
     }
 
     /**
      * 根据镇级查询所对应的村
+     *
      * @param id
      * @return
      */
     @Override
     public List<Map<String, Object>> selectVillageBytownId(Integer id) {
-        List<Map<String,Object>>  list =villageMapper.selectByTownId(id);
+        List<Map<String, Object>> list = villageMapper.selectByTownId(id);
 
         return list;
     }
 
     /**
      * 根据区级id查询所有的镇
-     *
+     * <p>
      * List<Map<String,Object>>  list =districtMapper.selectByDistrivtId(id);
+     *
      * @param id
      * @return
      */
     @Override
     public List<Map<String, Object>> selectTownByDistrictId(Integer id) {
-        List<Map<String,Object>>  list =townMapper.selectByDistrictId(id);
+        List<Map<String, Object>> list = townMapper.selectByDistrictId(id);
         return list;
     }
 
     /**
      * 查询所有的区
+     *
      * @return
      */
     @Override
     public List<Map<String, Object>> selectDistrict() {
-        List<Map<String,Object>>  list =districtMapper.selectByDistrivtId();
+        List<Map<String, Object>> list = districtMapper.selectByDistrivtId();
         return list;
     }
 
     /**
      * 政府端保存模版
+     *
      * @param checkItem
      * @param officials
      * @return
      */
     @Override
-    public Integer saveCheck(CheckItem checkItem, Officials officials,Integer id) {
-        try{
+    public Integer saveCheck(CheckItem checkItem, Officials officials, Integer id) {
+        try {
             // 1. 保存model信息并返回id
             TModel tModel = saveTmodel(checkItem, officials);
             modelMapper.insertSelective(tModel);
             Integer modelId = tModel.getId(); //获取模版id
             // 2. 保存check表数据并返回id
-            TCheck tCheck = saveCheckTbl(checkItem, officials, modelId,id);
+            TCheck tCheck = saveCheckTbl(checkItem, officials, modelId, id);
             int i = tCheckMapper.insertSelective(tCheck);
             Integer checkId = tCheck.getId();  //获取检查表id
             // 3. 保存并获取检查分类id
@@ -155,14 +163,13 @@ public class CountryCheckImpl implements CountryCheck {
             saveTmodelPath(modelId, checkItem, list);
 
             return modelId;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("保存失败");
 
         }
 
     }
-
 
 
     /**
@@ -262,7 +269,7 @@ public class CountryCheckImpl implements CountryCheck {
      * @param modelId   模版表id
      * @return
      */
-    private TCheck saveCheckTbl(CheckItem checkItem, Officials officials, Integer modelId,Integer id) {
+    private TCheck saveCheckTbl(CheckItem checkItem, Officials officials, Integer modelId, Integer id) {
 
         // 获取部门 id
         List<CheckLevel> checkLevels = checkItem.getCheckLevels();
@@ -397,6 +404,7 @@ public class CountryCheckImpl implements CountryCheck {
      * recheck_memo  '复查描述'
      * <p>
      * TODO 出现重复数据,是因为不同的部门上出现这种风险点和风险因素重复问题?????
+     *
      * @return
      */
     private TCheckItem saveCheckTtem(CheckItem checkItem, Officials officials, Integer CheckId, Integer CheckPartId) {
@@ -450,9 +458,14 @@ public class CountryCheckImpl implements CountryCheck {
     }
 
 
-
     /**
-     * 政府账号保存检查信息
+     * 政府账号保存检查信息(第一次检查)
+     * <p>
+     * 1. 保存item数据
+     * 2. 保存check数据
+     * 3. 保存check_document 行政检查文书
+     * 4. 保存
+     *
      * @param saveDataMessageItem
      * @param officials
      * @param id
@@ -460,21 +473,43 @@ public class CountryCheckImpl implements CountryCheck {
      */
     @Override
     public String saveCheckMessage(SaveDataMessageItem saveDataMessageItem, Officials officials, Integer id) {
-        try{
+        try {
+            // 1. 修改检查的数据
+            TCheck tCheck = tCheckMapper.selectByPrimaryKey(saveDataMessageItem.getCheckId());
+            tCheck.setStatus(2); // 表示已经检查
+            tCheckMapper.updateByPrimaryKey(tCheck); // 更新到数据库
+
+
             // 将信息进行保存 数据进行更新,数据的结构会更加的混乱
+            List<SaveDataMessage> list = saveDataMessageItem.getList();
+            for (SaveDataMessage saveDataMessage : list) {
+                TCheckItem tCheckItem = tCheckItemMapper.selectByPrimaryKey(saveDataMessage.getId());
+                // 对状态进行判断
+                if ("1".equals(saveDataMessage.getValue())) {  // 表示检查合格
+                    tCheckItem.setStatus(1); //合格
+                } else {
+                    // 表示不合格
+                    TRectification tRectification = new TRectification();
+                    tRectification.setCheckId(saveDataMessageItem.getCheckId()); // 检查表id
+                    tRectification.setUserId(id); // 企业id
+                    tRectification.setCreateUser(officials.getUid()); // 创建人的id
+                    tRectification.setCreateTime(new Date()); //生成时间
+                    //item.setMemo(saveDataMessage.getMemo()); //不合格描述
+                    tCheckItem.setStatus(2); //不合格
+                    tCheckItem.setMemo(saveDataMessage.getMemo()); // 不合格描述
+                    tCheckItem.setFiles(saveDataMessage.getFile()); // 不合格图片 应该是一个图片集合，但是现在没有集合
+                    //tCheckItem.set
+                }
 
 
-
-
-
+            }
 
 
             return "保存成功";
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-
 
 
     }

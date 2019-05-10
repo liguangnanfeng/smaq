@@ -59,6 +59,37 @@ public class CheckLevel implements Serializable {
      */
     public String reference;
 
+    /**
+     * 较大的危险因素
+     */
+    public String factors;
+
+    /**
+     * 易发生的事故类型,风险名称
+     */
+    public String types;
+
+    /**
+     * 较大重大的风险点
+     */
+    public String flag;
+
+    /**
+     * 管控措施
+     */
+    public String gkcs;
+
+    /**
+     * 管控主体
+     */
+    public String gkzt;
+
+    /**
+     * 图片路径
+     */
+    public String files;
+
+
 
 
 }

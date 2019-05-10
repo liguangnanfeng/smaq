@@ -434,6 +434,8 @@ public class CheckManualImpl implements ICheckManual {
 
         for (CheckLevel checkLevel : checkLevels) {
             TCheckItem tCheckItem = new TCheckItem();
+            tCheckItem.setMemo(checkLevel.getFactors());//不合格描述
+            //tCheckItem.setFiles(checkLevel.getFiles());//检查图片
             tCheckItem.setContent(checkLevel.getLevel4()); //检查标准详情
             tCheckItem.setLevelId(checkItem.getTitle());   //检查分类
             tCheckItem.setLevels(checkLevel.getLevel3());   // 检查等级

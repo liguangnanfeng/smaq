@@ -16,9 +16,13 @@ import com.spring.web.service.CheckCompany.Zzig_departmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 /**
@@ -484,7 +488,6 @@ public class AppController_Custom_Check {
         return result;
     }
 
-
     /**
      * TODO 根据检查表信息 查询复查记录
      */
@@ -556,6 +559,65 @@ public class AppController_Custom_Check {
         return result;
     }
 
+    /**
+     * 保存图片上传并返回路径
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "A300", method = RequestMethod.POST)
+    public AppResult saveImage(HttpServletRequest request, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+        AppResult result =new AppResultImpl();
+        System.out.println("执行文件上传");
+        request.setCharacterEncoding("UTF-8");
+        String realPath1 = "/images/upload/" ;
+        String path = null;
+        if(!file.isEmpty()) {
+            System.out.println("成功获取图片");
+            String fileName = file.getOriginalFilename();
+
+            String type = null;
+            type = fileName.indexOf(".") != -1 ? fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()) : null;
+            if (type != null) {
+                if ("GIF".equals(type.toUpperCase())||"PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())) {
+                    // 项目在容器中实际发布运行的根路径
+                    String realPath = request.getSession().getServletContext().getRealPath("/");
+                    // 自定义的文件名称
+
+                    String trueFileName = /*String.valueOf(System.currentTimeMillis()) +*/ fileName;
+                    // 设置存放图片文件的路径
+                    path = realPath + "images\\upload\\" + trueFileName;
+                    realPath1+=trueFileName;
+                    System.out.println(path);
+
+                    file.transferTo(new File(path));
+
+                }else {
+                    result.setStatus("1");
+                    result.setMessage("不是我们想要的文件类型,请按要求重新上传");
+                    return result;
+
+                }
+            }else {
+                result.setStatus("1");
+                result.setMessage("文件类型为空");
+                return result;
+
+            }
+        }else {
+
+            result.setStatus("1");
+            result.setMessage("没有找到相对应的文件");
+
+            return result;
+
+        }
+        result.setStatus("0");
+        result.setMessage("保存成功");
+        /*realPath1.replace("\"","/");*/
+        result.setData(realPath1);
+        return result;
+
+    }
 
 }
 

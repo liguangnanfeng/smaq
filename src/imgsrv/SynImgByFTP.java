@@ -18,9 +18,9 @@ import org.apache.commons.net.ftp.FTPReply;
  */
 public class SynImgByFTP {
     //ftp服务器地址
-    public String hostname = "58.215.112.118";
+    public String hostname = "118.25.137.34";
     //ftp服务器端口号默认为21
-    public Integer port = 21 ;
+    public Integer port = 22 ;
     //ftp登录账号
     public String username = "Administrator";
     //ftp登录密码

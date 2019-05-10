@@ -111,6 +111,8 @@ public class SaveDataImpl implements SaveMessageService {
                     tRectification.setUserId(zzjg.getUid()); // 企业id
                     tRectification.setCreateUser(zzjg.getId()); // 创建人的id
                     tRectification.setCreateTime(new Date()); //生成时间
+                    item.setMemo(saveDataMessage.getMemo()); //不合格描述
+                    item.setFiles(saveDataMessage.getFile()); //不合规照片
 
                     item.setStatus(2); // 状态 不合格
 
@@ -332,7 +334,7 @@ public class SaveDataImpl implements SaveMessageService {
             TCheck tCheck = tCheckMapper.selectByModelId(tModel.getId());
 
             // 判断是否检查过,没有检查过直接返回,有检查过在进行数据的更新插入然后在进行
-            if ("1".equals(tCheck.getStatus())) {
+           /* if (1==tCheck.getStatus()) {
                 // 部门或设施
                 List<TCheckPart> tCheckParts = tCheckPartMapper.findAllByCheckId(tCheck.getId());
 
@@ -343,9 +345,13 @@ public class SaveDataImpl implements SaveMessageService {
                 checkItemS.setItems(list);
 
                 return checkItemS;
-            } else {
-                // 表示已经检查过
-                Integer checkId = insertCheck(tCheck.getId());  //表示是新的数据,然后将新的数据进行传递
+
+            } else {*/
+                // 每一次都是查询最开始的那一条检查记录然后进行复制保存
+                // 这时候按照时间的进行检查，找到最早的那一个存储的模板，然后进行修改保存
+                TCheck tCheck1 = tCheckMapper.selectOldByModelId(tModel.getId());
+
+                Integer checkId = insertCheck(tCheck1.getId());  //表示是新的数据,然后将新的数据进行传递
 
                 List<TCheckPart> tCheckParts = tCheckPartMapper.findAllByCheckId(checkId);
 
@@ -357,7 +363,7 @@ public class SaveDataImpl implements SaveMessageService {
 
                 return checkItemS;
 
-            }
+           /* }*/
 
         } catch (Exception e) {
             // 查询出现问题就直接报错
@@ -402,6 +408,7 @@ public class SaveDataImpl implements SaveMessageService {
                 tCheckItem.setCheckId(tCheckId);
                 tCheckItem.setPartId(checkPartId);
                 tCheckItem.setStatus(null);
+//                tCheckItem.setFiles();
                 tCheckItem.setSuggest(null);
                 tCheckItem.setDeadline(null);
                 tCheckItem.setPlanTime(null);

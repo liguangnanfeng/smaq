@@ -240,7 +240,6 @@ public class AppController_Country_Check {
         return result;
     }
 
-
     /**
      * 获取部门,以及对应的岗位 level1 levle2
      * @param request
@@ -340,7 +339,7 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 政府端获取该企业所有的检查表
+     * 政府端获取该企业所有的模版表
      */
     @ResponseBody
     @RequestMapping(value="A228",method = RequestMethod.POST)
@@ -400,7 +399,6 @@ public class AppController_Country_Check {
 
     /**
      * 保存检查记录，并发送整改意见
-     *
      * @param saveDataMessageItem
      * @param id 公司的id
      * @return
@@ -432,7 +430,6 @@ public class AppController_Country_Check {
             result.setStatus("1");
             return result;
 
-
         }
 
         result.setMessage("保存成功");
@@ -440,7 +437,6 @@ public class AppController_Country_Check {
         result.setData(name);
 
         return result;
-
 
     }
 

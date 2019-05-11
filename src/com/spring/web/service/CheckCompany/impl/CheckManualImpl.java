@@ -372,7 +372,7 @@ public class CheckManualImpl implements ICheckManual {
         tCheck.setCheker(zzjg.getName());            // 检查人
         tCheck.setContact(zzjg.getMobile());            // 检查人的联系方式
         tCheck.setDapartContact(String.valueOf(checkItem.getDepartmentId()));      // 被检查人的id
-        tCheck.setStatus(1);              // 1. 未检查
+        tCheck.setStatus(4);              //  表示是为初始值模版
         tCheck.setCreateTime(new Date()); // 创建时间
 
         return tCheck;
@@ -447,6 +447,7 @@ public class CheckManualImpl implements ICheckManual {
             tCheckItem.setReference(checkLevel.getReference());//检查参照
             tCheckItem.setPartId(CheckPartId);    // 装置与设施id
             tCheckItem.setCheckId(CheckId);   // 检查表id
+           // tCheckItem.setStatus(4); //表示初始记录
             list.add(tCheckItem);
         }
         // 表示数据写反了

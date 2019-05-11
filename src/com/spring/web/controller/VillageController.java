@@ -2756,25 +2756,36 @@ public class VillageController extends BaseController {
         tCheck.setRealTime(new Date());
         tCheck.setCheker(user.getId()+"");  //当前的公司名称
         tCheck.setContact(user.getUserName());//
-        tCheck.setDapartContact(""); // 被检查部门
+        tCheck.setDapartContact(zzjgDepartmentMapper.selectByPrimaryKey(depId).getName() ); // 被检查部门
+        tCheck.setStatus(1); // 表示未检查  TODO  备注
+        tCheck.setCreateTime(new Date()); // 创建时间
+        tCheck.setCheckCompany(user.getUserName());
 
+        int i = tCheckMapper.insertSelective(tCheck);
+        Integer tCheckId = tCheck.getId(); // 获取id
+        //保存checkPart表数据
+        TCheckPart tCheckPart = new TCheckPart();
+        tCheckPart.setCheckId(tCheckId);// 检查表id
+        tCheckPart.setName(sName);      // 被检查装置
+        List list = saveModelService.saveTlevel(industryId, checkVal);
+        tCheckPart.setLevels(JSON.toJSONString(list)); //  保存检查等级
+        int i1 = tCheckPartMapper.insertSelective(tCheckPart);
+        Integer checkPartId = tCheckPart.getId(); // 获取partId
 
-
-
-
-
-
-
-
-
+        // 循环保存item数据
+        for (String s : checkVal) {
+            ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(Integer.parseInt(s));
+            TCheckItem tCheckItem = new TCheckItem();
+            tCheckItem.setCheckId(tCheckId); // 检查记录id
+            tCheckItem.setPartId(checkPartId); //partId
+            tCheckItem.setContent(companyManual.getMeasures()); //检查详情
+            tCheckItem.setLevels(JSON.toJSONString(list));
+            tCheckItem.setReference(companyManual.getReference()); //检查参照
+            tCheckItem.setMemo(companyManual.getFactors());        //不合格描述
+            tCheckItemMapper.insertSelective(tCheckItem);
+        }
         result.setMess("添加成功");
         return result;
     }
-
-
-
-
-
-
 
 }

@@ -11,4 +11,12 @@ public interface TRectificationConfirmMapper {
 
     List<Map> findTRectificationConfirm(String userId);
 
+    TRectificationConfirm findByCheckId(Integer checkId );
+
+
+    /**
+     * 修改数据的方法
+     * @param byCheckId
+     */
+    void updateByTRectificationConfirm(TRectificationConfirm byCheckId);
 }

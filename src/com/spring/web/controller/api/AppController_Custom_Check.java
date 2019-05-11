@@ -584,7 +584,7 @@ public class AppController_Custom_Check {
 
                     String trueFileName = /*String.valueOf(System.currentTimeMillis()) +*/ fileName;
                     // 设置存放图片文件的路径
-                    path = realPath + "images\\upload\\" + trueFileName;
+                    path = realPath + "images/upload/" + trueFileName;
                     realPath1+=trueFileName;
                     System.out.println(path);
 

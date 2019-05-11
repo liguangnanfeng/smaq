@@ -278,14 +278,16 @@ public class SaveDataImpl implements SaveMessageService {
             if(tRecheck.getStatus()==2){
                 //修改数据未合格
                 TRectificationConfirm byCheckId = tRectificationConfirmMapper.findByCheckId(saveDataMessageItem.getCheckId());
+                if (byCheckId==null){
+                    return null;
+                }
+
                 byCheckId.setStatus(1);
                 tRectificationConfirmMapper.updateByTRectificationConfirm(byCheckId);
-
 
             }else{
                 // 未全部整改
             }
-
 
             //表示限期整改
             int i = 7 * 24 * 60 * 60; // 限期时间

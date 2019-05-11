@@ -405,7 +405,6 @@
     // 获取名称
     var departmentName = $("#departmentId").val();
 
-
     $("#cycle").val(1);
     var day = new Date();
     day.setTime(day.getTime() + 24 * 60 * 60 * 1000);

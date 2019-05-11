@@ -2,17 +2,13 @@
 
 package com.spring.web.controller;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -2729,6 +2725,12 @@ public class VillageController extends BaseController {
     @ResponseBody
     public Result saveCheckMenu(String title,Integer depId,String sName,String[] checkVal,String cycle,String nextTime,String checkType, String checkNature ,HttpServletRequest request) {
         Result result = new ResultImpl();
+
+        String s1 = Arrays.toString(checkVal);
+        s1.replace("[", "");
+        s1.replace("]", "");
+        com.alibaba.fastjson.JSONArray array = JSON.parseArray(s1);
+        System.out.println(array);
 
         User user = getLoginUser(request); // 主账号登陆
         if(user==null){

@@ -34,4 +34,21 @@
         ORDER BY a.id DESC
     </select>
 
+
+    <select id="findByCheckId" resultType="com.spring.web.model.TRectificationConfirm"  parameterType="Integer">
+        select * from t_rectification_confirm where check_id= #{checkId};
+    </select>
+    
+    <update id="updateByTRectificationConfirm" parameterType="com.spring.web.model.TRectificationConfirm">
+        update t_rectification_confirm
+
+        <set >
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+
+    </update>
+
 </mapper>

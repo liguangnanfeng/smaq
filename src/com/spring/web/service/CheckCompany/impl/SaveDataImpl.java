@@ -77,6 +77,13 @@ public class SaveDataImpl implements SaveMessageService {
     @Autowired
     private TModelMapper modelMapper;
 
+    /**
+     * 复查记录表
+     */
+    @Autowired
+    private TRectificationConfirmMapper tRectificationConfirmMapper;
+
+
 
     /**
      * 保存检查信息,并进行返回结果消息
@@ -233,8 +240,8 @@ public class SaveDataImpl implements SaveMessageService {
     }
 
     /**
-     * 根据复查信息进行保存 只要里面有一条不合格就表示这次检查不合格
      *
+     * 根据复查信息进行保存 只要里面有一条不合格就表示这次检查不合格
      * @param saveDataMessageItem
      * @param zzjg
      * @return
@@ -261,13 +268,25 @@ public class SaveDataImpl implements SaveMessageService {
                 TCheckItem item = tCheckItemMapper.selectAllById(saveDataMessage.getId());
                 if ("1".equals(saveDataMessage.getValue())) {
                     tRecheck.setStatus(1);       // 1 未全部整改  2 全部整改
-                } else if ("2".equals(saveDataMessage.getValue())) {
-
-                    tRecheck.setStatus(2);       // 1 未全部整改  2 全部整改
                     break;
+                } else if ("2".equals(saveDataMessage.getValue())) {
+                    tRecheck.setStatus(2);       // 1 未全部整改  2 全部整改
+
                 }
 
             }
+            if(tRecheck.getStatus()==2){
+                //修改数据未合格
+                TRectificationConfirm byCheckId = tRectificationConfirmMapper.findByCheckId(saveDataMessageItem.getCheckId());
+                byCheckId.setStatus(1);
+                tRectificationConfirmMapper.updateByTRectificationConfirm(byCheckId);
+
+
+            }else{
+                // 未全部整改
+            }
+
+
             //表示限期整改
             int i = 7 * 24 * 60 * 60; // 限期时间
             long time = new Date().getTime();
@@ -409,7 +428,7 @@ public class SaveDataImpl implements SaveMessageService {
                 tCheckItem.setCheckId(tCheckId);
                 tCheckItem.setPartId(checkPartId);
                 tCheckItem.setStatus(null);
-//                tCheckItem.setFiles();
+//              tCheckItem.setFiles();
                 tCheckItem.setSuggest(null);
                 tCheckItem.setDeadline(null);
                 tCheckItem.setPlanTime(null);

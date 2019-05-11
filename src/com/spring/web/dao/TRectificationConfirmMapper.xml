@@ -23,14 +23,14 @@
     <!--</select>-->
 
     <insert id="saveTRectificationConfirm" parameterType="com.spring.web.model.TRectificationConfirm">
-    INSERT INTO t_rectification_confirm(confirm,sender,checker,status,check_id,create_time) VALUES (#{confirm},#{sender},#{checker},#{status},#{check_id},#{create_time})
+    INSERT INTO t_rectification_confirm(confirm,sender,checker,status,check_id,create_time) VALUES (#{confirm},#{sender},#{checker},#{status},#{checkId},#{createTime})
     </insert>
 
-    <select id="findTRectificationConfirm" parameterType="java.lang.String" resultMap="ResultMap">
+    <select id="findTRectificationConfirm" parameterType="java.lang.String" resultType="java.util.Map">
         select
-        *
-        from t_rectification_confirm
-        where checker = #{userId}
+        a.*,b.*
+        from t_rectification_confirm a LEFT JOIN t_check_tbl b on a.check_id = b.id
+        where a.checker = #{userId}
     </select>
 
 </mapper>

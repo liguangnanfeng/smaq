@@ -114,8 +114,8 @@
     left join
       t_recheck_tbl T3 on T0.recheck_id = T3.id
     where
-      T0.status = 2
-      and
+--       T0.status = 2
+--       and
       T3.check_id = #{checkId}
 
   </select>

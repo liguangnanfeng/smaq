@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("TRectificationConfirmService")
 public class TRectificationConfirmServiceImpl implements TRectificationConfirmService{
@@ -19,7 +20,7 @@ public class TRectificationConfirmServiceImpl implements TRectificationConfirmSe
     }
 
     @Override
-    public List<TRectificationConfirm> findTRectificationConfirm(String userId) {
+    public List<Map> findTRectificationConfirm(String userId) {
         return tRectificationConfirmMapper.findTRectificationConfirm(userId);
     }
 }

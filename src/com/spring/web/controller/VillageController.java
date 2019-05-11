@@ -18,9 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.spring.web.dao.ACompanyManualMapper;
-import com.spring.web.dao.ZzjgDepartmentMapper;
+import com.spring.web.dao.*;
 import com.spring.web.model.*;
+import com.spring.web.service.PCSaveModel;
+import com.spring.web.service.SaveModelService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.json.simple.JSONArray;
@@ -59,6 +60,7 @@ import com.spring.web.util.OutPrintUtil;
  * @Description: TODO(village:  /'vɪlɪdʒ/ 村庄)
  * @date 2017年7月21日 下午12:42:42
  */
+
 @Controller
 @RequestMapping("/village")
 public class VillageController extends BaseController {
@@ -70,6 +72,9 @@ public class VillageController extends BaseController {
     private UserService userService;
     @Autowired
     private CgfService cgfService;
+
+    @Autowired
+    private PCSaveModel saveModelService ;
 
 
     /**
@@ -2716,13 +2721,13 @@ public class VillageController extends BaseController {
      *  checkVal: 多选的检查项
      *  cycle :  检查周期
      *  nextTime : 开始日期
-     *
+     *  checkType : 1. 日常 2.定期 3. 临时
+     *  checkNature: 1. 基础 2. 现场  3. 高危
      * @return
      */
     @RequestMapping(value = "saveCheckMenu")
     @ResponseBody
-    public Result saveCheckMenu(String title,Integer depId,String sName,String[] checkVal,String cycle,String nextTime,String checkType,
-String checkNature ,HttpServletRequest request) {
+    public Result saveCheckMenu(String title,Integer depId,String sName,String[] checkVal,String cycle,String nextTime,String checkType, String checkNature ,HttpServletRequest request) {
         Result result = new ResultImpl();
 
         User user = getLoginUser(request); // 主账号登陆
@@ -2732,22 +2737,44 @@ String checkNature ,HttpServletRequest request) {
             return result;
         }
 
-        // 创建model方法
-        TModel model = new TModel();
-        model.setTitle(title);
-        model.setUserId(user.getId());
-        model.setFlag(1); //自查
-        model.setType(1); //
-        //根据部门id查询部门
-        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectByPrimaryKey(depId);
-        model.setPart(zzjgDepartment.getName());
-        model.setCycle(Integer.parseInt(cycle)); // 定期天数
-        model.setCreateTime(new Date());  // 创建时间
+        Integer integer = saveModelService.saveModel(title, depId, sName, checkVal, cycle, nextTime, checkType, checkNature, user.getId());  // 模版id
+        Integer industryId = saveModelService.saveTIndustry(user.getId(), checkNature);
+
+        //保存完模版之后.保存检查记录
+        TCheck tCheck = new TCheck();
+        tCheck.setStatus(1); // 未检查
+        tCheck.setFlag(1);   // 表示企业自查
+        tCheck.setTitle(title); // 被检查的标题
+        tCheck.setDepart("");   // 被检查的部门
+        tCheck.setUserId(user.getId()); // 被检查的部门
+        tCheck.setCreateUser(user.getId()); // 被创建人的id
+        tCheck.setModelId(integer);         // 模版id
+        tCheck.setIndustryId(industryId);
+        tCheck.setType(Integer.parseInt(checkType)); // 1. 日常 ,2. 定期 3 临时
+        tCheck.setIndustryType(Integer.parseInt(checkNature));                    // 1. 基础 2. 现场 ,3 高危
+        tCheck.setExpectTime(new Date());  //
+        tCheck.setRealTime(new Date());
+        tCheck.setCheker(user.getId()+"");  //当前的公司名称
+        tCheck.setContact(user.getUserName());//
+        tCheck.setDapartContact(""); // 被检查部门
+
+
+
+
+
+
+
 
 
 
         result.setMess("添加成功");
         return result;
     }
+
+
+
+
+
+
 
 }

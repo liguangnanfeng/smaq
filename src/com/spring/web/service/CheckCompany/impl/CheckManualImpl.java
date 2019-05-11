@@ -7,6 +7,8 @@ import com.spring.web.model.request.CheckItem;
 import com.spring.web.model.request.CheckLevel;
 import com.spring.web.model.response.CheckItemS;
 import com.spring.web.service.CheckCompany.ICheckManual;
+import com.spring.web.service.PCSaveModel;
+import com.spring.web.service.SaveModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,6 +79,8 @@ public class CheckManualImpl implements ICheckManual {
     @Autowired
     private TModelPartMapper tModelPartMapper;
 
+    @Autowired
+    private PCSaveModel saveModelService;
 
     /**
      * TODO 根据公司id和部门id查询部门下面的岗位
@@ -254,8 +258,10 @@ public class CheckManualImpl implements ICheckManual {
         // 获取部门 id
         List<CheckLevel> checkLevels = checkItem.getCheckLevels();
         List<String> departmentName = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         for (CheckLevel checkLevel : checkLevels) {
             departmentName.add(checkLevel.getLevel1());
+            list.add(Integer.toString(checkLevel.getId()));
         }
         String departmentNametr = JSON.toJSONString(departmentName);
 
@@ -263,14 +269,14 @@ public class CheckManualImpl implements ICheckManual {
         String name = dangerManualMapper.selectIndustryByid(checkItem.getCheckLevels().get(0).id);
 
         // 获取行业id
-        int IndustryId = companyManualMapper.selectDmidById(name);
+        Integer industryId = saveModelService.saveTIndustry(zzjg.getUid(), checkItem.getTitle() + ""); //  根据公司id和 危险类型, 获取行业id
 
         TModel tModel = new TModel();
         tModel.setTitle(checkItem.getTemplate()); // 检查名称
         tModel.setUserId(zzjg.getUid()); // 公司id
         tModel.setFlag(1); // 检查类型
         tModel.setPart(checkLevels.get(0).level1);              // 被检查的部门
-        tModel.setIndustryId(IndustryId);         // 被检查的行业id
+        tModel.setIndustryId(industryId);         // 被检查的行业id
         if (checkItem.getCheckType() == null) {
             checkItem.setCheckType(1);
         }
@@ -423,7 +429,6 @@ public class CheckManualImpl implements ICheckManual {
      * recheck_memo  '复查描述'
      * <p>
      * TODO 出现重复数据,是因为不同的部门上出现这种风险点和风险因素重复问题?????
-     *
      * @return
      */
     private TCheckItem saveCheckTtem(CheckItem checkItem, ZzjgPersonnel zzjg, Integer CheckId, Integer CheckPartId) {

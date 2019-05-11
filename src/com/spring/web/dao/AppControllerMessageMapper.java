@@ -14,7 +14,7 @@ public interface AppControllerMessageMapper {
 
     Messages findMessageDetail(String id);
 
-    List<Map>  findTCheckList(@Param("cid") String cid,@Param("pageNo") Integer pageNo,@Param("pageSize") Integer pageSize);
+    List<Map>  findTCheckList(@Param("cid") String userId,@Param("pageNo") Integer pageNo,@Param("pageSize") Integer pageSize);
 
     ZzjgPersonnel findPersonnel(String userId);
 

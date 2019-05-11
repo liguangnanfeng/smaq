@@ -82,24 +82,22 @@ public class AppController_message extends BaseController {
 
 
     /**
-     * 获取检查记录列表     String userId       // 测试userId  38
+     * 获取检查记录列表     只有当前检查人和当前责任人能看到 对应的检查记录
      */
     @RequestMapping(value = "findCheckList", method = RequestMethod.POST)
     public @ResponseBody
     AppResult findCheckList(@RequestBody Map<String, Object> params,HttpServletRequest request) {
 
-//        List<TCheck> list = appMessageService.findTCheckList("26");
 
         // 1.获取userId
         String userId  = String.valueOf(params.get("userId"));
         // 当前页
         Integer pageNo = (Integer.valueOf(String.valueOf(params.get("page")))-1)*10;
         // 2. 查询此用户属于哪个部门，哪个企业id
-        ZzjgPersonnel personnel = personnerService.findPersonnel(userId);
+//        ZzjgPersonnel personnel = personnerService.findPersonnel(userId);
 //
         System.out.println("获取检查记录列表==============");
-//        // 3. 展示此企业，此部门，的检查数据(check表有企业id,被检查部门名称(根据这两个条件查询))
-        List<Map> list = appMessageService.findTCheckList(String.valueOf(personnel.getUid()),pageNo,10);
+        List<Map> list = appMessageService.findTCheckList(userId,pageNo,10);
         AppResult result = new AppResultImpl();
         result.setData(list);
 

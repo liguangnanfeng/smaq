@@ -65,7 +65,7 @@
         select
         a.*,count(b.id) as count
         from t_check_tbl a LEFT JOIN t_check_item_tbl b ON a.id = b.check_id
-        where a.user_id = #{cid}
+        where a.status = 2 and a.create_user = #{cid} or a.dapart_contact = #{cid}
 		group BY a.id
         ORDER BY a.create_time DESC
         LIMIT #{pageNo},#{pageSize}

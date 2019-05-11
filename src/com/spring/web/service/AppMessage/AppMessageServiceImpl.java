@@ -25,8 +25,8 @@ public class AppMessageServiceImpl implements AppMessageService {
     }
 
     @Override
-    public List<Map> findTCheckList(String cid,Integer pageNo,Integer pageSize) {
-        return appControllerMessageMapper.findTCheckList(cid,pageNo,pageSize);
+    public List<Map> findTCheckList(String userId,Integer pageNo,Integer pageSize) {
+        return appControllerMessageMapper.findTCheckList(userId,pageNo,pageSize);
     }
 
     @Override

@@ -119,6 +119,8 @@
                     check_val.push(obj[c].value)
                 }
             }
+            console.log(obj)
+            console.log(check_val)
             var title = document.getElementById("title");
             var doc = document.getElementById("departmentId");
             var doc2 = document.getElementById("department2Id");
@@ -130,7 +132,7 @@
                 "title": title.value,
                 "depId": doc.value,
                 "sName": doc2.value,
-                "checkVal": JSON.stringify(check_val),
+                "checkVal": JSON.stringify(check_val) ,
                 "cycle": cycle.value,
                 "nextTime": nextTime.value,
                 "checkType": checkType.value,

@@ -112,7 +112,7 @@
 
         function saveCheckMenu(){
             alert("进入saveCheckMenu");
-            obj = document.getElementsByName("checkBox");
+            var obj = document.getElementsByName("checkBox");
             check_val = [];
             for(c in obj){
                 if(obj[c].checked){
@@ -130,7 +130,7 @@
                 "title": title.value,
                 "depId": doc.value,
                 "sName": doc2.value,
-                "checkVal": check_val,
+                "checkVal": JSON.stringify(check_val),
                 "cycle": cycle.value,
                 "nextTime": nextTime.value,
                 "checkType": checkType.value,

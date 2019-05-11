@@ -174,7 +174,7 @@ public class AppController_message extends BaseController {
         String name = String.valueOf(params.get("name"));
 
         TRectificationConfirm confirm = new TRectificationConfirm();
-        TCheck check = appMessageService.findCheckById(checkId);
+        TCheck check = tCheckMapper.selectByPrimaryKey(Integer.valueOf(checkId));
 
 
         // 组装数据  数据要求： checkId, 被检查人Id，检查人id（具体回复给谁），正文，时间，查看状态
@@ -205,7 +205,7 @@ public class AppController_message extends BaseController {
         String userId  = String.valueOf(params.get("userId"));
         String checkId  = String.valueOf(params.get("checkId"));
 
-        List<TRectificationConfirm> confirmList = tRectificationConfirmService.findTRectificationConfirm(userId);
+        List<Map> confirmList = tRectificationConfirmService.findTRectificationConfirm(userId);
 
         AppResult result = new AppResultImpl();
         result.setData(confirmList);

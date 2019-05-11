@@ -13,7 +13,7 @@ public interface AppMessageService {
     Messages findMessageDetail(String id);
 
     // 检查表，同一个企业可见
-    List<Map>  findTCheckList(String cid,Integer pageNo,Integer pageSize);
+    List<Map>  findTCheckList(String userId,Integer pageNo,Integer pageSize);
 
     // 根据checkId获取单条检查记录
     TCheck findCheckById(String checkId);

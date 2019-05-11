@@ -30,7 +30,8 @@
         select
         a.*,b.*
         from t_rectification_confirm a LEFT JOIN t_check_tbl b on a.check_id = b.id
-        where a.checker = #{userId}
+        where a.checker = #{userId} and a.status = 0
+        ORDER BY a.id DESC
     </select>
 
 

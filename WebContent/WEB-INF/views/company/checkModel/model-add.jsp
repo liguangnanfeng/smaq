@@ -72,7 +72,7 @@
                     })
                 },
                 complete: function (XMLHttpRequest, textStatus) {
-                    layer.close(index);
+                    // layer.close(index);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("查询失败")
@@ -101,7 +101,7 @@
                     })
                 },
                 complete: function (XMLHttpRequest, textStatus) {
-                    layer.close(index);
+                    // layer.close(index);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("查询失败")
@@ -132,7 +132,7 @@
                 "title": title.value,
                 "depId": doc.value,
                 "sName": doc2.value,
-                "checkVal": JSON.stringify(check_val) ,
+                "checkVal": JSON.stringify(check_val),
                 "cycle": cycle.value,
                 "nextTime": nextTime.value,
                 "checkType": checkType.value,
@@ -148,7 +148,7 @@
                     alert("添加成功");
                 },
                 complete: function (XMLHttpRequest, textStatus) {
-                    layer.close(index);
+                    // layer.close(index);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("添加失败")

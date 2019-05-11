@@ -2733,6 +2733,8 @@ public class VillageController extends BaseController {
         System.out.println(array);
 
         User user = getLoginUser(request); // 主账号登陆
+
+        String strs = request.getParameter("checkVal");
         if(user==null){
             result.setMess("登陆失败");
             result.setStatus("1");

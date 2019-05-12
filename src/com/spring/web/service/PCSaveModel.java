@@ -8,12 +8,12 @@ import java.util.List;
  */
 public interface PCSaveModel {
 
-    public Integer saveModel(String title, Integer depId, String sName, String[] checkVal,
+    public Integer saveModel(String title, Integer depId, String sName, List<String> checkVal,
                              String cycle, String nextTime, String checkType, String checkNature ,
                              Integer userId);
 
     public Integer saveTIndustry(Integer userId,String checkNature);
 
-    public List saveTlevel(Integer industyId, String[] checkVal );
+    public List saveTlevel(Integer industyId, List<String> checkVal );
 
 }

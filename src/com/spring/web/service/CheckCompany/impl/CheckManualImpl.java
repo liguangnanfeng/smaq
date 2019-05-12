@@ -143,12 +143,21 @@ public class CheckManualImpl implements ICheckManual {
     }
 
     /**
+     *
+     * 保存自定义模版的信息
+     * 按照步骤进行保存
      * 按照事务流的顺序一步一步来的,
+     *  保存  t_industry_tbl 获取id
+     *  保存  t_level_tbl 获取id
+     *  保存  t_item_tbl 检查项目  获取id
+     *  保存  t_item_surious 获取id
+     *  保存  t_model 获取id
+     *  保存  t_model_part_tbl 获取id
+     *  保存
      * 1. 保存model
      * 2. 保存check
      * 3. 保存
      * 4. 返回表数据
-     *
      * @param checkItem 用户选择的信息
      * @param zzjg      用户保存在域中的信息
      * @return 检查表的信息

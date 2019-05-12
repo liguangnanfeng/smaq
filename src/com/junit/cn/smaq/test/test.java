@@ -1,5 +1,7 @@
 package com.junit.cn.smaq.test;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.spring.web.dao.TCheckItemMapper;
 import com.spring.web.dao.TCheckMapper;
 import com.spring.web.model.TCheck;
@@ -13,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -49,5 +53,25 @@ public class test {
 
 
     }
+
+
+    /**
+     *
+     * ["2984","2985","2986"] 进行解析
+     */
+    @Test
+    public void test03(){
+        String str = "[\"2984\",\"2985\",\"2986\"]";
+
+        str.replace("\"", " ");
+        str.replace("]", " ");
+        str.replace("[", " ");
+        System.out.println(str);
+
+        List<String> list = JSON.parseObject(str, List.class);
+        System.out.println(list);
+
+    }
+
 
 }

@@ -323,21 +323,21 @@ public class AppController_Custom_Check {
         }
 
         // 获取session集合中的域对象
-        /*MySessionContext myc = MySessionContext.getInstance();
+        MySessionContext myc = MySessionContext.getInstance();
         HttpSession sess = myc.getSession(checkModel.getSessionId());
         if (sess == null) {
             result.setMessage("未登陆");
             result.setStatus("1");
             return result;
-        }*/
+        }
 
         // 获取域中的用户信息
-   /*     ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(checkModel.getAccess_token());
+        ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(checkModel.getAccess_token());
         if (zzjg == null) {
             result.setMessage("未登陆");
             result.setStatus("1");
             return result;
-        }*/
+        }
 
         // 判断完成, 根据id查询并进行封装数据
 

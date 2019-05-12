@@ -51,7 +51,7 @@ public class SaveModelService implements PCSaveModel {
      * 保存model数据到数据库并返回一个modelId
      * @return
      */
-    public Integer saveModel(String title, Integer depId, String sName, String[] checkVal,
+    public Integer saveModel(String title, Integer depId, String sName, List<String> checkVal,
                              String cycle, String nextTime, String checkType, String checkNature ,
                              Integer userId){
 
@@ -104,7 +104,6 @@ public class SaveModelService implements PCSaveModel {
 
         return ModelId;
 
-
     }
 
 
@@ -116,7 +115,7 @@ public class SaveModelService implements PCSaveModel {
         Company company = companyMapper.selectByPrimaryKey(userId); // 获取公司的详细信息
         TIndustry industry = new TIndustry();
 
-        industry.setName(company.getRegType()); //企业类型
+        industry.setName(company.getIndustry()); //企业类型
         industry.setType(Integer.parseInt(checkNature)); //等级 基础 高危
         int i = tIndustryMapper.insertSelective(industry);
         return industry.getId();
@@ -134,7 +133,7 @@ public class SaveModelService implements PCSaveModel {
      *
      */
 
-    public List saveTlevel(Integer industyId, String[] checkVal ){
+    public List saveTlevel(Integer industyId, List<String> checkVal ){
         List<Integer> list = new ArrayList<>();
 
         for (String s : checkVal) {

@@ -80,6 +80,17 @@ public class CountryCheckImpl implements CountryCheck {
     @Autowired
     private TModelPartMapper tModelPartMapper;
 
+    /*企业等级表*/
+    @Autowired
+    private TIndustryMapper tIndustryMapper;
+
+    @Autowired
+    private TItemMapper tItemMapper;
+
+    @Autowired
+    private TItemSeriousMapper tItemSeriousMapper;
+
+
     /**
      * 村级查询企业
      *
@@ -141,18 +152,22 @@ public class CountryCheckImpl implements CountryCheck {
     @Override
     public Integer saveCheck(CheckItem checkItem, Officials officials, Integer id) {
         try {
-            // 1. 保存model信息并返回id
-            TModel tModel = saveTmodel(checkItem, officials);
-            modelMapper.insertSelective(tModel);
-            Integer modelId = tModel.getId(); //获取模版id
+
+            // 1. 保存t_industry_tbl表 返回id
+            Integer industryId = saveTIdustry(checkItem);
+
+            // 2. 保存t_level_tbl AND t_item_tbl 返回id集合
+            List<Integer> levels = saveTLevel(checkItem, industryId);
+
+            // 3. 保存model信息并返回id
+            Integer modelId = saveTmodel(checkItem, officials,industryId);
+
             // 2. 保存check表数据并返回id
-            TCheck tCheck = saveCheckTbl(checkItem, officials, modelId, id);
-            int i = tCheckMapper.insertSelective(tCheck);
-            Integer checkId = tCheck.getId();  //获取检查表id
-            // 3. 保存并获取检查分类id
-            List<Integer> list = saveTLevel(checkItem);
+            Integer checkId = saveCheckTbl(checkItem, officials, modelId, industryId);
+
+
             // 4. 保存checkPart数据并返回id
-            TCheckPart tCheckPart = saveCheckPart(checkItem, list, checkId);
+            TCheckPart tCheckPart = saveCheckPart(checkItem, levels, checkId);
             tCheckPartMapper.insertSelective(tCheckPart);
             int tCheckPartId = tCheckPart.getId(); // 获取checkPartId
 
@@ -160,7 +175,7 @@ public class CountryCheckImpl implements CountryCheck {
             saveCheckTtem(checkItem, officials, checkId, tCheckPartId);
 
             // 6. 保存model_part() 计划检查模块表
-            saveTmodelPath(modelId, checkItem, list);
+            saveTmodelPath(modelId, checkItem, levels);
 
             return modelId;
         } catch (Exception e) {
@@ -169,6 +184,81 @@ public class CountryCheckImpl implements CountryCheck {
 
         }
 
+    }
+
+    /**
+     * 添加t_industry_tbl
+     *
+     * @param checkItem
+     * @return industryId
+     */
+    private Integer saveTIdustry(CheckItem checkItem) {
+
+        Company company = companyMapper.selectByPrimaryKey(checkItem.getId());
+
+        TIndustry industry = new TIndustry();
+
+        industry.setName(company.getIndustry()); //企业所属的行业
+
+        industry.setType(checkItem.getTitle());  // 1. 基础 2. 现场 3. 高危
+
+        int i = tIndustryMapper.insertSelective(industry);
+
+        return industry.getId();
+
+    }
+
+    /**
+     * 添加 t_level_tbl
+     * level1      varchar(50)  null comment 'Ⅱ级隐患自查标准',
+     * level2      varchar(50)  null comment 'Ⅲ级隐患自查标准',
+     * level3      varchar(100) null,
+     * industry_id int          null comment '所属行业',
+     * @return
+     */
+    private List<Integer> saveTLevel(CheckItem checkItem, Integer industryId) {
+        TLevel tLevel = new TLevel();
+
+        List<CheckLevel> checkLevels = checkItem.getCheckLevels();
+        List<Integer> list = new ArrayList<>();
+
+        for (CheckLevel checkLevel : checkLevels) {
+            // 按照数据库查询进行检查
+            if (checkLevel.getType() == "1") {
+                String level3 = checkLevel.getLevel3();
+                String[] split = level3.split("/");
+                tLevel.setLevel1(split[0]);
+                tLevel.setLevel2(split[1]);
+                tLevel.setLevel3(split[2]);
+
+            } else if (checkLevel.getType() == "2") {
+                // 自定义进行检查
+                tLevel.setLevel1(checkLevel.getLevel3());
+                tLevel.setLevel2(checkLevel.getLevel3());
+                tLevel.setLevel3(checkLevel.getLevel3());
+            }
+
+            tLevel.setIndustryId(industryId); //所属的行业id
+            tLevelMapper.insertSelective(tLevel);
+            Integer tLevelId = tLevel.getId(); //获取检查分类的id
+
+            // 添加t_item_tbl
+            TItem tItem = new TItem();
+            ACompanyManual companyManual = companyManualMapper.selectByPrimaryKey(checkLevel.getId());
+            tItem.setContent(companyManual.getMeasures());// 检查内容
+            tItem.setLevelId(tLevelId);
+            tItem.setReference(companyManual.getReference());
+            tItemMapper.insertSelective(tItem);
+
+            // 添加t_item_serious_tbl
+            TItemSerious tItemSerious = new TItemSerious();
+            tItemSerious.setLevelid(tLevelId);
+            tItemSerious.setKeywords(companyManual.getFactors());
+            tItemSeriousMapper.insertSelective(tItemSerious);
+            list.add(tLevelId);
+        }
+
+        return list;
     }
 
 
@@ -183,7 +273,7 @@ public class CountryCheckImpl implements CountryCheck {
      * @param
      * @return
      */
-    private TModel saveTmodel(CheckItem checkItem, Officials officials) {
+    private Integer saveTmodel(CheckItem checkItem, Officials officials,Integer industryId) {
 
         // 获取部门 id
         List<CheckLevel> checkLevels = checkItem.getCheckLevels();
@@ -193,18 +283,12 @@ public class CountryCheckImpl implements CountryCheck {
         }
         String departmentNametr = JSON.toJSONString(departmentName);
 
-        // 获取行业名称
-        String name = dangerManualMapper.selectIndustryByid(checkItem.getCheckLevels().get(0).id);
-
-        // 获取行业id
-        int IndustryId = companyManualMapper.selectDmidById(name);
-
         TModel tModel = new TModel();
         tModel.setTitle(checkItem.getTemplate()); // 检查名称
         tModel.setUserId(officials.getUid()); // 检查人员所属部门的id
         tModel.setFlag(2); // 检查类型
         tModel.setPart(checkLevels.get(0).level1);              // 被检查的部门
-        tModel.setIndustryId(IndustryId);         // 被检查的行业id
+        tModel.setIndustryId(industryId);         // 被检查的行业id
         if (checkItem.getCheckType() == null) {
             checkItem.setCheckType(1);
         }
@@ -233,8 +317,9 @@ public class CountryCheckImpl implements CountryCheck {
             tModel.setNextCheckTime(t); // 定期检查的时间
             tModel.setOpen(1);          // 定期生成
         }
-
-        return tModel;
+        modelMapper.insertSelective(tModel);
+        Integer modelId = tModel.getId(); //获取模版id
+        return modelId;
     }
 
     /**
@@ -269,7 +354,7 @@ public class CountryCheckImpl implements CountryCheck {
      * @param modelId   模版表id
      * @return
      */
-    private TCheck saveCheckTbl(CheckItem checkItem, Officials officials, Integer modelId, Integer id) {
+    private Integer saveCheckTbl(CheckItem checkItem, Officials officials, Integer modelId, Integer industryId) {
 
         // 获取部门 id
         List<CheckLevel> checkLevels = checkItem.getCheckLevels();
@@ -279,21 +364,15 @@ public class CountryCheckImpl implements CountryCheck {
         }
         String departmentNametr = JSON.toJSONString(departmentName);
 
-        // 获取行业名称
-        String name = dangerManualMapper.selectIndustryByid(checkItem.getCheckLevels().get(0).id);
-
-        // 获取行业id
-        int IndustryId = companyManualMapper.selectDmidById(name);
-
         TCheck tCheck = new TCheck();
         tCheck.setFlag(2);       //行政检查
         tCheck.setTitle(checkItem.getTemplate());     //被检查的标题
-        tCheck.setDepart(checkLevels.get(0).level1);    // 被检查的部门
-        tCheck.setUserId(id);     // 被检查的企业
+        tCheck.setDepart(checkLevels.get(0).level1);    // 被检查的部门 TODO 政府端理论上是检查多个部门,这里应该是添加多个部门的信息
+        tCheck.setUserId(checkItem.getId());     // 被检查的企业
         tCheck.setCreateUser(officials.getId()); //创建人(检查人员的id)
         tCheck.setModelId(modelId);    // 模版id
         tCheck.setType(checkItem.getTitle());       // 1. 日常 2 定期  3 临时
-        tCheck.setIndustryId(IndustryId); // 检查行业的id
+        tCheck.setIndustryId(industryId); // 检查行业的id
         tCheck.setIndustryType(checkItem.getCheckType()); // 1. 基础 2. 现场 3. 高危
         tCheck.setExpectTime(new Date()); // 预计检查时间
         tCheck.setRealTime(new Date());  // 实际检查时间
@@ -303,55 +382,11 @@ public class CountryCheckImpl implements CountryCheck {
         tCheck.setStatus(1);              // 1. 未检查
         tCheck.setCreateTime(new Date()); // 创建时间
 
-        return tCheck;
+        int i = tCheckMapper.insertSelective(tCheck);
+        Integer checkId = tCheck.getId();  //获取检查表id
 
-    }
+        return checkId;
 
-    /**
-     * 添加检查分类表
-     * level1      varchar(50)  null comment 'Ⅱ级隐患自查标准',
-     * level2      varchar(50)  null comment 'Ⅲ级隐患自查标准',
-     * level3      varchar(100) null,
-     * industry_id int          null comment '所属行业',
-     * 出现的类型 type 进行判断 1, 按类型进行检查, 2. 自定义进行检查
-     * 是自定义检查还是随机检查,
-     *
-     * @return
-     */
-    private List<Integer> saveTLevel(CheckItem checkItem) {
-        TLevel tLevel = new TLevel();
-
-        // 获取行业名称
-        String name = dangerManualMapper.selectIndustryByid(checkItem.getCheckLevels().get(0).id);
-
-        // 获取行业id
-        int IndustryId = companyManualMapper.selectDmidById(name);
-
-        List<CheckLevel> checkLevels = checkItem.getCheckLevels();
-        List<Integer> list = new ArrayList<>();
-
-        for (CheckLevel checkLevel : checkLevels) {
-            // 按照数据库查询进行检查
-            if (checkLevel.getType() == "1") {
-                String level3 = checkLevel.getLevel3();
-                String[] split = level3.split("/");
-                tLevel.setLevel1(split[0]);
-                tLevel.setLevel2(split[1]);
-                tLevel.setLevel3(split[2]);
-
-            } else if (checkLevel.getType() == "2") {
-                // 自定义进行检查
-                tLevel.setLevel1(checkLevel.getLevel3());
-                tLevel.setLevel2(checkLevel.getLevel3());
-                tLevel.setLevel3(checkLevel.getLevel3());
-            }
-            tLevel.setIndustryId(IndustryId);
-            tLevelMapper.insertSelective(tLevel);
-            Integer tLevelId = tLevel.getId(); //获取检查分类的id
-            list.add(tLevelId);
-        }
-
-        return list;
     }
 
     /**

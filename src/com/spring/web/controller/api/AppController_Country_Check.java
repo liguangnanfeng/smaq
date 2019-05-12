@@ -32,12 +32,8 @@ import java.util.Map;
 /**
  * @Author: 桃红梨白
  * @Date: 2019/05/05 19:26
- * 行政检查,
+ * 政府端
  * 编号从220开始
- * 首先要判断政府人员的权限 获取所在的usertype : 然后根据usertype根据数据进行保存
- * 获取所在的地区和地区所有的企业,获取企业的风险点
- * <p>
- * 根据行业,获取该行业所有的风险点
  */
 
 @Controller
@@ -167,7 +163,7 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 市直接查询所有的区
+     * TODO  无锡市直接查询所有的区
      */
     @ResponseBody
     @RequestMapping(value = "A223", method = RequestMethod.POST)
@@ -194,7 +190,7 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 总绝式, 来啥查啥
+     * TODO 总绝式, 来啥查啥
      *
      * @param request
      * @return
@@ -241,10 +237,9 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 获取部门,以及对应的岗位 level1 levle2
+     * TODO  根据公司id获取部门,以及对应的岗位 level1 levle2
      * @param request
-     * @param
-     * @param
+     * @param id 公司的id
      * @return
      */
 
@@ -282,8 +277,10 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 查询公司的安全责任人
-     * id: uid 总公司的id
+     * TODO 查询公司的安全责任人
+     * 安全责任人是相对的,政府端对应的安全责任人就是企业端的检查人员
+     * @param id 公司id
+     * @return 公司所有的安全责任人
      */
     @ResponseBody
     @RequestMapping(value = "A226", method = RequestMethod.POST)
@@ -311,8 +308,9 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 保存模版
-     * id 表示为公司的id
+     * TODO 政府端保存检查模版
+     * @param 封装的信息
+     * @return 模版id
      */
     @ResponseBody
     @RequestMapping(value="A227" ,method = RequestMethod.POST)
@@ -322,7 +320,7 @@ public class AppController_Country_Check {
         //到域中获取数据
         MySessionContext sess = MySessionContext.getInstance();
         HttpSession session = sess.getSession(checkItem.getSessionId());
-        Officials officials = (Officials) session.getAttribute(checkItem.getAccess_token());// 获取session域中的信息
+        Officials officials = (Officials) session.getAttribute(checkItem.getAccess_token());// 获取session域中用户登陆的信息
         if (officials == null || checkItem==null) {
             result.setMessage("登陆失败");
             result.setStatus("1");

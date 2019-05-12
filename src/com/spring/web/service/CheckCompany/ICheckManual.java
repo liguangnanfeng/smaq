@@ -25,6 +25,12 @@ public interface ICheckManual {
 
     List<CheckLevel> selectLevel5AndId(CheckLevel checkLevel);
 
+    /**
+     * 保存自定义模版的信息
+     * @param checkItem
+     * @param zzjg
+     * @return
+     */
     Integer saveCheck(CheckItem checkItem,ZzjgPersonnel zzjg);
 
     List<Map<Integer, String>> findUserByIdAndStatus(ZzjgPersonnel zzjg);

@@ -89,7 +89,12 @@ public class CheckLevel implements Serializable {
      */
     public String files;
 
+    /**
+     * 不同的检查内容
+     * 1. 基础  2. 现场  3. 高危
+     */
 
+    public Integer jcType;
 
 
 }

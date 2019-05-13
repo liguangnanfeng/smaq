@@ -21,6 +21,11 @@ public interface ICheckManual {
 
     List<CheckLevel> selectLevel3AndId(List<CheckLevel> checkLevel);
 
+    /**
+     * 根据levle1 level2 检查类型  查询level3
+     * @param checkLevel
+     * @return
+     */
     List<CheckLevel> selectLevel4AndId(CheckLevel checkLevel);
 
     List<CheckLevel> selectLevel5AndId(CheckLevel checkLevel);

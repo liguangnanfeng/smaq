@@ -121,5 +121,27 @@ public interface ACompanyManualMapper {
 
     // 根据公司id，部门名，岗位名
     List<ACompanyManual> findInspection(@Param("id") String id,@Param("dept") String dept,@Param("station") String station);
+
+    /**
+     * 根据level1 和Level 2 和检查的类型 (基础),查询level3
+     * @param checkLevel
+     * @return
+     */
+    List<CheckLevel> findLevel3ByjcType1(CheckLevel checkLevel);
+
+    /**
+     * 根据level1 和Level 2 和检查的类型 (现场),查询level3
+     * @param checkLevel
+     * @return
+     */
+    List<CheckLevel> findLevel3ByjcType2(CheckLevel checkLevel);
+
+
+    /**
+     * 根据level1 和Level 2 和检查的类型 (高危),查询level3
+     * @param checkLevel
+     * @return
+     */
+    List<CheckLevel> findLevel3ByjcType3(CheckLevel checkLevel);
 }
 

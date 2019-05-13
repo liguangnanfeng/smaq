@@ -46,8 +46,10 @@ public class Zzjg_PersonnelServiceImpl implements Zzjg_PersonnelService {
         boolean flag = EncryptUtil.match(zzjgPersonnel.getPassword(), password);
 
         if(flag){
+
             return zzjgPersonnel;
         }else{
+
             throw  new RuntimeException("密码错误");
         }
 

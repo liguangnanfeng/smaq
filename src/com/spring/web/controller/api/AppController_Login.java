@@ -3,6 +3,7 @@ package com.spring.web.controller.api;
 import com.spring.web.dao.AppTokenMapper;
 import com.spring.web.dao.OfficialsMapper;
 import com.spring.web.dao.UserMapper;
+import com.spring.web.dao.ZzjgPersonnelMapper;
 import com.spring.web.listener.MySessionContext;
 import com.spring.web.model.*;
 import com.spring.web.result.AppResult;
@@ -65,7 +66,14 @@ public class AppController_Login {
     /**
      * 验证apptoken
      */
+    @Autowired
     private AppTokenData appTokenData;
+
+    /**
+     * 直接去查询
+     */
+    @Autowired
+    private ZzjgPersonnelMapper zzjgPersonnelMapper;
 
     /**
      * 政府检查人员进行登陆
@@ -210,7 +218,10 @@ public class AppController_Login {
             }
 
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("user", zzjgPersonnel);
+            Integer id = zzjgPersonnel.getId();
+            Map stringObjectMap = zzjgPersonnelMapper.selectAll1( 844 );
+            map.put("user", stringObjectMap);
+
             AppToken db_appToken = appTokenMapper.selectByUserId(String.valueOf(zzjgPersonnel.getId()));
             if (db_appToken == null) {
                 AppToken appToken = new AppToken();
@@ -246,6 +257,7 @@ public class AppController_Login {
         } catch (Exception e) {
             // 表示密码不正确
             result.setStatus("1");
+            e.printStackTrace();
             result.setMessage("密码不正确");
             return result;
         }

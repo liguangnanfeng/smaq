@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 /**
@@ -142,7 +141,6 @@ public class AppController_Custom_Check {
         return result;
     }
 
-
     /**
      * 根据部门岗位(level1 , level2)查询风险点(level3)  直接查询
      *
@@ -153,7 +151,7 @@ public class AppController_Custom_Check {
     @ResponseBody
     @RequestMapping(value = "A202", method = RequestMethod.POST/*,
             headers = {"Content-type: application/json"}*/)
-    public AppResult checkLevel3(HttpServletRequest request, /*@RequestBody*/ CheckLevel checkLevel) {
+    public AppResult checkLevel3(HttpServletRequest request, /*@RequestBody*/ CheckLevel checkLevel ) {
 
         AppResult result = new AppResultImpl();
         if (checkLevel == null) {
@@ -161,6 +159,8 @@ public class AppController_Custom_Check {
             result.setMessage("请进行选择部门及其岗位");
             return result;
         }
+        //对不同的检查方式,进行不同的检查
+
 
         // 调用方法进行查询
         List<CheckLevel> list = checkManual.selectLevel4AndId(checkLevel);
@@ -183,6 +183,9 @@ public class AppController_Custom_Check {
         result.setData(set);
         return result;
     }
+
+
+
 
     /**
      * 查询level4

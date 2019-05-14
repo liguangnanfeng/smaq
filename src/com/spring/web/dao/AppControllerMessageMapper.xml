@@ -121,6 +121,12 @@
   </select>
 
 
+    <select id="selectRecheckByCheckId2" resultType="java.util.Map">
+      select a.*,b.name,c.title
+        FROM t_check_tbl c JOIN t_recheck_tbl a ON a.check_id = c.id LEFT JOIN zzjg_personnel_tbl b ON a.dapart_contact = b.id
+        where a.create_time = #{userId} or a.dapart_contact = #{userId}
+    </select>
+
     <select id="selectCheckByFlag" resultType="java.util.Map">
       select  a.user_id as userId,u.user_name,
 

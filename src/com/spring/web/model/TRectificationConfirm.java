@@ -22,6 +22,27 @@ public class TRectificationConfirm implements Serializable {
 
     private Date createTime;
 
+    private Integer senderId;
+
+    private Integer checkItemId;
+
+
+    public Integer getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(Integer senderId) {
+        this.senderId = senderId;
+    }
+
+    public Integer getCheckItemId() {
+        return checkItemId;
+    }
+
+    public void setCheckItemId(Integer checkItemId) {
+        this.checkItemId = checkItemId;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -55,6 +55,11 @@ public class AppMessageServiceImpl implements AppMessageService {
     }
 
     @Override
+    public List<Map<String, Object>> selectRecheckByCheckId2(Integer userId) {
+        return appControllerMessageMapper.selectRecheckByCheckId2(userId);
+    }
+
+    @Override
     public List<Map> selectCheckByFlag() {
         return appControllerMessageMapper.selectCheckByFlag();
     }

@@ -28,8 +28,11 @@ public interface AppMessageService {
     // 根据checkId获取整改意见时限
     TRectification findTRectification(String checkId);
 
-    // 复查
+    // 复查 （检查表里进入）
     List<Map<String, Object>> selectRecheckByCheckId(@Param("checkId")Integer checkId);
+
+    // 复查 （主界面进入）
+    List<Map<String, Object>> selectRecheckByCheckId2(@Param("userId")Integer userId);
 
     // 政府端检查表
     List<Map> selectCheckByFlag();

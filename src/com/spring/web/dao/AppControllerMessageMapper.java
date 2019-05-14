@@ -25,6 +25,9 @@ public interface AppControllerMessageMapper {
     // 复查
     List<Map<String, Object>> selectRecheckByCheckId(@Param("checkId")Integer checkId);
 
+    // 复查 （主界面进入）
+    List<Map<String, Object>> selectRecheckByCheckId2(@Param("userId")Integer userId);
+
     // 政府端检查表
     List<Map> selectCheckByFlag();
 

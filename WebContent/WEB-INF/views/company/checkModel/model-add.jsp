@@ -126,8 +126,8 @@
             var doc2 = document.getElementById("department2Id");
             var cycle = document.getElementById("cycle");
             var nextTime = document.getElementById("nextTime");
-            var checkType = document.getElementById("checkType");
-            var checkNature = document.getElementById("checkNature");
+            // var checkType = document.getElementById("checkType");
+            // var checkNature = document.getElementById("checkNature");
             var params = {
                 "title": title.value,
                 "depId": doc.value,
@@ -135,8 +135,8 @@
                 "checkVal": JSON.stringify(check_val),
                 "cycle": cycle.value,
                 "nextTime": nextTime.value,
-                "checkType": checkType.value,
-                "checkNature":checkNature.value
+                // "checkType": checkType.value,
+                // "checkNature":checkNature.value
             }
             $.ajax({
                 type: "POST",
@@ -214,36 +214,36 @@
 
 
             <%--检查方式--%>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查方式 :</label>
-                <div class="formControls col-xs-8 col-sm-9">
-            <span class="select-box inline">
+            <%--<div class="row cl">--%>
+                <%--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查方式 :</label>--%>
+                <%--<div class="formControls col-xs-8 col-sm-9">--%>
+            <%--<span class="select-box inline">--%>
 
-                   <select name="checkType" class="select" id="checkType" >
-                       <option value="1">日常</option>
-                       <option value="2">定期</option>
-                       <option value="3">临时</option>
-                  </select>
-            </span>
+                   <%--<select name="checkType" class="select" id="checkType" >--%>
+                       <%--<option value="1">日常</option>--%>
+                       <%--<option value="2">定期</option>--%>
+                       <%--<option value="3">临时</option>--%>
+                  <%--</select>--%>
+            <%--</span>--%>
 
-                </div>
-            </div>
+                <%--</div>--%>
+            <%--</div>--%>
 
             <%--检查性质--%>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查性质 :</label>
-                <div class="formControls col-xs-8 col-sm-9">
-            <span class="select-box inline">
+            <%--<div class="row cl">--%>
+                <%--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查性质 :</label>--%>
+                <%--<div class="formControls col-xs-8 col-sm-9">--%>
+            <%--<span class="select-box inline">--%>
 
-                   <select name="checkNature" class="select" id="checkNature">
-                       <option value="1">基础</option>
-                       <option value="2">现场</option>
-                       <option value="3">高危行业</option>
-                  </select>
-            </span>
+                   <%--<select name="checkNature" class="select" id="checkNature">--%>
+                       <%--<option value="1">基础</option>--%>
+                       <%--<option value="2">现场</option>--%>
+                       <%--<option value="3">高危行业</option>--%>
+                  <%--</select>--%>
+            <%--</span>--%>
 
-                </div>
-            </div>
+                <%--</div>--%>
+            <%--</div>--%>
 
 
         <%--部门--%>

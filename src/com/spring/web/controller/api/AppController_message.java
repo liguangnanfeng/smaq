@@ -164,7 +164,9 @@ public class AppController_message extends BaseController {
 
         String confirmText = String.valueOf(params.get("confirmText"));
         String checkId = String.valueOf(params.get("checkId"));
+        String checkItemId = String.valueOf(params.get("checkItemId"));
         String name = String.valueOf(params.get("name"));
+        String userId = String.valueOf(params.get("userId"));
 
         TRectificationConfirm confirm = new TRectificationConfirm();
         TCheck check = tCheckMapper.selectByPrimaryKey(Integer.valueOf(checkId));
@@ -179,6 +181,8 @@ public class AppController_message extends BaseController {
         confirm.setCreateTime(new Date());
         confirm.setSender(name);
         confirm.setStatus(0);
+        confirm.setSenderId(Integer.valueOf(userId));
+        confirm.setCheckItemId(Integer.valueOf(checkItemId));
 
         tRectificationConfirmService.saveTRectificationConfirm(confirm);
 
@@ -210,14 +214,13 @@ public class AppController_message extends BaseController {
 
 
     /**
-     * 复查    ,String checkId
+     * 复查    ,String checkId   （检查表里进入）
      */
     @RequestMapping(value = "findReCheckList", method = RequestMethod.POST)
     public @ResponseBody
     AppResult findReCheckList(@RequestBody Map<String, Object> params,HttpServletRequest request) {
 
         String checkId  = String.valueOf(params.get("checkId"));
-
         AppResult result = new AppResultImpl();
         if(null == checkId){
             result.setMessage("检查表id不能为空");
@@ -232,13 +235,23 @@ public class AppController_message extends BaseController {
 //        listMap.put("itemList", tRecheckItemMapper.selectByCheckId(id));
         listMap.put("itemList", appMessageService.selectRecheckByCheckId(id));
         System.out.println("复查 ==============");
-
-
         result.setData(listMap);
-
         return result;
 
     }
 
+    /**
+     * 复查列表 (主界面进入)
+     */
+    @RequestMapping(value = "findReCheckList2", method = RequestMethod.POST)
+    public @ResponseBody
+    AppResult findReCheckList2(@RequestBody Map<String, Object> params,HttpServletRequest request) {
 
+        String userId = String.valueOf(params.get("userId"));
+        LinkedHashMap<String,Object> listMap = new LinkedHashMap<>();
+        listMap.put("itemList", appMessageService.selectRecheckByCheckId2(Integer.valueOf(userId)));
+        AppResult result = new AppResultImpl();
+        result.setData(listMap);
+        return result;
+    }
 }

@@ -2790,4 +2790,20 @@ public class VillageController extends BaseController {
         return result;
     }
 
+
+    /**
+     * 保存模板2
+     */
+    @RequestMapping(value = "saveCheckMenu2")
+    @ResponseBody
+    public Result saveCheckMenu2(@RequestBody HashMap<String,Object> map){
+        Result result = new ResultImpl();
+        log.info(map);
+
+
+        result.setMess("添加成功");
+        return result;
+    }
+
+
 }

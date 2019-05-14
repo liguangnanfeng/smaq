@@ -84,7 +84,6 @@ public class SaveDataImpl implements SaveMessageService {
     private TRectificationConfirmMapper tRectificationConfirmMapper;
 
 
-
     /**
      * 保存检查信息,并进行返回结果消息
      * valve   1 :合格  2 : 不合格
@@ -152,7 +151,7 @@ public class SaveDataImpl implements SaveMessageService {
                     // 保存检查结果整改意见表
                     tRectificationMapper.insertSelective(tRectification);
 
-                }else{
+                } else {
                     return null;
                 }
 
@@ -240,7 +239,6 @@ public class SaveDataImpl implements SaveMessageService {
     }
 
     /**
-     *
      * 根据复查信息进行保存 只要里面有一条不合格就表示这次检查不合格
      * @param saveDataMessageItem
      * @param zzjg
@@ -275,17 +273,17 @@ public class SaveDataImpl implements SaveMessageService {
                 }
 
             }
-            if(tRecheck.getStatus()==2){
+            if (tRecheck.getStatus() == 2) {
                 //修改数据未合格
                 TRectificationConfirm byCheckId = tRectificationConfirmMapper.findByCheckId(saveDataMessageItem.getCheckId());
-                if (byCheckId==null){
+                if (byCheckId == null) {
                     return null;
                 }
 
                 byCheckId.setStatus(1);
                 tRectificationConfirmMapper.updateByTRectificationConfirm(byCheckId);
 
-            }else{
+            } else {
                 // 未全部整改
             }
 
@@ -369,23 +367,23 @@ public class SaveDataImpl implements SaveMessageService {
                 return checkItemS;
 
             } else {*/
-                // 每一次都是查询最开始的那一条检查记录然后进行复制保存
-                // 这时候按照时间的进行检查，找到最早的那一个存储的模板，然后进行修改保存
-                TCheck tCheck1 = tCheckMapper.selectOldByModelId(tModel.getId());
+            // 每一次都是查询最开始的那一条检查记录然后进行复制保存
+            // 这时候按照时间的进行检查，找到最早的那一个存储的模板，然后进行修改保存
+            TCheck tCheck1 = tCheckMapper.selectOldByModelId(tModel.getId());
 
-                Integer checkId = insertCheck(tCheck1.getId());  //表示是新的数据,然后将新的数据进行传递
+            Integer checkId = insertCheck(tCheck1.getId());  //表示是新的数据,然后将新的数据进行传递
 
-                List<TCheckPart> tCheckParts = tCheckPartMapper.findAllByCheckId(checkId);
+            List<TCheckPart> tCheckParts = tCheckPartMapper.findAllByCheckId(checkId);
 
-                checkItemS.setLevle1(tCheckParts.get(0).getName()); //部门信息
+            checkItemS.setLevle1(tCheckParts.get(0).getName()); // 部门信息
+            checkItemS.setType(tCheck1.getIndustryType());              // 检查类型
+            // 查询风险点数据
+            List<TCheckItem> list = tCheckItemMapper.selectAllByCheckId(checkId, tCheckParts.get(0).getId());
+            checkItemS.setItems(list);
 
-                // 查询风险点数据
-                List<TCheckItem> list = tCheckItemMapper.selectAllByCheckId(checkId, tCheckParts.get(0).getId());
-                checkItemS.setItems(list);
+            return checkItemS;
 
-                return checkItemS;
-
-           /* }*/
+            /* }*/
 
         } catch (Exception e) {
             // 查询出现问题就直接报错
@@ -397,11 +395,11 @@ public class SaveDataImpl implements SaveMessageService {
     /**
      * 在更新完数据之后,新一轮数据的保存
      * 根据item表id进行查询然后将新一轮的数据进行保存然后重复提交
-     *  肯定是只对应一张检查表
-     *
+     * 肯定是只对应一张检查表
+     * <p>
      * 但是在查询到未检查的数据的时候,要将数据进行筛选
      */
-    private Integer insertCheck(Integer checkId){
+    private Integer insertCheck(Integer checkId) {
 
         // 获取对应的检查表的数据
         TCheck tCheck = tCheckMapper.selectByPrimaryKey(checkId); //获取主表
@@ -440,7 +438,7 @@ public class SaveDataImpl implements SaveMessageService {
 
         }
 
-       return tCheckId;
+        return tCheckId;
 
     }
 

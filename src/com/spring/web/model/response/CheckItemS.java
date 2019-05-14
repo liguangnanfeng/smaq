@@ -16,6 +16,8 @@ public class CheckItemS {
 
     public String levle1;
 
+    public Integer type;
+
     public List<TCheckItem> items;
 
 

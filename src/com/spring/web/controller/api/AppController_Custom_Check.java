@@ -13,10 +13,12 @@ import com.spring.web.result.AppResultImpl;
 import com.spring.web.service.CheckCompany.ICheckManual;
 import com.spring.web.service.CheckCompany.SaveMessageService;
 import com.spring.web.service.CheckCompany.Zzig_departmentService;
+import com.sun.javaws.security.AppPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -142,16 +144,120 @@ public class AppController_Custom_Check {
     }
 
     /**
+     * TODO 查询五个高危检选项
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="A212",method=RequestMethod.POST)
+    public AppResult checkGaoWei(HttpServletRequest request){
+        // 获取登陆内容
+        AppResult result = new AppResultImpl();
+        ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
+        if(zzjg==null){
+            result.setStatus("1");
+            result.setMessage("未成功登陆,请重新登陆");
+            return result;
+        }
+
+        // 查询高危风险
+        List<Map> list =  checkManual.checkGaoWei(zzjg.getUid());
+        result.setStatus("0");
+        result.setMessage("查询成功");
+        result.setData(list);
+
+        return result;
+    }
+
+    /**
+     * TODO 查询基础检查 选项
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="A213",method=RequestMethod.POST)
+    public AppResult checkJiChu(HttpServletRequest request){
+        // 获取登陆内容
+        AppResult result = new AppResultImpl();
+        ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
+        if(zzjg==null){
+            result.setStatus("1");
+            result.setMessage("未成功登陆,请重新登陆");
+            return result;
+        }
+
+        // 查询高危风险
+        Map map = checkManual.checkJiChu(zzjg);
+        result.setStatus("0");
+        result.setMessage("查询成功");
+        result.setData(map);
+
+        return result;
+    }
+
+    /**
+     * TODO 高危检查选项
+     * 获取所有高危检查的选项 level 1 level2 level 3
+     * @param request
+     * @param industryId 返回的高危检查的id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "A214",method = RequestMethod.POST)
+    public AppResult checkGaoWeiItem(HttpServletRequest request,Integer industryId ){
+        // 获取登陆内容
+        AppResult result = new AppResultImpl();
+        ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
+        if(zzjg==null){
+            result.setStatus("1");
+            result.setMessage("未成功登陆,请重新登陆");
+            return result;
+        }
+        Map map = checkManual.checkGaoWeiItem(industryId);
+        result.setStatus("0");
+        result.setMessage("查询成功");
+        result.setData(map);
+
+        return result;
+    }
+
+    /**
+     * 不管是高危还是基础,统一的查询level4 and level风险点.返回,然后在包存的的时候,继续数据的修改
+     * 查询数据,并进行返回
+     */
+    @ResponseBody
+    @RequestMapping(value="A215",method = RequestMethod.POST)
+    public AppResult checkJiChuAndGaoWei( HttpServletRequest request , CheckLevel checkLevel){
+        AppResult result = new AppResultImpl();
+        /*ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
+        if(null==zzjg){
+            result.setStatus("1");
+            result.setMessage("未成功登陆");
+            return result;
+        }*/
+        List<Map> list = checkManual.checkGaoWeiAndJiChu(checkLevel);
+
+        if(null==list){
+            result.setStatus("1");
+            result.setMessage("没有相关数据");
+            return result;
+        }
+        result.setStatus("0");
+        result.setMessage("查询成功");
+        result.setData(list);
+        return result;
+    }
+
+    /**
+     * 现场检查
      * 根据部门岗位(level1 , level2)查询风险点(level3)  直接查询
-     *
      * @param request
      * @param checkLevel
      * @return AppResult
      */
     @ResponseBody
-    @RequestMapping(value = "A202", method = RequestMethod.POST/*,
-            headers = {"Content-type: application/json"}*/)
-    public AppResult checkLevel3(HttpServletRequest request, /*@RequestBody*/ CheckLevel checkLevel ) {
+    @RequestMapping(value = "A202", method = RequestMethod.POST)
+    public AppResult checkLevel3(HttpServletRequest request, @RequestBody CheckLevel checkLevel ) {
 
         AppResult result = new AppResultImpl();
         if (checkLevel == null) {
@@ -161,9 +267,8 @@ public class AppController_Custom_Check {
         }
         //对不同的检查方式,进行不同的检查
 
-
         // 调用方法进行查询
-        List<CheckLevel> list = checkManual.selectLevel4AndId(checkLevel);
+        List<Map<String ,Object>> list = checkManual.selectLevel4AndId(checkLevel);
 
         if (null == list || list.size() == 0) {
             result.setStatus("1");
@@ -176,16 +281,13 @@ public class AppController_Custom_Check {
 
         //result.setData(list);
         Set<String> set = new HashSet<>();
-        for (CheckLevel level : list) {
+        for (Map level : list) {
 
-            set.add(level.level3);
+            set.add((String)level.get("level3"));
         }
         result.setData(set);
         return result;
     }
-
-
-
 
     /**
      * 查询level4
@@ -196,7 +298,7 @@ public class AppController_Custom_Check {
      */
     @ResponseBody
     @RequestMapping(value = "A203", method = RequestMethod.POST)
-    public AppResult checkLevel4(HttpServletRequest request, /*@RequestBody*/ CheckLevel checkLevel) {
+    public AppResult checkLevel4(HttpServletRequest request, @RequestBody CheckLevel checkLevel) {
         AppResult result = new AppResultImpl();
         if (checkLevel == null) {
             result.setStatus("1");
@@ -205,7 +307,7 @@ public class AppController_Custom_Check {
         }
 
         // 调用方法进行查询
-        List<CheckLevel> list = checkManual.selectLevel5AndId(checkLevel);
+        List<Map> list = checkManual.selectLevel5AndId(checkLevel);
         if (null == list || list.size() == 0) {
             result.setStatus("1");
             result.setMessage("未查询到数据");
@@ -221,6 +323,7 @@ public class AppController_Custom_Check {
     /**
      *
      * TODO 保存自定义的检查模版, 并返回模版 Id
+     *      统一的保存 基础 现场 高危  但是在保存的时候,industryId 在显示的时候,要查询出
      * @return
      */
     @ResponseBody
@@ -571,7 +674,9 @@ public class AppController_Custom_Check {
         AppResult result =new AppResultImpl();
         System.out.println("执行文件上传");
         request.setCharacterEncoding("UTF-8");
+
         String realPath1 = "/images/upload/" ;
+        //String realPath1 = "images/upload/" ;
         String path = null;
         if(!file.isEmpty()) {
             System.out.println("成功获取图片");
@@ -615,10 +720,39 @@ public class AppController_Custom_Check {
         }
         result.setStatus("0");
         result.setMessage("保存成功");
-        /*realPath1.replace("\"","/");*/
+        realPath1.replace("\\","/");
         result.setData(realPath1);
         return result;
 
+    }
+    /**
+     * 保存图片并保存到数据库
+     */
+
+
+    /**
+     * 保存截图
+     * @return
+     */
+    @RequestMapping("A301")
+    public String saveScreenshot(HttpServletRequest request){
+        String screenshot = request.getParameter("");
+        // 使用绝对路径
+        if(null == screenshot){
+            return null;
+        }
+        BASE64Decoder decoder = new BASE64Decoder();
+        try {
+            byte[] bytes = decoder.decodeBuffer(screenshot);
+            String realPath = request.getSession().getServletContext().getRealPath("/");
+            String path= "/images/upload/";
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "";
     }
 
 }

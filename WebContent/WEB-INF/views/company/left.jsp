@@ -240,9 +240,9 @@
                         </li>
                         <li><a data-href="${ly }/village/showCheckModel" data-title="查看检查模版" href="javascript:void(0)">查看检查模版</a>
                         </li>
-                        <%--<li><a data-href="${ly }/company/model-list-cx?flag=1&type=1" data-title="企业自查" href="javascript:void(0)">企业自查</a></li>
-                    <li><a data-href="${ly }/company/check-list?flag=4&type=3" data-title="行政检查" href="javascript:void(0)">行政检查</a></li>
-                    <li><a data-href="${ly }/village/trouble-set" data-title="排查内容设置" href="javascript:void(0)">排查内容设置</a></li> --%>
+                        <&lt;%&ndash;<li><a data-href="${ly }/company/model-list-cx?flag=1&type=1" data-title="企业自查" href="javascript:void(0)">企业自查</a></li>
+                        <li><a data-href="${ly }/company/check-list?flag=4&type=3" data-title="行政检查" href="javascript:void(0)">行政检查</a></li>
+                    <%--<li><a data-href="${ly }/village/trouble-set" data-title="排查内容设置" href="javascript:void(0)">排查内容设置</a></li> --%>
                         <%-- <li><a data-href="${ly }/company/check-list?flag=3&type=3" data-title="部门抽查" href="javascript:void(0)">部门抽查</a></li> --%>
                     </ul>
                 </div>

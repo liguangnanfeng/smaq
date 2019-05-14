@@ -115,7 +115,7 @@ public class AppController_Login {
     }
 
     /**
-     * 政府端登陆
+     * 政府端
      */
     private AppResult countryLogin(HttpServletRequest request, String username, String password) {
         AppResult result = new AppResultImpl();
@@ -153,11 +153,10 @@ public class AppController_Login {
                 appToken.setLastLoginTime(new Date());
                 appToken.setExpires(7);
                 appToken.setUserId(user.getId());
-
+                String sessionId = saveAttribute(request, user, appToken.getAccessToken());
                 if (appTokenMapper.insertSelective(appToken) == 1) {
                     map.put("appToken", appToken);
                     map.put("type", user.getFlag());
-                    String sessionId = saveAttribute(request, user, appToken.getAccessToken());
                     map.put("sessionId", sessionId);
                     result.setData(map);
 
@@ -165,9 +164,8 @@ public class AppController_Login {
             } else {
                 db_appToken.setLastLoginTime((new Date()));
                 db_appToken.setExpires(7);
-
+                String sessionId = saveAttribute(request, user, db_appToken.getAccessToken());
                 if (appTokenMapper.updateByPrimaryKeySelective(db_appToken) == 1) {
-                    String sessionId = saveAttribute(request, user, db_appToken.getAccessToken());
                     map.put("type", user.getFlag());
                     map.put("appToken",db_appToken );
                     map.put("sessionId", sessionId);
@@ -188,7 +186,7 @@ public class AppController_Login {
     }
 
     /**
-     * 企业端登陆
+     * 企业端
      *
      * @param request
      * @param username
@@ -229,11 +227,10 @@ public class AppController_Login {
                 appToken.setLastLoginTime(new Date());
                 appToken.setExpires(7);
                 appToken.setUserId(zzjgPersonnel.getId());
-
+                String sessionId = saveAttribute(request, zzjgPersonnel, appToken.getAccessToken());
                 if (appTokenMapper.insertSelective(appToken) == 1) {
                     map.put("appToken", appToken);
                     map.put("type", 5);
-                    String sessionId = saveAttribute(request, zzjgPersonnel, appToken.getAccessToken());
                     map.put("sessionId", sessionId);
                     result.setData(map);
 
@@ -242,9 +239,8 @@ public class AppController_Login {
             } else {
                 db_appToken.setLastLoginTime((new Date()));
                 db_appToken.setExpires(7);
-
+                String sessionId = saveAttribute(request, zzjgPersonnel, db_appToken.getAccessToken());
                 if (appTokenMapper.updateByPrimaryKeySelective(db_appToken) == 1) {
-                    String sessionId = saveAttribute(request, zzjgPersonnel, db_appToken.getAccessToken());
                     map.put("type", 5);
                     map.put("appToken", db_appToken);
                     map.put("sessionId", sessionId);

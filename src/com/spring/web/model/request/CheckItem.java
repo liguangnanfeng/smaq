@@ -26,13 +26,13 @@ public class CheckItem {
 
     /**
      *
-     * 检查危险程度
-     * 现场 危险
+     * 检查危险程度  定期检查,日常检查 随机检查
+     *
      */
     public Integer title;
 
     /**
-     * 检查类型 定期检查,日常检查 随机检查
+     * 检查类型  现场 危险
      */
     public Integer checkType;
 

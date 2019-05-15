@@ -18,5 +18,19 @@ public class CheckItemS {
 
     public List<TCheckItem> items;
 
+    public String getLevle1() {
+        return levle1;
+    }
 
+    public void setLevle1(String levle1) {
+        this.levle1 = levle1;
+    }
+
+    public List<TCheckItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<TCheckItem> items) {
+        this.items = items;
+    }
 }

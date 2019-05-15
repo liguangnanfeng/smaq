@@ -15,5 +15,19 @@ public class Department implements Serializable {
     public Integer uid;
     public List<String> names;
 
+    public Integer getUid() {
+        return uid;
+    }
 
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
+    public List<String> getNames() {
+        return names;
+    }
+
+    public void setNames(List<String> names) {
+        this.names = names;
+    }
 }

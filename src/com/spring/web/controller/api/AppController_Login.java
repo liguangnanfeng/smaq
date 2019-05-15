@@ -8,12 +8,14 @@ import com.spring.web.listener.MySessionContext;
 import com.spring.web.model.*;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
+import com.spring.web.service.CheckCompany.CountryCheck;
 import com.spring.web.service.CheckCompany.LoginService;
 import com.spring.web.service.CheckCompany.Zzjg_PersonnelService;
 import com.spring.web.util.DateConvertUtil;
 import com.spring.web.util.EncryptUtil;
 import com.spring.web.util.RandomUtil;
 import com.spring.web.util.SessionUtil;
+import com.sun.javafx.collections.MappingChange;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -81,6 +83,12 @@ public class AppController_Login {
     @Autowired
     private OfficialsMapper officialsMapper;
 
+    /**
+     * 政府端查询数据
+     */
+    @Autowired
+    private CountryCheck countryCheck;
+
 
     /**
      * 用户登陆功能
@@ -145,7 +153,10 @@ public class AppController_Login {
             result.setStatus("0");
             result.setMessage("登陆成功");
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("user", user);
+            // TODO 查询详细的信息发送给前端进行展示  判断等级,查询不同的表数据
+            Map map1 = countryCheck.selectParticular(user.getId(),user.getFlag());
+
+            map.put("user", map1);
             AppToken db_appToken = appTokenMapper.selectByUserId(String.valueOf(user.getId()));
             if (db_appToken == null) {
                 AppToken appToken = new AppToken();

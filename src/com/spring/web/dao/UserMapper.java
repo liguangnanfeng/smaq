@@ -85,5 +85,6 @@ public interface UserMapper {
     * @return 获取没有经纬度的企业
     */
     List<User> selectJwd();
-    
+
+
 }

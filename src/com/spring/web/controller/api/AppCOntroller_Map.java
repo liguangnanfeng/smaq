@@ -31,12 +31,12 @@ public class AppCOntroller_Map extends BaseController {
 
     /**
      * TODO 保存图片并保存到数据库
-     * @param model
+     * @param
      * @param request
      * @return
      */
     @RequestMapping("B001")
-    public String saveMap(Model model, HttpServletRequest request){
+    public String saveMap(HttpServletRequest request){
 
         User user = getLoginUser(request);
 
@@ -47,8 +47,9 @@ public class AppCOntroller_Map extends BaseController {
         }
         BASE64Decoder decoder = new BASE64Decoder();
         try {
-            String images  = image.replaceAll("", "+");
-            byte[] bytes = decoder.decodeBuffer(images.replace("data:image/jpg;base64", ""));
+            String images  = image.replaceAll(" ", "+");
+
+            byte[] bytes = decoder.decodeBuffer(images.substring(images.indexOf(",") + 1));
             image= image.replace("base64", "");
             for (int i = 0; i < bytes.length; i++) {
                 if(bytes[i]<0){
@@ -92,7 +93,7 @@ public class AppCOntroller_Map extends BaseController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return "上传失败";
         }
 
     }
@@ -134,6 +135,5 @@ public class AppCOntroller_Map extends BaseController {
 
         return tMap.getFiles();
     }
-
 
 }

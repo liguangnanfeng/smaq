@@ -263,6 +263,7 @@ public class AppController_Custom_Check {
             result.setMessage("请进行选择部门及其岗位");
             return result;
         }
+
         //对不同的检查方式,进行不同的检查
 
         // 调用方法进行查询

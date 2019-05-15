@@ -96,6 +96,7 @@ public class TradeCliqueController extends BaseController {
     }
 
     /**
+     * TODO 风险分布图
      * 集团首页风险分布图
      */
     @RequestMapping(value = "control-list2")

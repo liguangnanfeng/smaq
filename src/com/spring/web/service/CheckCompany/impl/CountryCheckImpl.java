@@ -8,6 +8,7 @@ import com.spring.web.model.request.CheckLevel;
 import com.spring.web.model.request.SaveDataMessage;
 import com.spring.web.model.request.SaveDataMessageItem;
 import com.spring.web.service.CheckCompany.CountryCheck;
+import org.apache.shiro.util.MapContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -140,6 +141,34 @@ public class CountryCheckImpl implements CountryCheck {
     public List<Map<String, Object>> selectDistrict() {
         List<Map<String, Object>> list = districtMapper.selectByDistrivtId();
         return list;
+    }
+
+    /**
+     * 查询政府端登录用户的详细信息
+     * @param id
+     * @param flag
+     * @return
+     */
+    @Override
+    public Map selectParticular(Integer id, Integer flag) {
+        Map map = new HashMap();
+        if(flag==4){ //村级
+
+           map = villageMapper.selectParticularByUid(id);
+
+
+        }else if(flag==3){  //镇级
+
+            map = townMapper.selectParticularByUid(id);
+        }else if(flag==6){   //区级
+            map = districtMapper.selectParticularByUid(id);
+        }else if(flag==7){   //市级
+            map.put("name", "无锡市");
+        }else{
+            map.put("name", "怎么进来的");
+
+        }
+        return map;
     }
 
     /**
@@ -418,7 +447,6 @@ public class CountryCheckImpl implements CountryCheck {
 
     /**
      * 政府账号保存检查信息(第一次检查)
-     * <p>
      * 1. 保存item数据
      * 2. 保存check数据
      * 3. 保存check_document 行政检查文书
@@ -455,11 +483,17 @@ public class CountryCheckImpl implements CountryCheck {
                     tCheckItem.setStatus(2); //不合格
                     tCheckItem.setMemo(saveDataMessage.getMemo()); // 不合格描述
                     tCheckItem.setFiles(saveDataMessage.getFile()); // 不合格图片 应该是一个图片集合，但是现在没有集合
-                    //tCheckItem.set
+                    tCheckItem.setSuggest(1);  //   1. 立即整改 2. 限期整改
+                    if(tCheckItem.getSuggest()==2){
+                        tCheckItem.setDeadline(new Date()); // 限期整改时间
+
+                    }
+                    tCheckItem.setRecheckTime(new Date()); // 预计的复查时间
                 }
+                tCheckItemMapper.updateByPrimaryKey(tCheckItem);
 
             }
-
+                // TODO 发送检查通知书
             return "保存成功";
         } catch (Exception e) {
             e.printStackTrace();
@@ -468,6 +502,8 @@ public class CountryCheckImpl implements CountryCheck {
 
 
     }
+
+
 
 
 }

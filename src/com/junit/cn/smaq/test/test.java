@@ -95,7 +95,7 @@ public class test {
     /**
      * 获取所有的基础查询
      */
-    @Test
+/*    @Test
     public void test05(){
         ZzjgPersonnel zzjg = new ZzjgPersonnel();
         zzjg.setUid(37097);
@@ -103,7 +103,7 @@ public class test {
         Map map = iCheckManual.checkJiChu(zzjg);
         System.out.println(map);
 
-    }
+    }*/
     /**
      * 获取所有的基础查询
      */

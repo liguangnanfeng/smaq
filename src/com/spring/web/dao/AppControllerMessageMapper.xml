@@ -50,7 +50,7 @@
         select
         *
         from messages
-        where user_id = #{userId}
+        where user_id = #{userId
         limit #{pageNo},#{pageSize}
     </select>
 
@@ -60,7 +60,9 @@
         from messages
         where id = #{id}
     </select>
-
+    <!--
+        检查不合格的返回到前端
+    -->
     <select id="findTCheckList"  resultType="java.util.Map">
         select
         a.*,count(b.id) as count
@@ -70,6 +72,20 @@
         ORDER BY a.create_time DESC
         LIMIT #{pageNo},#{pageSize}
     </select>
+
+    <!--
+    检查不合格的返回到前端
+-->
+    <select id="findTCheckListByStatus"  resultType="java.util.Map">
+        select
+        a.*,count(b.id) as count
+        from t_check_tbl a LEFT JOIN t_check_item_tbl b ON a.id = b.check_id
+        where a.status = 2 and a.create_user = #{cid} or a.dapart_contact = #{cid} and b.status =2
+		group BY a.id
+        ORDER BY a.create_time DESC
+        LIMIT #{pageNo},#{pageSize}
+    </select>
+
 
     <select id="findCheckById" parameterType="java.lang.String" resultType="com.spring.web.model.TCheck">
         select

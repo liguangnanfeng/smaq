@@ -30,6 +30,11 @@ public class AppMessageServiceImpl implements AppMessageService {
     }
 
     @Override
+    public List<Map> findTCheckListByStatus(String userId, Integer pageNo, Integer pageSize) {
+        return appControllerMessageMapper.findTCheckListByStatus(userId,pageNo,pageSize);
+    }
+
+    @Override
     public TCheck findCheckById(String checkId) {
         return appControllerMessageMapper.findCheckById(checkId);
     }
@@ -63,6 +68,8 @@ public class AppMessageServiceImpl implements AppMessageService {
     public List<Map> selectCheckByFlag() {
         return appControllerMessageMapper.selectCheckByFlag();
     }
+
+
 
 
 }

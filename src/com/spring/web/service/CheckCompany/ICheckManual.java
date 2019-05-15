@@ -59,9 +59,9 @@ public interface ICheckManual {
 
     /**
      * 基础检查 查询
-     * @param zzjg
+     * @param uid
      */
-    Map checkJiChu(ZzjgPersonnel zzjg);
+    Map checkJiChu(Integer uid);
 
     /**
      * 获取高危的检查选项

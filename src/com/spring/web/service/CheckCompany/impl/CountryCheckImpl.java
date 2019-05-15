@@ -154,10 +154,10 @@ public class CountryCheckImpl implements CountryCheck {
         try {
 
             // 1. 保存t_industry_tbl表 返回id
-            Integer industryId = saveTIdustry(checkItem);
+            Integer industryId = null;
 
             // 2. 保存t_level_tbl AND t_item_tbl 返回id集合
-            List<Integer> levels = saveTLevel(checkItem, industryId);
+            List<Integer> levels = null;
 
             // 3. 保存model信息并返回id
             Integer modelId = saveTmodel(checkItem, officials,industryId);
@@ -185,82 +185,6 @@ public class CountryCheckImpl implements CountryCheck {
         }
 
     }
-
-    /**
-     * 添加t_industry_tbl
-     *
-     * @param checkItem
-     * @return industryId
-     */
-    private Integer saveTIdustry(CheckItem checkItem) {
-
-        Company company = companyMapper.selectByPrimaryKey(checkItem.getId());
-
-        TIndustry industry = new TIndustry();
-
-        industry.setName(company.getIndustry()); //企业所属的行业
-
-        industry.setType(checkItem.getTitle());  // 1. 基础 2. 现场 3. 高危
-
-        int i = tIndustryMapper.insertSelective(industry);
-
-        return industry.getId();
-
-    }
-
-    /**
-     * 添加 t_level_tbl
-     * level1      varchar(50)  null comment 'Ⅱ级隐患自查标准',
-     * level2      varchar(50)  null comment 'Ⅲ级隐患自查标准',
-     * level3      varchar(100) null,
-     * industry_id int          null comment '所属行业',
-     * @return
-     */
-    private List<Integer> saveTLevel(CheckItem checkItem, Integer industryId) {
-        TLevel tLevel = new TLevel();
-
-        List<CheckLevel> checkLevels = checkItem.getCheckLevels();
-        List<Integer> list = new ArrayList<>();
-
-        for (CheckLevel checkLevel : checkLevels) {
-            // 按照数据库查询进行检查
-            if (checkLevel.getType() == "1") {
-                String level3 = checkLevel.getLevel3();
-                String[] split = level3.split("/");
-                tLevel.setLevel1(split[0]);
-                tLevel.setLevel2(split[1]);
-                tLevel.setLevel3(split[2]);
-
-            } else if (checkLevel.getType() == "2") {
-                // 自定义进行检查
-                tLevel.setLevel1(checkLevel.getLevel3());
-                tLevel.setLevel2(checkLevel.getLevel3());
-                tLevel.setLevel3(checkLevel.getLevel3());
-            }
-
-            tLevel.setIndustryId(industryId); //所属的行业id
-            tLevelMapper.insertSelective(tLevel);
-            Integer tLevelId = tLevel.getId(); //获取检查分类的id
-
-            // 添加t_item_tbl
-            TItem tItem = new TItem();
-            ACompanyManual companyManual = companyManualMapper.selectByPrimaryKey(checkLevel.getId());
-            tItem.setContent(companyManual.getMeasures());// 检查内容
-            tItem.setLevelId(tLevelId);
-            tItem.setReference(companyManual.getReference());
-            tItemMapper.insertSelective(tItem);
-
-            // 添加t_item_serious_tbl
-            TItemSerious tItemSerious = new TItemSerious();
-            tItemSerious.setLevelid(tLevelId);
-            tItemSerious.setKeywords(companyManual.getFactors());
-            tItemSeriousMapper.insertSelective(tItemSerious);
-            list.add(tLevelId);
-        }
-
-        return list;
-    }
-
 
     /**
      * 检查计划模板表
@@ -492,7 +416,6 @@ public class CountryCheckImpl implements CountryCheck {
 
     }
 
-
     /**
      * 政府账号保存检查信息(第一次检查)
      * <p>
@@ -513,7 +436,6 @@ public class CountryCheckImpl implements CountryCheck {
             TCheck tCheck = tCheckMapper.selectByPrimaryKey(saveDataMessageItem.getCheckId());
             tCheck.setStatus(2); // 表示已经检查
             tCheckMapper.updateByPrimaryKey(tCheck); // 更新到数据库
-
 
             // 将信息进行保存 数据进行更新,数据的结构会更加的混乱
             List<SaveDataMessage> list = saveDataMessageItem.getList();
@@ -536,9 +458,7 @@ public class CountryCheckImpl implements CountryCheck {
                     //tCheckItem.set
                 }
 
-
             }
-
 
             return "保存成功";
         } catch (Exception e) {

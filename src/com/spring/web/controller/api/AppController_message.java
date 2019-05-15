@@ -88,7 +88,6 @@ public class AppController_message extends BaseController {
     public @ResponseBody
     AppResult findCheckList(@RequestBody Map<String, Object> params,HttpServletRequest request) {
 
-
         // 1.获取userId
         String userId  = String.valueOf(params.get("userId"));
         // 当前页
@@ -103,6 +102,31 @@ public class AppController_message extends BaseController {
 
         return result;
     }
+
+
+
+    /**
+     * 获取检查记录列表     只有当前检查人和当前责任人能看到 不合格
+     */
+    @RequestMapping(value = "findCheckListBystatus", method = RequestMethod.POST)
+    public @ResponseBody
+    AppResult findCheckListByStatus(@RequestBody Map<String, Object> params,HttpServletRequest request) {
+
+        // 1.获取userId
+        String userId  = String.valueOf(params.get("userId"));
+        // 当前页
+        Integer pageNo = (Integer.valueOf(String.valueOf(params.get("page")))-1)*10;
+        // 2. 查询此用户属于哪个部门，哪个企业id
+//        ZzjgPersonnel personnel = personnerService.findPersonnel(userId);
+//
+        System.out.println("获取检查记录列表==============");
+        List<Map> list = appMessageService.findTCheckListByStatus(userId,pageNo,10);
+        AppResult result = new AppResultImpl();
+        result.setData(list);
+
+        return result;
+    }
+
 
 
     /**

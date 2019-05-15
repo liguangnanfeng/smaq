@@ -51,4 +51,9 @@
 
     </update>
 
+
+    <select id="selectByCheckItemId" resultType="com.spring.web.model.TRectificationConfirm">
+        select * from t_rectification_confirm where id =#{checkIemId};
+    </select>
+
 </mapper>

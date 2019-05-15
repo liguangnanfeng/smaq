@@ -217,7 +217,7 @@ public class AppController_Login {
 
             Map<String, Object> map = new HashMap<String, Object>();
             Integer id = zzjgPersonnel.getId();
-            Map stringObjectMap = zzjgPersonnelMapper.selectAll1( 844 );
+            Map stringObjectMap = zzjgPersonnelMapper.selectAll1( id );
             map.put("user", stringObjectMap);
 
             AppToken db_appToken = appTokenMapper.selectByUserId(String.valueOf(zzjgPersonnel.getId()));

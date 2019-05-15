@@ -139,8 +139,8 @@ public class CheckManualImpl implements ICheckManual {
      * @param zzjg
      */
     @Override
-    public Map checkJiChu(ZzjgPersonnel zzjg) {
-        TCompany tCompany = tCompanyMapper.selectByPrimaryKey(zzjg.getUid());//获取基础检查
+    public Map checkJiChu(Integer uid) {
+        TCompany tCompany = tCompanyMapper.selectByPrimaryKey(uid);//获取基础检查
         TIndustry industry = tIndustryMapper.selectByPrimaryKey(tCompany.getIndustry1()); //获取他是工贸企业
         Map map = new LinkedHashMap();
         List<String> list = tLevelMapper.selectLevel1ByIndustry(industry.getId());
@@ -372,7 +372,17 @@ public class CheckManualImpl implements ICheckManual {
         if (checkItem.getCheckType() == null) {
             checkItem.setCheckType(1);
         }
+        if(-1==checkItem.getCheckType()){
+            tModel.setIndustryType(1);       // 被检查的危险类型 1. 基础  2. 现场  3. 五大高危行业
+        }else if(-2==checkItem.getCheckType() ){
+            tModel.setIndustryType(2);       // 被检查的危险类型 1. 基础  2. 现场  3. 五大高危行业
+        }else{
+            tModel.setIndustryType(3);       // 被检查的危险类型 1. 基础  2. 现场  3. 五大高危行业
+        }
+
         tModel.setIndustryType(checkItem.getCheckType());       // 被检查的危险类型 1. 基础  2. 现场  3. 五大高危行业
+
+
         tModel.setType(checkItem.getTitle());    //  1. 日常 2. 定期 3. 临时
         tModel.setCreateTime(new Date()); // 模版的创建时间
 
@@ -454,14 +464,13 @@ public class CheckManualImpl implements ICheckManual {
         if(industryId!= null) {
             tCheck.setIndustryId(industryId); // 检查行业的id
         }
-        if(-2==checkItem.getCheckType()){
-            tCheck.setIndustryType(2); // 1. 基础 2. 现场 3. 高危
-        }else if(-1==checkItem.getCheckType() ){
+        if(-1==checkItem.getCheckType()){
             tCheck.setIndustryType(1); // 1. 基础 2. 现场 3. 高危
+        }else if(-2==checkItem.getCheckType() ){
+            tCheck.setIndustryType(2); // 1. 基础 2. 现场 3. 高危
         }else{
             tCheck.setIndustryType(3); // 1. 基础 2. 现场 3. 高危
         }
-
 
         tCheck.setExpectTime(new Date()); // 预计检查时间
         tCheck.setRealTime(new Date());  // 实际检查时间

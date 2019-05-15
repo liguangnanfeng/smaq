@@ -240,6 +240,7 @@ public class SaveDataImpl implements SaveMessageService {
 
     /**
      * 根据复查信息进行保存 只要里面有一条不合格就表示这次检查不合格
+     *
      * @param saveDataMessageItem
      * @param zzjg
      * @return
@@ -262,66 +263,75 @@ public class SaveDataImpl implements SaveMessageService {
             User user = userMapper.selectByPrimaryKey(zzjg.getUid());
             tRecheck.setCheckCompany(user.getUserName()); //检查的公司名称
 
+            boolean flag = false;
+
+            // 循环遍历是否有未检查项
             for (SaveDataMessage saveDataMessage : saveDataMessageItem.getList()) {
                 TCheckItem item = tCheckItemMapper.selectAllById(saveDataMessage.getId());
                 if ("1".equals(saveDataMessage.getValue())) {
                     tRecheck.setStatus(1);       // 1 未全部整改  2 全部整改
+                    flag = false;
                     break;
                 } else if ("2".equals(saveDataMessage.getValue())) {
+                    flag = true;
                     tRecheck.setStatus(2);       // 1 未全部整改  2 全部整改
 
                 }
-
             }
-            if (tRecheck.getStatus() == 2) {
-                //修改数据未合格
-                TRectificationConfirm byCheckId = tRectificationConfirmMapper.findByCheckId(saveDataMessageItem.getCheckId());
-                if (byCheckId == null) {
-                    return null;
-                }
-
-                byCheckId.setStatus(1);
-                tRectificationConfirmMapper.updateByTRectificationConfirm(byCheckId);
-
-            } else {
-                // 未全部整改
-            }
-
-            //表示限期整改
-            int i = 7 * 24 * 60 * 60; // 限期时间
-            long time = new Date().getTime();
-            long l = time + i; //
-            Date date = new Date(l);
-            tRecheck.setNextTime(date);      // 未合格项 限期检查时间
-            tRecheck.setChecker(zzjg.getName());       // 检查人员名称
 
             TCheck tCheck = tCheckMapper.selectByPrimaryKey(item1.getCheckId());
-
+            tRecheck.setChecker(zzjg.getName());       // 检查人员名称
             tRecheck.setDapartContact(tCheck.getDapartContact());   // 被检查部门的负责人
-            int i1 = tRecheckMapper.insertSelective(tRecheck);
+            if(!flag){
+                int i = 7 * 24 * 60 * 60; // 限期时间
+                long time = new Date().getTime();
+                long l = time + i; //
+                Date date = new Date(l);
+                tRecheck.setNextTime(date);      // 未合格项 限期检查时间
+            }
+            tRecheckMapper.insertSelective(tRecheck);
             Integer id = tRecheck.getId(); // 获取到主表id
 
-            // --------------------------------------------------------------------------------------------------
-
             List<SaveDataMessage> list = saveDataMessageItem.getList();
+            // 在进行便利进行保存 t_recheck_item_tbl  t_rectifiction_confirm 表
             for (SaveDataMessage saveDataMessage : list) {
-                TCheckItem item = tCheckItemMapper.selectAllById(saveDataMessage.getId());
+
+                // 修改 t_check_item_tbl 数据为合格不合格;
+                TCheckItem checkItem = tCheckItemMapper.selectAllById(saveDataMessage.getId());
+
+                // TODO 添加t_recheck_item_tbl表数据
+                TRecheckItem tRecheckItem = new TRecheckItem();
+
+                // TODO 修改t_rectification_confirm 记录
+                TRectificationConfirm tRectificationConfirm = tRectificationConfirmMapper.selectByCheckItemId(checkItem.getId());
+                tRectificationConfirm.setStatus(2); //表示已读
                 if ("1".equals(saveDataMessage.getValue())) {
-                    item.setStatus(3); // 复查成功
+                    checkItem.setStatus(3); // 复查成功
+                    tRecheckItem.setStatus(2); //表示复查成功
+                    tRectificationConfirm.setStatus(1);
                 } else if ("2".equals(saveDataMessage.getValue())) {
 
-                    item.setStatus(2);
+                    checkItem.setStatus(2); //复查不合格
+                    checkItem.setRecheckFile(saveDataMessage.getFile());//复查照片
+                    checkItem.setPlanTime(new Date());                  // 实际的复查时间
+                    checkItem.setMemo(saveDataMessage.getMemo());      // 复查描述
+
+                    tRecheckItem.setStatus(3); //表示复查不合格
+                    tRecheckItem.setFile(saveDataMessage.getFile());    //图片
+                    tRecheckItem.setDeadline(new Date());
+                    tRecheckItem.setMemo(saveDataMessage.getMemo());  // 复查描述
+                    tRectificationConfirm.setStatus(0);
 
                 }
 
-                TRecheckItem tRecheckItem = new TRecheckItem();
-                tRecheckItem.setCheckItemId(item.getCheckId()); // 检查项目表id
+
+
+                tRecheckItem.setCheckItemId(checkItem.getCheckId()); // 检查项目表id
                 tRecheckItem.setRecheckId(id);                  // 复查主表id
                 tRecheckItem.setDeadline(new Date());           // 创建时间
-
+                tCheckItemMapper.updateByPrimaryKey(checkItem);
                 tRecheckItemMapper.insertSelective(tRecheckItem);
-
-                tCheckItemMapper.updateByPrimaryKey(item);// 进行更新
+                tRectificationConfirmMapper.updateByTRectificationConfirm(tRectificationConfirm);
 
             }
             return "成功";

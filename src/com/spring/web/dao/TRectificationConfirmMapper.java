@@ -19,4 +19,9 @@ public interface TRectificationConfirmMapper {
      * @param byCheckId
      */
     void updateByTRectificationConfirm(TRectificationConfirm byCheckId);
+
+    /**
+     * 根据 checkItem表数据进行查询
+     */
+    TRectificationConfirm selectByCheckItemId(Integer checkItemId);
 }

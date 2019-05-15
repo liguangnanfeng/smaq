@@ -528,10 +528,7 @@ var i=0;
 
     </div>
 </div>
-
-
-
-
+    
 <div class="row cl level3">
     <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查项目 :</label>
     <div class="formControls col-xs-8 col-sm-9">

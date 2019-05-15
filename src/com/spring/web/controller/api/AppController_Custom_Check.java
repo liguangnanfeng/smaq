@@ -1,7 +1,9 @@
 package com.spring.web.controller.api;
 
 
+import com.spring.web.dao.TCheckMapper;
 import com.spring.web.listener.MySessionContext;
+import com.spring.web.model.TCheck;
 import com.spring.web.model.TCheckItem;
 import com.spring.web.model.ZzjgDepartment;
 import com.spring.web.model.ZzjgPersonnel;
@@ -14,6 +16,7 @@ import com.spring.web.service.CheckCompany.ICheckManual;
 import com.spring.web.service.CheckCompany.SaveMessageService;
 import com.spring.web.service.CheckCompany.Zzig_departmentService;
 import com.sun.javaws.security.AppPolicy;
+import org.apache.cxf.ws.addressing.MAPAggregator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,30 +41,25 @@ import java.util.*;
 @RequestMapping(value = "api/custom/check")
 public class AppController_Custom_Check {
 
-    /**
-     * 查询部门
-     */
+    /**查询部门*/
     @Autowired
     private Zzig_departmentService zzig_departmentService;
 
-    /**
-     * 查询风险点
-     */
+    /**查询风险点*/
     @Autowired
     private ICheckManual checkManual;
 
-    /**
-     * 检查以及复查信息
-     */
+    /**检查以及复查信息*/
     @Autowired
     private SaveMessageService saveMessageService;
 
-    /**
-     * token验证
-     */
+    /**token验证*/
     @Autowired
     private AppTokenData appTokenData;
 
+    /**checkMapper*/
+    @Autowired
+    private TCheckMapper tCheckMapper;
     /**
      * 获取部门,以及对应的岗位 level1 levle2
      *
@@ -187,7 +185,7 @@ public class AppController_Custom_Check {
         }
 
         // 查询高危风险
-        Map map = checkManual.checkJiChu(zzjg);
+        Map map = checkManual.checkJiChu(zzjg.getUid());
         result.setStatus("0");
         result.setMessage("查询成功");
         result.setData(map);
@@ -321,7 +319,6 @@ public class AppController_Custom_Check {
     }
 
     /**
-     *
      * TODO 保存自定义的检查模版, 并返回模版 Id
      *      统一的保存 基础 现场 高危  但是在保存的时候,industryId 在显示的时候,要查询出
      * @return
@@ -612,15 +609,20 @@ public class AppController_Custom_Check {
         }
 
         List<TCheckItem> list = saveMessageService.findItemByCheckId(i);
+        // 查询检查类型
+        TCheck tCheck = tCheckMapper.selectByPrimaryKey(i);
         if (list == null) {
             result.setStatus("1");
             result.setMessage("查询失败,请重新发起检查");
             return result;
         }
+        Map<String,Object> map = new LinkedHashMap();
 
+        map.put("type",tCheck.getIndustryType());
+        map.put("List",list);
         result.setStatus("0");
         result.setMessage("查询成功");
-        result.setData(list);
+        result.setData(map);
 
         return result;
 
@@ -676,7 +678,6 @@ public class AppController_Custom_Check {
         request.setCharacterEncoding("UTF-8");
 
         String realPath1 = "/images/upload/" ;
-        //String realPath1 = "images/upload/" ;
         String path = null;
         if(!file.isEmpty()) {
             System.out.println("成功获取图片");
@@ -728,32 +729,6 @@ public class AppController_Custom_Check {
     /**
      * 保存图片并保存到数据库
      */
-
-
-    /**
-     * 保存截图
-     * @return
-     */
-    @RequestMapping("A301")
-    public String saveScreenshot(HttpServletRequest request){
-        String screenshot = request.getParameter("");
-        // 使用绝对路径
-        if(null == screenshot){
-            return null;
-        }
-        BASE64Decoder decoder = new BASE64Decoder();
-        try {
-            byte[] bytes = decoder.decodeBuffer(screenshot);
-            String realPath = request.getSession().getServletContext().getRealPath("/");
-            String path= "/images/upload/";
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "";
-    }
 
 }
 

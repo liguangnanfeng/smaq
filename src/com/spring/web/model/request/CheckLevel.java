@@ -57,67 +57,56 @@ public class CheckLevel implements Serializable {
      */
     public String reference;
 
-    public Integer getId() {
-        return id;
-    }
+    /**
+     * 较大的危险因素
+     */
+    public String factors;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    /**
+     * 易发生的事故类型,风险名称
+     */
+    public String types;
 
-    public Integer getUid() {
-        return uid;
-    }
+    /**
+     * 较大重大的风险点
+     */
+    public String flag;
 
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
+    /**
+     * 管控措施
+     */
+    public String gkcs;
 
-    public String getType() {
-        return type;
-    }
+    /**
+     * 管控主体
+     */
+    public String gkzt;
 
-    public void setType(String type) {
-        this.type = type;
-    }
+    /**
+     * 图片路径
+     */
+    public String files;
 
-    public String getLevel1() {
-        return level1;
-    }
+    /**
+     * 不同的检查内容
+     * 1. 基础  2. 现场  3. 高危
+     */
 
-    public void setLevel1(String level1) {
-        this.level1 = level1;
-    }
+    public Integer checkType;
 
-    public String getLevel2() {
-        return level2;
-    }
+    /**
+     * 行业id
+     */
+    public Integer industryId;
 
-    public void setLevel2(String level2) {
-        this.level2 = level2;
-    }
 
-    public String getLevel3() {
-        return level3;
-    }
+    /**
+     *
+     */
+    public String access_token;
+    public String sessionId;
 
-    public void setLevel3(String level3) {
-        this.level3 = level3;
-    }
 
-    public String getLevel4() {
-        return level4;
-    }
 
-    public void setLevel4(String level4) {
-        this.level4 = level4;
-    }
 
-    public String getReference() {
-        return reference;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
 }

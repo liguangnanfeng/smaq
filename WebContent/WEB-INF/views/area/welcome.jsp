@@ -504,7 +504,7 @@ $(function(){
       //判断当前浏览器是否支持WebSocket
       WEB_SOCKET_SWF_LOCATION = "${ly }/js/plugins/websocket/WebSocketMain.swf";
       if(window.WebSocket){  
-          websocket = new WebSocket("ws://"+location.hostname+":"+location.port+"/village/websocket/danger/"+userno);
+          websocket = new WebSocket("wss://"+location.hostname+":"+location.port+"/village/websocket/danger/"+userno);
   	}
       else {
       	//alert("当前版本不支持");
@@ -538,11 +538,13 @@ $(function(){
           
       }
 
+
       //连接关闭的回调方法
       websocket.onclose = function () {
           //setMessageInnerHTML("WebSocket连接关闭");
           //alert("close");
       }
+
 
       //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
       window.onbeforeunload = function () {

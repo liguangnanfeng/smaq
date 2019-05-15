@@ -721,7 +721,7 @@ public class AppController_Custom_Check {
         }
         result.setStatus("0");
         result.setMessage("保存成功");
-        realPath1.replace("\\","/");
+        /*realPath1.replace("\\","/");*/
         result.setData(realPath1);
         return result;
 

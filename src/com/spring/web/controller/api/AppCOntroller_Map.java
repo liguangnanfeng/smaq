@@ -4,8 +4,6 @@ import com.spring.web.BaseController;
 import com.spring.web.dao.TMapMapper;
 import com.spring.web.model.User;
 import com.spring.web.model.request.TMap;
-import com.spring.web.result.AppResult;
-import com.spring.web.result.AppResultImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,9 +36,9 @@ public class AppCOntroller_Map extends BaseController {
      * @return
      */
     @RequestMapping("B001")
-    public String saveMap(Model model, HttpServletRequest request,Integer uid){
+    public String saveMap(Model model, HttpServletRequest request){
 
-        //User user = getLoginUser(request);
+        User user = getLoginUser(request);
 
         String image = request.getParameter("images");
 
@@ -73,11 +71,11 @@ public class AppCOntroller_Map extends BaseController {
             ops.close();
 
             // 根据id进行查询, 是否为保存还是修改
-            TMap tMap = tMapMapper.selectByUserId(uid);
+            TMap tMap = tMapMapper.selectByUserId(user.getId());
             if(tMap==null){
                 // 表示是新增
                 TMap tMap1 = new TMap();
-                tMap1.setUserId(uid);
+                tMap1.setUserId(user.getId());
                 tMap1.setFiles(filePath);
 
                 tMapMapper.insertTMap(tMap1);
@@ -103,13 +101,13 @@ public class AppCOntroller_Map extends BaseController {
      * TODO 删除图片
      */
     @RequestMapping("B002")
-    public String dropMap( HttpServletRequest request,Integer uid){
-        /*User user = getLoginUser(request);
+    public String dropMap( HttpServletRequest request){
+        User user = getLoginUser(request);
         if(user==null){
             return null;
-        }*/
+        }
         try {
-            tMapMapper.dropByUserId(uid);
+            tMapMapper.dropByUserId(user.getId());
             return "删除成功";
         }catch (Exception e){
             e.printStackTrace();
@@ -122,14 +120,14 @@ public class AppCOntroller_Map extends BaseController {
      * TODO 获取图片的路径
      */
     @RequestMapping("B003")
-    public String findMap(HttpServletRequest request,Integer uid){
+    public String findMap(HttpServletRequest request){
 
-       /* User user = getLoginUser(request);
+        User user = getLoginUser(request);
 
         if(user==null){
             return null;
-        }*/
-        TMap tMap = tMapMapper.selectByUserId(uid);
+        }
+        TMap tMap = tMapMapper.selectByUserId(user.getId());
         if(tMap==null){
             return null;
         }

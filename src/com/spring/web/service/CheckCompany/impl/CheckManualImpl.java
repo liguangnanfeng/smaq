@@ -7,6 +7,8 @@ import com.spring.web.model.request.CheckItem;
 import com.spring.web.model.request.CheckLevel;
 import com.spring.web.model.response.CheckItemS;
 import com.spring.web.service.CheckCompany.ICheckManual;
+import com.spring.web.service.PCSaveModel;
+import com.spring.web.service.SaveModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,11 +73,26 @@ public class CheckManualImpl implements ICheckManual {
     @Autowired
     private ZzjgPersonnelMapper zzjgPersonnelMapper;
 
-    /**
-     *
-     */
     @Autowired
     private TModelPartMapper tModelPartMapper;
+
+    @Autowired
+    private PCSaveModel saveModelService;
+
+    @Autowired
+    private CompanyMapper companyMapper;
+
+    @Autowired
+    private TIndustryMapper tIndustryMapper;
+
+    @Autowired
+    private TItemSeriousMapper tItemSeriousMapper;
+
+    @Autowired
+    private TItemMapper tItemMapper;
+
+    @Autowired
+    private TCompanyMapper tCompanyMapper;
 
 
     /**
@@ -90,11 +107,84 @@ public class CheckManualImpl implements ICheckManual {
     public Map<String, List> selectDangerAndManual(Integer uid, List<String> names) {
 
         Map<String, List> map = new HashMap<>();
-
         for (String name : names) {
             map.put(name, companyManualMapper.selectDangerAndManual(uid, name));
         }
         return map;
+    }
+
+    /**
+     * 获取所有的高危检查项
+     * @return
+     */
+    @Override
+    public List<Map> checkGaoWei(Integer Uid) {
+
+        List<Map> list = new ArrayList<>();
+        // 首先根据公司id查询部门所需要的
+        TCompany tCompany = tCompanyMapper.selectByPrimaryKey(Uid);
+        String industry3 = tCompany.getIndustry3();
+        String[] split = industry3.split(",");
+        for (String s : split) {
+           list.addAll(tIndustryMapper.selectType3(Integer.valueOf(s)));
+        }
+
+
+
+        return list;
+    }
+
+    /**
+     * 基础检查 获取该公司的基础检查的检查项
+     * @param zzjg
+     */
+    @Override
+    public Map checkJiChu(Integer uid) {
+        TCompany tCompany = tCompanyMapper.selectByPrimaryKey(uid);//获取基础检查
+        TIndustry industry = tIndustryMapper.selectByPrimaryKey(tCompany.getIndustry1()); //获取他是工贸企业
+        Map map = new LinkedHashMap();
+        List<String> list = tLevelMapper.selectLevel1ByIndustry(industry.getId());
+        // 在根据部门做出统一的查询
+        for (String level1 : list) {
+            List<Map<String, Object>> maps = tLevelMapper.selectlevel2Bylevel1AndIndustryId(level1, industry.getId());
+            map.put(level1,maps);
+        }
+        return map;
+
+    }
+
+
+
+    /**
+     * 获取高危的检查选项
+     * level1 对应 level2
+     * @param industryId
+     */
+    @Override
+    public Map checkGaoWeiItem(Integer industryId) {
+        Map map = new LinkedHashMap();
+        List<String> list = tLevelMapper.selectLevel1ByIndustry(industryId);
+        // 在根据部门做出统一的查询
+        for (String level1 : list) {
+            List<Map<String, Object>> maps = tLevelMapper.selectlevel2Bylevel1AndIndustryId(level1, industryId);
+            map.put(level1,maps);
+        }
+        return map;
+    }
+
+    /**
+     * 根据基础还是高危
+     * 根据一条sql获取多条数据
+     * 不管这条sql 的查询数据
+     * 获取详细的数据
+     * @param checkLevel
+     */
+    @Override
+    public List<Map> checkGaoWeiAndJiChu(CheckLevel checkLevel) {
+
+       List<Map> list =  tLevelMapper.selectGaoweiAndJiChu(checkLevel.getIndustryId(),checkLevel.getLevel1(),checkLevel.getLevel2());
+
+        return list;
     }
 
     /**
@@ -103,9 +193,9 @@ public class CheckManualImpl implements ICheckManual {
      * @param checkLevel
      */
     @Override
-    public List<CheckLevel> selectLevel3AndId(List<CheckLevel> checkLevel) {
+    public List<Map> selectLevel3AndId(List<CheckLevel> checkLevel) {
 
-        List<CheckLevel> list = new ArrayList<>();
+        List<Map> list = new ArrayList<>();
 
         for (CheckLevel check : checkLevel) {
             list.addAll(companyManualMapper.selectLevel3AndId(check));
@@ -114,14 +204,15 @@ public class CheckManualImpl implements ICheckManual {
     }
 
     /**
-     * TODO 根据 部门 岗位检查详细信息
+     * TODO 根据 部门 岗位检查详细信息  根据levle1 level2 检查类型  查询level3
      *
      * @param checkLevel
      * @return
      */
     @Override
-    public List<CheckLevel> selectLevel4AndId(CheckLevel checkLevel) {
-        List<CheckLevel> list = new ArrayList<>();
+    public List<Map<String, Object>> selectLevel4AndId(CheckLevel checkLevel) {
+        List<Map<String,Object>> list = new ArrayList<>();
+
         list.addAll(companyManualMapper.selectLevel3AndId(checkLevel));
 
         return list;
@@ -131,43 +222,52 @@ public class CheckManualImpl implements ICheckManual {
      * TODO 根据level3 查询level4及其危险点
      */
     @Override
-    public List<CheckLevel> selectLevel5AndId(CheckLevel checkLevel) {
-        List<CheckLevel> list = new ArrayList<>();
+    public List<Map> selectLevel5AndId(CheckLevel checkLevel) {
+        List<Map> list = new ArrayList<>();
         list.addAll(companyManualMapper.selectLevel4AndId(checkLevel));
-
         return list;
     }
 
     /**
+     *
+     * 保存自定义模版的信息
+     * 按照步骤进行保存
      * 按照事务流的顺序一步一步来的,
+     *  保存  t_model 获取id
+     *  保存  t_model_part_tbl 获取id
+     *  保存
      * 1. 保存model
      * 2. 保存check
      * 3. 保存
      * 4. 返回表数据
-     *
      * @param checkItem 用户选择的信息
      * @param zzjg      用户保存在域中的信息
      * @return 检查表的信息
      */
     @Override
     public Integer saveCheck(CheckItem checkItem, ZzjgPersonnel zzjg) {
-        //Integer tCheckId =null;
+
         try {
+
+            // 1. 保存t_industry_tbl表 返回id  TODO
+            Integer industryId = checkItem.getCheckLevels().get(0).getIndustryId();
+
+            // 2. 保存t_level_tbl AND t_item_tbl 返回id集合
+            List<Integer> levels = null;
+
             // 1. 保存model信息并返回id
-            TModel tModel = saveTmodel(checkItem, zzjg);
+            TModel tModel = saveTmodel(checkItem, zzjg,industryId);
             modelMapper.insertSelective(tModel);
             Integer modelId = tModel.getId(); //获取模版id
 
             // 2. 保存check表数据并返回id
-            TCheck tCheck = saveCheckTbl(checkItem, zzjg, modelId);
+            TCheck tCheck = saveCheckTbl(checkItem, zzjg, modelId,industryId);
             int i = tCheckMapper.insertSelective(tCheck);
             Integer checkId = tCheck.getId();  //获取检查表id
 
-            // 3. 保存并获取检查分类id
-            List<Integer> list = saveTLevel(checkItem);
 
             // 4. 保存checkPart数据并返回id
-            TCheckPart tCheckPart = saveCheckPart(checkItem, list, checkId);
+            TCheckPart tCheckPart = saveCheckPart(checkItem, levels, checkId);
             tCheckPartMapper.insertSelective(tCheckPart);
             int tCheckPartId = tCheckPart.getId(); // 获取checkPartId
 
@@ -175,7 +275,7 @@ public class CheckManualImpl implements ICheckManual {
             saveCheckTtem(checkItem, zzjg, checkId, tCheckPartId);
 
             // 6. 保存model_part() 计划检查模块表
-            saveTmodelPath(modelId, checkItem, list);
+            saveTmodelPath(modelId, checkItem, levels);
 
             System.out.println(checkId);
             return modelId; // 数据返回 TODO 添加功能结束
@@ -188,7 +288,6 @@ public class CheckManualImpl implements ICheckManual {
         }
 
     }
-
     /**
      * 查询该企业所有的安全责任人
      * 先使用cid ,不行在使用uid
@@ -238,6 +337,8 @@ public class CheckManualImpl implements ICheckManual {
         return map;
     }
 
+
+
     /**
      * 检查计划模板表
      * 传递的模块信息进行保存括其他的数据进行保存
@@ -249,32 +350,41 @@ public class CheckManualImpl implements ICheckManual {
      * @param zzjg
      * @return
      */
-    private TModel saveTmodel(CheckItem checkItem, ZzjgPersonnel zzjg) {
+    private TModel saveTmodel(CheckItem checkItem, ZzjgPersonnel zzjg, Integer industryId ) {
 
         // 获取部门 id
         List<CheckLevel> checkLevels = checkItem.getCheckLevels();
         List<String> departmentName = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         for (CheckLevel checkLevel : checkLevels) {
             departmentName.add(checkLevel.getLevel1());
+            list.add(Integer.toString(checkLevel.getId()));
         }
         String departmentNametr = JSON.toJSONString(departmentName);
-
-        // 获取行业名称
-        String name = dangerManualMapper.selectIndustryByid(checkItem.getCheckLevels().get(0).id);
-
-        // 获取行业id
-        int IndustryId = companyManualMapper.selectDmidById(name);
 
         TModel tModel = new TModel();
         tModel.setTitle(checkItem.getTemplate()); // 检查名称
         tModel.setUserId(zzjg.getUid()); // 公司id
         tModel.setFlag(1); // 检查类型
         tModel.setPart(checkLevels.get(0).level1);              // 被检查的部门
-        tModel.setIndustryId(IndustryId);         // 被检查的行业id
+        if(industryId!= null){
+            tModel.setIndustryId(industryId);         // 被检查的行业id
+        }
+
         if (checkItem.getCheckType() == null) {
             checkItem.setCheckType(1);
         }
+        if(-1==checkItem.getCheckType()){
+            tModel.setIndustryType(1);       // 被检查的危险类型 1. 基础  2. 现场  3. 五大高危行业
+        }else if(-2==checkItem.getCheckType() ){
+            tModel.setIndustryType(2);       // 被检查的危险类型 1. 基础  2. 现场  3. 五大高危行业
+        }else{
+            tModel.setIndustryType(3);       // 被检查的危险类型 1. 基础  2. 现场  3. 五大高危行业
+        }
+
         tModel.setIndustryType(checkItem.getCheckType());       // 被检查的危险类型 1. 基础  2. 现场  3. 五大高危行业
+
+
         tModel.setType(checkItem.getTitle());    //  1. 日常 2. 定期 3. 临时
         tModel.setCreateTime(new Date()); // 模版的创建时间
 
@@ -335,7 +445,7 @@ public class CheckManualImpl implements ICheckManual {
      * @param modelId   模版表id
      * @return
      */
-    private TCheck saveCheckTbl(CheckItem checkItem, ZzjgPersonnel zzjg, Integer modelId) {
+    private TCheck saveCheckTbl(CheckItem checkItem, ZzjgPersonnel zzjg, Integer modelId, Integer industryId) {
 
         // 获取部门 id
         List<CheckLevel> checkLevels = checkItem.getCheckLevels();
@@ -345,12 +455,6 @@ public class CheckManualImpl implements ICheckManual {
         }
         String departmentNametr = JSON.toJSONString(departmentName);
 
-        // 获取行业名称
-        String name = dangerManualMapper.selectIndustryByid(checkItem.getCheckLevels().get(0).id);
-
-        // 获取行业id
-        int IndustryId = companyManualMapper.selectDmidById(name);
-
         TCheck tCheck = new TCheck();
         tCheck.setFlag(1);       //企业自查
         tCheck.setTitle(checkItem.getTemplate());     //被检查的标题
@@ -359,14 +463,23 @@ public class CheckManualImpl implements ICheckManual {
         tCheck.setCreateUser(zzjg.getId()); //创建人(检查人员的id)
         tCheck.setModelId(modelId);    // 模版id
         tCheck.setType(checkItem.getTitle());       // 1. 日常 2 定期  3 临时
-        tCheck.setIndustryId(IndustryId); // 检查行业的id
-        tCheck.setIndustryType(checkItem.getCheckType()); // 1. 基础 2. 现场 3. 高危
+        if(industryId!= null) {
+            tCheck.setIndustryId(industryId); // 检查行业的id
+        }
+        if(-1==checkItem.getCheckType()){
+            tCheck.setIndustryType(1); // 1. 基础 2. 现场 3. 高危
+        }else if(-2==checkItem.getCheckType() ){
+            tCheck.setIndustryType(2); // 1. 基础 2. 现场 3. 高危
+        }else{
+            tCheck.setIndustryType(3); // 1. 基础 2. 现场 3. 高危
+        }
+
         tCheck.setExpectTime(new Date()); // 预计检查时间
         tCheck.setRealTime(new Date());  // 实际检查时间
         tCheck.setCheker(zzjg.getName());            // 检查人
         tCheck.setContact(zzjg.getMobile());            // 检查人的联系方式
         tCheck.setDapartContact(String.valueOf(checkItem.getDepartmentId()));      // 被检查人的id
-        tCheck.setStatus(1);              // 1. 未检查
+        tCheck.setStatus(4);              //  表示是为初始值模版
         tCheck.setCreateTime(new Date()); // 创建时间
 
         return tCheck;
@@ -423,7 +536,6 @@ public class CheckManualImpl implements ICheckManual {
      * recheck_memo  '复查描述'
      * <p>
      * TODO 出现重复数据,是因为不同的部门上出现这种风险点和风险因素重复问题?????
-     *
      * @return
      */
     private TCheckItem saveCheckTtem(CheckItem checkItem, ZzjgPersonnel zzjg, Integer CheckId, Integer CheckPartId) {
@@ -434,12 +546,17 @@ public class CheckManualImpl implements ICheckManual {
 
         for (CheckLevel checkLevel : checkLevels) {
             TCheckItem tCheckItem = new TCheckItem();
+            tCheckItem.setMemo(checkLevel.getFactors());//不合格描述
+            //tCheckItem.setFiles(checkLevel.getFiles());//检查图片
             tCheckItem.setContent(checkLevel.getLevel4()); //检查标准详情
             tCheckItem.setLevelId(checkItem.getTitle());   //检查分类
             tCheckItem.setLevels(checkLevel.getLevel3());   // 检查等级
+
             tCheckItem.setReference(checkLevel.getReference());//检查参照
+
             tCheckItem.setPartId(CheckPartId);    // 装置与设施id
             tCheckItem.setCheckId(CheckId);   // 检查表id
+           // tCheckItem.setStatus(4); //表示初始记录
             list.add(tCheckItem);
         }
         // 表示数据写反了
@@ -449,52 +566,6 @@ public class CheckManualImpl implements ICheckManual {
 
     }
 
-    /**
-     * 添加检查分类表
-     * level1      varchar(50)  null comment 'Ⅱ级隐患自查标准',
-     * level2      varchar(50)  null comment 'Ⅲ级隐患自查标准',
-     * level3      varchar(100) null,
-     * industry_id int          null comment '所属行业',
-     * 出现的类型 type 进行判断 1, 按类型进行检查, 2. 自定义进行检查
-     * 是自定义检查还是随机检查,
-     *
-     * @return
-     */
-    private List<Integer> saveTLevel(CheckItem checkItem) {
-        TLevel tLevel = new TLevel();
-
-        // 获取行业名称
-        String name = dangerManualMapper.selectIndustryByid(checkItem.getCheckLevels().get(0).id);
-
-        // 获取行业id
-        int IndustryId = companyManualMapper.selectDmidById(name);
-
-        List<CheckLevel> checkLevels = checkItem.getCheckLevels();
-        List<Integer> list = new ArrayList<>();
-
-        for (CheckLevel checkLevel : checkLevels) {
-            // 按照数据库查询进行检查
-            if (checkLevel.getType() == "1") {
-                String level3 = checkLevel.getLevel3();
-                String[] split = level3.split("/");
-                tLevel.setLevel1(split[0]);
-                tLevel.setLevel2(split[1]);
-                tLevel.setLevel3(split[2]);
-
-            } else if (checkLevel.getType() == "2") {
-                // 自定义进行检查
-                tLevel.setLevel1(checkLevel.getLevel3());
-                tLevel.setLevel2(checkLevel.getLevel3());
-                tLevel.setLevel3(checkLevel.getLevel3());
-            }
-            tLevel.setIndustryId(IndustryId);
-            tLevelMapper.insertSelective(tLevel);
-            Integer tLevelId = tLevel.getId(); //获取检查分类的id
-            list.add(tLevelId);
-        }
-
-        return list;
-    }
 
     /**
      * 检查计划模板 模块表

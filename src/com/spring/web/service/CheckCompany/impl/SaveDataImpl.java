@@ -77,6 +77,12 @@ public class SaveDataImpl implements SaveMessageService {
     @Autowired
     private TModelMapper modelMapper;
 
+    /**
+     * 复查记录表
+     */
+    @Autowired
+    private TRectificationConfirmMapper tRectificationConfirmMapper;
+
 
     /**
      * 保存检查信息,并进行返回结果消息
@@ -111,8 +117,9 @@ public class SaveDataImpl implements SaveMessageService {
                     tRectification.setUserId(zzjg.getUid()); // 企业id
                     tRectification.setCreateUser(zzjg.getId()); // 创建人的id
                     tRectification.setCreateTime(new Date()); //生成时间
-
                     item.setStatus(2); // 状态 不合格
+                    item.setMemo(saveDataMessage.getMemo()); //不合格描述
+                    item.setFiles(saveDataMessage.getFile()); //不合规照片
 
                     if (saveDataMessageItem.getType() == null) { // 立即整改
 
@@ -144,6 +151,8 @@ public class SaveDataImpl implements SaveMessageService {
                     // 保存检查结果整改意见表
                     tRectificationMapper.insertSelective(tRectification);
 
+                } else {
+                    return null;
                 }
 
                 // 保存checkItem表数据
@@ -254,52 +263,75 @@ public class SaveDataImpl implements SaveMessageService {
             User user = userMapper.selectByPrimaryKey(zzjg.getUid());
             tRecheck.setCheckCompany(user.getUserName()); //检查的公司名称
 
+            boolean flag = false;
+
+            // 循环遍历是否有未检查项
             for (SaveDataMessage saveDataMessage : saveDataMessageItem.getList()) {
                 TCheckItem item = tCheckItemMapper.selectAllById(saveDataMessage.getId());
                 if ("1".equals(saveDataMessage.getValue())) {
                     tRecheck.setStatus(1);       // 1 未全部整改  2 全部整改
-                } else if ("2".equals(saveDataMessage.getValue())) {
-
-                    tRecheck.setStatus(2);       // 1 未全部整改  2 全部整改
+                    flag = false;
                     break;
-                }
+                } else if ("2".equals(saveDataMessage.getValue())) {
+                    flag = true;
+                    tRecheck.setStatus(2);       // 1 未全部整改  2 全部整改
 
+                }
             }
-            //表示限期整改
-            int i = 7 * 24 * 60 * 60; // 限期时间
-            long time = new Date().getTime();
-            long l = time + i; //
-            Date date = new Date(l);
-            tRecheck.setNextTime(date);      // 未合格项 限期检查时间
-            tRecheck.setChecker(zzjg.getName());       // 检查人员名称
 
             TCheck tCheck = tCheckMapper.selectByPrimaryKey(item1.getCheckId());
-
+            tRecheck.setChecker(zzjg.getName());       // 检查人员名称
             tRecheck.setDapartContact(tCheck.getDapartContact());   // 被检查部门的负责人
-            int i1 = tRecheckMapper.insertSelective(tRecheck);
+            if(!flag){
+                int i = 7 * 24 * 60 * 60; // 限期时间
+                long time = new Date().getTime();
+                long l = time + i; //
+                Date date = new Date(l);
+                tRecheck.setNextTime(date);      // 未合格项 限期检查时间
+            }
+            tRecheckMapper.insertSelective(tRecheck);
             Integer id = tRecheck.getId(); // 获取到主表id
 
-            // --------------------------------------------------------------------------------------------------
-
             List<SaveDataMessage> list = saveDataMessageItem.getList();
+            // 在进行便利进行保存 t_recheck_item_tbl  t_rectifiction_confirm 表
             for (SaveDataMessage saveDataMessage : list) {
-                TCheckItem item = tCheckItemMapper.selectAllById(saveDataMessage.getId());
+
+                // 修改 t_check_item_tbl 数据为合格不合格;
+                TCheckItem checkItem = tCheckItemMapper.selectAllById(saveDataMessage.getId());
+
+                // TODO 添加t_recheck_item_tbl表数据
+                TRecheckItem tRecheckItem = new TRecheckItem();
+
+                // TODO 修改t_rectification_confirm 记录
+                TRectificationConfirm tRectificationConfirm = tRectificationConfirmMapper.selectByCheckItemId(checkItem.getId());
+                tRectificationConfirm.setStatus(2); //表示已读
                 if ("1".equals(saveDataMessage.getValue())) {
-                    item.setStatus(3); // 复查成功
+                    checkItem.setStatus(3); // 复查成功
+                    tRecheckItem.setStatus(2); //表示复查成功
+                    tRectificationConfirm.setStatus(1);
                 } else if ("2".equals(saveDataMessage.getValue())) {
 
-                    item.setStatus(2);
+                    checkItem.setStatus(2); //复查不合格
+                    checkItem.setRecheckFile(saveDataMessage.getFile());//复查照片
+                    checkItem.setPlanTime(new Date());                  // 实际的复查时间
+                    checkItem.setMemo(saveDataMessage.getMemo());      // 复查描述
+
+                    tRecheckItem.setStatus(3); //表示复查不合格
+                    tRecheckItem.setFile(saveDataMessage.getFile());    //图片
+                    tRecheckItem.setDeadline(new Date());
+                    tRecheckItem.setMemo(saveDataMessage.getMemo());  // 复查描述
+                    tRectificationConfirm.setStatus(0);
 
                 }
 
-                TRecheckItem tRecheckItem = new TRecheckItem();
-                tRecheckItem.setCheckItemId(item.getCheckId()); // 检查项目表id
+
+
+                tRecheckItem.setCheckItemId(checkItem.getCheckId()); // 检查项目表id
                 tRecheckItem.setRecheckId(id);                  // 复查主表id
                 tRecheckItem.setDeadline(new Date());           // 创建时间
-
+                tCheckItemMapper.updateByPrimaryKey(checkItem);
                 tRecheckItemMapper.insertSelective(tRecheckItem);
-
-                tCheckItemMapper.updateByPrimaryKey(item);// 进行更新
+                tRectificationConfirmMapper.updateByTRectificationConfirm(tRectificationConfirm);
 
             }
             return "成功";
@@ -332,7 +364,7 @@ public class SaveDataImpl implements SaveMessageService {
             TCheck tCheck = tCheckMapper.selectByModelId(tModel.getId());
 
             // 判断是否检查过,没有检查过直接返回,有检查过在进行数据的更新插入然后在进行
-            if ("1".equals(tCheck.getStatus())) {
+           /* if (1==tCheck.getStatus()) {
                 // 部门或设施
                 List<TCheckPart> tCheckParts = tCheckPartMapper.findAllByCheckId(tCheck.getId());
 
@@ -343,21 +375,25 @@ public class SaveDataImpl implements SaveMessageService {
                 checkItemS.setItems(list);
 
                 return checkItemS;
-            } else {
-                // 表示已经检查过
-                Integer checkId = insertCheck(tCheck.getId());  //表示是新的数据,然后将新的数据进行传递
 
-                List<TCheckPart> tCheckParts = tCheckPartMapper.findAllByCheckId(checkId);
+            } else {*/
+            // 每一次都是查询最开始的那一条检查记录然后进行复制保存
+            // 这时候按照时间的进行检查，找到最早的那一个存储的模板，然后进行修改保存
+            TCheck tCheck1 = tCheckMapper.selectOldByModelId(tModel.getId());
 
-                checkItemS.setLevle1(tCheckParts.get(0).getName()); //部门信息
+            Integer checkId = insertCheck(tCheck1.getId());  //表示是新的数据,然后将新的数据进行传递
 
-                // 查询风险点数据
-                List<TCheckItem> list = tCheckItemMapper.selectAllByCheckId(checkId, tCheckParts.get(0).getId());
-                checkItemS.setItems(list);
+            List<TCheckPart> tCheckParts = tCheckPartMapper.findAllByCheckId(checkId);
 
-                return checkItemS;
+            checkItemS.setLevle1(tCheckParts.get(0).getName()); // 部门信息
+            checkItemS.setType(tCheck1.getIndustryType());              // 检查类型
+            // 查询风险点数据
+            List<TCheckItem> list = tCheckItemMapper.selectAllByCheckId(checkId, tCheckParts.get(0).getId());
+            checkItemS.setItems(list);
 
-            }
+            return checkItemS;
+
+            /* }*/
 
         } catch (Exception e) {
             // 查询出现问题就直接报错
@@ -369,11 +405,11 @@ public class SaveDataImpl implements SaveMessageService {
     /**
      * 在更新完数据之后,新一轮数据的保存
      * 根据item表id进行查询然后将新一轮的数据进行保存然后重复提交
-     *  肯定是只对应一张检查表
-     *
+     * 肯定是只对应一张检查表
+     * <p>
      * 但是在查询到未检查的数据的时候,要将数据进行筛选
      */
-    private Integer insertCheck(Integer checkId){
+    private Integer insertCheck(Integer checkId) {
 
         // 获取对应的检查表的数据
         TCheck tCheck = tCheckMapper.selectByPrimaryKey(checkId); //获取主表
@@ -402,6 +438,7 @@ public class SaveDataImpl implements SaveMessageService {
                 tCheckItem.setCheckId(tCheckId);
                 tCheckItem.setPartId(checkPartId);
                 tCheckItem.setStatus(null);
+//              tCheckItem.setFiles();
                 tCheckItem.setSuggest(null);
                 tCheckItem.setDeadline(null);
                 tCheckItem.setPlanTime(null);
@@ -411,7 +448,7 @@ public class SaveDataImpl implements SaveMessageService {
 
         }
 
-       return tCheckId;
+        return tCheckId;
 
     }
 

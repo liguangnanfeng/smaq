@@ -23,14 +23,37 @@
     <!--</select>-->
 
     <insert id="saveTRectificationConfirm" parameterType="com.spring.web.model.TRectificationConfirm">
-    INSERT INTO t_rectification_confirm(confirm,sender,checker,status,check_id,create_time) VALUES (#{confirm},#{sender},#{checker},#{status},#{check_id},#{create_time})
+    INSERT INTO t_rectification_confirm(confirm,sender,checker,status,check_id,create_time,check_item_id,sender_id) VALUES (#{confirm},#{sender},#{checker},#{status},#{checkId},#{createTime},#{checkItemId},#{senderId})
     </insert>
 
-    <select id="findTRectificationConfirm" parameterType="java.lang.String" resultMap="ResultMap">
+    <select id="findTRectificationConfirm" parameterType="java.lang.String" resultType="java.util.Map">
         select
-        *
-        from t_rectification_confirm
-        where checker = #{userId}
+        a.*,b.*
+        from t_rectification_confirm a LEFT JOIN t_check_tbl b on a.check_id = b.id
+        where a.checker = #{userId} and a.status = 0
+        ORDER BY a.id DESC
+    </select>
+
+
+    <select id="findByCheckId" resultType="com.spring.web.model.TRectificationConfirm"  parameterType="Integer">
+        select * from t_rectification_confirm where check_id= #{checkId};
+    </select>
+
+    <update id="updateByTRectificationConfirm" parameterType="com.spring.web.model.TRectificationConfirm">
+        update t_rectification_confirm
+
+        <set >
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+
+    </update>
+
+
+    <select id="selectByCheckItemId" resultType="com.spring.web.model.TRectificationConfirm">
+        select * from t_rectification_confirm where id =#{checkIemId};
     </select>
 
 </mapper>

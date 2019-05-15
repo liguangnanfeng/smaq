@@ -105,9 +105,9 @@ public interface ACompanyManualMapper {
      */
     List<String> selectDangerAndManual(@Param("uid") Integer uid, @Param("name") String name);
 
-    List<CheckLevel> selectLevel3AndId(CheckLevel check);
+    List<Map<String, Object>> selectLevel3AndId(CheckLevel check);
 
-    List<CheckLevel> selectLevel4AndId(CheckLevel checkLevel);
+    List<Map> selectLevel4AndId(CheckLevel checkLevel);
 
     int selectDmidById(String name);
 
@@ -118,5 +118,10 @@ public interface ACompanyManualMapper {
      * @return
      */
     List<String> findLevel2ByPersonelId(@Param("name") String name, @Param("uid") Integer uid);
+
+    // 根据公司id，部门名，岗位名
+    List<ACompanyManual> findInspection(@Param("id") String id,@Param("dept") String dept,@Param("station") String station);
+
+
 }
 

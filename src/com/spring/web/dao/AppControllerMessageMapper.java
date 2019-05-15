@@ -14,7 +14,8 @@ public interface AppControllerMessageMapper {
 
     Messages findMessageDetail(String id);
 
-    List<TCheck>  findTCheckList(@Param("cid") String cid,@Param("pageNo") Integer pageNo,@Param("pageSize") Integer pageSize);
+    List<Map>  findTCheckList(@Param("cid") String userId,@Param("pageNo") Integer pageNo,@Param("pageSize") Integer pageSize);
+    List<Map> findTCheckListByStatus(@Param("cid") String userId,@Param("pageNo") Integer pageNo,@Param("pageSize") Integer pageSize);
 
     ZzjgPersonnel findPersonnel(String userId);
 
@@ -24,5 +25,12 @@ public interface AppControllerMessageMapper {
 
     // 复查
     List<Map<String, Object>> selectRecheckByCheckId(@Param("checkId")Integer checkId);
+
+    // 复查 （主界面进入）
+    List<Map<String, Object>> selectRecheckByCheckId2(@Param("userId")Integer userId);
+
+    // 政府端检查表
+    List<Map> selectCheckByFlag();
+
 
 }

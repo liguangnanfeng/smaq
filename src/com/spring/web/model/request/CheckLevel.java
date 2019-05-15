@@ -14,8 +14,6 @@ import java.util.logging.Level;
  * TODO 查询的风险点 对数据进行统一的封装
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 public class CheckLevel implements Serializable {
 

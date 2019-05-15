@@ -2,23 +2,22 @@
 
 package com.spring.web.controller;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.spring.web.dao.*;
 import com.spring.web.model.*;
+import com.spring.web.service.PCSaveModel;
+import com.spring.web.service.SaveModelService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.json.simple.JSONArray;
@@ -57,6 +56,7 @@ import com.spring.web.util.OutPrintUtil;
  * @Description: TODO(village:  /'vɪlɪdʒ/ 村庄)
  * @date 2017年7月21日 下午12:42:42
  */
+
 @Controller
 @RequestMapping("/village")
 public class VillageController extends BaseController {
@@ -68,6 +68,9 @@ public class VillageController extends BaseController {
     private UserService userService;
     @Autowired
     private CgfService cgfService;
+
+    @Autowired
+    private PCSaveModel saveModelService ;
 
 
     /**
@@ -2688,4 +2691,123 @@ public class VillageController extends BaseController {
         List<ZzjgDepartment> zzjgDepartmentList = zzjgDepartmentMapper.selectDepByCompanyIdandSome(user.getId(), depId);
         return zzjgDepartmentList;
     }
+
+    /**
+     * 根据公司和部门,岗位获取检查项
+     *
+     * @return
+     */
+    @RequestMapping(value = "findInspection")
+    @ResponseBody
+    public List<ACompanyManual> findInspection(Integer depId,String sName, HttpServletRequest request) {
+        User user = getLoginUser(request);
+
+        ZzjgDepartment zzjgDepartment =  zzjgDepartmentMapper.selectByPrimaryKey(depId);
+        List<ACompanyManual> ACompanyManual = aCompanyManualMapper.findInspection(String.valueOf(user.getId()),zzjgDepartment.getName(),sName);
+
+        return ACompanyManual;
+    }
+
+
+    /**
+     *  企业端保存保存检查模板 2019-05
+     *  title : 检查表名称
+     *  depId:  部门id
+     *  sName :岗位名称
+     *  checkVal: 多选的检查项
+     *  cycle :  检查周期
+     *  nextTime : 开始日期
+     *  checkType : 1. 日常 2.定期 3. 临时
+     *  checkNature: 1. 基础 2. 现场  3. 高危
+     * @return
+     */
+    @RequestMapping(value = "saveCheckMenu")
+    @ResponseBody
+    public Result saveCheckMenu(String title,Integer depId,String sName,String checkVal,String cycle,String nextTime,String checkType, String checkNature ,HttpServletRequest request) {
+        Result result = new ResultImpl();
+        checkVal.replace("[", " ");
+        checkVal.replace("]", " ");
+        checkVal.replace("\"", " ");
+        System.out.println(checkVal);
+
+        List<String> lists = JSON.parseObject(checkVal, List.class);
+
+        System.out.println(lists);
+
+        User user = getLoginUser(request); // 主账号登陆
+
+        String strs = request.getParameter("checkVal");
+        if(user==null){
+            result.setMess("登陆失败");
+            result.setStatus("1");
+            return result;
+        }
+
+        Integer integer = saveModelService.saveModel(title, depId, sName, lists, cycle, nextTime, checkType, checkNature, user.getId());  // 模版id
+        Integer industryId = saveModelService.saveTIndustry(user.getId(), checkNature);
+
+        //保存完模版之后.保存检查记录
+        TCheck tCheck = new TCheck();
+        tCheck.setStatus(1); // 未检查
+        tCheck.setFlag(1);   // 表示企业自查
+        tCheck.setTitle(title); // 被检查的标题
+        tCheck.setDepart(zzjgDepartmentMapper.selectByPrimaryKey(depId).getName());   // 被检查的部门
+        tCheck.setUserId(user.getId()); // 被检查公司id
+        tCheck.setCreateUser(user.getId()); // 被创建人的id
+        tCheck.setModelId(integer);         // 模版id
+        tCheck.setIndustryId(industryId);
+        tCheck.setType(Integer.parseInt(checkType)); // 1. 日常 ,2. 定期 3 临时
+        tCheck.setIndustryType(Integer.parseInt(checkNature));                    // 1. 基础 2. 现场 ,3 高危
+        tCheck.setExpectTime(new Date());  //
+        tCheck.setRealTime(new Date());    //
+        tCheck.setCheker(user.getUserName());  //当前的公司名称
+        //tCheck.setContact(user.getUserName());// 手机号无
+        tCheck.setDapartContact(depId+"" ); // 被检查部门的id
+        tCheck.setStatus(1); // 表示未检查  TODO  备注
+        tCheck.setCreateTime(new Date()); // 创建时间
+        tCheck.setCheckCompany(user.getUserName());
+
+        int i = tCheckMapper.insertSelective(tCheck);
+        Integer tCheckId = tCheck.getId(); // 获取id
+        //保存checkPart表数据
+        TCheckPart tCheckPart = new TCheckPart();
+        tCheckPart.setCheckId(tCheckId);// 检查表id
+        tCheckPart.setName(sName);      // 被检查装置
+        List list = saveModelService.saveTlevel(industryId, lists);
+        tCheckPart.setLevels(JSON.toJSONString(list)); //  保存检查等级
+        int i1 = tCheckPartMapper.insertSelective(tCheckPart);
+        Integer checkPartId = tCheckPart.getId(); // 获取partId
+
+        // 循环保存item数据
+        for (String s : lists) {
+            ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(Integer.parseInt(s));
+            TCheckItem tCheckItem = new TCheckItem();
+            tCheckItem.setCheckId(tCheckId); // 检查记录id
+            tCheckItem.setPartId(checkPartId); //partId
+            tCheckItem.setContent(companyManual.getMeasures()); //检查详情
+            tCheckItem.setLevels(JSON.toJSONString(list));
+            tCheckItem.setReference(companyManual.getReference()); //检查参照
+            tCheckItem.setMemo(companyManual.getFactors());        //不合格描述
+            tCheckItemMapper.insertSelective(tCheckItem);
+        }
+        result.setMess("添加成功");
+        return result;
+    }
+
+
+    /**
+     * 保存模板2
+     */
+    @RequestMapping(value = "saveCheckMenu2")
+    @ResponseBody
+    public Result saveCheckMenu2(@RequestBody HashMap<String,Object> map){
+        Result result = new ResultImpl();
+        log.info(map);
+
+
+        result.setMess("添加成功");
+        return result;
+    }
+
+
 }

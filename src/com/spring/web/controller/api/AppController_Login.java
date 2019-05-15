@@ -3,16 +3,19 @@ package com.spring.web.controller.api;
 import com.spring.web.dao.AppTokenMapper;
 import com.spring.web.dao.OfficialsMapper;
 import com.spring.web.dao.UserMapper;
+import com.spring.web.dao.ZzjgPersonnelMapper;
 import com.spring.web.listener.MySessionContext;
 import com.spring.web.model.*;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
+import com.spring.web.service.CheckCompany.CountryCheck;
 import com.spring.web.service.CheckCompany.LoginService;
 import com.spring.web.service.CheckCompany.Zzjg_PersonnelService;
 import com.spring.web.util.DateConvertUtil;
 import com.spring.web.util.EncryptUtil;
 import com.spring.web.util.RandomUtil;
 import com.spring.web.util.SessionUtil;
+import com.sun.javafx.collections.MappingChange;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -65,13 +68,26 @@ public class AppController_Login {
     /**
      * 验证apptoken
      */
+    @Autowired
     private AppTokenData appTokenData;
+
+    /**
+     * 直接去查询
+     */
+    @Autowired
+    private ZzjgPersonnelMapper zzjgPersonnelMapper;
 
     /**
      * 政府检查人员进行登陆
      */
     @Autowired
     private OfficialsMapper officialsMapper;
+
+    /**
+     * 政府端查询数据
+     */
+    @Autowired
+    private CountryCheck countryCheck;
 
 
     /**
@@ -107,7 +123,7 @@ public class AppController_Login {
     }
 
     /**
-     * 政府端登陆
+     * 政府端
      */
     private AppResult countryLogin(HttpServletRequest request, String username, String password) {
         AppResult result = new AppResultImpl();
@@ -137,7 +153,10 @@ public class AppController_Login {
             result.setStatus("0");
             result.setMessage("登陆成功");
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("user", user);
+            // TODO 查询详细的信息发送给前端进行展示  判断等级,查询不同的表数据
+            Map map1 = countryCheck.selectParticular(user.getId(),user.getFlag());
+
+            map.put("user", map1);
             AppToken db_appToken = appTokenMapper.selectByUserId(String.valueOf(user.getId()));
             if (db_appToken == null) {
                 AppToken appToken = new AppToken();
@@ -145,11 +164,10 @@ public class AppController_Login {
                 appToken.setLastLoginTime(new Date());
                 appToken.setExpires(7);
                 appToken.setUserId(user.getId());
-
+                String sessionId = saveAttribute(request, user, appToken.getAccessToken());
                 if (appTokenMapper.insertSelective(appToken) == 1) {
                     map.put("appToken", appToken);
                     map.put("type", user.getFlag());
-                    String sessionId = saveAttribute(request, user, appToken.getAccessToken());
                     map.put("sessionId", sessionId);
                     result.setData(map);
 
@@ -157,9 +175,8 @@ public class AppController_Login {
             } else {
                 db_appToken.setLastLoginTime((new Date()));
                 db_appToken.setExpires(7);
-
+                String sessionId = saveAttribute(request, user, db_appToken.getAccessToken());
                 if (appTokenMapper.updateByPrimaryKeySelective(db_appToken) == 1) {
-                    String sessionId = saveAttribute(request, user, db_appToken.getAccessToken());
                     map.put("type", user.getFlag());
                     map.put("appToken",db_appToken );
                     map.put("sessionId", sessionId);
@@ -180,7 +197,7 @@ public class AppController_Login {
     }
 
     /**
-     * 企业端登陆
+     * 企业端
      *
      * @param request
      * @param username
@@ -210,7 +227,10 @@ public class AppController_Login {
             }
 
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("user", zzjgPersonnel);
+            Integer id = zzjgPersonnel.getId();
+            Map stringObjectMap = zzjgPersonnelMapper.selectAll1( id );
+            map.put("user", stringObjectMap);
+
             AppToken db_appToken = appTokenMapper.selectByUserId(String.valueOf(zzjgPersonnel.getId()));
             if (db_appToken == null) {
                 AppToken appToken = new AppToken();
@@ -218,11 +238,10 @@ public class AppController_Login {
                 appToken.setLastLoginTime(new Date());
                 appToken.setExpires(7);
                 appToken.setUserId(zzjgPersonnel.getId());
-
+                String sessionId = saveAttribute(request, zzjgPersonnel, appToken.getAccessToken());
                 if (appTokenMapper.insertSelective(appToken) == 1) {
                     map.put("appToken", appToken);
                     map.put("type", 5);
-                    String sessionId = saveAttribute(request, zzjgPersonnel, appToken.getAccessToken());
                     map.put("sessionId", sessionId);
                     result.setData(map);
 
@@ -231,9 +250,8 @@ public class AppController_Login {
             } else {
                 db_appToken.setLastLoginTime((new Date()));
                 db_appToken.setExpires(7);
-
+                String sessionId = saveAttribute(request, zzjgPersonnel, db_appToken.getAccessToken());
                 if (appTokenMapper.updateByPrimaryKeySelective(db_appToken) == 1) {
-                    String sessionId = saveAttribute(request, zzjgPersonnel, db_appToken.getAccessToken());
                     map.put("type", 5);
                     map.put("appToken", db_appToken);
                     map.put("sessionId", sessionId);
@@ -246,6 +264,7 @@ public class AppController_Login {
         } catch (Exception e) {
             // 表示密码不正确
             result.setStatus("1");
+            e.printStackTrace();
             result.setMessage("密码不正确");
             return result;
         }

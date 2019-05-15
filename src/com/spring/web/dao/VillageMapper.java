@@ -111,4 +111,11 @@ public interface VillageMapper {
      * @return
      */
     List<Map<String, Object>> selectByTownId(Integer id);
+
+    /**
+     * 村级账号查询详细信息
+     * @param id
+     * @return
+     */
+    Map selectParticularByUid(Integer id);
 }

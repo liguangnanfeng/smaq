@@ -436,7 +436,7 @@
     <!--表示
         查询该模版对应的最新的检查记录,但是只查询一条
      -->
-    <select id="selectByModelId" resultType="com.spring.web.model.TCheck">
+    <select id="selectByModelId" resultMap="BaseResultMap">
     select
     *
     from t_check_tbl
@@ -451,6 +451,16 @@
         <include refid="Base_Column_List"/>
         from t_check_tbl
         where user_id =#{Uid} and create_user=#{id} and status = 2 order by id desc ;
+    </select>
+
+
+    <select id="selectOldByModelId" resultMap="BaseResultMap" >
+    select
+        <include refid="Base_Column_List"/>
+    from t_check_tbl
+    where
+    model_id = #{modelId} order by id asc  limit 0 ,1;
+
     </select>
 
 </mapper>

@@ -7,6 +7,7 @@ import com.spring.web.model.Officials;
 import com.spring.web.model.ZzjgDepartment;
 import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.model.request.CheckItem;
+import com.spring.web.model.request.CheckLevel;
 import com.spring.web.model.request.SaveDataMessageItem;
 import com.spring.web.model.response.CheckItemS;
 import com.spring.web.result.AppResult;
@@ -32,12 +33,8 @@ import java.util.Map;
 /**
  * @Author: 桃红梨白
  * @Date: 2019/05/05 19:26
- * 行政检查,
+ * 政府端
  * 编号从220开始
- * 首先要判断政府人员的权限 获取所在的usertype : 然后根据usertype根据数据进行保存
- * 获取所在的地区和地区所有的企业,获取企业的风险点
- * <p>
- * 根据行业,获取该行业所有的风险点
  */
 
 @Controller
@@ -80,7 +77,6 @@ public class AppController_Country_Check {
      */
     @Autowired
     private SaveMessageService saveMessageService;
-
 
 
     /**
@@ -167,7 +163,7 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 市直接查询所有的区
+     * TODO  无锡市直接查询所有的区
      */
     @ResponseBody
     @RequestMapping(value = "A223", method = RequestMethod.POST)
@@ -194,7 +190,7 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 总绝式, 来啥查啥
+     * TODO 总绝式, 来啥查啥
      *
      * @param request
      * @return
@@ -240,12 +236,118 @@ public class AppController_Country_Check {
         return result;
     }
 
+    /**
+     * TODO 查询高危检查项
+     * @param request
+     * @param uid
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="B212",method=RequestMethod.POST)
+    public AppResult checkGaoWei(HttpServletRequest request,Integer uid){
+
+        AppResult result = new AppResultImpl();
+        Officials officials = (Officials) appTokenData.getAppUser(request);
+        if (officials == null) {
+            result.setMessage("登陆失败");
+            result.setStatus("1");
+            return result;
+
+        }
+
+        // 查询高危风险
+        List<Map> list =  checkManual.checkGaoWei(uid);
+        result.setStatus("0");
+        result.setMessage("查询成功");
+        result.setData(list);
+
+        return result;
+    }
 
     /**
-     * 获取部门,以及对应的岗位 level1 levle2
+     * TODO 基础检查, 获取基础检查的id
+     */
+
+    @ResponseBody
+    @RequestMapping(value="B213",method=RequestMethod.POST)
+    public AppResult checkJiChu(HttpServletRequest request ,Integer uid){
+
+        AppResult result = new AppResultImpl();
+        Officials officials = (Officials) appTokenData.getAppUser(request);
+        if (officials == null) {
+            result.setMessage("登陆失败");
+            result.setStatus("1");
+            return result;
+
+        }
+        Map map = checkManual.checkJiChu(uid);
+
+        if(map==null){
+            result.setMessage("查询失败");
+            result.setStatus("1");
+            return result;
+        }
+
+        result.setMessage("查询成功");
+        result.setStatus("0");
+        result.setData(map);
+        return result;
+    }
+
+
+    /**
+     * TODO 高危检查选项
+     *      * 获取所有高危检查的选项 level 1 level2 level 3
+     */
+
+    @ResponseBody
+    @RequestMapping(value="B214")
+    public AppResult checkGaoWeiItem(HttpServletRequest request,Integer industryId){
+        AppResult result = new AppResultImpl();
+        Officials officials = (Officials) appTokenData.getAppUser(request);
+        if (officials == null) {
+            result.setMessage("登陆失败");
+            result.setStatus("1");
+            return result;
+
+        }
+
+        Map map = checkManual.checkGaoWeiItem(industryId);
+        result.setStatus("0");
+        result.setMessage("查询成功");
+        result.setData(map);
+
+        return result;
+    }
+
+    /**
+     * TODO 高危检查的其他选项
+     * 不管是高危还是基础,统一的查询level4 and level风险点.返回,然后在包存的的时候,继续数据的修改
+     * 查询数据,并进行返回
+     */
+    @ResponseBody
+    @RequestMapping(value="B215",method = RequestMethod.POST)
+    public AppResult checkJiChuAndGaoWei( HttpServletRequest request , CheckLevel checkLevel){
+        AppResult result = new AppResultImpl();
+
+        List<Map> list = checkManual.checkGaoWeiAndJiChu(checkLevel);
+
+        if(null==list){
+            result.setStatus("1");
+            result.setMessage("没有相关数据");
+            return result;
+        }
+        result.setStatus("0");
+        result.setMessage("查询成功");
+        result.setData(list);
+        return result;
+    }
+
+    /**
+     * TODO  现场检查  根据公司id获取部门,以及对应的岗位 level1 levle2
+     *
      * @param request
-     * @param
-     * @param
+     * @param id      公司的id
      * @return
      */
 
@@ -263,7 +365,7 @@ public class AppController_Country_Check {
         }
 
         // 企业对应的所有的部门
-       List<String> list = zzjgDepartmentMapper.selectNameByUid(id);
+        List<String> list = zzjgDepartmentMapper.selectNameByUid(id);
 
         // 对数据进行判断是否存在
         if (null == list || list.size() == 0) {
@@ -283,8 +385,11 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 查询公司的安全责任人
-     * id: uid 总公司的id
+     * TODO 查询公司的安全责任人
+     * 安全责任人是相对的,政府端对应的安全责任人就是企业端的检查人员
+     *
+     * @param id 公司id
+     * @return 公司所有的安全责任人
      */
     @ResponseBody
     @RequestMapping(value = "A226", method = RequestMethod.POST)
@@ -293,7 +398,7 @@ public class AppController_Country_Check {
         AppResult result = new AppResultImpl();
 
         Officials officials = (Officials) appTokenData.getAppUser(request);
-        if (officials == null || id==null ) {
+        if (officials == null || id == null) {
             result.setMessage("登陆失败");
             result.setStatus("1");
             return result;
@@ -312,39 +417,41 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 保存模版
-     * id 表示为公司的id
+     * TODO 政府端保存检查模版
+     *
+     * @param 封装的信息
+     * @return 模版id
      */
     @ResponseBody
-    @RequestMapping(value="A227" ,method = RequestMethod.POST)
-    public AppResult saveModel(HttpServletRequest request, @RequestBody CheckItem checkItem ){
+    @RequestMapping(value = "A227", method = RequestMethod.POST)
+    public AppResult saveModel(HttpServletRequest request, @RequestBody CheckItem checkItem) {
         AppResult result = new AppResultImpl();
 
         //到域中获取数据
         MySessionContext sess = MySessionContext.getInstance();
         HttpSession session = sess.getSession(checkItem.getSessionId());
-        Officials officials = (Officials) session.getAttribute(checkItem.getAccess_token());// 获取session域中的信息
-        if (officials == null || checkItem==null) {
+        Officials officials = (Officials) session.getAttribute(checkItem.getAccess_token());// 获取session域中用户登陆的信息
+        if (officials == null || checkItem == null) {
             result.setMessage("登陆失败");
             result.setStatus("1");
             return result;
 
         }
 
-        Integer modelId =  countryCheck.saveCheck(checkItem,officials,checkItem.getId());
+        Integer modelId = countryCheck.saveCheck(checkItem, officials, checkItem.getId());
         result.setMessage("查询成功");
         result.setStatus("0");
         result.setData(modelId);
-        return  result;
+        return result;
 
     }
 
     /**
-     * 政府端获取该企业所有的检查表
+     * 政府端获取该企业所有的模版表
      */
     @ResponseBody
-    @RequestMapping(value="A228",method = RequestMethod.POST)
-    public AppResult CheckModelByUid(HttpServletRequest request,Integer id ){
+    @RequestMapping(value = "A228", method = RequestMethod.POST)
+    public AppResult CheckModelByUid(HttpServletRequest request, Integer id) {
 
         AppResult result = new AppResultImpl();
 
@@ -372,11 +479,11 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 根据模版id查询所有的详细信息
+     * 根据模版id查询所有的详细信息 就重新生成一系列的数据
      */
     @ResponseBody
-    @RequestMapping(value="A229",method = RequestMethod.POST)
-    public AppResult checkItemtById(HttpServletRequest request,Integer modelId){
+    @RequestMapping(value = "A229", method = RequestMethod.POST)
+    public AppResult checkItemtById(HttpServletRequest request, Integer modelId) {
         AppResult result = new AppResultImpl();
 
         Officials officials = (Officials) appTokenData.getAppUser(request);
@@ -402,14 +509,14 @@ public class AppController_Country_Check {
      * 保存检查记录，并发送整改意见
      *
      * @param saveDataMessageItem
-     * @param id 公司的id
+     * @param id                  公司的id
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="A230" ,method = RequestMethod.POST)
-    public  AppResult saveIdea(@RequestBody SaveDataMessageItem saveDataMessageItem,Integer id){
+    @RequestMapping(value = "A230", method = RequestMethod.POST)
+    public AppResult saveIdea(@RequestBody SaveDataMessageItem saveDataMessageItem, Integer id) {
         AppResult result = new AppResultImpl();
-        if (saveDataMessageItem==null){
+        if (saveDataMessageItem == null) {
             result.setStatus("1");
             result.setMessage("保存失败");
             return result;
@@ -418,7 +525,7 @@ public class AppController_Country_Check {
         MySessionContext sess = MySessionContext.getInstance();
         HttpSession session = sess.getSession(saveDataMessageItem.getSessionId());
         Officials officials = (Officials) session.getAttribute(saveDataMessageItem.getAccess_token());// 获取session域中的信息
-        if (officials == null ) {
+        if (officials == null) {
             result.setMessage("账号出现问题,请重新登陆");
             result.setStatus("1");
             return result;
@@ -426,12 +533,11 @@ public class AppController_Country_Check {
         }
 
         // 对数据进行保存
-        String name = countryCheck. saveCheckMessage(saveDataMessageItem, officials,id);
-        if(name==null){
+        String name = countryCheck.saveCheckMessage(saveDataMessageItem, officials, id);
+        if (name == null) {
             result.setMessage("保存是被请重新发起检查");
             result.setStatus("1");
             return result;
-
 
         }
 
@@ -441,8 +547,31 @@ public class AppController_Country_Check {
 
         return result;
 
-
     }
+
+    /**
+     * 保存政府端复查的信息
+     */
+    @ResponseBody
+    @RequestMapping(value="A231",method=RequestMethod.POST)
+    public AppResult saveReviewData(HttpServletRequest request ,@RequestBody SaveDataMessageItem saveDataMessageItem){
+        AppResult result = new AppResultImpl();
+        Officials officials = (Officials) appTokenData.getAppUser(request);
+        if (officials==null){
+            result.setStatus("1");
+            result.setMessage("未登陆");
+            return result;
+        }
+        // 保存信息,
+
+        return result;
+    }
+
+
+
+
+
+
 
 
 }

@@ -133,4 +133,10 @@
     from t_industry_tbl
     where type = #{type}
   </select>
+
+  <!--获取所有的高危检查-->
+  <select id="selectType3" resultType="java.util.Map">
+    select id , name  from t_industry_tbl where id = #{industryId} and type=3;
+  </select>
+
 </mapper>

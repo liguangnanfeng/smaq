@@ -35,7 +35,7 @@ public class AppTokenData {
     public Object getAppUser(HttpServletRequest request){
         String access_token = request.getParameter("access_token");
         String sessionId = request.getParameter("sessionId");
-        if (StringUtils.isEmpty(access_token)) {
+      /*  if (StringUtils.isEmpty(access_token)) {
             return null;
         }
 
@@ -53,7 +53,7 @@ public class AppTokenData {
             at.setLastLoginTime(date);
             appTokenMapper.updateByPrimaryKeySelective(at);
         }
-
+*/
         //到域中获取数据
         MySessionContext sess = MySessionContext.getInstance();
         HttpSession session = sess.getSession(sessionId);

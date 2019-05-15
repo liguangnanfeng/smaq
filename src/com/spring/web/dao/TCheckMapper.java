@@ -81,4 +81,11 @@ public interface TCheckMapper {
      * @return
      */
     List<TCheck> findAllByUidAndUserId(@Param("id") Integer id, @Param("Uid") Integer uid);
+
+    /**
+     * 找寻该模版最早的内容进行覆盖更新
+     * @param id
+     * @return
+     */
+    TCheck selectOldByModelId(Integer id);
 }

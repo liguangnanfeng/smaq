@@ -5,8 +5,10 @@ import com.spring.web.dao.*;
 import com.spring.web.model.*;
 import com.spring.web.model.request.CheckItem;
 import com.spring.web.model.request.CheckLevel;
+import com.spring.web.model.request.SaveDataMessage;
 import com.spring.web.model.request.SaveDataMessageItem;
 import com.spring.web.service.CheckCompany.CountryCheck;
+import org.apache.shiro.util.MapContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +18,7 @@ import java.util.*;
 /**
  * @Author: 桃红梨白
  * @Date: 2019/05/08 18:02
- *
+ * <p>
  * 小程序政府端进行检查,获取数据
  */
 @Service
@@ -32,7 +34,9 @@ public class CountryCheckImpl implements CountryCheck {
     @Autowired
     private VillageMapper villageMapper;
 
-    /**镇级数据*/
+    /**
+     * 镇级数据
+     */
     @Autowired
     private TownMapper townMapper;
 
@@ -77,74 +81,122 @@ public class CountryCheckImpl implements CountryCheck {
     @Autowired
     private TModelPartMapper tModelPartMapper;
 
+    /*企业等级表*/
+    @Autowired
+    private TIndustryMapper tIndustryMapper;
+
+    @Autowired
+    private TItemMapper tItemMapper;
+
+    @Autowired
+    private TItemSeriousMapper tItemSeriousMapper;
+
+
     /**
      * 村级查询企业
+     *
      * @param id
      * @return
      */
     @Override
-    public List<Map<String,Object>> selectCompanyByVillageId(Integer id) {
-        List<Map<String,Object>>  list =  companyMapper.selectByVillageId(id);
+    public List<Map<String, Object>> selectCompanyByVillageId(Integer id) {
+        List<Map<String, Object>> list = companyMapper.selectByVillageId(id);
 
         return list;
     }
 
     /**
      * 根据镇级查询所对应的村
+     *
      * @param id
      * @return
      */
     @Override
     public List<Map<String, Object>> selectVillageBytownId(Integer id) {
-        List<Map<String,Object>>  list =villageMapper.selectByTownId(id);
+        List<Map<String, Object>> list = villageMapper.selectByTownId(id);
 
         return list;
     }
 
     /**
      * 根据区级id查询所有的镇
-     *
+     * <p>
      * List<Map<String,Object>>  list =districtMapper.selectByDistrivtId(id);
+     *
      * @param id
      * @return
      */
     @Override
     public List<Map<String, Object>> selectTownByDistrictId(Integer id) {
-        List<Map<String,Object>>  list =townMapper.selectByDistrictId(id);
+        List<Map<String, Object>> list = townMapper.selectByDistrictId(id);
         return list;
     }
 
     /**
      * 查询所有的区
+     *
      * @return
      */
     @Override
     public List<Map<String, Object>> selectDistrict() {
-        List<Map<String,Object>>  list =districtMapper.selectByDistrivtId();
+        List<Map<String, Object>> list = districtMapper.selectByDistrivtId();
         return list;
     }
 
     /**
+     * 查询政府端登录用户的详细信息
+     * @param id
+     * @param flag
+     * @return
+     */
+    @Override
+    public Map selectParticular(Integer id, Integer flag) {
+        Map map = new HashMap();
+        if(flag==4){ //村级
+
+           map = villageMapper.selectParticularByUid(id);
+
+
+        }else if(flag==3){  //镇级
+
+            map = townMapper.selectParticularByUid(id);
+        }else if(flag==6){   //区级
+            map = districtMapper.selectParticularByUid(id);
+        }else if(flag==7){   //市级
+            map.put("name", "无锡市");
+        }else{
+            map.put("name", "怎么进来的");
+
+        }
+        return map;
+    }
+
+    /**
      * 政府端保存模版
+     *
      * @param checkItem
      * @param officials
      * @return
      */
     @Override
-    public Integer saveCheck(CheckItem checkItem, Officials officials,Integer id) {
-        try{
-            // 1. 保存model信息并返回id
-            TModel tModel = saveTmodel(checkItem, officials);
-            modelMapper.insertSelective(tModel);
-            Integer modelId = tModel.getId(); //获取模版id
+    public Integer saveCheck(CheckItem checkItem, Officials officials, Integer id) {
+        try {
+
+            // 1. 保存t_industry_tbl表 返回id
+            Integer industryId = null;
+
+            // 2. 保存t_level_tbl AND t_item_tbl 返回id集合
+            List<Integer> levels = null;
+
+            // 3. 保存model信息并返回id
+            Integer modelId = saveTmodel(checkItem, officials,industryId);
+
             // 2. 保存check表数据并返回id
-            TCheck tCheck = saveCheckTbl(checkItem, officials, modelId,id);
-            int i = tCheckMapper.insertSelective(tCheck);
-            Integer checkId = tCheck.getId();  //获取检查表id
-            // 3. 保存并获取检查分类id
-            List<Integer> list = saveTLevel(checkItem);
+            Integer checkId = saveCheckTbl(checkItem, officials, modelId, industryId);
+
+
             // 4. 保存checkPart数据并返回id
-            TCheckPart tCheckPart = saveCheckPart(checkItem, list, checkId);
+            TCheckPart tCheckPart = saveCheckPart(checkItem, levels, checkId);
             tCheckPartMapper.insertSelective(tCheckPart);
             int tCheckPartId = tCheckPart.getId(); // 获取checkPartId
 
@@ -152,18 +204,16 @@ public class CountryCheckImpl implements CountryCheck {
             saveCheckTtem(checkItem, officials, checkId, tCheckPartId);
 
             // 6. 保存model_part() 计划检查模块表
-            saveTmodelPath(modelId, checkItem, list);
+            saveTmodelPath(modelId, checkItem, levels);
 
             return modelId;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("保存失败");
 
         }
 
     }
-
-
 
     /**
      * 检查计划模板表
@@ -176,7 +226,7 @@ public class CountryCheckImpl implements CountryCheck {
      * @param
      * @return
      */
-    private TModel saveTmodel(CheckItem checkItem, Officials officials) {
+    private Integer saveTmodel(CheckItem checkItem, Officials officials,Integer industryId) {
 
         // 获取部门 id
         List<CheckLevel> checkLevels = checkItem.getCheckLevels();
@@ -186,18 +236,12 @@ public class CountryCheckImpl implements CountryCheck {
         }
         String departmentNametr = JSON.toJSONString(departmentName);
 
-        // 获取行业名称
-        String name = dangerManualMapper.selectIndustryByid(checkItem.getCheckLevels().get(0).id);
-
-        // 获取行业id
-        int IndustryId = companyManualMapper.selectDmidById(name);
-
         TModel tModel = new TModel();
         tModel.setTitle(checkItem.getTemplate()); // 检查名称
         tModel.setUserId(officials.getUid()); // 检查人员所属部门的id
         tModel.setFlag(2); // 检查类型
         tModel.setPart(checkLevels.get(0).level1);              // 被检查的部门
-        tModel.setIndustryId(IndustryId);         // 被检查的行业id
+        tModel.setIndustryId(industryId);         // 被检查的行业id
         if (checkItem.getCheckType() == null) {
             checkItem.setCheckType(1);
         }
@@ -226,8 +270,9 @@ public class CountryCheckImpl implements CountryCheck {
             tModel.setNextCheckTime(t); // 定期检查的时间
             tModel.setOpen(1);          // 定期生成
         }
-
-        return tModel;
+        modelMapper.insertSelective(tModel);
+        Integer modelId = tModel.getId(); //获取模版id
+        return modelId;
     }
 
     /**
@@ -262,7 +307,7 @@ public class CountryCheckImpl implements CountryCheck {
      * @param modelId   模版表id
      * @return
      */
-    private TCheck saveCheckTbl(CheckItem checkItem, Officials officials, Integer modelId,Integer id) {
+    private Integer saveCheckTbl(CheckItem checkItem, Officials officials, Integer modelId, Integer industryId) {
 
         // 获取部门 id
         List<CheckLevel> checkLevels = checkItem.getCheckLevels();
@@ -272,21 +317,15 @@ public class CountryCheckImpl implements CountryCheck {
         }
         String departmentNametr = JSON.toJSONString(departmentName);
 
-        // 获取行业名称
-        String name = dangerManualMapper.selectIndustryByid(checkItem.getCheckLevels().get(0).id);
-
-        // 获取行业id
-        int IndustryId = companyManualMapper.selectDmidById(name);
-
         TCheck tCheck = new TCheck();
         tCheck.setFlag(2);       //行政检查
         tCheck.setTitle(checkItem.getTemplate());     //被检查的标题
-        tCheck.setDepart(checkLevels.get(0).level1);    // 被检查的部门
-        tCheck.setUserId(id);     // 被检查的企业
+        tCheck.setDepart(checkLevels.get(0).level1);    // 被检查的部门 TODO 政府端理论上是检查多个部门,这里应该是添加多个部门的信息
+        tCheck.setUserId(checkItem.getId());     // 被检查的企业
         tCheck.setCreateUser(officials.getId()); //创建人(检查人员的id)
         tCheck.setModelId(modelId);    // 模版id
         tCheck.setType(checkItem.getTitle());       // 1. 日常 2 定期  3 临时
-        tCheck.setIndustryId(IndustryId); // 检查行业的id
+        tCheck.setIndustryId(industryId); // 检查行业的id
         tCheck.setIndustryType(checkItem.getCheckType()); // 1. 基础 2. 现场 3. 高危
         tCheck.setExpectTime(new Date()); // 预计检查时间
         tCheck.setRealTime(new Date());  // 实际检查时间
@@ -296,55 +335,11 @@ public class CountryCheckImpl implements CountryCheck {
         tCheck.setStatus(1);              // 1. 未检查
         tCheck.setCreateTime(new Date()); // 创建时间
 
-        return tCheck;
+        int i = tCheckMapper.insertSelective(tCheck);
+        Integer checkId = tCheck.getId();  //获取检查表id
 
-    }
+        return checkId;
 
-    /**
-     * 添加检查分类表
-     * level1      varchar(50)  null comment 'Ⅱ级隐患自查标准',
-     * level2      varchar(50)  null comment 'Ⅲ级隐患自查标准',
-     * level3      varchar(100) null,
-     * industry_id int          null comment '所属行业',
-     * 出现的类型 type 进行判断 1, 按类型进行检查, 2. 自定义进行检查
-     * 是自定义检查还是随机检查,
-     *
-     * @return
-     */
-    private List<Integer> saveTLevel(CheckItem checkItem) {
-        TLevel tLevel = new TLevel();
-
-        // 获取行业名称
-        String name = dangerManualMapper.selectIndustryByid(checkItem.getCheckLevels().get(0).id);
-
-        // 获取行业id
-        int IndustryId = companyManualMapper.selectDmidById(name);
-
-        List<CheckLevel> checkLevels = checkItem.getCheckLevels();
-        List<Integer> list = new ArrayList<>();
-
-        for (CheckLevel checkLevel : checkLevels) {
-            // 按照数据库查询进行检查
-            if (checkLevel.getType() == "1") {
-                String level3 = checkLevel.getLevel3();
-                String[] split = level3.split("/");
-                tLevel.setLevel1(split[0]);
-                tLevel.setLevel2(split[1]);
-                tLevel.setLevel3(split[2]);
-
-            } else if (checkLevel.getType() == "2") {
-                // 自定义进行检查
-                tLevel.setLevel1(checkLevel.getLevel3());
-                tLevel.setLevel2(checkLevel.getLevel3());
-                tLevel.setLevel3(checkLevel.getLevel3());
-            }
-            tLevel.setIndustryId(IndustryId);
-            tLevelMapper.insertSelective(tLevel);
-            Integer tLevelId = tLevel.getId(); //获取检查分类的id
-            list.add(tLevelId);
-        }
-
-        return list;
     }
 
     /**
@@ -397,6 +392,7 @@ public class CountryCheckImpl implements CountryCheck {
      * recheck_memo  '复查描述'
      * <p>
      * TODO 出现重复数据,是因为不同的部门上出现这种风险点和风险因素重复问题?????
+     *
      * @return
      */
     private TCheckItem saveCheckTtem(CheckItem checkItem, Officials officials, Integer CheckId, Integer CheckPartId) {
@@ -449,10 +445,13 @@ public class CountryCheckImpl implements CountryCheck {
 
     }
 
-
-
     /**
-     * 政府账号保存检查信息
+     * 政府账号保存检查信息(第一次检查)
+     * 1. 保存item数据
+     * 2. 保存check数据
+     * 3. 保存check_document 行政检查文书
+     * 4. 保存
+     *
      * @param saveDataMessageItem
      * @param officials
      * @param id
@@ -460,24 +459,51 @@ public class CountryCheckImpl implements CountryCheck {
      */
     @Override
     public String saveCheckMessage(SaveDataMessageItem saveDataMessageItem, Officials officials, Integer id) {
-        try{
+        try {
+            // 1. 修改检查的数据
+            TCheck tCheck = tCheckMapper.selectByPrimaryKey(saveDataMessageItem.getCheckId());
+            tCheck.setStatus(2); // 表示已经检查
+            tCheckMapper.updateByPrimaryKey(tCheck); // 更新到数据库
+
             // 将信息进行保存 数据进行更新,数据的结构会更加的混乱
+            List<SaveDataMessage> list = saveDataMessageItem.getList();
+            for (SaveDataMessage saveDataMessage : list) {
+                TCheckItem tCheckItem = tCheckItemMapper.selectByPrimaryKey(saveDataMessage.getId());
+                // 对状态进行判断
+                if ("1".equals(saveDataMessage.getValue())) {  // 表示检查合格
+                    tCheckItem.setStatus(1); //合格
+                } else {
+                    // 表示不合格
+                    TRectification tRectification = new TRectification();
+                    tRectification.setCheckId(saveDataMessageItem.getCheckId()); // 检查表id
+                    tRectification.setUserId(id); // 企业id
+                    tRectification.setCreateUser(officials.getUid()); // 创建人的id
+                    tRectification.setCreateTime(new Date()); //生成时间
+                    //item.setMemo(saveDataMessage.getMemo()); //不合格描述
+                    tCheckItem.setStatus(2); //不合格
+                    tCheckItem.setMemo(saveDataMessage.getMemo()); // 不合格描述
+                    tCheckItem.setFiles(saveDataMessage.getFile()); // 不合格图片 应该是一个图片集合，但是现在没有集合
+                    tCheckItem.setSuggest(1);  //   1. 立即整改 2. 限期整改
+                    if(tCheckItem.getSuggest()==2){
+                        tCheckItem.setDeadline(new Date()); // 限期整改时间
 
+                    }
+                    tCheckItem.setRecheckTime(new Date()); // 预计的复查时间
+                }
+                tCheckItemMapper.updateByPrimaryKey(tCheckItem);
 
-
-
-
-
-
+            }
+                // TODO 发送检查通知书
             return "保存成功";
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
 
 
-
     }
+
+
 
 
 }

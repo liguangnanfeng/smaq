@@ -52,27 +52,64 @@
         }
     </style>
     <script>
-        function findPerson() {
-            $("#department2Id option:gt(0)").remove();
-            var doc = document.getElementById("departmentId");
-            obj = {
-                "depId": doc.value
+        function findPerson(obj) {
+            var level1 = $(obj);
+            var dom =  $(obj).parent().parent().parent('.level1').next().find('.department2Id');
+            dom.empty();
+            dom.append('<option value="0">请选择岗位</option>')
+            // var doc = document.getElementById("departmentId");
+            params = {
+                "depId": level1.val()
             }
             $.ajax({
                 type: "POST",
                 url: getRootPath() + '/village/selectDep',
-                data: obj,
+                data: params,
                 async: false,
                 dataType: "json",
                 success: function (result) {
                     $.each(result, function (index, item) {
                         var station = item.name;//岗位
                         var id = item.id;//岗位id
-                        $("#department2Id").append("<option>" + station + "</option>")
+                        dom.append("<option value='" + station + "'>" + station + "</option>")
                     })
                 },
                 complete: function (XMLHttpRequest, textStatus) {
-                    layer.close(index);
+                    // layer.close(index);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("查询失败")
+                }
+            });
+        }
+
+        function findCheck(obj) {
+            var level2 = $(obj);
+            var dom2 =  $(obj).parent().parent().parent('.level2').prev().find('.departmentId');
+            var inspection =  $(obj).parent().parent().parent('.level2').next().find('.inspection');
+
+            // var doc = document.getElementById("departmentId");
+            // var doc2 = document.getElementById("department2Id");
+            params2 = {
+                "depId": dom2.val(),
+                "sName": level2.val()
+            }
+            console.log(params)
+            $.ajax({
+                type: "POST",
+                url: getRootPath() + '/village/findInspection',
+                data: params2,
+                async: false,
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (index, item) {
+                        var isp = item.level3;
+                        var manuId = item.id;
+                        inspection.append("<p class='checkBoxOuter'><input type='checkbox' class='checkBox' name='checkBox' value='" + manuId + "'/>" + isp + "</p>")
+                    })
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    // layer.close(index);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("查询失败")
@@ -80,6 +117,105 @@
             });
 
         }
+
+        // function saveCheckMenu() {
+        //     alert("进入saveCheckMenu");
+        //     var obj = document.getElementsByName("checkBox");
+        //     check_val = [];
+        //     for (c in obj) {
+        //         if (obj[c].checked) {
+        //             check_val.push(obj[c].value)
+        //         }
+        //     }
+        //     console.log(obj)
+        //     console.log(check_val)
+        //     var title = document.getElementById("title");
+        //     var doc = document.getElementById("departmentId");
+        //     var doc2 = document.getElementById("department2Id");
+        //     var cycle = document.getElementById("cycle");
+        //     var nextTime = document.getElementById("nextTime");
+        //     // var checkType = document.getElementById("checkType");
+        //     // var checkNature = document.getElementById("checkNature");
+        //     var params = {
+        //         "title": title.value,
+        //         "depId": doc.value,
+        //         "sName": doc2.value,
+        //         "checkVal": JSON.stringify(check_val),
+        //         "cycle": cycle.value,
+        //         "nextTime": nextTime.value,
+        //         // "checkType": checkType.value,
+        //         // "checkNature":checkNature.value
+        //     }
+        //     $.ajax({
+        //         type: "POST",
+        //         url: getRootPath() + '/village/saveCheckMenu',
+        //         data: params,
+        //         async: false,
+        //         dataType: "json",
+        //         success: function () {
+        //             alert("添加成功");
+        //         },
+        //         complete: function (XMLHttpRequest, textStatus) {
+        //             // layer.close(index);
+        //         },
+        //         error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //             alert("添加失败")
+        //         }
+        //     });
+        //
+        // }
+
+        function saveCheckMenu() {
+            var title = document.getElementById("title");
+            var checkType = document.getElementById("checkType");
+            var checkNature = document.getElementById("checkNature");
+
+            var checkItemList = [];
+
+            for(let j=1;j<=i;j++){
+                var checkList = $('.checkedList'+j+'').find(".checkBox");
+                console.log(checkList.length)
+                var check_val = [];
+                for (c in checkList) {
+                    if (checkList[c].checked) {
+                        check_val.push(checkList[c].value)
+                    }
+                }
+
+                var jcx = {
+                    'bm' : $('.department'+j+'').children('.departmentId').val(),
+                    'gw': $('.post'+j+'').children('.department2Id').val(),
+                    'dx': check_val
+                }
+                checkItemList.push(jcx);
+            }
+            var params3 = {
+                "title":title.value,
+                "checkType":checkType.value,
+                "checkNature": checkNature.value,
+                "checkItemList" : checkItemList
+            }
+            console.log(params3);
+            console.log('请求前')
+            $.ajax({
+                type: "POST",
+                url: getRootPath() + '/village/saveCheckMenu2',
+                data: JSON.stringify(params3),
+                async: false,
+                contentType: "application/json",
+                dataType: "json",
+                success: function (result) {
+                    alert(result);
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    // layer.close(index);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("添加失败")
+                }
+            });
+        }
+
     </script>
     <script type="text/javascript">
         var modelId = '${model.id}';
@@ -113,6 +249,65 @@
 
 
     </script>
+
+    <script>
+var i=0;
+        function  addItem(type){
+            i++;
+            var add1 = `<div  class="addItem`+i+`"  >
+<div class="row cl level1">
+    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择部门 :</label>
+    <div class="department  formControls col-xs-8 col-sm-9">
+            <span class="department`+i+`   select-box inline">
+
+            <select name="departmentId" class="departmentId"  onChange="findPerson(this)">
+            <option value="0">请选择车间</option>
+            <c:forEach items="${map}" var="entry">
+                <option value="${entry.value}">${entry.key}</option>
+            </c:forEach>
+
+            </select>
+            </span>
+
+    </div>
+</div>
+
+<div class="row cl level2">
+    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择岗位 :</label>
+    <div class="post  formControls col-xs-8 col-sm-9">
+            <span class="post`+i+`   select-box inline">
+
+            <select name="department2Id" class="department2Id"  onchange="findCheck(this)">
+            <option value="0">请选择岗位</option>
+            </select>
+            </span>
+
+    </div>
+</div>
+
+
+
+
+<div class="row cl level3">
+    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查项目 :</label>
+    <div class="formControls col-xs-8 col-sm-9">
+        <div class="checkedList`+i+`">
+        <p class="inspection"></p>
+        </div>
+    </div>
+</div>
+
+</div>`;
+            $('#addContainer').append(add1);
+
+
+        }
+
+
+
+
+    </script>
+
 </head>
 <body>
 <nav class="breadcrumb">
@@ -130,40 +325,46 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">检查表名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" id="title" value="${companyname }企业定期检查表" style="width:350px" class="input-text"
+                <input type="text" id="title" style="width:350px" class="input-text"
                        maxlength="50" placeholder="根据检查需要填写或空缺"/>
             </div>
         </div>
+
+        检查方式
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查方式 :</label>
+            <div class="formControls col-xs-8 col-sm-9">
+            <span class="select-box inline">
+
+                   <select name="checkType" class="select" id="checkType">
+                       <option value="1">日常</option>
+                       <option value="2">定期</option>
+                       <option value="3">临时</option>
+                  </select>
+            </span>
+
+            </div>
+        </div>
+
+        检查性质
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查性质 :</label>
+            <div class="formControls col-xs-8 col-sm-9">
+            <span class="select-box inline">
+
+                   <select name="checkNature" class="select" id="checkNature">
+                       <option value="1">基础</option>
+                       <option value="2">现场</option>
+                       <option value="3">高危行业</option>
+                  </select>
+            </span>
+
+            </div>
+        </div>
+
+
         <%--部门--%>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择部门 :</label>
-            <div class="formControls col-xs-8 col-sm-9">
-            <span class="select-box inline">
 
-                   <select name="departmentId" class="select" id="departmentId" onChange="findPerson()">
-                            <option value="0">请选择车间</option>
-                        <c:forEach items="${map}" var="entry">
-                            <option value="${entry.value}">${entry.key}</option>
-                        </c:forEach>
-
-                  </select>
-            </span>
-
-            </div>
-        </div>
-        <%--岗位--%>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择岗位 :</label>
-            <div class="formControls col-xs-8 col-sm-9">
-            <span class="select-box inline">
-
-                   <select name="department2Id" class="select" id="department2Id">
-                             <option value="0">请选择岗位</option>
-                  </select>
-            </span>
-
-            </div>
-        </div>
 
         <div class="row cl" style="display: none;">
             <label class="form-label col-xs-4 col-sm-2" style="line-height:50px;">检查类型：</label>
@@ -178,31 +379,31 @@
             </div>
         </div>
 
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">自动预警设置：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="radio" name="open" value="1" <c:if test="${model.open != 0}">checked="checked"</c:if>/>开启
-                <input type="radio" name="open" value="0" class="ml-20"
-                       <c:if test="${model.open == 0}">checked="checked"</c:if>/>关闭
-                <span class="ml-20">开启后，逾期不填写检查记录，系统自动预警！</span>
-            </div>
-        </div>
+        <%--<div class="row cl">--%>
+        <%--<label class="form-label col-xs-4 col-sm-2">自动预警设置：</label>--%>
+        <%--<div class="formControls col-xs-8 col-sm-9">--%>
+        <%--<input type="radio" name="open" value="1" <c:if test="${model.open != 0}">checked="checked"</c:if>/>开启--%>
+        <%--<input type="radio" name="open" value="0" class="ml-20"--%>
+        <%--<c:if test="${model.open == 0}">checked="checked"</c:if>/>关闭--%>
+        <%--<span class="ml-20">开启后，逾期不填写检查记录，系统自动预警！</span>--%>
+        <%--</div>--%>
+        <%--</div>--%>
 
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">检查周期(天)：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" id="cycle" value="" style="width:350px" class="input-text required ll-numberbox"
-                       data-options="min:1,max:365"/>
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">检查开始日期：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" id="nextTime" value=""
-                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'})"
-                       class="input-text Wdate mb-5 mt-5" style="width:350px;"/>
-            </div>
-        </div>
+        <%--<div class="row cl">--%>
+        <%--<label class="form-label col-xs-4 col-sm-2">检查周期(天)：</label>--%>
+        <%--<div class="formControls col-xs-8 col-sm-9">--%>
+        <%--<input type="text" id="cycle" value="" style="width:350px" class="input-text required ll-numberbox"--%>
+        <%--data-options="min:1,max:365"/>--%>
+        <%--</div>--%>
+        <%--</div>--%>
+        <%--<div class="row cl">--%>
+        <%--<label class="form-label col-xs-4 col-sm-2">检查开始日期：</label>--%>
+        <%--<div class="formControls col-xs-8 col-sm-9">--%>
+        <%--<input type="text" id="nextTime" value=""--%>
+        <%--onfocus="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'})"--%>
+        <%--class="input-text Wdate mb-5 mt-5" style="width:350px;"/>--%>
+        <%--</div>--%>
+        <%--</div>--%>
         <%-- <div class="row cl">
           <label class="form-label col-xs-4 col-sm-2">备注：</label>
           <div class="formControls col-xs-8 col-sm-9">
@@ -210,20 +411,20 @@
           </div>
         </div> --%>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">岗位/部位：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" id="jcbw" value="${name}" style="width:350px" class="input-text"/>
-            </div>
+            <%--<label class="form-label col-xs-4 col-sm-2">岗位/部位：</label>--%>
+            <%--<div class="formControls col-xs-8 col-sm-9">--%>
+            <%--<input type="text" id="jcbw" value="${name}" style="width:350px" class="input-text"/>--%>
+            <%--</div>--%>
             <div class="div_model mt-20">
                 <ul class="div_fold">
                     <li class="item" data-n="">
-                        <div class="title_item">
-                            <h4><b>+</b></h4>
-                            <!--
-                            <a class="btn_ejc" style="text-decoration:none" onclick="part_edit(this)" href="javascript:;" title="编辑检查项">编辑检查项</a>
-                            <a class="btn_djc" style="text-decoration:none" onclick="part_del(this)" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe609;</i></a>
-                              -->
-                        </div>
+                        <%--<div class="title_item">--%>
+                        <%--<h4><b>+</b></h4>--%>
+                        <%--<!----%>
+                        <%--<a class="btn_ejc" style="text-decoration:none" onclick="part_edit(this)" href="javascript:;" title="编辑检查项">编辑检查项</a>--%>
+                        <%--<a class="btn_djc" style="text-decoration:none" onclick="part_del(this)" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe609;</i></a>--%>
+                        <%---->--%>
+                        <%--</div>--%>
                         <div class="info">
                             <table class="table table-border table-bordered table-bg table-hover table-sort">
                                 <thead>
@@ -258,20 +459,84 @@
                     </li>
                 </ul>
             </div>
+
+                <%--添加项的容器--%>
+
+
+                <div id="addContainer"></div>
+
+
+                <div class="row cl">
+                    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
+                        <button onClick="addItem(1)" class="btn btn-primary radius" type="button"
+                                style="padding: 0 70px;">
+                            <i class="Hui-iconfont">&#xe632;</i>新增检查项
+                        </button>
+                        <button onClick="addItem(2)" class="btn btn-primary radius" type="button"
+                                style="padding: 0 70px;">
+                            <i class="Hui-iconfont">&#xe632;</i>新增自定义检查项
+                        </button>
+                    </div>
+                </div>
+
+
             <div class="row cl">
                 <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
-                    <button onClick="article_save_submit_1()" class="btn btn-primary radius" type="button"
+                    <button onClick="saveCheckMenu()" class="btn btn-primary radius" type="button"
                             style="padding: 0 70px;">
                         <i class="Hui-iconfont">&#xe632;</i>保存检查表
                     </button>
-                    <button onClick="giveup_save_submit()" class="btn btn-primary radius" type="button"
-                            style="padding: 0 70px;">
-                        放弃添加
-                    </button>
+                    <%--<button onClick="giveup_save_submit()" class="btn btn-primary radius" type="button"--%>
+                    <%--style="padding: 0 70px;">--%>
+                    <%--放弃添加--%>
+                    <%--</button>--%>
                 </div>
             </div>
         </div>
     </form>
+</div>
+
+
+<%--隐藏域--%>
+<div  class="addItem"  style="display:none">
+<div class="row cl level1">
+    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择部门 :</label>
+    <div class="formControls col-xs-8 col-sm-9">
+            <span class="select-box inline">
+
+            <select name="departmentId" class="select departmentId"  onChange="findPerson(this)">
+            <option value="0">请选择车间</option>
+            <c:forEach items="${map}" var="entry">
+                <option value="${entry.value}">${entry.key}</option>
+            </c:forEach>
+
+            </select>
+            </span>
+
+    </div>
+</div>
+
+<div class="row cl level2">
+    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择岗位 :</label>
+    <div class="formControls col-xs-8 col-sm-9">
+            <span class="select-box inline">
+
+            <select name="department2Id" class="select department2Id"  onchange="findCheck(this)">
+            <option value="0">请选择岗位</option>
+            </select>
+            </span>
+
+    </div>
+</div>
+    
+<div class="row cl level3">
+    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查项目 :</label>
+    <div class="formControls col-xs-8 col-sm-9">
+        <p class="inspection"></p>
+        <%--<p id="xiangmu"><input type="checkbox" name="category" value="今日话题" />今日话题 </p>--%>
+    </div>
+</div>
+
 </div>
 
 </body>
@@ -279,7 +544,6 @@
 
     // 获取名称
     var departmentName = $("#departmentId").val();
-
 
     $("#cycle").val(1);
     var day = new Date();
@@ -390,6 +654,7 @@
              tbody.closest("li").remove();
          }
      }*/
+
 
 </script>
 </html>

@@ -12,9 +12,22 @@ import lombok.Data;
 @Data
 public class SaveDataMessage {
 
+    /**
+     * id
+     */
     public Integer id;
+    /**
+     * 状态
+     */
     public String value;
+    /**
+     * 隐患照片
+     */
+    public String file;
 
+    /**
+     * 隐患描述
+     */
 
     public Integer getId() {
         return id;
@@ -30,5 +43,13 @@ public class SaveDataMessage {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
     }
 }

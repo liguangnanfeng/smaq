@@ -27,9 +27,7 @@ public class RegionnameGetServiceImpl implements RegionnameGetService {
     @Autowired
     private BaseDao baseDao;
     private final static String GET_REGION_NAME = "company.queryForListId";
-    /** (非 Javadoc) 
-    *  
-    *  
+    /** (非 Javadoc)
     * @param regionId
     * @return 
     * @see com.spring.web.service.company_cd.RegionnameGetService#getRegionname(java.lang.Integer) 

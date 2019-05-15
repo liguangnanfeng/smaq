@@ -64,4 +64,11 @@ public interface DistrictMapper {
      * @return
      */
     List<Map<String, Object>> selectByDistrivtId();
+
+    /**
+     * 区级用户登陆获取详细信息
+     * @param id
+     * @return
+     */
+    Map selectParticularByUid(Integer id);
 }

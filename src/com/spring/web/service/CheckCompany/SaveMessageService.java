@@ -46,7 +46,7 @@ public interface SaveMessageService {
 
 
     /**
-     * 根据模版查询检查表信息
+     * 根据模版查询检查表信息并生成新的检查记录
      * @param modelId
      * @return
      */

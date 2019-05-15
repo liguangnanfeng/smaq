@@ -242,6 +242,16 @@ public class CompanyController_cd extends BaseController {
         return "company/main";
     }
 
+	  /**
+     * 前台首页
+     * 
+     * @throws Exception
+     */
+    @RequestMapping("threeLeft")
+    public String threeLeft(Model model, HttpServletRequest request) throws Exception {
+        return "company/threeLeft";
+    }
+	
     /**
      * 基本信息页面
      */

@@ -479,7 +479,7 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 根据模版id查询所有的详细信息
+     * 根据模版id查询所有的详细信息 就重新生成一系列的数据
      */
     @ResponseBody
     @RequestMapping(value = "A229", method = RequestMethod.POST)
@@ -548,6 +548,30 @@ public class AppController_Country_Check {
         return result;
 
     }
+
+    /**
+     * 保存政府端复查的信息
+     */
+    @ResponseBody
+    @RequestMapping(value="A231",method=RequestMethod.POST)
+    public AppResult saveReviewData(HttpServletRequest request ,@RequestBody SaveDataMessageItem saveDataMessageItem){
+        AppResult result = new AppResultImpl();
+        Officials officials = (Officials) appTokenData.getAppUser(request);
+        if (officials==null){
+            result.setStatus("1");
+            result.setMessage("未登陆");
+            return result;
+        }
+        // 保存信息,
+
+        return result;
+    }
+
+
+
+
+
+
 
 
 }

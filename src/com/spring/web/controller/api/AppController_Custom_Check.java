@@ -508,7 +508,6 @@ public class AppController_Custom_Check {
     /**
      * TODO 根据前端传递的合格不合格信息进行数据的存储
      * 进行数据的时候,就生成新一轮的检查记录表,
-     *
      * @param request
      * @param sessionId
      * @param token
@@ -722,14 +721,11 @@ public class AppController_Custom_Check {
         }
         result.setStatus("0");
         result.setMessage("保存成功");
-        /*realPath1.replace("\\","/");*/
+        realPath1.replace("\\","/");
         result.setData(realPath1);
         return result;
 
     }
-    /**
-     * 保存图片并保存到数据库
-     */
 
 }
 

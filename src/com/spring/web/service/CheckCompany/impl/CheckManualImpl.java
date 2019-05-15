@@ -153,6 +153,8 @@ public class CheckManualImpl implements ICheckManual {
 
     }
 
+
+
     /**
      * 获取高危的检查选项
      * level1 对应 level2

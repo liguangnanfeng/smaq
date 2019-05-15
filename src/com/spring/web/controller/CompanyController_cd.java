@@ -248,7 +248,8 @@ public class CompanyController_cd extends BaseController {
      * @throws Exception
      */
     @RequestMapping("threeLeft")
-    public String threeLeft(Model model, HttpServletRequest request) throws Exception {
+    public String threeLeft(Model model, HttpServletRequest request,String leftBasic) throws Exception {
+		model.addAttribute("leftBasic", leftBasic);
         return "company/threeLeft";
     }
 	

@@ -62,9 +62,16 @@ public interface TModelMapper {
     List<TModel> selectAuto();
 
     /**
-     * 根据公司id查询所有的模版信息
+     * TODO  企业端 公司id查询所有的模版信息
      * @param uid
      * @return
      */
     List<Map<Integer, String>> selectModelByUid(Integer uid);
+
+    /**
+     * TODO 政府端 公司id查询所有的模版信息
+     * @param uid
+     * @return
+     */
+    List<Map<Integer, String>> selectCountryModelByUid(Integer uid);
 }

@@ -188,7 +188,6 @@ public class AppController_Custom_Check extends BaseController {
 
     }
 
-
     /**
      * TODO 查询基础检查 选项
      * @param request
@@ -214,7 +213,7 @@ public class AppController_Custom_Check extends BaseController {
 
         return result;
     }
-    
+
     /**
      * TODO  pc_端获取所有高危检查的选项 level
      */

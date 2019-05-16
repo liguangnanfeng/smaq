@@ -129,8 +129,6 @@ public class CheckManualImpl implements ICheckManual {
            list.addAll(tIndustryMapper.selectType3(Integer.valueOf(s)));
         }
 
-
-
         return list;
     }
 
@@ -158,10 +156,8 @@ public class CheckManualImpl implements ICheckManual {
      * @param industryId
      */
     @Override
-    public void checkGaoWeiLevel1(Integer industryId) {
-        tLevelMapper.selectByIndustryId(industryId);
-        
-
+    public void checkGaoWeiLevel1(Integer uid) {
+        tLevelMapper.selectByIndustryId(uid);
 
     }
 
@@ -317,7 +313,7 @@ public class CheckManualImpl implements ICheckManual {
     }
 
     /**
-     * TODO 根据公司id查询所有的模版信息
+     * TODO  企业端 根据公司id查询所有的模版信息
      *
      * @param uid
      * @return
@@ -328,6 +324,16 @@ public class CheckManualImpl implements ICheckManual {
         return list;
     }
 
+    /**
+     * TODO 政府端 根据公司id查询所有的模版信息
+     * @param uid
+     * @return
+     */
+    @Override
+    public List<Map<Integer, String>> findCountryModelByUid(Integer uid) {
+        List<Map<Integer, String>> list = modelMapper.selectCountryModelByUid(uid);
+        return list;
+    }
 
     /**
      * 根据安全责任人的id,查询对应的部门,以及岗位
@@ -562,8 +568,13 @@ public class CheckManualImpl implements ICheckManual {
             //tCheckItem.setFiles(checkLevel.getFiles());//检查图片
             tCheckItem.setContent(checkLevel.getLevel4()); //检查标准详情
             tCheckItem.setLevelId(checkItem.getTitle());   //检查分类
-            tCheckItem.setLevels(checkLevel.getLevel3());   // 检查等级
 
+
+                if(null==checkLevel.getLevel3()){
+                    tCheckItem.setLevels(checkLevel.getLevel1());   // 检查等级
+                }else{
+                    tCheckItem.setLevels(checkLevel.getLevel3());   // 检查等级
+                }
             tCheckItem.setReference(checkLevel.getReference());//检查参照
 
             tCheckItem.setPartId(CheckPartId);    // 装置与设施id
@@ -577,7 +588,6 @@ public class CheckManualImpl implements ICheckManual {
         return null;
 
     }
-
 
     /**
      * 检查计划模板 模块表

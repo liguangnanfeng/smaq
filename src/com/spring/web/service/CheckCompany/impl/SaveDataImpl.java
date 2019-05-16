@@ -6,6 +6,7 @@ import com.spring.web.model.request.SaveDataMessage;
 import com.spring.web.model.request.SaveDataMessageItem;
 import com.spring.web.model.response.CheckItemS;
 import com.spring.web.service.CheckCompany.SaveMessageService;
+import com.spring.web.util.SmsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -93,6 +94,7 @@ public class SaveDataImpl implements SaveMessageService {
     @Override
     public String saveCheckMessage(SaveDataMessageItem saveDataMessageItem, ZzjgPersonnel zzjg) {
 
+
         try {
 
             for (SaveDataMessage saveDataMessage : saveDataMessageItem.getList()) {
@@ -148,9 +150,9 @@ public class SaveDataImpl implements SaveMessageService {
                         tRectification.setItem2(item.getContent()); //限期整改项
 
                     }
+
                     // 保存检查结果整改意见表
                     tRectificationMapper.insertSelective(tRectification);
-
                 } else {
                     return null;
                 }
@@ -175,6 +177,31 @@ public class SaveDataImpl implements SaveMessageService {
             e.printStackTrace(); //打印异常
             return null;
 
+        }
+
+    }
+
+    /**
+     * 发送短信
+     */
+    private void Sms(List<SaveDataMessage> list ){
+        boolean flag = false;
+        for (SaveDataMessage saveDataMessage : list) {
+            if("2".equals(saveDataMessage.getValue())){
+                flag = true;
+                break;
+            }
+        }
+
+        if(flag){
+            TCheckItem item = tCheckItemMapper.selectAllById(list.get(0).getId());
+            TCheck tCheck = tCheckMapper.selectByPrimaryKey(item.getCheckId());
+            // 获取手机号
+            ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectByPrimaryKey(Integer.parseInt(tCheck.getDapartContact()));
+            // 有多个不合格项, 只发送一次短信通知
+            SmsUtil smsUtil = new SmsUtil() ;
+           // smsUtil.sendSMS(zzjgPersonnel.getMobile(),"111222");
+            smsUtil.sendSMS("17516470884","111222");
         }
 
     }
@@ -357,43 +384,26 @@ public class SaveDataImpl implements SaveMessageService {
         try {
             CheckItemS checkItemS = new CheckItemS();
 
-            // 获取model所有数据进行测试
+            // 通过modelId
             TModel tModel = modelMapper.selectByPrimaryKey(modelId);
+            tModel.setUseTime(new Date()); // 模版的使用时间
+            modelMapper.updateByPrimaryKey(tModel);
 
-            // 获取checkId 和部门信息 可能会对应多张表
-            TCheck tCheck = tCheckMapper.selectByModelId(tModel.getId());
-
-            // 判断是否检查过,没有检查过直接返回,有检查过在进行数据的更新插入然后在进行
-           /* if (1==tCheck.getStatus()) {
-                // 部门或设施
-                List<TCheckPart> tCheckParts = tCheckPartMapper.findAllByCheckId(tCheck.getId());
-
-                checkItemS.setLevle1(tCheckParts.get(0).getName()); //部门信息
-
-                // 查询风险点数据
-                List<TCheckItem> list = tCheckItemMapper.selectAllByCheckId(tCheck.getId(), tCheckParts.get(0).getId());
-                checkItemS.setItems(list);
-
-                return checkItemS;
-
-            } else {*/
             // 每一次都是查询最开始的那一条检查记录然后进行复制保存
             // 这时候按照时间的进行检查，找到最早的那一个存储的模板，然后进行修改保存
-            TCheck tCheck1 = tCheckMapper.selectOldByModelId(tModel.getId());
+            TCheck tCheck = tCheckMapper.selectOldByModelId(tModel.getId());
 
-            Integer checkId = insertCheck(tCheck1.getId());  //表示是新的数据,然后将新的数据进行传递
+            Integer checkId = insertCheck(tCheck.getId());  //表示是新的数据,然后将新的数据进行传递
 
             List<TCheckPart> tCheckParts = tCheckPartMapper.findAllByCheckId(checkId);
 
             checkItemS.setLevle1(tCheckParts.get(0).getName()); // 部门信息
-            checkItemS.setType(tCheck1.getIndustryType());              // 检查类型
+            checkItemS.setType(tCheck.getIndustryType());              // 检查类型
             // 查询风险点数据
             List<TCheckItem> list = tCheckItemMapper.selectAllByCheckId(checkId, tCheckParts.get(0).getId());
             checkItemS.setItems(list);
 
             return checkItemS;
-
-            /* }*/
 
         } catch (Exception e) {
             // 查询出现问题就直接报错
@@ -403,47 +413,45 @@ public class SaveDataImpl implements SaveMessageService {
     }
 
     /**
-     * 在更新完数据之后,新一轮数据的保存
-     * 根据item表id进行查询然后将新一轮的数据进行保存然后重复提交
-     * 肯定是只对应一张检查表
-     * <p>
-     * 但是在查询到未检查的数据的时候,要将数据进行筛选
+     * TODO 根据最早插入的check数据,从新生成一条新的数据,并进行返回
+     *
+     * @param checkId
+     * @return
      */
     private Integer insertCheck(Integer checkId) {
 
         // 获取对应的检查表的数据
         TCheck tCheck = tCheckMapper.selectByPrimaryKey(checkId); //获取主表
-        List<TCheckPart> allByCheckId = tCheckPartMapper.findAllByCheckId(checkId); //获取部位
+        List<TCheckPart> allByCheckId = tCheckPartMapper.findAllByCheckId(checkId); //获取部位这里是只有一条数据
         List<TCheckItem> tCheckItems = tCheckItemMapper.selectAllByCheckId(checkId, allByCheckId.get(0).getId()); //获取详情
 
         // 新增 tCheck
-        //TCheck newCheck = new TCheck();
         tCheck.setStatus(1); //表示未检查
         tCheck.setId(null);
         tCheck.setExpectTime(new Date());// 预计的检查时间
         tCheck.setCreateTime(new Date()); //创建时间
         tCheck.setRealTime(new Date()); //实际检查时间
 
-        int i = tCheckMapper.insertSelective(tCheck);
+        tCheckMapper.insertSelective(tCheck);
         Integer tCheckId = tCheck.getId(); //获取检查的id
 
         // 新增tCheckPart 能确定只有一条记录所有现在出现的就是新的记录数据
         for (TCheckPart tCheckPart : allByCheckId) {
             tCheckPart.setCheckId(tCheckId);
             tCheckPart.setId(null);
-            int i1 = tCheckPartMapper.insertSelective(tCheckPart);
+            tCheckPartMapper.insertSelective(tCheckPart);
             Integer checkPartId = tCheckPart.getId();
             for (TCheckItem tCheckItem : tCheckItems) {
                 tCheckItem.setId(null);
                 tCheckItem.setCheckId(tCheckId);
                 tCheckItem.setPartId(checkPartId);
                 tCheckItem.setStatus(null);
-//              tCheckItem.setFiles();
                 tCheckItem.setSuggest(null);
                 tCheckItem.setDeadline(null);
                 tCheckItem.setPlanTime(null);
                 tCheckItem.setRecheckTime(null);
                 tCheckItemMapper.insertSelective(tCheckItem);
+
             }
 
         }

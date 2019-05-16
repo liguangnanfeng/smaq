@@ -41,7 +41,19 @@ public interface ICheckManual {
 
     List<Map<Integer, String>> findUserByIdAndStatus(ZzjgPersonnel zzjg);
 
+    /**
+     * 企业端查询所有模版
+     * @param uid
+     * @return
+     */
     List<Map<Integer, String>> findModelByUid(Integer uid);
+
+    /**
+     * 政府端查询所有的模版
+     * @param uid
+     * @return
+     */
+    List<Map<Integer, String>> findCountryModelByUid(Integer uid);
 
     /**
      * 根据检查人员id查询部门对应的level2
@@ -81,4 +93,6 @@ public interface ICheckManual {
      * @param industryId
      */
     void checkGaoWeiLevel1(Integer industryId);
+
+
 }

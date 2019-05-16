@@ -149,7 +149,12 @@
 
   <!--根据industeyId(基础查询的选项) 查询所有的基础操作-->
   <select id="selectLevel1ByIndustry" resultType="String">
-       select level1,industry_id from t_level_tbl where industry_id= #{industryId} group by level1;
+       select level1 from t_level_tbl where industry_id= #{industryId} group by level1;
+  </select>
+
+  <select id="selectByIndustryId" resultType="Map">
+
+     select level1 from t_level_tbl where industry_id= #{industryId} group by level1;
   </select>
 
   <!--根据level1 和industryId查询level2-->

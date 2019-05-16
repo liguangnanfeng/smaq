@@ -23,15 +23,24 @@
        http://www.springframework.org/schema/task/spring-task.xsd
   ">
 
+
+
+
   <!--spring 全局配置文件，用来控制spring 特性  对应的是系统级别的配置，作用范围是系统上下文-->
 
   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="locations">
       <list>
         <value>classpath:resources/resources.properties</value>
+        <value>classpath:resources/Sms.properties</value>
       </list>
     </property>
   </bean>
+
+<!--  <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="fileEncoding" value="utf-8"></property>
+
+  </bean>-->
 
   <!-- druid 监控统计功能 -->
   <!-- <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">

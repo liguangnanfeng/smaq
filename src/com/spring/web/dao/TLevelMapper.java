@@ -93,6 +93,6 @@ public interface TLevelMapper {
      * 获取所有的高危选项level1
      * @param industryId
      */
-    void selectByIndustryId(Integer industryId);
+    List<Map> selectByIndustryId(Integer industryId);
 
 }

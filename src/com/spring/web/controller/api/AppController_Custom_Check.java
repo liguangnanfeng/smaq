@@ -1,12 +1,10 @@
 package com.spring.web.controller.api;
 
 
+import com.spring.web.BaseController;
 import com.spring.web.dao.TCheckMapper;
 import com.spring.web.listener.MySessionContext;
-import com.spring.web.model.TCheck;
-import com.spring.web.model.TCheckItem;
-import com.spring.web.model.ZzjgDepartment;
-import com.spring.web.model.ZzjgPersonnel;
+import com.spring.web.model.*;
 import com.spring.web.model.request.*;
 import com.spring.web.model.response.CheckItemS;
 import com.spring.web.result.AppResult;
@@ -39,7 +37,7 @@ import java.util.*;
 @Controller
 @SuppressWarnings("all")
 @RequestMapping(value = "api/custom/check")
-public class AppController_Custom_Check {
+public class AppController_Custom_Check extends BaseController {
 
     /**查询部门*/
     @Autowired
@@ -166,6 +164,36 @@ public class AppController_Custom_Check {
 
         return result;
     }
+
+
+    /**
+     * TODO 查询基础检查 选项  jsp页面
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="A2132",method=RequestMethod.POST)
+    public AppResult checkJiChu2(HttpServletRequest request){
+        // 获取登陆内容
+        User user = getLoginUser(request);
+
+        AppResult result = new AppResultImpl();
+//        ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
+//        if(zzjg==null){
+//            result.setStatus("1");
+//            result.setMessage("未成功登陆,请重新登陆");
+//            return result;
+//        }
+
+        // 查询高危风险
+        Map map = checkManual.checkJiChu(user.getId());
+        result.setStatus("0");
+        result.setMessage("查询成功");
+        result.setData(map);
+
+        return result;
+    }
+
 
     /**
      * TODO 查询基础检查 选项

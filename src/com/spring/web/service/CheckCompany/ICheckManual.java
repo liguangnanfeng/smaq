@@ -92,7 +92,5 @@ public interface ICheckManual {
      *  TODO 查询高危选项的level1
      * @param industryId
      */
-    void checkGaoWeiLevel1(Integer industryId);
-
-
+    List<Map<String, Object>> checkGaoWei2(Integer industryId);
 }

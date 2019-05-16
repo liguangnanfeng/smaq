@@ -157,6 +157,10 @@
      select level1 from t_level_tbl where industry_id= #{industryId} group by level1;
   </select>
 
+  <select id="checkGaoWei2">
+      SELECT id, level1 ,industry_id FROM t_level_tbl WHERE industry_id= #{industryId} group by level1;
+  </select>
+
   <!--根据level1 和industryId查询level2-->
   <select id="selectlevel2Bylevel1AndIndustryId" resultType="Map">
         select level2 ,industry_id  as industryId

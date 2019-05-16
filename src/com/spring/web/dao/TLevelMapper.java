@@ -95,4 +95,10 @@ public interface TLevelMapper {
      */
     List<Map> selectByIndustryId(Integer industryId);
 
+    /**
+     * 查询高危lecel1
+     * @param industryId
+     * @return
+     */
+    List<Map<String, Object>> checkGaoWei2(Integer industryId);
 }

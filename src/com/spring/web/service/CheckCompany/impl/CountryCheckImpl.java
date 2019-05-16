@@ -8,6 +8,7 @@ import com.spring.web.model.request.CheckLevel;
 import com.spring.web.model.request.SaveDataMessage;
 import com.spring.web.model.request.SaveDataMessageItem;
 import com.spring.web.service.CheckCompany.CountryCheck;
+import com.spring.web.util.SmsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -519,6 +520,9 @@ public class CountryCheckImpl implements CountryCheck {
 
             }
                 // TODO 发送检查通知书
+
+            Sms(saveDataMessageItem.getList()); //短信
+
             return "保存成功";
         } catch (Exception e) {
             e.printStackTrace();
@@ -526,5 +530,36 @@ public class CountryCheckImpl implements CountryCheck {
         }
 
     }
+
+
+    /**
+     * 发送短信
+     */
+    private void Sms(List<SaveDataMessage> list ){
+        boolean flag = false;
+        for (SaveDataMessage saveDataMessage : list) {
+            if("2".equals(saveDataMessage.getValue())){
+                flag = true;
+                break;
+            }
+        }
+        if(flag){
+            TCheckItem item = tCheckItemMapper.selectAllById(list.get(0).getId());
+            TCheck tCheck = tCheckMapper.selectByPrimaryKey(item.getCheckId());
+            // 获取手机号
+            ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectByPrimaryKey(Integer.parseInt(tCheck.getDapartContact()));
+            // 有多个不合格项, 只发送一次短信通知
+            SmsUtil smsUtil = new SmsUtil() ;
+            // smsUtil.sendSMS(zzjgPersonnel.getMobile(),"111222");
+            smsUtil.sendSMS("17516470884","111222");
+        }
+
+    }
+
+
+
+
+
+
 
 }

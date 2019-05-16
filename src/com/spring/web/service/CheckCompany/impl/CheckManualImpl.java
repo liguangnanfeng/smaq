@@ -151,15 +151,6 @@ public class CheckManualImpl implements ICheckManual {
 
     }
 
-    /**
-     * 获取所有的高危选项level1
-     * @param industryId
-     */
-    @Override
-    public void checkGaoWeiLevel1(Integer uid) {
-        tLevelMapper.selectByIndustryId(uid);
-
-    }
 
     /**
      * 获取高危的检查选项
@@ -193,6 +184,16 @@ public class CheckManualImpl implements ICheckManual {
         return list;
     }
 
+    /**
+     * 查询高危level1
+     * @param industryId
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> checkGaoWei2(Integer industryId) {
+        List<Map<String, Object>> list = tLevelMapper.checkGaoWei2(industryId);
+        return list;
+    }
 
 
     /**

@@ -1,4 +1,5 @@
   <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@ include file="/WEB-INF/views/taglibs.jsp" %>
     <!DOCTYPE HTML>
     <html>
     <style type="text/css">
@@ -367,11 +368,9 @@
     href="javascript:void(0)">人员管理</a></li>
     </ul>
     <div class="div_omenu">
-    <div class="div_otop">在线监测<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
-    <ul>
-    <li><a data-href="${ly }/company/source/source-video?flag=2" data-title="实时监控"
-    href="javascript:void(0)">实时监控</a></li>
-    <li><a data-href="${ly }/village/company/zdlist?hazard=1&yzz=1" data-title="报警设备"
+
+
+    lage/company/zdlist?hazard=1&yzz=1" data-title="报警设备"
     href="javascript:void(0)">报警设备</a></li>
     </ul>
     </div>

@@ -25,13 +25,13 @@ dt a:hover{text-decoration: none;}
 </script>
 <script type="text/javascript">
    $(function(){
-//     var loginType = '${loginType}';
-//     if(loginType == '1'){
-//       layer.alert("登录状态失效，请重新登录！",function(ind){
-//         layer.close(ind);
-//         top.location.href = getRootPath() + "/backLogout";
-//       });
-//     }
+<%--//     var loginType = '${loginType}';--%>
+<%--//     if(loginType == '1'){--%>
+<%--//       layer.alert("登录状态失效，请重新登录！",function(ind){--%>
+<%--//         layer.close(ind);--%>
+<%--//         top.location.href = getRootPath() + "/backLogout";--%>
+<%--//       });--%>
+<%--//     }--%>
     
     $(document).keydown(function(event){ 
       if(event.keyCode==13){ 

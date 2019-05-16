@@ -383,6 +383,8 @@
                     dataType: "json",
                     success: function (result) {
                         console.log(result);
+                        console.log('l am here',result.data);
+                        console.log('l am here',result.data[0]);
                     },
                     complete: function (XMLHttpRequest, textStatus) {
                         // layer.close(index);
@@ -628,7 +630,9 @@
 
             </select>
             </span>
+                <script>
 
+                </script>
     </div>
 </div>
 

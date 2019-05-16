@@ -371,22 +371,19 @@
     html2canvas(document.querySelector(".amap-maps")).then(canvas => {
     onrendered(canvas)
     function onrendered(canvas) {
-    console.log('-----')
+    console.log('-----3')
     //把截取到的图片替换到a标签的路径下载
     var str = canvas.toDataURL()
+    console.log(str)
+    
     $.post(getRootPath() + "/api/map/B001", {
     images: str
     }, function(res) {
     console.log('++++++++')
     console.log(res)
     if(res==''){
-      alert('保存失败')
+    alert('保存失败')
     }
-    if(area_editing==0){
-    return;
-    }
-    area_editing = 0;
-    polyEditor.close();
     });
     }
     });

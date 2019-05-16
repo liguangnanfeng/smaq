@@ -138,6 +138,7 @@
     </tbody>
     </table>
     </div>
+    <%--<div id="haha" style="position:absolute;top:0;background:yellow;width:100px;height:100px;"></div>--%>
     </body>
 
     <script type="text/javascript"
@@ -149,8 +150,6 @@
     console.log(res)
 
     });
-
-
 
     var jw = '${user.longitude},${user.latitude}';
     var userId = ${user.id};
@@ -296,14 +295,6 @@
     }
     path.push(path[0]);//首尾相连的折线，使中间地图可以被点击
     var path1 = path.slice(0);//拷贝
-
-    var xAsc =Array.from(path[0].sort(function(a, b) {
-    return a[0] > b[0]
-    }));
-    //y轴升序
-    var yAsc = path[1].sort(function(a, b) {
-    return a[1] > b[1]
-    });
     var polyline = new AMap.Polyline({
     path: path1,
     strokeColor: "#ff00ff",
@@ -354,7 +345,6 @@
     });
     polygon.setMap(map);
     polyEditor = new AMap.PolyEditor(map, polygon);
-    console.log(polygon)
     // polyEditor.on('addnode', function(event) {
     // });
     // polyEditor.on('adjust', function(event) {
@@ -366,31 +356,32 @@
     });
     polyEditor.open();
     }
-
-    var endEditArea = function(){
-    html2canvas(document.querySelector(".amap-maps")).then(canvas => {
-    onrendered(canvas)
-    function onrendered(canvas) {
-    console.log('-----')
-    //把截取到的图片替换到a标签的路径下载
-    var str = canvas.toDataURL()
+    <%-- canvas转img --%>
+      function convertCanvasToImage(canvas) {
+    <%--var imgData = canvas.getContext("2d").getImageData(xAsc[0][0] - 10, yAsc[0][1] - 10, 500, 500)--%>
+    <%--console.log(imgData)--%>
+    <%--console.log('............')--%>
+        var image = canvas.toDataURL("image/png", 0);
     $.post(getRootPath() + "/api/map/B001", {
-    images: str
-    }, function(res) {
-    console.log('++++++++')
-    console.log(res)
-    if(res==''){
-      alert('保存失败')
-    }
+    images:image
+    }, function(r) {
+    if(r!=''){
     if(area_editing==0){
     return;
     }
     area_editing = 0;
     polyEditor.close();
-    });
+    }else{
+    alert('修改失败')
     }
     });
-
+       }
+    <%-- 保存范围方法 --%>
+    var endEditArea = function(){
+    html2canvas(document.querySelector(".amap-maps"),{
+    useCORS:true,allowTaint: false,foreignObjectRendering: true,taintTest: true,scale: 1 }).then(canvas => {
+    convertCanvasToImage(canvas);
+    });
     }
 
 

@@ -731,11 +731,12 @@ public class AppController_Custom_Check extends BaseController {
                 if ("GIF".equals(type.toUpperCase())||"PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())) {
                     // 项目在容器中实际发布运行的根路径
                     String realPath = request.getSession().getServletContext().getRealPath("/");
+                    String realPath2 = realPath.replaceAll("\\\\","/");
                     // 自定义的文件名称
 
                     String trueFileName = /*String.valueOf(System.currentTimeMillis()) +*/ fileName;
                     // 设置存放图片文件的路径
-                    path = realPath + "images/upload/" + trueFileName;
+                    path = realPath2 + "images/upload/" + trueFileName;
                     realPath1+=trueFileName;
                     System.out.println(path);
 

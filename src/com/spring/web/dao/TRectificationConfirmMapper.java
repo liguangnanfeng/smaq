@@ -9,7 +9,11 @@ public interface TRectificationConfirmMapper {
 
     void saveTRectificationConfirm(TRectificationConfirm confirm);
 
+    void updateTRectificationConfirm(TRectificationConfirm confirm);
+
     List<Map> findTRectificationConfirm(String userId);
+
+    TRectificationConfirm  findTRectificationConfirmByItemId(String id);
 
     TRectificationConfirm findByCheckId(Integer checkId );
 

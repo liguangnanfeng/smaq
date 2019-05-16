@@ -9,6 +9,10 @@ public interface TRectificationConfirmService {
 
     void saveTRectificationConfirm(TRectificationConfirm confirm);
 
+    void updateTRectificationConfirm(TRectificationConfirm confirm);
+
     List<Map> findTRectificationConfirm(String userId);
+
+    TRectificationConfirm findTRectificationConfirmByItemId(String id);
 
 }

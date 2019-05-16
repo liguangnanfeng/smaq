@@ -52,6 +52,53 @@
         }
     </style>
     <script>
+
+        function nature(obj) {
+            var cType = $(obj);
+
+            console.log(cType.val());
+            if('0' == cType.val()){
+                return null;
+            }else if('-1' == cType.val()){    // 基础检查 与高危类似
+
+                $(".addCh3").css("display",'block');
+
+
+
+                // let params = {
+                //
+                // };
+                // $.ajax({
+                //     type: "POST",
+                //     url: getRootPath() + 'api/custom/check/A213',
+                //     data: params,
+                //     async: false,
+                //     dataType: "json",
+                //     success: function (result) {
+                //
+                //     },
+                //     complete: function (XMLHttpRequest, textStatus) {
+                //
+                //     },
+                //     error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //         alert("查询失败")
+                //     }
+                // });
+
+
+            }else if('-2' == cType.val()){    //现场检查  选择部门岗位
+
+                $(".addCh1").css("display",'block');
+                // 两套html页面，这一套不变
+
+
+            }else{                          // 高危检查
+
+            }
+        }
+
+
+
         function findPerson(obj) {
             var level1 = $(obj);
             var dom =  $(obj).parent().parent().parent('.level1').next().find('.department2Id');
@@ -251,54 +298,104 @@
     </script>
 
     <script>
-var i=0;
+        var i=0;
         function  addItem(type){
             i++;
-            var add1 = `<div  class="addItem`+i+`"  >
-<div class="row cl level1">
-    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择部门 :</label>
-    <div class="department  formControls col-xs-8 col-sm-9">
-            <span class="department`+i+`   select-box inline">
+            if(1==type){
 
-            <select name="departmentId" class="departmentId"  onChange="findPerson(this)">
-            <option value="0">请选择车间</option>
-            <c:forEach items="${map}" var="entry">
-                <option value="${entry.value}">${entry.key}</option>
-            </c:forEach>
+                var add1 = `<div  class="addItem`+i+`"  >
+                                <div class="row cl level1">
+                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择部门 :</label>
+                                    <div class="department  formControls col-xs-8 col-sm-9">
+                                            <span class="department`+i+`   select-box inline">
+                                            <select name="departmentId" class="departmentId"  onChange="findPerson(this)">
+                                            <option value="0">请选择车间</option>
+                                            <c:forEach items="${map}" var="entry">
+                                                <option value="${entry.value}">${entry.key}</option>
+                                            </c:forEach>
+                                            </select>
+                                            </span>
+                                    </div>
+                                </div>
 
-            </select>
-            </span>
+                                <div class="row cl level2">
+                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择岗位 :</label>
+                                    <div class="post  formControls col-xs-8 col-sm-9">
+                                            <span class="post`+i+`   select-box inline">
 
-    </div>
-</div>
+                                            <select name="department2Id" class="department2Id"  onchange="findCheck(this)">
+                                            <option value="0">请选择岗位</option>
+                                            </select>
+                                            </span>
+                                    </div>
+                                </div>
+                                <div class="row cl level3">
+                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查项目 :</label>
+                                    <div class="formControls col-xs-8 col-sm-9">
+                                        <div class="checkedList`+i+`">
+                                        <p class="inspection"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>`;
+                $('#addContainer').append(add1);
+            }else if (2==type){
 
-<div class="row cl level2">
-    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择岗位 :</label>
-    <div class="post  formControls col-xs-8 col-sm-9">
-            <span class="post`+i+`   select-box inline">
+            }else if(3==type){
 
-            <select name="department2Id" class="department2Id"  onchange="findCheck(this)">
-            <option value="0">请选择岗位</option>
-            </select>
-            </span>
+                var add3 = `<div  class="addItem`+i+`"  >
+                                <div class="row cl level1">
+                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目选择1 :</label>
+                                    <div class="department  formControls col-xs-8 col-sm-9">
+                                            <span class="department`+i+`   select-box inline">
+                                            <select name="departmentId" class="departmentId"  onChange="findPerson(this)">
+                                            <option value="0">请选择项目1</option>
 
-    </div>
-</div>
+                                            </select>
+                                            </span>
+                                    </div>
+                                </div>
+
+                                <div class="row cl level2">
+                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目选择2 :</label>
+                                    <div class="post  formControls col-xs-8 col-sm-9">
+                                            <span class="post`+i+`   select-box inline">
+
+                                            <select name="department2Id" class="department2Id"  onchange="findCheck(this)">
+                                            <option value="0">请选择项目2</option>
+                                            </select>
+                                            </span>
+                                    </div>
+                                </div>
+
+                                </div>`;
+                $('#addContainer').append(add3);
+                console.log("===================="+getRootPath());
+
+                // 请求后台获取项目列表
+
+                $.ajax({
+                    type: "POST",
+                    url: getRootPath() + '/api/custom/check/A2132',
+                    data: '',
+                    async: false,
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        // layer.close(index);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("添加失败")
+                    }
+                });
 
 
 
+            }
 
-<div class="row cl level3">
-    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查项目 :</label>
-    <div class="formControls col-xs-8 col-sm-9">
-        <div class="checkedList`+i+`">
-        <p class="inspection"></p>
-        </div>
-    </div>
-</div>
-
-</div>`;
-            $('#addContainer').append(add1);
 
 
         }
@@ -352,10 +449,13 @@ var i=0;
             <div class="formControls col-xs-8 col-sm-9">
             <span class="select-box inline">
 
-                   <select name="checkNature" class="select" id="checkNature">
-                       <option value="1">基础</option>
-                       <option value="2">现场</option>
-                       <option value="3">高危行业</option>
+                   <select name="checkNature" class="select" id="checkNature" onchange="nature(this)">
+                       <option value="0">请选择检查类别</option>
+                       <option value="-1">基础</option>
+                       <option value="-2">现场</option>
+                       <c:forEach items="${danger}" var="entry">
+                           <option value="${entry.id}">${entry.name}</option>
+                       </c:forEach>
                   </select>
             </span>
 
@@ -466,7 +566,7 @@ var i=0;
                 <div id="addContainer"></div>
 
 
-                <div class="row cl">
+                <div class="addCh1 row cl" style="display: none">
                     <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
                         <button onClick="addItem(1)" class="btn btn-primary radius" type="button"
                                 style="padding: 0 70px;">
@@ -478,6 +578,22 @@ var i=0;
                         </button>
                     </div>
                 </div>
+
+
+                <div class="addCh3 row cl" style="display: none">
+                    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
+                        <button onClick="addItem(3)" class="btn btn-primary radius" type="button"
+                                style="padding: 0 70px;">
+                            <i class="Hui-iconfont">&#xe632;</i>新增检查项
+                        </button>
+                        <button onClick="addItem(4)" class="btn btn-primary radius" type="button"
+                                style="padding: 0 70px;">
+                            <i class="Hui-iconfont">&#xe632;</i>新增自定义检查项
+                        </button>
+                    </div>
+                </div>
+
+
 
 
             <div class="row cl">
@@ -504,7 +620,7 @@ var i=0;
     <div class="formControls col-xs-8 col-sm-9">
             <span class="select-box inline">
 
-            <select name="departmentId" class="select departmentId"  onChange="findPerson(this)">
+            <select name="departmentId" class="select departmentId"  onchange="findPerson(this)">
             <option value="0">请选择车间</option>
             <c:forEach items="${map}" var="entry">
                 <option value="${entry.value}">${entry.key}</option>

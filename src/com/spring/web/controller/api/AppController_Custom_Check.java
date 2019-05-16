@@ -167,31 +167,25 @@ public class AppController_Custom_Check extends BaseController {
 
 
     /**
-     * TODO 查询基础检查 选项  jsp页面
+     * TODO 查询基础选项  jsp页面
      * @param request
      * @return
      */
     @ResponseBody
     @RequestMapping(value="A2132",method=RequestMethod.POST)
-    public AppResult checkJiChu2(HttpServletRequest request){
+    public AppResult checkJiChu2(HttpServletRequest request, Integer in){
         // 获取登陆内容
         User user = getLoginUser(request);
 
         AppResult result = new AppResultImpl();
-//        ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
-//        if(zzjg==null){
-//            result.setStatus("1");
-//            result.setMessage("未成功登陆,请重新登陆");
-//            return result;
-//        }
 
-        // 查询高危风险
         Map map = checkManual.checkJiChu(user.getId());
         result.setStatus("0");
         result.setMessage("查询成功");
         result.setData(map);
 
         return result;
+
     }
 
 
@@ -220,6 +214,7 @@ public class AppController_Custom_Check extends BaseController {
 
         return result;
     }
+    
     /**
      * TODO  pc_端获取所有高危检查的选项 level
      */

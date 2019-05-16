@@ -75,4 +75,10 @@ public interface ICheckManual {
      * @param checkLevel
      */
     List checkGaoWeiAndJiChu(CheckLevel checkLevel);
+
+    /**
+     *  TODO 查询高危选项的level1
+     * @param industryId
+     */
+    void checkGaoWeiLevel1(Integer industryId);
 }

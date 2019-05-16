@@ -89,4 +89,10 @@ public interface TLevelMapper {
     List<Map> selectGaoweiAndJiChu(@Param("industryId") Integer industryId,@Param("level1") String level1,@Param("level2") String level2);
 
 
+    /**
+     * 获取所有的高危选项level1
+     * @param industryId
+     */
+    void selectByIndustryId(Integer industryId);
+
 }

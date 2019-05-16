@@ -3,11 +3,15 @@ package com.spring.web.controller.api;
 import com.spring.web.BaseController;
 import com.spring.web.dao.TMapMapper;
 import com.spring.web.model.User;
+import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.model.request.TMap;
+import com.spring.web.result.AppResult;
+import com.spring.web.result.AppResultImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +32,10 @@ public class AppCOntroller_Map extends BaseController {
     /**map*/
     @Autowired
     private TMapMapper tMapMapper;
+
+
+
+
 
     /**
      * TODO 保存图片并保存到数据库
@@ -135,5 +143,6 @@ public class AppCOntroller_Map extends BaseController {
 
         return tMap.getFiles();
     }
+
 
 }

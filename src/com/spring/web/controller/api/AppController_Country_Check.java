@@ -8,6 +8,7 @@ import com.spring.web.model.ZzjgDepartment;
 import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.model.request.CheckItem;
 import com.spring.web.model.request.CheckLevel;
+import com.spring.web.model.request.CheckModel;
 import com.spring.web.model.request.SaveDataMessageItem;
 import com.spring.web.model.response.CheckItemS;
 import com.spring.web.result.AppResult;
@@ -77,7 +78,6 @@ public class AppController_Country_Check {
      */
     @Autowired
     private SaveMessageService saveMessageService;
-
 
     /**
      * @return TODO 根据村级账号的id查询所有的企业
@@ -521,6 +521,7 @@ public class AppController_Country_Check {
             result.setMessage("保存失败");
             return result;
         }
+
         //到域中获取数据
         MySessionContext sess = MySessionContext.getInstance();
         HttpSession session = sess.getSession(saveDataMessageItem.getSessionId());
@@ -567,7 +568,25 @@ public class AppController_Country_Check {
         return result;
     }
 
+    /**
+     * 查询当前用户有多少条不合格记录\
+     */
+    @ResponseBody
+    @RequestMapping(value="A232",method=RequestMethod.POST)
+    public AppResult findCheckItem(HttpServletRequest request ,@RequestBody CheckModel checkModel){
+        AppResult result = new AppResultImpl();
+        if (checkModel.getSessionId() == null || checkModel.getAccess_token() == null) {
+            result.setStatus("1");
+            result.setMessage("查询失败");
+            return result;
+        }
+        //到域中获取数据
+        MySessionContext sess = MySessionContext.getInstance();
+        HttpSession session = sess.getSession(checkModel.getSessionId());
+        Officials officials = (Officials) session.getAttribute(checkModel.getAccess_token());// 获取session域中的信息
 
+        return result;
+    }
 
 
 

@@ -153,7 +153,17 @@ public class CheckManualImpl implements ICheckManual {
 
     }
 
+    /**
+     * 获取所有的高危选项level1
+     * @param industryId
+     */
+    @Override
+    public void checkGaoWeiLevel1(Integer industryId) {
+        tLevelMapper.selectByIndustryId(industryId);
+        
 
+
+    }
 
     /**
      * 获取高危的检查选项
@@ -186,6 +196,8 @@ public class CheckManualImpl implements ICheckManual {
 
         return list;
     }
+
+
 
     /**
      * TODO 根据uid(企业总id) level2(岗位) 查询level3 及其id

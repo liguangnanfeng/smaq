@@ -192,6 +192,26 @@ public class AppController_Custom_Check {
 
         return result;
     }
+    /**
+     * TODO  pc_端获取所有高危检查的选项 level
+     */
+    @ResponseBody
+    @RequestMapping("B004")
+    public AppResult checkGaoWeiLevel1(HttpServletRequest request,Integer industryId ){
+        AppResult result = new AppResultImpl();
+        // 获取登陆内容
+
+        ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
+        if(zzjg==null){
+            result.setStatus("1");
+            result.setMessage("未成功登陆,请重新登陆");
+            return result;
+        }
+        checkManual.checkGaoWeiLevel1(industryId);
+        return result;
+
+    }
+
 
     /**
      * TODO 高危检查选项

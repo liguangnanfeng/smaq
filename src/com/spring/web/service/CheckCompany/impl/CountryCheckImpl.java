@@ -477,7 +477,7 @@ public class CountryCheckImpl implements CountryCheck {
                     TRectification tRectification = new TRectification();
                     tRectification.setCheckId(saveDataMessageItem.getCheckId()); // 检查表id
                     tRectification.setUserId(id); // 企业id
-                    tRectification.setCreateUser(officials.getUid()); // 创建人的id
+                    tRectification.setCreateUser(officials.getId()); // 创建人的id
                     tRectification.setCreateTime(new Date()); //生成时间
                     //item.setMemo(saveDataMessage.getMemo()); //不合格描述
                     tCheckItem.setStatus(2); //不合格

@@ -191,11 +191,12 @@ public class AppController_message extends BaseController {
         String checkItemId = String.valueOf(params.get("checkItemId"));
         String name = String.valueOf(params.get("name"));
         String userId = String.valueOf(params.get("userId"));
+        String address = String.valueOf(params.get("address"));
+
+        TRectificationConfirm confirmSet = tRectificationConfirmService.findTRectificationConfirmByItemId(checkItemId);
 
         TRectificationConfirm confirm = new TRectificationConfirm();
         TCheck check = tCheckMapper.selectByPrimaryKey(Integer.valueOf(checkId));
-
-
         // 组装数据  数据要求： checkId, 被检查人Id，检查人id（具体回复给谁），正文，时间，查看状态
         System.out.println("整改意见回复(存储) ==============");
 //        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -207,8 +208,13 @@ public class AppController_message extends BaseController {
         confirm.setStatus(0);
         confirm.setSenderId(Integer.valueOf(userId));
         confirm.setCheckItemId(Integer.valueOf(checkItemId));
+        confirm.setPhoto(address);
 
-        tRectificationConfirmService.saveTRectificationConfirm(confirm);
+        if(null == confirmSet){
+            tRectificationConfirmService.saveTRectificationConfirm(confirm);
+        }else{
+            tRectificationConfirmService.updateTRectificationConfirm(confirm);
+        }
 
         AppResult result = new AppResultImpl();
         return result;

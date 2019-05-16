@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +36,7 @@ public class AppCOntroller_Map extends BaseController {
      * @param request
      * @return
      */
+    @ResponseBody
     @RequestMapping("B001")
     public String saveMap(HttpServletRequest request){
 
@@ -101,6 +103,7 @@ public class AppCOntroller_Map extends BaseController {
     /**
      * TODO 删除图片
      */
+    @ResponseBody
     @RequestMapping("B002")
     public String dropMap( HttpServletRequest request){
         User user = getLoginUser(request);
@@ -120,6 +123,7 @@ public class AppCOntroller_Map extends BaseController {
     /**
      * TODO 获取图片的路径
      */
+    @ResponseBody
     @RequestMapping("B003")
     public String findMap(HttpServletRequest request){
 

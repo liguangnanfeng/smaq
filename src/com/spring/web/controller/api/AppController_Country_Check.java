@@ -577,7 +577,7 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 查询当前用户有多少条不合格记录
+     * 查询当前用户有所有的检查记录
      */
     @ResponseBody
     @RequestMapping(value="A232",method=RequestMethod.POST)
@@ -595,4 +595,9 @@ public class AppController_Country_Check {
 
         return result;
     }
+
+    /**
+     * 
+     */
+
 }

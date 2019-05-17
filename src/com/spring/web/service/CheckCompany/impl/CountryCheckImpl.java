@@ -529,6 +529,29 @@ public class CountryCheckImpl implements CountryCheck {
             return null;
         }
 
+
+    /**
+     * 发送短信
+     */
+    private void Sms(List<SaveDataMessage> list ){
+        boolean flag = false;
+        for (SaveDataMessage saveDataMessage : list) {
+            if("2".equals(saveDataMessage.getValue())){
+                flag = true;
+                break;
+            }
+        }
+        if(flag){
+            TCheckItem item = tCheckItemMapper.selectAllById(list.get(0).getId());
+            TCheck tCheck = tCheckMapper.selectByPrimaryKey(item.getCheckId());
+            // 获取手机号
+            ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectByPrimaryKey(Integer.parseInt(tCheck.getDapartContact()));
+            // 有多个不合格项, 只发送一次短信通知
+            SmsUtil smsUtil = new SmsUtil() ;
+            // smsUtil.sendSMS(zzjgPersonnel.getMobile(),"111222");
+            smsUtil.sendSMS("17516470884","111222");
+        }
+
     }
 
 
@@ -554,13 +577,4 @@ public class CountryCheckImpl implements CountryCheck {
 
     }
 
-    /**
-     * 政府端查询检查记录
-     * @return
-     */
-    @Override
-    public List findRecordByCreateUser(Integer id) {
-       List<Map> list = tCheckMapper.selectRecordByCreateUser(id);
-       return list;
-    }
 }

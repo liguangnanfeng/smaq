@@ -207,12 +207,14 @@ public class AppController_Custom_Check extends BaseController {
      */
     @RequestMapping(value = "A2133", method = RequestMethod.POST)
     public @ResponseBody
-    List checkGaoWei2(HttpServletRequest request) {
+    List checkGaoWei2(HttpServletRequest request,@RequestBody Map<String,Object> params) {
         // 获取登陆内容
         try {
             User user = getLoginUser(request);
 
-            Integer industryId = Integer.valueOf(request.getParameter("industryId"));
+            String inid = String.valueOf(params.get("id"));
+
+            Integer industryId = Integer.valueOf(inid);
 
             List<Map<String, Object>> GaoWeilist = checkManual.checkGaoWei2(industryId);
 
@@ -781,9 +783,3 @@ public class AppController_Custom_Check extends BaseController {
     }
 
 }
-
-
-
-
-
-

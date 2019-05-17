@@ -301,28 +301,31 @@ public class AppController_Login {
     public AppResult LogionOut(HttpServletRequest request) {
         AppResult result = new AppResultImpl();
 
-       // Object o = appTokenData.delectUserId(request);
-        String access_token = request.getParameter("access_token");
-        String sessionId = request.getParameter("sessionId");
-        // 没有传递数据
-        if (StringUtils.isEmpty(access_token)||StringUtils.isEmpty(sessionId)) {
-            return null;
-        }
-        // 登陆已经超时
-        AppToken at = appTokenMapper.selectByPrimaryKey(access_token);
-        Date date = new Date();
-        Date end = DateConvertUtil.addDays(at.getLastLoginTime(), at.getExpires());
-        if (null == at || end.before(date)) {// 超时 或 不存在
-            result.setStatus("1");
-            result.setMessage("出现退出错误");
+        try {
+            // Object o = appTokenData.delectUserId(request);
+            String access_token = request.getParameter("access_token");
+            String sessionId = request.getParameter("sessionId");
+            // 没有传递数据
+            if (StringUtils.isEmpty(access_token)||StringUtils.isEmpty(sessionId)) {
+
+                result.setStatus("1");
+                result.setMessage("未正常退出!");
+                return result;
+            }
+            MySessionContext myc = MySessionContext.getInstance();
+
+            HttpSession session = myc.getSession(sessionId);
+            myc.delSession(session);
+            result.setStatus("0");
+            result.setMessage("退出成功");
 
             return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("0");
+            result.setMessage("退出成功");
+            return result;
         }
-
-        result.setStatus("0");
-        result.setMessage("退出成功");
-
-        return result;
 
     }
 

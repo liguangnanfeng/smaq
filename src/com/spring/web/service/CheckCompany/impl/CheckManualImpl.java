@@ -497,7 +497,7 @@ public class CheckManualImpl implements ICheckManual {
         tCheck.setRealTime(new Date());  // 实际检查时间
         tCheck.setCheker(zzjg.getName());            // 检查人
         tCheck.setContact(zzjg.getMobile());            // 检查人的联系方式
-        tCheck.setDapartContact(String.valueOf(checkItem.getDepartmentId()));      // 被检查人的id
+        tCheck.setDapartContact(String.valueOf(checkItem.getDepartmentId()));      // 被检查人的部门的id
         tCheck.setStatus(4);              //  表示是为初始值模版
         tCheck.setCreateTime(new Date()); // 创建时间
 

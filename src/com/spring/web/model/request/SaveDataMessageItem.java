@@ -12,28 +12,20 @@ import java.util.List;
 @Data
 public class SaveDataMessageItem {
 
-    /**
-     * 企业的id
-     */
+    /**企业的id*/
     public Integer uid;
 
-    /**
-     * 检查表id
-     */
+    /**检查表id*/
     public Integer checkId;
 
     public String access_token;
 
     public String sessionId;
 
-    /**
-     * 责任人id
-     */
+    /**责任人id*/
     public Integer zrrId;
 
-    /**
-     *
-     */
+
 
     /**
      *  立即整改/限时整改
@@ -42,6 +34,7 @@ public class SaveDataMessageItem {
      */
     public String type;
 
+    /**消息集合*/
     public List<SaveDataMessage> list;
 
 }

@@ -565,15 +565,25 @@ public class AppController_Country_Check {
     @RequestMapping(value="A231",method=RequestMethod.POST)
     public AppResult saveReviewData(HttpServletRequest request ,@RequestBody SaveDataMessageItem saveDataMessageItem){
         AppResult result = new AppResultImpl();
-        Officials officials = (Officials) appTokenData.getAppUser(request);
+        MySessionContext sess = MySessionContext.getInstance();
+        HttpSession session = sess.getSession(saveDataMessageItem.getSessionId());
+        Officials officials = (Officials) session.getAttribute(saveDataMessageItem.getAccess_token());// 获取session域中的信息
         if (officials==null){
             result.setStatus("1");
             result.setMessage("未登陆");
             return result;
         }
-        // 保存信息,
-
+       // String message = saveMessageService.saveReviewData(saveDataMessageItem, officials);
+        String message = countryCheck.saveReviewData(saveDataMessageItem, officials);
+        if (message == null) {
+            result.setStatus("1");
+            result.setMessage("保存失败");
+            return result;
+        }
+        result.setStatus("0");
+        result.setMessage("保存成功");
         return result;
+
     }
 
     /**

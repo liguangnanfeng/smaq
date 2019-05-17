@@ -13,53 +13,31 @@ import java.util.List;
 @Data
 public class CheckItem {
 
-    /**
-     * 公司id
-     */
+    /**公司id*/
     public Integer uid;
 
-
-    /**
-     * 检查表标题
-     */
+    /**检查表标题*/
     public String template;
 
-    /**
-     *
-     * 检查危险程度  定期检查,日常检查 随机检查
-     *
-     */
+    /**检查危险程度  定期检查,日常检查 随机检查*/
     public Integer title;
 
-    /**
-     * 检查类型  现场 危险
-     */
+    /**检查类型  现场 危险*/
     public Integer checkType;
 
-    /**
-     * 检查时间
-     */
-
+    /**检查时间*/
     public Integer cycle;
 
-    /**
-     * 对应的负责人id
-     */
+    /**对应的负责人id*/
     public Integer departmentId;
 
-    /**
-     * sessionId
-     */
+    /**sessionId*/
     public String SessionId;
-    /**
-     * 身份验证
-     */
+
+    /**身份验证*/
     public String access_token;
 
-    /**
-     * 封装的危险点信息
-     */
+    /**封装的危险点信息*/
     public List<CheckLevel> checkLevels;
-
 
 }

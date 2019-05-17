@@ -134,10 +134,10 @@ public class AppController_message extends BaseController {
         return result;
     }
 
-
-
     /**
      * 获取检查记录详情  ,String checkId
+     * 获取检查记录详情
+     *
      */
     @RequestMapping(value = "findCheckDetailList", method = RequestMethod.POST)
     public @ResponseBody
@@ -234,6 +234,24 @@ public class AppController_message extends BaseController {
     @RequestMapping(value = "findTRectificationConfirm", method = RequestMethod.POST)
     public @ResponseBody
     AppResult findTRectificationConfirm(@RequestBody Map<String, Object> params, HttpServletRequest request){
+
+        String userId  = String.valueOf(params.get("userId"));
+        String checkId  = String.valueOf(params.get("checkId"));
+
+        List<Map> confirmList = tRectificationConfirmService.findTRectificationConfirm(userId);
+
+        AppResult result = new AppResultImpl();
+        result.setData(confirmList);
+        return result;
+
+    }
+
+    /**
+     * 整改意见回复(政府端)
+     */
+    @RequestMapping(value = "findTRectificationConfirmByZF", method = RequestMethod.POST)
+    public @ResponseBody
+    AppResult findTRectificationConfirmByZF(@RequestBody Map<String, Object> params, HttpServletRequest request){
 
         String userId  = String.valueOf(params.get("userId"));
         String checkId  = String.valueOf(params.get("checkId"));

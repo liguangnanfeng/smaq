@@ -26,40 +26,30 @@ import java.util.*;
 
 /**
  * @author 桃红梨白
- * TODO 小程序 企业端
+ * 发起检查   TODO 小程序 企业端
  */
 @Controller
 //@SuppressWarnings("all")
 @RequestMapping(value = "api/custom/check")
 public class AppController_Custom_Check extends BaseController {
 
-    /**
-     * 查询部门
-     */
+    /**查询部门*/
     @Autowired
     private Zzig_departmentService zzig_departmentService;
 
-    /**
-     * 查询风险点
-     */
+    /**查询风险点*/
     @Autowired
     private ICheckManual checkManual;
 
-    /**
-     * 检查以及复查信息
-     */
+    /**检查以及复查信息*/
     @Autowired
     private SaveMessageService saveMessageService;
 
-    /**
-     * token验证
-     */
+    /**token验证*/
     @Autowired
     private AppTokenData appTokenData;
 
-    /**
-     * 检查记录
-     */
+    /**检查记录*/
     @Autowired
     private TCheckMapper tCheckMapper;
 
@@ -560,7 +550,6 @@ public class AppController_Custom_Check extends BaseController {
 
     /**
      * TODO 根据前端传递的合格不合格信息进行数据的存储
-     * 进行数据的时候,就生成新一轮的检查记录表,
      *
      * @param request
      * @param saveDataMessageItem
@@ -643,7 +632,7 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO 根据检查表信息 查询复查记录
+     * TODO 根据检查表信息 查询复查记录把不合格项查询出来
      */
     @ResponseBody
     @RequestMapping(value = "A210", method = RequestMethod.POST)
@@ -719,6 +708,21 @@ public class AppController_Custom_Check extends BaseController {
         return result;
     }
 
+
+    /**
+     * 企业端复查详情
+     */
+    @RequestMapping(value = "B215",method=RequestMethod.POST)
+    public @ResponseBody
+    AppResult rechekItem(HttpServletRequest request,Integer reCheckId ){
+
+
+
+        return null;
+    }
+
+
+
     /**
      * 保存图片上传并返回路径
      *
@@ -781,5 +785,10 @@ public class AppController_Custom_Check extends BaseController {
         return result;
 
     }
+
+
+
+
+
 
 }

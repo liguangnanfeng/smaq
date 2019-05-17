@@ -90,9 +90,24 @@ public class CountryCheckImpl implements CountryCheck {
     private TItemSeriousMapper tItemSeriousMapper;
 
     /*短信服务*/
+    @Autowired
     private SmsUtil smsUtil;
 
+    /**总人员表*/
+    @Autowired
+    private UserMapper userMapper ;
 
+    /**复查记录*/
+    @Autowired
+    private TRecheckMapper tRecheckMapper;
+
+    /**复查消息记录表*/
+    @Autowired
+    private TRectificationConfirmMapper tRectificationConfirmMapper;
+
+    /**复查详情表*/
+    @Autowired
+    private TRecheckItemMapper tRecheckItemMapper;
     /**
      * 村级查询企业
      *
@@ -170,6 +185,19 @@ public class CountryCheckImpl implements CountryCheck {
         }
         return map;
     }
+
+    /**
+     * TODO 政府端查询检查记录
+     * @param id
+     * @return
+     */
+    @Override
+    public List findRecordByCreateUser(Integer id) {
+        List<Map> list = tCheckMapper.selectRecordByCreateUser(id);
+        return list;
+    }
+
+
 
     /**
      * 政府端保存模版
@@ -521,7 +549,7 @@ public class CountryCheckImpl implements CountryCheck {
             }
                 // TODO 发送检查通知书
 
-            Sms(saveDataMessageItem.getList()); //短信
+           // Sms(saveDataMessageItem.getList()); //短信
 
             return "保存成功";
         } catch (Exception e) {
@@ -529,52 +557,130 @@ public class CountryCheckImpl implements CountryCheck {
             return null;
         }
 
-
+    }
     /**
-     * 发送短信
+     * 政府端保存复查记录
+     *
+     * @param saveDataMessageItem
+     * @param officials
+     * @return
      */
-    private void Sms(List<SaveDataMessage> list ){
-        boolean flag = false;
-        for (SaveDataMessage saveDataMessage : list) {
-            if("2".equals(saveDataMessage.getValue())){
-                flag = true;
-                break;
-            }
-        }
-        if(flag){
-            TCheckItem item = tCheckItemMapper.selectAllById(list.get(0).getId());
-            TCheck tCheck = tCheckMapper.selectByPrimaryKey(item.getCheckId());
-            // 获取手机号
-            ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectByPrimaryKey(Integer.parseInt(tCheck.getDapartContact()));
-            // 有多个不合格项, 只发送一次短信通知
-            SmsUtil smsUtil = new SmsUtil() ;
-            // smsUtil.sendSMS(zzjgPersonnel.getMobile(),"111222");
-            smsUtil.sendSMS("17516470884","111222");
-        }
+    @Override
+    public String saveReviewData(SaveDataMessageItem saveDataMessageItem, Officials officials) {
 
+        try {
+
+            // id查询CheckItem
+            TCheckItem item1 = tCheckItemMapper.selectAllById(saveDataMessageItem.getList().get(0).getId());
+
+            // --------------------------------------------------------------------------------------------------
+            // 复查意见表=> 主表
+            TRecheck tRecheck = new TRecheck();
+            tRecheck.setCheckId(item1.getCheckId()); // 检查表id
+            tRecheck.setUserId(saveDataMessageItem.getUid()); // 企业id
+            tRecheck.setCreateUser(officials.getId());  //检查人员id
+            tRecheck.setCreateTime(new Date());    // 创建时间
+
+            // 通过checkId获取公司的id
+            TCheck tCheck1 = tCheckMapper.selectByPrimaryKey(saveDataMessageItem.getCheckId());
+
+            User user = userMapper.selectByPrimaryKey(tCheck1.getUserId());
+            tRecheck.setCheckCompany(user.getUserName()); //检查的公司名称
+
+            boolean flag = false;
+
+            // 循环遍历是否有未检查项
+            for (SaveDataMessage saveDataMessage : saveDataMessageItem.getList()) {
+                TCheckItem item = tCheckItemMapper.selectAllById(saveDataMessage.getId());
+                if ("2".equals(saveDataMessage.getValue())) {
+                    tRecheck.setStatus(1);       // 1 未全部整改  2 全部整改
+                    flag = false;
+                    break;
+                } else if ("1".equals(saveDataMessage.getValue())) {
+                    flag = true;
+                    tRecheck.setStatus(2);       // 1 未全部整改  2 全部整改
+
+                }
+            }
+
+            TCheck tCheck = tCheckMapper.selectByPrimaryKey(item1.getCheckId());
+            tRecheck.setChecker(officials.getName());       // 检查人员名称
+            tRecheck.setDapartContact(tCheck.getDapartContact());   // 被检查部门的负责人
+            if(!flag){
+                int i = 7 * 24 * 60 * 60; // 限期时间
+                long time = new Date().getTime();
+                long l = time + i; //
+                Date date = new Date(l);
+                tRecheck.setNextTime(date);      // 未合格项 限期检查时间
+            }
+            tRecheckMapper.insertSelective(tRecheck);
+            Integer id = tRecheck.getId(); // 获取到主表id
+// -----------------------------------------------------------------------------------------------------------------------------
+
+            List<SaveDataMessage> list = saveDataMessageItem.getList();
+            // 在进行便利进行保存 t_recheck_item_tbl  t_rectifiction_confirm 表
+            for (SaveDataMessage saveDataMessage : list) {
+
+                // 修改 t_check_item_tbl 数据为合格不合格;
+                TCheckItem checkItem = tCheckItemMapper.selectAllById(saveDataMessage.getId());
+
+                // TODO 添加t_recheck_item_tbl表数据
+                TRecheckItem tRecheckItem = new TRecheckItem();
+
+
+                if ("1".equals(saveDataMessage.getValue())) {
+                    checkItem.setStatus(3); // 复查成功
+                    tRecheckItem.setStatus(2); //表示复查成功
+                    //tRectificationConfirm.setStatus(1);
+                } else if ("2".equals(saveDataMessage.getValue())) {
+
+                    checkItem.setStatus(2); //复查不合格
+                    checkItem.setRecheckFile(saveDataMessage.getFile());//复查照片
+                    checkItem.setPlanTime(new Date());                  // 实际的复查时间
+                    checkItem.setMemo(saveDataMessage.getMemo());      // 复查描述
+
+                    tRecheckItem.setStatus(3); //表示复查不合格
+                    tRecheckItem.setFile(saveDataMessage.getFile());    //图片
+                    tRecheckItem.setDeadline(new Date());
+                    tRecheckItem.setMemo(saveDataMessage.getMemo());  // 复查描述
+
+                }
+
+                tRecheckItem.setCheckItemId(checkItem.getCheckId()); // 检查项目表id
+                tRecheckItem.setRecheckId(id);                  // 复查主表id
+                tRecheckItem.setDeadline(new Date());           // 创建时间
+                tCheckItemMapper.updateByPrimaryKey(checkItem);
+                tRecheckItemMapper.insertSelective(tRecheckItem);
+
+            }
+            saveTRectificationConfirm(saveDataMessageItem);
+
+            return "成功";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-
     /**
-     * 发送短信
+     * TODO 修改tRectificationConfirm数据
+     * 当为空的时候就不进行检查
      */
-    private void Sms(List<SaveDataMessage> list ){
-        boolean flag = false;
+    private void saveTRectificationConfirm(SaveDataMessageItem saveDataMessageItem){
+        List<SaveDataMessage> list = saveDataMessageItem.getList();
         for (SaveDataMessage saveDataMessage : list) {
-            if("2".equals(saveDataMessage.getValue())){
-                flag = true;
-                break;
+            List<TRectificationConfirm> tRectificationConfirms = tRectificationConfirmMapper.selectByCheckItemId(saveDataMessage.id);
+
+            if(null !=tRectificationConfirms && tRectificationConfirms.size()>0  ){
+                for (TRectificationConfirm tRectificationConfirm : tRectificationConfirms) {
+                    if("2".equals(saveDataMessage.getValue())){
+                        tRectificationConfirm.setStatus(0); //表示未合格
+                    }else{
+                        tRectificationConfirm.setStatus(1); //表示合格
+                    }
+                    tRectificationConfirmMapper.updateByTRectificationConfirm(tRectificationConfirm);
+                }
             }
         }
-        if(flag){
-            TCheckItem item = tCheckItemMapper.selectAllById(list.get(0).getId());
-            TCheck tCheck = tCheckMapper.selectByPrimaryKey(item.getCheckId());
-            // 获取手机号
-            ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectByPrimaryKey(Integer.parseInt(tCheck.getDapartContact()));
-            // 有多个不合格项, 只发送一次短信通知
-            smsUtil.sendSMS("15670382411", "111222");
-        }
-
     }
-
 }

@@ -12,23 +12,14 @@ import lombok.Data;
 @Data
 public class SaveDataMessage {
 
-    /**
-     * id
-     */
+    /**id*/
     public Integer id;
-    /**
-     * 状态
-     */
+    /**状态*/
     public String value;
-    /**
-     * 隐患照片
-     */
+    /**隐患照片*/
     public String file;
 
-    /**
-     * 隐患描述
-     */
-
+    /**隐患描述*/
     public String memo;
 
 

@@ -72,4 +72,11 @@ public interface CountryCheck {
     List findRecordByCreateUser(Integer id);
 
 
+    /**
+     * 政府端保存复查信息
+     * @param saveDataMessageItem
+     * @param officials
+     * @return
+     */
+    String saveReviewData(SaveDataMessageItem saveDataMessageItem, Officials officials);
 }

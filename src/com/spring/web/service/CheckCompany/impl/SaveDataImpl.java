@@ -21,69 +21,51 @@ import java.util.*;
  */
 @Service
 @Transactional
+@SuppressWarnings("all")
 public class SaveDataImpl implements SaveMessageService {
 
-    /**
-     * 检查 检查项
-     */
+    /**检查 检查项*/
     @Autowired
     private TCheckItemMapper tCheckItemMapper;
 
-    /**
-     * 检查部位
-     */
+    /**检查部位*/
     @Autowired
     private TCheckPartMapper tCheckPartMapper;
 
 
-    /**
-     * 整改记录表
-     */
+    /**整改记录表*/
     @Autowired
     private TRectificationMapper tRectificationMapper;
 
-    /**
-     * 检查主表
-     */
+    /**检查主表*/
     @Autowired
     private TCheckMapper tCheckMapper;
 
-    /**
-     * 复查意见表主表
-     */
+    /**复查意见表主表*/
     @Autowired
     private TRecheckMapper tRecheckMapper;
 
-    /**
-     * 复查意见表
-     */
+    /**复查意见表*/
     @Autowired
     private TRecheckItemMapper tRecheckItemMapper;
 
-    /**
-     * 主账号
-     */
+    /**主账号 */
     @Autowired
     private UserMapper userMapper;
-    /**
-     * 用户表
-     */
+    /**用户表*/
     @Autowired
     private ZzjgPersonnelMapper zzjgPersonnelMapper;
 
-    /**
-     * 模版表
-     */
-
+    /**模版表*/
     @Autowired
     private TModelMapper modelMapper;
 
-    /**
-     * 复查记录表
-     */
+    /**复查记录表*/
     @Autowired
     private TRectificationConfirmMapper tRectificationConfirmMapper;
-
+    /**短信功能*/
+    @Autowired
+    private SmsUtil smsUtil;
 
     /**
      * 保存检查信息,并进行返回结果消息
@@ -168,8 +150,9 @@ public class SaveDataImpl implements SaveMessageService {
 
             }
 
-            //insertCheck(saveDataMessageItem); //重新生成检查记录
 
+            // 发送短信
+            smsUtil.sendSMS("7516470884", "112221");
             return "插入成功";
 
         } catch (Exception e) {
@@ -215,20 +198,16 @@ public class SaveDataImpl implements SaveMessageService {
      */
     @Override
     public List findItemByCheckId(Integer checkId) {
-        // List tCheckItemMapper.findDangerByCheckId(checkId,2);
-        List<Map<String, Object>> maps = tCheckItemMapper.selectDangerByCheckId(checkId, 2);
-        if (maps == null) {
-            return null;
-        }
+
+        List<Map<String, Object>> maps = tCheckItemMapper.selectDangerByCheckId(checkId,2);
+
         return maps;
     }
 
     /**
      * 根据当前登陆用户的id查询所有的检查记录
-     *
      * @param zzjg
      */
-
     @Override
     public List<Map> findCheckItemById(ZzjgPersonnel zzjg) {
         Integer id = zzjg.getId();  //当前登陆用户的id
@@ -266,7 +245,8 @@ public class SaveDataImpl implements SaveMessageService {
     }
 
     /**
-     * 根据复查信息进行保存 只要里面有一条不合格就表示这次检查不合格
+     * 根据复查信息进行保存
+     * TODO 保存item 的时候会item有多个,但是在消息中的回复可能只有一条,所以会有一个空值
      *
      * @param saveDataMessageItem
      * @param zzjg
@@ -295,11 +275,11 @@ public class SaveDataImpl implements SaveMessageService {
             // 循环遍历是否有未检查项
             for (SaveDataMessage saveDataMessage : saveDataMessageItem.getList()) {
                 TCheckItem item = tCheckItemMapper.selectAllById(saveDataMessage.getId());
-                if ("1".equals(saveDataMessage.getValue())) {
+                if ("2".equals(saveDataMessage.getValue())) {
                     tRecheck.setStatus(1);       // 1 未全部整改  2 全部整改
                     flag = false;
                     break;
-                } else if ("2".equals(saveDataMessage.getValue())) {
+                } else if ("1".equals(saveDataMessage.getValue())) {
                     flag = true;
                     tRecheck.setStatus(2);       // 1 未全部整改  2 全部整改
 
@@ -318,6 +298,7 @@ public class SaveDataImpl implements SaveMessageService {
             }
             tRecheckMapper.insertSelective(tRecheck);
             Integer id = tRecheck.getId(); // 获取到主表id
+// -----------------------------------------------------------------------------------------------------------------------------
 
             List<SaveDataMessage> list = saveDataMessageItem.getList();
             // 在进行便利进行保存 t_recheck_item_tbl  t_rectifiction_confirm 表
@@ -329,9 +310,7 @@ public class SaveDataImpl implements SaveMessageService {
                 // TODO 添加t_recheck_item_tbl表数据
                 TRecheckItem tRecheckItem = new TRecheckItem();
 
-                // TODO 修改t_rectification_confirm 记录
-                //TRectificationConfirm tRectificationConfirm = tRectificationConfirmMapper.selectByCheckItemId(checkItem.getId());
-                //tRectificationConfirm.setStatus(2); //表示已读
+
                 if ("1".equals(saveDataMessage.getValue())) {
                     checkItem.setStatus(3); // 复查成功
                     tRecheckItem.setStatus(2); //表示复查成功
@@ -347,26 +326,24 @@ public class SaveDataImpl implements SaveMessageService {
                     tRecheckItem.setFile(saveDataMessage.getFile());    //图片
                     tRecheckItem.setDeadline(new Date());
                     tRecheckItem.setMemo(saveDataMessage.getMemo());  // 复查描述
-                    //tRectificationConfirm.setStatus(0);
+
 
                 }
-
-
 
                 tRecheckItem.setCheckItemId(checkItem.getCheckId()); // 检查项目表id
                 tRecheckItem.setRecheckId(id);                  // 复查主表id
                 tRecheckItem.setDeadline(new Date());           // 创建时间
                 tCheckItemMapper.updateByPrimaryKey(checkItem);
                 tRecheckItemMapper.insertSelective(tRecheckItem);
-                //tRectificationConfirmMapper.updateByTRectificationConfirm(tRectificationConfirm);
+
 
             }
+            saveTRectificationConfirm(saveDataMessageItem); // 修改数据
             return "成功";
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-
     }
 
     /**
@@ -457,6 +434,33 @@ public class SaveDataImpl implements SaveMessageService {
         }
 
         return tCheckId;
+
+    }
+
+
+    /**
+     * TODO 修改tRectificationConfirm数据
+     * 当为空的时候就不进行检查
+     */
+    private void saveTRectificationConfirm(SaveDataMessageItem saveDataMessageItem){
+        List<SaveDataMessage> list = saveDataMessageItem.getList();
+        for (SaveDataMessage saveDataMessage : list) {
+            List<TRectificationConfirm> tRectificationConfirms = tRectificationConfirmMapper.selectByCheckItemId(saveDataMessage.id);
+
+            if(null !=tRectificationConfirms && tRectificationConfirms.size()>0  ){
+                for (TRectificationConfirm tRectificationConfirm : tRectificationConfirms) {
+                    if("2".equals(saveDataMessage.getValue())){
+                        tRectificationConfirm.setStatus(0); //表示未合格
+                    }else{
+                        tRectificationConfirm.setStatus(1); //表示合格
+                    }
+                    tRectificationConfirmMapper.updateByTRectificationConfirm(tRectificationConfirm);
+                }
+
+
+            }
+
+        }
 
     }
 

@@ -24,7 +24,13 @@
   ">
 
 
-
+  <!--短信配置-->
+  <bean id="SmsUtils" class="com.spring.web.util.SmsUtil">
+    <property name="appid" value="${javasms.appid}"></property>
+    <property name="appkey" value="${javasms.appkey}"></property>
+    <property name="templateId" value="${javasms.template}"></property>
+    <property name="smsSign" value="${javasms.Sign}"></property>
+  </bean>
 
   <!--spring 全局配置文件，用来控制spring 特性  对应的是系统级别的配置，作用范围是系统上下文-->
 

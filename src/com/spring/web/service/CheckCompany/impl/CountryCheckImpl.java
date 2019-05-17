@@ -34,9 +34,7 @@ public class CountryCheckImpl implements CountryCheck {
     @Autowired
     private VillageMapper villageMapper;
 
-    /**
-     * 镇级数据
-     */
+    /*镇级数据*/
     @Autowired
     private TownMapper townMapper;
 
@@ -90,6 +88,9 @@ public class CountryCheckImpl implements CountryCheck {
 
     @Autowired
     private TItemSeriousMapper tItemSeriousMapper;
+
+    /*短信服务*/
+    private SmsUtil smsUtil;
 
 
     /**
@@ -155,7 +156,6 @@ public class CountryCheckImpl implements CountryCheck {
         if(flag==4){ //村级
 
            map = villageMapper.selectParticularByUid(id);
-
 
         }else if(flag==3){  //镇级
 
@@ -549,17 +549,18 @@ public class CountryCheckImpl implements CountryCheck {
             // 获取手机号
             ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectByPrimaryKey(Integer.parseInt(tCheck.getDapartContact()));
             // 有多个不合格项, 只发送一次短信通知
-            SmsUtil smsUtil = new SmsUtil() ;
-            // smsUtil.sendSMS(zzjgPersonnel.getMobile(),"111222");
-            smsUtil.sendSMS("17516470884","111222");
+            smsUtil.sendSMS("15670382411", "111222");
         }
 
     }
 
-
-
-
-
-
-
+    /**
+     * 政府端查询检查记录
+     * @return
+     */
+    @Override
+    public List findRecordByCreateUser(Integer id) {
+       List<Map> list = tCheckMapper.selectRecordByCreateUser(id);
+       return list;
+    }
 }

@@ -577,27 +577,26 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 查询当前用户有所有的检查记录
+     * TODO 政府端查询检查记录
+     * 只有政府端登陆人员获取的数据
+     * 
      */
     @ResponseBody
     @RequestMapping(value="A232",method=RequestMethod.POST)
-    public AppResult findCheckItem(HttpServletRequest request ,@RequestBody CheckModel checkModel){
+    public AppResult findCheckItem(HttpServletRequest request ){
         AppResult result = new AppResultImpl();
-        if (checkModel.getSessionId() == null || checkModel.getAccess_token() == null) {
+        Officials officials = (Officials) appTokenData.getAppUser(request);// 获取session域中的信息
+        List<Map> list =  countryCheck.findRecordByCreateUser(officials.getId());
+        if (list==null){
             result.setStatus("1");
-            result.setMessage("查询失败");
+            result.setMessage("未查询成功");
             return result;
         }
-        //到域中获取数据
-        MySessionContext sess = MySessionContext.getInstance();
-        HttpSession session = sess.getSession(checkModel.getSessionId());
-        Officials officials = (Officials) session.getAttribute(checkModel.getAccess_token());// 获取session域中的信息
+        result.setData(list);
+        result.setStatus("0");
+        result.setMessage("查询成功");
 
         return result;
     }
-
-    /**
-     * 
-     */
 
 }

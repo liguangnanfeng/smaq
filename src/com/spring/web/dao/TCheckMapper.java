@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.spring.web.model.TCheckItem;
+import com.sun.javafx.collections.MappingChange;
 import org.apache.ibatis.annotations.Param;
 import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.TCheck;
@@ -88,4 +89,12 @@ public interface TCheckMapper {
      * @return
      */
     TCheck selectOldByModelId(Integer id);
+
+    /**
+     * 政府端查询检查记录
+     * @param id
+     * @return
+     */
+    List<Map> selectRecordByCreateUser(Integer id);
+
 }

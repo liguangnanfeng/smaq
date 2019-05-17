@@ -14,6 +14,13 @@ public interface AppControllerMessageMapper {
 
     Messages findMessageDetail(String id);
 
+    /**
+     * 获取已检查的检查记录
+     * @param userId
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
     List<Map>  findTCheckList(@Param("cid") String userId,@Param("pageNo") Integer pageNo,@Param("pageSize") Integer pageSize);
     List<Map> findTCheckListByStatus(@Param("cid") String userId,@Param("pageNo") Integer pageNo,@Param("pageSize") Integer pageSize);
 

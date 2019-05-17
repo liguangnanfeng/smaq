@@ -20,7 +20,17 @@ public class TRectificationConfirmServiceImpl implements TRectificationConfirmSe
     }
 
     @Override
+    public void updateTRectificationConfirm(TRectificationConfirm confirm) {
+        tRectificationConfirmMapper.updateTRectificationConfirm(confirm);
+    }
+
+    @Override
     public List<Map> findTRectificationConfirm(String userId) {
         return tRectificationConfirmMapper.findTRectificationConfirm(userId);
+    }
+
+    @Override
+    public TRectificationConfirm findTRectificationConfirmByItemId(String id) {
+        return tRectificationConfirmMapper.findTRectificationConfirmByItemId(id);
     }
 }

@@ -11,6 +11,12 @@ import java.util.List;
  */
 @Data
 public class SaveDataMessageItem {
+
+    /**
+     * 企业的id
+     */
+    public Integer uid;
+
     /**
      * 检查表id
      */
@@ -30,7 +36,7 @@ public class SaveDataMessageItem {
      */
 
     /**
-     * 立即整改/限时整改
+     *  立即整改/限时整改
      *  为空表示立即整改
      *  不为空表示限期整改
      */

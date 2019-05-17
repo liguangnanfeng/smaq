@@ -8,7 +8,7 @@ import com.spring.web.model.request.CheckLevel;
 import com.spring.web.model.request.SaveDataMessage;
 import com.spring.web.model.request.SaveDataMessageItem;
 import com.spring.web.service.CheckCompany.CountryCheck;
-import org.apache.shiro.util.MapContext;
+import com.spring.web.util.SmsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -179,21 +179,20 @@ public class CountryCheckImpl implements CountryCheck {
      * @return
      */
     @Override
-    public Integer saveCheck(CheckItem checkItem, Officials officials, Integer id) {
+    public Integer saveCheck(CheckItem checkItem, Officials officials, Integer uid) {
         try {
 
             // 1. 保存t_industry_tbl表 返回id
-            Integer industryId = null;
+            Integer industryId = checkItem.getCheckLevels().get(0).getIndustryId();
 
             // 2. 保存t_level_tbl AND t_item_tbl 返回id集合
             List<Integer> levels = null;
 
             // 3. 保存model信息并返回id
-            Integer modelId = saveTmodel(checkItem, officials,industryId);
+            Integer modelId = saveTmodel(checkItem, officials,industryId,uid);
 
             // 2. 保存check表数据并返回id
-            Integer checkId = saveCheckTbl(checkItem, officials, modelId, industryId);
-
+            Integer checkId = saveCheckTbl(checkItem, officials, modelId, industryId,uid);
 
             // 4. 保存checkPart数据并返回id
             TCheckPart tCheckPart = saveCheckPart(checkItem, levels, checkId);
@@ -226,7 +225,7 @@ public class CountryCheckImpl implements CountryCheck {
      * @param
      * @return
      */
-    private Integer saveTmodel(CheckItem checkItem, Officials officials,Integer industryId) {
+    private Integer saveTmodel(CheckItem checkItem, Officials officials,Integer industryId,Integer uid) {
 
         // 获取部门 id
         List<CheckLevel> checkLevels = checkItem.getCheckLevels();
@@ -238,14 +237,22 @@ public class CountryCheckImpl implements CountryCheck {
 
         TModel tModel = new TModel();
         tModel.setTitle(checkItem.getTemplate()); // 检查名称
-        tModel.setUserId(officials.getUid()); // 检查人员所属部门的id
-        tModel.setFlag(2); // 检查类型
+        tModel.setUserId(uid); // 检查人员所属部门的id
+        tModel.setFlag(3); // 检查类型 第三方
         tModel.setPart(checkLevels.get(0).level1);              // 被检查的部门
         tModel.setIndustryId(industryId);         // 被检查的行业id
         if (checkItem.getCheckType() == null) {
             checkItem.setCheckType(1);
         }
-        tModel.setIndustryType(checkItem.getCheckType());       // 被检查的危险类型 1. 基础  2. 现场  3. 五大高危行业
+
+        if(-2==checkItem.getCheckType()){
+            tModel.setIndustryType(2);       // 被检查的危险类型 1. 基础  2. 现场  3. 五大高危行业
+        }else if(-1==checkItem.getCheckType()){
+            tModel.setIndustryType(1);       // 被检查的危险类型 1. 基础  2. 现场  3. 五大高危行业
+        }else{
+            tModel.setIndustryType(3);       // 被检查的危险类型 1. 基础  2. 现场  3. 五大高危行业
+        }
+
         tModel.setType(checkItem.getTitle());    //  1. 日常 2. 定期 3. 临时
         tModel.setCreateTime(new Date()); // 模版的创建时间
 
@@ -307,7 +314,7 @@ public class CountryCheckImpl implements CountryCheck {
      * @param modelId   模版表id
      * @return
      */
-    private Integer saveCheckTbl(CheckItem checkItem, Officials officials, Integer modelId, Integer industryId) {
+    private Integer saveCheckTbl(CheckItem checkItem, Officials officials, Integer modelId, Integer industryId,Integer uid) {
 
         // 获取部门 id
         List<CheckLevel> checkLevels = checkItem.getCheckLevels();
@@ -321,12 +328,23 @@ public class CountryCheckImpl implements CountryCheck {
         tCheck.setFlag(2);       //行政检查
         tCheck.setTitle(checkItem.getTemplate());     //被检查的标题
         tCheck.setDepart(checkLevels.get(0).level1);    // 被检查的部门 TODO 政府端理论上是检查多个部门,这里应该是添加多个部门的信息
-        tCheck.setUserId(checkItem.getId());     // 被检查的企业
+        tCheck.setUserId(uid);     // 被检查的企业的id
         tCheck.setCreateUser(officials.getId()); //创建人(检查人员的id)
         tCheck.setModelId(modelId);    // 模版id
         tCheck.setType(checkItem.getTitle());       // 1. 日常 2 定期  3 临时
         tCheck.setIndustryId(industryId); // 检查行业的id
-        tCheck.setIndustryType(checkItem.getCheckType()); // 1. 基础 2. 现场 3. 高危
+
+        if (checkItem.getCheckType() == null) {
+            checkItem.setCheckType(1);
+        }
+        if(-2==checkItem.getCheckType()){
+            tCheck.setIndustryType(2); // 1. 基础 2. 现场 3. 高危
+        }else if(-1==checkItem.getCheckType()){
+            tCheck.setIndustryType(1); // 1. 基础 2. 现场 3. 高危
+        }else{
+            tCheck.setIndustryType(3); // 1. 基础 2. 现场 3. 高危
+        }
+
         tCheck.setExpectTime(new Date()); // 预计检查时间
         tCheck.setRealTime(new Date());  // 实际检查时间
         tCheck.setCheker(officials.getName());            // 检查人
@@ -348,7 +366,6 @@ public class CountryCheckImpl implements CountryCheck {
      * levels   varchar(500) null comment '检查分类s',
      * name     varchar(50)  null comment '部位或装置名称',
      * part_img varchar(200) null comment '部门照片'
-     *
      * @return
      */
     private TCheckPart saveCheckPart(CheckItem checkItem, List<Integer> list, Integer tCheckId) {
@@ -377,7 +394,7 @@ public class CountryCheckImpl implements CountryCheck {
      * t_check_item_tbl
      * content       '检查标准详情',
      * level_id      '检查分类',
-     * levels      ,
+     * levels      ,  检查的参照
      * reference     '检查参照',
      * part_id       '装置或设施id',
      * check_id     ,
@@ -391,11 +408,10 @@ public class CountryCheckImpl implements CountryCheck {
      * recheck_file  '复查图片s',
      * recheck_memo  '复查描述'
      * <p>
-     * TODO 出现重复数据,是因为不同的部门上出现这种风险点和风险因素重复问题?????
      *
      * @return
      */
-    private TCheckItem saveCheckTtem(CheckItem checkItem, Officials officials, Integer CheckId, Integer CheckPartId) {
+    private void saveCheckTtem(CheckItem checkItem, Officials officials, Integer CheckId, Integer CheckPartId) {
 
         List<TCheckItem> list = new LinkedList<>();
         // 获取检查标准详情
@@ -405,15 +421,23 @@ public class CountryCheckImpl implements CountryCheck {
             TCheckItem tCheckItem = new TCheckItem();
             tCheckItem.setContent(checkLevel.getLevel4()); //检查标准详情
             tCheckItem.setLevelId(checkItem.getTitle());   //检查分类
-            tCheckItem.setLevels(checkLevel.getLevel3());   // 检查等级
+
+           if(null==checkLevel.getLevel3()){
+               tCheckItem.setLevels(checkLevel.getLevel1());   // 检查等级
+           }else{
+               tCheckItem.setLevels(checkLevel.getLevel3());   // 检查等级
+           }
             tCheckItem.setReference(checkLevel.getReference());//检查参照
             tCheckItem.setPartId(CheckPartId);    // 装置与设施id
             tCheckItem.setCheckId(CheckId);   // 检查表id
-            list.add(tCheckItem);
-        }
-        tCheckItemMapper.insertThreeBath(list, CheckId, CheckPartId);
+            tCheckItem.setMemo(checkLevel.getFactors());// 不合格描述
 
-        return null;
+            list.add(tCheckItem);
+
+        }
+
+        // 添加item数据
+        tCheckItemMapper.insertThreeBath(list, CheckId, CheckPartId);
 
     }
 
@@ -446,12 +470,12 @@ public class CountryCheckImpl implements CountryCheck {
     }
 
     /**
-     * 政府账号保存检查信息(第一次检查)
+     *    政府账号保存检查信息(第一次检查)
      * 1. 保存item数据
      * 2. 保存check数据
      * 3. 保存check_document 行政检查文书
-     * 4. 保存
-     *
+     * 4. 发送文书
+     * 5. 发送短信
      * @param saveDataMessageItem
      * @param officials
      * @param id
@@ -460,8 +484,10 @@ public class CountryCheckImpl implements CountryCheck {
     @Override
     public String saveCheckMessage(SaveDataMessageItem saveDataMessageItem, Officials officials, Integer id) {
         try {
+            Integer id1 = saveDataMessageItem.getList().get(0).getId();
+            TCheckItem tCheckItem1 = tCheckItemMapper.selectByPrimaryKey(id1);
             // 1. 修改检查的数据
-            TCheck tCheck = tCheckMapper.selectByPrimaryKey(saveDataMessageItem.getCheckId());
+            TCheck tCheck = tCheckMapper.selectByPrimaryKey(tCheckItem1.getCheckId());
             tCheck.setStatus(2); // 表示已经检查
             tCheckMapper.updateByPrimaryKey(tCheck); // 更新到数据库
 
@@ -477,7 +503,7 @@ public class CountryCheckImpl implements CountryCheck {
                     TRectification tRectification = new TRectification();
                     tRectification.setCheckId(saveDataMessageItem.getCheckId()); // 检查表id
                     tRectification.setUserId(id); // 企业id
-                    tRectification.setCreateUser(officials.getUid()); // 创建人的id
+                    tRectification.setCreateUser(officials.getId()); // 创建人的id
                     tRectification.setCreateTime(new Date()); //生成时间
                     //item.setMemo(saveDataMessage.getMemo()); //不合格描述
                     tCheckItem.setStatus(2); //不合格
@@ -494,14 +520,44 @@ public class CountryCheckImpl implements CountryCheck {
 
             }
                 // TODO 发送检查通知书
+
+            Sms(saveDataMessageItem.getList()); //短信
+
             return "保存成功";
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
 
+    }
+
+
+    /**
+     * 发送短信
+     */
+    private void Sms(List<SaveDataMessage> list ){
+        boolean flag = false;
+        for (SaveDataMessage saveDataMessage : list) {
+            if("2".equals(saveDataMessage.getValue())){
+                flag = true;
+                break;
+            }
+        }
+        if(flag){
+            TCheckItem item = tCheckItemMapper.selectAllById(list.get(0).getId());
+            TCheck tCheck = tCheckMapper.selectByPrimaryKey(item.getCheckId());
+            // 获取手机号
+            ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectByPrimaryKey(Integer.parseInt(tCheck.getDapartContact()));
+            // 有多个不合格项, 只发送一次短信通知
+            SmsUtil smsUtil = new SmsUtil() ;
+            // smsUtil.sendSMS(zzjgPersonnel.getMobile(),"111222");
+            smsUtil.sendSMS("17516470884","111222");
+        }
 
     }
+
+
+
 
 
 

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -82,11 +83,21 @@ public class AppController_message extends BaseController {
 
 
     /**
-     * 获取检查记录列表     只有当前检查人和当前责任人能看到 对应的检查记录
+     * TODO 获取已检查记录列表     只有当前检查人和当前责任人能看到 对应的检查记录
      */
     @RequestMapping(value = "findCheckList", method = RequestMethod.POST)
     public @ResponseBody
     AppResult findCheckList(@RequestBody Map<String, Object> params,HttpServletRequest request) {
+        AppResult result = new AppResultImpl();
+        MySessionContext myc = MySessionContext.getInstance();
+        HttpSession sess = myc.getSession((String)params.get("sessionId"));
+        if (null == sess) {
+            result.setStatus("1");
+            result.setMessage("登陆时间过长");
+            return result;
+        }
+
+        ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute((String)params.get("access_token"));
 
         // 1.获取userId
         String userId  = String.valueOf(params.get("userId"));
@@ -96,8 +107,14 @@ public class AppController_message extends BaseController {
 //        ZzjgPersonnel personnel = personnerService.findPersonnel(userId);
 //
         System.out.println("获取检查记录列表==============");
-        List<Map> list = appMessageService.findTCheckList(userId,pageNo,10);
-        AppResult result = new AppResultImpl();
+        // 检查人员和被检查人员
+        List<Map> list =null;
+        if("1".equals(zzjg.getStatus())){
+             list = appMessageService.findTCheckList(userId,pageNo,10);
+        }else{
+             list = appMessageService.findTCheckListByStatus(userId, pageNo, 10);
+        }
+
         result.setData(list);
 
         return result;
@@ -191,11 +208,12 @@ public class AppController_message extends BaseController {
         String checkItemId = String.valueOf(params.get("checkItemId"));
         String name = String.valueOf(params.get("name"));
         String userId = String.valueOf(params.get("userId"));
+        String address = String.valueOf(params.get("address"));
+
+        TRectificationConfirm confirmSet = tRectificationConfirmService.findTRectificationConfirmByItemId(checkItemId);
 
         TRectificationConfirm confirm = new TRectificationConfirm();
         TCheck check = tCheckMapper.selectByPrimaryKey(Integer.valueOf(checkId));
-
-
         // 组装数据  数据要求： checkId, 被检查人Id，检查人id（具体回复给谁），正文，时间，查看状态
         System.out.println("整改意见回复(存储) ==============");
 //        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -207,8 +225,13 @@ public class AppController_message extends BaseController {
         confirm.setStatus(0);
         confirm.setSenderId(Integer.valueOf(userId));
         confirm.setCheckItemId(Integer.valueOf(checkItemId));
+        confirm.setPhoto(address);
 
-        tRectificationConfirmService.saveTRectificationConfirm(confirm);
+        if(null == confirmSet){
+            tRectificationConfirmService.saveTRectificationConfirm(confirm);
+        }else{
+            tRectificationConfirmService.updateTRectificationConfirm(confirm);
+        }
 
         AppResult result = new AppResultImpl();
         return result;

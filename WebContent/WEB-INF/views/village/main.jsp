@@ -19,13 +19,13 @@ dt a:hover{text-decoration: none;}
 </style>
 <script type="text/javascript">
     $(function(){
-   /*  var loginType = '${loginType}';
-    if(loginType == '1'){
-      layer.alert("登录状态失效，请重新登录！",function(ind){
-        layer.close(ind);
-        top.location.href = getRootPath() + "/villageLogout";
-      });
-    } */
+   <%--/*  var loginType = '${loginType}';--%>
+    <%--if(loginType == '1'){--%>
+      <%--layer.alert("登录状态失效，请重新登录！",function(ind){--%>
+        <%--layer.close(ind);--%>
+        <%--top.location.href = getRootPath() + "/villageLogout";--%>
+      <%--});--%>
+    <%--} */--%>
      
     $(document).keydown(function(event){ 
       if(event.keyCode==13){ 

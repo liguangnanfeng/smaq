@@ -16,7 +16,7 @@ public class CheckItem {
     /**
      * 公司id
      */
-    public Integer id;
+    public Integer uid;
 
 
     /**
@@ -46,7 +46,6 @@ public class CheckItem {
      * 对应的负责人id
      */
     public Integer departmentId;
-
 
     /**
      * sessionId

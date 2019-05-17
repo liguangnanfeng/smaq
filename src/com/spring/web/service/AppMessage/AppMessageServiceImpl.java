@@ -24,6 +24,13 @@ public class AppMessageServiceImpl implements AppMessageService {
         return appControllerMessageMapper.findMessageDetail(id);
     }
 
+    /**
+     * 获取已检查的检查记录
+     * @param userId
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
     @Override
     public List<Map> findTCheckList(String userId,Integer pageNo,Integer pageSize) {
         return appControllerMessageMapper.findTCheckList(userId,pageNo,pageSize);

@@ -23,17 +23,16 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping("api/map")
-public class AppCOntroller_Map extends BaseController {
+public class AppController_Map extends BaseController {
 
-    /**map*/
+    /**map对象*/
     @Autowired
     private TMapMapper tMapMapper;
 
     /**
      * TODO 保存图片并保存到数据库
-     * @param
-     * @param request
-     * @return
+     * @param request 请求
+     * @return 返回到地址
      */
     @ResponseBody
     @RequestMapping("B001")

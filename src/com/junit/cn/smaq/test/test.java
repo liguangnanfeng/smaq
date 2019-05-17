@@ -35,10 +35,8 @@ public class test {
     private TCheckMapper tCheckMapper;
     @Autowired
     private SaveMessageService saveMessageService;
-
     @Autowired
     private ICheckManual iCheckManual;
-
     @Autowired
     private TCompanyMapper tCompanyMapper;
 
@@ -49,20 +47,15 @@ public class test {
         System.out.println(allByUidAndUserId);
 
     }
-
-
     /**
      * 测试根据模版id查询模版数据
      */
     @Test
     public void test02() {
         CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(1545);
-
         System.out.println(checkItemByModelId);
 
-
     }
-
 
     /**
      * ["2984","2985","2986"] 进行解析
@@ -84,7 +77,6 @@ public class test {
     /**
      * 获取所有的高危检查
      */
-
     @Test
     public void test04() {
         List<Map> maps = iCheckManual.checkGaoWei(6);
@@ -92,18 +84,6 @@ public class test {
 
     }
 
-    /**
-     * 获取所有的基础查询
-     */
-/*    @Test
-    public void test05(){
-        ZzjgPersonnel zzjg = new ZzjgPersonnel();
-        zzjg.setUid(37097);
-
-        Map map = iCheckManual.checkJiChu(zzjg);
-        System.out.println(map);
-
-    }*/
     /**
      * 获取所有的基础查询
      */

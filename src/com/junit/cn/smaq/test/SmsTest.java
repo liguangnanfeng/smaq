@@ -1,20 +1,11 @@
 package com.junit.cn.smaq.test;
 
-import com.github.qcloudsms.SmsMultiSender;
-import com.github.qcloudsms.SmsMultiSenderResult;
-import com.github.qcloudsms.SmsSingleSender;
-import com.github.qcloudsms.SmsSingleSenderResult;
-import com.github.qcloudsms.httpclient.HTTPException;
-import com.spring.web.model.request.Msg;
 import com.spring.web.util.SmsUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.io.IOException;
 
 /**
  * @Author: 桃红梨白
@@ -45,7 +36,7 @@ public class SmsTest {
      */
     @Test
     public void Test03(){
-        smsUtil.sendSMS("17516470884","111222");
+        smsUtil.sendSMS("15670382411","111222");
 
     }
 

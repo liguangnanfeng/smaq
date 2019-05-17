@@ -2,49 +2,36 @@ package com.spring.web.controller.api;
 
 import com.spring.web.dao.AppTokenMapper;
 import com.spring.web.dao.OfficialsMapper;
-import com.spring.web.dao.UserMapper;
 import com.spring.web.dao.ZzjgPersonnelMapper;
 import com.spring.web.listener.MySessionContext;
 import com.spring.web.model.*;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
 import com.spring.web.service.CheckCompany.CountryCheck;
-import com.spring.web.service.CheckCompany.LoginService;
 import com.spring.web.service.CheckCompany.Zzjg_PersonnelService;
-import com.spring.web.util.DateConvertUtil;
 import com.spring.web.util.EncryptUtil;
 import com.spring.web.util.RandomUtil;
-import com.spring.web.util.SessionUtil;
-import com.sun.javafx.collections.MappingChange;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.print.DocFlavor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * @Author: 桃红梨白
  * TODO 企业端登陆
- * 状态码类型: 0 成功  1 失败
+ * 0 :成功  1:失败
  */
 
 @Controller
 @RequestMapping(value = "api/custom/login")
-@SuppressWarnings("all")
 public class AppController_Login {
 
     /**
@@ -54,22 +41,10 @@ public class AppController_Login {
     private Zzjg_PersonnelService zzjgPersonnelService;
 
     /**
-     * 政府端
-     */
-    @Autowired
-    private UserMapper userMapper;
-
-    /**
      * token验证
      */
     @Autowired
     private AppTokenMapper appTokenMapper;
-
-    /**
-     * 验证apptoken
-     */
-    @Autowired
-    private AppTokenData appTokenData;
 
     /**
      * 直接去查询
@@ -89,41 +64,58 @@ public class AppController_Login {
     @Autowired
     private CountryCheck countryCheck;
 
-
     /**
-     * 用户登陆功能
+     * TODO 用户登陆功能
      *
-     * @param request
-     * @param username
-     * @param password
-     * @return
+     * @param request  请求
+     * @param username 用户名
+     * @param password 密码
+     * @return 用户的登陆信息
      */
     @RequestMapping(value = "A250", method = RequestMethod.POST)
-    @ResponseBody
-    public AppResult userLogin(HttpServletRequest request, String username, String password, Integer type) {
+    public @ResponseBody
+    AppResult userLogin(HttpServletRequest request, String username, String password, Integer type) {
 
         AppResult result = new AppResultImpl();
 
-        // 空数据
-        if (username == null || "".equals(username) || password == null || "".equals(password) || null == type) {
+        try {
+            // 空数据
+            if (username == null || "".equals(username) || password == null || "".equals(password) || null == type) {
+                result.setStatus("1");
+                result.setMessage("请输入账号或密码");
+                return result;
+            }
+            // 企业
+            if ("1".equals(Integer.toString(type))) {
+                result = CommonLogin(request, username, password);
+            }
+            // 政府
+            if ("2".equals(Integer.toString(type))) {
+                //政府端登陆 写一个登陆接口
+                result = countryLogin(request, username, password);
+            }
+            return result;
+        } catch (NullPointerException e) {
+
+            e.printStackTrace();
             result.setStatus("1");
-            result.setMessage("请输入账号或密码");
+            result.setMessage("请输入账号/密码");
+            return result;
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMessage("登陆失败");
             return result;
         }
-        // 企业
-        if ("1".equals(Integer.toString(type))) {
-            result = CommonLogin(request, username, password);
-        }
-        // 政府
-        if ("2".equals(Integer.toString(type))) {
-            //政府端登陆 写一个登陆接口
-            result = countryLogin(request, username, password);
-        }
-        return result;
     }
 
     /**
      * 政府端
+     * @param request 请求
+     * @param username 用户id
+     * @param password 密码
+     * @return 用户信息
      */
     private AppResult countryLogin(HttpServletRequest request, String username, String password) {
         AppResult result = new AppResultImpl();
@@ -137,12 +129,7 @@ public class AppController_Login {
                 result.setMessage("该账号不存在");
                 return result;
             }
-            // 判断前后台登录
-          /*  if (!"1".equals(user.getDel())) {
-                result.setStatus("1");
-                result.setMessage("该账号被冻结。");
-                return result;
-            }*/
+
             // 判断密码是否错误
             if (!EncryptUtil.match(user.getPassword(), password)) {
                 result.setStatus("1");
@@ -155,7 +142,7 @@ public class AppController_Login {
             Map<String, Object> map = new HashMap<String, Object>();
             System.out.println(user);
             // TODO 查询详细的信息发送给前端进行展示  判断等级,查询不同的表数据
-            Map map1 = countryCheck.selectParticular(user.getId(),user.getFlag());
+            Map map1 = countryCheck.selectParticular(user.getId(), user.getFlag());
             System.out.println(map1);
             map.put("user", map1);
             AppToken db_appToken = appTokenMapper.selectByUserId(String.valueOf(user.getId()));
@@ -179,7 +166,7 @@ public class AppController_Login {
                 String sessionId = saveAttribute(request, user, db_appToken.getAccessToken());
                 if (appTokenMapper.updateByPrimaryKeySelective(db_appToken) == 1) {
                     map.put("type", user.getFlag());
-                    map.put("appToken",db_appToken );
+                    map.put("appToken", db_appToken);
                     map.put("sessionId", sessionId);
                     result.setData(map);
                 }
@@ -200,10 +187,10 @@ public class AppController_Login {
     /**
      * 企业端
      *
-     * @param request
-     * @param username
-     * @param password
-     * @return
+     * @param request 请求
+     * @param username 用户id
+     * @param password 密码
+     * @return 用户信息
      */
     private AppResult CommonLogin(HttpServletRequest request, String username, String password) {
         AppResult result = new AppResultImpl();
@@ -229,7 +216,7 @@ public class AppController_Login {
 
             Map<String, Object> map = new HashMap<String, Object>();
             Integer id = zzjgPersonnel.getId();
-            Map stringObjectMap = zzjgPersonnelMapper.selectAll1( id );
+            Map stringObjectMap = zzjgPersonnelMapper.selectAll1(id);
             map.put("user", stringObjectMap);
 
             AppToken db_appToken = appTokenMapper.selectByUserId(String.valueOf(zzjgPersonnel.getId()));
@@ -273,10 +260,13 @@ public class AppController_Login {
     }
 
     /**
-     * 将数据放入session中
+     * TODO 将数据放入session中
+     * @param request       请求
+     * @param zzjgPersonnel 用户数据
+     * @param token         令牌
+     * @return              sessionId
      */
     private String saveAttribute(HttpServletRequest request, Object zzjgPersonnel, String token) {
-        //request.getSession().getServletContext().setAttribute(token, zzjgPersonnel);
 
         // 获取session对象
         HttpSession session = request.getSession();
@@ -292,9 +282,8 @@ public class AppController_Login {
 
     /**
      * 注销
-     *
-     * @param token
-     * @return AppResult
+     * @param request 请求
+     * @return message 消息
      */
     @ResponseBody
     @RequestMapping(value = "A251", method = RequestMethod.POST)
@@ -302,11 +291,10 @@ public class AppController_Login {
         AppResult result = new AppResultImpl();
 
         try {
-            // Object o = appTokenData.delectUserId(request);
             String access_token = request.getParameter("access_token");
             String sessionId = request.getParameter("sessionId");
             // 没有传递数据
-            if (StringUtils.isEmpty(access_token)||StringUtils.isEmpty(sessionId)) {
+            if (StringUtils.isEmpty(access_token) || StringUtils.isEmpty(sessionId)) {
 
                 result.setStatus("1");
                 result.setMessage("未正常退出!");

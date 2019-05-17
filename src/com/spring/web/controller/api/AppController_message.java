@@ -104,16 +104,9 @@ public class AppController_message extends BaseController {
         Integer pageNo = (Integer.valueOf(String.valueOf(params.get("page")))-1)*10;
         // 2. 查询此用户属于哪个部门，哪个企业id
 //        ZzjgPersonnel personnel = personnerService.findPersonnel(userId);
-//
         System.out.println("获取检查记录列表==============");
         // 检查人员和被检查人员
-        List<Map> list =null;
-        if("1".equals(zzjg.getStatus())){
-             list = appMessageService.findTCheckList(userId,pageNo,10);
-        }else{
-             list = appMessageService.findTCheckListByStatus(userId, pageNo, 10);
-        }
-
+        List<Map> list = appMessageService.findTCheckList(userId,pageNo,10);
         result.setData(list);
 
         return result;

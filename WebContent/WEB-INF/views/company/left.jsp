@@ -243,7 +243,7 @@
     <%--<div class="div_otop">检查模版设置<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>--%>
     <%--<ul>--%>
     <%--&lt;%&ndash;<li><a data-href="${ly }/village/trouble-set?url=/company/model-list-cx?flag=1%26type=1" data-title="企业自查" href="javascript:void(0)">企业自查</a></li>&ndash;%&gt;--%>
-    <li><a data-href="${ly }/village/addCheckModel" data-title="添加检查模版" href="javascript:void(0)">添加检查模版</a>
+    <%--<li><a data-href="${ly }/village/addCheckModel" data-title="添加检查模版" href="javascript:void(0)">添加检查模版</a>--%>
     <%--</li>--%>
     <%--<li><a data-href="${ly }/village/showCheckModel" data-title="查看检查模版" href="javascript:void(0)">查看检查模版</a>--%>
     <%--</li>--%>

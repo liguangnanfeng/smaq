@@ -55,13 +55,14 @@
 
         function nature(obj) {
             var cType = $(obj);
-            console.log("cType.val()在这");
-            console.log(cType.val());
-            if ('0' == cType.val()) {
-                return null;
-            } else if ('-1' == cType.val()) {    // 基础检查 与高危类似
 
-                $(".addCh3").css("display", 'block');
+            console.log(cType.val());
+            if('0' == cType.val()){
+                return null;
+            }else if('-1' == cType.val()){    // 基础检查 与高危类似
+
+                $(".addCh3").css("display",'block');
+
 
 
                 // let params = {
@@ -85,235 +86,189 @@
                 // });
 
 
-            } else if ('-2' == cType.val()) {    //现场检查  选择部门岗位
+            }else if('-2' == cType.val()){    //现场检查  选择部门岗位
 
-                $(".addCh1").css("display", 'block');
+                $(".addCh1").css("display",'block');
                 // 两套html页面，这一套不变
 
 
-            } else {
-
-               var  params3 =4;
-                console.log("hello");
-                $(".addCh3").css("display", 'block');
-                // 高危检查
-                $.ajax({
-                    type: "POST",
-                    url: getRootPath() + '/api/custom/check/A2133',
-                    data: params3,
-                    async: false,
-                    contentType: "application/json",
-                    dataType: "json",
-                    success: function (result) {
-                        console.log(result);
-                        console.log('l am here', result.data);
-                        var data = result.data;
-
-                        for (var key in data) {
-
-                            //这里是动态添加option到select里面
-                            var opt = document.createElement("option");
-                            opt.value = key;
-                            opt.innerText = key;
-                            var select1 = document.querySelector("#selectitem1");
-                            var select2 = document.querySelector("#selectitem2");
-                            select1.appendChild(opt);
-                        }
-
-
-                        $('#selectitem1').on("change", function () {
-                            var valbase = select1.value;
-                            var data2 = data[valbase];
-                            console.log(data2);
-                            for (var i = 0; i < data2.length; i++) {
-                                var opt2 = document.createElement("option");
-                                opt2.innerText = data2[i].level2;
-                                select2.appendChild(opt2);
-                            }
-
-                        });
-
-
-                    }
-
-
-                })
+            }else{                          // 高危检查
 
             }
         }
-            function findPerson(obj) {
-                var level1 = $(obj);
-                var dom = $(obj).parent().parent().parent('.level1').next().find('.department2Id');
-                dom.empty();
-                dom.append('<option value="0">请选择岗位</option>')
-                // var doc = document.getElementById("departmentId");
-                params = {
-                    "depId": level1.val()
-                }
-                $.ajax({
-                    type: "POST",
-                    url: getRootPath() + '/village/selectDep',
-                    data: params,
-                    async: false,
-                    dataType: "json",
-                    success: function (result) {
-                        $.each(result, function (index, item) {
-                            var station = item.name;//岗位
-                            var id = item.id;//岗位id
-                            dom.append("<option value='" + station + "'>" + station + "</option>")
-                        })
-                    },
-                    complete: function (XMLHttpRequest, textStatus) {
-                        // layer.close(index);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert("查询失败")
-                    }
-                });
-                $.ajax()
+
+
+
+        function findPerson(obj) {
+            var level1 = $(obj);
+            var dom =  $(obj).parent().parent().parent('.level1').next().find('.department2Id');
+            dom.empty();
+            dom.append('<option value="0">请选择岗位</option>')
+            // var doc = document.getElementById("departmentId");
+            params = {
+                "depId": level1.val()
             }
-
-            function findCheck(obj) {
-                var level2 = $(obj);
-                var dom2 = $(obj).parent().parent().parent('.level2').prev().find('.departmentId');
-                var inspection = $(obj).parent().parent().parent('.level2').next().find('.inspection');
-
-                // var doc = document.getElementById("departmentId");
-                // var doc2 = document.getElementById("department2Id");
-                params2 = {
-                    "depId": dom2.val(),
-                    "sName": level2.val()
+            $.ajax({
+                type: "POST",
+                url: getRootPath() + '/village/selectDep',
+                data: params,
+                async: false,
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (index, item) {
+                        var station = item.name;//岗位
+                        var id = item.id;//岗位id
+                        dom.append("<option value='" + station + "'>" + station + "</option>")
+                    })
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    // layer.close(index);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("查询失败")
                 }
-                console.log(params)
-                $.ajax({
-                    type: "POST",
-                    url: getRootPath() + '/village/findInspection',
-                    data: params2,
-                    async: false,
-                    dataType: "json",
-                    success: function (result) {
-                        $.each(result, function (index, item) {
-                            var isp = item.level3;
-                            var manuId = item.id;
-                            inspection.append("<p class='checkBoxOuter'><input type='checkbox' class='checkBox' name='checkBox' value='" + manuId + "'/>" + isp + "</p>")
-                        })
-                    },
-                    complete: function (XMLHttpRequest, textStatus) {
-                        // layer.close(index);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert("查询失败")
-                    }
-                });
+            });
+        }
 
+        function findCheck(obj) {
+            var level2 = $(obj);
+            var dom2 =  $(obj).parent().parent().parent('.level2').prev().find('.departmentId');
+            var inspection =  $(obj).parent().parent().parent('.level2').next().find('.inspection');
+
+            // var doc = document.getElementById("departmentId");
+            // var doc2 = document.getElementById("department2Id");
+            params2 = {
+                "depId": dom2.val(),
+                "sName": level2.val()
             }
-
-            // function saveCheckMenu() {
-            //     alert("进入saveCheckMenu");
-            //     var obj = document.getElementsByName("checkBox");
-            //     check_val = [];
-            //     for (c in obj) {
-            //         if (obj[c].checked) {
-            //             check_val.push(obj[c].value)
-            //         }
-            //     }
-            //     console.log(obj)
-            //     console.log(check_val)
-            //     var title = document.getElementById("title");
-            //     var doc = document.getElementById("departmentId");
-            //     var doc2 = document.getElementById("department2Id");
-            //     var cycle = document.getElementById("cycle");
-            //     var nextTime = document.getElementById("nextTime");
-            //     // var checkType = document.getElementById("checkType");
-            //     // var checkNature = document.getElementById("checkNature");
-            //     var params = {
-            //         "title": title.value,
-            //         "depId": doc.value,
-            //         "sName": doc2.value,
-            //         "checkVal": JSON.stringify(check_val),
-            //         "cycle": cycle.value,
-            //         "nextTime": nextTime.value,
-            //         // "checkType": checkType.value,
-            //         // "checkNature":checkNature.value
-            //     }
-            //     $.ajax({
-            //         type: "POST",
-            //         url: getRootPath() + '/village/saveCheckMenu',
-            //         data: params,
-            //         async: false,
-            //         dataType: "json",
-            //         success: function () {
-            //             alert("添加成功");
-            //         },
-            //         complete: function (XMLHttpRequest, textStatus) {
-            //             // layer.close(index);
-            //         },
-            //         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            //             alert("添加失败")
-            //         }
-            //     });
-            //
-            // }
-
-            function saveCheckMenu() {
-                var title = document.getElementById("title");
-                var checkType = document.getElementById("checkType");
-                var checkNature = document.getElementById("checkNature");
-
-                var checkItemList = [];
-
-                for (let j = 1; j <= i; j++) {
-                    var checkList = $('.checkedList' + j + '').find(".checkBox");
-                    console.log(checkList.length)
-                    var check_val = [];
-                    for (c in checkList) {
-                        if (checkList[c].checked) {
-                            check_val.push(checkList[c].value)
-                        }
-                    }
-
-                    var jcx = {
-                        'bm': $('.department' + j + '').children('.departmentId').val(),
-                        'gw': $('.post' + j + '').children('.department2Id').val(),
-                        'dx': check_val
-                    }
-                    checkItemList.push(jcx);
+            console.log(params)
+            $.ajax({
+                type: "POST",
+                url: getRootPath() + '/village/findInspection',
+                data: params2,
+                async: false,
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (index, item) {
+                        var isp = item.level3;
+                        var manuId = item.id;
+                        inspection.append("<p class='checkBoxOuter'><input type='checkbox' class='checkBox' name='checkBox' value='" + manuId + "'/>" + isp + "</p>")
+                    })
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    // layer.close(index);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("查询失败")
                 }
-                var params3 = {
-                    "title": title.value,
-                    "checkType": checkType.value,
-                    "checkNature": checkNature.value,
-                    "checkItemList": checkItemList
-                }
-                console.log(params3);
-                console.log('请求前')
-                $.ajax({
-                    type: "POST",
-                    url: getRootPath() + '/village/saveCheckMenu2',
-                    data: JSON.stringify(params3),
-                    async: false,
-                    contentType: "application/json",
-                    dataType: "json",
-                    success: function (result) {
-                        alert(result);
-                    },
-                    complete: function (XMLHttpRequest, textStatus) {
-                        // layer.close(index);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert("添加失败")
+            });
+
+        }
+
+        // function saveCheckMenu() {
+        //     alert("进入saveCheckMenu");
+        //     var obj = document.getElementsByName("checkBox");
+        //     check_val = [];
+        //     for (c in obj) {
+        //         if (obj[c].checked) {
+        //             check_val.push(obj[c].value)
+        //         }
+        //     }
+        //     console.log(obj)
+        //     console.log(check_val)
+        //     var title = document.getElementById("title");
+        //     var doc = document.getElementById("departmentId");
+        //     var doc2 = document.getElementById("department2Id");
+        //     var cycle = document.getElementById("cycle");
+        //     var nextTime = document.getElementById("nextTime");
+        //     // var checkType = document.getElementById("checkType");
+        //     // var checkNature = document.getElementById("checkNature");
+        //     var params = {
+        //         "title": title.value,
+        //         "depId": doc.value,
+        //         "sName": doc2.value,
+        //         "checkVal": JSON.stringify(check_val),
+        //         "cycle": cycle.value,
+        //         "nextTime": nextTime.value,
+        //         // "checkType": checkType.value,
+        //         // "checkNature":checkNature.value
+        //     }
+        //     $.ajax({
+        //         type: "POST",
+        //         url: getRootPath() + '/village/saveCheckMenu',
+        //         data: params,
+        //         async: false,
+        //         dataType: "json",
+        //         success: function () {
+        //             alert("添加成功");
+        //         },
+        //         complete: function (XMLHttpRequest, textStatus) {
+        //             // layer.close(index);
+        //         },
+        //         error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //             alert("添加失败")
+        //         }
+        //     });
+        //
+        // }
+
+        function saveCheckMenu() {
+            var title = document.getElementById("title");
+            var checkType = document.getElementById("checkType");
+            var checkNature = document.getElementById("checkNature");
+
+            var checkItemList = [];
+
+            for(let j=1;j<=i;j++){
+                var checkList = $('.checkedList'+j+'').find(".checkBox");
+                console.log(checkList.length)
+                var check_val = [];
+                for (c in checkList) {
+                    if (checkList[c].checked) {
+                        check_val.push(checkList[c].value)
                     }
-                });
+                }
+
+                var jcx = {
+                    'bm' : $('.department'+j+'').children('.departmentId').val(),
+                    'gw': $('.post'+j+'').children('.department2Id').val(),
+                    'dx': check_val
+                }
+                checkItemList.push(jcx);
             }
-
-
+            var params3 = {
+                "title":title.value,
+                "checkType":checkType.value,
+                "checkNature": checkNature.value,
+                "checkItemList" : checkItemList
+            }
+            console.log(params3);
+            console.log('请求前')
+            $.ajax({
+                type: "POST",
+                url: getRootPath() + '/village/saveCheckMenu2',
+                data: JSON.stringify(params3),
+                async: false,
+                contentType: "application/json",
+                dataType: "json",
+                success: function (result) {
+                    alert(result);
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    // layer.close(index);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("添加失败")
+                }
+            });
+        }
 
     </script>
     <script type="text/javascript">
         var modelId = '${model.id}';
         //alert("modelId="+modelId);//都是null
-        var type ='${type}';
-        var flag ='${flag}';
+        var type = ${type};
+        var flag = ${flag};
         var industryId = '${model.industryId}', industryType = '${model.industryType}';
         $(function () {
             if (industryId != "" && industryType != "") {
@@ -393,8 +348,8 @@
                                     <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目选择1 :</label>
                                     <div class="department  formControls col-xs-8 col-sm-9">
                                             <span class="department`+i+`   select-box inline">
-                                            <select name="departmentId" id="selectitem1"   class="departmentId"  onChange="findPerson(this)">
-                                            <option  value="0">请选择项目1</option>
+                                            <select name="departmentId" class="departmentId"  onChange="findPerson(this)">
+                                            <option value="0">请选择项目1</option>
 
                                             </select>
                                             </span>
@@ -406,8 +361,8 @@
                                     <div class="post  formControls col-xs-8 col-sm-9">
                                             <span class="post`+i+`   select-box inline">
 
-                                            <select name="department2Id"  id="selectitem2" class="department2Id"  onchange="findCheck(this)">
-                                            <option   value="0">请选择项目2</option>
+                                            <select name="department2Id" class="department2Id"  onchange="findCheck(this)">
+                                            <option value="0">请选择项目2</option>
                                             </select>
                                             </span>
                                     </div>
@@ -419,69 +374,29 @@
 
                 // 请求后台获取项目列表
 
-
-
-               $.ajax({
-                   type: "POST",
-                   url: getRootPath() + '/api/custom/check/A2132',
-                   data: '',
-                   async: false,
-                   contentType: "application/json",
-                   dataType: "json",
-                   success: function (result) {
-                       console.log(result);
-                       console.log('l am here',result.data);
-                       var data=result.data;
-
-                       for (var key in data){
-
-                           //这里是动态添加option到select里面
-                           var opt = document.createElement ("option");
-                           opt.value =key;
-                           opt.innerText=key;
-                           var select1=document.querySelector("#selectitem1");
-                           var select2=document.querySelector("#selectitem2");
-                           select1.appendChild(opt);
-                       }
-
-
-                       $('#selectitem1').on("change",function(){
-                           var valbase=select1.value;
-                           var data2=data[valbase];
-                           console.log(data2);
-                           for (var i=0;i<data2.length;i++){
-                               var opt2 = document.createElement ("option");
-                               opt2.innerText =data2[i].level2;
-                               select2.appendChild(opt2);
-                           }
-
-                       });
+                $.ajax({
+                    type: "POST",
+                    url: getRootPath() + '/api/custom/check/A2132',
+                    data: '',
+                    async: false,
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result);
+                        console.log('l am here',result.data);
+                        console.log('l am here',result.data[0]);
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        // layer.close(index);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("添加失败")
+                    }
+                });
 
 
 
-
-                   },
-                   complete: function (XMLHttpRequest, textStatus) {
-                       // layer.close(index);
-                   },
-                   error: function (XMLHttpRequest, textStatus, errorThrown) {
-                       alert("添加失败")
-                   }
-               });
-
-
-           }
-
-
-
-
-
-
-
-
-
-
-
+            }
 
 
 
@@ -543,14 +458,6 @@
                        <c:forEach items="${danger}" var="entry">
                            <option value="${entry.id}">${entry.name}</option>
                        </c:forEach>
-<%--                       <script>--%>
-<%--                           window.onload=function () {--%>
-<%--                               var checknature=document.querySelector('#checkNature');--%>
-<%--                               --%>
-<%--                               console.log(checknature.value[enter.id]);--%>
-<%--                               console.log(${entry.id});--%>
-<%--                           }--%>
-<%--                       </script>--%>
                   </select>
             </span>
 
@@ -766,7 +673,7 @@
 
     function article_save_submit_1() {
         //alert("model-add3.jsp");
-        industryId = '${ind1.id }';//基础管理';给默认值，隐藏
+        industryId = ${ind1.id };//'基础管理';给默认值，隐藏
         industryType = 1;
         if (industryId == '') {
             layer.alert("请选择检查类型");

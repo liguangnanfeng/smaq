@@ -57,6 +57,9 @@ public class AppController_Custom_Check extends BaseController {
     @Autowired
     private AppTokenData appTokenData;
 
+    /**
+     * 检查记录
+     */
     @Autowired
     private TCheckMapper tCheckMapper;
 
@@ -142,8 +145,26 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
+     * TODO 查询企业对应的高危检查
+     *
+     * @param request request请求
+     * @return result 高危检查条目
      */
+    @RequestMapping(value = "A212", method = RequestMethod.POST)
+    public @ResponseBody
+    AppResult checkGaoWei(HttpServletRequest request) {
         AppResult result = new AppResultImpl();
+        try {
+            ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
+
+            // 查询高危风险
+            List<Map> list = checkManual.checkGaoWei(zzjg.getUid());
+            result.setStatus("0");
+            result.setMessage("查询成功");
+            result.setData(list);
+
+            return result;
+        } catch (NullPointerException e) {
             result.setStatus("1");
             result.setMessage("未查询出数据");
             return result;
@@ -156,7 +177,15 @@ public class AppController_Custom_Check extends BaseController {
 
 
     /**
+     * TODO 查询基础选项  jsp页面
+     *
+     * @param request request 请求
+     * @return result 基础条目
      */
+    @RequestMapping(value = "A2132", method = RequestMethod.POST)
+    public @ResponseBody
+    AppResult checkJiChu2(HttpServletRequest request) {
+
         User user = getLoginUser(request);
 
         AppResult result = new AppResultImpl();
@@ -170,10 +199,41 @@ public class AppController_Custom_Check extends BaseController {
 
     }
 
+    /**
+     * TODO pc端查询高危level1
+     *
+     * @param request request请求
+     * @return list  高危levelOne条目
+     */
+    @RequestMapping(value = "A2133", method = RequestMethod.POST)
+    public @ResponseBody
+    List checkGaoWei2(HttpServletRequest request,@RequestBody Map<String,Object> params) {
+        // 获取登陆内容
+        try {
+            User user = getLoginUser(request);
+
+            String inid = String.valueOf(params.get("id"));
+
+            Integer industryId = Integer.valueOf(inid);
+
+            List<Map<String, Object>> GaoWeilist = checkManual.checkGaoWei2(industryId);
+
+            return GaoWeilist;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /**
      * TODO 查询基础检查 选项
+     *
+     * @param request request请求
+     * @return result 小程序基础检查条目
      */
+    @RequestMapping(value = "A213", method = RequestMethod.POST)
+    public @ResponseBody
+    AppResult checkJiChu(HttpServletRequest request) {
         // 获取登陆内容
         AppResult result = new AppResultImpl();
         ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
@@ -193,32 +253,29 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO  pc_端获取所有高危检查的选项 level
-     */
-  /*  @ResponseBody
-    @RequestMapping("B004")
-    public AppResult checkGaoWeiLevel1(HttpServletRequest request, Integer industryId) {
-        AppResult result = new AppResultImpl();
-        // 获取登陆内容
-
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
-        if (zzjg == null) {
-            result.setStatus("1");
-            result.setMessage("未成功登陆,请重新登陆");
-            return result;
-        }
-        checkManual.checkGaoWeiLevel1(industryId);
-        return result;
-
-    }*/
-
-    /**
      * TODO 高危检查选项
+     *
+     * @param request    request请求
      * @param industryId 返回的高危检查的id
      * @return result    小程序 高危检查条目
      */
+    @RequestMapping(value = "A214", method = RequestMethod.POST)
+    public @ResponseBody
+    AppResult checkGaoWeiItem(HttpServletRequest request, Integer industryId) {
         // 获取登陆内容
         AppResult result = new AppResultImpl();
+        try {
+
+            ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
+
+            Map map = checkManual.checkGaoWeiItem(industryId);
+            result.setStatus("0");
+            result.setMessage("查询成功");
+            result.setData(map);
+
+            return result;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
             result.setStatus("1");
             result.setMessage("未查询出数据");
             return result;
@@ -237,6 +294,9 @@ public class AppController_Custom_Check extends BaseController {
      * @param checkLevel 高危/基础 检查条件
      * @return 小程序 检查项详细条目
      */
+    @RequestMapping(value = "A215", method = RequestMethod.POST)
+    public @ResponseBody
+    AppResult checkJiChuAndGaoWei(HttpServletRequest request, CheckLevel checkLevel) {
         AppResult result = new AppResultImpl();
         try {
 
@@ -247,6 +307,8 @@ public class AppController_Custom_Check extends BaseController {
             result.setData(list);
 
             return result;
+        } catch (Exception e) {
+            e.printStackTrace();
             result.setStatus("1");
             result.setMessage("网络异常");
             return result;
@@ -254,8 +316,15 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
+     * TODO 现场检查/查询level3
+     *
+     * @param request request请求
+     * @param checkLevel 现场检查条件
+     * @return AppResult 小程序 现场检查项条目
      */
     @RequestMapping(value = "A202", method = RequestMethod.POST)
+    public @ResponseBody
+    AppResult checkLevel3(HttpServletRequest request, @RequestBody CheckLevel checkLevel) {
 
         AppResult result = new AppResultImpl();
         try {
@@ -322,6 +391,9 @@ public class AppController_Custom_Check extends BaseController {
 
     /**
      * TODO 保存自定义的检查模版, 并返回模版 Id
+     *
+     * @param request
+     * @param checkItem
      * @return
      */
     @RequestMapping(value = "A204", method = RequestMethod.POST)
@@ -360,6 +432,10 @@ public class AppController_Custom_Check extends BaseController {
 
     /**
      * TODO 根据用户点击查询(所有)模版
+     *
+     * @param request
+     * @param sessionId
+     * @param access_token
      * @return
      */
     @RequestMapping(value = "A205", method = RequestMethod.POST)
@@ -606,6 +682,8 @@ public class AppController_Custom_Check extends BaseController {
 
     /**
      * TODO 存储复查数据, 只要有一条数据不合格,复查表就存储不合格
+     *
+     * @param saveDataMessageItem
      * @return
      */
     @ResponseBody
@@ -705,9 +783,3 @@ public class AppController_Custom_Check extends BaseController {
     }
 
 }
-
-
-
-
-
-

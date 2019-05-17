@@ -153,9 +153,10 @@ public class AppController_Login {
             result.setStatus("0");
             result.setMessage("登陆成功");
             Map<String, Object> map = new HashMap<String, Object>();
+            System.out.println(user);
             // TODO 查询详细的信息发送给前端进行展示  判断等级,查询不同的表数据
             Map map1 = countryCheck.selectParticular(user.getId(),user.getFlag());
-
+            System.out.println(map1);
             map.put("user", map1);
             AppToken db_appToken = appTokenMapper.selectByUserId(String.valueOf(user.getId()));
             if (db_appToken == null) {

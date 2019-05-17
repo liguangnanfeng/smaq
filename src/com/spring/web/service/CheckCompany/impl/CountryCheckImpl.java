@@ -34,9 +34,7 @@ public class CountryCheckImpl implements CountryCheck {
     @Autowired
     private VillageMapper villageMapper;
 
-    /**
-     * 镇级数据
-     */
+    /*镇级数据*/
     @Autowired
     private TownMapper townMapper;
 
@@ -90,6 +88,9 @@ public class CountryCheckImpl implements CountryCheck {
 
     @Autowired
     private TItemSeriousMapper tItemSeriousMapper;
+
+    /*短信服务*/
+    private SmsUtil smsUtil;
 
 
     /**
@@ -155,7 +156,6 @@ public class CountryCheckImpl implements CountryCheck {
         if(flag==4){ //村级
 
            map = villageMapper.selectParticularByUid(id);
-
 
         }else if(flag==3){  //镇级
 
@@ -529,8 +529,6 @@ public class CountryCheckImpl implements CountryCheck {
             return null;
         }
 
-    }
-
 
     /**
      * 发送短信
@@ -557,9 +555,26 @@ public class CountryCheckImpl implements CountryCheck {
     }
 
 
+    /**
+     * 发送短信
+     */
+    private void Sms(List<SaveDataMessage> list ){
+        boolean flag = false;
+        for (SaveDataMessage saveDataMessage : list) {
+            if("2".equals(saveDataMessage.getValue())){
+                flag = true;
+                break;
+            }
+        }
+        if(flag){
+            TCheckItem item = tCheckItemMapper.selectAllById(list.get(0).getId());
+            TCheck tCheck = tCheckMapper.selectByPrimaryKey(item.getCheckId());
+            // 获取手机号
+            ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectByPrimaryKey(Integer.parseInt(tCheck.getDapartContact()));
+            // 有多个不合格项, 只发送一次短信通知
+            smsUtil.sendSMS("15670382411", "111222");
+        }
 
-
-
-
+    }
 
 }

@@ -64,4 +64,12 @@ public interface CountryCheck {
      * @return
      */
     Map selectParticular(Integer id, Integer flag);
+
+    /**
+     * 政府端获取检查记录
+     * @return
+     */
+    List findRecordByCreateUser(Integer id);
+
+
 }

@@ -81,7 +81,6 @@ public class AppController_message extends BaseController {
         return result;
     }
 
-
     /**
      * TODO 获取已检查记录列表     只有当前检查人和当前责任人能看到 对应的检查记录
      */
@@ -119,8 +118,6 @@ public class AppController_message extends BaseController {
 
         return result;
     }
-
-
 
     /**
      * 获取检查记录列表     只有当前检查人和当前责任人能看到 不合格
@@ -238,7 +235,6 @@ public class AppController_message extends BaseController {
 
     }
 
-
     /**
      * 整改意见回复(检查人读取)        , String checkId
      */
@@ -256,9 +252,6 @@ public class AppController_message extends BaseController {
         return result;
 
     }
-
-
-
 
     /**
      * 复查    ,String checkId   （检查表里进入）
@@ -301,4 +294,5 @@ public class AppController_message extends BaseController {
         result.setData(listMap);
         return result;
     }
+
 }

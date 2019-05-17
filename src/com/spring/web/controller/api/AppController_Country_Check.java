@@ -8,6 +8,7 @@ import com.spring.web.model.ZzjgDepartment;
 import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.model.request.CheckItem;
 import com.spring.web.model.request.CheckLevel;
+import com.spring.web.model.request.CheckModel;
 import com.spring.web.model.request.SaveDataMessageItem;
 import com.spring.web.model.response.CheckItemS;
 import com.spring.web.result.AppResult;
@@ -77,7 +78,6 @@ public class AppController_Country_Check {
      */
     @Autowired
     private SaveMessageService saveMessageService;
-
 
     /**
      * @return TODO 根据村级账号的id查询所有的企业
@@ -239,12 +239,13 @@ public class AppController_Country_Check {
     /**
      * TODO 查询高危检查项
      * @param request
-     * @param uid
+     * @param uid 公司id
      * @return
      */
     @ResponseBody
     @RequestMapping(value="B212",method=RequestMethod.POST)
     public AppResult checkGaoWei(HttpServletRequest request,Integer uid){
+
 
         AppResult result = new AppResultImpl();
         Officials officials = (Officials) appTokenData.getAppUser(request);
@@ -266,8 +267,10 @@ public class AppController_Country_Check {
 
     /**
      * TODO 基础检查, 获取基础检查的id
+     * @param request
+     * @param uid 公司id
+     * @return
      */
-
     @ResponseBody
     @RequestMapping(value="B213",method=RequestMethod.POST)
     public AppResult checkJiChu(HttpServletRequest request ,Integer uid){
@@ -294,12 +297,13 @@ public class AppController_Country_Check {
         return result;
     }
 
-
     /**
-     * TODO 高危检查选项
-     *      * 获取所有高危检查的选项 level 1 level2 level 3
+     *  TODO 高危检查选项
+     *    获取所有高危检查的选项 level 1 level2 level 3
+     * @param request
+     * @param industryId
+     * @return
      */
-
     @ResponseBody
     @RequestMapping(value="B214")
     public AppResult checkGaoWeiItem(HttpServletRequest request,Integer industryId){
@@ -350,7 +354,6 @@ public class AppController_Country_Check {
      * @param id      公司的id
      * @return
      */
-
     @ResponseBody
     @RequestMapping(value = "A225", method = RequestMethod.POST)
     public AppResult checkCompany(HttpServletRequest request, Integer id) {
@@ -438,7 +441,7 @@ public class AppController_Country_Check {
 
         }
 
-        Integer modelId = countryCheck.saveCheck(checkItem, officials, checkItem.getId());
+        Integer modelId = countryCheck.saveCheck(checkItem, officials, checkItem.getUid());
         result.setMessage("查询成功");
         result.setStatus("0");
         result.setData(modelId);
@@ -447,11 +450,14 @@ public class AppController_Country_Check {
     }
 
     /**
-     * 政府端获取该企业所有的模版表
+     *  政府端获取该企业所有的模版表
+     * @param request
+     * @param id 公司id
+     * @return
      */
     @ResponseBody
     @RequestMapping(value = "A228", method = RequestMethod.POST)
-    public AppResult CheckModelByUid(HttpServletRequest request, Integer id) {
+    public AppResult CheckModelByUid(HttpServletRequest request, Integer uid) {
 
         AppResult result = new AppResultImpl();
 
@@ -462,7 +468,9 @@ public class AppController_Country_Check {
             return result;
 
         }
-        List<Map<Integer, String>> list = checkManual.findModelByUid(id);
+        // 政府端查询模版,是全部进行查询
+        List<Map<Integer, String>> list = checkManual.findCountryModelByUid(uid);
+
         if (list == null || list.size() == 0) {
             result.setMessage("查询失败");
             result.setStatus("1");
@@ -514,13 +522,14 @@ public class AppController_Country_Check {
      */
     @ResponseBody
     @RequestMapping(value = "A230", method = RequestMethod.POST)
-    public AppResult saveIdea(@RequestBody SaveDataMessageItem saveDataMessageItem, Integer id) {
+    public AppResult saveIdea(@RequestBody SaveDataMessageItem saveDataMessageItem) {
         AppResult result = new AppResultImpl();
         if (saveDataMessageItem == null) {
             result.setStatus("1");
             result.setMessage("保存失败");
             return result;
         }
+
         //到域中获取数据
         MySessionContext sess = MySessionContext.getInstance();
         HttpSession session = sess.getSession(saveDataMessageItem.getSessionId());
@@ -533,7 +542,7 @@ public class AppController_Country_Check {
         }
 
         // 对数据进行保存
-        String name = countryCheck.saveCheckMessage(saveDataMessageItem, officials, id);
+        String name = countryCheck.saveCheckMessage(saveDataMessageItem, officials,saveDataMessageItem.getUid());
         if (name == null) {
             result.setMessage("保存是被请重新发起检查");
             result.setStatus("1");
@@ -567,11 +576,27 @@ public class AppController_Country_Check {
         return result;
     }
 
+    /**
+     * TODO 政府端查询检查记录
+     * 只有政府端登陆人员获取的数据
+     * 
+     */
+    @ResponseBody
+    @RequestMapping(value="A232",method=RequestMethod.POST)
+    public AppResult findCheckItem(HttpServletRequest request ){
+        AppResult result = new AppResultImpl();
+        Officials officials = (Officials) appTokenData.getAppUser(request);// 获取session域中的信息
+        List<Map> list =  countryCheck.findRecordByCreateUser(officials.getId());
+        if (list==null){
+            result.setStatus("1");
+            result.setMessage("未查询成功");
+            return result;
+        }
+        result.setData(list);
+        result.setStatus("0");
+        result.setMessage("查询成功");
 
-
-
-
-
-
+        return result;
+    }
 
 }

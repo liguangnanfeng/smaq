@@ -330,12 +330,12 @@ public class SaveDataImpl implements SaveMessageService {
                 TRecheckItem tRecheckItem = new TRecheckItem();
 
                 // TODO 修改t_rectification_confirm 记录
-                TRectificationConfirm tRectificationConfirm = tRectificationConfirmMapper.selectByCheckItemId(checkItem.getId());
-                tRectificationConfirm.setStatus(2); //表示已读
+                //TRectificationConfirm tRectificationConfirm = tRectificationConfirmMapper.selectByCheckItemId(checkItem.getId());
+                //tRectificationConfirm.setStatus(2); //表示已读
                 if ("1".equals(saveDataMessage.getValue())) {
                     checkItem.setStatus(3); // 复查成功
                     tRecheckItem.setStatus(2); //表示复查成功
-                    tRectificationConfirm.setStatus(1);
+                    //tRectificationConfirm.setStatus(1);
                 } else if ("2".equals(saveDataMessage.getValue())) {
 
                     checkItem.setStatus(2); //复查不合格
@@ -347,7 +347,7 @@ public class SaveDataImpl implements SaveMessageService {
                     tRecheckItem.setFile(saveDataMessage.getFile());    //图片
                     tRecheckItem.setDeadline(new Date());
                     tRecheckItem.setMemo(saveDataMessage.getMemo());  // 复查描述
-                    tRectificationConfirm.setStatus(0);
+                    //tRectificationConfirm.setStatus(0);
 
                 }
 
@@ -358,7 +358,7 @@ public class SaveDataImpl implements SaveMessageService {
                 tRecheckItem.setDeadline(new Date());           // 创建时间
                 tCheckItemMapper.updateByPrimaryKey(checkItem);
                 tRecheckItemMapper.insertSelective(tRecheckItem);
-                tRectificationConfirmMapper.updateByTRectificationConfirm(tRectificationConfirm);
+                //tRectificationConfirmMapper.updateByTRectificationConfirm(tRectificationConfirm);
 
             }
             return "成功";

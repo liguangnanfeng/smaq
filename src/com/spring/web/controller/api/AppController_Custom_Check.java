@@ -26,13 +26,10 @@ import java.util.*;
 
 /**
  * @author 桃红梨白
- * TODO 发起检查功能
- * 状态码类型: 0 成功  1 失败
- * 保留方法:
- * 查询员工信息 private Zzjg_PersonnelService zzjg_personnelService;
+ * TODO 小程序 企业端
  */
 @Controller
-@SuppressWarnings("all")
+//@SuppressWarnings("all")
 @RequestMapping(value = "api/custom/check")
 public class AppController_Custom_Check extends BaseController {
 
@@ -60,131 +57,106 @@ public class AppController_Custom_Check extends BaseController {
     @Autowired
     private AppTokenData appTokenData;
 
-    /**
-     * checkMapper
-     */
     @Autowired
     private TCheckMapper tCheckMapper;
 
     /**
-     * 获取部门,以及对应的岗位 level1 levle2
+     * TODO 获取部门,以及对应的岗位 level1 levle2
      *
-     * @param request
-     * @param
-     * @param
-     * @return
+     * @param request request请求
+     * @return result 返回的基础信息
      */
-    @ResponseBody
     @RequestMapping(value = "A200", method = RequestMethod.POST)
-    public AppResult checkCompany(HttpServletRequest request) {
+    public @ResponseBody
+    AppResult checkCompany(HttpServletRequest request) {
 
         AppResult result = new AppResultImpl();
 
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
+        try {
+            ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
 
-        if (null == zzjg || !"1".equals(zzjg.getStatus())) {
-            result.setStatus("1");
-            result.setMessage("还未登陆,请重新登陆");
+            // 使用总公司 获取这家公司对应的所有的部门
+            List<ZzjgDepartment> list = zzig_departmentService.selectDepartmentByCid(zzjg.getCid());
+
+            // 获取所有的部门 使用list集合
+            List<String> names = new ArrayList<>();
+
+            for (ZzjgDepartment zzjgDepartment : list) {
+                names.add(zzjgDepartment.getName());
+            }
+
+            // 根据公司id 和部门获取所有的岗位并进行数据你对比添加
+            Map<String, List> stringListMap = checkManual.selectDangerAndManual(zzjg.getUid(), names);
+
+            result.setStatus("0");
+            result.setMessage("查询成功");
+            result.setData(stringListMap);
+
             return result;
-        }
-
-        // 使用总公司 获取这家公司对应的所有的部门
-        List<ZzjgDepartment> list = zzig_departmentService.selectDepartmentByCid(zzjg.getCid());
-
-        // 对数据进行判断是否存在
-        if (null == list || list.size() == 0) {
+        } catch (NullPointerException n) {
+            n.printStackTrace();
             result.setStatus("1");
             result.setMessage("未查询出数据");
             return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMessage("网络故障,请稍后再试");
+            return result;
         }
-
-        // 获取所有的部门 使用list集合
-        List<String> names = new ArrayList<>();
-
-        for (ZzjgDepartment zzjgDepartment : list) {
-            names.add(zzjgDepartment.getName());
-        }
-
-        // 根据公司id 和部门获取所有的岗位并进行数据你对比添加
-        Map<String, List> stringListMap = checkManual.selectDangerAndManual(zzjg.getUid(), names);
-
-        result.setStatus("0");
-        result.setMessage("查询成功");
-        result.setData(stringListMap);
-
-        return result;
     }
 
     /**
      * 查询安全责任人
      *
-     * @param request
-     * @return
+     * @param request request请求
+     * @return result 安全责任人
      */
-    @ResponseBody
     @RequestMapping(value = "A201", method = RequestMethod.POST)
-    public AppResult checkLevel2(HttpServletRequest request) {
+    public @ResponseBody
+    AppResult checkLevel2(HttpServletRequest request) {
 
         AppResult result = new AppResultImpl();
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
+        try {
+            ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
 
-        if (null == zzjg || !"1".equals(zzjg.getStatus())) {
+            // 调用service层数据返回安全责任人
+            List<Map<Integer, String>> list = checkManual.findUserByIdAndStatus(zzjg);
+
+            result.setData(list);
+            result.setStatus("0");
+            result.setMessage("查询成功");
+
+            return result;
+        } catch (NullPointerException n) {
+            n.printStackTrace();
+            result.setMessage("未查询出数据");
             result.setStatus("1");
-            result.setMessage("还未登陆,请重新登陆");
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage("网络故障,请稍后再试");
+            result.setStatus("1");
             return result;
         }
-
-        // 调用service层数据返回安全责任人
-        List<Map<Integer, String>> list = checkManual.findUserByIdAndStatus(zzjg);
-
-        if (list == null) {
-            result.setMessage("查询失败");
-            result.setStatus("1");
-            return result;
-        }
-        result.setData(list);
-
-        return result;
     }
 
     /**
-     * TODO 查询五个高危检选项
-     *
-     * @param request
-     * @return
      */
-    @ResponseBody
-    @RequestMapping(value = "A212", method = RequestMethod.POST)
-    public AppResult checkGaoWei(HttpServletRequest request) {
-        // 获取登陆内容
         AppResult result = new AppResultImpl();
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
-        if (zzjg == null) {
             result.setStatus("1");
-            result.setMessage("未成功登陆,请重新登陆");
+            result.setMessage("未查询出数据");
+            return result;
+        } catch (Exception e) {
+            result.setStatus("1");
+            result.setMessage("网络故障");
             return result;
         }
-
-        // 查询高危风险
-        List<Map> list = checkManual.checkGaoWei(zzjg.getUid());
-        result.setStatus("0");
-        result.setMessage("查询成功");
-        result.setData(list);
-
-        return result;
     }
 
 
     /**
-     * TODO 查询基础选项  jsp页面
-     *
-     * @param request
-     * @return
      */
-    @ResponseBody
-    @RequestMapping(value = "A2132", method = RequestMethod.POST)
-    public AppResult checkJiChu2(HttpServletRequest request, Integer in) {
-        // 获取登陆内容
         User user = getLoginUser(request);
 
         AppResult result = new AppResultImpl();
@@ -198,37 +170,10 @@ public class AppController_Custom_Check extends BaseController {
 
     }
 
-    /**
-     * TODO pc端查询高危level1
-     * @param request
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "A2133", method = RequestMethod.POST)
-    public List checkGaoWei2(HttpServletRequest request,String industryId ) {
-        // 获取登陆内容
-        User user = getLoginUser(request);
-
-       // Integer industryId = Integer.valueOf(request.getParameter("industryId"));
-
-        List<Map<String, Object>> list = checkManual.checkGaoWei2(Integer.valueOf(industryId));
-
-        if(list==null){
-            return null ;
-        }
-
-        return list;
-    }
 
     /**
      * TODO 查询基础检查 选项
-     *
-     * @param request
-     * @return
      */
-    @ResponseBody
-    @RequestMapping(value = "A213", method = RequestMethod.POST)
-    public AppResult checkJiChu(HttpServletRequest request) {
         // 获取登陆内容
         AppResult result = new AppResultImpl();
         ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
@@ -269,220 +214,185 @@ public class AppController_Custom_Check extends BaseController {
 
     /**
      * TODO 高危检查选项
-     * 获取所有高危检查的选项 level 1 level2 level 3
-     *
-     * @param request
      * @param industryId 返回的高危检查的id
-     * @return
+     * @return result    小程序 高危检查条目
      */
-    @ResponseBody
-    @RequestMapping(value = "A214", method = RequestMethod.POST)
-    public AppResult checkGaoWeiItem(HttpServletRequest request, Integer industryId) {
         // 获取登陆内容
         AppResult result = new AppResultImpl();
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
-        if (zzjg == null) {
             result.setStatus("1");
-            result.setMessage("未成功登陆,请重新登陆");
+            result.setMessage("未查询出数据");
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMessage("网络故障");
             return result;
         }
-        Map map = checkManual.checkGaoWeiItem(industryId);
-        result.setStatus("0");
-        result.setMessage("查询成功");
-        result.setData(map);
-
-        return result;
     }
 
     /**
-     * 不管是高危还是基础,统一的查询level4 and level风险点.返回,然后在包存的的时候,继续数据的修改
-     * 查询数据,并进行返回
-     */
-    @ResponseBody
-    @RequestMapping(value = "A215", method = RequestMethod.POST)
-    public AppResult checkJiChuAndGaoWei(HttpServletRequest request, CheckLevel checkLevel) {
-        AppResult result = new AppResultImpl();
-        /*ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
-        if(null==zzjg){
-            result.setStatus("1");
-            result.setMessage("未成功登陆");
-            return result;
-        }*/
-        List<Map> list = checkManual.checkGaoWeiAndJiChu(checkLevel);
-
-        if (null == list) {
-            result.setStatus("1");
-            result.setMessage("没有相关数据");
-            return result;
-        }
-        result.setStatus("0");
-        result.setMessage("查询成功");
-        result.setData(list);
-        return result;
-    }
-
-    /**
-     * 现场检查
-     * 根据部门岗位(level1 , level2)查询风险点(level3)  直接查询
+     * TODO  高危/基础  检查项详细信息
      *
-     * @param request
-     * @param checkLevel
-     * @return AppResult
+     * @param request request请求
+     * @param checkLevel 高危/基础 检查条件
+     * @return 小程序 检查项详细条目
      */
-    @ResponseBody
-    @RequestMapping(value = "A202", method = RequestMethod.POST)
-    public AppResult checkLevel3(HttpServletRequest request, @RequestBody CheckLevel checkLevel) {
-
         AppResult result = new AppResultImpl();
-        if (checkLevel == null) {
-            result.setStatus("3");
-            result.setMessage("请进行选择部门及其岗位");
+        try {
+
+            List<Map> list = checkManual.checkGaoWeiAndJiChu(checkLevel);
+
+            result.setStatus("0");
+            result.setMessage("查询成功");
+            result.setData(list);
+
+            return result;
+            result.setStatus("1");
+            result.setMessage("网络异常");
             return result;
         }
+    }
 
-        //对不同的检查方式,进行不同的检查
+    /**
+     */
+    @RequestMapping(value = "A202", method = RequestMethod.POST)
 
-        // 调用方法进行查询
-        List<Map<String, Object>> list = checkManual.selectLevel4AndId(checkLevel);
+        AppResult result = new AppResultImpl();
+        try {
 
-        if (null == list || list.size() == 0) {
+            // 调用方法进行查询
+            List<Map<String, Object>> list = checkManual.selectLevel4AndId(checkLevel);
+
+
+            Set<String> set = new HashSet<>();
+            for (Map level : list) {
+                set.add((String) level.get("level3"));
+            }
+            result.setStatus("0");
+            result.setMessage("查询成功");
+            result.setData(set);
+
+            return result;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
             result.setStatus("1");
             result.setMessage("未查询到数据");
             return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMessage("网络故障");
+            return result;
         }
-
-        result.setStatus("0");
-        result.setMessage("查询成功");
-
-        //result.setData(list);
-        Set<String> set = new HashSet<>();
-        for (Map level : list) {
-
-            set.add((String) level.get("level3"));
-        }
-        result.setData(set);
-        return result;
     }
 
     /**
-     * 查询level4
+     * TODO 查询level4
      *
      * @param request
      * @param checkLevel
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "A203", method = RequestMethod.POST)
-    public AppResult checkLevel4(HttpServletRequest request, @RequestBody CheckLevel checkLevel) {
+    public @ResponseBody
+    AppResult checkLevel4(HttpServletRequest request, @RequestBody CheckLevel checkLevel) {
         AppResult result = new AppResultImpl();
-        if (checkLevel == null) {
-            result.setStatus("1");
-            result.setMessage("请进行选择风险点");
-            return result;
-        }
+        try {
 
-        // 调用方法进行查询
-        List<Map> list = checkManual.selectLevel5AndId(checkLevel);
-        if (null == list || list.size() == 0) {
+            // 调用方法进行查询
+            List<Map> list = checkManual.selectLevel5AndId(checkLevel);
+
+            result.setStatus("0");
+            result.setMessage("查询成功");
+            result.setData(list);
+
+            return result;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
             result.setStatus("1");
             result.setMessage("未查询到数据");
             return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMessage("网络异常");
+            return result;
         }
-
-        result.setStatus("0");
-        result.setMessage("查询成功");
-        result.setData(list);
-        return result;
     }
 
     /**
      * TODO 保存自定义的检查模版, 并返回模版 Id
-     * 统一的保存 基础 现场 高危  但是在保存的时候,industryId 在显示的时候,要查询出
-     *
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "A204", method = RequestMethod.POST)
-    public AppResult saveCheck(HttpServletRequest request, @RequestBody CheckItem checkItem) {
+    public @ResponseBody
+    AppResult saveCheck(HttpServletRequest request, @RequestBody CheckItem checkItem) {
         AppResult result = new AppResultImpl();
 
-        if (null == checkItem) {
+        try {
+
+            MySessionContext myc = MySessionContext.getInstance();
+            HttpSession sess = myc.getSession(checkItem.getSessionId());
+
+            ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(checkItem.getAccess_token());
+            // 保存检查项
+            Integer modelId = checkManual.saveCheck(checkItem, zzjg);
+
+            result.setStatus("0");
+            result.setMessage("查询成功");
+            result.setData(modelId);
+
+            System.out.println("保存检查项并返回modelId" + modelId);
+            return result;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
             result.setStatus("1");
-            result.setMessage("数据格式错误,请从新输入");
+            result.setMessage("未查询到数据");
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMessage("网络异常");
             return result;
         }
-
-        MySessionContext myc = MySessionContext.getInstance();
-        HttpSession sess = myc.getSession(checkItem.getSessionId());
-        if (null == sess) {
-            result.setStatus("1");
-            result.setMessage("登陆时间过长");
-            return result;
-        }
-
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(checkItem.getAccess_token());
-        if (null == zzjg || !"1".equals(zzjg.getStatus())) {
-            result.setStatus("1");
-            result.setMessage("还未登陆,请重新登陆");
-            return result;
-        }
-
-        Integer modelId = checkManual.saveCheck(checkItem, zzjg);
-        result.setStatus("0");
-        result.setMessage("查询成功");
-        result.setData(modelId);
-        System.out.println(modelId);
-        return result;
 
     }
 
     /**
      * TODO 根据用户点击查询(所有)模版
-     *
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "A205", method = RequestMethod.POST)
-    public AppResult checkDepartmentById(HttpServletRequest request, String sessionId, String access_token) {
+    public @ResponseBody
+    AppResult checkDepartmentById(HttpServletRequest request, String sessionId, String access_token) {
         AppResult result = new AppResultImpl();
 
-        if (sessionId == null || access_token == null) {
-            result.setMessage("未成功请求,请重新选择");
+        try {
+
+            MySessionContext myc = MySessionContext.getInstance();
+            HttpSession sess = myc.getSession(sessionId);
+
+            ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(access_token);
+
+            // 根据公司id获取模版信息
+            List<Map<Integer, String>> list = checkManual.findModelByUid(zzjg.getUid());
+
+            result.setStatus("0");
+            result.setData(list);
+            result.setMessage("查询成功");
+
+            return result;
+        }catch(NullPointerException e){
+            e.printStackTrace();
             result.setStatus("1");
+            result.setMessage("未查询出数据");
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMessage("网络异常");
             return result;
         }
-
-        // 获取session集合中的域对象
-        MySessionContext myc = MySessionContext.getInstance();
-        HttpSession sess = myc.getSession(sessionId);
-        if (sess == null) {
-            result.setMessage("未登陆");
-            result.setStatus("1");
-            return result;
-        }
-
-        // 获取域中的用户信息
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(access_token);
-        if (zzjg == null) {
-            result.setMessage("未登陆");
-            result.setStatus("1");
-            return result;
-        }
-
-        Integer uid = zzjg.getUid(); // 获取总公司id
-        // 根据公司id获取模版信息
-        List<Map<Integer, String>> list = checkManual.findModelByUid(uid);
-        if (list == null || list.size() == 0) {
-            result.setMessage("查询失败");
-            result.setStatus("1");
-            return result;
-
-        }
-        result.setMessage("查询成功");
-        result.setData(list);
-        result.setStatus("0"); // 状态码成功 0 失败 1
-
-        return result;
 
     }
 
@@ -490,51 +400,38 @@ public class AppController_Custom_Check extends BaseController {
      * TODO 根据模版id查询详细信息 > 开启检查
      *
      * @param request
-     * @param modelId
-     * @param sessionId
-     * @param token
+     * @param checkModel
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "A206", method = RequestMethod.POST)
-    public AppResult checkItemtById(HttpServletRequest request,/*Integer modelId */@RequestBody CheckModel checkModel) {
+    public @ResponseBody
+    AppResult checkItemtById(HttpServletRequest request,@RequestBody CheckModel checkModel) {
         AppResult result = new AppResultImpl();
-        // 判断是否为空
-        if (checkModel.getModelId() == null || checkModel.getSessionId() == null || checkModel.getAccess_token() == null) {
-            result.setMessage("查询失败");
-            result.setStatus("1");
-        }
+        try {
 
-        // 获取session集合中的域对象
-        MySessionContext myc = MySessionContext.getInstance();
-        HttpSession sess = myc.getSession(checkModel.getSessionId());
-        if (sess == null) {
-            result.setMessage("未登陆");
+            MySessionContext myc = MySessionContext.getInstance();
+            HttpSession sess = myc.getSession(checkModel.getSessionId());
+            ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(checkModel.getAccess_token());
+
+            // 根据id查询并进行封装数据
+            CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(checkModel.getModelId());
+
+            result.setStatus("0");
+            result.setMessage("查询成功");
+            result.setData(checkItemByModelId);
+
+            return result;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            result.setMessage("未查询出数据");
+            result.setStatus("1");
+            return result;
+        }catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage("网络故障");
             result.setStatus("1");
             return result;
         }
-
-        // 获取域中的用户信息
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(checkModel.getAccess_token());
-        if (zzjg == null) {
-            result.setMessage("未登陆");
-            result.setStatus("1");
-            return result;
-        }
-
-        // 判断完成, 根据id查询并进行封装数据
-
-        CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(checkModel.getModelId());
-        //CheckItemS checkItemByModelId = checkManual.findCheckItemByModelId(modelId);
-        if (checkItemByModelId == null) {
-            result.setMessage("查询失败");
-            result.setStatus("1");
-            return result;
-        }
-        result.setStatus("0");
-        result.setMessage("查询成功");
-        result.setData(checkItemByModelId);
-        return result;
 
     }
 
@@ -543,7 +440,8 @@ public class AppController_Custom_Check extends BaseController {
      *
      * @param request
      * @param sessionId
-     * @param token
+     * @param access_token
+     * @param personnelId
      * @return
      */
     @ResponseBody
@@ -589,8 +487,7 @@ public class AppController_Custom_Check extends BaseController {
      * 进行数据的时候,就生成新一轮的检查记录表,
      *
      * @param request
-     * @param sessionId
-     * @param token
+     * @param saveDataMessageItem
      * @return
      */
     @ResponseBody
@@ -709,8 +606,6 @@ public class AppController_Custom_Check extends BaseController {
 
     /**
      * TODO 存储复查数据, 只要有一条数据不合格,复查表就存储不合格
-     *
-     * @param checkId
      * @return
      */
     @ResponseBody

@@ -30,17 +30,62 @@ function edit(id, obj){
   $("#fjgkfzr").val(p.find("input[name='fjgkfzr']").val());
   $("#win-add").modal("show");
 }
+
 function chosem(){
   $("#win-add2").modal("show");
 }
+
 function chosem2(){
   $("#win-add3").modal("show");
 }
+
+function chosem3() {
+
+    $("#win-add4").modal("show");
+    var name = $("#gkzt").val();
+    var id = $("#gkztIds").val();
+    $.ajax({ //post也可
+        type: "POST",
+        url: getRootPath() + "/company/safety-system/control-list-one",
+        data: {name: name, pid:id},
+        dataType: 'json',
+        success: function (result) {
+            var dataObj = result,
+                con = "";
+            $.each(dataObj, function (index, item) {
+                con += "<tr class=\"text-c\">";
+                con += "<td style=\"width:30px;\" align=\"center\" valign=\"middle\"><input  type=\"radio\" name=\"radio-1\" value='" + item.name + "'></td>";
+                con += "<td align=\"center\" valign=\"middle\">"+item.name+"</td>";
+                con += "</tr>";
+            });
+            $("#test").html(con);
+        }
+    });
+}
+
+
+function per_chooses() {
+
+    var list = $("#win-add4 :checked");
+    var v = [];
+    list.each(function() {
+        v.push($(this).val());
+    })
+    $("#buwei").val(v.join(","));
+    $("#win-add4").modal("hide");
+
+}
+
+
+
+
+
 function save_() {
   var obj = {
       "fjgkfzr" : $("#fjgkfzr").val(),
       "gkcs" : $("#gkcs").val(),
       "gkzt" : $("#gkzt").val(),
+      "level2" : $("#buwei").val(),
       "id" : id
   }
   if(obj.gkzt == '') {
@@ -55,6 +100,11 @@ function save_() {
     $("#gkcs").focus();
     return false;
   }
+  if(obj.level2 == '') {
+      $("#level2").focus();
+      return false;
+  }
+
   var i = layer.load();
   $.post(getRootPath() + "/company/safety-system/aCompanyManual-save", obj, function(result) {
     layer.close(i);
@@ -111,8 +161,8 @@ function pr_() {
           <c:forEach items="${list }" var="be">
           <c:if test="${(be.level1 eq be1.key && be.level2 eq be2) || (empty be1.key && empty be.level1)}">
           <tr>
-            <td class="text-c">${empty be1.key ? '公司' : be1.key}</td>
-            <td class="text-c">${be2}</td>
+            <td class="text-c">${be.gkzt}</td>
+            <td class="text-c">${be.level2}</td>
             <td class="text-c">
                <c:choose>
                 <c:when test="${be.level eq '红色'}"><font class="col-a">${be.level}</font></c:when>
@@ -155,6 +205,9 @@ function pr_() {
               <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控主体：</label>
               <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
                 <input type="text" id="gkzt" value="" style="width: 357px" class="input-text required">
+
+                <input id = "gkztIds"  type="hidden" >
+
                 <c:if test="${not empty departL}">
                 <button class="btn btn-primary radius" type="button" onclick="chosem()">
                   <i class="Hui-iconfont">&#xe611;</i>选择管控主体
@@ -162,6 +215,27 @@ function pr_() {
                 </c:if>
               </div>
             </div>
+
+
+
+            <div class="row cl mt-15">
+              <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">部位：</label>
+              <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
+                <input type="text" id="buwei" value="" style="width: 357px" class="input-text required">
+                <c:if test="${not empty perL}">
+                  <button class="btn btn-primary radius" type="button" onclick="chosem3()">
+
+                      <i class="Hui-iconfont" >&#xe611;</i>选择部位
+
+                  </button>
+                </c:if>
+              </div>
+            </div>
+
+
+
+
+
             <div class="row cl mt-15">
               <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控措施：</label>
               <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
@@ -207,7 +281,8 @@ function pr_() {
               </thead>
               <c:forEach items="${departL }" var="be">
               <tr class="text-c">
-                <td><input type="radio" name="radio-1" value="${be.name }"></td>
+                <td><input type="radio" name="radio-1" value="${be.name }" onclick="dep_choose2s(${be.id})"></td>
+                <input type="hidden" value="${be.id }">
                 <td>${be.companyName }</td>
                 <td>${be.name }</td>
                 <%-- <td>${be.level == 1 ? be.name : be.parName}</td>
@@ -224,12 +299,15 @@ function pr_() {
       </div>
     </div>
     <script type="text/javascript">
+      function  dep_choose2s(a) {
+         $("#gkztIds").val(a);
+      }
     function dep_choose() {
       var list = $("#win-add2 :checked");
       var v = [];
       list.each(function() {
         v.push($(this).val());
-      })
+      });
       $("#gkzt").val(v.join(","));
       $("#win-add2").modal("hide");
     }
@@ -273,8 +351,36 @@ function pr_() {
         </div>
       </div>
     </div>
-    
+
+
+
+  <%-- 部位窗口信息 --%>
+  <div id="win-add4" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 400px">
+      <div class="modal-content radius">
+        <div class="modal-header">
+          <h3 class="modal-title">选择部位</h3>
+          <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+        </div>
+        <div id = "test" class="modal-body">
+          <table class="table table-border table-bordered table-bg table-hover table-sort" style="float:none">
+            <thead>
+              <tr class="text-c">
+              <th style="width:50px;">&nbsp;</th>
+              <th>部位</th>"
+            </thead>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" onclick="per_chooses()">确定</button>
+          <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <script type="text/javascript">
+
     function per_choose() {
       var list = $("#win-add3 :checked");
       var v = [];
@@ -282,6 +388,7 @@ function pr_() {
         v.push($(this).val());
       })
       $("#fjgkfzr").val(v.join(","));
+
       $("#win-add3").modal("hide");
     }
     </script>

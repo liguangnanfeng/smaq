@@ -11,15 +11,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.UUID;
 
 /**
  * @Author: 桃红梨白
  * @Date: 2019/05/15 10:11
  * 添加 地图功能
+ * 添加ip地址,反向代理 获取的是nginx的地址
  */
 @Controller
 @RequestMapping("api/map")
@@ -36,21 +40,22 @@ public class AppController_Map extends BaseController {
      */
     @ResponseBody
     @RequestMapping("B001")
-    public String saveMap(HttpServletRequest request){
-
+    public String saveMap(HttpServletRequest request,String images) throws UnknownHostException {
+        // 获取服务器的地址
+        InetAddress address = InetAddress.getLocalHost();
         User user = getLoginUser(request);
+       // String image = request.getParameter("images");
 
-        String image = request.getParameter("images");
-
-        if(null == image){
+        if(null == images){
             return null;
         }
+
         BASE64Decoder decoder = new BASE64Decoder();
         try {
-            String images  = image.replaceAll(" ", "+");
+            images  = images.replaceAll(" ", "+");
 
             byte[] bytes = decoder.decodeBuffer(images.substring(images.indexOf(",") + 1));
-            image= image.replace("base64", "");
+            images = images.replace("base64", "");
             for (int i = 0; i < bytes.length; i++) {
                 if(bytes[i]<0){
                     //调整异常数据
@@ -61,11 +66,21 @@ public class AppController_Map extends BaseController {
             String realPath = request.getSession().getServletContext().getRealPath("/");
 
             String path= "/images/upload/";
-            String s = UUID.randomUUID().toString();
+            String s = UUID.randomUUID().toString().replaceAll("-", "");
+
+            // 判断是否存在
+            File file =new File(realPath+path);
+            if  (!file .exists()  && !file .isDirectory())
+            {
+                System.out.println("//不存在");
+                file .mkdir();
+            }
+
             // 生成jpeg图片
             String imgFilePath =realPath+path+s+".jpg";
             // 数据库图片路径
-            String filePath = path+s+".jpg";
+            String filePath =  InetAddress.getLocalHost().getHostAddress()+":"+ request.getLocalPort()+path+s+".jpg";
+
             OutputStream ops = new FileOutputStream(imgFilePath);
             ops.write(bytes);
             ops.flush();

@@ -754,6 +754,15 @@ public class AppController_Custom_Check extends BaseController {
                     String trueFileName = /*String.valueOf(System.currentTimeMillis()) +*/ fileName;
                     // 设置存放图片文件的路径
                     path = realPath2 + "images/upload/" + trueFileName;
+
+                    // 判断是否存在
+                    File file1 =new File(realPath2+"images/upload/");
+                    if  (!file1 .exists()  && !file1 .isDirectory())
+                    {
+                        System.out.println("//不存在");
+                        file1 .mkdir();
+                    }
+
                     realPath1 += trueFileName;
                     System.out.println(path);
 

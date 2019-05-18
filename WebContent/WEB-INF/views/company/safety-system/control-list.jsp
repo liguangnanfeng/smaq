@@ -161,8 +161,12 @@
           <c:forEach items="${list }" var="be">
             <c:if test="${(be.level1 eq be1.key && be.level2 eq be2) || (empty be1.key && empty be.level1)}">
               <tr>
-                <td class="text-c">${be.gkzt}</td>
-                <td class="text-c">${be.level2}</td>
+                <c:if test="${empty be.gkzt}">
+                  <td class="text-c">无数据</td>
+                </c:if>
+                  <c:if test="${empty be.level2}">
+                    <td class="text-c">无数据</td>
+                  </c:if>
                 <td class="text-c">
                   <c:choose>
                     <c:when test="${be.level eq '红色'}"><font class="col-a">${be.level}</font></c:when>

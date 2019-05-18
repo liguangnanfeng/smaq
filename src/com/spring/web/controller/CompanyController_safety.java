@@ -4,8 +4,13 @@
  */
 package com.spring.web.controller;
 
-import java.util.*;
-import javax.servlet.http.HttpServletRequest;
+import com.spring.web.BaseController;
+import com.spring.web.ibatis.LlHashMap;
+import com.spring.web.model.*;
+import com.spring.web.result.Result;
+import com.spring.web.result.ResultImpl;
+import com.spring.web.service.cgf.CgfService;
+import com.spring.web.service.trouble.TroubleService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,30 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.spring.web.BaseController;
-import com.spring.web.ibatis.LlHashMap;
-import com.spring.web.model.ACompanyManual;
-import com.spring.web.model.ACompanyManualZp;
-import com.spring.web.model.ADangerManual;
-import com.spring.web.model.AFxgzp;
-import com.spring.web.model.AFxjz;
-import com.spring.web.model.AGwyj;
-import com.spring.web.model.AGwyjSh;
-import com.spring.web.model.AGzk;
-import com.spring.web.model.AImplementation;
-import com.spring.web.model.AMaterial;
-import com.spring.web.model.AWhp;
-import com.spring.web.model.AZytjfxcdpj;
-import com.spring.web.model.Company;
-import com.spring.web.model.Material;
-import com.spring.web.model.Product;
-import com.spring.web.model.Regulation;
-import com.spring.web.model.User;
-import com.spring.web.model.ZzjgDepartment;
-import com.spring.web.result.Result;
-import com.spring.web.result.ResultImpl;
-import com.spring.web.service.cgf.CgfService;
-import com.spring.web.service.trouble.TroubleService;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 /**
  * @Title: CompanyController_cd
@@ -135,7 +118,7 @@ public class CompanyController_safety extends BaseController {
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         // 根据企业ID 查询当前企业中所有的高危风险的数据 ID
         List<ACompanyManual> aCompanyManualList = aCompanyManualMapper.selectIds(company.getUserId());
-       // 根据 ids 修改删除标记为 1（已经删除）
+        // 根据 ids 修改删除标记为 1（已经删除）
         for (int i = 0; i < aCompanyManualList.size(); i++) {
             aCompanyManualMapper.updateAll(aCompanyManualList.get(i).getId());
         }
@@ -506,30 +489,30 @@ public class CompanyController_safety extends BaseController {
         ACompanyManual aCompanyManual1 ;
         // 根据 行业 查询该行业中所有的较大风险信息
         List<ADangerManual> aDangerManualList = aDangerManualMapper.selectFactors("1",company.getIndustry()) ;
-       if (aDangerManualList.size() != 0){
-           for (int i = 0; i < aDangerManualList.size(); i++) {
+        if (aDangerManualList.size() != 0){
+            for (int i = 0; i < aDangerManualList.size(); i++) {
 
-               aCompanyManual1 = new ACompanyManual();
-               aCompanyManual1.setUid(user.getId());
-               aCompanyManual1.setLevel3(aDangerManualList.get(i).getLevel1()+"/"+aDangerManualList.get(i).getLevel2()+"/"+aDangerManualList.get(i).getLevel3());
-               aCompanyManual1.setFactors(aDangerManualList.get(i).getFactors());
-               aCompanyManual1.setType(aDangerManualList.get(i).getType());
-               aCompanyManual1.setMeasures(aDangerManualList.get(i).getMeasures());
-               aCompanyManual1.setReference(aDangerManualList.get(i).getReference());
-               aCompanyManual1.setFlag("1");
-               aCompanyManual1.setLevel("橙色");
-               aCompanyManual1.setDel(0);
-               aCompanyManual1.setCtime(new Date());
+                aCompanyManual1 = new ACompanyManual();
+                aCompanyManual1.setUid(user.getId());
+                aCompanyManual1.setLevel3(aDangerManualList.get(i).getLevel1()+"/"+aDangerManualList.get(i).getLevel2()+"/"+aDangerManualList.get(i).getLevel3());
+                aCompanyManual1.setFactors(aDangerManualList.get(i).getFactors());
+                aCompanyManual1.setType(aDangerManualList.get(i).getType());
+                aCompanyManual1.setMeasures(aDangerManualList.get(i).getMeasures());
+                aCompanyManual1.setReference(aDangerManualList.get(i).getReference());
+                aCompanyManual1.setFlag("1");
+                aCompanyManual1.setLevel("橙色");
+                aCompanyManual1.setDel(0);
+                aCompanyManual1.setCtime(new Date());
 
-               // 添加数据到表中
-               aCompanyManualMapper.save(aCompanyManual1);
-           }
-           return result;
-       }else {
-           result.setStatus("1");
-           result.setMess("该行业暂无较大危险！");
-           return result;
-       }
+                // 添加数据到表中
+                aCompanyManualMapper.save(aCompanyManual1);
+            }
+            return result;
+        }else {
+            result.setStatus("1");
+            result.setMess("该行业暂无较大危险！");
+            return result;
+        }
     }
 
 
@@ -720,8 +703,8 @@ public class CompanyController_safety extends BaseController {
      */
     @RequestMapping(value = "set-risk-edit")
     public @ResponseBody Result setRiskEdit(Model model, ACompanyManual ac,
-            HttpServletRequest request,
-            String gzkhxys, String gzkwlys) throws Exception {
+                                            HttpServletRequest request,
+                                            String gzkhxys, String gzkwlys) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         ACompanyManual a = aCompanyManualMapper.selectByPrimaryKey(ac.getId());
@@ -1202,10 +1185,10 @@ public class CompanyController_safety extends BaseController {
             for(Map<String, Object> ac : acL) {
                 String level1 = getStringFromMap(ac, "level1");
                 if(StringUtils.isBlank(level1)) {
-                  continue;
+                    continue;
                 }
                 if((level1).equals(name)) {
-                  acL_f.add(ac);
+                    acL_f.add(ac);
                 }
 //                String level1 = getStringFromMap(ac, "level1");
 //                String level2 = getStringFromMap(ac, "level2");
@@ -1337,7 +1320,7 @@ public class CompanyController_safety extends BaseController {
      */
     @RequestMapping(value = "risk-list-load")//确认风险操作
     public String riskListLoad(Model model, HttpServletRequest request, String industry,
-           Integer depId) throws Exception {
+                               Integer depId) throws Exception {
         User user = getLoginUser(request);
         if(StringUtils.isNotBlank(industry)) {
             industry = utf8Str(industry);
@@ -1509,6 +1492,9 @@ public class CompanyController_safety extends BaseController {
     /**
      * 分级管控
      */
+    /**
+     * 分级管控
+     */
     @RequestMapping(value = "control-list")
     public String controlList(Model model, HttpServletRequest request, Integer type) throws Exception {
         User user = getLoginUser(request);
@@ -1533,7 +1519,6 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("treeMap", levmap);
 
         model.addAttribute("type", type);
-
         model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
 
         model.addAttribute("departL", zzjgDepartmentMapper.selectLevel1ByUid(user.getId()));//组织架构部门班组
@@ -1547,7 +1532,6 @@ public class CompanyController_safety extends BaseController {
 
 
 
-
     /**
      * 分级管控
      */
@@ -1556,6 +1540,7 @@ public class CompanyController_safety extends BaseController {
     List<ZzjgDepartment> controlLists(Model model, HttpServletRequest request, String name,Integer pid) throws Exception {
 
         User user = getLoginUser(request);
+
         List<ZzjgDepartment> zzjgDepartmentList1 = zzjgDepartmentMapper.selectOnes(pid);
 
         return zzjgDepartmentList1;
@@ -1676,11 +1661,11 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("list22", list22);
 
         if(flag.equals("2")){
-        	//log.error("zhangcl 2018.10.18 controlList3,area_range="+company.getAreaRange());
-        	return "company/safety-system/control-list3";
+            //log.error("zhangcl 2018.10.18 controlList3,area_range="+company.getAreaRange());
+            return "company/safety-system/control-list3";
         }
         else{
-        	return "company/safety-system/control-list2";
+            return "company/safety-system/control-list2";
         }
 
     }
@@ -1690,9 +1675,9 @@ public class CompanyController_safety extends BaseController {
      */
     @RequestMapping(value = "control-list3")//zhangcl 2018.10.13
     public String controlList3(Model model, HttpServletRequest request, Integer id, String lnglat) throws Exception {
-    	//log.error("zhangcl 2018.10.13 controlList3,id="+id+",lnglat="+lnglat);
-    	aCompanyManualMapper.updateLnglat(id,lnglat);
-    	return controlList2(model, request, "2");
+        //log.error("zhangcl 2018.10.13 controlList3,id="+id+",lnglat="+lnglat);
+        aCompanyManualMapper.updateLnglat(id,lnglat);
+        return controlList2(model, request, "2");
     }
 
     @RequestMapping(value = "area-range-save")
@@ -1704,7 +1689,7 @@ public class CompanyController_safety extends BaseController {
         return controlList2(model, request, "2");
     }
 
-	/**
+    /**
      * 实施方案-保存
      */
     @RequestMapping(value = "plan-save")
@@ -1763,7 +1748,7 @@ public class CompanyController_safety extends BaseController {
      */
     @RequestMapping(value = "aCompanyManual-save1")
     public @ResponseBody Result aCompanyManualSave1(HttpServletRequest request, Integer[] ids,
-            Integer depId) throws Exception {
+                                                    Integer depId) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         ZzjgDepartment dep = zzjgDepartmentMapper.selectByPrimaryKey(depId);

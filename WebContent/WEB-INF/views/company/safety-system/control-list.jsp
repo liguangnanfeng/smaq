@@ -1,1016 +1,447 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="/WEB-INF/views/taglibs.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/taglibs.jsp"%>
 <!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="renderer" content="webkit|ie-comp|ie-stand">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport"
-        content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-  <meta http-equiv="Cache-Control" content="no-siteapp"/>
-  <%@ include file="/WEB-INF/inc/back-header.inc" %>
-  <title>风险分级管控 隐患排查治理智能化平台</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <%-- <%@ include file="/WEB-INF/inc/back-header.inc"%> --%>
+  <%@ include file="/WEB-INF/inc/print.inc"%>
+  <title>风险分级管控   隐患排查治理智能化平台</title>
+  <script src="${ly }/js/jquery-migrate-1.2.1.min.js"></script>
+  <script src="${ly }/js/jquery.jqprint-0.3.js"></script>
+  <script type="text/javascript" src="${ly}/js/H-ui.admin_v3.0/lib/layer/2.4/layer.js"></script>
   <meta name="keywords" content="风险分级管控   隐患排查治理智能化平台">
   <meta name="description" content="风险分级管控   隐患排查治理智能化平台">
   <style type="text/css">
-    .input-text {
-      position: relative
-    }
-
-    .txtarea_sq {
-      height: 100px;
-      width: 350px;
-    }
-
-    .div_model {
-      float: left;
-      width: 80%;
-      margin-left: 10%
-    }
-
-    body .form .row {
-      margin-top: 20px;
-    }
-
-    .radio-lx {
-      display: inline-block;
-      cursor: pointer;
-      height: 50px;
-      font-size: 14px;
-      line-height: 50px;
-      margin-bottom: 10px;
-      padding: 0 35px;
-      margin-right: 30px;
-      background: #f5f5f5;
-      border-radius: 5px;
-    }
-
-    .radio-lxxz {
-      background: #D9EDF7;
-      color: #31708F
-    }
+    body .dis-ib{margin-right:15px;}
+    .col-b,.col-a,.col-c,.col-d{margin:0;padding:0 15px;height:25px;line-height:25px;}
   </style>
-  <script>
-
-      function nature(obj) {
-          var cType = $(obj);
-          //未选择
-          if ('0' == cType.val()) {
-              return null;
-          } else if ('-1' == cType.val()) {    // 基础检查 与高危类似
-              $('#addContainer').html('');
-              $(".addCh1").hide();
-              $(".addCh3").css("display", 'block');
-
-          }
-          //现场检查  选择部门岗位
-          else if ('-2' == cType.val()) {
-
-              $('#addContainer').empty();
-              $(".addCh3").hide();
-              $(".addCh1").css("display", 'block');
-              // 两套html页面，这一套不变
-
-
-
-          }
-          // 高危检查
-          else {
-              $('#addContainer').empty();
-              $(".addCh1").hide();
-              $(".addCh3").css("display", 'block');
-
-          }
-      }
-
-
-
-      //请求现场数据 进行渲染
-      function findPerson(obj) {
-          var level1 = $(obj);
-          var dom = $(obj).parent().parent().parent('.level1').next().find('.department2Id');
-          dom.empty();
-          dom.append('<option value="0">请选择岗位</option>')
-          // var doc = document.getElementById("departmentId");
-          params = {
-              "depId": level1.val()
-          }
-          $.ajax({
-              type: "POST",
-              url: getRootPath() + '/village/selectDep',
-              data: params,
-              async: false,
-              dataType: "json",
-              success: function (result) {
-                  $.each(result, function (index, item) {
-                      var station = item.name;//岗位
-                      var id = item.id;//岗位id
-                      dom.append("<option value='" + station + "'>" + station + "</option>")
-                  })
-              },
-              complete: function (XMLHttpRequest, textStatus) {
-                  // layer.close(index);
-              },
-              error: function (XMLHttpRequest, textStatus, errorThrown) {
-                  console.log("查询失败");
-              }
-          });
-          $.ajax()
-      }
-
-      function findCheck(obj) {
-          var level2 = $(obj);
-          var dom2 = $(obj).parent().parent().parent('.level2').prev().find('.departmentId');
-          var inspection = $(obj).parent().parent().parent('.level2').next().find('.inspection');
-
-          // var doc = document.getElementById("departmentId");
-          // var doc2 = document.getElementById("department2Id");
-          params2 = {
-              "depId": dom2.val(),
-              "sName": level2.val()
-          }
-          console.log(params)
-          $.ajax({
-              type: "POST",
-              url: getRootPath() + '/village/findInspection',
-              data: params2,
-              async: false,
-              dataType: "json",
-              success: function (result) {
-                  $.each(result, function (index, item) {
-                      var isp = item.level3;
-                      var manuId = item.id;
-                      inspection.append("<p class='checkBoxOuter'><input type='checkbox' class='checkBox' name='checkBox' value='" + manuId + "'/>" + isp + "</p>")
-                  })
-              },
-              complete: function (XMLHttpRequest, textStatus) {
-                  // layer.close(index);
-              },
-              error: function (XMLHttpRequest, textStatus, errorThrown) {
-                  alert("查询失败")
-              }
-          });
-
-      }
-
-      function saveCheckMenu() {
-          alert("进入saveCheckMenu");
-          var obj = document.getElementsByName("checkBox");
-          check_val = [];
-          for (c in obj) {
-              if (obj[c].checked) {
-                  check_val.push(obj[c].value)
-              }
-          }
-          console.log(obj)
-          console.log(check_val)
-          var title = document.getElementById("title");
-          var doc = document.getElementById("departmentId");
-          var doc2 = document.getElementById("department2Id");
-          var cycle = document.getElementById("cycle");
-          var nextTime = document.getElementById("nextTime");
-          // var checkType = document.getElementById("checkType");
-          // var checkNature = document.getElementById("checkNature");
-          var params = {
-              "title": title.value,
-              "depId": doc.value,
-              "sName": doc2.value,
-              "checkVal": JSON.stringify(check_val),
-              "cycle": cycle.value,
-              "nextTime": nextTime.value,
-              // "checkType": checkType.value,
-              // "checkNature":checkNature.value
-          }
-          $.ajax({
-              type: "POST",
-              url: getRootPath() + '/village/saveCheckMenu',
-              data: params,
-              async: false,
-              dataType: "json",
-              success: function () {
-                  alert("添加成功");
-              },
-              complete: function (XMLHttpRequest, textStatus) {
-                  // layer.close(index);
-              },
-              error: function (XMLHttpRequest, textStatus, errorThrown) {
-                  alert("添加失败")
-              }
-          });
-
-      }
-
-      function saveCheckMenu() {
-          var title = document.getElementById("title");
-          var checkType = document.getElementById("checkType");
-          var checkNature = document.getElementById("checkNature");
-
-          var checkItemList = [];
-          var cusCheckItemList = [];//自定义检查项
-          for (let j = 1; j <= i; j++) {
-              var checkList = $('.checkedList' + j + '').find(".checkBox");
-              console.log(checkList.length)
-              var check_val = [];
-              for (c in checkList) {
-                  if (checkList[c].checked) {
-                      check_val.push(checkList[c].value)
-                  }
-              }
-
-              var jcx = {
-                  'bm': $('.addItem' + j + ' .department' + j + '').children('.departmentId').val(),
-                  'gw': $('.addItem' + j + ' .post' + j + '').children('.department2Id').val(),
-                  'dx': check_val
-              }
-              if(jcx.bm){
-                  checkItemList.push(jcx);
-              }
-
-              var cusCheck = {
-                  'bm': $('.cusAddItem' + j + ' .department' + j + '').children('.departmentId').val(),
-                  'gw': $('.cusAddItem' + j + ' .post' + j + '').children('.department2Id').val(),
-                  'project': $('#project'+ j).val(),
-                  'content': $('#content'+ j).val(),
-              }
-              if(cusCheck.project){
-                  cusCheckItemList.push(cusCheck);
-              }
-          }
-          var params3 = {
-              "title": title.value,//检查表名称
-              "checkType": checkType.value,//检查方式
-              "checkNature": checkNature.value,//检查性质
-              "checkItemList": checkItemList,//检查项 数组  单个对象 bm  部门  gw 项目 dx 检查项目
-              "cusCheckItemList":cusCheckItemList,//自定义检查项  数组  单个对象 bm  部门  gw 项目 project 自定义检查项目  content自定义检查内容
-          }
-          console.log(params3);
-          console.log('请求前');
-          $.ajax({
-              type: "POST",
-              url: getRootPath() + '/village/saveCheckMenu2',
-              data: JSON.stringify(params3),
-              async: false,
-              contentType: "application/json",
-              dataType: "json",
-              success: function (result) {
-                  alert(result);
-              },
-              complete: function (XMLHttpRequest, textStatus) {
-                  // layer.close(index);
-              },
-              error: function (XMLHttpRequest, textStatus, errorThrown) {
-                  alert("添加失败")
-              }
-          });
-      }
-
-
-
-  </script>
   <script type="text/javascript">
-      var modelId = '${model.id}';
-      //alert("modelId="+modelId);//都是null
-      var type ='${type}';
-      var flag ='${flag}';
-      var industryId = '${model.industryId}', industryType = '${model.industryType}';
-      $(function () {
-          if (industryId != "" && industryType != "") {
-              $(".radio-lx[type='" + industryType + "']").addClass("radio-lxxz");
-          }
-          $(".div_fold").on("click", ".item h4", function () {
-              var info = $(this).closest(".item").find(".info");
-              if (info.is(":hidden")) {
-                  info.show();
-                  $(this).find("b").html("-");
-              } else {
-                  info.hide();
-                  $(this).find("b").html("+");
+      /* 弹窗管控信息添加 */
+      function edit(id, obj){
+          window.id = id;
+          var p = $(obj).parent();
+          $("#gkzt").val(p.find("input[name='gkzt']").val());
+          $("#gkcs").val(p.find("input[name='gkcs']").val());
+          $("#fjgkfzr").val(p.find("input[name='fjgkfzr']").val());
+          $("#win-add").modal("show");
+      }
+
+      function chosem(){
+          $("#win-add2").modal("show");
+      }
+
+      function chosem2(){
+          $("#win-add3").modal("show");
+      }
+
+      function chosem3() {
+
+          $("#win-add4").modal("show");
+          var name = $("#gkzt").val();
+          var id = $("#gkztIds").val();
+          $.ajax({ //post也可
+              type: "POST",
+              url: getRootPath() + "/company/safety-system/control-list-one",
+              data: {name: name, pid:id},
+              dataType: 'json',
+              success: function (result) {
+                  var dataObj = result,
+                      con = "";
+                  $.each(dataObj, function (index, item) {
+                      con += "<tr class=\"text-c\">";
+                      con += "<td style=\"width:30px;\" align=\"center\" valign=\"middle\"><input  type=\"radio\" name=\"radio-1\" value='" + item.name + "'></td>";
+                      con += "<td align=\"center\" valign=\"middle\">"+item.name+"</td>";
+                      con += "</tr>";
+                  });
+                  $("#test").html(con);
               }
           });
-      });
-
-      //设置检查类型
-      function indu_(i, t) {
-          industryId = i;
-          industryType = t;
-          $(".radio-lx").removeClass("radio-lxxz");
-          $(".radio-lx[type='" + t + "']").addClass("radio-lxxz");
       }
 
 
-  </script>
+      function per_chooses() {
 
-  <script>
-      window.onload=function () {
-
-
+          var list = $("#win-add4 :checked");
+          var v = [];
+          list.each(function() {
+              v.push($(this).val());
+          })
+          $("#buwei").val(v.join(","));
+          $("#win-add4").modal("hide");
 
       }
 
-  </script>
 
 
 
 
-
-  <script>
-      var i=0;
-      function  addItem(type){
-          i++;
-          if(1==type){
-
-              var add1 = `<div  class="addItem`+i+`"  >
-                                <div class="row cl level1">
-                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择部门 :</label>
-                                    <div class="department  formControls col-xs-8 col-sm-9">
-                                            <span class="department`+i+`   select-box inline">
-                                            <select name="departmentId" class="departmentId"  onChange="findPerson(this)">
-                                            <option value="0">请选择车间</option>
-                                            <c:forEach items="${map}" var="entry">
-                                                <option value="${entry.value}">${entry.key}</option>
-                                            </c:forEach>
-                                            </select>
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="row cl level2">
-                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择岗位 :</label>
-                                    <div class="post  formControls col-xs-8 col-sm-9">
-                                            <span class="post`+i+`   select-box inline">
-
-                                            <select name="department2Id" class="department2Id"  onchange="findCheck(this)">
-                                            <option value="0">请选择岗位</option>
-                                            </select>
-                                            </span>
-                                    </div>
-                                </div>
-                                <div class="row cl level3">
-                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查项目 :</label>
-                                    <div class="formControls col-xs-8 col-sm-9">
-                                        <div class="checkedList`+i+`">
-                                        <p class="inspection"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>`;
-              $('#addContainer').append(add1);
-
-          }else if (2==type){
-
-              var add1 =`<div  class="cusAddItem`+i+`"  >
-                                <div class="row cl level1">
-                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择部门 :</label>
-                                    <div class="department  formControls col-xs-8 col-sm-9">
-                                            <span class="department`+i+`   select-box inline">
-                                            <select name="departmentId" class="departmentId"  onChange="findPerson(this)">
-                                            <option value="0">请选择车间</option>
-                                            <c:forEach items="${map}" var="entry">
-                                                <option value="${entry.value}">${entry.key}</option>
-                                            </c:forEach>
-                                            </select>
-                                            </span>
-                                    </div>
-                                </div>
-                                <div class="row cl level2">
-                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择岗位 :</label>
-                                    <div class="post  formControls col-xs-8 col-sm-9">
-                                            <span class="post`+i+`  select-box inline">
-
-                                            <select name="department2Id" class="department2Id"  onchange="findCheck(this)">
-                                            <option value="0">请选择岗位</option>
-                                            </select>
-                                            </span>
-                                    </div>
-                                </div>
-                                <div class="row cl level2">
-                                    <div>
-                                         <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>自定义检查项目 :</label>
-                                          <div class="formControls col-xs-8 col-sm-9">
-                                          <input type="text" id="project`+i+`" class="input-text">
-                                     </div>
-                                </div>
-                                     <div>
-                                     <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>自定义检查内容 :</label>
-                                     <div class="formControls col-xs-8 col-sm-9">
-                                     <input  type="text" id="content`+i+`" class="input-text">
-                                 </div>
-                                 </div>
-                                </div>`;
-              $('#addContainer').append(add1);
+      function save_() {
+          var obj = {
+              "fjgkfzr" : $("#fjgkfzr").val(),
+              "gkcs" : $("#gkcs").val(),
+              "gkzt" : $("#gkzt").val(),
+              "level2" : $("#buwei").val(),
+              "id" : id
           }
-          else if(3==type){
-              console.log('ceshi');
-              var add3 = `<div  class="addItem`+i+`"  >
-                                <div class="row cl level1">
-                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目选择1 :</label>
-                                    <div class="department  formControls col-xs-8 col-sm-9">
-                                            <span class="department`+i+`   select-box inline">
-                                            <select name="departmentId"   class="departmentId selectitem`+i+`"  >
-                                            <option  value="0">请选择项目1</option>
-
-                                            </select>
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="row cl level2">
-                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目选择2 :</label>
-                                    <div class="post  formControls col-xs-8 col-sm-9">
-                                            <span class="post`+i+`   select-box inline">
-
-                                            <select name="department2Id"   class="department2Id zdyselectitem`+i+`"  >
-                                            <option   value="0">请选择项目2</option>
-                                            </select>
-                                            </span>
-                                    </div>
-                                </div>
-
-                                </div>`;
-              $('#addContainer').append(add3);
-              console.log("===================="+getRootPath());
-
-              //在这里渲染数据!!!
-              var csval=$("#checkNature option:selected").val();
-              console.log("csval:"+csval);
-              //第一个下拉框
-              var select1=document.querySelector('.selectitem'+i);
-              //第二个下拉框
-              var select2=document.querySelector( ".zdyselectitem"+i);
-              select1.options.length=1;
-              select2.options.length=1;
-              //1.基础
-              if (csval==-1) {
-                  $.ajax({
-                      type: "POST",
-                      url: getRootPath() + '/api/custom/check/A2132',
-                      data: '',
-                      async: false,
-                      contentType: "application/json",
-                      dataType: "json",
-                      success: function (result) {
-                          console.log("基础数据调用成功");
-                          var data=result.data;
-
-                          for (var key in data){
-                              //这里是动态添加option到select里面
-                              var opt = document.createElement ("option");
-                              opt.value =key;
-                              opt.innerText=key;
-                              select1.appendChild(opt);
-
-                          }
-
-
-                          $('.selectitem'+i).on("change",function(){
-                              console.log("data",data);
-                              var valbase=select1.value;
-                              console.log('valbase',valbase);
-                              var data2=data[valbase];
-                              //data2为第一个下拉框选中的数组长度
-                              console.log('data2',data2);
-                              //在这里需要做一次清
-                              console.log("我要开始清空了");
-                              var w=0;
-                              // for (var n=1;n<=data2.length;n++){
-                              //     w++;
-                              //     console.log("第"+w+"次删除");
-                              //     console.log( $(".zdyselectitem1").children().eq(n+1).remove());
-                              //     $(".zdyselectitem1").children().eq(n+1).remove()
-                              // }
-                              select2.options.length=1;
-                              for (var m=0;m<data2.length;m++){
-                                  var opt2 = document.createElement ("option");
-                                  console.log(opt2);
-                                  opt2.innerText =data2[m].level2;
-                                  select2.appendChild(opt2);
-                              }
-                          });
-
-
-
-
-                      },
-                      complete: function (XMLHttpRequest, textStatus) {
-                          // layer.close(index);
-                      },
-                      error: function (XMLHttpRequest, textStatus, errorThrown) {
-                          console.log("添加失败")
-                      }
-                  });
-
-              }
-
-              //3.高危
-              if (csval!=0&&csval!=-1&&csval!=-2) {
-                  var  params3 = {
-                      "id" : csval
-                  };
-
-                  $.ajax({
-                      type: "POST",
-                      url: getRootPath() + '/api/custom/check/A2133',
-                      data: JSON.stringify(params3),
-                      async: false,
-                      contentType: "application/json",
-                      dataType: "json",
-                      success: function (data) {
-                          console.log("高危数据调用成功");
-                          console.log('l am here',data);
-                          data.map(function(item,index){
-                              var opt = document.createElement("option");
-                              opt.value =item.industry_id;
-                              opt.innerText =item.level1;
-                              select1.appendChild(opt);
-
-                          })
-
-
-                      },
-                      error:function(res){
-
-                          console.log("高危数据请求出错1");
-                          console.log(res);
-                      }
-                  });
-                  //监听高危第一次下拉框
-                  $(".selectitem1").change(function(){
-                      var csval2=$(".selectitem1 option:selected").val();
-                      console.log("我是change事件");
-                      console.log(csval2);
-                      var aaa={
-                          "industryId":csval2
-                      };
-                      //第二次请求高危数据
-                      $.ajax({
-                          type: "POST",
-                          url: getRootPath() + '/api/custom/check/A214',
-                          data: JSON.stringify(aaa),
-                          async: false,
-                          contentType: "application/json",
-                          dataType: "json",
-                          success: function (result) {
-                              console.log("高危数据2调用成功");
-                              var data=result.data;
-                              console.log('data',data);
-                              select2.options.length=1;
-                              for (var key in data){//遍历对象
-                                  console.log("key",data[key]);
-                                  data[key].map(function(item,index){//遍历数组
-                                      console.log('level2:',item.level2);
-
-                                      var opt2 = document.createElement ("option");
-                                      opt2.innerText =item.level2;
-                                      select2.appendChild(opt2);
-                                  })
-                              }
-                          },
-                          error:function(res){
-                              console.log("高危数据请求出错2");
-                          }
-                      });
-
-
-
-
-                  });
-
-
-              }
-
-
-          }else if(4==type){
-              var add1 =`<div class="row cl">
-                    <div>
-                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>自定义检查项目 :</label>
-                   <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" id="project`+i+`" class="input-text">
-                    </div>
-                    </div>
-                    <div>
-                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>自定义检查内容 :</label>
-                    <div class="formControls col-xs-8 col-sm-9">
-                    <input  type="text" id="content`+i+`"class="input-text">
-                    </div>
-                    </div>
-                    </div>`;
-              $('#addContainer').append(add1);
+          if(obj.gkzt == '') {
+              $("#gkzt").focus();
+              return false;
+          }
+          if(obj.fjgkfzr == '') {
+              $("#fjgkfzr").focus();
+              return false;
+          }
+          if(obj.gkcs == '') {
+              $("#gkcs").focus();
+              return false;
+          }
+          if(obj.level2 == '') {
+              $("#level2").focus();
+              return false;
           }
 
+          var i = layer.load();
+          $.post(getRootPath() + "/company/safety-system/aCompanyManual-save", obj, function(result) {
+              layer.close(i);
+              location.reload();
+          })
       }
-
-
-
-
+      function pr_() {
+          $(".div-pcz").hide();
+          $("#container").jqprint();
+          $(".div-pcz").show();
+      }
   </script>
-
 </head>
 <body>
+<%-- <nav class="breadcrumb text-c">
+  <a class="btn-page <c:if test="${type == 1}"> pagexz</c:if>" data-href="${ly }/company/safety-system/control-list?type=1" data-title="重大风险管控" onclick="Hui_admin_tab(this)">重大风险管控</a>
+  <a class="btn-page <c:if test="${type == 2}"> pagexz</c:if>" data-href="${ly }/company/safety-system/control-list?type=2" data-title="较大风险管控" onclick="Hui_admin_tab(this)" href="javascript:;">较大风险管控</a>
+  <a class="btn-page <c:if test="${type == 3}"> pagexz</c:if>" data-href="${ly }/company/safety-system/control-list?type=3" data-title="一般和较小风险管控" onclick="Hui_admin_tab(this)" href="javascript:;">一般和较小风险管控</a>
+  <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>
+</nav> --%>
 <nav class="breadcrumb">
-  <span>添加检查表</span>
-  <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
-     href="javascript:location.replace(location.href);" title="刷新">
+  <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+  <span class="c-gray en">&gt;</span> <span>风险分级管控</span>
+  <span class="c-gray en">&gt;</span> <span>分级管控</span>
+  <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
     <i class="Hui-iconfont">&#xe68f;</i>
   </a>
 </nav>
 <div class="page-container">
-  <form class="form form-horizontal" id="form">
-    <%-- <div class="row cl">
-      <img alt="" src="${ly }/images/danger.jpg" style="margin-left:10%;height:120px;"/>
-    </div> --%>
-    <div class="row cl">
-      <label class="form-label col-xs-4 col-sm-2">检查表名称：</label>
-      <div class="formControls col-xs-8 col-sm-9">
-        <input type="text" id="title" style="width:350px" class="input-text"
-               maxlength="50" placeholder="根据检查需要填写或空缺"/>
-      </div>
-    </div>
-
-    检查方式
-    <div class="row cl">
-      <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查方式 :</label>
-      <div class="formControls col-xs-8 col-sm-9">
-            <span class="select-box inline">
-
-                   <select name="checkType" class="select" id="checkType">
-                       <option value="1">日常</option>
-                       <option value="2">定期</option>
-                       <option value="3">临时</option>
-                  </select>
-            </span>
-
-      </div>
-    </div>
-
-    检查性质
-    <div class="row cl">
-      <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查性质 :</label>
-      <div class="formControls col-xs-8 col-sm-9">
-            <span class="select-box inline">
-
-                   <select name="checkNature" class="select" id="checkNature" onchange="nature(this)">
-                       <option value="0">请选择检查类别</option>
-                       <option value="-1">基础</option>
-                       <option value="-2">现场</option>
-                       <c:forEach items="${danger}" var="entry">
-                         <option value="${entry.id}">${entry.name}</option>
-                       </c:forEach>
-<%--                       <script>--%>
-<%--                           window.onload=function () {--%>
-<%--                               var checknature=document.querySelector('#checkNature');--%>
-<%--                               --%>
-<%--                               console.log(checknature.value[enter.id]);--%>
-<%--                               console.log(${entry.id});--%>
-<%--                           }--%>
-<%--                       </script>--%>
-                  </select>
-            </span>
-
-      </div>
-    </div>
-
-
-    <%--部门--%>
-
-
-    <div class="row cl" style="display: none;">
-      <label class="form-label col-xs-4 col-sm-2" style="line-height:50px;">检查类型：</label>
-      <div class="formControls col-xs-8 col-sm-9">
-        <div class="radio-lx" onclick="indu_(${ind1.id },1)" type="1">基础管理</div>
-        <c:forEach items="${ind2L }" var="be">
-          <div class="radio-lx" onclick="indu_(${be.id },2)" type="2">现场管理-${be.name }</div>
+  <div class="row cl" style="margin-top:20px;text-align:center;">
+    <button onClick="pr_()" class="btn btn-success radius " type="button" style="padding: 0 70px;">
+      <i class="Hui-iconfont mr-10">&#xe652;</i>打印
+    </button>
+  </div>
+  <div class="mt-20" id="container" style="margin:auto;">
+    <h3 class="text-c">${company.name}分级管控表</h3>
+    <table id="xxx" class="table table-border table-bordered table-bg table-hover table-sort">
+      <thead>
+      <tr class="text-c">
+        <th style="min-width:80px">车间</th>
+        <th style="min-width:80px">岗位/部位</th>
+        <th style="min-width:50px">风险等级</th>
+        <th style="min-width:150px">风险类型</th>
+        <th style="min-width:200px">风险因素</th>
+        <th style="min-width:50px">管控主体</th>
+        <th style="min-width:50px">责任人</th>
+        <th style="min-width:150px">管控措施</th>
+        <th style="min-width:100px" class="div-pcz">操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <c:forEach items="${treeMap }" var="be1" varStatus="index">
+        <c:forEach items="${be1.value }" var="be2">
+          <c:forEach items="${list }" var="be">
+            <c:if test="${(be.level1 eq be1.key && be.level2 eq be2) || (empty be1.key && empty be.level1)}">
+              <tr>
+                <td class="text-c">${be.gkzt}</td>
+                <td class="text-c">${be.level2}</td>
+                <td class="text-c">
+                  <c:choose>
+                    <c:when test="${be.level eq '红色'}"><font class="col-a">${be.level}</font></c:when>
+                    <c:when test="${be.level eq '橙色'}"><font class="col-b">${be.level}</font></c:when>
+                    <c:when test="${be.level eq '黄色'}"><font class="col-c">${be.level}</font></c:when>
+                    <c:when test="${be.level eq '蓝色'}"><font class="col-d">${be.level}</font></c:when>
+                  </c:choose>
+                </td>
+                <td class="text-c">${be.type }</td>
+                <td class="text-c">${be.factors }</td>
+                <td class="text-c">${be.gkzt }</td>
+                <td class="text-c">${be.fjgkfzr }</td>
+                <td><p>${empty be.gkcs ? be.measures : be.gkcs}</p></td>
+                <td class="text-c div-pcz">
+                  <input type="hidden" name="gkcs" value="${empty be.gkcs ? be.measures : be.gkcs }"/>
+                  <input type="hidden" name="gkzt" value="${be.gkzt }"/>
+                  <input type="hidden" name="fjgkfzr" value="${be.fjgkfzr }"/>
+                  <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑">编辑管控信息</a>
+                </td>
+              </tr>
+            </c:if>
+          </c:forEach>
         </c:forEach>
-        <c:forEach items="${ind3L }" var="be">
-          <div class="radio-lx" onclick="indu_(${be.id },3)" type="3">高危作业-${be.name }</div>
-        </c:forEach>
+      </c:forEach>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 弹窗管控信息添加 -->
+<div id="win-add" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width: 760px">
+    <div class="modal-content radius">
+      <div class="modal-header">
+        <h3 class="modal-title">管控信息</h3>
+        <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+      </div>
+      <div class="modal-body">
+        <div class="row cl">
+          <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控主体：</label>
+          <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
+            <input type="text" id="gkzt" value="" style="width: 357px" class="input-text required">
+
+            <input id = "gkztIds"  type="hidden" >
+
+            <c:if test="${not empty departL}">
+              <button class="btn btn-primary radius" type="button" onclick="chosem()">
+                <i class="Hui-iconfont">&#xe611;</i>选择管控主体
+              </button>
+            </c:if>
+          </div>
+        </div>
+
+
+
+        <div class="row cl mt-15">
+          <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">部位：</label>
+          <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
+            <input type="text" id="buwei" value="" style="width: 357px" class="input-text required">
+            <c:if test="${not empty perL}">
+              <button class="btn btn-primary radius" type="button" onclick="chosem3()">
+
+                <i class="Hui-iconfont" >&#xe611;</i>选择部位
+
+              </button>
+            </c:if>
+          </div>
+        </div>
+
+
+
+
+
+        <div class="row cl mt-15">
+          <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控措施：</label>
+          <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
+            <textarea id="gkcs" class="textarea txtarea_sq" style="width: 557px;"></textarea>
+          </div>
+        </div>
+        <div class="row cl mt-15">
+          <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">责任人：</label>
+          <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
+            <input type="text" id="fjgkfzr" value="" style="width: 357px" class="input-text required">
+            <c:if test="${not empty perL}">
+              <button class="btn btn-primary radius" type="button" onclick="chosem2()">
+                <i class="Hui-iconfont">&#xe611;</i>选择责任人
+              </button>
+            </c:if>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="save_()">确定</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
       </div>
     </div>
+  </div>
+</div>
 
-    <%--<div class="row cl">--%>
-    <%--<label class="form-label col-xs-4 col-sm-2">自动预警设置：</label>--%>
-    <%--<div class="formControls col-xs-8 col-sm-9">--%>
-    <%--<input type="radio" name="open" value="1" <c:if test="${model.open != 0}">checked="checked"</c:if>/>开启--%>
-    <%--<input type="radio" name="open" value="0" class="ml-20"--%>
-    <%--<c:if test="${model.open == 0}">checked="checked"</c:if>/>关闭--%>
-    <%--<span class="ml-20">开启后，逾期不填写检查记录，系统自动预警！</span>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-
-    <%--<div class="row cl">--%>
-    <%--<label class="form-label col-xs-4 col-sm-2">检查周期(天)：</label>--%>
-    <%--<div class="formControls col-xs-8 col-sm-9">--%>
-    <%--<input type="text" id="cycle" value="" style="width:350px" class="input-text required ll-numberbox"--%>
-    <%--data-options="min:1,max:365"/>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--<div class="row cl">--%>
-    <%--<label class="form-label col-xs-4 col-sm-2">检查开始日期：</label>--%>
-    <%--<div class="formControls col-xs-8 col-sm-9">--%>
-    <%--<input type="text" id="nextTime" value=""--%>
-    <%--onfocus="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'})"--%>
-    <%--class="input-text Wdate mb-5 mt-5" style="width:350px;"/>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%-- <div class="row cl">
-      <label class="form-label col-xs-4 col-sm-2">备注：</label>
-      <div class="formControls col-xs-8 col-sm-9">
-        <input type="text" id="memo" value="${model.memo }" style="width:350px" class="input-text" maxlength="500"/>
+<div id="win-add2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width: 900px">
+    <div class="modal-content radius">
+      <div class="modal-header">
+        <h3 class="modal-title">选择管控主体</h3>
+        <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
       </div>
-    </div> --%>
-    <div class="row cl">
-      <%--<label class="form-label col-xs-4 col-sm-2">岗位/部位：</label>--%>
-      <%--<div class="formControls col-xs-8 col-sm-9">--%>
-      <%--<input type="text" id="jcbw" value="${name}" style="width:350px" class="input-text"/>--%>
-      <%--</div>--%>
-      <div class="div_model mt-20">
-        <ul class="div_fold">
-          <li class="item" data-n="">
-            <%--<div class="title_item">--%>
-            <%--<h4><b>+</b></h4>--%>
-            <%--<!----%>
-            <%--<a class="btn_ejc" style="text-decoration:none" onclick="part_edit(this)" href="javascript:;" title="编辑检查项">编辑检查项</a>--%>
-            <%--<a class="btn_djc" style="text-decoration:none" onclick="part_del(this)" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe609;</i></a>--%>
-            <%---->--%>
-            <%--</div>--%>
-            <div class="info">
-              <table class="table table-border table-bordered table-bg table-hover table-sort">
-                <thead>
-                <tr class="text-c">
-                  <th width="5%">序号</th>
-                  <th width="80%">检查项目</th>
-                  <th width="15%">操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <!-- 循环检查项目-->
-                <c:set value="0" var="x"/>
-                <c:forEach items="${items}" var="l">
-
-                  <c:set value="${x + 1}" var="x"/>
-                  <tr class="text-c" data-lid="${l.dmid }">
-                    <!--fix a bug id->dmid zhangcl 2018.12.13-->
-                    <td>${x}</td>
-                    <td>${l.level1 }/${l.level2 }<c:if
-                            test="${!empty l.level3}">/${l.level3 }</c:if></td>
-                    <td>
-                      <a style="text-decoration:none" onclick="del(this)" href="javascript:;"
-                         title="删除">删除</a>
-                    </td>
-                  </tr>
-
-                </c:forEach>
-                <!-- 循环结束 -->
-                </tbody>
-              </table>
-            </div>
-          </li>
-        </ul>
+      <div class="modal-body">
+        <table class="table table-border table-bordered table-bg table-hover table-sort" style="float:none;">
+          <thead>
+          <tr class="text-c">
+            <th style="width:50px;">&nbsp;</th>
+            <th>公司</th>
+            <th>车间/部门</th>
+            <!-- <th>班组</th> -->
+          </tr>
+          </thead>
+          <c:forEach items="${departL }" var="be">
+            <tr class="text-c">
+              <td><input type="radio" name="radio-1" value="${be.name }" onclick="dep_choose2s(${be.id})"></td>
+              <input type="hidden" value="${be.id }">
+              <td>${be.companyName }</td>
+              <td>${be.name }</td>
+                <%-- <td>${be.level == 1 ? be.name : be.parName}</td>
+                <td>${be.level == 1 ? '' : be.name}</td> --%>
+            </tr>
+          </c:forEach>
+        </table>
       </div>
-
-      <%--添加项的容器--%>
-
-
-      <div id="addContainer"></div>
-
-
-      <div class="addCh1 row cl" style="display: none">
-        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
-          <button onClick="addItem(1)" class="btn btn-primary radius" type="button"
-                  style="padding: 0 70px;">
-            <i class="Hui-iconfont">&#xe632;</i>新增检查项
-          </button>
-          <button onClick="addItem(2)" class="btn btn-primary radius" type="button"
-                  style="padding: 0 70px;">
-            <i class="Hui-iconfont">&#xe632;</i>新增自定义检查项
-          </button>
-        </div>
-      </div>
-
-
-      <div class="addCh3 row cl" style="display: none">
-        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
-          <button onClick="addItem(3)" class="btn btn-primary radius" type="button"
-                  style="padding: 0 70px;">
-            <i class="Hui-iconfont">&#xe632;</i>新增检查项
-          </button>
-          <button onClick="addItem(4)" class="btn btn-primary radius" type="button"
-                  style="padding: 0 70px;">
-            <i class="Hui-iconfont">&#xe632;</i>新增自定义检查项
-          </button>
-        </div>
-      </div>
-
-
-
-
-      <div class="row cl">
-        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
-          <button onClick="saveCheckMenu()" class="btn btn-primary radius" type="button"
-                  style="padding: 0 70px;">
-            <i class="Hui-iconfont">&#xe632;</i>保存检查表
-          </button>
-          <%--<button onClick="giveup_save_submit()" class="btn btn-primary radius" type="button"--%>
-          <%--style="padding: 0 70px;">--%>
-          <%--放弃添加--%>
-          <%--</button>--%>
-        </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="dep_choose()">确定</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
       </div>
     </div>
-  </form>
+  </div>
+</div>
+<script type="text/javascript">
+    function  dep_choose2s(a) {
+        $("#gkztIds").val(a);
+    }
+    function dep_choose() {
+        var list = $("#win-add2 :checked");
+        var v = [];
+        list.each(function() {
+            v.push($(this).val());
+        });
+        $("#gkzt").val(v.join(","));
+        $("#win-add2").modal("hide");
+    }
+</script>
+
+<div id="win-add3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width: 900px">
+    <div class="modal-content radius">
+      <div class="modal-header">
+        <h3 class="modal-title">选择责任人</h3>
+        <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+      </div>
+      <div class="modal-body">
+        <table class="table table-border table-bordered table-bg table-hover table-sort" style="float:none;">
+          <thead>
+          <tr class="text-c">
+            <th style="width:50px;">&nbsp;</th>
+            <th>姓名</th>
+            <th>公司</th>
+            <th>部门</th>
+            <th>班组</th>
+            <th>职务</th>
+          </tr>
+          </thead>
+          <c:forEach items="${perL }" var="be">
+            <tr class="text-c">
+              <td><input type="radio" name="radio-2" value="${be.name }"></td>
+              <td>${be.name }</td>
+              <td>${be.companyName }</td>
+              <td>${be.level == 1 ? be.dname : be.dpname}</td>
+              <td>${be.level == 1 ? '' : be.dname}</td>
+              <td>${be.position }</td>
+            </tr>
+          </c:forEach>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="per_choose()">确定</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
-<%--隐藏域--%>
 
-<%--现场--%>
-<div  class="addItem"  style="display:none">
-  <div class="row cl level1">
-    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择部门 :</label>
-    <div class="formControls col-xs-8 col-sm-9">
-            <span class="select-box inline">
-
-            <select name="departmentId" class="select departmentId"  onchange="findPerson(this)">
-            <option value="0">请选择车间</option>
-            <c:forEach items="${map}" var="entry">
-              <option value="${entry.value}">${entry.key}</option>
-            </c:forEach>
-
-            </select>
-            </span>
-      <script>
-
-      </script>
+<%-- 部位窗口信息 --%>
+<div id="win-add4" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width: 400px">
+    <div class="modal-content radius">
+      <div class="modal-header">
+        <h3 class="modal-title">选择部位</h3>
+        <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+      </div>
+      <div id = "test" class="modal-body">
+        <table class="table table-border table-bordered table-bg table-hover table-sort" style="float:none">
+          <thead>
+          <tr class="text-c">
+            <th style="width:50px;">&nbsp;</th>
+            <th>部位</th>"
+          </thead>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="per_chooses()">确定</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+      </div>
     </div>
   </div>
+</div>
 
-  <div  class="addItem"  style="display:none">
-    <div class="row cl level1">
-      <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择部门 :</label>
-      <div class="formControls col-xs-8 col-sm-9">
-            <span class="select-box inline">
-
-            <select name="departmentId" class="select departmentId"  onchange="findPerson2(this)">
-            <option value="0">请选择车间</option>
-            <c:forEach items="${map}" var="entry">
-              <option value="${entry.value}">${entry.key}</option>
-            </c:forEach>
-
-            </select>
-            </span>
-        <script>
-
-        </script>
-      </div>
-    </div>
-
-
-
-
-
-
-
-
-
-    <div class="row cl level2">
-      <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择岗位 :</label>
-      <div class="formControls col-xs-8 col-sm-9">
-            <span class="select-box inline">
-
-            <select name="department2Id" class="select department2Id"  onchange="findCheck(this)">
-            <option value="0">请选择岗位</option>
-            </select>
-            </span>
-
-      </div>
-    </div>
-
-    <div class="row cl level3">
-      <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查项目 :</label>
-      <div class="formControls col-xs-8 col-sm-9">
-        <p class="inspection"></p>
-        <%--<p id="xiangmu"><input type="checkbox" name="category" value="今日话题" />今日话题 </p>--%>
-      </div>
-    </div>
-
-  </div>
-
-</body>
 <script type="text/javascript">
 
-    // 获取名称
-    var departmentName = $("#departmentId").val();
-
-    $("#cycle").val(1);
-    var day = new Date();
-    day.setTime(day.getTime() + 24 * 60 * 60 * 1000);
-    var s = day.getFullYear() + "-" + (day.getMonth() + 1) + "-" + day.getDate();
-    $("#nextTime").val(s);//默认明天
-
-    function article_save_submit_1() {
-        //alert("model-add3.jsp");
-        industryId = '${ind1.id }';//基础管理';给默认值，隐藏
-        industryType = 1;
-        if (industryId == '') {
-            layer.alert("请选择检查类型");
-            return false;
-        }
-
-        if (!$("#jcbw").val()) {
-            layer.alert("请添加检查部位");
-            return false;
-        }
-
-        var obj = new Object();
-
-        var model = new Object();
-        model.id = modelId;
-        model.title = $("#title").val();//检查表名称
-        model.type = type;
-        model.flag = flag;
-
-        model.open = $(":radio:checked").val();
-        model.cycle = $("#cycle").val();
-        model.nextTime = $("#nextTime").val();
-        //alert(model.open);
-
-        model.part = $("#part").val();//受检部门单位
-        model.industryId = industryId;
-        model.industryType = industryType;
-        model.memo = $("#memo").val();//备注
-        model.del = 0;
-        if (model.open == 1) {
-            if (model.cycle == '') {
-                layer.alert("请输入报表生成周期")
-                return false;
-            }
-            if (model.nextTime == '') {
-                layer.alert("请选择下次报表自动创建时间")
-                return false;
-            }
-        }
-        obj.model = model;
-        var index = layer.load();
-        var partList = new Array();
-        $(".div_fold li").each(function () {
-            var levels = '';
-            $(this).find("tbody").children("tr").each(function (i, item) {
-                var i = $(item).attr("data-lid");
-                levels = levels == '' ? i : levels + "," + i;
-            })
-
-            var part = new Object();
-            part.name = $("#jcbw").val();
-            part.levels = levels;
-            //alert("levels:"+levels);
-            partList.push(part);
+    function per_choose() {
+        var list = $("#win-add3 :checked");
+        var v = [];
+        list.each(function() {
+            v.push($(this).val());
         })
+        $("#fjgkfzr").val(v.join(","));
 
-        obj.partList = partList;
-        //alert(JSON.stringify(obj))
-        $.ajax({
-            type: "POST",
-            url: getRootPath() + '/company/model-save',
-            data: JSON.stringify(obj),
-            async: false,
-            dataType: "json",
-            contentType: 'application/json',
-            success: function (result) {
-                if (result.status == '0') {
-//show_tab("检查表", "/company/model-list-cx?flag=" + flag + (flag == 1 ? "&type=" + type : ""));
-                    window.location.href = '${ly }/company/safety-system/risk-list';
+        $("#win-add3").modal("hide");
+    }
+</script>
+</body>
+<script type="text/javascript">
+    $(function(){
+        var b = null, l1 = '', c = 1;
+        var b2 = null, l2 = '', c2 = 1;
+        $("#xxx tbody tr").each(function() {
+            var td = $(this).children("td").eq(0);
+            var td2 = $(this).children("td").eq(1);
+            var l1_ = td.text();
+            var l2_ = td2.text();
 
+            //与上一层一样
+            if(l1 == l1_) {
+                td.remove();
+                c = c + 1;
+
+                if(l2 == l2_) {
+                    td2.remove();
+                    c2 = c2 + 1;
                 } else {
-                    layer.alert(result.map.message);
+                    l2 = l2_;
+                    if(b2 != null) {
+                        b2.attr("rowspan", c2);
+                        c2 = 1;
+                    }
+                    b2 = td2;
                 }
-            },
-            complete: function (XMLHttpRequest, textStatus) {
-                layer.close(index);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("保存失败")
+
+            } else {//与上一层不一样
+                l1 = l1_;
+                if(b != null) {
+                    b.attr("rowspan", c);
+                    c = 1;
+                }
+                b = td;
+
+                l2 = l2_;
+                if(b2 != null) {
+                    b2.attr("rowspan", c2);
+                    c2 = 1;
+                }
+                b2 = td2;
             }
-        });
-    }
-
-    function giveup_save_submit() {
-        window.location.href = "/company/safety-system/risk-list";
-    }
-
-    /* //部门单个检查项删除
-     function del(obj) {
-         var tbody = $(obj).closest("tbody");
-         $(obj).closest("tr").remove();
-         var trList = tbody.children("tr");
-         $.each(trList, function(i, item) {
-             $(this).children("td").first().text(i + 1);
-         })
-
-         if(trList.length == 0) {
-             tbody.closest("li").remove();
-         }
-     }*/
-
-
+        })
+        if(b != null) {
+            b.attr("rowspan", c);
+        }
+        if(b2 != null) {
+            b2.attr("rowspan", c2);
+        }
+    })
 </script>
 </html>

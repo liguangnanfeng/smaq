@@ -9,7 +9,11 @@ public interface TRectificationConfirmMapper {
 
     void saveTRectificationConfirm(TRectificationConfirm confirm);
 
+    void updateTRectificationConfirm(TRectificationConfirm confirm);
+
     List<Map> findTRectificationConfirm(String userId);
+
+    TRectificationConfirm  findTRectificationConfirmByItemId(String id);
 
     TRectificationConfirm findByCheckId(Integer checkId );
 
@@ -19,4 +23,9 @@ public interface TRectificationConfirmMapper {
      * @param byCheckId
      */
     void updateByTRectificationConfirm(TRectificationConfirm byCheckId);
+
+    /**
+     * 根据 checkItem表数据进行查询
+     */
+    List<TRectificationConfirm> selectByCheckItemId(Integer checkItemId);
 }

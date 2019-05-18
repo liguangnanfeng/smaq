@@ -1,6 +1,8 @@
 package com.spring.web.dao;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import com.spring.web.model.TIndustry;
 
@@ -58,4 +60,10 @@ public interface TIndustryMapper {
     List<TIndustry> selectByIds(@Param("ids") String ids);
     
     List<TIndustry> selectByType(@Param("type") Integer type);
+
+    /**
+     * 获取所有的高危检查
+     * */
+    List<Map> selectType3(Integer industryId);
+
 }

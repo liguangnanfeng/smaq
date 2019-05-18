@@ -25,13 +25,13 @@ dt a:hover{text-decoration: none;}
 </script>
 <script type="text/javascript">
    $(function(){
-//     var loginType = '${loginType}';
-//     if(loginType == '1'){
-//       layer.alert("登录状态失效，请重新登录！",function(ind){
-//         layer.close(ind);
-//         top.location.href = getRootPath() + "/backLogout";
-//       });
-//     }
+<%--//     var loginType = '${loginType}';--%>
+<%--//     if(loginType == '1'){--%>
+<%--//       layer.alert("登录状态失效，请重新登录！",function(ind){--%>
+<%--//         layer.close(ind);--%>
+<%--//         top.location.href = getRootPath() + "/backLogout";--%>
+<%--//       });--%>
+<%--//     }--%>
     
     $(document).keydown(function(event){ 
       if(event.keyCode==13){ 
@@ -53,7 +53,7 @@ dt a:hover{text-decoration: none;}
       <div class="Hui-tabNav-wp">
         <ul id="min_title_list" class="acrossTab cl">
           <li class="active">
-            <span title="首页" data-href="${ly }/company/welcome">首页</span>
+            <span title="首页1" data-href="${ly }/company/welcome">首页</span>
             <em></em>
           </li>
         </ul>

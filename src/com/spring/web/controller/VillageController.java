@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import com.spring.web.dao.*;
 import com.spring.web.model.*;
+import com.spring.web.service.CheckCompany.ICheckManual;
 import com.spring.web.service.PCSaveModel;
 import com.spring.web.service.SaveModelService;
 import org.apache.commons.lang3.StringUtils;
@@ -71,6 +72,10 @@ public class VillageController extends BaseController {
 
     @Autowired
     private PCSaveModel saveModelService ;
+
+    /**查询风险点*/
+    @Autowired
+    private ICheckManual checkManual;
 
 
     /**
@@ -2673,6 +2678,11 @@ public class VillageController extends BaseController {
             }
         }
 
+        // 查询高危风险
+        List<Map> list =  checkManual.checkGaoWei(user.getId());
+
+
+        model.addAttribute("danger",list);
         model.addAttribute("map", names);
         return "company/checkModel/model-add";
     }
@@ -2793,5 +2803,21 @@ public class VillageController extends BaseController {
         result.setMess("添加成功");
         return result;
     }
+
+
+    /**
+     * 保存模板2
+     */
+    @RequestMapping(value = "saveCheckMenu2")
+    @ResponseBody
+    public Result saveCheckMenu2(@RequestBody HashMap<String,Object> map){
+        Result result = new ResultImpl();
+        log.info(map);
+
+
+        result.setMess("添加成功");
+        return result;
+    }
+
 
 }

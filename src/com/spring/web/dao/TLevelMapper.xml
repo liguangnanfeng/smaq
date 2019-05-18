@@ -146,5 +146,41 @@
     from t_level_tbl
     where id in (${ids})
   </select>
-  
+
+  <!--根据industeyId(基础查询的选项) 查询所有的基础操作-->
+  <select id="selectLevel1ByIndustry" resultType="String">
+       select level1 from t_level_tbl where industry_id= #{industryId} group by level1;
+  </select>
+
+  <select id="selectByIndustryId" resultType="Map">
+
+     select level1 from t_level_tbl where industry_id= #{industryId} group by level1;
+  </select>
+
+  <select id="checkGaoWei2">
+      SELECT id, level1 ,industry_id FROM t_level_tbl WHERE industry_id= #{industryId} group by level1;
+  </select>
+
+  <!--根据level1 和industryId查询level2-->
+  <select id="selectlevel2Bylevel1AndIndustryId" resultType="Map">
+        select level2 ,industry_id  as industryId
+        from t_level_tbl
+        where industry_id =#{industryId}
+        and level1=#{level1} group by level2
+  </select>
+
+  <!--基础和高危检查 进行详细信息查询-->
+  <select id="selectGaoweiAndJiChu" resultType="java.util.Map" >
+        select
+    l.id as id , l.level1 as level1,   l.level2 as level2, l.level3 as level3,  i.content as level4 , i.reference  as reference,  s.keywords as factors
+        from t_level_tbl l left join t_item_tbl i on  l.id=i.level_id
+                   left join t_item_serious_tbl s on s.levelid = l.id
+
+        where l.industry_id = #{industryId} and l.level1 = #{level1} and l.level2 = #{level2}
+
+  </select>
+
 </mapper>
+
+
+

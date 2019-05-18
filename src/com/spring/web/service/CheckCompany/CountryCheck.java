@@ -56,4 +56,27 @@ public interface CountryCheck {
      * @return
      */
     String saveCheckMessage(SaveDataMessageItem saveDataMessageItem, Officials officials, Integer id);
+
+    /**
+     * 查询政府端登录用户的详细信息
+     * @param id
+     * @param flag
+     * @return
+     */
+    Map selectParticular(Integer id, Integer flag);
+
+    /**
+     * 政府端获取检查记录
+     * @return
+     */
+    List findRecordByCreateUser(Integer id);
+
+
+    /**
+     * 政府端保存复查信息
+     * @param saveDataMessageItem
+     * @param officials
+     * @return
+     */
+    String saveReviewData(SaveDataMessageItem saveDataMessageItem, Officials officials);
 }

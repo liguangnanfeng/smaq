@@ -11,31 +11,30 @@ import java.util.List;
  */
 @Data
 public class SaveDataMessageItem {
-    /**
-     * 检查表id
-     */
+
+    /**企业的id*/
+    public Integer uid;
+
+    /**检查表id*/
     public Integer checkId;
 
     public String access_token;
 
     public String sessionId;
 
-    /**
-     * 责任人id
-     */
+    /**责任人id*/
     public Integer zrrId;
 
-    /**
-     *
-     */
+
 
     /**
-     * 立即整改/限时整改
+     *  立即整改/限时整改
      *  为空表示立即整改
      *  不为空表示限期整改
      */
     public String type;
 
+    /**消息集合*/
     public List<SaveDataMessage> list;
 
     public Integer getCheckId() {

@@ -8,6 +8,7 @@ import com.spring.web.model.request.CheckLevel;
 import com.spring.web.model.request.SaveDataMessageItem;
 import com.spring.web.model.response.CheckItemS;
 import com.spring.web.model.response.MeasuresBean;
+import com.sun.javafx.collections.MappingChange;
 
 import java.util.List;
 import java.util.Map;
@@ -19,16 +20,16 @@ import java.util.Map;
 public interface ICheckManual {
     Map<String,List> selectDangerAndManual(Integer cid, List<String> names);
 
-    List<CheckLevel> selectLevel3AndId(List<CheckLevel> checkLevel);
+    List<Map> selectLevel3AndId(List<CheckLevel> checkLevel);
 
     /**
      * 根据levle1 level2 检查类型  查询level3
      * @param checkLevel
      * @return
      */
-    List<CheckLevel> selectLevel4AndId(CheckLevel checkLevel);
+    List<Map<String,Object>> selectLevel4AndId(CheckLevel checkLevel);
 
-    List<CheckLevel> selectLevel5AndId(CheckLevel checkLevel);
+    List<Map> selectLevel5AndId(CheckLevel checkLevel);
 
     /**
      * 保存自定义模版的信息
@@ -40,7 +41,19 @@ public interface ICheckManual {
 
     List<Map<Integer, String>> findUserByIdAndStatus(ZzjgPersonnel zzjg);
 
+    /**
+     * 企业端查询所有模版
+     * @param uid
+     * @return
+     */
     List<Map<Integer, String>> findModelByUid(Integer uid);
+
+    /**
+     * 政府端查询所有的模版
+     * @param uid
+     * @return
+     */
+    List<Map<Integer, String>> findCountryModelByUid(Integer uid);
 
     /**
      * 根据检查人员id查询部门对应的level2
@@ -50,7 +63,34 @@ public interface ICheckManual {
      */
     Map<String, List> findLevel2ByPersonnelId(Integer personnelId,Integer uId);
 
+    /**
+     * 获取所有的高危检查项
+     * @return
+     */
+    List<Map> checkGaoWei(Integer Uid);
 
+    /**
+     * 基础检查 查询
+     * @param uid
+     */
+    Map checkJiChu(Integer uid);
 
+    /**
+     * 获取高危的检查选项
+     * @param industryId
+     */
+    Map checkGaoWeiItem(Integer industryId);
 
+    /**
+     * 基础 高危
+     * 获取 level3  and level4
+     * @param checkLevel
+     */
+    List checkGaoWeiAndJiChu(CheckLevel checkLevel);
+
+    /**
+     *  TODO 查询高危选项的level1
+     * @param industryId
+     */
+    List<Map<String, Object>> checkGaoWei2(Integer industryId);
 }

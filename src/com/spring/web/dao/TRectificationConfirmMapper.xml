@@ -11,6 +11,9 @@
         <result column="status" property="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
         <result column="check_id" property="checkId" javaType="java.lang.Integer" jdbcType="INTEGER" />
         <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="DATE" />
+        <result column="sender_id" property="senderId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="checkItem_id" property="checkItemId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="photo" property="photo" javaType="java.lang.String" jdbcType="VARCHAR" />
     </resultMap>
 
 
@@ -23,17 +26,34 @@
     <!--</select>-->
 
     <insert id="saveTRectificationConfirm" parameterType="com.spring.web.model.TRectificationConfirm">
-    INSERT INTO t_rectification_confirm(confirm,sender,checker,status,check_id,create_time,check_item_id,sender_id) VALUES (#{confirm},#{sender},#{checker},#{status},#{checkId},#{createTime},#{checkItemId},#{senderId})
+    INSERT INTO t_rectification_confirm(confirm,sender,checker,status,check_id,create_time,check_item_id,sender_id,photo) VALUES (#{confirm},#{sender},#{checker},#{status},#{checkId},#{createTime},#{checkItemId},#{senderId},#{photo})
     </insert>
 
+    <update id="updateTRectificationConfirm" parameterType="com.spring.web.model.TRectificationConfirm">
+      update t_rectification_confirm set confirm = #{confirm} ,sender = #{sender},checker = #{checker},status = #{status},check_id = #{checkId},create_time = #{createTime},
+      check_item_id = #{checkItemId},sender_id = #{senderId},photo = #{photo}
+      where check_item_id = #{checkItemId}
+    </update>
+    <!--查询详细信息,进行分页
+        并查询公司的名称
+        和对应的检查项
+    -->
     <select id="findTRectificationConfirm" parameterType="java.lang.String" resultType="java.util.Map">
         select
-        a.*,b.*
+        a.*,b.* ,u.user_name, t.memo
         from t_rectification_confirm a LEFT JOIN t_check_tbl b on a.check_id = b.id
+        LEFT JOIN user_tbl u on b.user_id = u.id
+        LEFT JOIN t_check_item_tbl t on t.id = a.check_item_id
         where a.checker = #{userId} and a.status = 0
         ORDER BY a.id DESC
     </select>
 
+    <select id="findTRectificationConfirmByItemId" parameterType="java.lang.String" resultMap="ResultMap">
+        select
+        a.*
+        from t_rectification_confirm a
+        where a.check_item_id = #{id} and a.status = 0
+    </select>
 
     <select id="findByCheckId" resultType="com.spring.web.model.TRectificationConfirm"  parameterType="Integer">
         select * from t_rectification_confirm where check_id= #{checkId};
@@ -50,5 +70,10 @@
         where id = #{id,jdbcType=INTEGER}
 
     </update>
+
+
+    <select id="selectByCheckItemId" resultType="com.spring.web.model.TRectificationConfirm">
+        select * from t_rectification_confirm where check_item_id =#{checkIemId};
+    </select>
 
 </mapper>

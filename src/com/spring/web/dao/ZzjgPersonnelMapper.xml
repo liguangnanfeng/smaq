@@ -372,7 +372,7 @@
     -->
     <select id="selectAll1"  resultType="java.util.Map" parameterType="java.lang.Integer" >
 
-    select p.id as id , p.name as name, p.mobile as mobile, p.status as status ,p.position as position, d.name as department  , c.name as company
+    select p.id as id , p.name as name, p.mobile as mobile, p.status as status ,p.position as position, p.uid, d.name as department  , c.name as company
     from zzjg_personnel_tbl as  p join zzjg_department_tbl  as d  on d.id=p.dpid join zzjg_company_tbl  as c
     on c.id=p.cid
     where  p.id= #{id};

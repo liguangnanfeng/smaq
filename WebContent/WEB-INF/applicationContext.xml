@@ -23,15 +23,30 @@
        http://www.springframework.org/schema/task/spring-task.xsd
   ">
 
+
+  <!--短信配置-->
+  <bean id="SmsUtils" class="com.spring.web.util.SmsUtil">
+    <property name="appid" value="${javasms.appid}"></property>
+    <property name="appkey" value="${javasms.appkey}"></property>
+    <property name="templateId" value="${javasms.template}"></property>
+    <property name="smsSign" value="${javasms.Sign}"></property>
+  </bean>
+
   <!--spring 全局配置文件，用来控制spring 特性  对应的是系统级别的配置，作用范围是系统上下文-->
 
   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="locations">
       <list>
         <value>classpath:resources/resources.properties</value>
+        <value>classpath:resources/Sms.properties</value>
       </list>
     </property>
   </bean>
+
+<!--  <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="fileEncoding" value="utf-8"></property>
+
+  </bean>-->
 
   <!-- druid 监控统计功能 -->
   <!-- <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">

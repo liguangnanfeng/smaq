@@ -463,4 +463,9 @@
 
     </select>
 
+    <!--政府端获取已检查记录-->
+    <select id="selectRecordByCreateUser" parameterType="Integer" resultType="java.util.Map" >
+        SELECT * FROM t_check_tbl  WHERE create_user = #{id} and status=2  group by id desc ;
+    </select>
+
 </mapper>

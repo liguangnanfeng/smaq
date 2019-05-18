@@ -217,5 +217,11 @@
   <select id="selectByDistrictId" resultType="java.util.Map" parameterType="Integer">
     select user_id as id ,name from town_tbl where district_id=#{id};
   </select>
+  <!--镇级用户登陆获取详细信息-->
+  <select id="selectParticularByUid" resultType="java.util.Map" parameterType="Integer">
+select  o.uid,o.name,o.code,o.depart,o.flag,t.name as upName, t.address
+from officials_tbl o left join town_tbl t
+on o.uid =t.user_id  where o.id=#{id};
+  </select>
 
 </mapper>

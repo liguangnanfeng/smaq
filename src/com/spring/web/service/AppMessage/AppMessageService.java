@@ -37,4 +37,5 @@ public interface AppMessageService {
     // 政府端检查表
     List<Map> selectCheckByFlag();
 
+    List<Map> findTCheckListByStatus(String userId, Integer pageNo, Integer pageSize);
 }

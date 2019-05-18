@@ -9,6 +9,7 @@ import lombok.Data;
  */
 @Data
 public class CheckModel {
+    /**model表id*/
     public Integer modelId;
     public String sessionId;
     public String access_token;

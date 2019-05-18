@@ -504,7 +504,7 @@ $(function(){
       //判断当前浏览器是否支持WebSocket
       WEB_SOCKET_SWF_LOCATION = "${ly }/js/plugins/websocket/WebSocketMain.swf";
       if(window.WebSocket){  
-          websocket = new WebSocket("ws://"+location.hostname+":"+location.port+"/village/websocket/danger/"+userno);
+          websocket = new WebSocket("wss://"+location.hostname+":"+location.port+"/village/websocket/danger/"+userno);
   	}
       else {
       	//alert("当前版本不支持");

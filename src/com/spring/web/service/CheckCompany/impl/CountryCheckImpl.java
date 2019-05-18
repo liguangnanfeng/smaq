@@ -20,6 +20,8 @@ import java.util.*;
  * @Date: 2019/05/08 18:02
  * <p>
  * 小程序政府端进行检查,获取数据
+ * 现在是check 对应第一个item 和part part 和item是意义对应的关系
+ *
  */
 @Service
 @Transactional
@@ -222,13 +224,13 @@ public class CountryCheckImpl implements CountryCheck {
             // 2. 保存check表数据并返回id
             Integer checkId = saveCheckTbl(checkItem, officials, modelId, industryId,uid);
 
-            // 4. 保存checkPart数据并返回id
+          /*  // 4. 保存checkPart数据并返回id
             TCheckPart tCheckPart = saveCheckPart(checkItem, levels, checkId);
             tCheckPartMapper.insertSelective(tCheckPart);
-            int tCheckPartId = tCheckPart.getId(); // 获取checkPartId
+            int tCheckPartId = tCheckPart.getId(); // 获取checkPartId*/
 
             // 5. 保存Check_item 表数据并返回id TODO
-            saveCheckTtem(checkItem, officials, checkId, tCheckPartId);
+            saveCheckTtem(checkItem, officials, checkId);
 
             // 6. 保存model_part() 计划检查模块表
             saveTmodelPath(modelId, checkItem, levels);
@@ -439,33 +441,39 @@ public class CountryCheckImpl implements CountryCheck {
      *
      * @return
      */
-    private void saveCheckTtem(CheckItem checkItem, Officials officials, Integer CheckId, Integer CheckPartId) {
+    private void saveCheckTtem(CheckItem checkItem, Officials officials, Integer CheckId) {
 
-        List<TCheckItem> list = new LinkedList<>();
         // 获取检查标准详情
         List<CheckLevel> checkLevels = checkItem.getCheckLevels();
 
         for (CheckLevel checkLevel : checkLevels) {
+            List<TCheckItem> list = new LinkedList<>();
+            TCheckPart tCheckPart = new TCheckPart(); // 检查岗位/部位表
+
+            tCheckPart.setCheckId(CheckId);         // 检查表id
+            tCheckPart.setName(checkLevels.get(0).level2);    // 岗位或部位名称
+            int i = tCheckPartMapper.insertSelective(tCheckPart);
+
             TCheckItem tCheckItem = new TCheckItem();
+            tCheckItem.setMemo(checkLevel.getFactors());//不合格描述
+
             tCheckItem.setContent(checkLevel.getLevel4()); //检查标准详情
             tCheckItem.setLevelId(checkItem.getTitle());   //检查分类
 
-           if(null==checkLevel.getLevel3()){
-               tCheckItem.setLevels(checkLevel.getLevel1());   // 检查等级
-           }else{
-               tCheckItem.setLevels(checkLevel.getLevel3());   // 检查等级
-           }
+            if(null==checkLevel.getLevel3()){
+                tCheckItem.setLevels(checkLevel.getLevel1());   // 检查等级
+            }else{
+                tCheckItem.setLevels(checkLevel.getLevel3());   // 检查等级
+            }
             tCheckItem.setReference(checkLevel.getReference());//检查参照
-            tCheckItem.setPartId(CheckPartId);    // 装置与设施id
+
+            // tCheckItem.setPartId(tCheckPart.getId());    // 装置与设施id
             tCheckItem.setCheckId(CheckId);   // 检查表id
-            tCheckItem.setMemo(checkLevel.getFactors());// 不合格描述
 
             list.add(tCheckItem);
 
+            tCheckItemMapper.insertThreeBath(list, CheckId, tCheckPart.getId());
         }
-
-        // 添加item数据
-        tCheckItemMapper.insertThreeBath(list, CheckId, CheckPartId);
 
     }
 

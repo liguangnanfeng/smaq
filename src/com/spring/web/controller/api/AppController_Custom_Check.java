@@ -402,7 +402,7 @@ public class AppController_Custom_Check extends BaseController {
             Integer modelId = checkManual.saveCheck(checkItem, zzjg);
 
             result.setStatus("0");
-            result.setMessage("查询成功");
+            result.setMessage("保存成功");
             result.setData(modelId);
 
             System.out.println("保存检查项并返回modelId" + modelId);
@@ -434,7 +434,6 @@ public class AppController_Custom_Check extends BaseController {
         AppResult result = new AppResultImpl();
 
         try {
-
             MySessionContext myc = MySessionContext.getInstance();
             HttpSession sess = myc.getSession(sessionId);
 
@@ -571,11 +570,13 @@ public class AppController_Custom_Check extends BaseController {
 
             return result;
         } catch (NullPointerException n) {
+
             n.printStackTrace();
             result.setStatus("1");
             result.setMessage("未成功保存数据");
             return result;
         } catch (Exception e) {
+
             e.printStackTrace();
             result.setStatus("1");
             result.setMessage("网络异常");
@@ -584,8 +585,9 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO 根据当前用户查询所有的检查记录()
-     *
+     * TODO 根据当前用户查询所有的检查记录()  对根据判断求出这个责任人的部门和岗位
+     *  首先要判断他是检查人员还是被检查人员
+     *  根据状态进行查询,不同的检查详情在company_manul_tbl 获取岗位,来判断这个岗位的检查项是否合格,不合格进行显示
      * @param checkModel access_token信息
      * @return list       关于当前企业的不合格信息
      */
@@ -623,8 +625,8 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO 根据检查表信息 查询复查记录中不合格项查询出来
-     *
+     * TODO 根据检查表信息 查询检查记录中不合格项查询出来
+     * 首先根据用户id 进行判断获取他的部门 ,根据检查表的详细信息表示的是这个
      * @param checkId 检查表id
      * @return map     不合格的复查记录
      */
@@ -704,7 +706,6 @@ public class AppController_Custom_Check extends BaseController {
 
     }
 
-
     /**
      * TODO 企业端复查详情
      *
@@ -719,7 +720,6 @@ public class AppController_Custom_Check extends BaseController {
 
         return null;
     }
-
 
     /**
      * TODO 保存图片上传并返回路径

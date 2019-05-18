@@ -590,7 +590,6 @@ public class AppController_Country_Check {
                 return result;
 
             }
-
             Integer modelId = countryCheck.saveCheck(checkItem, officials, checkItem.getUid());
 
             result.setMessage("查询成功");

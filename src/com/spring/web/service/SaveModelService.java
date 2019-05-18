@@ -106,7 +106,6 @@ public class SaveModelService implements PCSaveModel {
 
     }
 
-
     /**
      * 根据用户的id查询公司的等级和规格 返回  行业id表
      * @return

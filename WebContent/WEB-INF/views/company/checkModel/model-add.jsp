@@ -949,6 +949,7 @@
                 return false;
             }
         }
+
         obj.model = model;
         var index = layer.load();
         var partList = new Array();
@@ -1010,7 +1011,6 @@
              tbody.closest("li").remove();
          }
      }*/
-
 
 </script>
 </html>

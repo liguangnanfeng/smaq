@@ -1,9 +1,11 @@
 package com.spring.web.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.web.model.ADangerManual;
 import com.spring.web.model.request.CheckLevel;
 import com.spring.web.model.response.MeasuresBean;
 import org.apache.ibatis.annotations.Param;
@@ -143,5 +145,33 @@ public interface ACompanyManualMapper {
      * @return
      */
     List<CheckLevel> findLevel3ByjcType3(CheckLevel checkLevel);
+
+
+    int add(ACompanyManual aCompanyManuals);
+
+
+    List<ACompanyManual> selectAll(@Param("uid") Integer uid);
+
+    boolean updateDeltess(@Param("id")Integer id);
+
+    List<ACompanyManual> selectIds(@Param("uid")Integer uid);
+
+    boolean updateAll(Integer id);
+
+    void insertBathByIndustry(Map<String, Object> m);
+
+    void updateDelByUserId(Integer id);
+
+    void updateDelByUserIddel(Integer id);
+
+    List<ACompanyManual> selectIdss(Integer userId);
+
+    void updateDelByUserId2(Integer id);
+
+    List<ACompanyManual> selectAlls(Integer userId);
+
+    void save(ACompanyManual aCompanyManual1);
+
+    List<ACompanyManual> findALLsss(@Param("flag")String flag, @Param("uid")Integer uid);
 }
 

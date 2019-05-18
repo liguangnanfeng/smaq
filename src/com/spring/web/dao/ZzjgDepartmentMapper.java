@@ -63,8 +63,6 @@ public interface ZzjgDepartmentMapper {
     
     List<Map<Object, Object>> selectLevel1ByUid(@Param("uid")Integer uid);
     
-    List<Map<Object, Object>> selectFullName(Integer cid);
-    
     List<Map<Object, Object>> selectLevel2ByUid(@Param("uid")Integer uid);
     
     /**
@@ -89,4 +87,9 @@ public interface ZzjgDepartmentMapper {
      * @return
      */
     List<String> selectNameByUid(Integer id);
+
+
+    List<ZzjgDepartment> selectOnes(@Param("pid")Integer pid);
+
+
 }

@@ -351,6 +351,23 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+
+    <select id="selectByMaps" resultType="java.util.HashMap">
+        select
+        T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
+        T1.flag,
+        T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
+        T1.wlbs,T1.gwzy,T1.lnglat
+        from
+        a_company_manual_tbl T1
+        where
+        T1.del = 0 and (T1.flag = "1" or T1.flag = "2" or T1.flag = "3")  and T1.uid = #{uid}
+    </select>
+
+
+
+
+
     <select id="selectByMap" resultType="java.util.HashMap">
         select
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
@@ -614,6 +631,38 @@
         </foreach>
     </insert>
 
+    <!-- 添加数据信息 -->
+    <insert id="add" parameterType="com.spring.web.model.ACompanyManual" >
+        insert into a_company_manual_tbl (uid, dmid,
+        level1, level2, level3,
+        factors,flag, level,
+        issys, del, ctime,
+        gwzy)
+        values (#{uid,jdbcType=INTEGER}, #{dmid,jdbcType=INTEGER},
+        #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},
+        #{factors,jdbcType=VARCHAR},#{flag,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR},
+        #{issys,jdbcType=INTEGER}, #{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP},
+        #{gwzy,jdbcType=VARCHAR})
+    </insert>
+
+
+
+    <!-- 添加数据信息 -->
+    <insert id="save" parameterType="com.spring.web.model.ACompanyManual" >
+        insert into a_company_manual_tbl (uid,level3,
+        factors, type, measures,reference, flag, level,
+        del, ctime)
+        values (#{uid,jdbcType=INTEGER},#{level3,jdbcType=VARCHAR},
+        #{factors,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{measures,jdbcType=VARCHAR},
+        #{reference,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR},
+        #{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP})
+    </insert>
+
+
+
+
+
+
     <select id="selectByMap2Limit" resultType="java.util.HashMap">
         select
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
@@ -807,13 +856,110 @@
     </update>
 
     <update id="updateCompanyDlevel">
-  update
-  company_tbl
-  set
-  dlevel = (select level from a_company_manual_tbl where uid = #{userId} and del = 0 order by find_in_set(level,'红色,橙色,黄色,蓝色') limit 1)
-  where
-  user_id = #{userId}
+      update
+      company_tbl
+      set
+      dlevel = (select level from a_company_manual_tbl where uid = #{userId} and del = 0 order by find_in_set(level,'红色,橙色,黄色,蓝色') limit 1)
+      where
+      user_id = #{userId}
   </update>
+
+
+
+    <update id="updateDelByUserId">
+        update
+        a_company_manual_tbl
+        set
+        del = 0
+        where
+        uid = #{uid} and flag2 = 1
+    </update>
+
+
+
+    <!--根据公司ID，风险等级 查询未删除的数据信息 -->
+    <select id="selectIdss"  resultType="com.spring.web.model.ACompanyManual">
+        select id from a_company_manual_tbl where flag = "1" and del = 0 and uid = #{uid};
+    </select>
+
+
+    <!--根据公司ID，风险等级 查询未删除的数据信息 -->
+    <select id="selectAlls"  resultType="com.spring.web.model.ACompanyManual">
+        select id from a_company_manual_tbl where flag = "3" and del = 0 and uid = #{uid};
+    </select>
+
+
+    <!--根据公司ID，风险等级 查询未删除的数据信息 -->
+    <select id="selectIds"  resultType="com.spring.web.model.ACompanyManual">
+        select id from a_company_manual_tbl where flag = "2" and del = 0 and uid = #{uid};
+    </select>
+
+
+    <!--根据公司ID，风险等级 查询未删除的数据信息 -->
+    <select id="findALLsss"  resultType="com.spring.web.model.ACompanyManual">
+        select * from a_company_manual_tbl where del = 0 and flag = #{flag} and uid = #{uid};
+    </select>
+
+
+
+
+    <update id="updateDelByUserId2">
+        update
+          a_company_manual_tbl
+        set
+          del = 0
+        where
+          uid = #{uid} and flag = 3
+    </update>
+
+
+
+
+
+
+    <insert id="insertBathByIndustry">
+        insert into a_company_manual_tbl (uid, dmid, level3, factors, type, measures, reference,
+        flag, level, issys, del, ctime,flag2)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{uid}, #{item.id}, #{item.level3}, #{item.factors}, #{item.type}, #{item.measures}, #{item.reference},
+            <choose>
+                <when test="flag == null or flag == ''">
+                    #{item.flag},
+                </when>
+                <otherwise>
+                    #{flag},
+                </otherwise>
+            </choose>
+            #{item.level}, #{issys}, #{del}, #{ctime},#{item.flag2})
+        </foreach>
+    </insert>
+
+
+
+
+
+    <!-- 修改数据信息达到删除的目的 -->
+    <update id="updateDeltess">
+        update
+        a_company_manual_tbl
+        set
+        del = 1
+        where
+        id = #{id}
+    </update>
+
+    <!-- 根据 ids 修改数据信息达到删除的目的 -->
+    <update id="updateAll">
+        update
+        a_company_manual_tbl
+        set
+        del = 1
+        where
+        id = #{id}
+    </update>
+
+
 
     <update id="updateDelByIds">
   update
@@ -873,7 +1019,7 @@ select level2  from a_company_manual_tbl where uid=#{uid} and level1 = #{name} g
     from a_company_manual_tbl
     where uid=#{uid}
     and level1 = #{level1}
-    and level2=#{level2};
+    and level2 = #{level2};
     and level3 like "%现场管理%";
     </select>
 
@@ -909,5 +1055,15 @@ name =#{name};
     <select id="findInspection"  parameterType="java.lang.String" resultMap="BaseResultMap">
         select  * from a_company_manual_tbl WHERE uid=#{id} and level1 like CONCAT('%',#{dept},'%') and level2 like CONCAT('%',#{station},'%')
     </select>
+
+
+    <!--根据公司ID，风险程度，是否删除 来查询数据信息-->
+    <select id="selectAll"  resultType="com.spring.web.model.ACompanyManual">
+        select * from a_company_manual_tbl where level= "红色" and del = 0 and uid = #{uid};
+    </select>
+
+
+
+
 
 </mapper>

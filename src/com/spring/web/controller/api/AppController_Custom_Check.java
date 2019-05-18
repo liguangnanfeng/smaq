@@ -1,6 +1,5 @@
 package com.spring.web.controller.api;
 
-
 import com.spring.web.BaseController;
 import com.spring.web.dao.TCheckMapper;
 import com.spring.web.listener.MySessionContext;
@@ -70,7 +69,7 @@ public class AppController_Custom_Check extends BaseController {
      */
     @RequestMapping(value = "A200", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult checkCompany(HttpServletRequest request) {
+    AppResult checkCompany(HttpServletRequest request,Integer dpid) {
 
         AppResult result = new AppResultImpl();
 
@@ -89,7 +88,7 @@ public class AppController_Custom_Check extends BaseController {
 
             // 根据公司id 和部门获取所有的岗位并进行数据你对比添加
             Map<String, List> stringListMap = checkManual.selectDangerAndManual(zzjg.getUid(), names);
-
+            
             result.setStatus("0");
             result.setMessage("查询成功");
             result.setData(stringListMap);
@@ -131,11 +130,13 @@ public class AppController_Custom_Check extends BaseController {
 
             return result;
         } catch (NullPointerException n) {
+
             n.printStackTrace();
             result.setMessage("未查询出数据");
             result.setStatus("1");
             return result;
         } catch (Exception e) {
+
             e.printStackTrace();
             result.setMessage("网络故障,请稍后再试");
             result.setStatus("1");
@@ -173,7 +174,6 @@ public class AppController_Custom_Check extends BaseController {
             return result;
         }
     }
-
 
     /**
      * TODO 查询基础选项  jsp页面
@@ -498,20 +498,19 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO 根据安全责任人的id 查询相关的部门和岗位  预留没有使用
+     * TODO 根据登陆人的id查询所有部门时
      *
      * @param sessionId    sessionID
      * @param access_token 令牌
-     * @param personnelId  负责人id
-     * @return map 获取相关部门
+     * @return list 获取改公司所有的部门
      */
     @ResponseBody
     @RequestMapping(value = "A207", method = RequestMethod.POST)
-    public AppResult checkByStatus(String sessionId, String access_token, Integer personnelId) {
+    public AppResult checkByStatus(String sessionId, String access_token) {
         AppResult result = new AppResultImpl();
 
         try {
-            if (sessionId == null || access_token == null || personnelId == null) {
+            if (sessionId == null || access_token == null ) {
                 result.setStatus("1");
                 result.setMessage("查询失败,请重新查询");
                 return result;
@@ -521,12 +520,12 @@ public class AppController_Custom_Check extends BaseController {
             HttpSession session = sess.getSession(sessionId);
             ZzjgPersonnel zzjg = (ZzjgPersonnel) session.getAttribute(access_token); // 获取session域中的信息
 
-            // 直接 进行查询获取部门的id 和公司的id  根据部门id查询部门名称 ,然后在根据部门名称查询 所对应的风险点
-            Map<String, List> map = checkManual.findLevel2ByPersonnelId(personnelId, zzjg.getUid());
+            // 使用总公司 获取这家公司对应的所有的部门
+            List<ZzjgDepartment> list = zzig_departmentService.selectDepartmentByCid(zzjg.getCid());
 
-            result.setStatus("2");
+            result.setStatus("0");
             result.setMessage("查询成功");
-            result.setData(map);
+            result.setData(list);
 
             return result;
         } catch (NullPointerException e) {
@@ -588,6 +587,7 @@ public class AppController_Custom_Check extends BaseController {
      * TODO 根据当前用户查询所有的检查记录()  对根据判断求出这个责任人的部门和岗位
      *  首先要判断他是检查人员还是被检查人员
      *  根据状态进行查询,不同的检查详情在company_manul_tbl 获取岗位,来判断这个岗位的检查项是否合格,不合格进行显示
+     *
      * @param checkModel access_token信息
      * @return list       关于当前企业的不合格信息
      */

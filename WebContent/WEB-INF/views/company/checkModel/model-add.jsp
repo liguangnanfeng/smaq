@@ -254,7 +254,7 @@
                     contentType: "application/json",
                     dataType: "json",
                     success: function (result) {
-                        alert(result);
+                        alert('保存成功');
                     },
                     complete: function (XMLHttpRequest, textStatus) {
                         // layer.close(index);

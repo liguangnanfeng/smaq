@@ -54,7 +54,7 @@ import com.spring.web.util.OutPrintUtil;
  * @author CGF
  * @version V1.0
  * @Title: VillageController
- * @Description: TODO(village:  /'vɪlɪdʒ/ 村庄)
+ * @Description: TODO(village : / ' vɪlɪdʒ / 村庄)
  * @date 2017年7月21日 下午12:42:42
  */
 
@@ -71,9 +71,11 @@ public class VillageController extends BaseController {
     private CgfService cgfService;
 
     @Autowired
-    private PCSaveModel saveModelService ;
+    private PCSaveModel saveModelService;
 
-    /**查询风险点*/
+    /**
+     * 查询风险点
+     */
     @Autowired
     private ICheckManual checkManual;
 
@@ -336,7 +338,8 @@ public class VillageController extends BaseController {
         result.setMap("totalzc", companyMapper.selectIdsByCompany_view_count(dto2));
         return result;
     }
-        protected void setUserId2(User user, CompanyListReqDTO dto) {
+
+    protected void setUserId2(User user, CompanyListReqDTO dto) {
         if (user.getUserType() == 4) {
             dto.setVillageId(user.getId());
         }
@@ -2679,10 +2682,10 @@ public class VillageController extends BaseController {
         }
 
         // 查询高危风险
-        List<Map> list =  checkManual.checkGaoWei(user.getId());
+        List<Map> list = checkManual.checkGaoWei(user.getId());
 
 
-        model.addAttribute("danger",list);
+        model.addAttribute("danger", list);
         model.addAttribute("map", names);
         return "company/checkModel/model-add";
     }
@@ -2709,31 +2712,32 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value = "findInspection")
     @ResponseBody
-    public List<ACompanyManual> findInspection(Integer depId,String sName, HttpServletRequest request) {
+    public List<ACompanyManual> findInspection(Integer depId, String sName, HttpServletRequest request) {
         User user = getLoginUser(request);
 
-        ZzjgDepartment zzjgDepartment =  zzjgDepartmentMapper.selectByPrimaryKey(depId);
-        List<ACompanyManual> ACompanyManual = aCompanyManualMapper.findInspection(String.valueOf(user.getId()),zzjgDepartment.getName(),sName);
+        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectByPrimaryKey(depId);
+        List<ACompanyManual> ACompanyManual = aCompanyManualMapper.findInspection(String.valueOf(user.getId()), zzjgDepartment.getName(), sName);
 
         return ACompanyManual;
     }
 
 
     /**
-     *  企业端保存保存检查模板 2019-05
-     *  title : 检查表名称
-     *  depId:  部门id
-     *  sName :岗位名称
-     *  checkVal: 多选的检查项
-     *  cycle :  检查周期
-     *  nextTime : 开始日期
-     *  checkType : 1. 日常 2.定期 3. 临时
-     *  checkNature: 1. 基础 2. 现场  3. 高危
+     * 企业端保存保存检查模板 2019-05
+     * title : 检查表名称
+     * depId:  部门id
+     * sName :岗位名称
+     * checkVal: 多选的检查项
+     * cycle :  检查周期
+     * nextTime : 开始日期
+     * checkType : 1. 日常 2.定期 3. 临时
+     * checkNature: 1. 基础 2. 现场  3. 高危
+     *
      * @return
      */
     @RequestMapping(value = "saveCheckMenu")
     @ResponseBody
-    public Result saveCheckMenu(String title,Integer depId,String sName,String checkVal,String cycle,String nextTime,String checkType, String checkNature ,HttpServletRequest request) {
+    public Result saveCheckMenu(String title, Integer depId, String sName, String checkVal, String cycle, String nextTime, String checkType, String checkNature, HttpServletRequest request) {
         Result result = new ResultImpl();
         checkVal.replace("[", " ");
         checkVal.replace("]", " ");
@@ -2747,7 +2751,7 @@ public class VillageController extends BaseController {
         User user = getLoginUser(request); // 主账号登陆
 
         String strs = request.getParameter("checkVal");
-        if(user==null){
+        if (user == null) {
             result.setMess("登陆失败");
             result.setStatus("1");
             return result;
@@ -2772,7 +2776,7 @@ public class VillageController extends BaseController {
         tCheck.setRealTime(new Date());    //
         tCheck.setCheker(user.getUserName());  //当前的公司名称
         //tCheck.setContact(user.getUserName());// 手机号无
-        tCheck.setDapartContact(depId+"" ); // 被检查部门的id
+        tCheck.setDapartContact(depId + ""); // 被检查部门的id
         tCheck.setStatus(1); // 表示未检查  TODO  备注
         tCheck.setCreateTime(new Date()); // 创建时间
         tCheck.setCheckCompany(user.getUserName());
@@ -2804,15 +2808,47 @@ public class VillageController extends BaseController {
         return result;
     }
 
-
     /**
      * 保存模板2
      */
     @RequestMapping(value = "saveCheckMenu2")
     @ResponseBody
-    public Result saveCheckMenu2(@RequestBody HashMap<String,Object> map){
+    public Result saveCheckMenu2(HttpServletRequest request, @RequestBody HashMap<String, Object> map) {
+        User user = getLoginUser(request); // 主账号登陆
         Result result = new ResultImpl();
+        String title = (String) map.get("title");  // 检查名称
+        String checkNature = (String) map.get("checkNature");  // -2 现场  -1 基础  其他 高危
+        List<Map> cusCheckItemList = (List<Map>) map.get("cusCheckItemList");
+        Object checkType = map.get("checkType");
+        List<Map> checkItemList = (List<Map>) map.get("checkItemList");
+
         log.info(map);
+
+        System.out.println(title);
+        System.out.println(checkNature);
+        System.out.println(cusCheckItemList);
+        System.out.println(checkType);
+        System.out.println(checkItemList);
+
+        // 保存检查信息到数据库
+        // 创建model方法
+        TModel model = new TModel();
+        model.setTitle(title);   // 标题
+        model.setUserId(user.getId()); // 企业id
+        model.setFlag(1); //自查
+        model.setType(Integer.parseInt((String)checkType)); //检查类型  日常, 定期, 临时
+        //基础, 现场, 高危
+        if("-2".equals(checkNature)){ //现场
+            model.setIndustryType(2);
+        }else if("-1".equals(checkNature)){
+            model.setIndustryType(1); // 基础
+        }else {
+            model.setIndustryType(3); // 高危
+        }
+        model.setCreateTime(new Date()); //创建时间
+
+       // model.setPart(); // 被检查的部门
+
 
 
         result.setMess("添加成功");

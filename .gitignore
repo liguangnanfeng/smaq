@@ -271,3 +271,5 @@ smaq.iml
 checkstyle_checks.xml
 .idea
 resources
+/html
+/images

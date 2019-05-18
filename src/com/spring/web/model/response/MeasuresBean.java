@@ -36,4 +36,60 @@ public class MeasuresBean {
                 ", reference='" + reference + '\'' +
                 '}';
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
+    public Integer getDmid() {
+        return dmid;
+    }
+
+    public void setDmid(Integer dmid) {
+        this.dmid = dmid;
+    }
+
+    public String getFactors() {
+        return factors;
+    }
+
+    public void setFactors(String factors) {
+        this.factors = factors;
+    }
+
+    public String getMeasures() {
+        return measures;
+    }
+
+    public void setMeasures(String measures) {
+        this.measures = measures;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
 }

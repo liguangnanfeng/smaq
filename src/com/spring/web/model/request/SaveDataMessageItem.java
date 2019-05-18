@@ -38,4 +38,51 @@ public class SaveDataMessageItem {
 
     public List<SaveDataMessage> list;
 
+    public Integer getCheckId() {
+        return checkId;
+    }
+
+    public void setCheckId(Integer checkId) {
+        this.checkId = checkId;
+    }
+
+    public String getAccess_token() {
+        return access_token;
+    }
+
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public Integer getZrrId() {
+        return zrrId;
+    }
+
+    public void setZrrId(Integer zrrId) {
+        this.zrrId = zrrId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<SaveDataMessage> getList() {
+        return list;
+    }
+
+    public void setList(List<SaveDataMessage> list) {
+        this.list = list;
+    }
 }

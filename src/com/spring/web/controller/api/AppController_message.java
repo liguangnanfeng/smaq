@@ -24,19 +24,19 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * 企业自查controller
+ * TODO 企业自查controller
  */
-
 @Controller
 @RequestMapping(value = "api/message")
 public class AppController_message extends BaseController {
 
+    /*消息服务*/
     @Autowired
     private AppMessageService appMessageService;
-
+    /*企业人员服务*/
     @Autowired
     private PersonnerService personnerService;
-
+    /*消息通知服务*/
     @Autowired
     private TRectificationConfirmService tRectificationConfirmService;
 
@@ -114,6 +114,9 @@ public class AppController_message extends BaseController {
 
     /**
      * 获取检查记录列表     只有当前检查人和当前责任人能看到 不合格
+     * 判断是企业端检查人员
+     * 分为两种  部门的责任人
+     * 岗位的责任人
      */
     @RequestMapping(value = "findCheckListBystatus", method = RequestMethod.POST)
     public @ResponseBody

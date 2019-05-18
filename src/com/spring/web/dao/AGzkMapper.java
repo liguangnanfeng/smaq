@@ -53,5 +53,5 @@ public interface AGzkMapper {
      */
     int updateByPrimaryKey(AGzk record);
     
-    List<AGzk> selectByUid(@Param("uid")Integer uid);
+    List<AGzk> selectByUid(@Param("uid") Integer uid);
 }

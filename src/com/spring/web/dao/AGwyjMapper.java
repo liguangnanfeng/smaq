@@ -52,5 +52,5 @@ public interface AGwyjMapper {
      */
     int updateByPrimaryKey(AGwyj record);
     
-    AGwyj selectByDepartId(@Param("departId")Integer departId);
+    AGwyj selectByDepartId(@Param("departId") Integer departId);
 }

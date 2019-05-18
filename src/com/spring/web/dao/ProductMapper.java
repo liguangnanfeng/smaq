@@ -57,7 +57,7 @@ public interface ProductMapper {
     * @param id
     * @return 
     */
-    List<Product> selectByUserId(Map<String,Object> map);
+    List<Product> selectByUserId(Map<String, Object> map);
 
     /** 
      * @param map

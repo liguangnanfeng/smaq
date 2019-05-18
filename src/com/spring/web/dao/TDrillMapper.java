@@ -54,7 +54,7 @@ public interface TDrillMapper {
      */
     int updateByPrimaryKey(TDrill record);
     
-    List<Map<String, Object>> selectTable(Map<String,Object> m);
+    List<Map<String, Object>> selectTable(Map<String, Object> m);
     
     List<Map<String, Object>> selectByUserId(Integer userId);
 }

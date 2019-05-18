@@ -79,14 +79,14 @@ public interface TLevelMapper {
      * @param industryId
      * @return
      */
-    List<Map<String,Object>> selectlevel2Bylevel1AndIndustryId(@Param("level1") String level1,@Param("industryId") Integer industryId);
+    List<Map<String,Object>> selectlevel2Bylevel1AndIndustryId(@Param("level1") String level1, @Param("industryId") Integer industryId);
 
     /**
      * 基础, 高危 详细数据的保存
      * @param
      * @return
      */
-    List<Map> selectGaoweiAndJiChu(@Param("industryId") Integer industryId,@Param("level1") String level1,@Param("level2") String level2);
+    List<Map> selectGaoweiAndJiChu(@Param("industryId") Integer industryId, @Param("level1") String level1, @Param("level2") String level2);
 
 
     /**

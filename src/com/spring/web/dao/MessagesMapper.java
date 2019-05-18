@@ -22,13 +22,13 @@ public interface MessagesMapper {
 
     int updateByPrimaryKey(Messages record);
     
-    Messages getMessageByCondition(@Param("map")Map<String, Object> params);
-    
-    List<Map<String, Object>> getRecviceMessages(@Param("map")Map<String, Object> params);
-    
-    Integer getRecviceMessagesCount(@Param("map")Map<String, Object> params);
-    
-    List<Map<String, Object>> getSendMessages(@Param("map")Map<String, Object> params);
-    
-    Integer getSendMessagesCount(@Param("map")Map<String, Object> params);
+    Messages getMessageByCondition(@Param("map") Map<String, Object> params);
+
+    List<Map<String, Object>> getRecviceMessages(@Param("map") Map<String, Object> params);
+
+    Integer getRecviceMessagesCount(@Param("map") Map<String, Object> params);
+
+    List<Map<String, Object>> getSendMessages(@Param("map") Map<String, Object> params);
+
+    Integer getSendMessagesCount(@Param("map") Map<String, Object> params);
 }

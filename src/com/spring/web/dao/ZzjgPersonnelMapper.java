@@ -45,9 +45,9 @@ public interface ZzjgPersonnelMapper {
     
     List<LlHashMap<Object, Object>> selectByMap(LlHashMap<Object, Object> m);
     
-    List<LlHashMap<Object, Object>>selectByMapLimit(LlHashMap<Object, Object>m);
+    List<LlHashMap<Object, Object>>selectByMapLimit(LlHashMap<Object, Object> m);
 
-    Integer selectByMapCount(LlHashMap<Object, Object>m);
+    Integer selectByMapCount(LlHashMap<Object, Object> m);
     
     List<Map<String, Object>> selectCountByTrade(Map<String, Object> m);
     
@@ -81,7 +81,7 @@ public interface ZzjgPersonnelMapper {
      * @param personnelId
      * @return
      */
-    String selectdpidById( Integer personnelId);
+    String selectdpidById(Integer personnelId);
 
     /**
      * 政府端

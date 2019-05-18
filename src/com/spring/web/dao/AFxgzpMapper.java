@@ -58,7 +58,7 @@ public interface AFxgzpMapper {
     * @param uid
     * @return 公司公告牌，一个公司只能一个
     */
-    AFxgzp selectFlag1(@Param("uid")Integer uid);
+    AFxgzp selectFlag1(@Param("uid") Integer uid);
     
     List<Map<String, Object>> selectByMap(Map<String, Object> m);
     

@@ -18,13 +18,13 @@ public interface MessageToUserMapper {
 
     int updateByPrimaryKey(MessageToUser record);
     
-    MessageToUser getMessageStatus(@Param("map")Map<String, Object> params);
-    
+    MessageToUser getMessageStatus(@Param("map") Map<String, Object> params);
+
     int updateInfoByMessageAndUserId(MessageToUser record);
-    
+
     Long insertMessagesListBatch(List<MessageToUser> users);
-    
-    List<MessageToUser> getUnReviceMessages(@Param("userId")Integer userId);
-    
-    Integer getUnreadMessageCount(@Param("userId")Integer userId);
+
+    List<MessageToUser> getUnReviceMessages(@Param("userId") Integer userId);
+
+    Integer getUnreadMessageCount(@Param("userId") Integer userId);
 }

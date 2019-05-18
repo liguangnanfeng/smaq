@@ -20,13 +20,13 @@ public interface TDeviceMapper {
     
     List<Map<String, Object>> getDeviceCompanyList();
     
-    Integer checkDeviceSnExsits(@Param("deviceSn")String deviceSn);
-    
-    List<Map<String, Object>> getDeviceListByCondition(@Param("map")Map<String, Object> map);
-    
-    Integer getDeviceCountByCondition(@Param("map")Map<String, Object> map);
-    
-    int deleteDeviceWithSensors(@Param("deviceSn")String deviceSn);
-    
-    Integer getCompanyIdByDeviceSn(@Param("deviceSn")String deviceSn);
+    Integer checkDeviceSnExsits(@Param("deviceSn") String deviceSn);
+
+    List<Map<String, Object>> getDeviceListByCondition(@Param("map") Map<String, Object> map);
+
+    Integer getDeviceCountByCondition(@Param("map") Map<String, Object> map);
+
+    int deleteDeviceWithSensors(@Param("deviceSn") String deviceSn);
+
+    Integer getCompanyIdByDeviceSn(@Param("deviceSn") String deviceSn);
 }

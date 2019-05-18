@@ -1,16 +1,11 @@
 package com.spring.web.dao;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import com.spring.web.model.ADangerManual;
+import com.spring.web.model.ACompanyManual;
 import com.spring.web.model.request.CheckLevel;
-import com.spring.web.model.response.MeasuresBean;
 import org.apache.ibatis.annotations.Param;
 
-import com.spring.web.model.ACompanyManual;
+import java.util.List;
+import java.util.Map;
 
 public interface ACompanyManualMapper {
     /**
@@ -107,9 +102,9 @@ public interface ACompanyManualMapper {
      */
     List<String> selectDangerAndManual(@Param("uid") Integer uid, @Param("name") String name);
 
-    List<CheckLevel> selectLevel3AndId(CheckLevel check);
+    List<Map<String, Object>> selectLevel3AndId(CheckLevel check);
 
-    List<CheckLevel> selectLevel4AndId(CheckLevel checkLevel);
+    List<Map> selectLevel4AndId(CheckLevel checkLevel);
 
     int selectDmidById(String name);
 

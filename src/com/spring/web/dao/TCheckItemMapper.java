@@ -131,14 +131,19 @@ public interface TCheckItemMapper {
     
 
     /** 
-    * @param userId
+    * @param
     * @return 监管端 隐患汇总数据
     */
     List<Map<String, Object>> selectCount2(Map<String, Object> m);
     
     List<Map<String, Object>> selectNeedDangerIndexList(Map<String, Object> m);
 
-    List<TCheckItem> selectAllByCheckId(@Param("checkId") Integer checkId,@Param("partId") Integer partId);
+    /**
+     * 直接根据checkId进行查询,,把所有相关记录的数据进行保存
+     * @param checkId
+     * @return
+     */
+    List<TCheckItem> selectAllByCheckId(@Param("checkId") Integer checkId);
 
     /**
      * 根据id查询数据

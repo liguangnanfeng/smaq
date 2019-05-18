@@ -276,9 +276,9 @@ public class BaseController implements Serializable {
     protected VideoInfoMapper videoInfoMapper;
     @Autowired
     protected TradeCliqueMapper tradeCliqueMapper;
-    
+
     /** Mapper类引入结束 */
-    
+
     /** Service类引入开始 */
     @Autowired
     protected UserService userService;
@@ -290,13 +290,13 @@ public class BaseController implements Serializable {
      */
     @Autowired
     protected BaseDao baseDao;
-    
+
     protected Gson gson = new GsonBuilder().create();
-    
+
     /**
      * 根据区域ID查询所在区域名称
      */
-    
+
     protected final static String SQL_SELECT_GLOBAL_REGION_NAME_BY_KEY = "globalRegion.selectGlobalRegionNameByKey";
 
     /**
@@ -350,7 +350,7 @@ public class BaseController implements Serializable {
 
     /**
      * 取得上传绝对路径
-     * 
+     *
      * @param request
      * @return
      */
@@ -360,7 +360,7 @@ public class BaseController implements Serializable {
 
     /**
      * 根据区域ID查询所在区域名称
-     * 
+     *
      * @param globalRegionId
      * @return
      */
@@ -394,53 +394,53 @@ public class BaseController implements Serializable {
         }
         return at.getUserId();
     }
-    
-    /** 
+
+    /**
      * @return 转码
      */
-     protected String utf8Str(String val) {
-         if (StringUtils.isBlank(val)) {
-             return "";
-         }
-         try {
-             return new String(val.getBytes("ISO8859_1"), "utf-8").replaceAll("<([a-zA-Z]+)[^<>]*>(.*?)</\\1>", "$2");
-         } catch (UnsupportedEncodingException e) {
-             e.printStackTrace();
-             return "";
-         }
-     }
-     
-     /** 
-    * @param user
-    * @param m 获取企业user_ids
-    * @return
-    */
-    //TODO 对登陆用户进行判定,查询出不同角色,执行不同的方法
-     EncacheUtil encacheUtil = new EncacheUtil();
+    protected String utf8Str(String val) {
+        if (StringUtils.isBlank(val)) {
+            return "";
+        }
+        try {
+            return new String(val.getBytes("ISO8859_1"), "utf-8").replaceAll("<([a-zA-Z]+)[^<>]*>(.*?)</\\1>", "$2");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 
-//     @SuppressWarnings({})
+    /**
+     * @param user
+     * @param m 获取企业user_ids
+     * @return
+     */
+    //TODO 对登陆用户进行判定,查询出不同角色,执行不同的方法
+    EncacheUtil encacheUtil = new EncacheUtil();
+
+    //     @SuppressWarnings({})
     protected Boolean setUserId(User user, Map<String, Object> m) {
-         setUserId2(user, m);
-         if (user.getUserType() == 9) {//国家
-             if(null == m.get("companyName") && null == m.get("townId") && null == m.get("villageId")
-                     && null == m.get("districtId")) {
-                 return true;
-             }
-         }
-         // TODO 进行判断，是企业，再将企业的id存储到map集合
-         if (user.getUserType() == 5) {//企业
-             m.put("userIds", user.getId());
-             return true;
-         }
-         List<Integer> userId = null;
-         if (user.getUserType() == 10) {//行业
-             userId = companyMapper.selectByCompany_trade(m);
-         } else {
-             userId = companyMapper.selectByCompany_view(m);
-         }
+        setUserId2(user, m);
+        if (user.getUserType() == 9) {//国家
+            if(null == m.get("companyName") && null == m.get("townId") && null == m.get("villageId")
+                    && null == m.get("districtId")) {
+                return true;
+            }
+        }
+        // TODO 进行判断，是企业，再将企业的id存储到map集合
+        if (user.getUserType() == 5) {//企业
+            m.put("userIds", user.getId());
+            return true;
+        }
+        List<Integer> userId = null;
+        if (user.getUserType() == 10) {//行业
+            userId = companyMapper.selectByCompany_trade(m);
+        } else {
+            userId = companyMapper.selectByCompany_view(m);
+        }
 /*         String key = gson.toJson(m);
          Element el = encacheUtil.getData(key);
-         
+
          if(null == el) {
              if (user.getUserType() == 10) {//行业
                  userId = companyMapper.selectByCompany_trade(m);
@@ -451,20 +451,20 @@ public class BaseController implements Serializable {
          } else {
              userId = (List<Integer>) el.getObjectValue();
          }*/
-         
+
 //         m.put("villageId", null);
 //         m.put("townId", null);
 //         m.put("districtId", null);
 //         m.put("tradeId", null);
-         if(userId.size() == 0) {
-             m.put("userIds", "-1");
-             return false;
-         } else {
-             m.put("userIds", StringUtils.join(userId, ","));
-             return true;
-         }
-     }
-    
+        if(userId.size() == 0) {
+            m.put("userIds", "-1");
+            return false;
+        } else {
+            m.put("userIds", StringUtils.join(userId, ","));
+            return true;
+        }
+    }
+
     protected void clearVillageTown(Map<String, Object> m) {
         m.put("villageId", null);
         m.put("townId", null);
@@ -472,39 +472,39 @@ public class BaseController implements Serializable {
         m.put("tradeId", null);
         m.put("companyName", null);
     }
-     
-     protected void setUserId2(User user, Map<String, Object> m) {
-         if (user.getUserType() == 4) {
-             m.put("villageId", user.getId());
-         }
-         if (user.getUserType() == 5) {
-             m.put("userId", user.getId());
-         }
-         if (user.getUserType() == 3) {
-             m.put("townId", user.getId());
-         }
-         if (user.getUserType() == 6) {
-             m.put("districtId", user.getId());
-         }
-         if (user.getUserType() == 9) {
-         }
-         if (user.getUserType() == 10) {
-             m.put("tradeId", user.getId());
-         }
-     }
-     
-     public LlHashMap<Object, Object> getLlMap() {
-         return new LlHashMap<Object, Object>();
-     }
-     
-     protected Regulation regulationGet(Integer userId) {
-         Regulation rg = regulationMapper.selectByUserId(userId);
-         if(null == rg) {
-             rg = new Regulation();
-             rg.setUserId(userId);
-             regulationMapper.insertSelective(rg);
-         }
-         return rg;
+
+    protected void setUserId2(User user, Map<String, Object> m) {
+        if (user.getUserType() == 4) {
+            m.put("villageId", user.getId());
+        }
+        if (user.getUserType() == 5) {
+            m.put("userId", user.getId());
+        }
+        if (user.getUserType() == 3) {
+            m.put("townId", user.getId());
+        }
+        if (user.getUserType() == 6) {
+            m.put("districtId", user.getId());
+        }
+        if (user.getUserType() == 9) {
+        }
+        if (user.getUserType() == 10) {
+            m.put("tradeId", user.getId());
+        }
     }
-     
+
+    public LlHashMap<Object, Object> getLlMap() {
+        return new LlHashMap<Object, Object>();
+    }
+
+    protected Regulation regulationGet(Integer userId) {
+        Regulation rg = regulationMapper.selectByUserId(userId);
+        if(null == rg) {
+            rg = new Regulation();
+            rg.setUserId(userId);
+            regulationMapper.insertSelective(rg);
+        }
+        return rg;
+    }
+
 }

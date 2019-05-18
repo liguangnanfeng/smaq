@@ -64,16 +64,16 @@ public interface TCheckMapper {
     
     List<Map<String, Object>> selectList2(Map<String, Object> m);//首页定期检查——企业自查修改使用
     
-    DynamicParameter<String, Object> selectCompany(@Param("id")Integer id);
-    
-    int deleteById(@Param("sql")String sql);
+    DynamicParameter<String, Object> selectCompany(@Param("id") Integer id);
+
+    int deleteById(@Param("sql") String sql);
 
     /**
      * 根据modelId查询所有的检查表 只有未检查的才能给它
      * @param modelId
      * @return
      */
-    TCheck  selectByModelId(Integer modelId);
+    TCheck selectByModelId(Integer modelId);
 
     /**
      * 根据用户登陆的信息查询所有的表信息

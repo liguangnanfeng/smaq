@@ -17,7 +17,7 @@ public interface TCleanWarnSettingMapper {
 
     int updateByPrimaryKey(TCleanWarnSetting record);
     
-    List<TCleanWarnSetting> getCleanSettings(@Param("creator")Integer creator);
+    List<TCleanWarnSetting> getCleanSettings(@Param("creator") Integer creator);
     
     List<TCleanWarnSetting> getAllCleanSettings();
 }

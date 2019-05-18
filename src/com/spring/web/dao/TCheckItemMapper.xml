@@ -838,9 +838,13 @@
     </select>
 
 
-    <!--根据模版id和partId查询详细信息-->
-    <select id="selectAllByCheckId" resultType="com.spring.web.model.TCheckItem">
-        select * from t_check_item_tbl where check_id =#{checkId} and part_id=#{partId} order by id;
+    <!--TODO 根据checkId 查询psrt和item
+    -->
+    <select id="selectAllByCheckId" resultType="java.util.Map">
+        select i.*, c.name
+        from t_check_item_tbl i join t_check_part_tbl c
+        on i.part_id = c.id
+        where i.check_id =#{checkId}  order by i.id;
     </select>
     <!--根据id查询部门数据  -->
     <select id="selectAllById" resultMap="BaseResultMap">

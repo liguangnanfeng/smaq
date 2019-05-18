@@ -54,5 +54,5 @@ public interface TAccidentMapper {
      */
     int updateByPrimaryKey(TAccident record);
     
-    List<TAccident> selectTable(Map<String,Object> m);
+    List<TAccident> selectTable(Map<String, Object> m);
 }

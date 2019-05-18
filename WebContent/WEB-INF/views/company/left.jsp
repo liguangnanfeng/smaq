@@ -168,8 +168,7 @@
                 <ul>
                     <li><a data-href="${ly }/html/editor/plan-list.html" data-title="管理手册" href="javascript:void(0)">管理手册</a>
                     </li>
-                    <li><a data-href="${ly }/company/safety-system/risk-list" data-title="风险辨识"
-                           href="javascript:void(0)">风险辨识</a></li>
+                    <li><a data-href="${ly }/company/safety-system/risk-list-update" data-title="风险辨识" href="javascript:void(0)">风险辨识</a></li>
                 </ul>
                 <div class="div_omenu">
                     <div class="div_otop">风险评估<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>

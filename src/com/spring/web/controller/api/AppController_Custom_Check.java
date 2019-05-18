@@ -88,7 +88,7 @@ public class AppController_Custom_Check extends BaseController {
 
             // 根据公司id 和部门获取所有的岗位并进行数据你对比添加
             Map<String, List> stringListMap = checkManual.selectDangerAndManual(zzjg.getUid(), names);
-            
+
             result.setStatus("0");
             result.setMessage("查询成功");
             result.setData(stringListMap);

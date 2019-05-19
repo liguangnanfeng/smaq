@@ -682,6 +682,7 @@ public class CompanyController_safety extends BaseController {
         }
     }
 
+
     /**
      * 设置风险因素
      */

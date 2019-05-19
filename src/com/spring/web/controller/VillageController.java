@@ -2,46 +2,17 @@
 
 package com.spring.web.controller;
 
-import java.util.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.URLEncoder;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.spring.web.dao.*;
-import com.spring.web.model.*;
-import com.spring.web.service.CheckCompany.ICheckManual;
-import com.spring.web.service.PCSaveModel;
-import com.spring.web.service.SaveModelService;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.json.simple.JSONArray;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
-import sun.invoke.empty.Empty;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.spring.web.BaseController;
 import com.spring.web.ibatis.DynamicParameter;
+import com.spring.web.model.*;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
 import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
+import com.spring.web.service.CheckCompany.ICheckManual;
+import com.spring.web.service.PCSaveModel;
 import com.spring.web.service.cgf.CgfService;
 import com.spring.web.service.user.UserService;
 import com.spring.web.tobject.cgf.CheckSaveReqDTO;
@@ -49,6 +20,21 @@ import com.spring.web.tobject.cgf.CompanyListReqDTO;
 import com.spring.web.util.ConstantsUtil;
 import com.spring.web.util.DateConvertUtil;
 import com.spring.web.util.OutPrintUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.json.simple.JSONArray;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.*;
+import java.net.URLEncoder;
+import java.util.*;
 
 /**
  * @author CGF
@@ -2809,7 +2795,10 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 保存模板2
+     *
+     * TODO 保存模板2
+     *
+     *
      */
     @RequestMapping(value = "saveCheckMenu2")
     @ResponseBody
@@ -2824,11 +2813,11 @@ public class VillageController extends BaseController {
 
         log.info(map);
 
-        System.out.println(title);
-        System.out.println(checkNature);
-        System.out.println(cusCheckItemList);
-        System.out.println(checkType);
-        System.out.println(checkItemList);
+        System.out.println(title);  // 标题
+        System.out.println(checkNature);  // 基础 高危
+        System.out.println(cusCheckItemList); // 存储的数据 自定义的项目
+        System.out.println(checkType);       //  定期 日常
+        System.out.println(checkItemList);   // 正常的查询
 
         // 保存检查信息到数据库
         // 创建model方法
@@ -2846,14 +2835,92 @@ public class VillageController extends BaseController {
             model.setIndustryType(3); // 高危
         }
         model.setCreateTime(new Date()); //创建时间
+        String bm = (String) checkItemList.get(0).get("bm");
+       // ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectByPrimaryKey(Integer.parseInt(bm));
+        model.setPart(bm); // 被检查的部门
+        model.setIndustryId(null);               // 被检查的行业
+        /*TODO 其他的进行保留*/
+        tModelMapper.insertSelective(model);
 
-       // model.setPart(); // 被检查的部门
+        TModelPart tModelPart = new TModelPart();
+        tModelPart.setModelId(model.getId()); // 模版id
+        tModelPart.setName(bm); // 部门名称
+        tModelPartMapper.insertSelective(tModelPart);
 
+        // 保存检查记录总表
+        TCheck tCheck = new TCheck();
+        tCheck.setFlag(1);   // 表示企业自查
+        tCheck.setTitle(title); // 被检查的标题
+        tCheck.setDepart(bm);   // 被检查的部门
+        tCheck.setUserId(user.getId()); // 被检查公司id
+        tCheck.setCreateUser(user.getId()); // 被创建人的id
+        tCheck.setModelId(model.getId());         // 模版id
+        tCheck.setIndustryId(null);
+        tCheck.setType(Integer.parseInt((String)checkType)); // 1. 日常 ,2. 定期 3 临时
+        if("-2".equals(checkNature)){ //现场
+            tCheck.setIndustryType(2);                    // 1. 基础 2. 现场 ,3 高危
+        }else if("-1".equals(checkNature)){
+            tCheck.setIndustryType(1);                    // 1. 基础 2. 现场 ,3 高危
+        }else {
+            tCheck.setIndustryType(3);                    // 1. 基础 2. 现场 ,3 高危
+        }
 
+        tCheck.setExpectTime(new Date());  //
+        tCheck.setRealTime(new Date());    //
+        tCheck.setCheker(user.getUserName());  //当前的公司名称
+        //tCheck.setContact(user.getUserName());// 手机号无
+        tCheck.setDapartContact(bm+""); // 被检查部门的id
+        tCheck.setStatus(1); // 表示未检查  TODO  备注
+        tCheck.setCreateTime(new Date()); // 创建时间
+        tCheck.setCheckCompany(user.getUserName());
+
+        int i = tCheckMapper.insertSelective(tCheck);
+        Integer tCheckId = tCheck.getId(); // 获取id
+
+       if(null!=cusCheckItemList||cusCheckItemList.size()>0){
+           // 保存part数据和item数据
+           for (Map map1 : cusCheckItemList) { // 循环自定义项
+               TCheckPart tCheckPart = new TCheckPart();
+               tCheckPart.setCheckId(tCheckId);
+               tCheckPart.setName((String) map1.get("gw"));  //岗位/部位信息
+               tCheckPartMapper.insertSelective(tCheckPart);
+               TCheckItem tCheckItem = new TCheckItem();
+               tCheckItem.setContent((String) map1.get("project"));
+               tCheckItem.setLevels((String) map1.get("content"));
+               tCheckItem.setPartId(tCheckPart.getId());
+               tCheckItem.setCheckId(tCheckId);
+               tCheckItemMapper.insertSelective(tCheckItem);
+           }
+
+       }
+
+        // 标准检查
+        if(null!=checkItemList ||checkItemList.size()>0){
+            for (Map map1 : checkItemList) {
+                List<String> list = (java.util.List<String>) map1.get("dx");
+                for (String integer : list) {  // 有几个就表示有几条检查看记录
+
+                    ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(Integer.parseInt(integer));
+                    TCheckPart tCheckPart = new TCheckPart();
+                    tCheckPart.setCheckId(tCheckId);
+                    tCheckPart.setName((String) map1.get("gw"));  //岗位/部位信息
+                    tCheckPartMapper.insertSelective(tCheckPart);
+                    TCheckItem tCheckItem = new TCheckItem();
+                    tCheckItem.setContent(companyManual.getMeasures()); //检查内容
+                    tCheckItem.setLevels(companyManual.getLevel3());
+                    tCheckItem.setPartId(tCheckPart.getId());
+                    tCheckItem.setCheckId(tCheckId);
+                    tCheckItem.setReference(companyManual.getReference()); //检查参照
+                    tCheckItem.setMemo(companyManual.getFactors());        //不合格描述
+                    tCheckItemMapper.insertSelective(tCheckItem);
+
+                }
+
+            }
+        }
 
         result.setMess("添加成功");
         return result;
     }
-
 
 }

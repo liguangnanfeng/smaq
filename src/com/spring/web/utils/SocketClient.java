@@ -1,19 +1,11 @@
 
 package com.spring.web.utils;
 
+import com.spring.web.controller.WebSocketDangerController;
+
+import javax.websocket.*;
 import java.io.IOException;
 import java.net.URI;
-
-import javax.websocket.ClientEndpoint;
-import javax.websocket.ContainerProvider;
-import javax.websocket.OnClose;
-import javax.websocket.OnError;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.WebSocketContainer;
-import com.spring.web.controller.WebSocketController;
-import com.spring.web.controller.WebSocketDangerController;
 
 @ClientEndpoint
 public class SocketClient {

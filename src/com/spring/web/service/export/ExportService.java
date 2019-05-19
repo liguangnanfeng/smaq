@@ -5,10 +5,11 @@
 
 package com.spring.web.service.export;
 
-import java.io.Serializable;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.web.multipart.MultipartFile;
 import com.spring.web.result.Result;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 
 /** 
  * @Title: exportService 
@@ -35,7 +36,7 @@ public interface ExportService extends Serializable {
     * @return 
      * @throws Exception 
     */
-    public Result tableImport(MultipartFile file, Integer userId,Integer id, Integer isType, HttpServletRequest request) throws Exception;
+    public Result tableImport(MultipartFile file, Integer userId, Integer id, Integer isType, HttpServletRequest request) throws Exception;
 
     /** 
     * @param file

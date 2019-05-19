@@ -1,17 +1,18 @@
 package com.spring.web.exception;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 
 /**
  * @Title: LlExceptionHandler
@@ -28,7 +29,7 @@ public class LlExceptionHandler implements HandlerExceptionResolver {
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handle,
-            Exception exception) {
+                                         Exception exception) {
         log.error("handle exception start...");
         if (!(request.getHeader("accept").indexOf("application/json") > -1)) {
             if (exception instanceof LlSystemException) {
@@ -56,7 +57,7 @@ public class LlExceptionHandler implements HandlerExceptionResolver {
 
     /**
      * 获取异常信息。
-     * 
+     *
      * @param aThrowable
      * @return 异常信息
      */

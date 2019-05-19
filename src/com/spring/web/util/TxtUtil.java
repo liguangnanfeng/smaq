@@ -1,10 +1,11 @@
 package com.spring.web.util;
 
+import org.apache.log4j.Logger;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
-import org.apache.log4j.Logger;
 
 /**
  * @Title: TxtUtil

@@ -4,13 +4,7 @@
  */
 package com.spring.web.util;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Random;
-import javax.servlet.http.HttpServletRequest;
+import ChartDirector.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -27,11 +21,13 @@ import org.jfree.chart.title.TextTitle;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
-import ChartDirector.Chart;
-import ChartDirector.LegendBox;
-import ChartDirector.LineLayer;
-import ChartDirector.TextBox;
-import ChartDirector.XYChart;
+
+import javax.servlet.http.HttpServletRequest;
+import java.awt.*;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Random;
 
 /**
  * @Title: ImageForLineChartUtil
@@ -43,7 +39,7 @@ import ChartDirector.XYChart;
 public class ImageForLineChartUtil {
     @SuppressWarnings("deprecation")
     public static String execute(TimeSeriesCollection lineDataset, String titleName, String formatStyle,
-            HttpServletRequest request) throws IOException {
+                                 HttpServletRequest request) throws IOException {
         JFreeChart chart = ChartFactory.createTimeSeriesChart("", "", "", lineDataset, true, true, true);
         // 设置子标题
         TextTitle subtitle = new TextTitle(titleName, new Font("宋体", Font.BOLD, 16));

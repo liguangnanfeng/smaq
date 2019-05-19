@@ -1,10 +1,11 @@
 package com.spring.web.util;
 
+import com.spring.web.model.User;
+import org.apache.log4j.Logger;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import org.apache.log4j.Logger;
-import com.spring.web.model.User;
 
 /**
  * @Title: SessionUtil

@@ -4,12 +4,9 @@
  */
 package com.spring.web.util;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.io.IOException;
-import java.util.List;
-import java.util.Random;
-import javax.servlet.http.HttpServletRequest;
+import ChartDirector.BarLayer;
+import ChartDirector.Chart;
+import ChartDirector.XYChart;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
@@ -24,9 +21,12 @@ import org.jfree.chart.servlet.ServletUtilities;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.ui.TextAnchor;
-import ChartDirector.BarLayer;
-import ChartDirector.Chart;
-import ChartDirector.XYChart;
+
+import javax.servlet.http.HttpServletRequest;
+import java.awt.*;
+import java.io.IOException;
+import java.util.List;
+import java.util.Random;
 
 /**
  * @Title: ImageForBarChartUtil
@@ -38,7 +38,7 @@ import ChartDirector.XYChart;
 public class ImageForBarChartUtil {
     @SuppressWarnings("deprecation")
     public static String execute(CategoryDataset dataset, String titleName, String xName, String yName,
-            String formatStyle, HttpServletRequest request) throws IOException {
+                                 String formatStyle, HttpServletRequest request) throws IOException {
         // 设置数据集
         /*
          * double[][] data = new double[][] {{1310, 1220, 1110, 1000},{720, 700, 680, 640},{1130, 1020, 980, 800}, {440, 400, 360, 300}}; String[] rowKeys = {"科目一", "科目二","科目三",

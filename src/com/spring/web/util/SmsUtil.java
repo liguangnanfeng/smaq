@@ -4,14 +4,13 @@ package com.spring.web.util;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import com.github.qcloudsms.httpclient.HTTPException;
-
 import com.spring.web.controller.LoginController;
-
-//import javax.json.Json;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 
 import java.io.IOException;
+
+//import javax.json.Json;
 
 /**
  * @Author: 桃红梨白

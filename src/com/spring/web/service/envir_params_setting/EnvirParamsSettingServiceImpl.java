@@ -5,11 +5,12 @@
 
 package com.spring.web.service.envir_params_setting;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.spring.web.dao.TWaterparamterMapper;
 import com.spring.web.model.TWaterparamter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /** 
 * @Title: EnvirParamsSettingServiceImpl 
@@ -18,7 +19,7 @@ import com.spring.web.model.TWaterparamter;
 * @version V1.0   
 */
 @Service
-public class EnvirParamsSettingServiceImpl implements EnvirParamsSettingService{
+public class EnvirParamsSettingServiceImpl implements EnvirParamsSettingService {
 
     @Autowired
     private TWaterparamterMapper tWaterparamterMapper;

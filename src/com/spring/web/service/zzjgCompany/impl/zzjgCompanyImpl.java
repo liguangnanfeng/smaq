@@ -4,15 +4,12 @@ import com.spring.web.dao.ZzjgCompanyMapper;
 import com.spring.web.dao.ZzjgDepartmentMapper;
 import com.spring.web.dao.ZzjgPersonnelMapper;
 import com.spring.web.ibatis.LlHashMap;
-import com.spring.web.model.User;
 import com.spring.web.model.ZzjgCompany;
 import com.spring.web.model.ZzjgDepartment;
 import com.spring.web.service.zzjgCompany.IzzjgCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**

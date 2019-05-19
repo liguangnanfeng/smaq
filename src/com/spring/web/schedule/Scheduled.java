@@ -1,14 +1,15 @@
 package com.spring.web.schedule;
 
-import java.util.Date;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import com.spring.web.dao.TModelMapper;
 import com.spring.web.model.TCheck;
 import com.spring.web.model.TModel;
 import com.spring.web.service.cgf.CgfService;
 import com.spring.web.util.DateConvertUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 定时任务 => 主要是做企业自动检查表,

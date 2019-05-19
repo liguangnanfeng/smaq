@@ -1,7 +1,10 @@
 package com.spring.web.service.AppMessage;
 
 import com.spring.web.dao.AppControllerMessageMapper;
-import com.spring.web.model.*;
+import com.spring.web.model.Messages;
+import com.spring.web.model.TCheck;
+import com.spring.web.model.TRectification;
+import com.spring.web.model.ZzjgPersonnel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +18,7 @@ public class AppMessageServiceImpl implements AppMessageService {
     private AppControllerMessageMapper appControllerMessageMapper;
 
     @Override
-    public List<Messages> findMessageList(String userId,Integer pageNo,Integer pageSize) {
+    public List<Messages> findMessageList(String userId, Integer pageNo, Integer pageSize) {
         return  appControllerMessageMapper.findMessageList(userId,pageNo,pageSize);
     }
 

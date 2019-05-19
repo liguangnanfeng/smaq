@@ -1,5 +1,15 @@
 package com.spring.web.ibatis;
 
+import com.spring.web.exception.LlSystemException;
+import com.spring.web.util.MessageConstantsUtil;
+import com.spring.web.util.StackTraceUtil;
+import org.apache.commons.beanutils.ConvertUtilsBean;
+import org.apache.commons.beanutils.PropertyUtilsBean;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
+
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -7,15 +17,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.beanutils.ConvertUtilsBean;
-import org.apache.commons.beanutils.PropertyUtilsBean;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.stereotype.Repository;
-import com.spring.web.exception.LlSystemException;
-import com.spring.web.util.MessageConstantsUtil;
-import com.spring.web.util.StackTraceUtil;
 
 /**
  * @Title: DynamicDBExecuter
@@ -283,7 +284,7 @@ public class DynamicDBExecuter implements BaseDao {
      * @param s
      * @param dynamicDBValues
      * @return
-     * @see com.spring.web.ibatis.BaseDao#queryForOneObject(java.lang.String, com.spring.web.ibatis.DynamicDBValues)
+     * @see com.spring.web.ibatis.BaseDao#queryForOneObject(String, com.spring.web.ibatis.DynamicDBValues)
      */
     @Override
     public <T extends Serializable> T queryForOneObject(String s, DynamicDBValues dynamicDBValues) {
@@ -310,12 +311,12 @@ public class DynamicDBExecuter implements BaseDao {
 
     /**
      * (非 Javadoc) 批量插入数据
-     * 
+     *
      * @param <T> DTO型
      * @param s 插入ID
      * @param list ModelList
      * @return 插入记录数
-     * @see com.spring.web.ibatis.BaseDao#insert(java.lang.String, java.util.List)
+     * @see com.spring.web.ibatis.BaseDao#insert(String, List)
      */
     @Override
     public <T extends Serializable> int insert(String s, List<T> list) {
@@ -335,12 +336,12 @@ public class DynamicDBExecuter implements BaseDao {
 
     /**
      * (非 Javadoc)
-     * 
+     *
      * @param <T>
      * @param s
      * @param dynamicDBValues
      * @return
-     * @see com.spring.web.ibatis.BaseDao#queryMapForList(java.lang.String, com.spring.web.ibatis.DynamicDBValues)
+     * @see com.spring.web.ibatis.BaseDao#queryMapForList(String, com.spring.web.ibatis.DynamicDBValues)
      */
     @Override
     public <T> List<T> queryForMap(String s, DynamicDBValues dynamicDBValues) {
@@ -363,11 +364,11 @@ public class DynamicDBExecuter implements BaseDao {
 
     /**
      * (非 Javadoc) 数据查询返回map
-     * 
+     *
      * @param s
      * @param dynamicDBValues
      * @return map
-     * @see com.spring.web.ibatis.BaseDao#queryForMapObject(java.lang.String, com.spring.web.ibatis.DynamicDBValues)
+     * @see com.spring.web.ibatis.BaseDao#queryForMapObject(String, com.spring.web.ibatis.DynamicDBValues)
      */
     @Override
     public Map<?, ?> queryForMapObject(String s, DynamicDBValues dynamicDBValues, String key) {

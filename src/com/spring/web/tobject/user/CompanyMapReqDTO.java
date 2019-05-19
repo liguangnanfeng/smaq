@@ -1,7 +1,6 @@
 package com.spring.web.tobject.user;
 
 import com.spring.web.tobject.DTO;
-import com.spring.web.util.ConstantsUtil;
 
 /**
  * @Title: CompanyMapReqDTO

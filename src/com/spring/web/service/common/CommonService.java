@@ -5,9 +5,10 @@
 
 package com.spring.web.service.common;
 
-import java.io.Serializable;
 import com.spring.web.model.GlobalRegion;
 import com.spring.web.result.Result;
+
+import java.io.Serializable;
 
 /**
  * 

@@ -1,13 +1,13 @@
 package com.spring.web.service.user;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
-import org.springframework.web.multipart.MultipartFile;
 import com.spring.web.model.TCleanWarnSetting;
 import com.spring.web.model.User;
 import com.spring.web.result.Result;
 import com.spring.web.tobject.cgf.CompanyListReqDTO;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Title: UserService
@@ -30,7 +30,7 @@ public interface UserService extends Serializable {
     
     public void sequipmentImportSaveForClique(Result result, MultipartFile file) throws Exception;
     
-    public void editName(User user, Result result, User user2, Integer id ,String userName) throws Exception;
+    public void editName(User user, Result result, User user2, Integer id, String userName) throws Exception;
     
     public List<Integer> selectCount(CompanyListReqDTO dto, User user);
 

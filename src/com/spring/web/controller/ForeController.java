@@ -1,5 +1,5 @@
-/**  
- * All right reserved. 
+/**
+ * All right reserved.
  */
 package com.spring.web.controller;
 
@@ -306,7 +306,7 @@ public class ForeController extends BaseController {
                 result.setMap("message", "该账号被冻结。");
                 return result;
             }
-            
+
             // 判断前后台登录
             if (!user.getUserName().equals("惠山区港口")) {
                 // 判断前后台登录
@@ -316,7 +316,7 @@ public class ForeController extends BaseController {
                     return result;
                 }
             }
-            
+
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             token.setRememberMe(true);
             Subject currentUser = SecurityUtils.getSubject();
@@ -502,7 +502,7 @@ public class ForeController extends BaseController {
         model.addAttribute("type", type);
         return "company/notice/notice-show";
     }
-    
+
     /**
      * 主要物质理化、危险、有害特性表
      */
@@ -511,7 +511,7 @@ public class ForeController extends BaseController {
         model.addAttribute("list", aMaterialMapper.selectAll());
         return "company/safety-system/risk-hua";
     }
-    
+
     /**
      * 主要物质理化、危险、有害特性表
      */
@@ -530,7 +530,7 @@ public class ForeController extends BaseController {
         result.setMap("list", companyRegMapper.selectByRegionId(regionId));
         return result;
     }
-    
+
     /**
      * 处理行业与将官行业对应
      */
@@ -545,7 +545,7 @@ public class ForeController extends BaseController {
         }
         return result;
     }
-    
+
     /**
      * 企业经纬度处理
      */
@@ -560,8 +560,8 @@ public class ForeController extends BaseController {
             if(StringUtils.isNotBlank(c.getAddress())) {
                 key = c.getAddress();
             }
-            String json = WeixinUtil.doGet("http://restapi.amap.com/v3/geocode/geo", 
-                    "address=" + key + "&output=JSON&key=51d38bbdd51aaf526aca2db34f0fe075", 
+            String json = WeixinUtil.doGet("http://restapi.amap.com/v3/geocode/geo",
+                    "address=" + key + "&output=JSON&key=51d38bbdd51aaf526aca2db34f0fe075",
                     "utf8", false);
             Map<String, Object> j = gson.fromJson(json, LinkedMap.class);
             String status = j.get("status").toString();
@@ -575,10 +575,10 @@ public class ForeController extends BaseController {
                     userMapper.updateByPrimaryKeySelective(u);
                 }
             } else {//解析异常
-                
+
             }
         }
         return result;
     }
-    
+
 }

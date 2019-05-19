@@ -82,7 +82,7 @@ public class AppController_message extends BaseController {
     }
 
     /**
-     * TODO 获取已检查记录列表     只有当前检查人和当前责任人能看到 对应的检查记录
+     * TODO 获取已检查记录列表     只有当前检查人和当前责任人能看到   对应的检查记录
      */
     @RequestMapping(value = "findCheckList", method = RequestMethod.POST)
     public @ResponseBody
@@ -97,6 +97,10 @@ public class AppController_message extends BaseController {
         }
 
         ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute((String)params.get("access_token"));
+        // 获取该人对应的部门，在进行检查
+        String bm = zzjgDepartmentMapper.selectByPrimaryKey(zzjg.getDpid()).getName();  //部门
+        String name = zzjgDepartmentMapper.selectByPrimaryKey(zzjg.getDid()).getName(); //岗位
+        // 根据岗位进行判断
 
         // 1.获取userId
         String userId  = String.valueOf(params.get("userId"));
@@ -114,9 +118,7 @@ public class AppController_message extends BaseController {
 
     /**
      * 获取检查记录列表     只有当前检查人和当前责任人能看到 不合格
-     * 判断是企业端检查人员
-     * 分为两种  部门的责任人
-     * 岗位的责任人
+     * 判断是企业端检查人员  由没有相应的权力，在进行保存的时候
      */
     @RequestMapping(value = "findCheckListBystatus", method = RequestMethod.POST)
     public @ResponseBody
@@ -153,8 +155,6 @@ public class AppController_message extends BaseController {
         result.setData(detailList);
         return result;
     }
-
-
 
     /**
      * 整改意见列表

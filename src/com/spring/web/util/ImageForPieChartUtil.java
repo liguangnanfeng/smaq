@@ -1,9 +1,8 @@
 package com.spring.web.util;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.io.IOException;
-import javax.servlet.http.HttpServletRequest;
+import ChartDirector.Chart;
+import ChartDirector.PieChart;
+import ChartDirector.TextBox;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
@@ -12,9 +11,10 @@ import org.jfree.chart.servlet.ServletUtilities;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.util.Rotation;
-import ChartDirector.Chart;
-import ChartDirector.PieChart;
-import ChartDirector.TextBox;
+
+import javax.servlet.http.HttpServletRequest;
+import java.awt.*;
+import java.io.IOException;
 
 /**
  * @Title: ImageForPieChartUtil

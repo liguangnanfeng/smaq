@@ -190,23 +190,6 @@
         </if>
     </select>
 
-
-    <!-- 根据姓名查询数据信息 -->
-    <select id="selectOne" resultType="com.spring.web.model.ZzjgDepartment">
-        select * from zzjg_department_tbl where del = 0 and  level = 1 and name = #{name} and uid = #{uid}
-    </select>
-
-
-
-    <!--  查询 ZzjgDepartment 表中 pid 为 zzjgDepartment.getId() 并且 level = 2 的 数据信息 -->
-    <select id="selectOnes" resultType="com.spring.web.model.ZzjgDepartment">
-        select * from zzjg_department_tbl where del = 0 and  level = 2 and pid = #{pid}
-    </select>
-
-
-
-
-
     <select id="selectByUid" resultType="java.util.Map">
     select 
         t1.id, t1.name, t1.level,
@@ -221,7 +204,7 @@
 
     <select id="selectLevel1ByUid" resultType="java.util.Map">
     select 
-        t1.id, t1.name, t1.level,t1.cid,
+        t1.id, t1.name, t1.level,
         (select name from zzjg_company_tbl where id = t1.cid) companyName
     from zzjg_department_tbl t1
     where 
@@ -268,6 +251,8 @@
     group by parName, name
     order by t1.id asc
   </select>
+
+    <!--根据公司id查询分公司的所有部门-->
     <select id="selectDepartmentByCompidAndLEvel" resultType="com.spring.web.model.ZzjgDepartment">
     select * from zzjg_department_tbl where cid= #{companyId, jdbcType=INTEGER } and level = 1
   </select>
@@ -279,5 +264,11 @@
     <select id="selectNameByUid" resultType="String" parameterType="Integer">
         select name from zzjg_department_tbl  where uid= #{id} and level=1;
     </select>
+
+    <select id="selectOnes" resultType="com.spring.web.model.ZzjgDepartment">
+        select * from zzjg_department_tbl  where pid=#{pid} and level=2;
+    </select>
+
+
 
 </mapper>

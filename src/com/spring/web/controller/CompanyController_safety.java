@@ -510,7 +510,7 @@ public class CompanyController_safety extends BaseController {
             return result;
         }else {
             result.setStatus("1");
-            result.setMess("该行业暂无较大危险！");
+            result.setMess("该行业暂无较大风险！");
             return result;
         }
     }
@@ -583,7 +583,7 @@ public class CompanyController_safety extends BaseController {
             return result;
         }else {
             result.setStatus("1");
-            result.setMess("该行业暂无危险！");
+            result.setMess("该行业暂无风险！");
             return result;
         }
     }
@@ -1492,9 +1492,6 @@ public class CompanyController_safety extends BaseController {
     /**
      * 分级管控
      */
-    /**
-     * 分级管控
-     */
     @RequestMapping(value = "control-list")
     public String controlList(Model model, HttpServletRequest request, Integer type) throws Exception {
         User user = getLoginUser(request);
@@ -1519,6 +1516,7 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("treeMap", levmap);
 
         model.addAttribute("type", type);
+
         model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
 
         model.addAttribute("departL", zzjgDepartmentMapper.selectLevel1ByUid(user.getId()));//组织架构部门班组
@@ -1532,6 +1530,7 @@ public class CompanyController_safety extends BaseController {
 
 
 
+
     /**
      * 分级管控
      */
@@ -1540,7 +1539,6 @@ public class CompanyController_safety extends BaseController {
     List<ZzjgDepartment> controlLists(Model model, HttpServletRequest request, String name,Integer pid) throws Exception {
 
         User user = getLoginUser(request);
-
         List<ZzjgDepartment> zzjgDepartmentList1 = zzjgDepartmentMapper.selectOnes(pid);
 
         return zzjgDepartmentList1;
@@ -1724,11 +1722,13 @@ public class CompanyController_safety extends BaseController {
      * 企业风险辨识-保存
      */
     @RequestMapping(value = "aCompanyManual-save")
-    public @ResponseBody Result aCompanyManualSave(HttpServletRequest request, ACompanyManual be) throws Exception {
+    public @ResponseBody Result aCompanyManualSave(HttpServletRequest request, ACompanyManual be,Integer ids) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         be.setUid(user.getId());
-
+        be.setDmid(ids);
+        be.setLevel1(be.getGkzt());
+        be.setLevel2(be.getLevel2());
         be.setType("高危");
         if (null == be.getId()) {
             be.setDel(0);

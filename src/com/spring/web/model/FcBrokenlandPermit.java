@@ -1,8 +1,8 @@
 package com.spring.web.model;
 
-import java.util.Date;
-
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 public class FcBrokenlandPermit {
     /**

@@ -1,9 +1,9 @@
 package com.spring.web.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 public class TRectification implements Serializable {
     /** 

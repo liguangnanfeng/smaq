@@ -2,25 +2,18 @@
 
 package com.spring.web.utils.quartz;
 
-import org.quartz.JobBuilder;
-import org.quartz.JobDetail;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.SchedulerFactory;
-import org.quartz.SimpleScheduleBuilder;
-import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
+import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
 public class WarnMainScheduler{
   //创建调度器
-    public static Scheduler getScheduler() throws SchedulerException{
+    public static Scheduler getScheduler() throws SchedulerException {
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
         return schedulerFactory.getScheduler();
     }
     
     
-    public static void schedulerJob() throws SchedulerException{
+    public static void schedulerJob() throws SchedulerException {
         //创建任务
         JobDetail jobDetail = JobBuilder.newJob(WarnCleanJob.class).withIdentity("job1", "group1").build();
         //创建触发器 每3秒钟执行一次

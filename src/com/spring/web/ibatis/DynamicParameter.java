@@ -76,7 +76,7 @@ public class DynamicParameter<K, V> extends HashMap implements DynamicDBValues {
      * 
      * @param s
      * @return
-     * @see com.spring.web.ibatis.DynamicDBValues#getBigDecimal(java.lang.String)
+     * @see com.spring.web.ibatis.DynamicDBValues#getBigDecimal(String)
      */
     @Override
     public BigDecimal getBigDecimal(String s) {

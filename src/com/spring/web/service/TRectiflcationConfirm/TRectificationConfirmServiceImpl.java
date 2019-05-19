@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service("TRectificationConfirmService")
-public class TRectificationConfirmServiceImpl implements TRectificationConfirmService{
+public class TRectificationConfirmServiceImpl implements TRectificationConfirmService {
 
     @Autowired
     private TRectificationConfirmMapper tRectificationConfirmMapper;

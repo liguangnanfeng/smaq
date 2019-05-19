@@ -1,4 +1,4 @@
-/*package com.spring.web.util;
+package com.spring.web.util;/*package com.spring.web.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

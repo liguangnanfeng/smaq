@@ -1,16 +1,16 @@
 package imgsrv;
 
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPReply;
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPReply;
 
 /**
  * 文件上传
@@ -243,8 +243,8 @@ public class SynImgByFTP {
             initFtpClient();
             //切换FTP目录 
             ftpClient.changeWorkingDirectory(pathname); 
-            FTPFile[] ftpFiles = ftpClient.listFiles(); 
-            for(FTPFile file : ftpFiles){ 
+            FTPFile[] ftpFiles = ftpClient.listFiles();
+            for(FTPFile file : ftpFiles){
                 if(filename.equalsIgnoreCase(file.getName())){ 
                     File localFile = new File(localpath + "/" + file.getName()); 
                     os = new FileOutputStream(localFile); 
@@ -366,7 +366,7 @@ public class SynImgByFTP {
         	  return false;
           }
           //遍历设备号目录
-	      FTPFile[] ids = ftpClient.listFiles(); 
+	      FTPFile[] ids = ftpClient.listFiles();
 	      for(FTPFile file_id : ids){
 	    	  if(!file_id.isDirectory()) continue;
 	    	  String id = file_id.getName();
@@ -385,7 +385,7 @@ public class SynImgByFTP {
 	        	  continue;
 	          }
 	          //遍历设备号目录
-		      FTPFile[] cids = ftpClient.listFiles(); 
+		      FTPFile[] cids = ftpClient.listFiles();
 		      for(FTPFile file_cid : cids){
 		    	  if(!file_id.isDirectory()) continue;
 		    	  String cid = file_cid.getName();
@@ -397,7 +397,7 @@ public class SynImgByFTP {
 		        	  System.out.println("切换到"+"/SNAPSHOT"+"/"+id+"/"+cid+"/"+date+"目录失败,或当前的视频截图还未生成！");
 		        	  continue;
 		          }
-		          FTPFile[] files = ftpClient.listFiles(); 
+		          FTPFile[] files = ftpClient.listFiles();
 		          if(files.length==0){
 		        	  System.out.println("目录为空："+"/SNAPSHOT"+"/"+id+"/"+cid+"/"+date);
 		        	  if(del==1){
@@ -463,7 +463,7 @@ public class SynImgByFTP {
                     	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
                         System.out.println(df.format(new Date())+" : 定时器执行");// new Date()为获取当前系统时间
                         System.out.println("开始同步。。。");
-                        SynImgByFTP ftp =new SynImgByFTP(); 
+                        SynImgByFTP ftp =new SynImgByFTP();
 						ftp.doSynchronous(1);
 						System.out.println("同步结束！");
 					} catch (Exception e) {
@@ -482,7 +482,7 @@ public class SynImgByFTP {
     public static void main(String[] args) throws IOException {
     	System.out.println("启动。。。");
     	System.out.println("开始同步。。。");
-        SynImgByFTP ftp =new SynImgByFTP(); 
+        SynImgByFTP ftp =new SynImgByFTP();
 		try {
 			ftp.doSynchronous(0);
 		} catch (Exception e) {

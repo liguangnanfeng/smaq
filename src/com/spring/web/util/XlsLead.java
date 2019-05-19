@@ -5,18 +5,16 @@
 
 package com.spring.web.util;
 
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import com.spring.web.model.Company;
-import com.spring.web.model.Regulation;
 
 /** 
  * @Title: XlsLead 
@@ -31,7 +29,7 @@ public class XlsLead {
      */
     public static void main(String[] args) {
         try {
-            Workbook wb = new XSSFWorkbook(OPCPackage.open(new File("D:/111222.xlsx")));
+            Workbook wb = new XSSFWorkbook(OPCPackage.open(new File("E:/111222.xlsx")));
             Sheet sheet = wb.getSheetAt(0);
 //            Company com=new Company();
 //            Regulation reg=new Regulation();

@@ -1,8 +1,8 @@
 package com.spring.web.validator;
 
-import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.regex.Pattern;
 
 /**
  * @Title: FaxValidator
@@ -27,11 +27,11 @@ public class FaxValidator implements ConstraintValidator<Fax, String> {
 
     /**
      * (非 Javadoc)
-     * 
+     *
      * @param arg0
      * @param arg1
      * @return
-     * @see javax.validation.ConstraintValidator#isValid(java.lang.Object, javax.validation.ConstraintValidatorContext)
+     * @see javax.validation.ConstraintValidator#isValid(Object, javax.validation.ConstraintValidatorContext)
      */
     @Override
     public boolean isValid(String string, ConstraintValidatorContext context) {

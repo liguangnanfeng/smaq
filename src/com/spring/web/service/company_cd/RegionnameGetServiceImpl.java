@@ -4,11 +4,11 @@
  */
 package com.spring.web.service.company_cd;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.spring.web.ibatis.BaseDao;
 import com.spring.web.ibatis.DynamicDBValues;
 import com.spring.web.ibatis.DynamicParameter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @Title: BuyServiceImpl
@@ -30,7 +30,7 @@ public class RegionnameGetServiceImpl implements RegionnameGetService {
     /** (非 Javadoc)
     * @param regionId
     * @return 
-    * @see com.spring.web.service.company_cd.RegionnameGetService#getRegionname(java.lang.Integer) 
+    * @see com.spring.web.service.company_cd.RegionnameGetService#getRegionname(Integer)
     */
     @Override
     public DynamicParameter<String, Object> getRegionname(Integer regionId) {

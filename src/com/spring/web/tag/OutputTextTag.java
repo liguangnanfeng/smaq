@@ -4,15 +4,14 @@
  */
 package com.spring.web.tag;
 
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
-
-import org.apache.commons.lang3.StringUtils;
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @Title: ChooseTag
@@ -73,7 +72,7 @@ public class OutputTextTag extends SimpleTagSupport {
 	 * 
 	 * @throws JspException
 	 * @throws IOException
-	 * @see javax.servlet.jsp.tagext.SimpleTagSupport#doTag()
+	 * @see SimpleTagSupport#doTag()
 	 */
 	@Override
 	public void doTag() throws JspException, IOException {

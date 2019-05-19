@@ -368,7 +368,7 @@
      select * from zzjg_personnel_tbl where  mobile= #{name,jdbcType = VARCHAR} limit 0,1
     </select>
 
-    <!--查询公司信息
+    <!--查询公司信息 ,包括部门信息 和岗位信息
     -->
     <select id="selectAll1"  resultType="java.util.Map" parameterType="java.lang.Integer" >
 

@@ -1,13 +1,13 @@
 package com.spring.web.security;
 
+import com.spring.web.util.EncodingUtil;
+import com.spring.web.util.Utf8EncodeOrDecodeUtil;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.codec.CodecSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.spring.web.util.EncodingUtil;
-import com.spring.web.util.Utf8EncodeOrDecodeUtil;
 
 /**
  * @Title: StandardPasswordEncoder

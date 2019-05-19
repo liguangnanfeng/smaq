@@ -5,11 +5,8 @@ import com.spring.web.dao.ZzjgPersonnelMapper;
 import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.service.CheckCompany.Zzjg_PersonnelService;
 import com.spring.web.util.EncryptUtil;
-import com.spring.web.util.MailUtil;
-import com.spring.web.util.MyMD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.security.provider.MD5;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("PersonnerService")
-public class PersonnerServiceImpl implements PersonnerService{
+public class PersonnerServiceImpl implements PersonnerService {
 
     @Autowired
     private PersonnelMapper personnelMapper;

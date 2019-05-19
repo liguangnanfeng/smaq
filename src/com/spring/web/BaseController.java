@@ -38,8 +38,8 @@ import com.spring.web.util.SessionUtil;
  * @author FL
  * @date 2016年1月19日 下午2:21:49
  * @version V1.0
- * @param <FcLimitspacePermitMapper>
- * 总控制器的概念
+ * @param  总控制器的概念
+ *
  */
 public class BaseController implements Serializable {
     /**
@@ -372,12 +372,15 @@ public class BaseController implements Serializable {
     }
 
     /**
-     * 获取app登录用户信息
+     * TODO 获取app登录用户信息
      */
     protected Integer getAppUserId(HttpServletRequest request) {
         String access_token = request.getParameter("access_token");
         if (StringUtils.isEmpty(access_token)) {
-            return null;
+            access_token =  request.getHeader("access_token");
+            if (StringUtils.isEmpty(access_token)) {
+                    return null ;
+            }
         }
         AppToken at = appTokenMapper.selectByPrimaryKey(access_token);
         Date date = new Date();

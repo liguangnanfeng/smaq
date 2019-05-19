@@ -31,10 +31,12 @@ import java.util.Map;
  */
 @Controller
 public class LoginController extends BaseController {
+
     /**
      * serialId
      */
     private static final long serialVersionUID = 1L;
+
     /**
      * 日志记录器
      */
@@ -198,6 +200,7 @@ public class LoginController extends BaseController {
 //            result.setMap("message", "验证码错误。");
 //            return result;
 //        }
+
         try {
             User user = userMapper.selectUserByUserName(username);
             // 判断前后台登录
@@ -218,12 +221,14 @@ public class LoginController extends BaseController {
                 result.setMap("message", "请用政府账号登录。");
                 return result;
             }
+
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             token.setRememberMe(true);
             Subject currentUser = SecurityUtils.getSubject();
             currentUser.login(token);
             SessionUtil.setUser(request, user);
             result.setMap("userType", user.getUserType());
+
         } catch (Exception uae) {
             uae.printStackTrace();
             log.info("对用户[" + username + "]进行登录验证..验证未通过,未知账户");

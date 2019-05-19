@@ -2813,11 +2813,13 @@ public class VillageController extends BaseController {
 
         log.info(map);
 
+
         System.out.println(title);  // 标题
         System.out.println(checkNature);  // 基础 高危
         System.out.println(cusCheckItemList); // 存储的数据 自定义的项目
         System.out.println(checkType);       //  定期 日常
         System.out.println(checkItemList);   // 正常的查询
+
 
         // 保存检查信息到数据库
         // 创建model方法
@@ -2842,10 +2844,17 @@ public class VillageController extends BaseController {
         /*TODO 其他的进行保留*/
         tModelMapper.insertSelective(model);
 
+<<<<<<< .mine
         TModelPart tModelPart = new TModelPart();
         tModelPart.setModelId(model.getId()); // 模版id
         tModelPart.setName(bm); // 部门名称
         tModelPartMapper.insertSelective(tModelPart);
+=======
+        TModelPart tModelPart = new TModelPart();
+        tModelPart.setModelId(model.getId()); // 模版id
+        tModelPart.setName(zzjgDepartment.getName()); // 部门名称
+        tModelPartMapper.insertSelective(tModelPart);
+>>>>>>> .theirs
 
         // 保存检查记录总表
         TCheck tCheck = new TCheck();

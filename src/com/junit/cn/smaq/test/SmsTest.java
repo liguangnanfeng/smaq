@@ -36,7 +36,7 @@ public class SmsTest {
      */
     @Test
     public void Test03(){
-        smsUtil.sendSMS("15670382411","111222");
+        smsUtil.sendSMS("17516470884","111222");
 
     }
 

@@ -55,5 +55,5 @@ public interface TradeCliqueMapper {
      */
     int updateByPrimaryKey(TradeClique record);
     
-    DynamicParameter<String, Object> selectForCliqueByUserId(Map<String,Object> m);
+    DynamicParameter<String, Object> selectForCliqueByUserId(Map<String, Object> m);
 }

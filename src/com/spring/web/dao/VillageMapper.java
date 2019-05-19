@@ -58,15 +58,15 @@ public interface VillageMapper {
     /** 
     * @return 
     */
-    List<DynamicParameter<String, Object>> selectVillageList(@Param("name")String name);
+    List<DynamicParameter<String, Object>> selectVillageList(@Param("name") String name);
 
     Village selectByName(Village record);
 
-    /** 
+    /**
     * @param village
-    * @return 
+    * @return
     */
-    Village selectVillageByName(@Param("name")String village);
+    Village selectVillageByName(@Param("name") String village);
 
     /** 
     * @return 

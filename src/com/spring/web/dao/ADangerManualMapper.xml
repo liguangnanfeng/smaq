@@ -230,9 +230,52 @@
         </foreach>
   </select>
 
+
+  <select id="selectById" resultType="com.spring.web.model.ACompanyManual">
+    <!--
+    fix a bug "id dmid" to "id" zhangcl 2018.10.27
+    it's a wrong fix, put it right by zhangcl 2018.12.7
+  -->
+    select * from a_danger_manual_tbl WHENEVER id =  (select dmid  from a_company_manual_tbl where id = #{id});
+
+  </select>
+
+
+
+  <select id="selectFactors" resultType="com.spring.web.model.ADangerManual">
+
+    select * from a_danger_manual_tbl where flag = #{flag} and industry = #{industry} ;
+
+  </select>
+
+
+
+
+
+
+
   <select id="selectIndustryByid" resultType="String">
      select industry as name from  a_danger_manual_tbl where  id =  (select dmid  from a_company_manual_tbl where id = #{id});
 
-     </select>
+  </select>
+
+
+  <select id="selectByMap" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+      from a_danger_manual_tbl T1
+    <where>
+      <if test="industry != null">
+        and T1.industry = #{industry}
+      </if>
+      <if test="level1 != null">
+        and T1.level1 in (${level1})
+      </if>
+      <if test="flag != null">
+        and T1.flag in (${flag})
+      </if>
+    </where>
+    order by T1.id desc
+  </select>
 
 </mapper>

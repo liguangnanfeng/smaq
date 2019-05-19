@@ -13,9 +13,9 @@ public interface TRectificationConfirmMapper {
 
     List<Map> findTRectificationConfirm(String userId);
 
-    TRectificationConfirm  findTRectificationConfirmByItemId(String id);
+    TRectificationConfirm findTRectificationConfirmByItemId(String id);
 
-    TRectificationConfirm findByCheckId(Integer checkId );
+    TRectificationConfirm findByCheckId(Integer checkId);
 
 
     /**

@@ -2830,6 +2830,7 @@ public class VillageController extends BaseController {
         System.out.println(checkType);       //  定期 日常
         System.out.println(checkItemList);   // 正常的查询
 
+
         // 保存检查信息到数据库
         // 创建model方法
         TModel model = new TModel();

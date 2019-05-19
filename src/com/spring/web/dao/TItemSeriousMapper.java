@@ -58,7 +58,7 @@ public interface TItemSeriousMapper {
     * @param levelid
     * @return 
     */
-    List<TItemSerious> selectbylid(@Param("levelid")Integer levelid);
+    List<TItemSerious> selectbylid(@Param("levelid") Integer levelid);
     
     List<Map<String, Object>> selectTLevel();
     

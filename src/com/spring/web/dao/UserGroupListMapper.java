@@ -20,7 +20,7 @@ public interface UserGroupListMapper {
     
     Long insertCompanyListBatch(List<UserGroupList> list);
     
-    List<Map<String, Object>> getGroupUserList(@Param("groupId")String groupId);
-    
-    int deleteByGroupId(@Param("groupId")String groupId);
+    List<Map<String, Object>> getGroupUserList(@Param("groupId") String groupId);
+
+    int deleteByGroupId(@Param("groupId") String groupId);
 }

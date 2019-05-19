@@ -55,6 +55,6 @@ public interface AMaterialMapper {
     
     List<AMaterial> selectAll();
     
-    List<AMaterial> selectByIds(@Param("ids")String ids);
+    List<AMaterial> selectByIds(@Param("ids") String ids);
     
 }

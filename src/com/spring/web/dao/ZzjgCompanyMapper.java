@@ -1,8 +1,9 @@
 package com.spring.web.dao;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 import com.spring.web.model.ZzjgCompany;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ZzjgCompanyMapper {
     /**
@@ -53,5 +54,5 @@ public interface ZzjgCompanyMapper {
      */
     int updateByPrimaryKey(ZzjgCompany record);
     
-    List<ZzjgCompany> selectAll(@Param("uid")Integer uid);
+    List<ZzjgCompany> selectAll(@Param("uid") Integer uid);
 }

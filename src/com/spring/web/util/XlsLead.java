@@ -31,7 +31,7 @@ public class XlsLead {
      */
     public static void main(String[] args) {
         try {
-            Workbook wb = new XSSFWorkbook(OPCPackage.open(new File("E:/111222.xlsx")));
+            Workbook wb = new XSSFWorkbook(OPCPackage.open(new File("D:/111222.xlsx")));
             Sheet sheet = wb.getSheetAt(0);
 //            Company com=new Company();
 //            Regulation reg=new Regulation();

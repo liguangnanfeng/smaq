@@ -1,14 +1,11 @@
 package com.spring.web.dao;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
+import com.spring.web.model.ACompanyManual;
 import com.spring.web.model.request.CheckLevel;
-import com.spring.web.model.response.MeasuresBean;
 import org.apache.ibatis.annotations.Param;
 
-import com.spring.web.model.ACompanyManual;
+import java.util.List;
+import java.util.Map;
 
 public interface ACompanyManualMapper {
     /**
@@ -122,6 +119,54 @@ public interface ACompanyManualMapper {
     // 根据公司id，部门名，岗位名
     List<ACompanyManual> findInspection(@Param("id") String id,@Param("dept") String dept,@Param("station") String station);
 
+    /**
+     * 根据level1 和Level 2 和检查的类型 (基础),查询level3
+     * @param checkLevel
+     * @return
+     */
+    List<CheckLevel> findLevel3ByjcType1(CheckLevel checkLevel);
 
+    /**
+     * 根据level1 和Level 2 和检查的类型 (现场),查询level3
+     * @param checkLevel
+     * @return
+     */
+    List<CheckLevel> findLevel3ByjcType2(CheckLevel checkLevel);
+
+
+    /**
+     * 根据level1 和Level 2 和检查的类型 (高危),查询level3
+     * @param checkLevel
+     * @return
+     */
+    List<CheckLevel> findLevel3ByjcType3(CheckLevel checkLevel);
+
+
+    int add(ACompanyManual aCompanyManuals);
+
+
+    List<ACompanyManual> selectAll(@Param("uid") Integer uid);
+
+    boolean updateDeltess(@Param("id")Integer id);
+
+    List<ACompanyManual> selectIds(@Param("uid")Integer uid);
+
+    boolean updateAll(Integer id);
+
+    void insertBathByIndustry(Map<String, Object> m);
+
+    void updateDelByUserId(Integer id);
+
+    void updateDelByUserIddel(Integer id);
+
+    List<ACompanyManual> selectIdss(Integer userId);
+
+    void updateDelByUserId2(Integer id);
+
+    List<ACompanyManual> selectAlls(Integer userId);
+
+    void save(ACompanyManual aCompanyManual1);
+
+    List<ACompanyManual> findALLsss(@Param("flag")String flag, @Param("uid")Integer uid);
 }
 

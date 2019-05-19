@@ -55,5 +55,5 @@ public interface AHxysgzkMapper {
     
     List<AHxysgzk> selectAll();
     
-    List<AHxysgzk> selectByIds(@Param("ids")String ids);
+    List<AHxysgzk> selectByIds(@Param("ids") String ids);
 }

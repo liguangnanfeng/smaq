@@ -131,7 +131,7 @@ public interface CompanyMapper {
      */
     List<DynamicParameter<String, Object>> selectCompanyMapByTown(Map<String, Object> m);
     
-    int insertBatch(@Param("list")List<Company> list);
+    int insertBatch(@Param("list") List<Company> list);
     
     List<DynamicParameter<String, Object>> selectNeedCompanyList(Map<String, Object> m);
 

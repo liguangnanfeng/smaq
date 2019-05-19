@@ -21,8 +21,8 @@ public interface AppControllerMessageMapper {
      * @param pageSize
      * @return
      */
-    List<Map>  findTCheckList(@Param("cid") String userId,@Param("pageNo") Integer pageNo,@Param("pageSize") Integer pageSize);
-    List<Map> findTCheckListByStatus(@Param("cid") String userId,@Param("pageNo") Integer pageNo,@Param("pageSize") Integer pageSize);
+    List<Map>  findTCheckList(@Param("cid") String userId, @Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize);
+    List<Map> findTCheckListByStatus(@Param("cid") String userId, @Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize);
 
     ZzjgPersonnel findPersonnel(String userId);
 
@@ -31,10 +31,10 @@ public interface AppControllerMessageMapper {
     TRectification findTRectification(String checkId);
 
     // 复查
-    List<Map<String, Object>> selectRecheckByCheckId(@Param("checkId")Integer checkId);
+    List<Map<String, Object>> selectRecheckByCheckId(@Param("checkId") Integer checkId);
 
     // 复查 （主界面进入）
-    List<Map<String, Object>> selectRecheckByCheckId2(@Param("userId")Integer userId);
+    List<Map<String, Object>> selectRecheckByCheckId2(@Param("userId") Integer userId);
 
     // 政府端检查表
     List<Map> selectCheckByFlag();

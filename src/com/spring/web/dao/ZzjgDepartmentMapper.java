@@ -59,20 +59,18 @@ public interface ZzjgDepartmentMapper {
      */
     List<ZzjgDepartment> selectByCompanyId(ZzjgDepartment zzjgDepartment);
     
-    List<Map<Object, Object>> selectByUid(@Param("uid")Integer uid);
+    List<Map<Object, Object>> selectByUid(@Param("uid") Integer uid);
     
-    List<Map<Object, Object>> selectLevel1ByUid(@Param("uid")Integer uid);
+    List<Map<Object, Object>> selectLevel1ByUid(@Param("uid") Integer uid);
     
-    List<Map<Object, Object>> selectFullName(Integer cid);
-    
-    List<Map<Object, Object>> selectLevel2ByUid(@Param("uid")Integer uid);
+    List<Map<Object, Object>> selectLevel2ByUid(@Param("uid") Integer uid);
     
     /**
      * 根据岗位id查询岗位名字和部门名字
      * @param id
      * @return
      */
-    List<Map<Object, Object>> selectNameParnameById(@Param("id")Integer id);//zhangcl 2018.10.27
+    List<Map<Object, Object>> selectNameParnameById(@Param("id") Integer id);//zhangcl 2018.10.27
 
     List<ZzjgDepartment> selectDepartmentByCompidAndLEvel(Integer companyId);
 
@@ -81,7 +79,7 @@ public interface ZzjgDepartmentMapper {
      * @param companyId
      * @return
      */
-    List<ZzjgDepartment> selectDepByCompanyIdandSome(Integer companyId,Integer depId);
+    List<ZzjgDepartment> selectDepByCompanyIdandSome(Integer companyId, Integer depId);
 
     /**
      * 根据总公司id查询所有的部门 level
@@ -89,4 +87,9 @@ public interface ZzjgDepartmentMapper {
      * @return
      */
     List<String> selectNameByUid(Integer id);
+
+
+    List<ZzjgDepartment> selectOnes(@Param("pid") Integer pid);
+
+
 }

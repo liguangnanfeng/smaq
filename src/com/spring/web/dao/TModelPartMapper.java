@@ -54,9 +54,9 @@ public interface TModelPartMapper {
      */
     int updateByPrimaryKey(TModelPart record);
     
-    List<TModelPart> selectByModelId(@Param("modelId")Integer modelId);
-    
-    int deleteByModelId(@Param("modelId")Integer modelId);
+    List<TModelPart> selectByModelId(@Param("modelId") Integer modelId);
+
+    int deleteByModelId(@Param("modelId") Integer modelId);
     
     int insertBath(Map<String, Object> m);
 }

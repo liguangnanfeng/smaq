@@ -18,15 +18,15 @@ public interface TSensorsMapper {
 
     int updateByPrimaryKey(TSensors record);
     
-    List<Map<String, Object>> getCompanyDevice(@Param("companyId")Integer companyId);
-    
-    Integer checkSensorSnExsist(@Param("map")Map<String, Object> params);
-    
+    List<Map<String, Object>> getCompanyDevice(@Param("companyId") Integer companyId);
+
+    Integer checkSensorSnExsist(@Param("map") Map<String, Object> params);
+
     List<Map<String, Object>> getSensorType();
-    
-    List<Map<String, Object>> getSensorsList(@Param("map")Map<String, Object> map);
-    
-    Integer getSensorsListCount(@Param("map")Map<String, Object> map);
-    
-    List<Map<String, Object>> getDeviceListBySensor(@Param("companyId")Integer companyId);
+
+    List<Map<String, Object>> getSensorsList(@Param("map") Map<String, Object> map);
+
+    Integer getSensorsListCount(@Param("map") Map<String, Object> map);
+
+    List<Map<String, Object>> getDeviceListBySensor(@Param("companyId") Integer companyId);
 }

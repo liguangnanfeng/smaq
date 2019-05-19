@@ -66,7 +66,7 @@ public interface SpersonMapper {
      * @param list
      * @return
      */
-    int insertSpersonBatch(@Param("list")List<Sperson> list);
+    int insertSpersonBatch(@Param("list") List<Sperson> list);
     
     /**
      * 查询企业下所有人员

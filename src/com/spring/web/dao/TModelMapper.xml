@@ -389,7 +389,7 @@
       根据id进行排序
    -->
   <select id="selectModelByUid" resultType="Map" >
-    select id, title from t_model_tbl where  user_id =#{uid} and del=0 and flag=1 order by id ;
+    select id, title from t_model_tbl where  user_id =#{uid} and del=0 and flag=1 and part=#{dpName} order by id ;
   </select>
   <!--政府端查询模版信息
 

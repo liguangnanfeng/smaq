@@ -43,10 +43,11 @@ public interface ICheckManual {
 
     /**
      * 企业端查询所有模版
-     * @param uid
+     * @param uid 公司id
+     * @param dpName 部门名称
      * @return
      */
-    List<Map<Integer, String>> findModelByUid(Integer uid);
+    List<Map<Integer, String>> findModelByUid(Integer uid,String dpName );
 
     /**
      * 政府端查询所有的模版

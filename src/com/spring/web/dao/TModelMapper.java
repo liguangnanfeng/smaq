@@ -3,6 +3,7 @@ package com.spring.web.dao;
 import java.util.List;
 import java.util.Map;
 import com.spring.web.model.TModel;
+import org.apache.ibatis.annotations.Param;
 
 public interface TModelMapper {
     /**
@@ -66,7 +67,7 @@ public interface TModelMapper {
      * @param uid
      * @return
      */
-    List<Map<Integer, String>> selectModelByUid(Integer uid);
+    List<Map<Integer, String>> selectModelByUid(@Param("uid") Integer uid,@Param("dpName") String dpName);
 
     /**
      * TODO 政府端 公司id查询所有的模版信息

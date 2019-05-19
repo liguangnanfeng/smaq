@@ -153,7 +153,6 @@ public class CheckManualImpl implements ICheckManual {
 
     }
 
-
     /**
      * 获取高危的检查选项
      * level1 对应 level2
@@ -396,13 +395,12 @@ public class CheckManualImpl implements ICheckManual {
         tCheck.setCheker(zzjg.getName());            // 检查人
         tCheck.setContact(zzjg.getMobile());            // 检查人的联系方式
         tCheck.setDapartContact(String.valueOf(checkItem.getDepartmentId()));      // 被检查人的部门的id
-        tCheck.setStatus(4);              //  表示是为初始值模版
+        tCheck.setStatus(1);              //  表示未检查
         tCheck.setCreateTime(new Date()); // 创建时间
         int i = tCheckMapper.insertSelective(tCheck);
         return tCheck.getId();
 
     }
-
 
     /**
      * 查询该企业所有的安全责任人
@@ -423,12 +421,13 @@ public class CheckManualImpl implements ICheckManual {
     /**
      * TODO  企业端 根据公司id查询所有的模版信息
      *
-     * @param uid
+     * @param uid    企业id
+     * @param dpName 部门名称
      * @return
      */
     @Override
-    public List<Map<Integer, String>> findModelByUid(Integer uid) {
-        List<Map<Integer, String>> list = modelMapper.selectModelByUid(uid);
+    public List<Map<Integer, String>> findModelByUid(Integer uid,String dpName) {
+        List<Map<Integer, String>> list = modelMapper.selectModelByUid(uid,dpName);
         return list;
     }
 
@@ -519,7 +518,6 @@ public class CheckManualImpl implements ICheckManual {
      */
     private TCheckItem saveCheckTtem(CheckItem checkItem, ZzjgPersonnel zzjg, Integer CheckId) {
 
-
         // 获取检查标准详情
         List<CheckLevel> checkLevels = checkItem.getCheckLevels();
 
@@ -528,7 +526,7 @@ public class CheckManualImpl implements ICheckManual {
             TCheckPart tCheckPart = new TCheckPart(); // 检查岗位/部位表
 
             tCheckPart.setCheckId(CheckId);         // 检查表id
-            tCheckPart.setName(checkLevels.get(0).level2);    // 岗位或部位名称
+            tCheckPart.setName(checkLevel.level2);    // 岗位或部位名称
             int i = tCheckPartMapper.insertSelective(tCheckPart);
 
             TCheckItem tCheckItem = new TCheckItem();
@@ -542,6 +540,7 @@ public class CheckManualImpl implements ICheckManual {
                 }else{
                     tCheckItem.setLevels(checkLevel.getLevel3());   // 检查等级
                 }
+
             tCheckItem.setReference(checkLevel.getReference());//检查参照
 
             // tCheckItem.setPartId(tCheckPart.getId());    // 装置与设施id

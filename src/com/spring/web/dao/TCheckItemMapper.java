@@ -143,7 +143,7 @@ public interface TCheckItemMapper {
      * @param checkId
      * @return
      */
-    List<TCheckItem> selectAllByCheckId(@Param("checkId") Integer checkId);
+    List<Map> selectAllByCheckId(@Param("checkId") Integer checkId);
 
     /**
      * 根据id查询数据
@@ -164,4 +164,8 @@ public interface TCheckItemMapper {
      */
     List<Map> selectRecheckList(Integer userId);
 
+    /**
+     * 根据检查记录主表id获取数据
+     */
+    List<TCheckItem> selectItemByCheckId(Integer checkId);
 }

@@ -165,8 +165,9 @@ public class AppController_Custom_Check extends BaseController {
 
             return result;
         } catch (NullPointerException e) {
-            result.setStatus("1");
+            result.setStatus("0");
             result.setMessage("未查询出数据");
+            result.setData(new ArrayList<Map>());
             return result;
         } catch (Exception e) {
             result.setStatus("1");
@@ -233,20 +234,35 @@ public class AppController_Custom_Check extends BaseController {
     AppResult checkJiChu(HttpServletRequest request) {
         // 获取登陆内容
         AppResult result = new AppResultImpl();
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
-        if (zzjg == null) {
+        try {
+            ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
+            if (zzjg == null) {
+                result.setStatus("1");
+                result.setMessage("未成功登陆,请重新登陆");
+                return result;
+            }
+
+            // 查询高危风险
+            Map map = checkManual.checkJiChu(zzjg.getUid());
+            result.setStatus("0");
+            result.setMessage("查询成功");
+            result.setData(map);
+
+            return result;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            result.setStatus("0");
+            result.setMessage("数据库为空");
+            result.setData(null);
+
+            return result;
+        }catch (Exception e) {
+            e.printStackTrace();
             result.setStatus("1");
-            result.setMessage("未成功登陆,请重新登陆");
+            result.setMessage("网络异常");
+
             return result;
         }
-
-        // 查询高危风险
-        Map map = checkManual.checkJiChu(zzjg.getUid());
-        result.setStatus("0");
-        result.setMessage("查询成功");
-        result.setData(map);
-
-        return result;
     }
 
     /**
@@ -422,15 +438,16 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO 根据用户点击查询(所有)模版
+     * TODO 根据用户点击查询(关联部门的)模版
      *
      * @param sessionId    sessionId
      * @param access_token 令牌
+     * @param dpName
      * @return list  企业关联的模版
      */
     @RequestMapping(value = "A205", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult checkDepartmentById(String sessionId, String access_token) {
+    AppResult checkDepartmentById(String sessionId, String access_token ,String dpName ) {
         AppResult result = new AppResultImpl();
 
         try {
@@ -440,7 +457,7 @@ public class AppController_Custom_Check extends BaseController {
             ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(access_token);
 
             // 根据公司id获取模版信息
-            List<Map<Integer, String>> list = checkManual.findModelByUid(zzjg.getUid());
+            List<Map<Integer, String>> list = checkManual.findModelByUid(zzjg.getUid(),dpName);
 
             result.setStatus("0");
             result.setData(list);
@@ -464,17 +481,18 @@ public class AppController_Custom_Check extends BaseController {
     /**
      * TODO 根据模版id查询详细信息 > 开启检查
      *
-     * @param checkModel 包含模版id信息
+     * @param  checkModel 包含模版id信息
      * @return checkItemByModelId 检查记录的详细信息
      */
     @RequestMapping(value = "A206", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult checkItemtById(@RequestBody CheckModel checkModel) {
+    AppResult checkItemtById(@RequestBody CheckModel checkModel /*Integer modelId  */) {
         AppResult result = new AppResultImpl();
         try {
 
             // 根据id查询并进行封装数据
             CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(checkModel.getModelId());
+            /*CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(modelId);*/
 
             result.setStatus("0");
             result.setMessage("查询成功");

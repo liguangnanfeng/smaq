@@ -14,13 +14,18 @@ public class SaveDataMessage {
 
     /**id*/
     public Integer id;
+
     /**状态*/
     public String value;
+
     /**隐患照片*/
     public String file;
 
     /**隐患描述*/
     public String memo;
+
+
+
 
     public Integer getId() {
         return id;
@@ -53,4 +58,5 @@ public class SaveDataMessage {
     public void setMemo(String memo) {
         this.memo = memo;
     }
+
 }

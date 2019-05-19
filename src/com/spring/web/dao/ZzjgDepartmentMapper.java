@@ -72,6 +72,11 @@ public interface ZzjgDepartmentMapper {
      */
     List<Map<Object, Object>> selectNameParnameById(@Param("id") Integer id);//zhangcl 2018.10.27
 
+    /**
+     * 根据公司id查询所有的部门
+     * @param companyId
+     * @return
+     */
     List<ZzjgDepartment> selectDepartmentByCompidAndLEvel(Integer companyId);
 
     /**

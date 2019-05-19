@@ -38,7 +38,6 @@ public class CheckItem {
     /**
      * 检查时间
      */
-
     public Integer cycle;
 
 
@@ -46,7 +45,6 @@ public class CheckItem {
      * 对应的负责人id
      */
     public Integer departmentId;
-
 
     /**
      * sessionId

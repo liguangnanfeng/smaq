@@ -487,12 +487,13 @@ public class AppController_xlb extends BaseController {
      */
     @RequestMapping(value = "A015", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult noticeDetail(HttpServletRequest request, Integer id,@RequestBody Map<String, Object> params) {
+    AppResult noticeDetail(HttpServletRequest request,@RequestBody Map<String, Object> params) {
         AppResult result = new AppResultImpl();
         Map<String, Object> map = new HashMap<String, Object>();
         String basic = String.valueOf(params.get("basic"));
-        if(null == basic){
-            map.put("notice", noticeMapper.selectByPrimaryKey(id));
+        String id = (String) params.get("id");
+        if(null == basic||"null".equals(basic)){
+            map.put("notice", noticeMapper.selectByPrimaryKey(Integer.parseInt(id)));
         }else{
             map.put("notice", noticeMapper.selectByPrimaryKey(Integer.valueOf(basic)));
         }

@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 public class TMap {
-    public  Integer userId;
+    public Integer userId;
     public String files;
 
 }

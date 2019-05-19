@@ -122,7 +122,6 @@ public class SaveDataImpl implements SaveMessageService {
                         long time = new Date().getTime();
                         long l = time + i; //
                         Date date = new Date(l);
-
                         item.setDeadline(date); // 限期整改期限
                         item.setSuggest(2);  // 1.立即整改 2. 限期整改
                         item.setPlanTime(date); // 预期检查时间
@@ -180,7 +179,7 @@ public class SaveDataImpl implements SaveMessageService {
             // 有多个不合格项, 只发送一次短信通知
             // 发送短信 发送给负责人的id表示
             System.out.println("发送短信==============");
-            smsUtil.sendSMS(zzjgPersonnel.getMobile(), "112221");
+            //smsUtil.sendSMS(zzjgPersonnel.getMobile(), "112221");
             System.out.println("发送短信==============");
         }
 
@@ -307,7 +306,6 @@ public class SaveDataImpl implements SaveMessageService {
                 // TODO 添加t_recheck_item_tbl表数据
                 TRecheckItem tRecheckItem = new TRecheckItem();
 
-
                 if ("1".equals(saveDataMessage.getValue())) {
                     checkItem.setStatus(3); // 复查成功
                     tRecheckItem.setStatus(2); //表示复查成功
@@ -323,7 +321,6 @@ public class SaveDataImpl implements SaveMessageService {
                     tRecheckItem.setFile(saveDataMessage.getFile());    //图片
                     tRecheckItem.setDeadline(new Date());
                     tRecheckItem.setMemo(saveDataMessage.getMemo());  // 复查描述
-
 
                 }
 
@@ -355,7 +352,7 @@ public class SaveDataImpl implements SaveMessageService {
      */
     @Override
     public CheckItemS findCheckItemByModelId(Integer modelId) {
-        try {
+
             CheckItemS checkItemS = new CheckItemS();
 
             // 通过modelId
@@ -369,26 +366,22 @@ public class SaveDataImpl implements SaveMessageService {
 
             Integer checkId = insertCheck(tCheck.getId());  //表示是新的数据,然后将新的数据进行传递
 
-            List<TCheckPart> tCheckParts = tCheckPartMapper.findAllByCheckId(checkId);
-
             checkItemS.setLevle1(tCheck.getDepart()); //  部门信息
             checkItemS.setType(tCheck.getIndustryType());              // 检查类型
             // 查询风险点数据
-            List<TCheckItem> list = tCheckItemMapper.selectAllByCheckId(checkId);
+            List<Map> list = tCheckItemMapper.selectAllByCheckId(checkId);
             checkItemS.setItems(list);
 
             return checkItemS;
-
-        } catch (Exception e) {
-            // 查询出现问题就直接报错
-            return null;
-        }
 
     }
 
     /**
      * TODO 根据最早插入的check数据,从新生成一条新的数据,并进行返回
-     *  根据最早更新的数据而定,
+     * 根据检查记录id获取数据,part item 进行新的数据的修改
+     *
+     *
+     *
      *  part和item一一对应
      * @param checkId
      * @return
@@ -398,7 +391,7 @@ public class SaveDataImpl implements SaveMessageService {
         // 获取对应的检查表的数据
         TCheck tCheck = tCheckMapper.selectByPrimaryKey(checkId); //获取主表
         List<TCheckPart> tCheckParts = tCheckPartMapper.findAllByCheckId(checkId);  //获取岗位
-        List<TCheckItem> tCheckItems = tCheckItemMapper.selectAllByCheckId(checkId); //获取详情
+        List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(checkId); //获取详情
 
         // 新增 tCheck
         tCheck.setStatus(1); //表示未检查
@@ -411,27 +404,29 @@ public class SaveDataImpl implements SaveMessageService {
         Integer tCheckId = tCheck.getId(); //获取检查的id
 
         // 现在唯一能够确定的就是part和item一一对应
-        for (int i = 0; i <tCheckParts.size() ; i++) {
-            TCheckPart tCheckPart = tCheckParts.get(i);
 
-            tCheckPart.setCheckId(tCheckId);
-            tCheckPart.setId(null);
-            tCheckPartMapper.insertSelective(tCheckPart);
-            Integer checkPartId = tCheckPart.getId();
+            for (int i = 0; i <tCheckParts.size() ; i++) {
+                TCheckPart tCheckPart = tCheckParts.get(i);
 
-            TCheckItem tCheckItem = tCheckItems.get(i);
+                tCheckPart.setCheckId(tCheckId);
+                tCheckPart.setId(null);
+                tCheckPartMapper.insertSelective(tCheckPart);
+                Integer checkPartId = tCheckPart.getId();
 
-            tCheckItem.setId(null);
-            tCheckItem.setCheckId(tCheckId);
-            tCheckItem.setPartId(checkPartId);
-            tCheckItem.setStatus(null);
-            tCheckItem.setSuggest(null);
-            tCheckItem.setDeadline(null);
-            tCheckItem.setPlanTime(null);
-            tCheckItem.setRecheckTime(null);
+                TCheckItem tCheckItem = tCheckItems.get(i);
 
-            tCheckItemMapper.insertSelective(tCheckItem);
-        }
+                tCheckItem.setId(null);
+                tCheckItem.setCheckId(tCheckId);
+                tCheckItem.setPartId(checkPartId);
+                tCheckItem.setStatus(null);
+                tCheckItem.setSuggest(null);
+                tCheckItem.setDeadline(null);
+                tCheckItem.setPlanTime(null);
+                tCheckItem.setRecheckTime(null);
+
+                tCheckItemMapper.insertSelective(tCheckItem);
+            }
+
 
         // 新增tCheckPart 能确定只有一条记录所有现在出现的就是新的记录数据
 

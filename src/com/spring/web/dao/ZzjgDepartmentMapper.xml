@@ -269,7 +269,9 @@
     order by t1.id asc
   </select>
 
-    <!--根据公司id查询分公司的所有部门-->
+    <!--根据公司id查询分公司的所有部门(一级)
+
+    -->
     <select id="selectDepartmentByCompidAndLEvel" resultType="com.spring.web.model.ZzjgDepartment">
     select * from zzjg_department_tbl where cid= #{companyId, jdbcType=INTEGER } and level = 1
   </select>

@@ -4,6 +4,7 @@ import com.spring.web.model.TCheckItem;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: 桃红梨白
@@ -16,7 +17,7 @@ public class CheckItemS {
 
     public String levle1;
 
-    public List<TCheckItem> items;
+    public List<Map> items;
 
     public Integer type;
 
@@ -30,11 +31,19 @@ public class CheckItemS {
         this.levle1 = levle1;
     }
 
-    public List<TCheckItem> getItems() {
+    public List<Map> getItems() {
         return items;
     }
 
-    public void setItems(List<TCheckItem> items) {
+    public void setItems(List<Map> items) {
         this.items = items;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

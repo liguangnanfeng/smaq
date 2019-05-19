@@ -454,12 +454,13 @@
     </select>
 
 
+    <!--根据模版id查询最早的检查记录-->
     <select id="selectOldByModelId" resultMap="BaseResultMap" >
     select
         <include refid="Base_Column_List"/>
     from t_check_tbl
     where
-    model_id = #{modelId} order by id asc  limit 0 ,1;
+    model_id = #{modelId} order by id limit 0 ,1;
 
     </select>
 

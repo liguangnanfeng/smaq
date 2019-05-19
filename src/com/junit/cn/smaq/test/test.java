@@ -4,14 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.spring.web.dao.TCheckItemMapper;
 import com.spring.web.dao.TCheckMapper;
+import com.spring.web.dao.TCheckPartMapper;
 import com.spring.web.dao.TCompanyMapper;
-import com.spring.web.model.TCheck;
-import com.spring.web.model.TCheckItem;
-import com.spring.web.model.TCompany;
-import com.spring.web.model.ZzjgPersonnel;
+import com.spring.web.model.*;
 import com.spring.web.model.response.CheckItemS;
 import com.spring.web.service.CheckCompany.ICheckManual;
 import com.spring.web.service.CheckCompany.SaveMessageService;
+import com.spring.web.service.SaveModelService;
+import org.apache.poi.ss.formula.functions.T;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +39,17 @@ public class test {
     private ICheckManual iCheckManual;
     @Autowired
     private TCompanyMapper tCompanyMapper;
+
+    @Autowired
+    private TCheckItemMapper tCheckItemMapper;
+
+    @Autowired
+    private TCheckPartMapper tCheckPartMapper;
+
+    @Autowired
+    private SaveMessageService   SaveDataImpl;
+
+
 
     @Test
     public void test01() {
@@ -92,5 +103,37 @@ public class test {
         TCompany tCompany = tCompanyMapper.selectByPrimaryKey(37097);
         System.out.println(tCompany);
     }
+
+    /**
+     * 检查item表结构信息
+     */
+    @Test
+    public void test07(){
+        List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(38302);
+        System.out.println(tCheckItems);
+    }
+
+    @Test
+    public void test08(){
+       Integer checkId = 38302;
+
+        TCheck tCheck = tCheckMapper.selectByPrimaryKey(38302); //获取主表
+        List<TCheckPart> tCheckParts = tCheckPartMapper.findAllByCheckId(38302);  //获取岗位
+        List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(38302); //获取详情
+
+        System.out.println(tCheck);
+        System.out.println(tCheckParts);
+        System.out.println(tCheckItems);
+    }
+
+    /**
+     * 获取检查内容
+     */
+    @Test
+    public void test09(){
+        CheckItemS checkItemByModelId = SaveDataImpl.findCheckItemByModelId(1630);
+        System.out.println(checkItemByModelId);
+    }
+
 
 }

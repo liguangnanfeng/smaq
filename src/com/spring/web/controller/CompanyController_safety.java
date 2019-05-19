@@ -109,7 +109,7 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-    *  重大风险一键导入
+    *  重大风险一键导入 2
     * */
     @RequestMapping(value = "risk-list-add1")
     public @ResponseBody Result riskList(HttpServletRequest request){
@@ -467,7 +467,7 @@ public class CompanyController_safety extends BaseController {
     }
 
     /*
-       导入所有较大风险数据
+       导入所有较大风险数据 1
     */
     @RequestMapping({"risk-list-addssss"})
     @ResponseBody
@@ -537,7 +537,7 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-    * 导入现场管理数据
+    * 导入一般和较大风险   3
     * */
     @RequestMapping({"risk-list-add2"})
     @ResponseBody
@@ -549,7 +549,7 @@ public class CompanyController_safety extends BaseController {
         Company company = this.companyMapper.selectByPrimaryKey(user.getId());
 
         // 根据企业ID 查询当前企业中所有的高危风险的数据 ID
-        List<ACompanyManual> aCompanyManualList = aCompanyManualMapper.selectIdss(company.getUserId());
+        List<ACompanyManual> aCompanyManualList = aCompanyManualMapper.selectAlls(company.getUserId());
         // 根据 ids 修改删除标记为 1（已经删除）
         for (int i = 0; i < aCompanyManualList.size(); i++) {
             aCompanyManualMapper.updateAll(aCompanyManualList.get(i).getId());

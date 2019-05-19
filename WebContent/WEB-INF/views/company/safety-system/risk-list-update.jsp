@@ -150,7 +150,7 @@
 
 
     function update2() {
-        layer.confirm("确定重置现场管理数据？", function(r) {
+        layer.confirm("确定重置较大风险数据信息？", function(r) {
             $.post(getRootPath() + "/company/safety-system/risk-list-addssss", {
             }, function(result) {
                 if(result.status == '1'){

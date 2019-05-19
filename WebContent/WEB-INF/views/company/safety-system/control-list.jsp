@@ -28,9 +28,7 @@
           $("#gkzt").val(p.find("input[name='gkzt']").val());
           $("#gkcs").val(p.find("input[name='gkcs']").val());
           $("#fjgkfzr").val(p.find("input[name='fjgkfzr']").val());
-
           $("#buwei").val(p.find("input[name='buwei']").val());
-
           $("#win-add").modal("show");
       }
 
@@ -47,6 +45,7 @@
           $("#win-add4").modal("show");
           var name = $("#gkzt").val();
           var id = $("#gkztIds").val();
+
           $.ajax({ //post也可
               type: "POST",
               url: getRootPath() + "/company/safety-system/control-list-one",
@@ -66,7 +65,6 @@
           });
       }
 
-
       function per_chooses() {
 
           var list = $("#win-add4 :checked");
@@ -78,10 +76,6 @@
           $("#win-add4").modal("hide");
 
       }
-
-
-
-
 
       function save_() {
           var obj = {
@@ -213,7 +207,7 @@
   </div>
 </div>
 
-<!-- 弹窗管控信息添加 -->
+<!--  编辑管控信息 弹窗 -->
 <div id="win-add" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="width: 760px">
     <div class="modal-content radius">
@@ -244,7 +238,7 @@
           <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
             <input type="text" id="buwei" value="" style="width: 357px" class="input-text required">
             <c:if test="${not empty perL}">
-              <button class="btn btn-primary radius" type="button" onclick="chosem3()">
+              <button class="btn btn-primary radius" id = "gangwei" type="button" onclick="chosem3()">
 
                 <i class="Hui-iconfont" >&#xe611;</i>选择部位
 

@@ -409,7 +409,7 @@
             order by find_in_set(T1.level,'红色,橙色,黄色,蓝色')
         </if>
         <if test="order == null">
-            order by T1.id desc
+            order by T1.id asc
         </if>
 
         <!-- <if test="type == 1">
@@ -899,7 +899,7 @@
 
     <!--根据公司ID，风险等级 查询未删除的数据信息 -->
     <select id="findALLsss"  resultType="com.spring.web.model.ACompanyManual">
-        select * from a_company_manual_tbl where del = 0 and flag = #{flag} and uid = #{uid};
+        select * from a_company_manual_tbl where del = 0 and flag = #{flag} and uid = #{uid} order by id asc;
     </select>
 
 

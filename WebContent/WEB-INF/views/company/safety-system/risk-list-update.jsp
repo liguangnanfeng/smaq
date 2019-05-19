@@ -61,15 +61,15 @@
     <h3 class="text-c">${company.name}风险因素辨识表</h3>
     <div class="mt-20">
         <div class="cl pd-5 bg-1 bk-gray mt-20">
-            <a onclick="updatedel1()" class="btn btn-danger radius" href="javascript:void(0);">高危风险数据清空</a>
-            <a onclick="update1()" class="btn btn-danger radius" href="javascript:void(0);">高危风险数据导入</a>
+            <a onclick="updatedel1()" class="btn btn-danger radius" href="javascript:void(0);">重大风险数据清空</a>
+            <a onclick="update1()" class="btn btn-danger radius" href="javascript:void(0);">重大风险数据导入</a>
 
 
             <a onclick="updatedel2()" class="btn btn-warning radius" href="javascript:void(0);">较大风险数据清空</a>
             <a onclick="update2()" class="btn btn-warning radius" href="javascript:void(0);">较大风险数据导入</a>
 
-            <a onclick="updatedel3()" class="btn btn-primary radius" href="javascript:void(0);">现场管理风险数据清空</a>
-            <a onclick="update3()" class="btn btn-primary radius" href="javascript:void(0);">现场管理风险数据导入</a>
+            <a onclick="updatedel3()" class="btn btn-primary radius" href="javascript:void(0);">一般和较小风险数据清空</a>
+            <a onclick="update3()" class="btn btn-primary radius" href="javascript:void(0);">一般和较小风险数据导入</a>
 
         </div>
         <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan">
@@ -87,14 +87,12 @@
                 <tr>
                     <c:set value="${fn:split(be.level3,'/')}" var="ls">
 
-
                     </c:set>
-
-
 
                     <td class="text-c">${ls[0] != null ? ls[0] : "无数据" }</td>
                     <td class="text-c">${ls[1] != null ? ls[1] : "无数据" }</td>
                     <td class="text-c">${ls[2] != null ? ls[2] : "无数据" }</td>
+
                     <td>
                         <p style="float:left;width:100%;">${be.factors}</p>
                     </td>

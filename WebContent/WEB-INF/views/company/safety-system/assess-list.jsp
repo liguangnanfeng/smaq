@@ -100,7 +100,7 @@
               location.reload();
           })
       }
-      $(function(){
+     /* $(function(){
           $('.table-sort').dataTable({
               "searching": false,
               "ordering": false,
@@ -109,7 +109,7 @@
               "aoColumnDefs": [
               ]
           });
-          /* 全选和反选 */
+          /!* 全选和反选 *!/
           $(".check-all").on('click', function() {
               $(".modal-body tbody input:checkbox").prop("checked", $(this).prop('checked'));
           })
@@ -120,7 +120,7 @@
                   $(".check-all").prop("checked", false);
               }
           })
-      })
+      })*/
   </script>
 </head>
 <body>

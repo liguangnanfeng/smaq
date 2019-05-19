@@ -46,7 +46,7 @@
               layer.alert("请选择需要删除的数据");
               return false;
           }
-          $.post(getRootPath() + "/company/safety-system/aCompanyManual-del", {
+          $.post(getRootPath() + "/company/safety-system/aCompanyManual-deletes", {
               ids : ids
           }, function(result) {
               location.reload();

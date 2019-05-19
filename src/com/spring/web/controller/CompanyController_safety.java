@@ -109,7 +109,7 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-    *  高危风险一键导入
+    *  重大风险一键导入
     * */
     @RequestMapping(value = "risk-list-add1")
     public @ResponseBody Result riskList(HttpServletRequest request){
@@ -486,6 +486,8 @@ public class CompanyController_safety extends BaseController {
         ACompanyManual aCompanyManual1 ;
         // 根据 行业 查询该行业中所有的较大风险信息
         List<ADangerManual> aDangerManualList = aDangerManualMapper.selectFactors("1",company.getIndustry()) ;
+
+
         if (aDangerManualList.size() != 0){
             for (int i = 0; i < aDangerManualList.size(); i++) {
 
@@ -944,7 +946,7 @@ public class CompanyController_safety extends BaseController {
     }
 
     /**
-     * 一般和较小实施方案
+     * 一般和较小判定
      */
     @RequestMapping({"assess6"})
     public String assess6(Model model, HttpServletRequest request) throws Exception {
@@ -1530,7 +1532,7 @@ public class CompanyController_safety extends BaseController {
 
 
     /**
-     * 分级管控
+     * 查询相应管控主体下的部门信息
      */
     @RequestMapping(value = "control-list-one")
     public @ResponseBody
@@ -1727,7 +1729,7 @@ public class CompanyController_safety extends BaseController {
         be.setDmid(ids);
         be.setLevel1(be.getGkzt());
         be.setLevel2(be.getLevel2());
-        be.setType("高危");
+        be.setType("重大");
         if (null == be.getId()) {
             be.setDel(0);
             be.setCtime(new Date());

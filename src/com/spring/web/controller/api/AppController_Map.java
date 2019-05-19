@@ -88,8 +88,8 @@ public class AppController_Map extends BaseController {
             String imgFilePath =realPath+path+s+".jpg";
             // 数据库图片路径
             //String filePath =  InetAddress.getLocalHost().getHostAddress()+":"+ request.getLocalPort()+path+s+".jpg";
-            //String filePath =  "https://sec.dicarl.com"+path+s+".jpg";
-            String filePath =  path+s+".jpg";
+            String filePath =  "https://sec.dicarl.com"+path+s+".jpg";
+            //String filePath =  path+s+".jpg";
 
             OutputStream ops = new FileOutputStream(imgFilePath);
             ops.write(bytes);

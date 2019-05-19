@@ -4,82 +4,10 @@
  */
 package com.spring.web.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.alibaba.fastjson.JSON;
 import com.spring.web.BaseController;
 import com.spring.web.ibatis.DynamicParameter;
-import com.spring.web.ibatis.LlHashMap;
-import com.spring.web.model.ACompanyManual;
-import com.spring.web.model.Company;
-import com.spring.web.model.Cyryjkjh;
-import com.spring.web.model.Detection;
-import com.spring.web.model.Evaluation;
-import com.spring.web.model.Examination;
-import com.spring.web.model.Facilities;
-import com.spring.web.model.Library;
-import com.spring.web.model.LightningProtection;
-import com.spring.web.model.Material;
-import com.spring.web.model.Mequipment;
-import com.spring.web.model.Monitor;
-import com.spring.web.model.Pequipment;
-import com.spring.web.model.Product;
-import com.spring.web.model.ProductionProcessDiagram;
-import com.spring.web.model.QccData;
-import com.spring.web.model.Regulation;
-import com.spring.web.model.SafetyFacilities;
-import com.spring.web.model.Sequipment;
-import com.spring.web.model.Sperson;
-import com.spring.web.model.Standard;
-import com.spring.web.model.TAccident;
-import com.spring.web.model.TCheck;
-import com.spring.web.model.TCheckItem;
-import com.spring.web.model.TCheckPart;
-import com.spring.web.model.TCompany;
-import com.spring.web.model.TContingencyPlan;
-import com.spring.web.model.TDrill;
-import com.spring.web.model.TItem;
-import com.spring.web.model.TLevel;
-import com.spring.web.model.TModel;
-import com.spring.web.model.TModelPart;
-import com.spring.web.model.TRectification;
-import com.spring.web.model.Table;
-import com.spring.web.model.Table3;
-import com.spring.web.model.Table4;
-import com.spring.web.model.User;
-import com.spring.web.model.ZzjgDepartment;
+import com.spring.web.model.*;
 import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
 import com.spring.web.service.cgf.CgfService;
@@ -89,11 +17,24 @@ import com.spring.web.tobject.cgf.ModelSaveReqDTO;
 import com.spring.web.tobject.cgf.RecheckSaveReqDTO;
 import com.spring.web.tobject.cgf.ThreeSaveReqDTO;
 import com.spring.web.tobject.user.ModifyPwdReqDTO;
-import com.spring.web.util.DateConvertUtil;
-import com.spring.web.util.EncryptUtil;
-import com.spring.web.util.OutPrintUtil;
-import com.spring.web.util.SessionUtil;
-import com.spring.web.util.WeixinUtil;
+import com.spring.web.util.*;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.*;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Title: CompanyController_cd
@@ -910,7 +851,7 @@ public class CompanyController_cd extends BaseController {
      * 批量导入特种设备
      * 
      * @param file
-     * @param contractCode
+     * @param
      * @throws Exception
      */
     @RequestMapping(value = "importSequipmentExcel", produces = "text/html;charset=utf-8")
@@ -925,7 +866,7 @@ public class CompanyController_cd extends BaseController {
      * 批量导入主要设备
      * 
      * @param file
-     * @param contractCode
+     * @param
      * @throws Exception
      */
     @RequestMapping(value = "importMajorequipmentExcel", produces = "text/html;charset=utf-8")
@@ -1759,6 +1700,63 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("list", table2mapper.selectTable(m));
         model.addAttribute("isType", isType);
         return "company/tables/tab-weilist";
+    }
+
+
+    /**
+     * 安全标准化
+     */
+    @RequestMapping(value = "tables/tab-biaozhun")
+    public String biaozhun(HttpServletRequest request, Model model, Integer isType, Integer isTab) throws Exception {
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
+        setUserId(user, m);
+        if (null != isType) {
+            m.put("isType", isType);
+        } else {
+            m.put("code", 5);
+        }
+        model.addAttribute("list", table2mapper.selectTable(m));
+        model.addAttribute("isType", isType);
+        return "company/tables/tab-biaozhun";
+    }
+
+
+    /**
+     * 安全工作台账
+     */
+    @RequestMapping(value = "tables/tab-taizhang")
+    public String taizhang(HttpServletRequest request, Model model, Integer isType, Integer isTab) throws Exception {
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
+        setUserId(user, m);
+        if (null != isType) {
+            m.put("isType", isType);
+        } else {
+            m.put("code", 5);
+        }
+        model.addAttribute("list", table2mapper.selectTable(m));
+        model.addAttribute("isType", isType);
+        return "company/tables/tab-taizhang";
+    }
+
+
+    /**
+     * 安全档案
+     */
+    @RequestMapping(value = "tables/tab-dangan")
+    public String dangan(HttpServletRequest request, Model model, Integer isType, Integer isTab) throws Exception {
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
+        setUserId(user, m);
+        if (null != isType) {
+            m.put("isType", isType);
+        } else {
+            m.put("code", 5);
+        }
+        model.addAttribute("list", table2mapper.selectTable(m));
+        model.addAttribute("isType", isType);
+        return "company/tables/tab-dangan";
     }
 
     /**

@@ -28,6 +28,9 @@
           $("#gkzt").val(p.find("input[name='gkzt']").val());
           $("#gkcs").val(p.find("input[name='gkcs']").val());
           $("#fjgkfzr").val(p.find("input[name='fjgkfzr']").val());
+
+          $("#buwei").val(p.find("input[name='buwei']").val());
+
           $("#win-add").modal("show");
       }
 
@@ -197,6 +200,7 @@
                   <input type="hidden" name="gkcs" value="${empty be.gkcs ? be.measures : be.gkcs }"/>
                   <input type="hidden" name="gkzt" value="${be.gkzt }"/>
                   <input type="hidden" name="fjgkfzr" value="${be.fjgkfzr }"/>
+                  <input type="hidden" name="buwei" value="${be.level2}"/>
                   <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑">编辑管控信息</a>
                 </td>
               </tr>

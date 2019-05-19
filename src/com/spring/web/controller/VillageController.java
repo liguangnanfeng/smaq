@@ -239,7 +239,7 @@ public class VillageController extends BaseController {
         User user = getLoginUser(request);
         //log.error("zhangcl 2018.11.8 companyList start1 userid:"+user.getId());
         cgfService.selectCompanyWithPage(dto, user, model);
-        //log.error("zhangcl 2018.11.8 companyList end1:"+ System.currentTimeMillis());    
+        //log.error("zhangcl 2018.11.8 companyList end1:"+ System.currentTimeMillis());
         if (user.getUserType().intValue() == 3) {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("townId", dto.getTownId());
@@ -760,14 +760,14 @@ public class VillageController extends BaseController {
 //        m.put("page", 0);
 //        m.put("limit", 20);
 //        List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyMap(m);
-//        
+//
 //        for (int i = 0; i < list.size(); i++) {
 //            DynamicParameter<String, Object> item = list.get(i);
 //            item.put("id", i + 1 + "");
 //        }
-//        Integer count = companyMapper.selectCountMap(m);      
-//        String listStr = JSONArray.toJSONString(list);       
-//        String userStr = JSONObject.toJSONString(user);     
+//        Integer count = companyMapper.selectCountMap(m);
+//        String listStr = JSONArray.toJSONString(list);
+//        String userStr = JSONObject.toJSONString(user);
 //        model.addAttribute("count", count);
 //        model.addAttribute("companyList", listStr);
 //        model.addAttribute("user", userStr);
@@ -1307,7 +1307,7 @@ public class VillageController extends BaseController {
 //        }
 //        model.addAttribute("now", new Date());
 //        model.addAttribute("company", companyMapper.selectByPrimaryKey(tc.getUserId()));
-//        
+//
 //        Map<String, Object> m = new HashMap<String, Object>();
 //        m.put("userId", user.getId());
 //        model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
@@ -2385,7 +2385,7 @@ public class VillageController extends BaseController {
             model.addAttribute("townL", townMapper.selectListByDistrict(m));
         }
         model.addAttribute("m", m);
-        //log.error("list："+aCompanyManualMapper.selectByMap3(m));  
+        //log.error("list："+aCompanyManualMapper.selectByMap3(m));
         if (level.equals("红色")) {
             return "village/safety-system/control-listmenu";
         } else {
@@ -2707,102 +2707,11 @@ public class VillageController extends BaseController {
         return ACompanyManual;
     }
 
-
     /**
-     * 企业端保存保存检查模板 2019-05
-     * title : 检查表名称
-     * depId:  部门id
-     * sName :岗位名称
-     * checkVal: 多选的检查项
-     * cycle :  检查周期
-     * nextTime : 开始日期
-     * checkType : 1. 日常 2.定期 3. 临时
-     * checkNature: 1. 基础 2. 现场  3. 高危
-     *
-     * @return
-     */
-    @RequestMapping(value = "saveCheckMenu")
-    @ResponseBody
-    public Result saveCheckMenu(String title, Integer depId, String sName, String checkVal, String cycle, String nextTime, String checkType, String checkNature, HttpServletRequest request) {
-        Result result = new ResultImpl();
-        checkVal.replace("[", " ");
-        checkVal.replace("]", " ");
-        checkVal.replace("\"", " ");
-        System.out.println(checkVal);
-
-        List<String> lists = JSON.parseObject(checkVal, List.class);
-
-        System.out.println(lists);
-
-        User user = getLoginUser(request); // 主账号登陆
-
-        String strs = request.getParameter("checkVal");
-        if (user == null) {
-            result.setMess("登陆失败");
-            result.setStatus("1");
-            return result;
-        }
-
-        Integer integer = saveModelService.saveModel(title, depId, sName, lists, cycle, nextTime, checkType, checkNature, user.getId());  // 模版id
-        Integer industryId = saveModelService.saveTIndustry(user.getId(), checkNature);
-
-        //保存完模版之后.保存检查记录
-        TCheck tCheck = new TCheck();
-        tCheck.setStatus(1); // 未检查
-        tCheck.setFlag(1);   // 表示企业自查
-        tCheck.setTitle(title); // 被检查的标题
-        tCheck.setDepart(zzjgDepartmentMapper.selectByPrimaryKey(depId).getName());   // 被检查的部门
-        tCheck.setUserId(user.getId()); // 被检查公司id
-        tCheck.setCreateUser(user.getId()); // 被创建人的id
-        tCheck.setModelId(integer);         // 模版id
-        tCheck.setIndustryId(industryId);
-        tCheck.setType(Integer.parseInt(checkType)); // 1. 日常 ,2. 定期 3 临时
-        tCheck.setIndustryType(Integer.parseInt(checkNature));                    // 1. 基础 2. 现场 ,3 高危
-        tCheck.setExpectTime(new Date());  //
-        tCheck.setRealTime(new Date());    //
-        tCheck.setCheker(user.getUserName());  //当前的公司名称
-        //tCheck.setContact(user.getUserName());// 手机号无
-        tCheck.setDapartContact(depId + ""); // 被检查部门的id
-        tCheck.setStatus(1); // 表示未检查  TODO  备注
-        tCheck.setCreateTime(new Date()); // 创建时间
-        tCheck.setCheckCompany(user.getUserName());
-
-        int i = tCheckMapper.insertSelective(tCheck);
-        Integer tCheckId = tCheck.getId(); // 获取id
-        //保存checkPart表数据
-        TCheckPart tCheckPart = new TCheckPart();
-        tCheckPart.setCheckId(tCheckId);// 检查表id
-        tCheckPart.setName(sName);      // 被检查装置
-        List list = saveModelService.saveTlevel(industryId, lists);
-        tCheckPart.setLevels(JSON.toJSONString(list)); //  保存检查等级
-        int i1 = tCheckPartMapper.insertSelective(tCheckPart);
-        Integer checkPartId = tCheckPart.getId(); // 获取partId
-
-        // 循环保存item数据
-        for (String s : lists) {
-            ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(Integer.parseInt(s));
-            TCheckItem tCheckItem = new TCheckItem();
-            tCheckItem.setCheckId(tCheckId); // 检查记录id
-            tCheckItem.setPartId(checkPartId); //partId
-            tCheckItem.setContent(companyManual.getMeasures()); //检查详情
-            tCheckItem.setLevels(JSON.toJSONString(list));
-            tCheckItem.setReference(companyManual.getReference()); //检查参照
-            tCheckItem.setMemo(companyManual.getFactors());        //不合格描述
-            tCheckItemMapper.insertSelective(tCheckItem);
-        }
-        result.setMess("添加成功");
-        return result;
-    }
-
-    /**
-     *
-     * TODO 保存模板2
-     *
-     *
+     *PC 企业端保存保存检查模板
      */
     @RequestMapping(value = "saveCheckMenu2")
-    @ResponseBody
-    public Result saveCheckMenu2(HttpServletRequest request, @RequestBody HashMap<String, Object> map) {
+    public String saveCheckMenu2(HttpServletRequest request, @RequestBody HashMap<String, Object> map) {
         User user = getLoginUser(request); // 主账号登陆
         Result result = new ResultImpl();
         String title = (String) map.get("title");  // 检查名称
@@ -2813,15 +2722,17 @@ public class VillageController extends BaseController {
 
         log.info(map);
 
-
         System.out.println(title);  // 标题
         System.out.println(checkNature);  // 基础 高危
         System.out.println(cusCheckItemList); // 存储的数据 自定义的项目
         System.out.println(checkType);       //  定期 日常
         System.out.println(checkItemList);   // 正常的查询
 
+        if(null==title||null==checkNature||null==checkType){
+            return  "请进行选择";
+        }
 
-        // 保存检查信息到数据库
+        // 保存检查信息到数据库s
         // 创建model方法
         TModel model = new TModel();
         model.setTitle(title);   // 标题
@@ -2838,29 +2749,22 @@ public class VillageController extends BaseController {
         }
         model.setCreateTime(new Date()); //创建时间
         String bm = (String) checkItemList.get(0).get("bm");
-       // ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectByPrimaryKey(Integer.parseInt(bm));
-        model.setPart(bm); // 被检查的部门
+        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectByPrimaryKey(Integer.parseInt(bm));
+        model.setPart(zzjgDepartment.getName()); // 被检查的部门
         model.setIndustryId(null);               // 被检查的行业
         /*TODO 其他的进行保留*/
         tModelMapper.insertSelective(model);
 
-<<<<<<< .mine
-        TModelPart tModelPart = new TModelPart();
-        tModelPart.setModelId(model.getId()); // 模版id
-        tModelPart.setName(bm); // 部门名称
-        tModelPartMapper.insertSelective(tModelPart);
-=======
         TModelPart tModelPart = new TModelPart();
         tModelPart.setModelId(model.getId()); // 模版id
         tModelPart.setName(zzjgDepartment.getName()); // 部门名称
         tModelPartMapper.insertSelective(tModelPart);
->>>>>>> .theirs
 
         // 保存检查记录总表
         TCheck tCheck = new TCheck();
         tCheck.setFlag(1);   // 表示企业自查
         tCheck.setTitle(title); // 被检查的标题
-        tCheck.setDepart(bm);   // 被检查的部门
+        tCheck.setDepart(zzjgDepartment.getName());   // 被检查的部门
         tCheck.setUserId(user.getId()); // 被检查公司id
         tCheck.setCreateUser(user.getId()); // 被创建人的id
         tCheck.setModelId(model.getId());         // 模版id
@@ -2886,25 +2790,24 @@ public class VillageController extends BaseController {
         int i = tCheckMapper.insertSelective(tCheck);
         Integer tCheckId = tCheck.getId(); // 获取id
 
-       if(null!=cusCheckItemList||cusCheckItemList.size()>0){
-           // 保存part数据和item数据
-           for (Map map1 : cusCheckItemList) { // 循环自定义项
-               TCheckPart tCheckPart = new TCheckPart();
-               tCheckPart.setCheckId(tCheckId);
-               tCheckPart.setName((String) map1.get("gw"));  //岗位/部位信息
-               tCheckPartMapper.insertSelective(tCheckPart);
-               TCheckItem tCheckItem = new TCheckItem();
-               tCheckItem.setContent((String) map1.get("project"));
-               tCheckItem.setLevels((String) map1.get("content"));
-               tCheckItem.setPartId(tCheckPart.getId());
-               tCheckItem.setCheckId(tCheckId);
-               tCheckItemMapper.insertSelective(tCheckItem);
-           }
-
-       }
+        if (null!=cusCheckItemList||cusCheckItemList.size()>0){
+            // 保存part数据和item数据
+            for (Map map1 : cusCheckItemList) { // 循环自定义项
+                TCheckPart tCheckPart = new TCheckPart();
+                tCheckPart.setCheckId(tCheckId);
+                tCheckPart.setName((String) map1.get("gw"));  //岗位/部位信息
+                tCheckPartMapper.insertSelective(tCheckPart);
+                TCheckItem tCheckItem = new TCheckItem();
+                tCheckItem.setContent((String) map1.get("project"));
+                tCheckItem.setLevels((String) map1.get("content"));
+                tCheckItem.setPartId(tCheckPart.getId());
+                tCheckItem.setCheckId(tCheckId);
+                tCheckItemMapper.insertSelective(tCheckItem);
+            }
+        }
 
         // 标准检查
-        if(null!=checkItemList ||checkItemList.size()>0){
+        if(null==checkItemList||checkItemList.size()>0){
             for (Map map1 : checkItemList) {
                 List<String> list = (java.util.List<String>) map1.get("dx");
                 for (String integer : list) {  // 有几个就表示有几条检查看记录
@@ -2928,8 +2831,7 @@ public class VillageController extends BaseController {
             }
         }
 
-        result.setMess("添加成功");
-        return result;
+        return "添加成功";
     }
 
 }

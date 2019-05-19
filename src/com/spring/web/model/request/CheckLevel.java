@@ -1,12 +1,9 @@
 package com.spring.web.model.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.util.logging.Level;
 
 /**
  * @Author: 桃红梨白
@@ -101,14 +98,13 @@ public class CheckLevel implements Serializable {
     public String sessionId;
 
 
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-}
+    }
 
     public Integer getUid() {
         return uid;
@@ -214,11 +210,4 @@ public class CheckLevel implements Serializable {
         this.files = files;
     }
 
-    public Integer getJcType() {
-        return jcType;
-    }
-
-    public void setJcType(Integer jcType) {
-        this.jcType = jcType;
-    }
 }

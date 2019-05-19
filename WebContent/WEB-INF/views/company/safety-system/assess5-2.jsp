@@ -99,7 +99,7 @@
         <th style="min-width:100px">场所/部位/环节</th>
         <th style="min-width:100px">风险等级</th>
         <th style="min-width:100px">风险因素</th>
-        <th style="min-width:100px">风险类型</th>
+        <%--<th style="min-width:100px">风险类型</th>--%>
         <th style="min-width:50px">操作</th>
       </tr>
       </thead>
@@ -121,7 +121,7 @@
           </td>
           <td class="text-c"><font class="col-a">红色</font></td>
           <td>${be.factors }</td>
-          <td>${be.type }</td>
+          <%--<td>${be.type }</td>--%>
           <td class="text-c"><a class="btn-cz" style="text-decoration:none;" onClick="del_(${be.id})" href="javascript:;" title="删除">删除</a></td>
         </tr>
       </c:forEach>

@@ -228,7 +228,7 @@ public class LoginController extends BaseController {
             currentUser.login(token);
             SessionUtil.setUser(request, user);
             result.setMap("userType", user.getUserType());
-            
+
         } catch (Exception uae) {
             uae.printStackTrace();
             log.info("对用户[" + username + "]进行登录验证..验证未通过,未知账户");

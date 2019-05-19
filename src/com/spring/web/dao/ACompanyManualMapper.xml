@@ -392,18 +392,7 @@
         <if test="flag2 != null">
             and T1.flag2 = #{flag2}
         </if>
-        <!-- <if test="type == 1">
-            and (T1.hxys is not null and T1.hxys != '')
-        </if>
-        <if test="type == 2">
-            and (T1.material is not null and T1.material != '')
-        </if>
-        <if test="type == 3">
-            and (T1.gy is not null and T1.gy != '')
-        </if>
-        <if test="type == 4">
-            and (T1.wlbs is not null and T1.wlbs != '')
-        </if> -->
+
         <if test="level != null and level != ''">
             and T1.level = #{level}
         </if>
@@ -422,6 +411,19 @@
         <if test="order == null">
             order by T1.id desc
         </if>
+
+        <!-- <if test="type == 1">
+           and (T1.hxys is not null and T1.hxys != '')
+       </if>
+       <if test="type == 2">
+           and (T1.material is not null and T1.material != '')
+       </if>
+       <if test="type == 3">
+           and (T1.gy is not null and T1.gy != '')
+       </if>
+       <if test="type == 4">
+           and (T1.wlbs is not null and T1.wlbs != '')
+       </if> -->
     </select>
     <select id="selectByMapGroupByLevel1Level2" resultType="java.util.HashMap">
         select

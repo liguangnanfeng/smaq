@@ -430,7 +430,7 @@
                        href="javascript:void(0)">安全台账</a>
                     </li>
 
-                    <li><a data-href="${ly }/company/tables/tab-weilist" data-title="安全标准化"
+                    <li><a data-href="${ly }/company/tables/tab-biaozhun" data-title="安全标准化"
                            href="javascript:void(0)">安全标准化</a></li>
 
 

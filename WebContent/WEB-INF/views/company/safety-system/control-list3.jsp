@@ -149,9 +149,7 @@
         function addImg(){
         document.querySelector('.breadcrumb').style.visibility = "visible";
         $.post(getRootPath() + "/api/map/B003", {}, function(res) {
-        console.log('bo3')
         res = res
-        console.log(res)
         if(res){
         $("#areaImg").attr("src",res);
         $("#areaImg").css({'width':'100%','height':'400px'})
@@ -369,21 +367,55 @@
         }
         <%-- canvas转img --%>
         function convertCanvasToImage(canvas) {
-<%--            canvas.width = document.querySelector('.amap-container')--%>
-        var image = canvas.toDataURL("image/png", 0);
-        console.log(image);
-        $.post(getRootPath() + "/api/map/B001", {
-        images:image
-        }, function(r) {
-        if(r!=''){
-        console.log('成功')
-        polyEditor.close();
-        addImg()
-        }else{
-        alert('修改失败')
-        addImg()
-        }
-        });
+            var image = canvas.toDataURL("image/png", 0.5);
+            console.log(image)
+            var img = new Image;
+            img.src = image
+            console.log(img)
+<%--            console.log(11111)--%>
+<%--            img.onload = function(){--%>
+<%--            var height = img.height,--%>
+<%--            width = img.width--%>
+<%--            , canvas = new Canvas(width, height)--%>
+<%--            , ctx = canvas.getContext('2d')--%>
+<%--            ctx.drawImage(img, 0, 0, width, height)--%>
+<%--            let imageData = ctx.getImageData(0, 0, width, height), data = imageData.data--%>
+<%--            // 对像素集合中的单个像素进行循环，每个像素是由4个通道组成，所以 i=i+4--%>
+<%--            for(let i = 0; i < data.length; i+=4) {--%>
+<%--            // 得到 RGBA 通道的值--%>
+<%--            let r = data[i]--%>
+<%--            , g = data[i+1]--%>
+<%--            , b = data[i+2]--%>
+
+<%--            // 我们从最下面那张颜色生成器中可以看到在图片的右上角区域，有一小块在--%>
+<%--            // 肉眼的观察下基本都是白色的，所以我在这里把 RGB 值都在 245 以上的--%>
+<%--            // 的定义为白色--%>
+<%--            // 大家也可以自己定义的更精确，或者更宽泛一些--%>
+<%--            if([r,g,b].every(v => v < 256 && v > 245)) data[i+3] = 0--%>
+<%--            }--%>
+
+<%--            // 将修改后的代码复制回画布中--%>
+<%--            ctx.putImageData(imageData, 0, 0)--%>
+
+<%--            console.log(ctx)--%>
+<%--            }--%>
+
+
+
+
+<%-- 有用的注释 --%>
+<%--        $.post(getRootPath() + "/api/map/B001", {--%>
+<%--        images:image--%>
+<%--        }, function(r) {--%>
+<%--        if(r!=''){--%>
+<%--        console.log('成功')--%>
+<%--        polyEditor.close();--%>
+<%--        addImg()--%>
+<%--        }else{--%>
+<%--        alert('修改失败')--%>
+<%--        addImg()--%>
+<%--        }--%>
+<%--        });--%>
         }
         <%-- 保存范围方法 --%>
         var endEditArea = function(){
@@ -419,8 +451,7 @@
         map.add(polygon)
         document.querySelector('.breadcrumb').style.visibility = "hidden";
         html2canvas(document.querySelector(".amap-container"),{
-        useCORS:true,allowTaint: false,foreignObjectRendering: true,taintTest: true,scale: 1 }).then(canvas => {
-        console.log(111)
+        useCORS:true,allowTaint: false,foreignObjectRendering: true,taintTest: true,scale:1 }).then(canvas => {
             convertCanvasToImage(canvas);
         });
         }

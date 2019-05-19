@@ -30,8 +30,8 @@ $(document).ready(function() {
       $(this).parent().find(".div_omenu2").removeClass("div_omenu2xz");
     }
   });
-  
-  
+
+
 });
 </script>
 <body>
@@ -148,7 +148,7 @@ $(document).ready(function() {
           </ul>
         </dd>
       </dl>
-      
+
       <dl>
         <dt>
           <i class="Hui-iconfont">&#xe70c;</i>安全监察监管
@@ -170,7 +170,7 @@ $(document).ready(function() {
           </ul>
         </dd>
       </dl>
-      
+
       <dl>
         <dt>
           <i class="Hui-iconfont">&#xe70c;</i>行政执法
@@ -215,7 +215,7 @@ $(document).ready(function() {
           </ul>
         </dd>
       </dl> --%>
-      
+
       <%-- <dl>
         <dt>
           <i class="Hui-iconfont">&#xe6cd;</i>危险有害因素检索

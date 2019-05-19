@@ -156,18 +156,22 @@
             <li><a href="${ly }/company/tables/tab-list?isType=1" data-title="安全生产规章制度"
                    href="javascript:void(0)"> <img alt="" src="${ly }/images/companyImg/icon/shigubaogao.png"/>安全生产规章制度</a></li>
 
+            <%--<li><a href="${ly }/company/tables/tab-list?isType=1" data-title="安全生产规章制度"
+                   href="javascript:void(0)"> <img alt="" src="${ly }/images/companyImg/icon/zhuyaoshebei.png"/>安全生产规章制度</a></li>
+            </ul>--%>
         </c:if>
         <!--管理档案-->
         <c:if test="${leftBasic == 9}">
 
             <ul>
 
-                <li><a href="${ly }/company/evaluate/zheng-list" data-title="安全工作台账"
-                       href="javascript:void(0)">  <img alt="" src="${ly }/images/companyImg/icon/geleixukezheng.png"/>安全工作台账</a></li>
 
+                <li><a href="${ly }/company/tables/tab-taizhang" data-title="安全工作台账"
+                       href="javascript:void(0)"> <img alt="" src="${ly }/images/companyImg/icon/anquanjiangcheng.png"/>安全工作台账</a></li>
 
-                <li><a href="${ly }/company/evaluate/zheng-list" data-title="安全档案"
-                       href="javascript:void(0)">  <img alt="" src="${ly }/images/companyImg/icon/geleixukezheng.png"/>安全档案</a></li>
+                <li><a href="${ly }/company/tables/tab-dangan" data-title="安全档案"
+                       href="javascript:void(0)"> <img alt="" src="${ly }/images/companyImg/icon/shigubaogao.png"/>安全档案</a></li>
+
 
             </ul>
 

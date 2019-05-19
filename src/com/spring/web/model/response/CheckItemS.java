@@ -18,6 +18,10 @@ public class CheckItemS {
 
     public List<TCheckItem> items;
 
+    public Integer type;
+
+
+
     public String getLevle1() {
         return levle1;
     }

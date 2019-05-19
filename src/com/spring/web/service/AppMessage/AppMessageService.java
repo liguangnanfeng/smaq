@@ -38,4 +38,15 @@ public interface AppMessageService {
     List<Map> selectCheckByFlag();
 
     List<Map> findTCheckListByStatus(String userId, Integer pageNo, Integer pageSize);
+
+    /**
+     * 被检查人员获取不合格项
+     * @param userId
+     * @param bm
+     * @param name
+     * @param pageNo
+     * @param i
+     * @return
+     */
+    List<Map> findTCheckListByStatusAndBJC(String userId, String bm, String name, Integer pageNo, int i);
 }

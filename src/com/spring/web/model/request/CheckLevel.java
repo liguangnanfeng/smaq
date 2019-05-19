@@ -101,14 +101,13 @@ public class CheckLevel implements Serializable {
     public String sessionId;
 
 
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-}
+    }
 
     public Integer getUid() {
         return uid;
@@ -214,11 +213,4 @@ public class CheckLevel implements Serializable {
         this.files = files;
     }
 
-    public Integer getJcType() {
-        return jcType;
-    }
-
-    public void setJcType(Integer jcType) {
-        this.jcType = jcType;
-    }
 }

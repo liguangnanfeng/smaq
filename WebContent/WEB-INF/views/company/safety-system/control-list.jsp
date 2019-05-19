@@ -21,6 +21,25 @@
     .col-b,.col-a,.col-c,.col-d{margin:0;padding:0 15px;height:25px;line-height:25px;}
   </style>
   <script type="text/javascript">
+    function copy_(fjgkfzr,gkcs,gkzt,level2,level,factors) {
+
+
+    var data = {
+    "fjgkfzr" : fjgkfzr,
+    "gkcs" : gkcs,
+    "gkzt" : gkzt,
+    "level2" : level2,
+    "level":level,
+    "factors":factors,
+    "id" : '',
+    "ids": '',
+    }
+
+    console.log(data);
+    $.post(getRootPath() + "/company/safety-system/aCompanyManual-save", data, function(result) {
+    location.reload();
+    })
+    }
       /* 弹窗管控信息添加 */
       function edit(id, obj){
           window.id = id;
@@ -195,7 +214,15 @@
                   <input type="hidden" name="gkzt" value="${be.gkzt }"/>
                   <input type="hidden" name="fjgkfzr" value="${be.fjgkfzr }"/>
                   <input type="hidden" name="buwei" value="${be.level2}"/>
-                  <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑">编辑管控信息</a>
+                <c:if test="${empty be.gkzt}">
+                    <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑">编辑管控信息</a>
+                </c:if>
+                <c:if test="${not empty be.gkzt}">
+                    <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑">编辑</a>
+<%--                     <input type="button" style="text-decoration:none;" onClick='copy_('"${be}") title="复制" value="复制"></input>--%>
+
+                  <a style="text-decoration:none;" onClick="copy_('${be.fjgkfzr}','${be.gkcs}','${be.gkzt}','${be.level2}','${be.level}','${be.factors}' )" href="javascript:;" title="复制" >复制</a>
+                </c:if>
                 </td>
               </tr>
             </c:if>
@@ -219,7 +246,7 @@
         <div class="row cl">
           <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控主体：</label>
           <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
-            <input type="text" id="gkzt" value="" style="width: 357px" class="input-text required">
+            <input type="text" id="gkzt" value="" style="width: 357px" class="input-text required" readonly="readonly">
 
             <input id = "gkztIds"  type="hidden" >
 
@@ -236,9 +263,9 @@
         <div class="row cl mt-15">
           <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">部位：</label>
           <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
-            <input type="text" id="buwei" value="" style="width: 357px" class="input-text required">
+            <input type="text" id="buwei" value="" style="width: 357px" class="input-text required" readonly="readonly">
             <c:if test="${not empty perL}">
-              <button class="btn btn-primary radius" id = "gangwei" type="button" onclick="chosem3()">
+              <button class="btn btn-primary radius" id = "gangwei" type="button" onclick="chosem3()" >
 
                 <i class="Hui-iconfont" >&#xe611;</i>选择部位
 
@@ -254,12 +281,12 @@
         <div class="row cl mt-15">
           <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控措施：</label>
           <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
-            <textarea id="gkcs" class="textarea txtarea_sq" style="width: 557px;"></textarea>
+            <textarea id="gkcs" class="textarea txtarea_sq" style="width: 557px;" ></textarea>
           </div>
         </div>
         <div class="row cl mt-15">
           <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">责任人：</label>
-          <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
+          <div class="formControls col-xs-8 col-sm-9" style="width: 80%;" readonly="readonly">
             <input type="text" id="fjgkfzr" value="" style="width: 357px" class="input-text required">
             <c:if test="${not empty perL}">
               <button class="btn btn-primary radius" type="button" onclick="chosem2()">

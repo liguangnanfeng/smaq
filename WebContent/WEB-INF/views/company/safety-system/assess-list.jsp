@@ -100,27 +100,27 @@
               location.reload();
           })
       }
-     /* $(function(){
-          $('.table-sort').dataTable({
-              "searching": false,
-              "ordering": false,
-              "bStateSave": true,//状态保存
-              "pagingType":"full_numbers",
-              "aoColumnDefs": [
-              ]
-          });
-          /!* 全选和反选 *!/
-          $(".check-all").on('click', function() {
-              $(".modal-body tbody input:checkbox").prop("checked", $(this).prop('checked'));
-          })
-          $(".tab-ass tbody input:checkbox").on('click', function() {
-              if($(".tab-ass tbody input:checkbox").length == $(".tab-ass tbody input:checked").length) {
-                  $(".check-all").prop("checked", true);
-              } else {
-                  $(".check-all").prop("checked", false);
-              }
-          })
-      })*/
+        $(function(){
+            $('.table-sort').dataTable({
+                "searching": false,
+                "ordering": false,
+                "bStateSave": true,//状态保存
+                "pagingType":"full_numbers",
+                "aoColumnDefs": [
+                ]
+            });
+            /* 全选和反选 */
+            $(".check-all").on('click', function() {
+                $(".modal-body tbody input:checkbox").prop("checked", $(this).prop('checked'));
+            })
+            $(".tab-ass tbody input:checkbox").on('click', function() {
+                if($(".tab-ass tbody input:checkbox").length == $(".tab-ass tbody input:checked").length) {
+                    $(".check-all").prop("checked", true);
+                } else {
+                    $(".check-all").prop("checked", false);
+                }
+            })
+        })
   </script>
 </head>
 <body>
@@ -196,11 +196,16 @@
           <td><p>${point2}</p></td>
           <td><p>${point3}</p></td>
           <td>${be.factors }</td>
-          <td><input class="btn btn-warning-outline size-S radius ml-5" type="button" value="橙色" /></td>
+          <td>
+            <input class="btn btn-warning size-S radius ml-5" type="button" value="橙色" />
+
+          </td>
+
+
         <%--  <td>
              &lt;%&ndash;  <c:choose>
               <c:when test="${be.zpLevel eq '红色'}"><font class="col-a">${be.zpLevel}</font></c:when>
-              <c:when test="${be.zpLevel eq '橙色'}"><font class="col-b">${be.zpLevel}</font></c:when>
+
               <c:when test="${be.zpLevel eq '黄色'}"><font class="col-c">${be.zpLevel}</font></c:when>
               <c:when test="${be.zpLevel eq '蓝色'}"><font class="col-d">${be.zpLevel}</font></c:when>
              </c:choose>&ndash;%&gt;

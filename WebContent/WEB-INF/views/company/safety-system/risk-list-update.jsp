@@ -117,9 +117,11 @@
         location.reload();
     }
 
-
+    /*
+    * 重大风险清空和导入
+    * */
     function update1() {
-        layer.confirm("确定重置高危风险？", function(r) {
+        layer.confirm("确定重置重大风险信息？", function(r) {
             $.post(getRootPath() + "/company/safety-system/risk-list-add1", {
             }, function(result) {
                 if(result.status == '1'){
@@ -132,7 +134,7 @@
     }
 
     function updatedel1() {
-        layer.confirm("确定清空高危风险数据信息？", function(r) {
+        layer.confirm("确定清空重大风险数据信息？", function(r) {
             $.post(getRootPath() + "/company/safety-system/risk-list-adddel1", {
             }, function(result) {
                 if(result.status == '1'){
@@ -145,8 +147,9 @@
         })
     }
 
-
-
+    /*
+     * 较大风险清空和导入
+     * */
     function update2() {
         layer.confirm("确定重置较大风险数据信息？", function(r) {
             $.post(getRootPath() + "/company/safety-system/risk-list-addssss", {
@@ -178,9 +181,11 @@
 
 
 
-
+    /*
+     * 较小和一般风险清空和导入
+     * */
     function update3() {
-        layer.confirm("确定重置现场管理风险？", function(r) {
+        layer.confirm("确定重置较小和一般风险信息？", function(r) {
             $.post(getRootPath() + "/company/safety-system/risk-list-add2", {
             }, function(result) {
                 if(result.status == '1'){
@@ -195,7 +200,7 @@
 
 
     function updatedel3() {
-        layer.confirm("确定清空现场管理风险数据信息？", function(r) {
+        layer.confirm("确定清空较小和一般风险数据信息？", function(r) {
             $.post(getRootPath() + "/company/safety-system/risk-list-adddels", {
             }, function(result) {
                 if(result.status == '1'){

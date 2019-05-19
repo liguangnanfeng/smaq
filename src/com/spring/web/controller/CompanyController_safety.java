@@ -430,7 +430,6 @@ public class CompanyController_safety extends BaseController {
                             break;
                         }
                     }
-
                     if (!has) {
                         it.remove();
                     }
@@ -571,7 +570,6 @@ public class CompanyController_safety extends BaseController {
                 aCompanyManual1.setMeasures(aDangerManualList.get(i).getMeasures());
                 aCompanyManual1.setReference(aDangerManualList.get(i).getReference());
                 aCompanyManual1.setFlag("3");
-                aCompanyManual1.setLevel("橙色");
                 aCompanyManual1.setDel(0);
                 aCompanyManual1.setCtime(new Date());
 

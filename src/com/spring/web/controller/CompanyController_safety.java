@@ -537,7 +537,7 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-    * 导入一般和较大风险   3
+    * 导入一般和较小风险   3
     * */
     @RequestMapping({"risk-list-add2"})
     @ResponseBody

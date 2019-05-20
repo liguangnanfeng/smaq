@@ -24,11 +24,16 @@
                 <script type="text/javascript">
                 var url = '${url}';
                 $(function() {
-                var name = getCookie('user-name');
-                if (null != name && '' != name) {
-                $("#userName").val(name);
-                }
+            document.querySelector('#remember').checked = true
 
+            var name = getCookie('name');
+            var pwd = getCookie('pwd');
+            if (null != name && '' != name) {
+            $("#userName").val(name);
+            }
+            if (null != pwd && '' != pwd) {
+            $("#password").val(pwd);
+            }
                 $(document).keydown(function(event){
                 if(event.keyCode==13){
                 $("#login_btn").click();
@@ -49,11 +54,17 @@
                 return false;
                 } */
 
-                if ($("#online").is(":checked")) {
-                setCookie("user-name", $("#userName").val());
-                }
 
-                $("#login_btn").attr("disabled", "disabled");
+            if ($("#remember").is(":checked")) {
+            setCookie("name", $("#userName").val());
+            setCookie("pwd", $("#password").val());
+            }else{
+            setCookie("name", '');
+            setCookie("pwd", '');
+            }
+
+
+            $("#login_btn").attr("disabled", "disabled");
                 $.post(getRootPath() + "/fore/blogin", {
                 userName : $("#userName").val(),
                 password : $("#password").val(),
@@ -102,7 +113,8 @@
                 <div style="float:left;width:100%;">
                 <div style="width:1366px;margin:auto;">
                 <div class="div_login" >
-                <img alt="" src="${ly }/images/llogo.jpg" class="img_dlogo" style="max-width: 48%;margin-left: 13%;"/>
+                <img alt="" src="${ly }/images/home/sy_title.jpg" class="img_dlogo" style="max-width: 48%;margin-left: 13%;"/>
+<%--                <img alt="" src="${ly }/images/llogo.jpg" class="img_dlogo" style="max-width: 48%;margin-left: 13%;"/>--%>
                 <img alt="" src="${ly }/images/dit.png" class="img_dldt" style="top: 73px;max-width: 47%;"/>
                 </div>
                 </div>
@@ -113,7 +125,7 @@
                 <div class="div_lomain">
                 <form class="form form-horizontal" method="post">
                 <div class="toplogin">
-                <a href="" class="a_login2" style="width: 400px;margin-left: 117px;">政府端</a>
+<%--                <a href="" class="a_login2" style="width: 400px;margin-left: 117px;">政府端</a>--%>
                 </div>
                 <div class="div_row">
                 <div class="row_left">&nbsp;</div>
@@ -145,7 +157,8 @@
                 <div class="row_left">&nbsp;</div>
                 <div class="row_right">
                 <%-- <a href="${ly }/village" class="a_ruk">监管端入口</a> --%>
-                <a href="${ly }/fore/company" class="a_ruk">企业端入口</a>
+<%--                <a href="${ly }/fore/company" class="a_ruk">企业端入口</a>--%>
+            <label style="color: white;float:right;" class="forgetpwd"><input id="remember" type="checkbox" value=""/><b>&nbsp;记住账号</b> </label>
                 <%-- <a href="${ly }/fore/toRegister" class="a_ruk" style="float:left;">企业注册</a> --%>
                 </div>
                 </div>

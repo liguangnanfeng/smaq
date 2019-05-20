@@ -288,6 +288,53 @@
             href="javascript:void(0)"> <img alt="" src="${ly }/images/companyImg/icon/linshifengxian.png"/>报警设备</a></li>
             </ul>
         </c:if>
+        <c:if test="${leftBasic == 13}">
+        <ul>
+        <li><a href="${ly }/company/study/department-list?sign=2" data-title="管控架构"
+        href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/zhiyejiankang.png"/>管控架构</a></li>
+        <li><a data-href="${ly }/company/source/management-guide" data-title="机制文件"
+        href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/teshuzuoye.png"/>机制文件</a></li>
+        </ul>
+        </c:if>
+        <c:if test="${leftBasic == 14}">
+            <ul>
+            <li><a href="${ly }/company/source/equipment?type=1" data-title="设备设施管理"
+            href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/qita.png"/>设备设施管理</a></li>
+            <li><a href="${ly }/company/source/staff" data-title="人员管理"
+            href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/zuzhijiagou.png"/>人员管理</a></li>
+            <li><a href="${ly }/company/threeLeft?leftBasic=12" data-title="在线检测"
+            href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/pingjiapinggu.png"/>在线检测</a></li>
+            <li><a href="${ly }/company/source/distribution" data-title="风险分布图"
+            href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/fengxianfenbubiao.png"/>风险分布图</a></li>
+            <li><a href="${ly }/company/source/publicity?flag=1" data-title="公示"
+            href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/gaozhipai.png"/>公示</a></li>
+            </ul>
+        </c:if>
+        <c:if test="${leftBasic == 15}">
+            <ul>
+            <li><a href="${ly }/company/source/specialWork?type=1" data-title="非化工液氨使用企业"
+            href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/tezhongshebei.png"/>非化工液氨使用企业</a></li>
+            <li><a href="${ly }/company/source/specialWork?type=2" data-title="粉尘涉爆企业"
+            href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/chizhengshanggang.png"/>粉尘涉爆企业</a></li>
+            <li><a href="${ly }/company/source/specialWork?type=3" data-title="高温熔融金属现场运输"
+            href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/zhiyeweishengxuanchuan.png"/>高温熔融金属现场运输</a></li>
+            <li><a href="${ly }/company/source/specialWork?type=4" data-title="工贸行业有限空间安全作业"
+            href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/sheibeisheshi.png"/>工贸行业有限空间安全作业</a></li>
+            <li><a href="${ly }/company/source/specialWork?type=5" data-title="冶金企业煤气"
+            href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/zhiweijiance.png"/>冶金企业煤气</a></li>
+            </ul>
+        </c:if>
+        <c:if test="${leftBasic == 16}">
+            <ul>
+            <li><a href="${ly }/company/tables/tab-yjlist" data-title="应急预案" href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/gangweifengxian.png"/>应急预案</a>
+            </li>
+            <li><a href="${ly }/company/facilities/facilities-list?flag=1" data-title="消防设备设施"
+            href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/jiaoyupeixun.png"/>消防设备设施</a></li>
+<%--            zhiweijiance--%>
+            <li><a href="${ly }/company/facilities/facilities-list?flag=2" data-title="应急设备设施"
+            href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/zhiweijiance.png"/>应急设备设施</a></li>
+            </ul>
+        </c:if>
         </div>
         </body>
         </html>

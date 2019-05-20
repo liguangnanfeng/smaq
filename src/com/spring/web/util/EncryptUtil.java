@@ -1,7 +1,8 @@
 package com.spring.web.util;
 
-import java.util.UUID;
 import com.spring.web.security.StandardPasswordEncoder;
+
+import java.util.UUID;
 
 /**
  * @Title: EncryptUtil

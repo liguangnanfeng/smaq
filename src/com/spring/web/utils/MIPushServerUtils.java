@@ -1,9 +1,6 @@
 
 package com.spring.web.utils;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import com.alibaba.fastjson.JSONObject;
 import com.spring.web.model.MessageToUser;
 import com.spring.web.model.Messages;
@@ -11,7 +8,10 @@ import com.xiaomi.xmpush.server.Constants;
 import com.xiaomi.xmpush.server.Message;
 import com.xiaomi.xmpush.server.Result;
 import com.xiaomi.xmpush.server.Sender;
-import com.xiaomi.xmpush.server.TargetedMessage;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /** 
 * @Title: MIPushServerUtils 
@@ -27,7 +27,7 @@ public class MIPushServerUtils {
     public static final String IOS_APP_SECRET = "CaEsIjXTSGxzxjLq8LqgAg==";
     
     
-    public  void sendMessages(List<MessageToUser> toUsers,String createName,Integer type,Messages msg,Integer environment) throws Exception {
+    public  void sendMessages(List<MessageToUser> toUsers, String createName, Integer type, Messages msg, Integer environment) throws Exception {
         Sender sender = null;
         //安卓
         if(type.equals(0)){

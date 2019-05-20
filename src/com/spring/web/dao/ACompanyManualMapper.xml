@@ -392,18 +392,7 @@
         <if test="flag2 != null">
             and T1.flag2 = #{flag2}
         </if>
-        <!-- <if test="type == 1">
-            and (T1.hxys is not null and T1.hxys != '')
-        </if>
-        <if test="type == 2">
-            and (T1.material is not null and T1.material != '')
-        </if>
-        <if test="type == 3">
-            and (T1.gy is not null and T1.gy != '')
-        </if>
-        <if test="type == 4">
-            and (T1.wlbs is not null and T1.wlbs != '')
-        </if> -->
+
         <if test="level != null and level != ''">
             and T1.level = #{level}
         </if>
@@ -420,8 +409,21 @@
             order by find_in_set(T1.level,'红色,橙色,黄色,蓝色')
         </if>
         <if test="order == null">
-            order by T1.id desc
+            order by T1.id asc
         </if>
+
+        <!-- <if test="type == 1">
+           and (T1.hxys is not null and T1.hxys != '')
+       </if>
+       <if test="type == 2">
+           and (T1.material is not null and T1.material != '')
+       </if>
+       <if test="type == 3">
+           and (T1.gy is not null and T1.gy != '')
+       </if>
+       <if test="type == 4">
+           and (T1.wlbs is not null and T1.wlbs != '')
+       </if> -->
     </select>
     <select id="selectByMapGroupByLevel1Level2" resultType="java.util.HashMap">
         select
@@ -897,7 +899,7 @@
 
     <!--根据公司ID，风险等级 查询未删除的数据信息 -->
     <select id="findALLsss"  resultType="com.spring.web.model.ACompanyManual">
-        select * from a_company_manual_tbl where del = 0 and flag = #{flag} and uid = #{uid};
+        select * from a_company_manual_tbl where del = 0 and flag = #{flag} and uid = #{uid} order by id asc;
     </select>
 
 

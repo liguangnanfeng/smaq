@@ -4,19 +4,17 @@
  */
 package com.spring.web.util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-//import javax.mail.Address;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import java.util.*;
+
+//import javax.mail.Address;
 
 /**
  * @Title: MailUtil

@@ -21,6 +21,25 @@
     .col-b,.col-a,.col-c,.col-d{margin:0;padding:0 15px;height:25px;line-height:25px;}
   </style>
   <script type="text/javascript">
+    function copy_(fjgkfzr,gkcs,gkzt,level2,level,factors) {
+
+
+    var data = {
+    "fjgkfzr" : fjgkfzr,
+    "gkcs" : gkcs,
+    "gkzt" : gkzt,
+    "level2" : level2,
+    "level":level,
+    "factors":factors,
+    "id" : '',
+    "ids": '',
+    }
+
+    console.log(data);
+    $.post(getRootPath() + "/company/safety-system/aCompanyManual-save", data, function(result) {
+    location.reload();
+    })
+    }
       /* 弹窗管控信息添加 */
       function edit(id, obj){
           window.id = id;
@@ -28,6 +47,7 @@
           $("#gkzt").val(p.find("input[name='gkzt']").val());
           $("#gkcs").val(p.find("input[name='gkcs']").val());
           $("#fjgkfzr").val(p.find("input[name='fjgkfzr']").val());
+          $("#buwei").val(p.find("input[name='buwei']").val());
           $("#win-add").modal("show");
       }
 
@@ -44,6 +64,7 @@
           $("#win-add4").modal("show");
           var name = $("#gkzt").val();
           var id = $("#gkztIds").val();
+
           $.ajax({ //post也可
               type: "POST",
               url: getRootPath() + "/company/safety-system/control-list-one",
@@ -63,7 +84,6 @@
           });
       }
 
-
       function per_chooses() {
 
           var list = $("#win-add4 :checked");
@@ -76,17 +96,14 @@
 
       }
 
-
-
-
-
       function save_() {
           var obj = {
               "fjgkfzr" : $("#fjgkfzr").val(),
               "gkcs" : $("#gkcs").val(),
               "gkzt" : $("#gkzt").val(),
               "level2" : $("#buwei").val(),
-              "id" : id
+              "id" : id,
+              "ids": $("#gkztIds").val(),
           }
           if(obj.gkzt == '') {
               $("#gkzt").focus();
@@ -161,12 +178,24 @@
           <c:forEach items="${list }" var="be">
             <c:if test="${(be.level1 eq be1.key && be.level2 eq be2) || (empty be1.key && empty be.level1)}">
               <tr>
+
                 <c:if test="${empty be.gkzt}">
-                  <td class="text-c">无数据</td>
+                    <td class="text-c">暂无数据</td>
                 </c:if>
-                  <c:if test="${empty be.level2}">
-                    <td class="text-c">无数据</td>
-                  </c:if>
+
+                <c:if test="${not empty be.gkzt}">
+                  <td class="text-c">${be.gkzt}</td>
+                </c:if>
+
+                <c:if test="${empty be.level2}">
+                    <td class="text-c">暂无数据</td>
+                </c:if>
+
+                <c:if test="${not empty be.level2}">
+                  <td class="text-c">${be.level2}</td>
+                </c:if>
+
+
                 <td class="text-c">
                   <c:choose>
                     <c:when test="${be.level eq '红色'}"><font class="col-a">${be.level}</font></c:when>
@@ -184,7 +213,16 @@
                   <input type="hidden" name="gkcs" value="${empty be.gkcs ? be.measures : be.gkcs }"/>
                   <input type="hidden" name="gkzt" value="${be.gkzt }"/>
                   <input type="hidden" name="fjgkfzr" value="${be.fjgkfzr }"/>
-                  <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑">编辑管控信息</a>
+                  <input type="hidden" name="buwei" value="${be.level2}"/>
+                <c:if test="${empty be.gkzt}">
+                    <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑">编辑管控信息</a>
+                </c:if>
+                <c:if test="${not empty be.gkzt}">
+                    <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑">编辑</a>
+<%--                     <input type="button" style="text-decoration:none;" onClick='copy_('"${be}") title="复制" value="复制"></input>--%>
+
+                  <a style="text-decoration:none;" onClick="copy_('${be.fjgkfzr}','${be.gkcs}','${be.gkzt}','${be.level2}','${be.level}','${be.factors}' )" href="javascript:;" title="复制" >复制</a>
+                </c:if>
                 </td>
               </tr>
             </c:if>
@@ -196,7 +234,7 @@
   </div>
 </div>
 
-<!-- 弹窗管控信息添加 -->
+<!--  编辑管控信息 弹窗 -->
 <div id="win-add" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="width: 760px">
     <div class="modal-content radius">
@@ -208,7 +246,7 @@
         <div class="row cl">
           <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控主体：</label>
           <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
-            <input type="text" id="gkzt" value="" style="width: 357px" class="input-text required">
+            <input type="text" id="gkzt" value="" style="width: 357px" class="input-text required" readonly="readonly">
 
             <input id = "gkztIds"  type="hidden" >
 
@@ -225,9 +263,9 @@
         <div class="row cl mt-15">
           <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">部位：</label>
           <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
-            <input type="text" id="buwei" value="" style="width: 357px" class="input-text required">
+            <input type="text" id="buwei" value="" style="width: 357px" class="input-text required" readonly="readonly">
             <c:if test="${not empty perL}">
-              <button class="btn btn-primary radius" type="button" onclick="chosem3()">
+              <button class="btn btn-primary radius" id = "gangwei" type="button" onclick="chosem3()" >
 
                 <i class="Hui-iconfont" >&#xe611;</i>选择部位
 
@@ -243,12 +281,12 @@
         <div class="row cl mt-15">
           <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控措施：</label>
           <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
-            <textarea id="gkcs" class="textarea txtarea_sq" style="width: 557px;"></textarea>
+            <textarea id="gkcs" class="textarea txtarea_sq" style="width: 557px;" ></textarea>
           </div>
         </div>
         <div class="row cl mt-15">
           <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">责任人：</label>
-          <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
+          <div class="formControls col-xs-8 col-sm-9" style="width: 80%;" readonly="readonly">
             <input type="text" id="fjgkfzr" value="" style="width: 357px" class="input-text required">
             <c:if test="${not empty perL}">
               <button class="btn btn-primary radius" type="button" onclick="chosem2()">

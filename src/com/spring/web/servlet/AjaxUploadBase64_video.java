@@ -1,25 +1,18 @@
 package com.spring.web.servlet;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
+import com.spring.web.result.Result;
+import com.spring.web.result.ResultImpl;
+import com.spring.web.util.OutPrintUtil;
+import sun.misc.BASE64Decoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.jfree.util.Log;
-
-import sun.misc.BASE64Decoder;
-
-import com.spring.web.result.Result;
-import com.spring.web.result.ResultImpl;
-import com.spring.web.util.OutPrintUtil;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 @WebServlet("/ajaxUploadBase64-video")
 public class AjaxUploadBase64_video extends HttpServlet {

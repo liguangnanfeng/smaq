@@ -4,18 +4,15 @@
  */
 package com.spring.web.util;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.spring.web.bean.*;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Map;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.spring.web.bean.AccessTokenBean;
-import com.spring.web.bean.WebAccessTokenBean;
-import com.spring.web.bean.WebWechatMessageBean;
-import com.spring.web.bean.WebWechatUserDetailBean;
-import com.spring.web.bean.WechatUserDetailBean;
 
 /**
  * 微信验证,通过token

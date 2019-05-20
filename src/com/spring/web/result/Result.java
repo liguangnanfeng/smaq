@@ -4,9 +4,10 @@
  */
 package com.spring.web.result;
 
+import com.spring.web.tobject.DTO;
+
 import java.util.List;
 import java.util.Map;
-import com.spring.web.tobject.DTO;
 
 /**
  * @Title: Result

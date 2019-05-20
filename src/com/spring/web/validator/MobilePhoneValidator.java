@@ -27,11 +27,11 @@ public class MobilePhoneValidator implements ConstraintValidator<MobilePhone, St
 
     /**
      * (非 Javadoc)
-     * 
+     *
      * @param arg0
      * @param arg1
      * @return
-     * @see javax.validation.ConstraintValidator#isValid(java.lang.Object, javax.validation.ConstraintValidatorContext)
+     * @see javax.validation.ConstraintValidator#isValid(Object, javax.validation.ConstraintValidatorContext)
      */
     @Override
     public boolean isValid(String value, ConstraintValidatorContext arg1) {

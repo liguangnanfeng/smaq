@@ -4,22 +4,14 @@
  */
 package com.spring.web.service.export;
 
-import java.io.File;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import javax.servlet.http.HttpServletRequest;
+import com.spring.web.dao.*;
+import com.spring.web.model.*;
+import com.spring.web.result.Result;
+import com.spring.web.result.ResultImpl;
+import com.spring.web.util.ConstantsUtil;
+import com.spring.web.util.DateConvertUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,51 +20,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import com.spring.web.dao.CompanyMapper;
-import com.spring.web.dao.DetectionMapper;
-import com.spring.web.dao.EvaluationMapper;
-import com.spring.web.dao.ExaminationMapper;
-import com.spring.web.dao.FacilitiesMapper;
-import com.spring.web.dao.GlobalRegionMapper;
-import com.spring.web.dao.ImportRecordMapper;
-import com.spring.web.dao.MaterialMapper;
-import com.spring.web.dao.MequipmentMapper;
-import com.spring.web.dao.PequipmentMapper;
-import com.spring.web.dao.PingMapper;
-import com.spring.web.dao.ProductMapper;
-import com.spring.web.dao.RegulationMapper;
-import com.spring.web.dao.SequipmentMapper;
-import com.spring.web.dao.SpersonMapper;
-import com.spring.web.dao.TCheckItemMapper;
-import com.spring.web.dao.TCheckMapper;
-import com.spring.web.dao.TCheckPartMapper;
-import com.spring.web.dao.Table2Mapper;
-import com.spring.web.dao.Table3Mapper;
-import com.spring.web.dao.UserMapper;
-import com.spring.web.model.Company;
-import com.spring.web.model.Detection;
-import com.spring.web.model.Evaluation;
-import com.spring.web.model.Examination;
-import com.spring.web.model.Facilities;
-import com.spring.web.model.ImportRecord;
-import com.spring.web.model.Material;
-import com.spring.web.model.Mequipment;
-import com.spring.web.model.Pequipment;
-import com.spring.web.model.Ping;
-import com.spring.web.model.Product;
-import com.spring.web.model.Regulation;
-import com.spring.web.model.Sequipment;
-import com.spring.web.model.Sperson;
-import com.spring.web.model.TCheck;
-import com.spring.web.model.TCheckItem;
-import com.spring.web.model.TCheckPart;
-import com.spring.web.model.Table2;
-import com.spring.web.model.Table3;
-import com.spring.web.model.User;
-import com.spring.web.result.Result;
-import com.spring.web.result.ResultImpl;
-import com.spring.web.util.ConstantsUtil;
-import com.spring.web.util.DateConvertUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Title: ExportServiceImpl
@@ -179,7 +132,7 @@ public class ExportServiceImpl implements ExportService {
             List<Material> list1 = new ArrayList<Material>();//主要原辅材料
             List<Product> list2 = new ArrayList<Product>();//主要生产产品
             List<Mequipment> list3 = new ArrayList<Mequipment>();//主要设备清单
-            List<Sperson> list4 = new ArrayList<Sperson>();//（—）安全管理人员 
+            List<Sperson> list4 = new ArrayList<Sperson>();//（—）安全管理人员
             List<Sperson> list5 = new ArrayList<Sperson>();//危险化学品安全管理人员
             List<Sperson> list6 = new ArrayList<Sperson>();//特种作业人员
             List<Sequipment> list7 = new ArrayList<Sequipment>();//特种设备
@@ -272,7 +225,7 @@ public class ExportServiceImpl implements ExportService {
                         if(StringUtils.isEmpty(tos(row, 0)) || StringUtils.isEmpty(tos(row, 1))) {
                             continue;
                         }
-                        list7.add(new Sequipment(null, null, tos(row, 1), tos(row, 2), tos(row, 3), 
+                        list7.add(new Sequipment(null, null, tos(row, 1), tos(row, 2), tos(row, 3),
                                 null, tos(row, 4), tos(row, 5), tos(row, 6)));
                         break;
                     case 8 : 
@@ -490,7 +443,7 @@ public class ExportServiceImpl implements ExportService {
         String safetyM = tos(sheet, 15, 1);
         String safetyMContact = tos(sheet, 15, 3);
         String area_range = tos(sheet,16,1);//add by zhangcl 2018.10.18
-        return new Company(null, null, null, regType, regType2, null, address, legal, 
+        return new Company(null, null, null, regType, regType2, null, address, legal,
                 legalContact, capital, establish, business, scope, license, regRegion, authority, 
                 null, fixed, staff, income, industry, danger, null, hazard, dlevel, charge, 
                 chargeContact, safety, safetyContact, safetyM, safetyMContact, duty, postage, email, null, null, 0, null, null,area_range);//modify by zhangcl 2018.10.18
@@ -583,7 +536,7 @@ public class ExportServiceImpl implements ExportService {
      * @param request
      * @return
      * @throws Exception
-     * @see com.spring.web.service.export.ExportService#(org.springframework.web.multipart.MultipartFile, java.lang.Integer, javax.servlet.http.HttpServletRequest)
+     * @see com.spring.web.service.export.ExportService#tableImport(org.springframework.web.multipart.MultipartFile, Integer, HttpServletRequest)
      */
     @Override
     public Result tableImport(MultipartFile file, Integer userId, Integer id, Integer isType, HttpServletRequest request)
@@ -629,17 +582,17 @@ public class ExportServiceImpl implements ExportService {
         return result;
     }
 
-    /** (非 Javadoc) 
-    *  
-    *  
+    /** (非 Javadoc)
+    *
+    *
     * @param file
     * @param id
-    * @param
+    * @param id2
     * @param isType
     * @param request
     * @return
-    * @throws Exception 
-    * @see com.spring.web.service.export.ExportService#hImport(org.springframework.web.multipart.MultipartFile, java.lang.Integer, java.lang.Integer, java.lang.Integer, javax.servlet.http.HttpServletRequest) 
+    * @throws Exception
+    * @see com.spring.web.service.export.ExportService#hImport(org.springframework.web.multipart.MultipartFile, Integer, Integer, Integer, HttpServletRequest)
     */
     @Override
     public Result hImport(MultipartFile file, Integer userId, Integer id, Integer isType, HttpServletRequest request)
@@ -685,15 +638,15 @@ public class ExportServiceImpl implements ExportService {
         return result;
     }
 
-    /** (非 Javadoc) 
-    *  
-    *  
+    /** (非 Javadoc)
+    *
+    *
     * @param file
     * @param userId
     * @param request
     * @return
-    * @throws Exception 
-    * @see com.spring.web.service.export.ExportService#pImport(org.springframework.web.multipart.MultipartFile, java.lang.Integer, javax.servlet.http.HttpServletRequest) 
+    * @throws Exception
+    * @see com.spring.web.service.export.ExportService#pImport(org.springframework.web.multipart.MultipartFile, Integer, HttpServletRequest)
     */
     @Override
     public Result pImport(MultipartFile file, Integer userId, HttpServletRequest request) throws Exception {

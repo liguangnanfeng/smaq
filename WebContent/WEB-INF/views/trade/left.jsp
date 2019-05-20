@@ -91,7 +91,7 @@ $(document).ready(function() {
     <div class="menu_dropdown bk_2">
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe643;</i>企业数据库
+          <i class="Hui-iconfont">&#xe643;</i>企业分类数据库
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -122,7 +122,7 @@ $(document).ready(function() {
       </dl>
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe63c;</i>风险分级管控
+          <i class="Hui-iconfont">&#xe63c;</i>风险分级与管控
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -135,7 +135,7 @@ $(document).ready(function() {
       </dl>
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe687;</i>隐患排查治理
+          <i class="Hui-iconfont">&#xe687;</i>隐患排查与治理
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -161,7 +161,7 @@ $(document).ready(function() {
       </dl>
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe687;</i>风险研判与承诺公告
+          <i class="Hui-iconfont">&#xe687;</i>风险研判与承诺
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -172,7 +172,7 @@ $(document).ready(function() {
       </dl>
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe687;</i>重大危险源源长制
+          <i class="Hui-iconfont">&#xe687;</i>重大危险源长制
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -187,7 +187,7 @@ $(document).ready(function() {
       </dl>
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe70c;</i>安全监察监管
+          <i class="Hui-iconfont">&#xe70c;</i>安全监察与监管
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -208,7 +208,7 @@ $(document).ready(function() {
       
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe70c;</i>行政执法
+          <i class="Hui-iconfont">&#xe70c;</i>行政与执法档案
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -225,7 +225,7 @@ $(document).ready(function() {
       </dl>
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe653;</i>领导关注
+          <i class="Hui-iconfont">&#xe653;</i>领导关注点汇总
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -270,7 +270,7 @@ $(document).ready(function() {
       </dl> --%>
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe61d;</i>系统设置
+          <i class="Hui-iconfont">&#xe61d;</i>系统与账号设置
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>

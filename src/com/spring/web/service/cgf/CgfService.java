@@ -5,31 +5,14 @@
 
 package com.spring.web.service.cgf;
 
-import java.io.Serializable;
-import java.util.List;
-
-import org.springframework.ui.Model;
-
-import com.spring.web.model.District;
-import com.spring.web.model.FcTargetAssessment;
-import com.spring.web.model.FcTemporaryDangerCensus;
-import com.spring.web.model.PushMessage;
-import com.spring.web.model.TCheck;
-import com.spring.web.model.TModel;
-import com.spring.web.model.TRectification;
-import com.spring.web.model.Town;
-import com.spring.web.model.User;
-import com.spring.web.model.Village;
+import com.spring.web.model.*;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.Result;
-import com.spring.web.tobject.cgf.CheckSaveReqDTO;
-import com.spring.web.tobject.cgf.CompanyListReqDTO;
-import com.spring.web.tobject.cgf.GreatdangerSaveReqDTO;
-import com.spring.web.tobject.cgf.ModelSaveReqDTO;
-import com.spring.web.tobject.cgf.NaturaldangerSaveReqDTO;
-import com.spring.web.tobject.cgf.RecheckSaveReqDTO;
-import com.spring.web.tobject.cgf.TemporaryDangerSaveReqDTO;
-import com.spring.web.tobject.cgf.ThreeSaveReqDTO;
+import com.spring.web.tobject.cgf.*;
+import org.springframework.ui.Model;
+
+import java.io.Serializable;
+import java.util.List;
 
 public interface CgfService extends Serializable {
     
@@ -98,69 +81,69 @@ public interface CgfService extends Serializable {
     /** 
     * @param 保存村
     */
-    public void villageSave(Integer region, Village village,String vName,String vPsw, String jw, Result result) throws Exception;
-    
-    /** 
+    public void villageSave(Integer region, Village village, String vName, String vPsw, String jw, Result result) throws Exception;
+
+    /**
      * @param 保存镇
      */
-    public void townSave(Town town,String tName, String tPsw, String jw, String villageids, Result result) throws Exception;
-    
-    /** 
+    public void townSave(Town town, String tName, String tPsw, String jw, String villageids, Result result) throws Exception;
+
+    /**
      * @param 保存区县
      */
-    public void districtSave(District d,String tName, String tPsw, String jw, String villageids, Result result) throws Exception;
-    
-    /** 
+    public void districtSave(District d, String tName, String tPsw, String jw, String villageids, Result result) throws Exception;
+
+    /**
      * @param 保存行业
      */
     public void tradeSave(Integer userId, String userName, String tradeName, String userPsw, String companyArea, Result result) throws Exception;
-    
-    /** 
+
+    /**
      * @param 排查治理记录添加
      */
     public void checkListAdd(Integer _userId, TCheck tCheck, String items, AppResult result) throws Exception;
 
-    /** 
+    /**
     * @param 现场记录保存
     */
     public Integer checkDocumentSave8(Integer checkId, Integer userId, String copy, Integer flag2, String itms, Integer loginUserId, String checkCompany) throws Exception;
 
-    /** 
+    /**
     * @param p
     * @param ids 推送消息保存
-    * @throws Exception 
+    * @throws Exception
     */
     public void pushMessageSave(PushMessage p, String ids) throws Exception;
-    
-    /** 
+
+    /**
     * @param id
     * @throws Exception 检查表删除
     */
     public void checkDel(Integer id) throws Exception;
-    
-    /** 
+
+    /**
     * @param dto 企业查询分页
-    * @param model 
+    * @param model
     */
     public void selectCompanyWithPage(CompanyListReqDTO dto, User user, Model model);
 
-    /** 
+    /**
     * @param dto
     * @param object
-    * @return 
+    * @return
     */
     public List<Integer> getCompanyUserIds(CompanyListReqDTO dto, User user);
-    
+
     public void naturaldangerSave(NaturaldangerSaveReqDTO dto) throws Exception;
 
-	public void targetAssessmentSave(FcTargetAssessment fcTargetAssessment,User user)throws Exception;
-	
-	public void fcTemporaryDangerCensusSave(FcTemporaryDangerCensus fcTemporaryDangerCensus,User user)throws Exception;
-	
+	public void targetAssessmentSave(FcTargetAssessment fcTargetAssessment, User user)throws Exception;
+
+	public void fcTemporaryDangerCensusSave(FcTemporaryDangerCensus fcTemporaryDangerCensus, User user)throws Exception;
+
 	public void greatdangerSave(GreatdangerSaveReqDTO dto) throws Exception;
-	
+
 	public void temporarydangerSave(TemporaryDangerSaveReqDTO dto) throws Exception;
-	
-	public void monitorUpdate(String puids, String ids, String names,Integer userId)throws Exception;
+
+	public void monitorUpdate(String puids, String ids, String names, Integer userId)throws Exception;
     
 }

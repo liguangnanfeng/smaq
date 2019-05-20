@@ -5,13 +5,13 @@
 
 package com.spring.web.service.common;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.spring.web.dao.GlobalRegionMapper;
 import com.spring.web.ibatis.BaseDao;
 import com.spring.web.ibatis.DynamicDBValues;
 import com.spring.web.model.GlobalRegion;
 import com.spring.web.result.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /** 
 * @Title: CommonServiceImpl 

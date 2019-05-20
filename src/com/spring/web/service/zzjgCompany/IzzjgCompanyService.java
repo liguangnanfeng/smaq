@@ -1,13 +1,9 @@
 package com.spring.web.service.zzjgCompany;
 
-import com.google.gson.JsonElement;
 import com.spring.web.ibatis.LlHashMap;
-import com.spring.web.model.User;
 import com.spring.web.model.ZzjgCompany;
 import com.spring.web.model.ZzjgDepartment;
-import org.springframework.ui.Model;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**

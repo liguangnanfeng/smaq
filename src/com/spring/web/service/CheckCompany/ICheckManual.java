@@ -1,14 +1,8 @@
 package com.spring.web.service.CheckCompany;
 
-import com.spring.web.model.ACompanyManual;
-import com.spring.web.model.Officials;
 import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.model.request.CheckItem;
 import com.spring.web.model.request.CheckLevel;
-import com.spring.web.model.request.SaveDataMessageItem;
-import com.spring.web.model.response.CheckItemS;
-import com.spring.web.model.response.MeasuresBean;
-import com.sun.javafx.collections.MappingChange;
 
 import java.util.List;
 import java.util.Map;
@@ -37,7 +31,7 @@ public interface ICheckManual {
      * @param zzjg
      * @return
      */
-    Integer saveCheck(CheckItem checkItem,ZzjgPersonnel zzjg);
+    Integer saveCheck(CheckItem checkItem, ZzjgPersonnel zzjg);
 
     List<Map<Integer, String>> findUserByIdAndStatus(ZzjgPersonnel zzjg);
 
@@ -62,7 +56,7 @@ public interface ICheckManual {
      * @param uId
      * @return
      */
-    Map<String, List> findLevel2ByPersonnelId(Integer personnelId,Integer uId);
+    Map<String, List> findLevel2ByPersonnelId(Integer personnelId, Integer uId);
 
     /**
      * 获取所有的高危检查项

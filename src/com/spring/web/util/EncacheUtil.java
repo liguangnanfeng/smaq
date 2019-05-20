@@ -4,9 +4,9 @@
  */
 package com.spring.web.util;
 
-import net.sf.ehcache.Cache;  
-import net.sf.ehcache.CacheManager;  
-import net.sf.ehcache.Element; 
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
 
 /**
  * @Title: EncacheUtil
@@ -25,7 +25,7 @@ public class EncacheUtil {
     private static String cacheName = "search_product";
     
     private static void ehcacheSetUp() {  
-        cacheManager = CacheManager.create();  
+        cacheManager = CacheManager.create();
         cacheManager.addCache(cacheName);  
     }  
   
@@ -34,7 +34,7 @@ public class EncacheUtil {
             ehcacheSetUp();
         }
         Cache cache = cacheManager.getCache(cacheName);
-        cache.put(new Element(key, value));  
+        cache.put(new Element(key, value));
     }  
   
     public static Element getData(String key) {

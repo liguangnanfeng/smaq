@@ -5,11 +5,11 @@
 
 package com.spring.web.tobject.cgf;
 
-import java.util.List;
-
 import com.spring.web.model.FcTemporaryDangerItem;
 import com.spring.web.model.FcTemporaryDangerStudy;
 import com.spring.web.tobject.DTO;
+
+import java.util.List;
 
 /** 
  * @Title: ModelSaveReqDTO 

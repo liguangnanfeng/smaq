@@ -88,10 +88,16 @@ body .select {
   line-height: 32px;
 }
 </style>
+  <script src="${ly }/js/jquery-migrate-1.2.1.min.js"></script>
+  <script src="${ly }/js/jquery.jqprint-0.3.js"></script>
 <script type="text/javascript">
 function showpicture(src){
   $(".div_imgp img").attr("src", src);
   $("#modal-plan").modal("show")}
+
+  function pr_() {
+  $("#div_container").jqprint();
+  }
 </script>
 </head>
 <body>
@@ -99,20 +105,26 @@ function showpicture(src){
     <div class="div_pdetail">
       <c:choose>
         <c:when test="${check.flag == 1}">
-          <button onClick="parent.show_dialog('检查表打印', getRootPath()+'/company/plan-next-print?id=${check.id}')" class="btn btn-success radius"
-            type="button" style="padding: 0 60px;margin-right: 20px">
-            <i class="Hui-iconfont mr-10">&#xe652;</i>
-            <!-- 打印 -->
-            打印预览
+          <button onClick="pr_()" class="btn btn-success radius ml-20" type="button" style="padding: 0 70px;">
+          <i class="Hui-iconfont mr-10">&#xe652;</i>打印
           </button>
+<%--          <button onClick="parent.show_dialog('检查表打印', getRootPath()+'/company/plan-next-print?id=${check.id}')" class="btn btn-success radius"--%>
+<%--            type="button" style="padding: 0 60px;margin-right: 20px">--%>
+<%--            <i class="Hui-iconfont mr-10">&#xe652;</i>--%>
+<%--            <!-- 打印 -->--%>
+<%--            打印预览33--%>
+<%--          </button>--%>
         </c:when>
         <c:otherwise>
-          <button onClick="parent.show_dialog('检查表打印', getRootPath()+'/village/check-document?checkId=${check.id}&flag=8')"
-            class="btn btn-success radius" type="button" style="padding: 0 60px;margin-right: 20px">
-            <i class="Hui-iconfont mr-10">&#xe652;</i>
-            <!-- 打印文书 -->
-            打印预览
+          <button onClick="pr_()" class="btn btn-success radius ml-20" type="button" style="padding: 0 70px;">
+          <i class="Hui-iconfont mr-10">&#xe652;</i>打印
           </button>
+<%--          <button onClick="parent.show_dialog('检查表打印', getRootPath()+'/village/check-document?checkId=${check.id}&flag=8')"--%>
+<%--            class="btn btn-success radius" type="button" style="padding: 0 60px;margin-right: 20px">--%>
+<%--            <i class="Hui-iconfont mr-10">&#xe652;</i>--%>
+<%--            <!-- 打印文书 -->--%>
+<%--            打印预览44--%>
+<%--          </button>--%>
         </c:otherwise>
       </c:choose>
       <%-- <button onClick="parent.show_tab('排查治理记录', '${ly }/village/check-list?flag=${flag }')" class="btn btn-success radius" type="button" style="padding: 0 15px;margin-right: 20px">
@@ -137,7 +149,7 @@ function showpicture(src){
       </c:if>
     </div>
   </div>
-  <div>
+  <div id="div_container">
     <h2 class="text-c mb-10">检查详情表</h2>
     <div class="f-l div_pdetail mt-10">
       <font>检查部门：${check.depart }</font> <label>检查日期：<fmt:formatDate value="${check.realTime }" pattern="yyyy年MM月dd日" /> <c:if
@@ -295,5 +307,6 @@ function showpicture(src){
       </div>
     </div>
   </div>
-</body>
+
+  </body>
 </html>

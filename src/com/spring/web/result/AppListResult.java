@@ -4,8 +4,9 @@
  */
 package com.spring.web.result;
 
-import java.util.List;
 import com.spring.web.ibatis.DynamicParameter;
+
+import java.util.List;
 
 /**
  * @Title: AppListResult

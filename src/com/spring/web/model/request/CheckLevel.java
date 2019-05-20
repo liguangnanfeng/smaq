@@ -1,12 +1,9 @@
 package com.spring.web.model.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.util.logging.Level;
 
 /**
  * @Author: 桃红梨白

@@ -2,46 +2,17 @@
 
 package com.spring.web.controller;
 
-import java.util.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.URLEncoder;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.spring.web.dao.*;
-import com.spring.web.model.*;
-import com.spring.web.service.CheckCompany.ICheckManual;
-import com.spring.web.service.PCSaveModel;
-import com.spring.web.service.SaveModelService;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.json.simple.JSONArray;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
-import sun.invoke.empty.Empty;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.spring.web.BaseController;
 import com.spring.web.ibatis.DynamicParameter;
+import com.spring.web.model.*;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
 import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
+import com.spring.web.service.CheckCompany.ICheckManual;
+import com.spring.web.service.PCSaveModel;
 import com.spring.web.service.cgf.CgfService;
 import com.spring.web.service.user.UserService;
 import com.spring.web.tobject.cgf.CheckSaveReqDTO;
@@ -49,6 +20,21 @@ import com.spring.web.tobject.cgf.CompanyListReqDTO;
 import com.spring.web.util.ConstantsUtil;
 import com.spring.web.util.DateConvertUtil;
 import com.spring.web.util.OutPrintUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.json.simple.JSONArray;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.*;
+import java.net.URLEncoder;
+import java.util.*;
 
 /**
  * @author CGF

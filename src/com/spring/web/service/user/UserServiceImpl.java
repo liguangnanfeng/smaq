@@ -1,22 +1,19 @@
 package com.spring.web.service.user;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.spring.web.dao.*;
+import com.spring.web.ibatis.BaseDao;
+import com.spring.web.ibatis.LlHashMap;
+import com.spring.web.model.*;
+import com.spring.web.result.Result;
+import com.spring.web.service.cgf.CgfService;
+import com.spring.web.tobject.cgf.CompanyListReqDTO;
+import com.spring.web.util.ConstantsUtil;
+import com.spring.web.util.DateConvertUtil;
+import com.spring.web.util.EncryptUtil;
+import com.spring.web.util.ExcelUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,36 +22,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.web.dao.CompanyMapper;
-import com.spring.web.dao.ExaminationMapper;
-import com.spring.web.dao.MequipmentMapper;
-import com.spring.web.dao.RegulationMapper;
-import com.spring.web.dao.SequipmentMapper;
-import com.spring.web.dao.SpersonMapper;
-import com.spring.web.dao.TCleanWarnSettingMapper;
-import com.spring.web.dao.TradeCompanyMapper;
-import com.spring.web.dao.TradeMapper;
-import com.spring.web.dao.UserMapper;
-import com.spring.web.dao.VillageMapper;
-import com.spring.web.ibatis.BaseDao;
-import com.spring.web.ibatis.DynamicParameter;
-import com.spring.web.ibatis.LlHashMap;
-import com.spring.web.model.Company;
-import com.spring.web.model.Mequipment;
-import com.spring.web.model.Regulation;
-import com.spring.web.model.Sequipment;
-import com.spring.web.model.Sperson;
-import com.spring.web.model.TCleanWarnSetting;
-import com.spring.web.model.Trade;
-import com.spring.web.model.TradeCompany;
-import com.spring.web.model.User;
-import com.spring.web.result.Result;
-import com.spring.web.service.cgf.CgfService;
-import com.spring.web.tobject.cgf.CompanyListReqDTO;
-import com.spring.web.util.ConstantsUtil;
-import com.spring.web.util.DateConvertUtil;
-import com.spring.web.util.EncryptUtil;
-import com.spring.web.util.ExcelUtil;
+import java.text.DecimalFormat;
+import java.util.*;
 
 /**
  * @Title: UserServiceImpl
@@ -519,7 +488,7 @@ public class UserServiceImpl implements UserService {
             
             Map<String, Integer> companyMap = new HashMap<String, Integer>();
             
-            List<Sequipment> l = new LinkedList<Sequipment>(); 
+            List<Sequipment> l = new LinkedList<Sequipment>();
             for (int i = 1; i < totalRows; i++) {
                 Row row = sheet.getRow(i);
                 String fileNumber = tos(row, 0);//设备档案号
@@ -599,7 +568,7 @@ public class UserServiceImpl implements UserService {
             
             Map<String, Integer> companyMap = new HashMap<String, Integer>();
             
-            List<Sequipment> l = new LinkedList<Sequipment>(); 
+            List<Sequipment> l = new LinkedList<Sequipment>();
             for (int i = 1; i < totalRows; i++) {
                 Row row = sheet.getRow(i);
                 String fileNumber = tos(row, 0);//设备档案号
@@ -645,7 +614,7 @@ public class UserServiceImpl implements UserService {
      *  企业更改名称
      */
      @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
-     public void editName(User user, Result result, User user2, Integer id ,String userName) throws Exception {
+     public void editName(User user, Result result, User user2, Integer id , String userName) throws Exception {
 
          if(null == user){
              result.setStatus("1");

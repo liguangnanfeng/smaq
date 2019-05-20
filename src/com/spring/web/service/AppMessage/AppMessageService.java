@@ -1,6 +1,9 @@
 package com.spring.web.service.AppMessage;
 
-import com.spring.web.model.*;
+import com.spring.web.model.Messages;
+import com.spring.web.model.TCheck;
+import com.spring.web.model.TRectification;
+import com.spring.web.model.ZzjgPersonnel;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

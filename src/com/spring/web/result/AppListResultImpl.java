@@ -4,9 +4,10 @@
  */
 package com.spring.web.result;
 
+import com.spring.web.ibatis.DynamicParameter;
+
 import java.util.ArrayList;
 import java.util.List;
-import com.spring.web.ibatis.DynamicParameter;
 
 /**
  * @Title: AppListResult
@@ -33,9 +34,9 @@ public class AppListResultImpl implements AppListResult {
 
     /**
      * (非 Javadoc)
-     * 
+     *
      * @param status
-     * @see com.spring.web.result.AppResult#setStatus(java.lang.String)
+     * @see com.spring.web.result.AppResult#setStatus(String)
      */
     @Override
     public void setStatus(String status) {
@@ -67,9 +68,9 @@ public class AppListResultImpl implements AppListResult {
 
     /**
      * (非 Javadoc)
-     * 
+     *
      * @param list
-     * @see com.spring.web.result.AppResult#setList(java.util.List)
+     * @see com.spring.web.result.AppResult#setList(List)
      */
     @Override
     public void setList(List<DynamicParameter<String, Object>> list) {

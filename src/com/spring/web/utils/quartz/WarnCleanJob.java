@@ -2,21 +2,21 @@
 
 package com.spring.web.utils.quartz;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import com.spring.web.dao.TCleanWarnSettingMapper;
+import com.spring.web.dao.TWarnmsgMapper;
+import com.spring.web.model.TCleanWarnSetting;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-import com.spring.web.dao.TCleanWarnSettingMapper;
-import com.spring.web.dao.TWarnmsgMapper;
-import com.spring.web.model.TCleanWarnSetting;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 
-public class WarnCleanJob implements Job{
+public class WarnCleanJob implements Job {
 
     @Autowired
     private TWarnmsgMapper tWarnmsgMapper;
@@ -25,7 +25,7 @@ public class WarnCleanJob implements Job{
     
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this); 
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
         TCleanWarnSetting setting = null;
         List<TCleanWarnSetting> settings = tCleanWarnSettingMapper.getAllCleanSettings();
         if(null != settings && !settings.isEmpty()){

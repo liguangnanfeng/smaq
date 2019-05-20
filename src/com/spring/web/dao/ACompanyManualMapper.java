@@ -138,14 +138,12 @@ public interface ACompanyManualMapper {
      */
     List<CheckLevel> findLevel3ByjcType2(CheckLevel checkLevel);
 
-
     /**
      * 根据level1 和Level 2 和检查的类型 (高危),查询level3
      * @param checkLevel
      * @return
      */
     List<CheckLevel> findLevel3ByjcType3(CheckLevel checkLevel);
-
 
     int add(ACompanyManual aCompanyManuals);
 
@@ -173,5 +171,6 @@ public interface ACompanyManualMapper {
     void save(ACompanyManual aCompanyManual1);
 
     List<ACompanyManual> findALLsss(@Param("flag")String flag, @Param("uid")Integer uid);
+
 }
 

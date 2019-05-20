@@ -418,6 +418,7 @@
         document.querySelector('.breadcrumb').style.display = 'none'
         html2canvas(document.querySelector(".amap-maps"),{
         useCORS:true,allowTaint: false,foreignObjectRendering: true,taintTest: true,scale: 1 }).then(canvas => {
+        console.log(111)
         convertCanvasToImage(canvas);
         });
         }

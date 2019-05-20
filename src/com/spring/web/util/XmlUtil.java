@@ -1,4 +1,4 @@
-/*package com.spring.web.util;
+package com.spring.web.util;/*package com.spring.web.util;
 
 import java.beans.PropertyDescriptor;
 import java.io.ByteArrayOutputStream;

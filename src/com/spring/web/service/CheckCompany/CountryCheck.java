@@ -46,7 +46,7 @@ public interface CountryCheck {
      * @param officials
      * @return
      */
-    Integer saveCheck(CheckItem checkItem, Officials officials,Integer id);
+    Integer saveCheck(CheckItem checkItem, Officials officials, Integer id);
 
     /**
      * 政府账号保存检查信息

@@ -4,14 +4,17 @@
  */
 package com.spring.web.service.cgf;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.spring.web.dao.*;
+import com.spring.web.ibatis.BaseDao;
+import com.spring.web.model.*;
+import com.spring.web.result.AppResult;
+import com.spring.web.result.Result;
+import com.spring.web.tobject.cgf.*;
+import com.spring.web.util.DateConvertUtil;
+import com.spring.web.util.EncryptUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.log4j.Logger;
@@ -22,76 +25,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.spring.web.dao.CompanyMapper;
-import com.spring.web.dao.DistrictMapper;
-import com.spring.web.dao.FcGreatDangerStudyMapper;
-import com.spring.web.dao.FcNaturalDangerItemMapper;
-import com.spring.web.dao.FcNaturalDangerStudyMapper;
-import com.spring.web.dao.FcTargetAssessmentMapper;
-import com.spring.web.dao.FcTemporaryDangerCensusMapper;
-import com.spring.web.dao.FcTemporaryDangerItemMapper;
-import com.spring.web.dao.FcTemporaryDangerStudyMapper;
-import com.spring.web.dao.MonitorMapper;
-import com.spring.web.dao.PushMessageMapper;
-import com.spring.web.dao.PushMessageUserMapper;
-import com.spring.web.dao.TCheckDocumentMapper;
-import com.spring.web.dao.TCheckItemMapper;
-import com.spring.web.dao.TCheckMapper;
-import com.spring.web.dao.TCheckPartMapper;
-import com.spring.web.dao.TItemMapper;
-import com.spring.web.dao.TModelMapper;
-import com.spring.web.dao.TModelPartMapper;
-import com.spring.web.dao.TRecheckItemMapper;
-import com.spring.web.dao.TRecheckMapper;
-import com.spring.web.dao.TRectificationMapper;
-import com.spring.web.dao.TownMapper;
-import com.spring.web.dao.TradeCompanyMapper;
-import com.spring.web.dao.TradeMapper;
-import com.spring.web.dao.UserMapper;
-import com.spring.web.dao.VillageMapper;
-import com.spring.web.ibatis.BaseDao;
-import com.spring.web.model.Company;
-import com.spring.web.model.District;
-import com.spring.web.model.FcContractorOperation;
-import com.spring.web.model.FcGreatDangerStudy;
-import com.spring.web.model.FcNaturalDangerItem;
-import com.spring.web.model.FcNaturalDangerStudy;
-import com.spring.web.model.FcTargetAssessment;
-import com.spring.web.model.FcTemporaryDangerCensus;
-import com.spring.web.model.FcTemporaryDangerItem;
-import com.spring.web.model.FcTemporaryDangerStudy;
-import com.spring.web.model.Monitor;
-import com.spring.web.model.PushMessage;
-import com.spring.web.model.TCheck;
-import com.spring.web.model.TCheckDocument;
-import com.spring.web.model.TCheckItem;
-import com.spring.web.model.TCheckPart;
-import com.spring.web.model.TModel;
-import com.spring.web.model.TModelPart;
-import com.spring.web.model.TRecheck;
-import com.spring.web.model.TRecheckItem;
-import com.spring.web.model.TRectification;
-import com.spring.web.model.Town;
-import com.spring.web.model.Trade;
-import com.spring.web.model.TradeCompany;
-import com.spring.web.model.User;
-import com.spring.web.model.Village;
-import com.spring.web.result.AppResult;
-import com.spring.web.result.Result;
-import com.spring.web.tobject.cgf.CheckSaveReqDTO;
-import com.spring.web.tobject.cgf.CompanyListReqDTO;
-import com.spring.web.tobject.cgf.GreatdangerSaveReqDTO;
-import com.spring.web.tobject.cgf.ModelSaveReqDTO;
-import com.spring.web.tobject.cgf.NaturaldangerSaveReqDTO;
-import com.spring.web.tobject.cgf.RecheckSaveReqDTO;
-import com.spring.web.tobject.cgf.TemporaryDangerSaveReqDTO;
-import com.spring.web.tobject.cgf.ThreePartReqDTO;
-import com.spring.web.tobject.cgf.ThreeSaveReqDTO;
-import com.spring.web.util.DateConvertUtil;
-import com.spring.web.util.EncryptUtil;
+import java.util.*;
 
 /**
  * @Title: CommonServiceImpl
@@ -415,7 +349,7 @@ public class CgfServiceImpl implements CgfService {
 
     /**
      * (非 Javadoc) 整改意见保存
-     * 
+     *
      * @param tr
      * @throws Exception
      * @see com.spring.web.service.cgf.CgfService#rectificationSave(com.spring.web.model.TRectification)
@@ -809,11 +743,11 @@ public class CgfServiceImpl implements CgfService {
 
     /**
      * (非 Javadoc)
-     * 
+     *
      * @param p
      * @param ids
      * @throws Exception
-     * @see com.spring.web.service.cgf.CgfService#pushMessageSave(com.spring.web.model.PushMessage, java.lang.String)
+     * @see com.spring.web.service.cgf.CgfService#pushMessageSave(com.spring.web.model.PushMessage, String)
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)

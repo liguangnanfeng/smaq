@@ -4,10 +4,11 @@
  */
 package com.spring.web.listener;
 
+import org.springframework.stereotype.Component;
+
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.stereotype.Component;
 
 /**
  * @Title: RequestListener

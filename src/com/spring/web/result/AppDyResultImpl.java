@@ -31,9 +31,9 @@ public class AppDyResultImpl implements AppDyResult {
 
     /**
      * (非 Javadoc)
-     * 
+     *
      * @param status
-     * @see com.spring.web.result.AppResult#setStatus(java.lang.String)
+     * @see com.spring.web.result.AppResult#setStatus(String)
      */
     @Override
     public void setStatus(String status) {

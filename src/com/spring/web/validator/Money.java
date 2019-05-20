@@ -1,6 +1,5 @@
 package com.spring.web.validator;
 
-import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;

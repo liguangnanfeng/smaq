@@ -24,7 +24,7 @@ public class MoneyValidator implements ConstraintValidator<Money, Double> {
      * @param arg0
      * @param arg1
      * @return
-     * @see javax.validation.ConstraintValidator#isValid(java.lang.Object, javax.validation.ConstraintValidatorContext)
+     * @see javax.validation.ConstraintValidator#isValid(Object, javax.validation.ConstraintValidatorContext)
      */
     @Override
     public boolean isValid(Double value, ConstraintValidatorContext context) {

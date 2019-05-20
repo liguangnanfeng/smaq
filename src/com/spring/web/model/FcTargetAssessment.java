@@ -2,8 +2,6 @@ package com.spring.web.model;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class FcTargetAssessment {
     /**
      *

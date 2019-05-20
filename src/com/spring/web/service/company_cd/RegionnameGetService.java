@@ -5,8 +5,9 @@
 
 package com.spring.web.service.company_cd;
 
-import java.io.Serializable;
 import com.spring.web.ibatis.DynamicParameter;
+
+import java.io.Serializable;
 
 /** 
  * @Title: BuyService 

@@ -37,7 +37,6 @@ public class AppController_Map extends BaseController {
     @Autowired
     private TMapMapper tMapMapper;
 
-    @Value("${java.str}")
     private String pathStr;
 
 

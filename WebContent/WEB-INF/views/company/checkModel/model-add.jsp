@@ -122,7 +122,8 @@
             function findCheck(obj) {
                 var level2 = $(obj);
                 var dom2 = $(obj).parent().parent().parent('.level2').prev().find('.departmentId');
-                var inspection = $(obj).parent().parent().parent('.level2').next().find('.inspection');
+
+                var inspection = $(obj).parent().parent().parent('.level2').next().find('.project1Id');
 
                 // var doc = document.getElementById("departmentId");
                 // var doc2 = document.getElementById("department2Id");
@@ -138,11 +139,16 @@
                     async: false,
                     dataType: "json",
                     success: function (result) {
+                        if(result.length>0){
+                    $(obj).parent().parent().parent('.level2').next().find('.project1Id').empty();
                         $.each(result, function (index, item) {
-                            var isp = item.level3;
-                            var manuId = item.id;
-                            inspection.append("<p class='checkBoxOuter'><input type='checkbox' class='checkBox' name='checkBox' value='" + manuId + "'/>" + isp + "</p>")
-                        })
+                    var isp = item.level3;
+                    var manuId = item.id;
+    <%--                            inspection.append("<p class='checkBoxOuter'><input type='checkbox' class='checkBox' name='checkBox' value='" + manuId + "'/>" + isp + "</p>")--%>
+                inspection.append("<option value='" + manuId + "'>" + isp + "</option>")
+                })
+    }
+
                     },
                     complete: function (XMLHttpRequest, textStatus) {
                         // layer.close(index);
@@ -154,6 +160,66 @@
 
             }
 
+    function findCheck1(obj) {
+    var project1Id = $(obj);
+<%--    var dom2 = $(obj).parent().parent().prev().find('.departmentId');--%>
+   var depId= $('.departmentId').eq(i-1).val();
+   var gawei= $('.department2Id').eq(i-1).val();
+    params2 = {
+    "level1": depId,
+    "level2": gawei,
+    "level3":project1Id.val(),
+    "id":"",
+    "uid":"",
+    "type":"",
+    "level4":"",
+    "reference":"",
+    "factors":"",
+    "types":"",
+    "flag":"",
+    "gkcs":"",
+    "gkzt":"",
+    "files":"",
+    "checkType":"",
+    "industryId":"",
+    "access_token":"",
+    "sessionId":"",
+    }
+<%--    var level2 = $(obj).parent().parent().prev().prev().find('.department2Id');--%>
+<%--    $(obj).parent().parent().parent('.level2').next().find('.inspection').empty();--%>
+    // var doc = document.getElementById("departmentId");
+    // var doc2 = document.getElementById("department2Id");
+<%--    params2 = {--%>
+<%--    "depId": dom2.val(),--%>
+<%--    "sName": level2.val(),--%>
+<%--    "type":project1Id.val()--%>
+<%--    }--%>
+    console.log(params2)
+    $.ajax({
+    type: "POST",
+    url: getRootPath() + '/api/custom/check/A2022',
+    data: JSON.stringify(params2),
+    async: false,
+    dataType: "json",
+    contentType: "application/json",
+    success: function (result) {
+<%--    $(obj).empty--%>
+    $.each(result, function (index, item) {
+    var isp = item.level3;
+    var manuId = item.id;
+    <%--                            inspection.append("<p class='checkBoxOuter'><input type='checkbox' class='checkBox' name='checkBox' value='" + manuId + "'/>" + isp + "</p>")--%>
+    inspection.append("<option value='" + manuId + "'>" + manuId + "</option>")
+    })
+    },
+    complete: function (XMLHttpRequest, textStatus) {
+    // layer.close(index);
+    },
+    error: function (XMLHttpRequest, textStatus, errorThrown) {
+    alert("查询失败")
+    }
+    });
+
+    }
             function saveCheckMenu() {
                 alert("进入saveCheckMenu");
                 var obj = document.getElementsByName("checkBox");
@@ -209,21 +275,23 @@
                 var checkItemList = [];
                 var cusCheckItemList = [];//自定义检查项
                 for (let j = 1; j <= i; j++) {
-                    var checkList = $('.checkedList' + j + '').find(".checkBox");
-                    console.log(checkList.length)
-                    var check_val = [];
-                    for (c in checkList) {
-                        if (checkList[c].checked) {
-                            check_val.push(checkList[c].value)
-                        }
-                    }
-
+<%--                    var checkList = $('.checkedList' + j + '').find(".checkBox");--%>
+<%--                    console.log(checkList.length)--%>
+<%--                    var check_val = [];--%>
+<%--                    for (c in checkList) {--%>
+<%--                        if (checkList[c].checked) {--%>
+<%--                            check_val.push(checkList[c].value)--%>
+<%--                        }--%>
+<%--                    }--%>
+                var dx= $('.project1Id').eq(j-1).val();
+                 var gawei= $('.content1Id').eq(j-1).val();
                     var jcx = {
                         'bm': $('.addItem' + j + ' .department' + j + '').children('.departmentId').val(),
                         'gw': $('.addItem' + j + ' .post' + j + '').children('.department2Id').val(),
-                        'dx': check_val
+                        'dx': dx,
+                        'cn': gawei,
                     }
-                    if(jcx.bm){
+                    if(jcx.bm&&dx &&dx!="0"&&jcx.bm!="0"){
                         checkItemList.push(jcx);
                     }
 
@@ -320,9 +388,9 @@
             i++;
             if(1==type){
 
-                var add1 = `<div  class="addItem`+i+`"  >
+                var add1 = `<div  class="addItem`+i+` col-xs-4"  >
                                 <div class="row cl level1">
-                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择部门 :</label>
+                                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>请选择部门 :</label>
                                     <div class="department  formControls col-xs-8 col-sm-9">
                                             <span class="department`+i+`   select-box inline">
                                             <select name="departmentId" class="departmentId"  onChange="findPerson(this)">
@@ -336,7 +404,7 @@
                                 </div>
 
                                 <div class="row cl level2">
-                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择岗位 :</label>
+                                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>请选择岗位 :</label>
                                     <div class="post  formControls col-xs-8 col-sm-9">
                                             <span class="post`+i+`   select-box inline">
 
@@ -347,21 +415,33 @@
                                     </div>
                                 </div>
                                 <div class="row cl level3">
-                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查项目 :</label>
+                                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>请选择检查项目 :</label>
                                     <div class="formControls col-xs-8 col-sm-9">
-                                        <div class="checkedList`+i+`">
-                                        <p class="inspection"></p>
-                                        </div>
+                                    <span class="checkedList`+i+`   select-box inline">
+                                    <select name="project1Id" class="project1Id"  onchange="findCheck1(this)">
+                                    <option value="0">选择检查项目</option>
+                                    </select>
+                                </span>
                                     </div>
                                 </div>
+    <div class="row cl level3">
+    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>请选择检查内容 :</label>
+    <div class="formControls col-xs-8 col-sm-9">
+    <span class="checkedList`+i+`   select-box inline">
+    <select name="content1Id" class="content1Id" >
+    <option value="0">选择检查内容</option>
+    </select>
+    </span>
+    </div>
+    </div>
                                 </div>`;
                 $('#addContainer').append(add1);
 
             }else if (2==type){
 
-                var add1 =`<div  class="cusAddItem`+i+`"  >
+                var add1 =`<div  class="cusAddItem`+i+` col-xs-4"  >
                                 <div class="row cl level1">
-                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择部门 :</label>
+                                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>请选择部门 :</label>
                                     <div class="department  formControls col-xs-8 col-sm-9">
                                             <span class="department`+i+`   select-box inline">
                                             <select name="departmentId" class="departmentId"  onChange="findPerson(this)">
@@ -374,7 +454,7 @@
                                     </div>
                                 </div>
                                 <div class="row cl level2">
-                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择岗位 :</label>
+                                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>请选择岗位 :</label>
                                     <div class="post  formControls col-xs-8 col-sm-9">
                                             <span class="post`+i+`  select-box inline">
 
@@ -386,13 +466,13 @@
                                 </div>
                                 <div class="row cl level2">
                                     <div>
-                                         <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>自定义检查项目 :</label>
+                                         <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>自定义检查项目 :</label>
                                           <div class="formControls col-xs-8 col-sm-9">
                                           <input type="text" id="project`+i+`" class="input-text">
                                      </div>
                                 </div>
                                      <div>
-                                     <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>自定义检查内容 :</label>
+                                     <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>自定义检查内容 :</label>
                                      <div class="formControls col-xs-8 col-sm-9">
                                      <input  type="text" id="content`+i+`" class="input-text">
                                  </div>
@@ -402,13 +482,13 @@
             }
             else if(3==type){
                 console.log('ceshi');
-                var add3 = `<div  class="addItem`+i+`"  >
+                var add3 = `<div  class="addItem`+i+` col-xs-4"  >
                                 <div class="row cl level1">
-                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目选择1 :</label>
+                                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>检查项目 :</label>
                                     <div class="department  formControls col-xs-8 col-sm-9">
                                             <span class="department`+i+`   select-box inline">
                                             <select name="departmentId"   class="departmentId selectitem`+i+`"  >
-                                            <option  value="0">请选择项目1</option>
+                                            <option  value="0">检查项目 </option>
 
                                             </select>
                                             </span>
@@ -416,12 +496,12 @@
                                 </div>
 
                                 <div class="row cl level2">
-                                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目选择2 :</label>
+                                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>检查内容 :</label>
                                     <div class="post  formControls col-xs-8 col-sm-9">
                                             <span class="post`+i+`   select-box inline">
 
                                             <select name="department2Id"   class="department2Id zdyselectitem`+i+`"  >
-                                            <option   value="0">请选择项目2</option>
+                                            <option   value="0">检查内容</option>
                                             </select>
                                             </span>
                                     </div>
@@ -581,15 +661,15 @@
 
 
                 }else if(4==type){
-                var add1 =`<div class="row cl">
-                    <div>
-                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>自定义检查项目 :</label>
+                var add1 =`<div class="col-xs-4">
+                    <div class="row cl level1">
+                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>检查项目 :</label>
                    <div class="formControls col-xs-8 col-sm-9">
                     <input type="text" id="project`+i+`" class="input-text">
                     </div>
                     </div>
-                    <div>
-                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>自定义检查内容 :</label>
+                    <div class="row cl level1">
+                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>检查内容 :</label>
                     <div class="formControls col-xs-8 col-sm-9">
                     <input  type="text" id="content`+i+`"class="input-text">
                     </div>
@@ -771,7 +851,7 @@
                 <%--添加项的容器--%>
 
 
-                <div id="addContainer"></div>
+                <div id="addContainer" class="row"></div>
 
 
                 <div class="addCh1 row cl" style="display: none">

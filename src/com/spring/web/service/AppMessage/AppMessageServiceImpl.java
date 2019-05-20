@@ -119,8 +119,8 @@ public class AppMessageServiceImpl implements AppMessageService {
 
     /**
      * 企业端被检查人获取复查记录
-     * @param userId  用户id
-     * @param uid     公司id
+     * @param userId    用户id
+     * @param uid       公司id
      * @return
      */
     @Override

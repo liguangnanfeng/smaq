@@ -342,7 +342,7 @@ public class AppController_message extends BaseController {
     @RequestMapping(value = "findReCheckList2", method = RequestMethod.POST)
     public @ResponseBody
     AppResult findReCheckList2(@RequestBody Map<String, Object> params, HttpServletRequest request) {
-
+        AppResult result = new AppResultImpl();
         String userId = String.valueOf(params.get("userId"));    // 用户id
         String uid = String.valueOf(params.get("uid"));          // 企业id
         String status = String.valueOf(params.get("status"));          // 企业/政府
@@ -368,7 +368,13 @@ public class AppController_message extends BaseController {
 
         LinkedHashMap<String, Object> listMap = new LinkedHashMap<>();
         listMap.put("itemList", maps);
-        AppResult result = new AppResultImpl();
+        if(null == maps){
+            result.setStatus("0");
+            result.setMessage("没有数据");
+            result.setData(new ArrayList<>());
+            return result;
+        }
+
         result.setData(listMap);
         return result;
     }

@@ -102,6 +102,11 @@ public interface ACompanyManualMapper {
      */
     List<String> selectDangerAndManual(@Param("uid") Integer uid, @Param("name") String name);
 
+    /**
+     * 查询level3
+     * @param check
+     * @return
+     */
     List<Map<String, Object>> selectLevel3AndId(CheckLevel check);
 
     List<Map> selectLevel4AndId(CheckLevel checkLevel);

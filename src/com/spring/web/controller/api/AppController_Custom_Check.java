@@ -1,6 +1,7 @@
 package com.spring.web.controller.api;
 
 import com.spring.web.BaseController;
+import com.spring.web.dao.ACompanyManualMapper;
 import com.spring.web.dao.TCheckMapper;
 import com.spring.web.listener.MySessionContext;
 import com.spring.web.model.*;
@@ -37,6 +38,11 @@ public class AppController_Custom_Check extends BaseController {
     @Autowired
     private Zzig_departmentService zzig_departmentService;
 
+    /**
+     * 查询风险详情
+     */
+    @Autowired
+    private ACompanyManualMapper aCompanyManualMapper;
     /**
      * 查询风险点
      */
@@ -362,6 +368,48 @@ public class AppController_Custom_Check extends BaseController {
         }
     }
 
+    /**
+     * pc端 现场检查/查询level3
+     */
+    @RequestMapping(value = "A2022", method = RequestMethod.POST)
+    public @ResponseBody
+    AppResult PCcheckLevel3(HttpServletRequest request,@RequestBody CheckLevel checkLevel){
+        AppResult result = new AppResultImpl();
+        try {
+            User user = getLoginUser(request);
+
+
+            // 取出数据对数据进行判断
+            ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(Integer.parseInt(checkLevel.getLevel1()));
+            checkLevel.setLevel1(companyManual.getLevel1());
+            ACompanyManual companyManual1 = aCompanyManualMapper.selectByPrimaryKey(Integer.parseInt(checkLevel.getLevel3()));
+            checkLevel.setLevel3(companyManual1.getLevel3());
+            checkLevel.setUid(user.getId());
+            // 调用方法进行查询
+            List<Map<String, Object>> list = checkManual.selectLevel4AndId(checkLevel);
+
+            Set<String> set = new HashSet<>();
+            for (Map level : list) {
+                set.add((String) level.get("level3"));
+            }
+            result.setStatus("0");
+            result.setMessage("查询成功");
+            result.setData(set);
+
+            return result;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMessage("未查询到数据");
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMessage("网络故障");
+            return result;
+        }
+
+    }
     /**
      * TODO 查询level4
      *

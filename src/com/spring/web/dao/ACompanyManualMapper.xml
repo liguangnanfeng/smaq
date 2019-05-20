@@ -991,7 +991,7 @@ select level2  from a_company_manual_tbl where uid=#{uid} and level1 = #{name} g
     from a_company_manual_tbl
     where uid=#{uid}
     and level1 = #{level1}
-    and level2=#{level2};
+    and level2 = #{level2};
   </select>
     <!--获取风险点及其id-->
     <select id="selectLevel4AndId" resultType="java.util.Map">

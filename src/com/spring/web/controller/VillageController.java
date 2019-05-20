@@ -1205,6 +1205,67 @@ public class VillageController extends BaseController {
         return "village/danger/check-list";
     }
 
+
+
+    /**
+     * 政府端隐患排查记录
+     * TODO 排查治理记录
+     * user. userType : 管理类型  1 超管 2普管 3镇 4 村 5 企业 6区县 7市 8省
+     * type 4 表示行政检查
+     */
+    @RequestMapping(value = "government-list")//flag:3 部门抽查
+    public String government(HttpServletRequest request, String title, Integer type, String companyName,
+                               Integer townId, Integer villageId,
+                               Integer status, Integer flag, Model model) throws Exception {
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
+        if (user.getUserType() == 3) {//镇
+            model.addAttribute("villageL", villageMapper.selectListByTown(m));
+        }
+        if (user.getUserType() == 6) {//区
+            model.addAttribute("townL", townMapper.selectListByDistrict(m));
+        }
+        // 向map集合进行存储
+        m.put("type", type);  //
+        m.put("flag", flag);  // 1
+        m.put("title", title); // 1
+        m.put("townId", townId);   // null
+        m.put("villageId", villageId);  //1
+        m.put("companyName", companyName); // null
+        m.put("status", status); //状态  null
+        // 进行判断
+        if (setUserId(user, m)) {
+            clearVillageTown(m);
+            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            model.addAttribute("list", list);
+        }
+        model.addAttribute("type", type);
+        model.addAttribute("flag", flag);
+        model.addAttribute("companyName", companyName);
+        model.addAttribute("title", title);
+        model.addAttribute("status", status);
+        model.addAttribute("townId", townId);
+        model.addAttribute("villageId", villageId);
+        Date d = new Date();
+        String x = DateFormatUtils.format(d, "yyyy-MM-dd");
+        d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
+        model.addAttribute("t", d.getTime());
+        /*if (user.getUserType() == 5) {
+            // 表示等于5的话就将页面进行跳转
+            return "company/danger/check-list";
+        }*/
+        // TODO 找到这个界面
+        return "village/danger/government-check";
+    }
+
+
+
+
+
+
+
+
+
     /**
      * 村级账号 隐患排查 检查历史
      */
@@ -1870,6 +1931,33 @@ public class VillageController extends BaseController {
 
         return "company/danger/recheck-list";
     }
+
+
+    /*
+    *  政府端 隐患治理
+    * */
+    @RequestMapping(value = "government-lists")
+    public String governmentList(HttpServletRequest request, Model model, Integer flag) throws Exception {
+        User user = getLoginUser(request);
+        model.addAttribute("flag", flag);
+
+
+        // 企业登录
+//        if(1==flag){
+        List<Map> list = tCheckItemMapper.selectRecheckList(user.getId());
+        model.addAttribute("list", list);
+//        }
+
+
+        return "company/danger/government-lists";
+    }
+
+
+
+
+
+
+
 
 
     /**

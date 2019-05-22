@@ -381,12 +381,12 @@
 
     <!--查询相应企业所有的安全责任人-->
     <select id="findUserByIdAndSTatus" resultType="MAP">
-        select id,name from zzjg_personnel_tbl where cid=#{cid} and status="2";
+        select id,name from zzjg_personnel_tbl where cid=#{cid} and status="2" and del=0 ;
     </select>
 
     <!--政府端查询企业所有的安全责任人-->
     <select id="findUserByIdAndStatus1" resultType="java.util.Map">
-         select id,name from zzjg_personnel_tbl where uid=#{id} and status="1";
+         select id,name from zzjg_personnel_tbl where uid=#{id} and status="1" and del=0;
     </select>
 
     <!--根据id查询部门名称-->
@@ -396,7 +396,7 @@
 
     <!--根据部门id查询这个部门所有的被检查人员的手机号-->
     <select id="selectByDpid" resultType="String">
-        SELECT mobile FROM zzjg_personnel_tbl WHERE dpid = #{dpid} ;
+        SELECT mobile FROM zzjg_personnel_tbl WHERE dpid = #{dpid} and del=0 ;
     </select>
 
 </mapper>

@@ -174,7 +174,7 @@ function showadd(id){
 
 function del_(id) {
   layer.confirm("确认要删除该数据么？", function(index) {
-    $.post("/company/system/user-save", {
+    $.post("/company/system/user-del", {
       id : id,
       del : 1
     },function(result) {

@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.spring.web.dao.ZzjgPersonnelMapper;
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.service.zzjgCompany.IzzjgCompanyService;
 import com.spring.web.util.EncryptUtil;
@@ -213,10 +214,14 @@ public class CompanyController_system extends BaseController {
         }
         dto.setUid(user.getId());
         // TODO 调用工具类生成密码 微信小程序端进行用户登陆密码请勿删除
-        String encryptedPwd = EncryptUtil.encrypt(dto.getPassword());
+        if(dto.getPassword().length()<30){
+            String encryptedPwd = EncryptUtil.encrypt(dto.getPassword());
+            dto.setPassword(encryptedPwd);
+        }
+
         dto.setCtime(d);
         dto.setDel(0);
-        dto.setPassword(encryptedPwd);
+
         if (null == dto.getId()) {
             zzjgPersonnelMapper.insertSelective(dto);
         } else {
@@ -225,6 +230,19 @@ public class CompanyController_system extends BaseController {
         }
         return result;
     }
-    
+
+    /**
+     * 员工删除
+     */
+    @RequestMapping(value = "user-del")
+    public
+    @ResponseBody Result userDel(Integer id, Integer del ){
+        Result result = new ResultImpl();
+        ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectByPrimaryKey(id);
+        zzjgPersonnel.setDel(del);
+        zzjgPersonnelMapper.updateByPrimaryKey(zzjgPersonnel);
+        return result;
+    }
+
     /** 组织架构  结束 */
 }

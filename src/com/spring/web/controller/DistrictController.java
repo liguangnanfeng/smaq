@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.spring.web.util.EncryptUtil;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -125,10 +126,16 @@ public class DistrictController extends BaseController {
     
     /**
      * 执法人员保存
+     * 当密码小于三十位数的话就表示是新增/修改密码
      */
     @RequestMapping(value = "off-save")
     public @ResponseBody Result offSave(Officials off, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
+
+        if(off.getPassword().length()<30){ //表示是新密码
+            String encryptedPwd = EncryptUtil.encrypt(off.getPassword());
+            off.setPassword(encryptedPwd);
+        }
         if(null == off.getId()) {
             User user = getLoginUser(request);
             off.setDel(0);
@@ -143,18 +150,35 @@ public class DistrictController extends BaseController {
     }
     
     /**
-     * 执法人员
+     * 执法人员添加
+     * 要将密码进行加密
      */
     @RequestMapping(value = "off-add")
     public String offAdd(Integer id, Model model) throws Exception {
+
         if(null != id) {
             model.addAttribute("p", officialsMapper.selectByPrimaryKey(id));
         }
         return "area/officials/officials-add";
     }
+    /**
+     * 执法人员删除
+     */
+    @RequestMapping(value = "off-del")
+    public @ResponseBody Result offdel(Integer id, Integer del) throws Exception {
+        Result result =  new ResultImpl();
+
+        if(null == id) {
+            return null;
+        }
+        Officials officials = officialsMapper.selectByPrimaryKey(id);
+        officials.setDel(del);
+        officialsMapper.updateByPrimaryKey(officials);
+        return result;
+    }
     
     /**
-     * 执法人员
+     * 执法人员 查询
      */
     @RequestMapping(value = "off-list")
     public String offList(HttpServletRequest request, Model model, String name) throws Exception {

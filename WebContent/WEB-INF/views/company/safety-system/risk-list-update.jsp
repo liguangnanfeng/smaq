@@ -89,9 +89,34 @@
 
                     </c:set>
 
-                    <td class="text-c">${ls[0] != null ? ls[0] : "无数据" }</td>
+                    <%--<td class="text-c">${ls[0] != null ? ls[0] : "无数据" }</td>
                     <td class="text-c">${ls[1] != null ? ls[1] : "无数据" }</td>
-                    <td class="text-c">${ls[2] != null ? ls[2] : "无数据" }</td>
+                    <td class="text-c">${ls[2] != null ? ls[2] : "无数据" }</td>--%>
+
+                    <c:if test="${ not empty ls[0]}">
+                        <td class="text-c">${ls[0]}</td>
+                    </c:if>
+
+                    <c:if test="${empty ls[0]}">
+                        <td class="text-c"><font style="display: none">${be.id}</font> </td>
+                    </c:if>
+
+                    <c:if test="${ not empty ls[1]}">
+                        <td class="text-c">${ls[1]}</td>
+                    </c:if>
+
+                    <c:if test="${empty ls[1]}">
+                        <td class="text-c"><font style="display: none">${be.id}</font> </td>
+                    </c:if>
+
+
+                    <c:if test="${ not empty ls[2]}">
+                        <td class="text-c">${ls[2]}</td>
+                    </c:if>
+
+                    <c:if test="${empty ls[2]}">
+                        <td class="text-c"><font style="display: none">${be.id}</font> </td>
+                    </c:if>
 
                     <td>
                         <p style="float:left;width:100%;">${be.factors}</p>

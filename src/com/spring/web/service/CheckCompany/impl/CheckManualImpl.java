@@ -6,7 +6,6 @@ import com.spring.web.model.*;
 import com.spring.web.model.request.CheckItem;
 import com.spring.web.model.request.CheckLevel;
 import com.spring.web.service.CheckCompany.ICheckManual;
-import com.spring.web.service.PCSaveModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,9 +76,6 @@ public class CheckManualImpl implements ICheckManual {
     private TModelPartMapper tModelPartMapper;
 
     @Autowired
-    private PCSaveModel saveModelService;
-
-    @Autowired
     private CompanyMapper companyMapper;
 
     @Autowired
@@ -120,16 +116,25 @@ public class CheckManualImpl implements ICheckManual {
     @Override
     public List<Map> checkGaoWei(Integer Uid) {
 
-        List<Map> list = new ArrayList<>();
-        // 首先根据公司id查询部门所需要的
-        TCompany tCompany = tCompanyMapper.selectByPrimaryKey(Uid);
-        String industry3 = tCompany.getIndustry3();
-        String[] split = industry3.split(",");
-        for (String s : split) {
-           list.addAll(tIndustryMapper.selectType3(Integer.valueOf(s)));
-        }
+        try {
+            List<Map> list = new ArrayList<>();
+            // 首先根据公司id查询部门所需要的
+            TCompany tCompany = tCompanyMapper.selectByPrimaryKey(Uid);
+            String industry3 = tCompany.getIndustry3();
+            String[] split = industry3.split(",");
+            for (String s : split) {
+               list.addAll(tIndustryMapper.selectType3(Integer.valueOf(s)));
+            }
 
-        return list;
+            return list;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return new ArrayList<>();
+        }catch (NumberFormatException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+
+        }
     }
 
     /**

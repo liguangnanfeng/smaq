@@ -464,6 +464,15 @@ public class CompanyController_safety extends BaseController {
             return "company/safety-system/risk-list-update";
         }
     }
+	
+	/**
+	* 截图
+	*/
+    @RequestMapping({"jietu"})
+    public String jietu(Model model, HttpServletRequest request) throws Exception {
+        
+        return "company/safety-system/jietu";
+    }
 
     /*
        导入所有较大风险数据 1

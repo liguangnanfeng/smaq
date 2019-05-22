@@ -174,7 +174,17 @@ $(function(){
             <td>${be.part }</td>
             <td>${be.partName }</td>
             <td>${be.c2 }/${be.c }</td>
-            <td><fmt:formatDate value="${be.useTime }"/></td>
+
+            <td>
+                <c:if test="${ not  empty be.useTime  }">
+                    <fmt:formatDate value="${be.useTime }"/>
+                </c:if>
+                <c:if test="${  empty be.useTime }">
+                    无
+                </c:if>
+
+            </td>
+
             <c:if test="${type == 2 || type==9}">
             <td>
                 <span>开启/关闭状态：${be.open == 1 ? '开启':'关闭'}</span><br>

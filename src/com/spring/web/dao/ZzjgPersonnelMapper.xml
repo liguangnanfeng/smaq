@@ -362,7 +362,8 @@
         select * from zzjg_personnel_tbl where id=#{userId ,jdbcType=INTEGER };
     </select>
 
-    <!--登陆
+    <!--
+    登陆
     -->
     <select id="selectPersonnelByNameAndPwd" resultType="com.spring.web.model.ZzjgPersonnel">
      select * from zzjg_personnel_tbl where  mobile= #{name,jdbcType = VARCHAR} limit 0,1
@@ -370,7 +371,7 @@
 
     <!--查询公司信息 ,包括部门信息 和岗位信息
     -->
-    <select id="selectAll1"  resultType="java.util.Map" parameterType="java.lang.Integer" >
+    <select id="selectAll1" resultType="java.util.Map" parameterType="java.lang.Integer">
 
     select p.id as id , p.name as name, p.mobile as mobile, p.status as status ,p.position as position, p.uid, d.name as department  , c.name as company
     from zzjg_personnel_tbl as  p join zzjg_department_tbl  as d  on d.id=p.dpid join zzjg_company_tbl  as c
@@ -392,4 +393,10 @@
     <select id="selectdpidById" resultType="String">
         select name from zzjg_department_tbl where id=(select dpid  from zzjg_personnel_tbl where id = #{personnelId});
     </select>
+
+    <!--根据部门id查询这个部门所有的被检查人员的手机号-->
+    <select id="selectByDpid" resultType="String">
+        SELECT mobile FROM zzjg_personnel_tbl WHERE dpid = #{dpid} ;
+    </select>
+
 </mapper>

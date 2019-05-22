@@ -24,14 +24,23 @@
         <script type="text/javascript">
         var url = '${url}', un = '${un}';
         $(function() {
-        if(un != '') {
-        $("#userName").val(un);
-        } else {
-        var name = getCookie('user-name');
-        if (null != name && '' != name) {
-        $("#userName").val(name);
-        }
-        }
+            document.querySelector('#remember').checked = true
+            var name = getCookie('user-name');
+            var pwd = getCookie('user-pwd');
+            if (null != name && '' != name) {
+            $("#userName").val(name);
+            }
+            if (null != pwd && '' != pwd) {
+            $("#password").val(pwd);
+            }
+<%--        if(un != '') {--%>
+<%--        $("#userName").val(un);--%>
+<%--        } else {--%>
+<%--        var name = getCookie('user-name');--%>
+<%--        if (null != name && '' != name) {--%>
+<%--        $("#userName").val(name);--%>
+<%--        }--%>
+<%--        }--%>
 
         $(document).keydown(function(event){
         if(event.keyCode==13){
@@ -53,9 +62,14 @@
         return false;
         }
 
-        if ($("#online").is(":checked")) {
-        setCookie("user-name", $("#userName").val());
-        }
+
+            if ($("#remember").is(":checked")) {
+            setCookie("user-name", $("#userName").val());
+            setCookie("user-pwd", $("#password").val());
+            }else{
+            setCookie("user-name", '');
+            setCookie("user-pwd", '');
+            }
 
         $("#login_btn").attr("disabled", "disabled");
         $.post(getRootPath() + "/fore/companyLogin", {
@@ -92,7 +106,8 @@
         <div style="float:left;width:100%;">
         <div style="width:1366px;margin:auto;">
         <div class="div_login">
-        <img alt="" src="${ly }/images/llogo.jpg" class="img_dlogo" style="max-width: 48%;margin-left: 13%;"/>
+        <img alt="" src="${ly }/images/home/sy_title1.jpg" class="img_dlogo" style="max-width: 48%;margin-left: 13%;"/>
+<%--        <img alt="" src="${ly }/images/llogo.jpg" class="img_dlogo" style="max-width: 48%;margin-left: 13%;"/>--%>
         <img alt="" src="${ly }/images/dit.png" class="img_dldt" style="top: 73px;max-width: 47%;"/>
         </div>
         </div>
@@ -103,7 +118,7 @@
         <div class="div_lomain">
         <form class="form form-horizontal" method="post">
         <div class="toplogin">
-        <a href="" class="a_login2" style="width: 400px;margin-left: 117px;">企业端</a>
+<%--        <a href="" class="a_login2" style="width: 400px;margin-left: 117px;">企业端</a>--%>
         </div>
         <div class="div_row">
         <div class="row_left">&nbsp;</div>
@@ -135,7 +150,8 @@
         <div class="row_left">&nbsp;</div>
         <div class="row_right">
         <%-- <a href="${ly }/fore/town" class="a_ruk">政府端入口</a> --%>
-        <a href="${ly }/village" class="a_ruk">政府端入口</a>
+<%--        <a href="${ly }/village" class="a_ruk">政府端入口</a>--%>
+            <label style="color: white;float:right;" class="forgetpwd"><input id="remember" type="checkbox" value=""/><b>&nbsp;记住账号</b> </label>
         <%-- <a href="${ly }/fore/toRegister" class="a_ruk" style="float:left;">企业注册</a> --%>
         </div>
         </div>

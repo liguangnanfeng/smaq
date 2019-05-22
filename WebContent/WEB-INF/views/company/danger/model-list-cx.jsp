@@ -66,23 +66,29 @@ $(function(){
     </a>
   </nav>
   <div class="page-container">
-    <c:set var="x" value="${fn:split('综合检查表/检查表/定期检查表/整改实施','/') }"/>
+    <c:set var="x" value="${fn:split('综合检查表/检查表/定期检查表/临时检查表','/') }"/>
     <div class="text-c">
     <c:if test="${flag == 1 }">
       <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;margin-top:20px;">
-        <a class="btn default ${flag == 1&&type==1 ? 'btn-primary' : 'radius'}" href="${ly }/company/model-list-cx?flag=1&type=1">综合检查表</a>
+        <a class="btn default ${flag == 1&&template==1 ? 'btn-primary' : 'radius'}" href="${ly }/company/model-list-cx?flag=1&type=1&template=1">综合检查表</a>
 		<c:if test="${rjcbxs == 1 }">
-			<a class="btn default ${flag == 1&&type==9 ? 'btn-primary' : 'radius'}" href="${ly }/company/model-list-cx1r?flag=1&type=9">日检查表</a>
+			<a class="btn default ${flag == 1&&template==2 ? 'btn-primary' : 'radius'}" href="${ly }/company/model-list-cx?flag=1&type=1&template=2">日检查表</a>
 		</c:if> 
-        <a class="btn default ${flag == 1&&type==2 ? 'btn-primary' : 'radius'}" href="${ly }/company/model-list-cx?flag=1&type=2">定期检查表</a>
-        <a class="btn default ${flag == 1&&type==3 ? 'btn-primary' : 'radius'}" href="${ly }/company/check-list?flag=1&type=3">整改复查</a>
+        <a class="btn default ${flag == 1&&template==3 ? 'btn-primary' : 'radius'}" href="${ly }/company/model-list-cx?flag=1&type=2&template=3">定期检查表</a>
+        <a class="btn default ${flag == 1&&template==4 ? 'btn-primary' : 'radius'}" href="${ly }/company/model-list-cx?flag=1&type=3&template=4">临时检查表</a>
       </div>
     </c:if>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-    <c:if test="${flag == 1 && type != 3 && type!=9}">
+    <%--<c:if test="${flag == 1 && type != 3 && type!=9}">--%>
+    <c:if test="${flag == 1}">
+        <%--<span class="l">--%>
+          <%--<a class="btn btn-primary radius" onclick="show_dialog('添加${x[type-1] }','${ly }/company/model-add?type=${type }&flag=1')" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加${x[type-1] }</a>--%>
+        <%--</span> --%>
         <span class="l">
-          <a class="btn btn-primary radius" onclick="show_dialog('添加${x[type-1] }','${ly }/company/model-add?type=${type }&flag=1')" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加${x[type-1] }</a>
+          <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel')" onclick="Hui_admin_tab(this)" href="javascript:;">
+              <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加检查模版
+          </a>
         </span>
     </c:if>
     <c:if test="${flag == 3 }">
@@ -155,7 +161,6 @@ $(function(){
    			<th>受检${flag == 1 ? '部门' : '单位'}</th>
             <th>检查类型</th>
    			<th>检查部位</th>
-            <th>检查次数</th>
             <th>最近${flag == 1 ? '检查' : '录入'}时间</th>
             <c:if test="${type == 2 || type == 9}">
             <th>自动化设置</th>
@@ -179,7 +184,6 @@ $(function(){
             </td>
             <td>${be.partName }</td>
             <td>${be.c2 }/${be.c }</td>
-            <td><fmt:formatDate value="${be.useTime }"/></td>
             <c:if test="${type == 2 || type==9}">
             <td>
                 <span>开启/关闭状态：${be.open == 1 ? '开启':'关闭'}</span><br>
@@ -189,14 +193,14 @@ $(function(){
             </td>
             </c:if>
             <td>
-              <a style="text-decoration:none" onClick="check_add(${be.id})" href="javascript:;">实施检查</a><br/>
+             <%-- <a style="text-decoration:none" onClick="check_add(${be.id})" href="javascript:;">实施检查</a><br/>--%>
               <a style="text-decoration:none" onclick="show_dialog('查看检查表_${be.id }', '${ly }/company/model-show/${be.id}?flag=1&type=${be.type}')" onclick="Hui_admin_tab(this)" href="javascript:;">查看检查表</a><br/>
-              <c:if test="${be.type != 9}">
-              <a style="text-decoration:none" onClick="show_dialog('编辑检查表_${be.id }', '${ly}/company/model-edit?modelId=${be.id }')" href="javascript:;">编辑检查表</a><br/>
-              </c:if>
-              <c:if test="${be.type == 2 || be.type == 9}"><!-- zhangcl 2018.10.27-->
+             <%-- <c:if test="${be.type != 9}">
+              &lt;%&ndash;<a style="text-decoration:none" onClick="show_dialog('编辑检查表_${be.id }', '${ly}/company/model-edit?modelId=${be.id }')" href="javascript:;">编辑检查表</a><br/>&ndash;%&gt;
+              </c:if>--%>
+              <%--<c:if test="${be.type == 2 || be.type == 9}"><!-- zhangcl 2018.10.27-->
               <a style="text-decoration:none" onClick="show_dialog('自动化设置_${be.id }', '${ly}/company/plan-auto?modelId=${be.id }&type=${type}')" href="javascript:;">自动化设置</a><br/>
-              </c:if>
+              </c:if>--%>
               <a style="text-decoration:none" onClick="del1_(${be.id })" href="javascript:;">删除检查表</a>
             </td>
             </tr>
@@ -269,7 +273,7 @@ $(function(){
                </c:if>
               </c:if>
               <c:if test="${flag == 1}">
-<%--                  TODO 查看检查记录           --%>
+<%--TODO 查看检查记录 --%>
               <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">查看检查记录</a>
               </c:if>
               <c:if test="${flag == 4 || flag == 3}">

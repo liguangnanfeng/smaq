@@ -21,18 +21,16 @@
     .col-b,.col-a,.col-c,.col-d{margin:0;padding:0 15px;height:25px;line-height:25px;}
   </style>
   <script type="text/javascript">
-    function copy_(fjgkfzr,gkcs,gkzt,level2,level,factors) {
+    function copy_(fjgkfzr,gkcs,gkzt,level2,level,factors,flag,uid) {
 
 
     var data = {
-    "fjgkfzr" : fjgkfzr,
-    "gkcs" : gkcs,
-    "gkzt" : gkzt,
-    "level2" : level2,
     "level":level,
     "factors":factors,
-    "id" : '',
+    "id" : null,
     "ids": '',
+    "flag":flag,
+    "uid":uid
     }
 
     console.log(data);
@@ -173,9 +171,9 @@
       </tr>
       </thead>
       <tbody>
+    <c:forEach items="${list }" var="be">
       <c:forEach items="${treeMap }" var="be1" varStatus="index">
         <c:forEach items="${be1.value }" var="be2">
-          <c:forEach items="${list }" var="be">
             <c:if test="${(be.level1 eq be1.key && be.level2 eq be2) || (empty be1.key && empty be.level1)}">
               <tr>
 
@@ -221,7 +219,7 @@
                     <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑">编辑</a>
 <%--                     <input type="button" style="text-decoration:none;" onClick='copy_('"${be}") title="复制" value="复制"></input>--%>
 
-                  <a style="text-decoration:none;" onClick="copy_('${be.fjgkfzr}','${be.gkcs}','${be.gkzt}','${be.level2}','${be.level}','${be.factors}' )" href="javascript:;" title="复制" >复制</a>
+                  <a style="text-decoration:none;" onClick="copy_('${be.fjgkfzr}','${be.gkcs}','${be.gkzt}','${be.level2}','${be.level}','${be.factors}','${be.flag}','${be.uid}' )" href="javascript:;" title="复制" >复制</a>
                 </c:if>
                 </td>
               </tr>

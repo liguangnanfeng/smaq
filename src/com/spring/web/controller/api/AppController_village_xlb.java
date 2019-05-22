@@ -58,6 +58,8 @@ public class AppController_village_xlb extends BaseController {
     private static final long serialVersionUID = 3074066448546610745L;
     @Autowired
     private CgfService cgfService;
+    @Autowired
+    private AppTokenData appTokenData;
 
     void setUserId(Integer userId, Map<String, Object> m) {
         User user = userMapper.selectByPrimaryKey(userId);
@@ -277,6 +279,7 @@ public class AppController_village_xlb extends BaseController {
 
     /**
      * 特种设备清单
+     *
      */
     @RequestMapping(value = "A007", method = RequestMethod.POST)
     public @ResponseBody AppResult sequipmentList(HttpServletRequest request, Integer userId) {
@@ -284,6 +287,7 @@ public class AppController_village_xlb extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> m = new HashMap<String, Object>();
         Integer _userId = getAppUserId(request);
+        //Object appUser = appTokenData.getAppUser(request);
         if (null == _userId) {
             result.setStatus("2");
             result.setMessage("登录超时");

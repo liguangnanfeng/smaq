@@ -22,7 +22,6 @@ public class Zzjg_PersonnelServiceImpl implements Zzjg_PersonnelService {
     @Autowired
     private ZzjgPersonnelMapper zzjgPersonnelMapper;
 
-
     /**
      * 进行登陆的的验证工作
      * 使用工具类进行验证

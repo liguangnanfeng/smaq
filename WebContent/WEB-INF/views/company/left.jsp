@@ -261,8 +261,11 @@
                 <li><a data-href="${ly }/village/evaluate/lawDoc-list?flag=4" data-title="上传图片视频资料" href="javascript:void(0)">上传图片视频资料</a></li>
                 <li><a data-href="${ly }/village/rectification-list?flag=1" data-title="隐患治理复查" href="javascript:void(0)">隐患治理复查</a></li> --%>
                 <%-- TODO 通过data-href  可以在域中通过getAttrbute 来进行获取内容--%>
-                <li><a data-href="${ly }/company/threeLeft?leftBasic=4" data-title="检查模版设置" href="javascript:void(0)">检查模版设置</a>
+                <%--<li><a data-href="${ly }/company/threeLeft?leftBasic=4" data-title="检查设置实施" href="javascript:void(0)">检查设置实施</a>--%>
+                <%--<li><a data-href="${ly }/company/model-list-cx?flag=1&type=1" data-title="检查设置实施" href="javascript:void(0)">检查设置实施</a>--%>
+                <li><a data-href="${ly }/company/model-list-cx?flag=1&type=1&template=1" data-title="检查设置实施" href="javascript:void(0)">检查设置实施</a>
                 </li>
+                    <%--调用综合检查记录信息--%>
                 <li><a data-href="${ly }/village/check-list?flag=1" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a>
                 </li>
                 <li><a data-href="${ly }/village/recheck-list?flag=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a>
@@ -352,62 +355,70 @@
                 <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
                 </dt>
                 <dd>
-                <div class="div_omenu">
-                <div class="div_otop">管控机制<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
+<%--                <div class="div_omenu">--%>
+<%--                <div class="div_otop">管控机制<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>--%>
+<%--                <ul>--%>
+<%--                <li><a data-href="${ly }/company/study/department-list?sign=2" data-title="机制文件"--%>
+<%--                href="javascript:void(0)">管控架构</a></li>--%>
+<%--                <li><a data-href="${ly }/company/source/management-guide" data-title="管控机制"--%>
+<%--                href="javascript:void(0)">机制文件</a></li>--%>
+<%--                </ul>--%>
+<%--                </div>--%>
+<%--                <div class="div_omenu2">--%>
+<%--                <div class="div_otop2">管控措施<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>--%>
+<%--                <ul class="oul">--%>
+<%--                <li><a data-href="${ly }/company/source/equipment?type=1" data-title="设备设施管理"--%>
+<%--                href="javascript:void(0)">设备设施管理</a></li>--%>
+<%--                <li><a data-href="${ly }/company/source/staff" data-title="人员管理"--%>
+<%--                href="javascript:void(0)">人员管理</a></li>--%>
+<%--                <li><a data-href="${ly }/company/threeLeft?leftBasic=12" data-title="在线检测"--%>
+<%--                href="javascript:void(0)">在线检测</a></li>--%>
+<%--                </ul>--%>
+<%--                <ul class="oul">--%>
+<%--                <li><a data-href="${ly }/company/source/distribution" data-title="风险分布图"--%>
+<%--                href="javascript:void(0)">风险分布图</a></li>--%>
+<%--                <li><a data-href="${ly }/company/source/publicity?flag=1" data-title="公示"--%>
+<%--                href="javascript:void(0)">公示</a></li>--%>
+<%--                </ul>--%>
+<%--                </div>--%>
                 <ul>
-                <li><a data-href="${ly }/company/study/department-list?sign=2" data-title="机制文件"
-                href="javascript:void(0)">管控架构</a></li>
-                <li><a data-href="${ly }/company/source/management-guide" data-title="管控机制"
-                href="javascript:void(0)">机制文件</a></li>
-                </ul>
-                </div>
-                <div class="div_omenu2">
-                <div class="div_otop2">管控措施<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
-                <ul class="oul">
-                <li><a data-href="${ly }/company/source/equipment?type=1" data-title="设备设施管理"
-                href="javascript:void(0)">设备设施管理</a></li>
-                <li><a data-href="${ly }/company/source/staff" data-title="人员管理"
-                href="javascript:void(0)">人员管理</a></li>
-                <li><a data-href="${ly }/company/threeLeft?leftBasic=12" data-title="在线检测"
-                href="javascript:void(0)">在线检测</a></li>
-                </ul>
-                <ul class="oul">
-                <li><a data-href="${ly }/company/source/distribution" data-title="风险分布图"
-                href="javascript:void(0)">风险分布图</a></li>
-                <li><a data-href="${ly }/company/source/publicity?flag=1" data-title="公示"
-                href="javascript:void(0)">公示</a></li>
-                </ul>
-                </div>
-                <ul>
+                <li><a data-href="${ly }/company/threeLeft?leftBasic=13" data-title="管控机制"
+                href="javascript:void(0)">管控机制</a></li>
+                <li><a data-href="${ly }/company/threeLeft?leftBasic=14" data-title="管控措施"
+                href="javascript:void(0)">管控措施</a></li>
                 <li><a data-href="${ly }/company/source/model-list-cx" data-title="隐患排查治理"
                 href="javascript:void(0)">隐患排查治理</a></li>
+            <li><a data-href="${ly }/company/threeLeft?leftBasic=15" data-title="特殊作业"
+            href="javascript:void(0)">特殊作业</a></li>
+            <li><a data-href="${ly }/company/threeLeft?leftBasic=16" data-title="应急救援"
+            href="javascript:void(0)">应急救援</a></li>
                 </ul>
-                <div class="div_omenu">
-                <div class="div_otop">特殊作业<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
-                <ul class="oul">
-                <li><a data-href="${ly }/company/source/specialWork?type=1" data-title="非化工液氨使用企业"
-                href="javascript:void(0)">非化工液氨使用企业</a></li>
-                <li><a data-href="${ly }/company/source/specialWork?type=2" data-title="粉尘涉爆企业"
-                href="javascript:void(0)">粉尘涉爆企业</a></li>
-                <li><a data-href="${ly }/company/source/specialWork?type=3" data-title="高温熔融金属现场运输"
-                href="javascript:void(0)">高温熔融金属现场运输</a></li>
-                <li><a data-href="${ly }/company/source/specialWork?type=4" data-title="工贸行业有限空间安全作业"
-                href="javascript:void(0)">工贸行业有限空间安全作业</a></li>
-                <li><a data-href="${ly }/company/source/specialWork?type=5" data-title="冶金企业煤气"
-                href="javascript:void(0)">冶金企业煤气</a></li>
-                </ul>
-                </div>
-                <div class="div_omenu">
-                <div class="div_otop">应急救援<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
-                <ul class="oul">
-                <li><a data-href="${ly }/company/tables/tab-yjlist" data-title="应急预案" href="javascript:void(0)">应急预案</a>
-                </li>
-                <li><a data-href="${ly }/company/facilities/facilities-list?flag=1" data-title="消防设备设施"
-                href="javascript:void(0)">消防设备设施</a></li>
-                <li><a data-href="${ly }/company/facilities/facilities-list?flag=2" data-title="应急设备设施"
-                href="javascript:void(0)">应急设备设施</a></li>
-                </ul>
-                </div>
+<%--                <div class="div_omenu">--%>
+<%--                <div class="div_otop">特殊作业<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>--%>
+<%--                <ul class="oul">--%>
+<%--                <li><a data-href="${ly }/company/source/specialWork?type=1" data-title="非化工液氨使用企业"--%>
+<%--                href="javascript:void(0)">非化工液氨使用企业</a></li>--%>
+<%--                <li><a data-href="${ly }/company/source/specialWork?type=2" data-title="粉尘涉爆企业"--%>
+<%--                href="javascript:void(0)">粉尘涉爆企业</a></li>--%>
+<%--                <li><a data-href="${ly }/company/source/specialWork?type=3" data-title="高温熔融金属现场运输"--%>
+<%--                href="javascript:void(0)">高温熔融金属现场运输</a></li>--%>
+<%--                <li><a data-href="${ly }/company/source/specialWork?type=4" data-title="工贸行业有限空间安全作业"--%>
+<%--                href="javascript:void(0)">工贸行业有限空间安全作业</a></li>--%>
+<%--                <li><a data-href="${ly }/company/source/specialWork?type=5" data-title="冶金企业煤气"--%>
+<%--                href="javascript:void(0)">冶金企业煤气</a></li>--%>
+<%--                </ul>--%>
+<%--                </div>--%>
+<%--                <div class="div_omenu">--%>
+<%--                <div class="div_otop">应急救援<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>--%>
+<%--                <ul class="oul">--%>
+<%--                <li><a data-href="${ly }/company/tables/tab-yjlist" data-title="应急预案" href="javascript:void(0)">应急预案</a>--%>
+<%--                </li>--%>
+<%--                <li><a data-href="${ly }/company/facilities/facilities-list?flag=1" data-title="消防设备设施"--%>
+<%--                href="javascript:void(0)">消防设备设施</a></li>--%>
+<%--                <li><a data-href="${ly }/company/facilities/facilities-list?flag=2" data-title="应急设备设施"--%>
+<%--                href="javascript:void(0)">应急设备设施</a></li>--%>
+<%--                </ul>--%>
+<%--                </div>--%>
                 <ul>
                 <li><a data-href="${ly }/company/source/files-select" data-title="档案管理" href="javascript:void(0)">档案管理</a>
                 </li>
@@ -432,9 +443,8 @@
 
                     <li><a data-href="${ly }/company/tables/tab-biaozhun" data-title="安全标准化"
                            href="javascript:void(0)">安全标准化</a></li>
-
-
-
+                    <li><a target="_blank" data-href="http://exam.dicarl.com/index.php?user-app-login&mobile=${userName }" data-title="安全培训"
+                           href="javascript:void(0)">安全培训</a></li>
 
                     <%--<li><a data-href="${ly }/company/threeLeft?leftBasic=8" data-title="责任制"
                            href="javascript:void(0)">安全台账</a></li>

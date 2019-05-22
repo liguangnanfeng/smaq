@@ -39,11 +39,6 @@ public class AppController_Custom_Check extends BaseController {
     private Zzig_departmentService zzig_departmentService;
 
     /**
-     * 查询风险详情
-     */
-    @Autowired
-    private ACompanyManualMapper aCompanyManualMapper;
-    /**
      * 查询风险点
      */
     @Autowired
@@ -75,7 +70,7 @@ public class AppController_Custom_Check extends BaseController {
      */
     @RequestMapping(value = "A200", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult checkCompany(HttpServletRequest request,Integer dpid) {
+    AppResult checkCompany(HttpServletRequest request, Integer dpid) {
 
         AppResult result = new AppResultImpl();
 
@@ -255,14 +250,14 @@ public class AppController_Custom_Check extends BaseController {
             result.setData(map);
 
             return result;
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
             result.setStatus("0");
             result.setMessage("数据库为空");
             result.setData(null);
 
             return result;
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             result.setStatus("1");
             result.setMessage("网络异常");
@@ -279,7 +274,7 @@ public class AppController_Custom_Check extends BaseController {
      */
     @RequestMapping(value = "A214", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult checkGaoWeiItem( Integer industryId) {
+    AppResult checkGaoWeiItem(Integer industryId) {
         // 获取登陆内容
         AppResult result = new AppResultImpl();
         try {
@@ -369,33 +364,26 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * pc端 现场检查/查询level3
+     * pc端 现场检查/查询level3/level4
      */
     @RequestMapping(value = "A2022", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult PCcheckLevel3(HttpServletRequest request,@RequestBody CheckLevel checkLevel){
+    AppResult PCcheckLevel3(HttpServletRequest request, @RequestBody CheckLevel checkLevel) {
         AppResult result = new AppResultImpl();
         try {
             User user = getLoginUser(request);
 
-
             // 取出数据对数据进行判断
-            ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(Integer.parseInt(checkLevel.getLevel1()));
-            checkLevel.setLevel1(companyManual.getLevel1());
-            ACompanyManual companyManual1 = aCompanyManualMapper.selectByPrimaryKey(Integer.parseInt(checkLevel.getLevel3()));
-            checkLevel.setLevel3(companyManual1.getLevel3());
+            ZzjgDepartment zzjg = zzjgDepartmentMapper.selectByPrimaryKey(Integer.parseInt(checkLevel.getLevel1()));
+            checkLevel.setLevel1(zzjg.getName());
+            checkLevel.setLevel3(checkLevel.getLevel3());
             checkLevel.setUid(user.getId());
             // 调用方法进行查询
-            List<Map<String, Object>> list = checkManual.selectLevel4AndId(checkLevel);
+            List<Map> list = checkManual.selectLevel5AndId(checkLevel);
 
-            Set<String> set = new HashSet<>();
-            for (Map level : list) {
-                set.add((String) level.get("level3"));
-            }
             result.setStatus("0");
             result.setMessage("查询成功");
-            result.setData(set);
-
+            result.setData(list);
             return result;
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -410,6 +398,7 @@ public class AppController_Custom_Check extends BaseController {
         }
 
     }
+
     /**
      * TODO 查询level4
      *
@@ -495,7 +484,7 @@ public class AppController_Custom_Check extends BaseController {
      */
     @RequestMapping(value = "A205", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult checkDepartmentById(String sessionId, String access_token ,String dpName ) {
+    AppResult checkDepartmentById(String sessionId, String access_token, String dpName) {
         AppResult result = new AppResultImpl();
 
         try {
@@ -505,7 +494,7 @@ public class AppController_Custom_Check extends BaseController {
             ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(access_token);
 
             // 根据公司id获取模版信息
-            List<Map<Integer, String>> list = checkManual.findModelByUid(zzjg.getUid(),dpName);
+            List<Map<Integer, String>> list = checkManual.findModelByUid(zzjg.getUid(), dpName);
 
             result.setStatus("0");
             result.setData(list);
@@ -529,18 +518,18 @@ public class AppController_Custom_Check extends BaseController {
     /**
      * TODO 根据模版id查询详细信息 > 开启检查
      *
-     * @param  checkModel 包含模版id信息
+     * @param checkModel 包含模版id信息
      * @return checkItemByModelId 检查记录的详细信息
      */
     @RequestMapping(value = "A206", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult checkItemtById(@RequestBody CheckModel checkModel /*Integer modelId  */) {
+    AppResult checkItemtById(/*@RequestBody CheckModel checkModel*/ Integer modelId  ) {
         AppResult result = new AppResultImpl();
         try {
 
             // 根据id查询并进行封装数据
-            CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(checkModel.getModelId());
-            /*CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(modelId);*/
+           // CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(checkModel.getModelId());
+            CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(modelId);
 
             result.setStatus("0");
             result.setMessage("查询成功");
@@ -576,7 +565,7 @@ public class AppController_Custom_Check extends BaseController {
         AppResult result = new AppResultImpl();
 
         try {
-            if (sessionId == null || access_token == null ) {
+            if (sessionId == null || access_token == null) {
                 result.setStatus("1");
                 result.setMessage("查询失败,请重新查询");
                 return result;
@@ -651,8 +640,8 @@ public class AppController_Custom_Check extends BaseController {
 
     /**
      * TODO 根据当前用户查询所有的检查记录()  对根据判断求出这个责任人的部门和岗位
-     *  首先要判断他是检查人员还是被检查人员
-     *  根据状态进行查询,不同的检查详情在company_manul_tbl 获取岗位,来判断这个岗位的检查项是否合格,不合格进行显示
+     * 首先要判断他是检查人员还是被检查人员
+     * 根据状态进行查询,不同的检查详情在company_manul_tbl 获取岗位,来判断这个岗位的检查项是否合格,不合格进行显示
      *
      * @param checkModel access_token信息
      * @return list       关于当前企业的不合格信息
@@ -693,6 +682,7 @@ public class AppController_Custom_Check extends BaseController {
     /**
      * TODO 根据检查表信息 查询检查记录中不合格项查询出来
      * 首先根据用户id 进行判断获取他的部门 ,根据检查表的详细信息表示的是这个
+     *
      * @param checkId 检查表id
      * @return map     不合格的复查记录
      */
@@ -822,11 +812,10 @@ public class AppController_Custom_Check extends BaseController {
                     path = realPath2 + "images/upload/" + trueFileName;
 
                     // 判断是否存在
-                    File file1 =new File(realPath2+"images/upload/");
-                    if  (!file1 .exists()  && !file1 .isDirectory())
-                    {
+                    File file1 = new File(realPath2 + "images/upload/");
+                    if (!file1.exists() && !file1.isDirectory()) {
                         System.out.println("//不存在");
-                        file1 .mkdir();
+                        file1.mkdir();
                     }
 
                     realPath1 += trueFileName;

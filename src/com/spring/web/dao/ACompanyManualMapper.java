@@ -109,6 +109,11 @@ public interface ACompanyManualMapper {
      */
     List<Map<String, Object>> selectLevel3AndId(CheckLevel check);
 
+    /**
+     * 直接根据 公司id  level1  level2  level3 获取level4 获取最后一步的数据
+     * @param checkLevel
+     * @return
+     */
     List<Map> selectLevel4AndId(CheckLevel checkLevel);
 
     int selectDmidById(String name);

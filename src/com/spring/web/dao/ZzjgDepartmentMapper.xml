@@ -203,10 +203,7 @@
         select * from zzjg_department_tbl where del = 0 and  level = 2 and pid = #{pid}
     </select>
 
-
-
-
-
+    <!--获取该公司所有的部门-->
     <select id="selectByUid" resultType="java.util.Map">
     select 
         t1.id, t1.name, t1.level,

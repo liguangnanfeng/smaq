@@ -171,10 +171,12 @@ public class SaveDataImpl implements SaveMessageService {
                 tCheck.setStatus(2); // 已检查
                 tCheck.setExpectTime(new Date()); //预计的检查时间
                 tCheck.setRealTime(new Date()); //实际的检查时间
+                tCheck.setLongitude(saveDataMessageItem.getLongitude()); //经度
+                tCheck.setLatitude(saveDataMessageItem.getLatitude());  //维度
                 tCheckMapper.updateByPrimaryKey(tCheck); // 更新到数据库
 
             }
-            // 根据
+            // 内容发送短信内容
             Sms(saveDataMessageItem.getList());
             return "插入成功";
 
@@ -191,25 +193,22 @@ public class SaveDataImpl implements SaveMessageService {
      * 每一个岗位出现不合格，就给这个岗位被检查人员发送短信
      */
     private void Sms(List<SaveDataMessage> list) {
-        boolean flag = false;
+       List<String>  personnelList = null ;
+
         for (SaveDataMessage saveDataMessage : list) {
             if ("2".equals(saveDataMessage.getValue())) {
                 Integer id = saveDataMessage.getId();
                 ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(id);
-                companyManual.getDmid();
+                personnelList= zzjgPersonnelMapper.selectByDpid(companyManual.getDmid());
             }
         }
+        if(null!=personnelList && personnelList.size()>0) {
+            for (String mobile : personnelList) {
+                System.out.println("发送短信==============");
+                smsUtil.sendSMS(mobile, "112221");
+                System.out.println("发送短信==============");
 
-        if (flag) {
-            TCheckItem item = tCheckItemMapper.selectAllById(list.get(0).getId());
-            TCheck tCheck = tCheckMapper.selectByPrimaryKey(item.getCheckId());
-            // 获取手机号
-
-            // 有多个不合格项, 只发送一次短信通知
-            // 发送短信 发送给负责人的id表示
-            System.out.println("发送短信==============");
-            //smsUtil.sendSMS(zzjgPersonnel.getMobile(), "112221");
-            System.out.println("发送短信==============");
+            }
         }
 
     }

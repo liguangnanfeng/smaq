@@ -1,6 +1,6 @@
-/**  
- * Copyright(c)2017 Wuxi Lanlin Co.,Ltd. 
- * All right reserved. 
+/**
+ * Copyright(c)2017 Wuxi Lanlin Co.,Ltd.
+ * All right reserved.
  */
 package com.spring.web.controller;
 
@@ -33,15 +33,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
+ * @author CGF
+ * @version V1.0
  * @Title: CompanyController_cd
  * @Description: TODO()
- * @author CGF
  * @date 2017年7月27日 上午9:49:51
- * @version V1.0
  */
 @Controller
 @RequestMapping("company")
@@ -59,14 +60,15 @@ public class CompanyController_cd extends BaseController {
      * 修改风险等级
      */
     @RequestMapping("getCompany")
-    public @ResponseBody Result getCompany(HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result getCompany(HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         Company c = companyMapper.selectByPrimaryKey(user.getId());
         result.setMap("com", c);
         return result;
     }
-    
+
 //    /**
 //     * 前台中间页
 //     * 
@@ -98,9 +100,10 @@ public class CompanyController_cd extends BaseController {
 //        model.addAttribute("loginUserId", user.getId());
 //        return "company/welcome";
 //    }
+
     /**
      * 前台中间页
-     * 
+     *
      * @throws Exception
      */
     @RequestMapping("welcome")
@@ -112,57 +115,59 @@ public class CompanyController_cd extends BaseController {
         m.put("type", "1");
         m.clear();
         setUserId(user, m);
-        
+
         List<Integer> count = userService.selectCount(new CompanyListReqDTO(), user);
-        
+
         model.addAttribute("lib", libraryMapper.selectLibraryList(2));
         m.clear();
         setUserId(user, m);
         model.addAttribute("dangerC", tCheckItemMapper.selectCount(m));// 隐患情况汇总
         model.addAttribute("dangerC2", tCheckItemMapper.selectZhongCount(m));// 隐患情况汇总
-        
+
         model.addAttribute("mc", monitorMapper.selectCount(m));
         model.addAttribute("count", count);
         model.addAttribute("loginUserId", user.getId());
-        
+
         //add 190123
-    	HttpSession session = request.getSession();
-    	User moveBeforeUser =  (User)session.getAttribute("govUser");
-    	if(moveBeforeUser != null){
-    		//log.error("moveBeforeUser："+moveBeforeUser.toString());
-    	    model.addAttribute("moveCompany",1);
-    	    String nameBefore = null;
-    	    switch(moveBeforeUser.getUserType()){
-    	    case 10://行业端
-    	    	nameBefore = tradeMapper.selectByPrimaryKey(moveBeforeUser.getId()).getName();
-    	    	break;
-    	    case 9://安泰
-    	    	nameBefore = moveBeforeUser.getUserName();
-    	    	break;
-    	    case 6://区
-    	    	nameBefore = districtMapper.selectByPrimaryKey(moveBeforeUser.getId()).getName();
-    	    	break;
-    	    case 3://镇
-    	    	nameBefore = townMapper.selectByPrimaryKey(moveBeforeUser.getId()).getName();
-    	    	break;
-    	    case 4://村
-    	    	nameBefore = villageMapper.selectByPrimaryKey(moveBeforeUser.getId()).getName();
-    	    	break;
-    	    
-    	    }
-    	    model.addAttribute("nameBefore", nameBefore);
-    	    
-    	}
+        HttpSession session = request.getSession();
+        User moveBeforeUser = (User) session.getAttribute("govUser");
+        if (moveBeforeUser != null) {
+            //log.error("moveBeforeUser："+moveBeforeUser.toString());
+            model.addAttribute("moveCompany", 1);
+            String nameBefore = null;
+            switch (moveBeforeUser.getUserType()) {
+                case 10://行业端
+                    nameBefore = tradeMapper.selectByPrimaryKey(moveBeforeUser.getId()).getName();
+                    break;
+                case 9://安泰
+                    nameBefore = moveBeforeUser.getUserName();
+                    break;
+                case 6://区
+                    nameBefore = districtMapper.selectByPrimaryKey(moveBeforeUser.getId()).getName();
+                    break;
+                case 3://镇
+                    nameBefore = townMapper.selectByPrimaryKey(moveBeforeUser.getId()).getName();
+                    break;
+                case 4://村
+                    nameBefore = villageMapper.selectByPrimaryKey(moveBeforeUser.getId()).getName();
+                    break;
+
+            }
+            model.addAttribute("nameBefore", nameBefore);
+
+        }
 
         return "company/welcome";
     }
+
     /**
      * 修改风险等级
-     * 
+     *
      * @throws Exception
      */
     @RequestMapping("changedlvl")
-    public @ResponseBody Result dlevel(Model model, HttpServletRequest request, Company c) throws Exception {
+    public @ResponseBody
+    Result dlevel(Model model, HttpServletRequest request, Company c) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         c.setUserId(user.getId());
@@ -172,7 +177,7 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * 前台首页
-     * 
+     *
      * @throws Exception
      */
     @RequestMapping("main")
@@ -183,17 +188,17 @@ public class CompanyController_cd extends BaseController {
         return "company/main";
     }
 
-	  /**
+    /**
      * 前台首页
-     * 
+     *
      * @throws Exception
      */
     @RequestMapping("threeLeft")
-    public String threeLeft(Model model, HttpServletRequest request,String leftBasic) throws Exception {
-		model.addAttribute("leftBasic", leftBasic);
+    public String threeLeft(Model model, HttpServletRequest request, String leftBasic) throws Exception {
+        model.addAttribute("leftBasic", leftBasic);
         return "company/threeLeft";
     }
-	
+
     /**
      * 基本信息页面
      */
@@ -203,20 +208,20 @@ public class CompanyController_cd extends BaseController {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         Regulation regulationComp = regulationGet(user.getId());
-        if(company.getHazard()==null){
-        	if(regulationComp.getCisDanger() != null){
-        		company.setHazard(regulationComp.getCisDanger());
-        		companyMapper.updateByPrimaryKey(company);
+        if (company.getHazard() == null) {
+            if (regulationComp.getCisDanger() != null) {
+                company.setHazard(regulationComp.getCisDanger());
+                companyMapper.updateByPrimaryKey(company);
             }
-        }else{
-        	if(regulationComp.getCisDanger() == null){
-        		company.setHazard(0);
-            }else{
-            	company.setHazard(regulationComp.getCisDanger());
+        } else {
+            if (regulationComp.getCisDanger() == null) {
+                company.setHazard(0);
+            } else {
+                company.setHazard(regulationComp.getCisDanger());
             }
-        	companyMapper.updateByPrimaryKey(company);
+            companyMapper.updateByPrimaryKey(company);
         }
-        
+
         if (null != company.getRegionId()) {
             model.addAttribute("regionName", globalRegionMapper.selectRegionName(company.getRegionId()));
         }
@@ -227,14 +232,15 @@ public class CompanyController_cd extends BaseController {
     }
 
     /**
-     * 企业添加保存
+     * TODO 企业添加保存
      */
     @RequestMapping(value = "company-edit-do")
-    public @ResponseBody Result companyEditDo(Company c, String jw, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result companyEditDo(Company c, String jw, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         String industry = c.getIndustry();
         Company company = companyMapper.selectByPrimaryKey(c.getUserId());
-        if(company != null && ! industry.equals(company.getIndustry())){
+        if (company != null && !industry.equals(company.getIndustry())) {
             tCompanyMapper.deleteByPrimaryKey(c.getUserId());
         }
         companyMapper.updateByPrimaryKeySelective(c);
@@ -247,7 +253,7 @@ public class CompanyController_cd extends BaseController {
             user.setLongitude(x[0]);
             userMapper.updateByPrimaryKeySelective(user);
         }
-        log.error("data："+userMapper.selectByPrimaryKey(user.getId()));
+        log.error("data：" + userMapper.selectByPrimaryKey(user.getId()));
         result.setMap("data", userMapper.selectByPrimaryKey(user.getId()));
         return result;
     }
@@ -270,12 +276,13 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("ind3L", tIndustryMapper.selectByType(3));// 高危检查类别
         return "company/information/information-edit1";
     }
-    
+
     /**
      * 获取基本信息页面
      */
     @RequestMapping("getBasicInformation-qcc")
-    public @ResponseBody Result getBasicInformationQcc(Model model, HttpServletRequest request, String companyName)
+    public @ResponseBody
+    Result getBasicInformationQcc(Model model, HttpServletRequest request, String companyName)
             throws Exception {
         Result result = new ResultImpl();
         QccData qccData = qccDataMapper.selectByCompanyName(companyName);
@@ -304,7 +311,8 @@ public class CompanyController_cd extends BaseController {
      * 修改基本信息页面保存
      */
     @RequestMapping("basic-information-change-save")
-    public @ResponseBody Result basicInformationChangeSave(Model model, Company c, String jw, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result basicInformationChangeSave(Model model, Company c, String jw, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         if (StringUtils.isNotBlank(jw)) {
             User user = new User();
@@ -312,7 +320,7 @@ public class CompanyController_cd extends BaseController {
             user.setLongitude(jw.split(",")[0]);
             user.setLatitude(jw.split(",")[1]);
             userMapper.updateByPrimaryKeySelective(user);
-            
+
             User u = getLoginUser(request);
             u.setLongitude(jw.split(",")[0]);
             u.setLatitude(jw.split(",")[1]);
@@ -375,7 +383,8 @@ public class CompanyController_cd extends BaseController {
      * 重大危险源编辑保存
      */
     @RequestMapping("information/information3-save")
-    public @ResponseBody Result information3Change(Model model, HttpServletRequest request, Regulation regulation) throws Exception {
+    public @ResponseBody
+    Result information3Change(Model model, HttpServletRequest request, Regulation regulation) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         regulation.setUserId(user.getId());
@@ -387,7 +396,8 @@ public class CompanyController_cd extends BaseController {
      * 规章制度编辑保存
      */
     @RequestMapping("rules-institution-change-save")
-    public @ResponseBody Result rulesInstitutionChangeSave(Regulation r) throws Exception {
+    public @ResponseBody
+    Result rulesInstitutionChangeSave(Regulation r) throws Exception {
         Result result = new ResultImpl();
         regulationMapper.updateByPrimaryKeySelective(r);
         return result;
@@ -417,7 +427,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("equipmentName", equipmentName);
         return "company/product/mequipment-list";
     }
-    
+
     /**
      * 主要设备清单页面(打印)
      */
@@ -431,7 +441,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("equipmentName", equipmentName);
         return "company/product/mequipment-list-print";
     }
-    
+
     /**
      * 安全设施登记台账
      */
@@ -462,13 +472,13 @@ public class CompanyController_cd extends BaseController {
     public String addMequipment(HttpServletRequest request) throws Exception {
         return "company/product/mequipment-add";
     }
-    
+
     /**
      * TO添加安全设施登记台账
      */
     @RequestMapping(value = "sf-add")
     public String sfAdd(Model model, Integer id) throws Exception {
-        if(null != id) {
+        if (null != id) {
             model.addAttribute("sf", safetyFacilitiesMapper.selectByPrimaryKey(id));
         }
         return "company/product/sf-add";
@@ -478,7 +488,8 @@ public class CompanyController_cd extends BaseController {
      * 设备添加/编辑保存
      */
     @RequestMapping(value = "product/mequipment-save")
-    public @ResponseBody Result meqSave(Mequipment mequipment, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result meqSave(Mequipment mequipment, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         mequipment.setUserId(user.getId());
@@ -489,12 +500,13 @@ public class CompanyController_cd extends BaseController {
         }
         return result;
     }
-    
+
     /**
      * 安全设施登记台账保存
      */
     @RequestMapping(value = "sf-save")
-    public @ResponseBody Result meqSave(SafetyFacilities mequipment, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result meqSave(SafetyFacilities mequipment, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         mequipment.setUserId(user.getId());
@@ -510,17 +522,19 @@ public class CompanyController_cd extends BaseController {
      * 删除主要设备
      */
     @RequestMapping(value = "product/deleteEquipment")
-    public @ResponseBody Result deleteEquipment(HttpServletRequest request, Integer id) throws Exception {
+    public @ResponseBody
+    Result deleteEquipment(HttpServletRequest request, Integer id) throws Exception {
         Result result = new ResultImpl();
         mequipmentMapper.deleteByPrimaryKey(id);
         return result;
     }
-    
+
     /**
      * 删除安全设施登记台账
      */
     @RequestMapping(value = "sf-del")
-    public @ResponseBody Result sfDel(HttpServletRequest request, Integer id) throws Exception {
+    public @ResponseBody
+    Result sfDel(HttpServletRequest request, Integer id) throws Exception {
         Result result = new ResultImpl();
         safetyFacilitiesMapper.deleteByPrimaryKey(id);
         return result;
@@ -561,7 +575,8 @@ public class CompanyController_cd extends BaseController {
      * 材料添加/编辑保存
      */
     @RequestMapping(value = "product/material-save")
-    public @ResponseBody Result materialSave(Material material, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result materialSave(Material material, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         material.setUserId(user.getId());
@@ -577,7 +592,8 @@ public class CompanyController_cd extends BaseController {
      * 删除材料
      */
     @RequestMapping(value = "product/deleteMaterial")
-    public @ResponseBody Result deleteMaterial(HttpServletRequest request, Integer id) throws Exception {
+    public @ResponseBody
+    Result deleteMaterial(HttpServletRequest request, Integer id) throws Exception {
         Result result = new ResultImpl();
         materialMapper.deleteByPrimaryKey(id);
         return result;
@@ -618,7 +634,8 @@ public class CompanyController_cd extends BaseController {
      * 产品添加/编辑保存
      */
     @RequestMapping(value = "product/product-save")
-    public @ResponseBody Result productSave(Product product, Integer code, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result productSave(Product product, Integer code, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         product.setUserId(user.getId());
@@ -634,7 +651,8 @@ public class CompanyController_cd extends BaseController {
      * 删除主要产品
      */
     @RequestMapping(value = "product/deleteProduct")
-    public @ResponseBody Result deleteProduct(HttpServletRequest request, Integer id) throws Exception {
+    public @ResponseBody
+    Result deleteProduct(HttpServletRequest request, Integer id) throws Exception {
         Result result = new ResultImpl();
         productMapper.deleteByPrimaryKey(id);
         return result;
@@ -654,13 +672,13 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping("train/special-list")
     public String spersonList(Model model, HttpServletRequest request, String spFlag, String spName, String spType,
-            Integer isTime) throws Exception {
+                              Integer isTime) throws Exception {
         if (spFlag == null || "".equals(spFlag)) {
             spFlag = "0";
         }
         int libraryType = 10;
         if ("0".equals(spFlag)) {
-            libraryType += 1; 
+            libraryType += 1;
         } else {
             libraryType += Integer.parseInt(spFlag);
         }
@@ -684,20 +702,20 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("isTime", isTime);
         return "company/train/special-list";
     }
-    
+
     /**
      * 特种作业人员页面
      */
     @RequestMapping("special-print")
     public String spersonPrint(Model model, HttpServletRequest request, String spFlag, String spName, String spType,
-            Integer isTime) throws Exception {
+                               Integer isTime) throws Exception {
         if (spFlag == null || "".equals(spFlag)) {
             spFlag = "0";
         }
         spName = utf8Str(spName);
         int libraryType = 10;
         if ("0".equals(spFlag)) {
-            libraryType += 1; 
+            libraryType += 1;
         } else {
             libraryType += Integer.parseInt(spFlag);
         }
@@ -747,7 +765,7 @@ public class CompanyController_cd extends BaseController {
         }
         int libraryType = 10;
         if ("0".equals(spFlag)) {
-            libraryType += 1; 
+            libraryType += 1;
         } else {
             libraryType += Integer.parseInt(spFlag);
         }
@@ -760,7 +778,8 @@ public class CompanyController_cd extends BaseController {
      * 特种作业人员添加/编辑保存
      */
     @RequestMapping(value = "train/special-save")
-    public @ResponseBody Result speSave(Sperson sperson, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result speSave(Sperson sperson, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         sperson.setUserId(user.getId());
@@ -776,7 +795,8 @@ public class CompanyController_cd extends BaseController {
      * 删除特种作业人员
      */
     @RequestMapping(value = "train/deleteSpecial")
-    public @ResponseBody Result deleteSpecial(HttpServletRequest request, Integer id) throws Exception {
+    public @ResponseBody
+    Result deleteSpecial(HttpServletRequest request, Integer id) throws Exception {
         Result result = new ResultImpl();
         spersonMapper.deleteByPrimaryKey(id);
         return result;
@@ -825,7 +845,8 @@ public class CompanyController_cd extends BaseController {
      * 特种设备添加/编辑保存
      */
     @RequestMapping(value = "sequipment/sequipment-save")
-    public @ResponseBody Result seqSave(Sequipment sequipment, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result seqSave(Sequipment sequipment, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         sequipment.setUserId(user.getId());
@@ -841,15 +862,16 @@ public class CompanyController_cd extends BaseController {
      * 删除特种设备
      */
     @RequestMapping(value = "sequipment/deleteSequipment")
-    public @ResponseBody Result deleteSequipment(HttpServletRequest request, Integer id) throws Exception {
+    public @ResponseBody
+    Result deleteSequipment(HttpServletRequest request, Integer id) throws Exception {
         Result result = new ResultImpl();
         sequipmentMapper.deleteByPrimaryKey(id);
         return result;
     }
-    
+
     /**
      * 批量导入特种设备
-     * 
+     *
      * @param file
      * @param
      * @throws Exception
@@ -861,10 +883,10 @@ public class CompanyController_cd extends BaseController {
         userService.importSequipmentExcel(result, user.getId(), file);
         writeResponse(result, response);//该方法调用如下
     }
-    
+
     /**
      * 批量导入主要设备
-     * 
+     *
      * @param file
      * @param
      * @throws Exception
@@ -882,7 +904,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping("evaluate/evaluation-list")
     public String evatList(Model model, HttpServletRequest request, String reportName, String evaType, Integer isTime,
-            String flag) throws Exception {
+                           String flag) throws Exception {
         if (flag == null || "".equals(flag)) {
             flag = "0";
         }
@@ -925,33 +947,35 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("flag", flag);
         return "company/evaluate/evaluation-add";
     }
-    
+
     /**
      * 从业人员健康监护
      */
     @RequestMapping(value = "cyryjkjh-add")
     public String evaEdit(Integer id, Model model) throws Exception {
-        if(null != id) {
+        if (null != id) {
             model.addAttribute("c", cyryjkjhMapper.selectByPrimaryKey(id));
         }
         return "company/evaluate/cyryjkjh-add";
     }
-    
+
     /**
      * 从业人员健康监护 删除
      */
     @RequestMapping(value = "cyryjkjh-del")
-    public @ResponseBody Result cyryjkjhDel(Integer id, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result cyryjkjhDel(Integer id, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         cyryjkjhMapper.deleteByPrimaryKey(id);
         return result;
     }
-    
+
     /**
      * 从业人员健康监护  保存
      */
     @RequestMapping(value = "cyryjkjh-save")
-    public @ResponseBody Result cyryjkjhSave(Cyryjkjh c, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result cyryjkjhSave(Cyryjkjh c, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         c.setUid(user.getId());
@@ -965,15 +989,16 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * 安全评价添加/编辑保存
-     * 
+     *
      * @throws Exception
      */
     @RequestMapping(value = "evaluate/evaluation-save")
-    public @ResponseBody Result evaSave(Evaluation evaluation, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result evaSave(Evaluation evaluation, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         evaluation.setUserId(user.getId());
-        if(0 == evaluation.getFlag().intValue()) {
+        if (0 == evaluation.getFlag().intValue()) {
             evaluation.setFlag(1);
         }
         if (null == evaluation.getId()) {
@@ -988,7 +1013,8 @@ public class CompanyController_cd extends BaseController {
      * 删除安全评价
      */
     @RequestMapping(value = "evaluate/deleteEva")
-    public @ResponseBody Result deleteEva(HttpServletRequest request, Integer id) throws Exception {
+    public @ResponseBody
+    Result deleteEva(HttpServletRequest request, Integer id) throws Exception {
         Result result = new ResultImpl();
         evaluationMapper.deleteByPrimaryKey(id);
         return result;
@@ -1015,7 +1041,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("isTime", isTime);
         return "company/evaluate/detection-list";
     }
-    
+
     /**
      * 职业健康体检
      */
@@ -1040,7 +1066,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "evaluate/detection-edit")
     public String deEdit(Integer id, Model model) throws Exception {
-        if(null != id) {
+        if (null != id) {
             Detection de = detectionMapper.selectByPrimaryKey(id);
             model.addAttribute("d", de);
         }
@@ -1052,7 +1078,8 @@ public class CompanyController_cd extends BaseController {
      * 安全检测添加/编辑保存
      */
     @RequestMapping(value = "evaluate/detection-save")
-    public @ResponseBody Result deSave(Detection detection, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result deSave(Detection detection, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         detection.setUserId(user.getId());
@@ -1068,7 +1095,8 @@ public class CompanyController_cd extends BaseController {
      * 删除安全检测
      */
     @RequestMapping(value = "evaluate/deleteDe")
-    public @ResponseBody Result deleteDe(HttpServletRequest request, Integer id) throws Exception {
+    public @ResponseBody
+    Result deleteDe(HttpServletRequest request, Integer id) throws Exception {
         Result result = new ResultImpl();
         detectionMapper.deleteByPrimaryKey(id);
         return result;
@@ -1101,7 +1129,8 @@ public class CompanyController_cd extends BaseController {
      * 健康检查编辑保存
      */
     @RequestMapping(value = "evaluate/health-save")
-    public @ResponseBody Result heSave(HttpServletRequest request, Examination e) throws Exception {
+    public @ResponseBody
+    Result heSave(HttpServletRequest request, Examination e) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
         if (null == e.getId()) {
@@ -1117,7 +1146,8 @@ public class CompanyController_cd extends BaseController {
      * 健康检查编辑sc
      */
     @RequestMapping(value = "health-del")
-    public @ResponseBody Result heSaveDel(HttpServletRequest request, Integer id) throws Exception {
+    public @ResponseBody
+    Result heSaveDel(HttpServletRequest request, Integer id) throws Exception {
         Result result = new ResultImpl();
         examinationMapper.deleteByPrimaryKey(id);
         return result;
@@ -1143,7 +1173,8 @@ public class CompanyController_cd extends BaseController {
      * 防护用品编辑保存
      */
     @RequestMapping(value = "labor/labor-save")
-    public @ResponseBody Result laSave(Pequipment pequipment, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result laSave(Pequipment pequipment, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         if (null == pequipment.getId()) {
@@ -1170,7 +1201,8 @@ public class CompanyController_cd extends BaseController {
      * 防护用品编辑删除
      */
     @RequestMapping(value = "pequipment-del")
-    public @ResponseBody Result pequipmentDel(Integer id, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result pequipmentDel(Integer id, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         pequipmentMapper.deleteByPrimaryKey(id);
         return result;
@@ -1197,7 +1229,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "facilities/facilities-edit")
     public String facilitiesEdit(Integer id, Model model, Integer flag) throws Exception {
-        if(null != id) {
+        if (null != id) {
             model.addAttribute("f", facilitiesMapper.selectByPrimaryKey(id));
         }
         model.addAttribute("flag", flag);
@@ -1208,7 +1240,8 @@ public class CompanyController_cd extends BaseController {
      * 消防应急设备添加/编辑保存
      */
     @RequestMapping(value = "facilities/facilities-save")
-    public @ResponseBody Result facilitiesSave(Facilities facilities, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result facilitiesSave(Facilities facilities, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         facilities.setUserId(user.getId());
@@ -1224,7 +1257,8 @@ public class CompanyController_cd extends BaseController {
      * 删除特种设备
      */
     @RequestMapping(value = "facilities/deleteFa")
-    public @ResponseBody Result deleteFacilities(HttpServletRequest request, Integer id) throws Exception {
+    public @ResponseBody
+    Result deleteFacilities(HttpServletRequest request, Integer id) throws Exception {
         Result result = new ResultImpl();
         facilitiesMapper.deleteByPrimaryKey(id);
         return result;
@@ -1247,12 +1281,13 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("user", user);
         return "company/system/userNameSet";
     }
-    
+
     /**
      * 验证修改登录名时的密码
      */
     @RequestMapping(value = "renzheng-psw")
-    public @ResponseBody Result renzheng(ModifyPwdReqDTO dto, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result renzheng(ModifyPwdReqDTO dto, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = userMapper.selectByPrimaryKey(getLoginUser(request).getId());
         String code = user.getPsw();
@@ -1260,20 +1295,20 @@ public class CompanyController_cd extends BaseController {
         if (!EncryptUtil.match(code, psw)) {
             result.setStatus("1");
             result.setMap("message", "密码错误");
-        } 
-        else {
+        } else {
             // 验证密码
             result.setStatus("0");
             result.setMap("message", "验证成功");
         }
         return result;
     }
-    
+
     /**
      * 修改登录名
      */
     @RequestMapping(value = "modify-userName")
-    public @ResponseBody Result modifyUserName(ModifyPwdReqDTO dto, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result modifyUserName(ModifyPwdReqDTO dto, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = userMapper.selectByPrimaryKey(getLoginUser(request).getId());
         String code = user.getPsw();
@@ -1284,14 +1319,13 @@ public class CompanyController_cd extends BaseController {
         if (!EncryptUtil.match(code, psw)) {
             result.setStatus("1");
             result.setMap("message", "密码错误");
-        } else if(!name.equals(oldUserName) ){
+        } else if (!name.equals(oldUserName)) {
             result.setStatus("1");
             result.setMap("message", "原登录名错误");
-        }else if(newUserName != null ){
+        } else if (newUserName != null) {
             result.setStatus("1");
             result.setMap("message", "登录名已存在");
-        }
-        else {
+        } else {
             // 新登录名
             String xmm = dto.getNewUserName();
             User newUser = new User();
@@ -1301,14 +1335,15 @@ public class CompanyController_cd extends BaseController {
         }
         return result;
     }
-   
+
     static String PP = "yyyy-MM";
 
     /**
      * 折线图数据 根据隐患类型 sT 起始时间 eT 终止时间
      */
     @RequestMapping(value = "lineChartData")
-    public @ResponseBody Result lineChartData(String sT, String eT, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result lineChartData(String sT, String eT, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
@@ -1379,7 +1414,8 @@ public class CompanyController_cd extends BaseController {
      * 折线图数据 根据隐患等级 sT 起始时间 eT 终止时间
      */
     @RequestMapping(value = "lineChartData2")
-    public @ResponseBody Result lineChartData2(String sT, String eT, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result lineChartData2(String sT, String eT, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
@@ -1442,7 +1478,8 @@ public class CompanyController_cd extends BaseController {
      * 柱状图数据 根据隐患整改 sT 起始时间 eT 终止时间
      */
     @RequestMapping(value = "zhuChartData")
-    public @ResponseBody Result zhuChartData(String sT, String eT, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result zhuChartData(String sT, String eT, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
@@ -1510,7 +1547,8 @@ public class CompanyController_cd extends BaseController {
      * 柱状图数据 根据隐患来源 sT 起始时间 eT 终止时间
      */
     @RequestMapping(value = "zhuChartData2")
-    public @ResponseBody Result zhuChartData2(String sT, String eT, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result zhuChartData2(String sT, String eT, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
@@ -1615,7 +1653,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "tables/tab-leadin", method = RequestMethod.POST)
     public void companyLeadin(@RequestParam MultipartFile file, @RequestParam("isType") Integer isType,
-            @RequestParam("id") Integer id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+                              @RequestParam("id") Integer id, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Result result = exportService.tableImport(file, getLoginUser(request).getId(), id, isType, request);
         OutPrintUtil.OutPrint(response, result);
     }
@@ -1624,7 +1662,8 @@ public class CompanyController_cd extends BaseController {
      * 删除表
      */
     @RequestMapping(value = "tables/tab-del")
-    public @ResponseBody Result deleteTab(HttpServletRequest request, Integer id) throws Exception {
+    public @ResponseBody
+    Result deleteTab(HttpServletRequest request, Integer id) throws Exception {
         Result result = new ResultImpl();
         table2mapper.deleteByPrimaryKey(id);
         return result;
@@ -1808,7 +1847,8 @@ public class CompanyController_cd extends BaseController {
      * 删除自评
      */
     @RequestMapping(value = "information/h8-del")
-    public @ResponseBody Result deleteh8(HttpServletRequest request, Integer id) throws Exception {
+    public @ResponseBody
+    Result deleteh8(HttpServletRequest request, Integer id) throws Exception {
         Result result = new ResultImpl();
         pingMapper.deleteByPrimaryKey(id);
         return result;
@@ -1818,7 +1858,8 @@ public class CompanyController_cd extends BaseController {
      * 安全生产标准化编辑保存
      */
     @RequestMapping(value = "information/save-info8")
-    public @ResponseBody Result infoSave(HttpServletRequest request, Model model, Standard standard) throws Exception {
+    public @ResponseBody
+    Result infoSave(HttpServletRequest request, Model model, Standard standard) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         standard.setUserId(user.getId());
@@ -1844,7 +1885,8 @@ public class CompanyController_cd extends BaseController {
      * pic保存
      */
     @RequestMapping(value = "information/save-pic")
-    public @ResponseBody Result picSave(HttpServletRequest request, Model model, Integer code, String pic) throws Exception {
+    public @ResponseBody
+    Result picSave(HttpServletRequest request, Model model, Integer code, String pic) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         Company c = companyMapper.selectByPrimaryKey(user.getId());
@@ -1885,7 +1927,8 @@ public class CompanyController_cd extends BaseController {
      * 删除h1表
      */
     @RequestMapping(value = "tables/h1-del")
-    public @ResponseBody Result deleteh1(HttpServletRequest request, Integer id) throws Exception {
+    public @ResponseBody
+    Result deleteh1(HttpServletRequest request, Integer id) throws Exception {
         Result result = new ResultImpl();
         table3mapper.deleteByPrimaryKey(id);
         return result;
@@ -1896,7 +1939,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "tables/h-leadin", method = RequestMethod.POST)
     public void hLeadin(@RequestParam MultipartFile file, @RequestParam("isType") Integer isType,
-            @RequestParam("id") Integer id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+                        @RequestParam("id") Integer id, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Result result = exportService.hImport(file, getLoginUser(request).getId(), id, isType, request);
         OutPrintUtil.OutPrint(response, result);
     }
@@ -1948,7 +1991,8 @@ public class CompanyController_cd extends BaseController {
      * 企业自查 删除
      */
     @RequestMapping(value = "check-del")
-    public @ResponseBody Result checkDel(HttpServletRequest request, Integer id) throws Exception {
+    public @ResponseBody
+    Result checkDel(HttpServletRequest request, Integer id) throws Exception {
         Result result = new ResultImpl();
         TCheck t = new TCheck();
         t.setId(id);
@@ -1961,7 +2005,8 @@ public class CompanyController_cd extends BaseController {
      * 企业自查 保存检查项
      */
     @RequestMapping(value = "t-check-save")
-    public @ResponseBody Result tCheckSave(TCheck tc, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result tCheckSave(TCheck tc, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         tc.setUserId(user.getId());
@@ -1981,7 +2026,8 @@ public class CompanyController_cd extends BaseController {
      * 企业自查 保存检查项 获取
      */
     @RequestMapping(value = "check-item-get")
-    public @ResponseBody Result checkItemGet(Integer id, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result checkItemGet(Integer id, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         result.setMap("item", tCheckItemMapper.selectByPrimaryKey(id));
         return result;
@@ -1991,7 +2037,8 @@ public class CompanyController_cd extends BaseController {
      * 企业自查 保存检查项
      */
     @RequestMapping(value = "check-item-save")
-    public @ResponseBody Result checkItemSave(TCheckItem tci, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result checkItemSave(TCheckItem tci, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         tCheckItemMapper.updateByPrimaryKeySelective(tci);
         return result;
@@ -2001,7 +2048,8 @@ public class CompanyController_cd extends BaseController {
      * 企业自查 保存部门照片
      */
     @RequestMapping(value = "check-part-save")
-    public @ResponseBody Result checkPartSave(TCheckPart tci, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result checkPartSave(TCheckPart tci, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         tCheckPartMapper.updateByPrimaryKeySelective(tci);
         return result;
@@ -2011,7 +2059,8 @@ public class CompanyController_cd extends BaseController {
      * 企业自查 保存检查
      */
     @RequestMapping(value = "check-save2")
-    public @ResponseBody Result checkSave2(TCheck t) {
+    public @ResponseBody
+    Result checkSave2(TCheck t) {
         Result result = new ResultImpl();
         try {
             cgfService.checkNestSave(t);
@@ -2035,7 +2084,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
         model.addAttribute("now", new Date());
         model.addAttribute("company", companyMapper.selectByPrimaryKey(tc.getUserId()));
-        if(tc.getStatus() == 2) {
+        if (tc.getStatus() == 2) {
             return "company/danger/print-plan-detail";
         }
         return "company/danger/print-plan-next";
@@ -2062,10 +2111,9 @@ public class CompanyController_cd extends BaseController {
 //        model.addAttribute("flag", flag);
 //        return "company/danger/model-show";
 //    }
-
     @RequestMapping(value = "model-show/{id}")//modify by zhangcl 2018.10.28
-    public String modelShow(@PathVariable Integer id, Model model,Integer flag,Integer type) throws Exception {
-    	log.error("type:"+type);
+    public String modelShow(@PathVariable Integer id, Model model, Integer flag, Integer type) throws Exception {
+        log.error("type:" + type);
         TModel tc = tModelMapper.selectByPrimaryKey(id);
         List<TModelPart> partL = tModelPartMapper.selectByModelId(id);
         model.addAttribute("model", tc);
@@ -2077,46 +2125,44 @@ public class CompanyController_cd extends BaseController {
             }
             levelIds = levelIds.append(p.getLevels());
         }
-        if(type!=null&&type==9){
-        	List<Map<String, Object>> iteml = new ArrayList<Map<String, Object>>();
+        if (type != null && type == 9) {
+            List<Map<String, Object>> iteml = new ArrayList<Map<String, Object>>();
             String[] levelsArr = levelIds.toString().split(",");
             for (int i = 0; i < levelsArr.length; i++) {
-            	Map<String, Object> a = new HashMap<String, Object>();
-            	Integer[] ids = new Integer[1];
-            	ids[0] = Integer.parseInt(levelsArr[i]);
-            	log.error("ids:"+ids[0]);
-            	
-            	List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
-            	String dangertype="";
-            	String factors="";
-            	String measures="";
-            	for(ACompanyManual aa: rets){
-            		dangertype = aa.getType();
-            		factors = aa.getFactors();
-            		measures = aa.getMeasures();
-            		log.error("type:"+dangertype);
-            		break;
-            	}
-            	a.put("levelId",Integer.parseInt(levelsArr[i]));
-            	a.put("dangerType",dangertype);
-            	a.put("factors",factors);
-            	a.put("measures",measures);
-            	log.error("a:"+a.toString());
+                Map<String, Object> a = new HashMap<String, Object>();
+                Integer[] ids = new Integer[1];
+                ids[0] = Integer.parseInt(levelsArr[i]);
+                log.error("ids:" + ids[0]);
+
+                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
+                String dangertype = "";
+                String factors = "";
+                String measures = "";
+                for (ACompanyManual aa : rets) {
+                    dangertype = aa.getType();
+                    factors = aa.getFactors();
+                    measures = aa.getMeasures();
+                    log.error("type:" + dangertype);
+                    break;
+                }
+                a.put("levelId", Integer.parseInt(levelsArr[i]));
+                a.put("dangerType", dangertype);
+                a.put("factors", factors);
+                a.put("measures", measures);
+                log.error("a:" + a.toString());
                 iteml.add(a);
             }
             model.addAttribute("itemL", iteml);
+        } else {
+            model.addAttribute("itemL", tItemMapper.selectByLevelIdsModel(levelIds.toString()));
         }
-        else{
-        	model.addAttribute("itemL", tItemMapper.selectByLevelIdsModel(levelIds.toString()));
-        }        
         model.addAttribute("now", new Date());
         model.addAttribute("flag", flag);
-        if(type!=null&&type==9){
-        	log.error("company/danger/model-show1");
-        	return "company/danger/model-show1";
-        }
-        else{
-        	return "company/danger/model-show";
+        if (type != null && type == 9) {
+            log.error("company/danger/model-show1");
+            return "company/danger/model-show1";
+        } else {
+            return "company/danger/model-show";
         }
     }
 
@@ -2125,7 +2171,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "model-list")
     public String modelList(Integer type, Integer flag, String title, Integer industryType, HttpServletRequest request,
-            Model model) throws Exception {
+                            Model model) throws Exception {
         User user = getLoginUser(request);
         //log.error("type: "+type);
         Map<String, Object> m = new HashMap<String, Object>();
@@ -2163,18 +2209,23 @@ public class CompanyController_cd extends BaseController {
 //
 //        return "company/danger/model-list-cx";
 //    }
+
     /**
      * 检查设置与实施-企业自查1
+     * TODO
+     * 综合检查表(Template 1)  日检查表(Template 2)
+     * type  =1(日常)  flag=1()自查
+     *
      */
     @RequestMapping(value = "model-list-cx")
     public String modelList1(Integer type, Integer flag, String title, Integer industryType, HttpServletRequest request,
-            Model model) throws Exception {
-        User user = getLoginUser(request); 
-        
+                             Model model, Integer template) throws Exception {
+        User user = getLoginUser(request);
+
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
         model.addAttribute("industryType", industryType);
-        
+        model.addAttribute("template",template);
         Map<String, Object> m = new HashMap<String, Object>();
         //log.error("type数据类型："+type.getClass());
         m.put("type", type);
@@ -2184,60 +2235,62 @@ public class CompanyController_cd extends BaseController {
         setUserId(user, m);
         //log.error("m："+m.toString());
         //log.error("定期检查表type=2："+tModelMapper.selectByMap(m).get(0));
-        List<Map<String, Object>> list = tModelMapper.selectByMap(m);
-     
+        List<Map<String, Object>> list=null;
+        if (null != template && template == 1) { //综合检查表
+            m.remove("type");
+             list = tModelMapper.selectByMap(m);
+        } else if(null != template && template == 2) { //日检查表
+
+            list = tModelMapper.selectByMap(m);
+        }else{
+            list = tModelMapper.selectByMap(m);
+        }
+
         //企业类型为 化工 或 构成重大危险源 则企业自查处 日检查表显示 wz 190108
         Company company = companyMapper.selectByPrimaryKey(user.getId());
+
         /*
          * 监管行业不能为空
          */
         //log.error("监管行业："+ company.getIndustry());
-        if(company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")){//显示效果需要
-        	//log.error("监管行业："+company.getIndustry());
-        	//log.error("是否构成重大危险源、1是："+company.getHazard());
-        	model.addAttribute("rjcbxs", 1);
-        	
+        if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {//显示效果需要
+            //log.error("监管行业："+company.getIndustry());
+            //log.error("是否构成重大危险源、1是："+company.getHazard());
+            model.addAttribute("rjcbxs", 1);
+
         }
-        
-     if(type == 2){
-       
-        if(company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")){//取数据
-        	
-        	//log.error("查询出日检查表和定期检查表检查周期不为1表单！");
-        	List<Map<String, Object>> lista = tModelMapper.selectByMap2(m);//定期检查表——检查周期不为1
-        	Integer type9 = 9;
-        	m.put("type", type9);
-            List<Map<String, Object>> listb = tModelMapper.selectByMap2(m);
-            lista.addAll(listb);
-            model.addAttribute("list", lista);
-            return "company/danger/model-list-cx";
- 	
-        }else{
-        	//查询日检查表 wz 190109
-        	Integer type9 = 9;
-        	m.put("type", type9);
-            //log.error("m："+m.toString());
-            //log.error("定+日检查表type=9："+tModelMapper.selectByMap(m).get(0));
-            List<Map<String, Object>> list1 = tModelMapper.selectByMap(m);
-            list.addAll(list1);
+        if (type == 2) {
+
+            if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {//取数据
+                //log.error("查询出日检查表和定期检查表检查周期不为1表单！");
+                List<Map<String, Object>> lista = tModelMapper.selectByMap2(m);//定期检查表——检查周期不为1
+                Integer type9 = 9;
+                m.put("type", type9);
+                List<Map<String, Object>> listb = tModelMapper.selectByMap2(m);
+                lista.addAll(listb);
+                model.addAttribute("list", lista);
+                return "company/danger/model-list-cx";
+
+            } else {
+                //查询日检查表 wz 190109
+                Integer type9 = 9;
+                m.put("type", type9);
+                List<Map<String, Object>> list1 = tModelMapper.selectByMap(m);
+                list.addAll(list1);
+            }
         }
-     } 
-        
         model.addAttribute("list", list);
-        
-        //model.addAttribute("list", tModelMapper.selectByMap(m));
 
         return "company/danger/model-list-cx";
     }
+
     /**
      * 检查设置与实施-企业自查1-日检查表 wz 190109
-     * TODO 日检查表
-     *
      */
     @RequestMapping(value = "model-list-cx1r")
     public String modelList2(Integer type, Integer flag, String title, Integer industryType, HttpServletRequest request,
-            Model model) throws Exception {
-        User user = getLoginUser(request); 
+                             Model model) throws Exception {
+        User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         //log.error("type数据类型："+type.getClass());
         m.put("type", type);
@@ -2249,13 +2302,13 @@ public class CompanyController_cd extends BaseController {
         //log.error("m："+m.toString());
         //log.error("日检查表type=9："+tModelMapper.selectByMap(m).get(0));
         List<Map<String, Object>> list = tModelMapper.selectByMap1(m);
-        
+
         //查找定期检查表中检查周期为1的表
         m.put("type", 2);
         List<Map<String, Object>> list1 = tModelMapper.selectByMap1(m);
         list.addAll(list1);
 
-        model.addAttribute("list", list);  
+        model.addAttribute("list", list);
         //model.addAttribute("list", tModelMapper.selectByMap(m));
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
@@ -2293,35 +2346,79 @@ public class CompanyController_cd extends BaseController {
 //        }
 //        return "village/danger/check-list";
 //    }
-  /**
- *
- * TODO   企业自查 -->  整改复查
- * TODO   title  type  compantName status 的传递
- * 检查设置与实施-整改实施
- */
-        @RequestMapping(value = "check-list")
-        public String troubleList1(HttpServletRequest request, String title, Integer type, String companyName,
-                Integer status, Integer flag, Model model) throws Exception {
-            User user = getLoginUser(request);
 
-            //企业类型为 化工 或 构成重大危险源 则企业自查处 日检查表显示 wz 190108
-            Company company = companyMapper.selectByPrimaryKey(user.getId());
-            if(company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")){
-                //log.error("监管行业："+company.getIndustry());
-                //log.error("是否构成重大危险源、1是："+company.getHazard());
-                model.addAttribute("rjcbxs", 1);
-            }
+    /**
+     * TODO 临时检查表
+     * 在model表查询获取数据
+     */
+    @RequestMapping(value = "check-LinShi")
+    public String modelLinShi(HttpServletRequest request, String title, Integer type, String companyName,
+                              Integer status, Integer flag, Model model) throws ParseException {
+        User user = getLoginUser(request);
+        //企业类型为 化工 或 构成重大危险源 则企业自查处 日检查表显示 wz 190108
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {
+            //log.error("监管行业："+company.getIndustry());
+            //log.error("是否构成重大危险源、1是："+company.getHazard());
+            model.addAttribute("rjcbxs", 1);
+        }
 
-    Map<String, Object> m = new HashMap<String, Object>();
+        Map<String, Object> m = new HashMap<String, Object>();
         m.put("flag", flag);
         m.put("title", title);
         m.put("companyName", companyName);
         m.put("status", status);
-        if(setUserId(user, m)) {
-        clearVillageTown(m);
-        List<Map<String, Object>> list = tCheckMapper.selectList(m);
-        model.addAttribute("list", list);
+        if (setUserId(user, m)) {
+            clearVillageTown(m);
+            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            model.addAttribute("list", list);
+        }
+        model.addAttribute("type", type);
+        model.addAttribute("flag", flag);
+        model.addAttribute("companyName", companyName);
+        model.addAttribute("title", title);
+        model.addAttribute("status", status);
+        Date d = new Date();
+        String x = DateFormatUtils.format(d, "yyyy-MM-dd");
+        d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
+        model.addAttribute("t", d.getTime());
+        if (user.getUserType() == 5) {//企业用户
+            return "company/danger/model-list-cx";
+        }
+        return "village/danger/check-list";
+
     }
+
+
+    /**
+     * TODO   整改复查
+     * TODO   title  type  compantName status 的传递
+     * 检查设置与实施-整改实施
+     */
+    @RequestMapping(value = "check-list")
+    public String troubleList1(HttpServletRequest request, String title, Integer type, String companyName,
+                               Integer status, Integer flag, Model model) throws Exception {
+        User user = getLoginUser(request);
+
+        //企业类型为 化工 或 构成重大危险源 则企业自查处 日检查表显示 wz 190108
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {
+            //log.error("监管行业："+company.getIndustry());
+            //log.error("是否构成重大危险源、1是："+company.getHazard());
+            model.addAttribute("rjcbxs", 1);
+        }
+
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("flag", flag);
+        m.put("title", title);
+        m.put("companyName", companyName);
+        m.put("status", status);
+        if (setUserId(user, m)) {
+            clearVillageTown(m);
+            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            model.addAttribute("list", list);
+        }
+
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
         model.addAttribute("companyName", companyName);
@@ -2336,6 +2433,7 @@ public class CompanyController_cd extends BaseController {
         }
         return "village/danger/check-list";
     }
+
     /**
      * 企业自查添加模板
      */
@@ -2360,8 +2458,8 @@ public class CompanyController_cd extends BaseController {
 //        return "company/danger/model-add2";
 //    }
     @RequestMapping(value = "model-add")//modify by zhangcl 2018.10.24
-    public String modelAdd(Integer type, Integer flag, Integer[] ids,Integer depId,
-    		Integer industryId, HttpServletRequest request, Model model)
+    public String modelAdd(Integer type, Integer flag, Integer[] ids, Integer depId,
+                           Integer industryId, HttpServletRequest request, Model model)
             throws Exception {
         User user = getLoginUser(request);
         TCompany tc = tCompanyMapper.selectByPrimaryKey(user.getId());
@@ -2378,19 +2476,19 @@ public class CompanyController_cd extends BaseController {
         if (StringUtils.isNotBlank(tc.getIndustry3())) {
             model.addAttribute("ind3L", tIndustryMapper.selectByIds(tc.getIndustry3()));// 高危检查类别
         }
-        if(type!=null&&type==9){//新增检查表类型
-        	model.addAttribute("companyname",user.getUserName());
-        	model.addAttribute("items",aDangerManualMapper.selectByIds(ids));
-        	//log.error("depId:"+depId);
-        	List<Map<Object, Object>> zzjg = zzjgDepartmentMapper.selectNameParnameById(depId);
-        	//log.error(zzjg==null?"yes":"no");
-        	for (Map<Object, Object> p : zzjg) {
-        		log.error(p.get("id")+","+p.get("name")+","+p.get("parName"));
-        		model.addAttribute("name",p.get("name"));
-        		model.addAttribute("parName",p.get("parName"));
-        		break;
+        if (type != null && type == 9) {//新增检查表类型
+            model.addAttribute("companyname", user.getUserName());
+            model.addAttribute("items", aDangerManualMapper.selectByIds(ids));
+            //log.error("depId:"+depId);
+            List<Map<Object, Object>> zzjg = zzjgDepartmentMapper.selectNameParnameById(depId);
+            //log.error(zzjg==null?"yes":"no");
+            for (Map<Object, Object> p : zzjg) {
+                log.error(p.get("id") + "," + p.get("name") + "," + p.get("parName"));
+                model.addAttribute("name", p.get("name"));
+                model.addAttribute("parName", p.get("parName"));
+                break;
             }
-        	return "company/danger/model-add3";
+            return "company/danger/model-add3";
         }
         return "company/danger/model-add2";
     }
@@ -2439,7 +2537,8 @@ public class CompanyController_cd extends BaseController {
      * 企业自查模板删除
      */
     @RequestMapping(value = "model-del")
-    public @ResponseBody Result modelDel(TModel t, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result modelDel(TModel t, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         t.setDel(1);
         tModelMapper.updateByPrimaryKeySelective(t);
@@ -2450,7 +2549,8 @@ public class CompanyController_cd extends BaseController {
      * 企业自查模板保存
      */
     @RequestMapping(value = "model-save")
-    public @ResponseBody Result modelSave(@RequestBody ModelSaveReqDTO dto, HttpServletRequest request)
+    public @ResponseBody
+    Result modelSave(@RequestBody ModelSaveReqDTO dto, HttpServletRequest request)
             throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
@@ -2464,9 +2564,10 @@ public class CompanyController_cd extends BaseController {
      * 企业自查模板 自动化设置保存
      */
     @RequestMapping(value = "model-auto")
-    public @ResponseBody Result modelAuto(TModel model, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result modelAuto(TModel model, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
-        log.error("model: "+model.toString());
+        log.error("model: " + model.toString());
         cgfService.modelAuto(model, result);
         return result;
     }
@@ -2481,7 +2582,7 @@ public class CompanyController_cd extends BaseController {
 //        return "company/danger/model-auto";
 //    }
     @RequestMapping(value = "plan-auto")//modi fy by zhangcl 2018.10.27
-    public String planAuto(Integer modelId, Model model,Integer type) throws Exception {
+    public String planAuto(Integer modelId, Model model, Integer type) throws Exception {
         TModel tm = tModelMapper.selectByPrimaryKey(modelId);
         model.addAttribute("model", tm);
         model.addAttribute("type", type);
@@ -2503,7 +2604,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "check-add3")
     public String checkAdd3(Model model, Integer flag) throws Exception {
-        if(null == flag) {
+        if (null == flag) {
             flag = 3;
         }
         model.addAttribute("flag", flag);
@@ -2523,7 +2624,8 @@ public class CompanyController_cd extends BaseController {
      * 添加委托检查记录 线下录入线上
      */
     @RequestMapping(value = "three-save")
-    public @ResponseBody Result threeSave(@RequestBody ThreeSaveReqDTO dto, HttpServletRequest request)
+    public @ResponseBody
+    Result threeSave(@RequestBody ThreeSaveReqDTO dto, HttpServletRequest request)
             throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
@@ -2546,7 +2648,7 @@ public class CompanyController_cd extends BaseController {
     public String checkEdit(Integer id, HttpServletRequest request, Model model) throws Exception {
         TCheck m = tCheckMapper.selectByPrimaryKey(id);
         Company com = companyMapper.selectByPrimaryKey(getLoginUser(request).getId());
-        model.addAttribute("company",com.getLegal());
+        model.addAttribute("company", com.getLegal());
         model.addAttribute("check", m);
         model.addAttribute("type", m.getType());
         model.addAttribute("flag", m.getFlag());
@@ -2589,12 +2691,13 @@ public class CompanyController_cd extends BaseController {
 //        model.addAttribute("listM", tCheckMapper.selectCompany(id));
 //        return "company/danger/plan-detail";
 //    }
+
     /**
      * 检查表 详情
      * TODO 查看检查记录
      */
     @RequestMapping(value = "check-detail")
-    public String checkDetail(Integer id, Model model,Integer jcxq) throws Exception {
+    public String checkDetail(Integer id, Model model, Integer jcxq) throws Exception {
         // 根据id查询的是检查表信息
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
         Integer type = tc.getType();
@@ -2605,61 +2708,60 @@ public class CompanyController_cd extends BaseController {
         //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
         List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(id);
         //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
-        if(type!=null&&type==9){
-        	for(Map<String,Object> a: iteml){
-            	//log.error("checkNext:"+1);
-            	Integer[] ids = new Integer[1];
-            	ids[0] = (Integer) a.get("levelId");
-            	//log.error("ids:"+ids[0]);
-            	//log.error("a:"+a.toString());
-            	List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
-            	String dangertype="";
-            	String factors="";
-            	String measures="";
-            	String level1="";
-            	String level2="";
-            	String level3="";
-            	for(ACompanyManual aa: rets){
-            		//log.error("checkNext:"+2);
-            		dangertype = aa.getType();
-            		factors = aa.getFactors();
-            		measures = aa.getMeasures();
-            		level1 = aa.getLevel1();
-            		level2 = aa.getLevel2();
-            		level3 = aa.getLevel3();
-            		//log.error("type:"+dangertype);
-            		break;
-            	}
-            	a.put("dangerType",dangertype);
-            	a.put("factors",factors);
-            	a.put("measures",measures);
-            	a.put("level1",level1);
-            	a.put("level2",level2);
-            	a.put("level3",level3);
-            	//log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
+        if (type != null && type == 9) {
+            for (Map<String, Object> a : iteml) {
+                //log.error("checkNext:"+1);
+                Integer[] ids = new Integer[1];
+                ids[0] = (Integer) a.get("levelId");
+                //log.error("ids:"+ids[0]);
+                //log.error("a:"+a.toString());
+                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
+                String dangertype = "";
+                String factors = "";
+                String measures = "";
+                String level1 = "";
+                String level2 = "";
+                String level3 = "";
+                for (ACompanyManual aa : rets) {
+                    //log.error("checkNext:"+2);
+                    dangertype = aa.getType();
+                    factors = aa.getFactors();
+                    measures = aa.getMeasures();
+                    level1 = aa.getLevel1();
+                    level2 = aa.getLevel2();
+                    level3 = aa.getLevel3();
+                    //log.error("type:"+dangertype);
+                    break;
+                }
+                a.put("dangerType", dangertype);
+                a.put("factors", factors);
+                a.put("measures", measures);
+                a.put("level1", level1);
+                a.put("level2", level2);
+                a.put("level3", level3);
+                //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
             }
         }
         //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
         model.addAttribute("itemL", iteml);
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
-        log.error("检查表 详情check-detail"+type);
-        
-        log.error("检查详情："+jcxq);//首页——定期检查——检查详情显示为未检查
-        if(jcxq == null){
-            if(type==9){
-            	return "company/danger/plan-detailrjcb";
-        	}else{
-        		return "company/danger/plan-detail";
-        	}	
-        }else{
-            if(type==9){
-            	return "company/danger/plan-detailrjcbjcxq";
-        	}else{
-        		return "company/danger/plan-detailjcxq";
-        	}	
+        log.error("检查表 详情check-detail" + type);
+
+        log.error("检查详情：" + jcxq);//首页——定期检查——检查详情显示为未检查
+        if (jcxq == null) {
+            if (type == 9) {
+                return "company/danger/plan-detailrjcb";
+            } else {
+                return "company/danger/plan-detail";
+            }
+        } else {
+            if (type == 9) {
+                return "company/danger/plan-detailrjcbjcxq";
+            } else {
+                return "company/danger/plan-detailjcxq";
+            }
         }
-        
-        
+
 
     }
 
@@ -2674,7 +2776,7 @@ public class CompanyController_cd extends BaseController {
         return "company/danger/danger-detail";
     }
 
-    
+
     /**
      * 检查表隐患汇总
      */
@@ -2688,7 +2790,7 @@ public class CompanyController_cd extends BaseController {
      * 检查表隐患 整改
      */
     @RequestMapping(value = "check-rectification-print")
-    public String checkRectificationPrint(Integer id, Model model,Integer flag) throws Exception {
+    public String checkRectificationPrint(Integer id, Model model, Integer flag) throws Exception {
         TRectification rectification = tRectificationMapper.selectByCheckId(id);
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
         model.addAttribute("check", check);
@@ -2705,7 +2807,8 @@ public class CompanyController_cd extends BaseController {
      * 检查表隐患 整改计划保存
      */
     @RequestMapping(value = "rectification-save")
-    public @ResponseBody Result rectificationSave(TRectification tr, HttpServletRequest request) {
+    public @ResponseBody
+    Result rectificationSave(TRectification tr, HttpServletRequest request) {
         Result result = new ResultImpl();
         try {
             tr.setCreateUser(getLoginUser(request).getId());
@@ -2722,7 +2825,8 @@ public class CompanyController_cd extends BaseController {
      * 计划 生成检查表
      */
     @RequestMapping(value = "plan-save")
-    public @ResponseBody Result planSave(TCheck check, HttpServletRequest request) {
+    public @ResponseBody
+    Result planSave(TCheck check, HttpServletRequest request) {
         Result result = new ResultImpl();
         try {
             User user = getLoginUser(request);
@@ -2772,20 +2876,22 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * TODO  实施检查
+     *
      * @param modelId
      * @param type
      * @param request
      * @return
      */
     @RequestMapping(value = "plan-save2")
-    public @ResponseBody Result planSave2(Integer modelId, Integer type,HttpServletRequest request) {
+    public @ResponseBody
+    Result planSave2(Integer modelId, Integer type, HttpServletRequest request) {
         Result result = new ResultImpl();
         try {
             TModel model = tModelMapper.selectByPrimaryKey(modelId);
-            
+
             //log.error(model.toString());
             type = model.getType();// add wz 190110
-            
+
             TCheck check = new TCheck();
             check.setFlag(model.getFlag());
             check.setTitle(model.getTitle());
@@ -2801,11 +2907,11 @@ public class CompanyController_cd extends BaseController {
             check.setUserId(user.getId());
             check.setCreateUser(user.getId());
             //log.error("planSave2 modelId:"+modelId+", type : "+type);//zhangcl 2018.10.29
-            if(type!=null&&type==9)
-            	cgfService.checkSave1(check);
+            if (type != null && type == 9)
+                cgfService.checkSave1(check);
             else
-            	cgfService.checkSave(check);
-            log.error("planSave2:"+6);//zhangcl 2018.10.29
+                cgfService.checkSave(check);
+            log.error("planSave2:" + 6);//zhangcl 2018.10.29
             result.setMap("id", check.getId());
         } catch (Exception e) {
             e.printStackTrace();
@@ -2819,7 +2925,8 @@ public class CompanyController_cd extends BaseController {
      * 编辑检查表
      */
     @RequestMapping(value = "plan-edit-save")
-    public @ResponseBody Result planEditSave(TCheck check, HttpServletRequest request) throws Exception {
+    public @ResponseBody
+    Result planEditSave(TCheck check, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         tCheckMapper.updateByPrimaryKeySelective(check);
         return result;
@@ -2838,8 +2945,9 @@ public class CompanyController_cd extends BaseController {
 //        model.addAttribute("now", new Date());
 //        return "company/danger/check-fuadd";
 //    }
+
     /**
-     * 隐患列表 复查 
+     * 隐患列表 复查
      */
     @RequestMapping(value = "recheck-add")//修改 wz0114
     public String recheckAdd(Integer checkId, Model model) throws Exception {
@@ -2849,54 +2957,54 @@ public class CompanyController_cd extends BaseController {
         //log.error("检查表type："+type);
         List<Map<String, Object>> iteml = tCheckItemMapper.selectDangerByCheckId(checkId, 2);
         //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
-        if(type!=null&&type==9){
-        	for(Map<String,Object> a: iteml){
-            	//log.error("checkNext:"+1);
-            	Integer[] ids = new Integer[1];
-            	ids[0] = (Integer) a.get("levelId");
-            	//log.error("ids:"+ids[0]);
-            	//log.error("a:"+a.toString());
-            	List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
-            	String dangertype="";
-            	String factors="";
-            	String measures="";
-            	String level1="";
-            	String level2="";
-            	String level3="";
-            	for(ACompanyManual aa: rets){
-            		//log.error("checkNext:"+2);
-            		dangertype = aa.getType();
-            		factors = aa.getFactors();
-            		measures = aa.getMeasures();
-            		level1 = aa.getLevel1();
-            		level2 = aa.getLevel2();
-            		level3 = aa.getLevel3();
-            		//log.error("type:"+dangertype);
-            		break;
-            	}
-            	a.put("dangerType",dangertype);
-            	a.put("factors",factors);
-            	a.put("measures",measures);
-            	a.put("level1",level1);
-            	a.put("level2",level2);
-            	a.put("level3",level3);
-            	//log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
+        if (type != null && type == 9) {
+            for (Map<String, Object> a : iteml) {
+                //log.error("checkNext:"+1);
+                Integer[] ids = new Integer[1];
+                ids[0] = (Integer) a.get("levelId");
+                //log.error("ids:"+ids[0]);
+                //log.error("a:"+a.toString());
+                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
+                String dangertype = "";
+                String factors = "";
+                String measures = "";
+                String level1 = "";
+                String level2 = "";
+                String level3 = "";
+                for (ACompanyManual aa : rets) {
+                    //log.error("checkNext:"+2);
+                    dangertype = aa.getType();
+                    factors = aa.getFactors();
+                    measures = aa.getMeasures();
+                    level1 = aa.getLevel1();
+                    level2 = aa.getLevel2();
+                    level3 = aa.getLevel3();
+                    //log.error("type:"+dangertype);
+                    break;
+                }
+                a.put("dangerType", dangertype);
+                a.put("factors", factors);
+                a.put("measures", measures);
+                a.put("level1", level1);
+                a.put("level2", level2);
+                a.put("level3", level3);
+                //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
             }
         }
         //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
         model.addAttribute("itemL", iteml);
-        
+
         Integer id = checkId;
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
         model.addAttribute("check", check);
         model.addAttribute("company", companyMapper.selectByPrimaryKey(Integer.parseInt(String.valueOf(check.get("userId")))));
         model.addAttribute("now", new Date());
-          
-        if(type==9){
-        	return "company/danger/check-fuaddrjcb";
-    	}else{
-    		return "company/danger/check-fuadd";
-    	}   
+
+        if (type == 9) {
+            return "company/danger/check-fuaddrjcb";
+        } else {
+            return "company/danger/check-fuadd";
+        }
     }
 
     /**
@@ -2926,7 +3034,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("itemList", tRecheckItemMapper.selectByCheckId(checkId));
         return "company/danger/check-fudetail";
     }
-    
+
     /**
      * 隐患列表 复查详情
      */
@@ -2940,12 +3048,13 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("itemList", tRecheckItemMapper.selectByCheckId(checkId));
         return "company/danger/print-fudetail";
     }
-    
+
     /**
      * 复查删除
      */
     @RequestMapping(value = "fu-del")
-    public @ResponseBody Result fuDel(Integer id, HttpServletRequest request) {
+    public @ResponseBody
+    Result fuDel(Integer id, HttpServletRequest request) {
         Result result = new ResultImpl();
         TRectification tr = new TRectification();
         tr.setId(id);
@@ -2958,7 +3067,8 @@ public class CompanyController_cd extends BaseController {
      * 编辑检查表
      */
     @RequestMapping(value = "recheck-save")
-    public @ResponseBody Result recheckSave(@RequestBody RecheckSaveReqDTO dto, HttpServletRequest request) {
+    public @ResponseBody
+    Result recheckSave(@RequestBody RecheckSaveReqDTO dto, HttpServletRequest request) {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         dto.getRecheck().setCreateUser(user.getId());
@@ -3018,18 +3128,18 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("list", monitorMapper.selectByMap(m));
         return "company/system/monitor-list";
     }
-    
+
     /**
      * 摄像头add
      */
     @RequestMapping(value = "monitor-add")
     public String monitorList(Integer id, Model model) throws Exception {
-        if(null != id) {
+        if (null != id) {
             model.addAttribute("m", monitorMapper.selectByPrimaryKey(id));
         }
         return "company/system/monitor-add";
     }
-    
+
     /**
      * 执法检查添加
      */
@@ -3037,14 +3147,15 @@ public class CompanyController_cd extends BaseController {
     public String checkAddCho() throws Exception {
         return "company/danger/check-add-cho";
     }
-    
+
     /**
      * 摄像头 删除
      */
     @RequestMapping(value = "monitor-save")
-    public @ResponseBody Result monitorSave(Monitor m, HttpServletRequest request) {
+    public @ResponseBody
+    Result monitorSave(Monitor m, HttpServletRequest request) {
         Result result = new ResultImpl();
-        if(null == m.getId()) {
+        if (null == m.getId()) {
             m.setDel(0);
             m.setUserId(getLoginUser(request).getId());
             monitorMapper.insertSelective(m);
@@ -3058,7 +3169,8 @@ public class CompanyController_cd extends BaseController {
      * 摄像头 删除
      */
     @RequestMapping(value = "monitor-del")
-    public @ResponseBody Result monitorDel(Integer id, HttpServletRequest request) {
+    public @ResponseBody
+    Result monitorDel(Integer id, HttpServletRequest request) {
         Result result = new ResultImpl();
         Monitor m = new Monitor();
         m.setId(id);
@@ -3066,7 +3178,7 @@ public class CompanyController_cd extends BaseController {
         monitorMapper.updateByPrimaryKeySelective(m);
         return result;
     }
-    
+
     /**
      * 各类许可证页面
      */
@@ -3103,11 +3215,12 @@ public class CompanyController_cd extends BaseController {
      * 保存许可证页面
      */
     @RequestMapping("evaluate/zheng-save")
-    public @ResponseBody Result zhengSave(Model model, HttpServletRequest request, Standard standard) throws Exception {
+    public @ResponseBody
+    Result zhengSave(Model model, HttpServletRequest request, Standard standard) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         standard.setUserId(user.getId());
-        if(null == standard.getId()) {
+        if (null == standard.getId()) {
             standardMapper.insertSelective(standard);
         } else {
             standardMapper.updateByPrimaryKeySelective(standard);
@@ -3141,7 +3254,8 @@ public class CompanyController_cd extends BaseController {
      * @throws Exception
      */
     @RequestMapping("evaluate/tab-she-add")
-    public @ResponseBody Result zhengTabSheAdd(Model model, HttpServletRequest request, Table3 table3) throws Exception {
+    public @ResponseBody
+    Result zhengTabSheAdd(Model model, HttpServletRequest request, Table3 table3) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         table3.setUserId(user.getId());
@@ -3172,7 +3286,7 @@ public class CompanyController_cd extends BaseController {
     public String yjjyList(HttpServletRequest request, Model model, String companyName, String name, Integer isTime, Integer c) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
-        if(null != c && c.compareTo(1) == 0) {
+        if (null != c && c.compareTo(1) == 0) {
             m.put("ownerId", user.getId());
         } else {
             setUserId(user, m);
@@ -3197,7 +3311,8 @@ public class CompanyController_cd extends BaseController {
      * 应急救援添加
      */
     @RequestMapping(value = "tables/tab-yjadd")
-    public @ResponseBody Result yjjyAdd(HttpServletRequest request, Model model, TContingencyPlan tContingencyPlan) throws Exception {
+    public @ResponseBody
+    Result yjjyAdd(HttpServletRequest request, Model model, TContingencyPlan tContingencyPlan) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         tContingencyPlan.setUserId(user.getId());
@@ -3221,7 +3336,7 @@ public class CompanyController_cd extends BaseController {
     public String yljyList(HttpServletRequest request, Model model, String name, Integer c) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
-        if(null != c && c.compareTo(1) == 0) {
+        if (null != c && c.compareTo(1) == 0) {
             m.put("ownerId", user.getId());
         } else {
             setUserId(user, m);
@@ -3231,8 +3346,8 @@ public class CompanyController_cd extends BaseController {
         //log.error("list："+ tDrillMapper.selectTable(m));
         model.addAttribute("name", name);
         model.addAttribute("c", c);
-        if(user.getUserType()==5){
-        	model.addAttribute("CompanyName", companyMapper.selectByPrimaryKey(user.getId()).getName());//应急预案演练所属企业显示企业名
+        if (user.getUserType() == 5) {
+            model.addAttribute("CompanyName", companyMapper.selectByPrimaryKey(user.getId()).getName());//应急预案演练所属企业显示企业名
         }
         return "company/tables/tab-yllist";
     }
@@ -3241,7 +3356,8 @@ public class CompanyController_cd extends BaseController {
      * 应急预案演练添加
      */
     @RequestMapping(value = "tables/tab-yladd")
-    public @ResponseBody Result yljyAdd(HttpServletRequest request, Model model, TDrill tDrill) throws Exception {
+    public @ResponseBody
+    Result yljyAdd(HttpServletRequest request, Model model, TDrill tDrill) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         tDrill.setUserId(user.getId());
@@ -3287,7 +3403,8 @@ public class CompanyController_cd extends BaseController {
      * 事故报告和处理保存
      */
     @RequestMapping(value = "tables/tabshi-save")
-    public @ResponseBody Result shiSave(HttpServletRequest request, Model model, TAccident tAccident) throws Exception {
+    public @ResponseBody
+    Result shiSave(HttpServletRequest request, Model model, TAccident tAccident) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         tAccident.setUserId(user.getId());
@@ -3338,8 +3455,9 @@ public class CompanyController_cd extends BaseController {
      * 生产工艺流程页面保存
      */
     @RequestMapping("process/process-save")
-    public @ResponseBody Result processSave(HttpServletRequest request,
-            ProductionProcessDiagram productionProcessDiagram) throws Exception {
+    public @ResponseBody
+    Result processSave(HttpServletRequest request,
+                       ProductionProcessDiagram productionProcessDiagram) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         productionProcessDiagram.setUserId(user.getId());
@@ -3355,7 +3473,8 @@ public class CompanyController_cd extends BaseController {
      * 生产工艺流程页面删除
      */
     @RequestMapping("process/process-del")
-    public @ResponseBody Result processDel(Integer id) {
+    public @ResponseBody
+    Result processDel(Integer id) {
         Result result = new ResultImpl();
         productionProcessDiagramMapper.deleteByPrimaryKey(id);
         return result;
@@ -3386,7 +3505,7 @@ public class CompanyController_cd extends BaseController {
         }
         return "company/product/lightning-edit";
     }
-    
+
     /**
      * 个人职业健康监护
      */
@@ -3398,7 +3517,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("list", cyryjkjhMapper.selectList(m));
         return "company/evaluate/cyryjkjh-list";
     }
-    
+
     /**
      * 视频监控
      */
@@ -3412,7 +3531,8 @@ public class CompanyController_cd extends BaseController {
      * 防雷防静电设施页面保存
      */
     @RequestMapping("product/lightning-save")
-    public @ResponseBody Result lightningSave(HttpServletRequest request, LightningProtection lightningProtection) {
+    public @ResponseBody
+    Result lightningSave(HttpServletRequest request, LightningProtection lightningProtection) {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         lightningProtection.setUserId(user.getId());
@@ -3428,7 +3548,8 @@ public class CompanyController_cd extends BaseController {
      * 防雷防静电设施页面删除
      */
     @RequestMapping("product/lightning-del")
-    public @ResponseBody Result lightningDel(Integer id) {
+    public @ResponseBody
+    Result lightningDel(Integer id) {
         Result result = new ResultImpl();
         lightningProtectionMapper.deleteByPrimaryKey(id);
         return result;
@@ -3443,13 +3564,13 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("list", table6Mapper.selectTable(m));
         return "company/trouble/trouble-information-list";
     }
-    
+
     /**
      * 企业列表
      */
     @RequestMapping(value = "company/company-list")
-    public String companyList( Model model, HttpServletRequest request, 
-            Integer danger,Integer hazard) throws Exception {
+    public String companyList(Model model, HttpServletRequest request,
+                              Integer danger, Integer hazard) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("companyName", user.getUserName());
@@ -3457,17 +3578,18 @@ public class CompanyController_cd extends BaseController {
         m.put("hazard", hazard);
         List<DynamicParameter<String, Object>> mlist = companyMapper.selectCompanyList(m);
         model.addAttribute("list", mlist);
-        if(danger != null){
+        if (danger != null) {
             return "company/company-list-gwzy";
         }
         return "company/company-list-zdwxy";
     }
-    
+
     /**
      * 根据name获取企业列表
      */
     @RequestMapping(value = "company-list-name", method = RequestMethod.POST)
-    public @ResponseBody Result companyListName(String companyName) {
+    public @ResponseBody
+    Result companyListName(String companyName) {
         Result result = new ResultImpl();
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("companyName", companyName);
@@ -3475,7 +3597,7 @@ public class CompanyController_cd extends BaseController {
         result.setMap("list", mlist);
         return result;
     }
-    
+
     /**
      * 视频调试
      */
@@ -3484,8 +3606,8 @@ public class CompanyController_cd extends BaseController {
         return "company/videodebug";
     }
 
-	/**
-     *  为response提供Json格式的返回数据
+    /**
+     * 为response提供Json格式的返回数据
      */
     public void writeResponse(Object obj, HttpServletResponse response) {
         try {
@@ -3499,20 +3621,20 @@ public class CompanyController_cd extends BaseController {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * 下载资料
      */
     @RequestMapping(value = "download")
     public void hedownload(String filename, String fileurl, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-    	//log.error("request.getServletContext():"+request.getServletContext());
-    	//log.error("request.getServletContext().getRealPath('/'):"+request.getServletContext().getRealPath("/"));
-    	//log.error("fileurl.replace:"+fileurl.replace("/smaq", ""));
+        //log.error("request.getServletContext():"+request.getServletContext());
+        //log.error("request.getServletContext().getRealPath('/'):"+request.getServletContext().getRealPath("/"));
+        //log.error("fileurl.replace:"+fileurl.replace("/smaq", ""));
         File realPath = new File(request.getServletContext().getRealPath("/"), fileurl.replace("/smaq", ""));
         //log.error("realPath:"+realPath.toString());
         //log.error("realPath:"+realPath);
-        if(!realPath.exists()) {
+        if (!realPath.exists()) {
             response.setHeader("Content-type", "text/html;charset=UTF-8");
             response.setContentType("text/html;charset=utf-8");
             PrintWriter out = response.getWriter();
@@ -3521,11 +3643,11 @@ public class CompanyController_cd extends BaseController {
             out.close();
             return;
         }
-        
+
         filename = URLEncoder.encode(new String(filename.getBytes("ISO-8859-1"), "UTF-8"), "UTF-8");
         response.setContentType(request.getServletContext().getMimeType(filename));
         response.setHeader("Content-Disposition", "attachment;filename=" + filename);
-        
+
         InputStream in = new FileInputStream(realPath);
         OutputStream out = response.getOutputStream();
         try {

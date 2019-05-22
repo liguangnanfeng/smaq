@@ -53,6 +53,9 @@ public class AppController_xlb extends BaseController {
     @Autowired
     private CgfService cgfService;
 
+    @Autowired
+    private AppTokenData appTokenData;
+
     /**
      * 用户登录
      */
@@ -1181,21 +1184,23 @@ public class AppController_xlb extends BaseController {
         result.setData(tContingencyPlanMapper.selectTable(m));
         return result;
     }
-    
+
     /**
-     * 执法复查
+     * TODO  执法复查
      */
     @RequestMapping(value = "A045", method = RequestMethod.POST)
     public @ResponseBody AppResult fucha(HttpServletRequest request) {
         AppResult result = new AppResultImpl();
+
+        Officials zzjg = (Officials) appTokenData.getAppUser(request);
         Integer userId = getAppUserId(request);
-        if (null == userId) {
+        if (null == zzjg) {
             result.setStatus("2");
             result.setMessage("登录超时");
             return result;
         }
         Map<String, Object> m = new HashMap<String, Object>();
-        setUserId(userId, m);
+        setUserId(zzjg.getUid(), m);
         m.put("flag", 2);
         result.setData(tRectificationMapper.selectRectificationList(m));
         return result;

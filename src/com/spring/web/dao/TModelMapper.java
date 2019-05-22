@@ -53,7 +53,13 @@ public interface TModelMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TModel record);
-    
+
+    /**
+     * 综合检查
+     * 日检查表
+     * @param m
+     * @return
+     */
     List<Map<String, Object>> selectByMap(Map<String, Object> m);
     
     List<Map<String, Object>> selectByMap1(Map<String, Object> m);//检索条件增加，检查周期

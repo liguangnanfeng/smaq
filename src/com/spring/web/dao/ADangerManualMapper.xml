@@ -230,7 +230,6 @@
         </foreach>
   </select>
 
-
   <select id="selectById" resultType="com.spring.web.model.ACompanyManual">
     <!--
     fix a bug "id dmid" to "id" zhangcl 2018.10.27
@@ -240,19 +239,11 @@
 
   </select>
 
-
-
   <select id="selectFactors" resultType="com.spring.web.model.ADangerManual">
 
     select * from a_danger_manual_tbl where flag = #{flag} and industry = #{industry} ;
 
   </select>
-
-
-
-
-
-
 
   <select id="selectIndustryByid" resultType="String">
      select industry as name from  a_danger_manual_tbl where  id =  (select dmid  from a_company_manual_tbl where id = #{id});

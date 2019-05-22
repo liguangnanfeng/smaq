@@ -195,7 +195,9 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping("threeLeft")
     public String threeLeft(Model model, HttpServletRequest request, String leftBasic) throws Exception {
+        User user = getLoginUser(request);
         model.addAttribute("leftBasic", leftBasic);
+        model.addAttribute("userName", user.getUserName());
         return "company/threeLeft";
     }
 

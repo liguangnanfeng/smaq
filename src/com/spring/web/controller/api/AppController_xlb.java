@@ -1171,9 +1171,16 @@ public class AppController_xlb extends BaseController {
      * 应急预案列表
      */
     @RequestMapping(value = "A044", method = RequestMethod.POST)
-    public @ResponseBody AppResult yuan(HttpServletRequest request) {
+    public @ResponseBody AppResult yuan(HttpServletRequest request,Integer type) {
         AppResult result = new AppResultImpl();
-        Integer userId = getAppUserId(request);
+        Integer userId =null;
+        if(type==5){
+            ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
+            userId = zzjgPersonnel.getUid();
+        }else{
+            Officials officials = (Officials) appTokenData.getAppUser(request);
+            userId = officials.getUid();
+        }
         if (null == userId) {
             result.setStatus("2");
             result.setMessage("登录超时");

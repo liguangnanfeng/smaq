@@ -63,7 +63,7 @@ public class AppController_Custom_Check extends BaseController {
     private TCheckMapper tCheckMapper;
 
     /**
-     * TODO 获取部门,以及对应的岗位 level1 levle2
+     * TODO 获取部门,以及对应的岗位 level1(部门) levle2(岗位)
      *
      * @param request request请求
      * @return result 返回的基础信息
@@ -201,7 +201,7 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO pc端查询高危level1
+     * TODO pc端查询高危level1(细则)
      *
      * @return list  高危levelOne条目
      */
@@ -364,7 +364,9 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * pc端 现场检查/查询level3/level4
+     * TODO pc端 现场检查/查询level3/level4
+     * 做一个二维数组,显示现在出现的问题的就是数组的嵌套
+     *
      */
     @RequestMapping(value = "A2022", method = RequestMethod.POST)
     public @ResponseBody

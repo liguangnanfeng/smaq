@@ -203,17 +203,15 @@
         select * from zzjg_department_tbl where del = 0 and  level = 2 and pid = #{pid}
     </select>
 
-    <!--获取该公司所有的部门-->
+    <!--pc端获取该公司所有的部门-->
     <select id="selectByUid" resultType="java.util.Map">
-    select 
-        t1.id, t1.name, t1.level,
-        (select name from zzjg_company_tbl where id = t1.cid) companyName,
-        (select name from zzjg_department_tbl where id = t1.pid) parName
+    select
+    t1.id, t1.name, t1.level
     from zzjg_department_tbl t1
-    where 
-        t1.del = 0 
-        and t1.uid = #{uid,jdbcType=INTEGER}
-    order by t1.id desc
+    where t1.del = 0
+    and t1.uid =#{uid,jdbcType=INTEGER}
+    and t1.level =1
+    order by t1.id desc;
   </select>
 
     <select id="selectLevel1ByUid" resultType="java.util.Map">

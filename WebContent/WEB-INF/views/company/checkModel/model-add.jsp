@@ -135,6 +135,7 @@
                 dataType: "json",
                 success: function (result) {
                     if (result.length > 0) {
+                        console.log(result);
                         $(obj).parent().parent().parent('.level2').next().find('.project1Id').empty();
                         inspection.append('<option value="0">选择检查项目</option>')
                         $.each(result, function (index, item) {

@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.spring.web.BaseController;
 import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.*;
+import com.spring.web.model.request.CheckLevel;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
 import com.spring.web.result.Result;
@@ -19,6 +20,7 @@ import com.spring.web.tobject.cgf.CompanyListReqDTO;
 import com.spring.web.util.ConstantsUtil;
 import com.spring.web.util.DateConvertUtil;
 import com.spring.web.util.OutPrintUtil;
+import com.sun.glass.ui.mac.MacApplication;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.json.simple.JSONArray;
@@ -2639,17 +2641,14 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * TODO 添加检查模版
-     * 添加检查模版 ==> 就是要进行数据的传递
-     * 1. 根据总公司的id查询所有的部门
-     * 2. 根据 总Id 和部门查询所有的岗位
+     * TODO PC端添加检查模版 直接获取部门信息(该公司所有的部门,一级目录)和高危风险(暂时没有,做出一个判断)
      */
     @RequestMapping(value = "addCheckModel")
     public String addCheckModel(Model model, HttpServletRequest request) {
         User user = getLoginUser(request);
 
         /**
-         * 里面包含部门的id  部门的信息部门的等级  获取这个公司对应的所有的部门
+         * 里面包含部门的id  部门的信息 部门的等级  获取这个公司对应的所有的部门
          */
         List<Map<Object, Object>> maps = zzjgDepartmentMapper.selectByUid(user.getId());
 
@@ -2660,10 +2659,8 @@ public class VillageController extends BaseController {
                 String name = (String) map.get("name");//部门名称
                 Integer id = (Integer) map.get("id");//部门id
                 names.put(name, id);
-
             }
         }
-
         // 查询高危风险
         List<Map> list = checkManual.checkGaoWei(user.getId());
         if (list.size() == 0) {
@@ -2676,8 +2673,53 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 根据公司和部门获取对应岗位
+     * 前台跳转
+     * @return
+     */
+    @RequestMapping(value = "getCheckModelBasic")
+    public String getCheckModelBasic(){
+        return "company/checkModel/model-add";
+    }
+
+    /**
+     * 传递json格式字符串
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "addCheckModel2")
+    public Map addCheckModel2( HttpServletRequest request) {
+        User user = getLoginUser(request);
+
+        /**
+         * 里面包含部门的id  部门的信息 部门的等级  获取这个公司对应的所有的部门
+         */
+        List<Map<Object, Object>> maps = zzjgDepartmentMapper.selectByUid(user.getId());
+
+        // 获取所有的部门 使用list集合
+        Map<String, Integer> names = new HashMap<>();
+        for (Map<Object, Object> map : maps) {
+            if (1 == map.get("level")) { //表示是一级目录
+                String name = (String) map.get("name");//部门名称
+                Integer id = (Integer) map.get("id");//部门id
+                names.put(name, id);
+            }
+        }
+        // 查询高危风险
+        List<Map> list = checkManual.checkGaoWei(user.getId());
+        if (list.size() == 0) {
+            list = null;
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("danger", list);
+        map.put("map", names);
+
+        return map;
+    }
+    /**
+     * TODO 根据公司和部门获取对应岗位
      *
+     *  获取岗位
      * @return
      */
     @RequestMapping(value = "selectDep")
@@ -2692,24 +2734,35 @@ public class VillageController extends BaseController {
 
     /**
      * 根据公司和部门,岗位获取检查项
-     *
+     * 根据部门和岗位,获取风险点和对应的风险因素和数据
+     * 根据部门id 和岗位的名称获取level3和其他属性
      * @return
      */
     @RequestMapping(value = "findInspection")
     @ResponseBody
-    public List<ACompanyManual> findInspection(Integer depId, String sName, HttpServletRequest request) {
-        User user = getLoginUser(request);
+    public List findInspection(Integer depId, String sName, HttpServletRequest request) {
+     //   User user = getLoginUser(request);
 
-        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectByPrimaryKey(depId);
-        List<ACompanyManual> ACompanyManual = aCompanyManualMapper.findInspection(String.valueOf(user.getId()), zzjgDepartment.getName(), sName);
-
-        return ACompanyManual;
+        String dpName = zzjgDepartmentMapper.selectByPrimaryKey(depId).getName();// 部门名称
+        //根据公司的id 部门名称和岗位信息获取该部门所有的风险点
+        List<String> level3s = aCompanyManualMapper.findInspection(String.valueOf(/*user.getId()*/26), dpName, sName); //获取level3
+        List list  = new ArrayList();
+        for (String level3 : level3s) { //根据level3获取level4和数据
+            LinkedHashMap<String,Object> map = new LinkedHashMap<String,Object>();
+            CheckLevel checkLevel = new CheckLevel();
+            checkLevel.setUid(/*user.getId()*/26);
+            checkLevel.setLevel1(dpName);
+            checkLevel.setLevel2(sName);
+            checkLevel.setLevel3(level3);
+            List<Map> listMap = aCompanyManualMapper.selectLevel4AndId(checkLevel);
+            map.put(level3,listMap);
+            list.add(map);
+        }
+        return list;
     }
 
     /**
-     * PC 企业端保存保存检查模板
-     * <p>
-     * 多个部门
+     * TODO PC 企业端保存保存检查模板
      */
     @ResponseBody
     @RequestMapping(value = "saveCheckMenu2")
@@ -2955,12 +3008,9 @@ public class VillageController extends BaseController {
                         tModelPart1.setModelId(model.getId()); // 模版id
                         tModelPart1.setName((String) map1.get("gw")); // 存储的就是岗位名称
                         tModelPartMapper.insertSelective(tModelPart1);
-
                     }
                 }
-
             }
-
            result.setStatus("0");
            return result;
        }catch (Exception e){
@@ -2969,64 +3019,4 @@ public class VillageController extends BaseController {
            return result;
        }
     }
-
-    /**
-     * 保存模版
-     *
-     * @param title
-     * @param uid
-     * @return
-     */
-    private Integer saveModel(String title, Integer uid, Object checkType, TCompany tCompany, String checkNature, ZzjgDepartment zzjgDepartment, String time) {
-
-        // 保存model到数据库
-        TModel model = new TModel();
-        model.setTitle(title);   // 计划检查名
-        model.setUserId(uid);    // 企业id
-        model.setFlag(1);        //自查
-        model.setType(Integer.parseInt((String) checkType)); //  检查类型  日常, 定期, 临时
-        if(null != zzjgDepartment){
-            model.setPart(zzjgDepartment.getName()); // 被检查的部门
-        }
-
-        //基础, 现场, 高危
-        if ("-2".equals(checkNature)) { //现场
-            model.setIndustryId(tCompany.getIndustry1());  //行业id
-            model.setIndustryType(2);
-        } else if ("-1".equals(checkNature)) {
-            model.setIndustryId(Integer.parseInt(tCompany.getIndustry2()));
-            model.setIndustryType(1); // 基础
-        } else {
-
-            model.setIndustryType(3); // 高危
-        }
-
-        model.setCreateTime(new Date()); //创建时间
-
-        if (null != time&& !"".equals(time)) {  // 保存定期生成时间
-
-            Date d = new Date();
-            long time1 = d.getTime();
-
-            int i = Integer.parseInt(time) * 24 * 60 * 60 * 1000;
-            long l = time1 + i;
-            Date t = new Date(l);
-
-            model.setCycle(Integer.getInteger(time)); //定期周期天数
-            model.setNextTime(t);     // 下次生成的时间
-            model.setNextCheckTime(t); // 定期检查的时间
-            model.setOpen(1);          // 定期生成
-
-        }
-
-        tModelMapper.insertSelective(model);
-        TModelPart tModelPart = new TModelPart();
-        tModelPart.setModelId(model.getId()); // 模版id
-
-        tModelPart.setName(zzjgDepartment.getName()); // 存储的就是岗位名称
-
-        tModelPartMapper.insertSelective(tModelPart);
-        return model.getId();
-    }
-
 }

@@ -61,6 +61,7 @@ public interface ZzjgDepartmentMapper {
 
     /**
      * 根据公司名称获取部门
+     *
      * @param uid
      * @return
      */

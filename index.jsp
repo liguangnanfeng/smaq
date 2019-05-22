@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/WEB-INF/inc/header.inc"%>
 <script type="text/javascript"  src="${ly }/js/index.js"></script>
-<title>苏阳之家</title>
+<title>怎会回事</title>
 <style type="text/css">
 .index_body_css{margin: 0px;padding:0px;background: #485a7e}
 .index_main_css {width:400px;height:280px;position:absolute;top:50%;left:50%;margin:-140px 0 0 -200px;z-index:100;}

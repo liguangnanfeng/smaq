@@ -199,9 +199,9 @@
                 //parent.show_dialog('添加检查表','/company/model-add?type=3&flag=1&ids='+ids+'&depid='+depId);
                 //})
                 //alert("depId:"+depId);
-                parent.window.location.href = '/company/model-add?type=9&flag=1&ids='+ids+'&depId='+depId;//1:综合检查表；2：定期检查表；3：整改复查 ；9：检查表 zhangcl 2018.10.27
+                //parent.window.location.href = '/company/model-add?type=9&flag=1&ids='+ids+'&depId='+depId;//1:综合检查表；2：定期检查表；3：整改复查 ；9：检查表 zhangcl 2018.10.27
 
-                //parent.reload_();
+                parent.reload_();
                 //alert("11");
             })
         })

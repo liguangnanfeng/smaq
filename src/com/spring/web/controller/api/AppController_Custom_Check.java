@@ -243,7 +243,7 @@ public class AppController_Custom_Check extends BaseController {
                 return result;
             }
 
-            // 查询高危风险
+            // 查询基础
             Map map = checkManual.checkJiChu(zzjg.getUid());
             result.setStatus("0");
             result.setMessage("查询成功");
@@ -366,7 +366,6 @@ public class AppController_Custom_Check extends BaseController {
     /**
      * TODO pc端 现场检查/查询level3/level4
      * 做一个二维数组,显示现在出现的问题的就是数组的嵌套
-     *
      */
     @RequestMapping(value = "A2022", method = RequestMethod.POST)
     public @ResponseBody

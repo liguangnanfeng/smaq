@@ -75,10 +75,12 @@
         <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan">
             <thead>
             <tr class="text-c">
-                <th style="width:10%">工艺</th>
-                <th style="width:10%">系统</th>
-                <th style="width:10%">场所/环节/部位</th>
-                <th style="width:60%">风险因素</th>
+                <th style="width:10%">辨识类型</th>
+                <th style="width:10%">车间</th>
+                <th style="width:10%">岗位</th>
+                <th style="width:60%">系统</th>
+                <th style="width:10%">风险类型</th>
+                <th style="width:10%">风险因素</th>
                 <th style="width:10%">操作</th>
             </tr>
             </thead>
@@ -92,9 +94,13 @@
                     <%--<td class="text-c">${ls[0] != null ? ls[0] : "无数据" }</td>
                     <td class="text-c">${ls[1] != null ? ls[1] : "无数据" }</td>
                     <td class="text-c">${ls[2] != null ? ls[2] : "无数据" }</td>--%>
+                    <td class="text-c">${be.level1}</td>
 
-                    <c:if test="${ not empty ls[0]}">
-                        <td class="text-c">${ls[0]}</td>
+                    <td class="text-c">${be.level1}</td>
+                    <td class="text-c">${be.level2}</td>
+                    <td class="text-c">${be.level3}</td>
+                 <%--   <c:if test="${ not empty ls[0]}">
+
                     </c:if>
 
                     <c:if test="${empty ls[0]}">
@@ -103,7 +109,7 @@
 
                     <c:if test="${ not empty ls[1]}">
                         <td class="text-c">${ls[1]}</td>
-                    </c:if>
+                    </c:if>--%>
 
                     <c:if test="${empty ls[1]}">
                         <td class="text-c"><font style="display: none">${be.id}</font> </td>
@@ -120,6 +126,12 @@
 
                     <td>
                         <p style="float:left;width:100%;">${be.factors}</p>
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
                     </td>
                     <td class="text-c" style="width:90px">
                             <%--           <button class="btn btn-primary radius" onClick="addgj('${be.id}')">确定风险操作</button> --%>
@@ -237,7 +249,6 @@
             })
         })
     }
-
 
     function del(id) {
         layer.confirm("确定删除该记录?", function(r) {

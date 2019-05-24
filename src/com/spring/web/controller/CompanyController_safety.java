@@ -22,11 +22,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
+ * @author CGF
+ * @version V1.0
  * @Title: CompanyController_cd
  * @Description: TODO(用一句话描述该文件做什么)
- * @author CGF
  * @date 2017年7月27日 上午9:49:51
- * @version V1.0
  */
 @Controller
 @RequestMapping("company/safety-system")
@@ -64,6 +64,7 @@ public class CompanyController_safety extends BaseController {
 
         return result;
     }
+
     /**
      * 企业风险辨识-删除
      */
@@ -78,8 +79,8 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-    * 多选框删除
-    * */
+     * 多选框删除
+     * */
     @RequestMapping({"aCompanyManual-deletes"})
     @ResponseBody
     public Result aCompanyManualDel(HttpServletRequest request, String ids) throws Exception {
@@ -91,12 +92,9 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-
-
-
     /*
-    * 较大风险删除
-    * */
+     * 较大风险删除
+     * */
     @RequestMapping({"aCompanyManual-del"})
     @ResponseBody
     public Result aCompanyManualDel(HttpServletRequest request, Integer id) throws Exception {
@@ -106,13 +104,12 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-
-
     /*
-    *  重大风险一键导入 2
-    * */
+     *  重大风险一键导入 2
+     * */
     @RequestMapping(value = "risk-list-add1")
-    public @ResponseBody Result riskList(HttpServletRequest request){
+    public @ResponseBody
+    Result riskList(HttpServletRequest request) {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
@@ -125,8 +122,8 @@ public class CompanyController_safety extends BaseController {
         ACompanyManual aCompanyManuals;
         List<String> list = null;
 
-        if ( null != company.getIndustry()){
-            if (company.getIndustry().contains("化工企业（危险化学品生产、经营、使用）、加油站")){
+        if (null != company.getIndustry()) {
+            if (company.getIndustry().contains("化工企业（危险化学品生产、经营、使用）、加油站")) {
                 list = new ArrayList<>();
                 list.add("危险化学品生产、经营单位主要负责人和安全生产管理人员未依法经考核合格。");
                 list.add("特种作业人员未持证上岗。");
@@ -149,7 +146,7 @@ public class CompanyController_safety extends BaseController {
                 list.add("新开发的危险化学品生产工艺未经小试、中试、工业化试验直接进行工业化生产；国内首次使用的化工工艺未经过省级人民政府有关部门组织的安全可靠性论证；新建装置未制定试生产方案投料开车；精细化工企业未按规范性文件要求开展反应安全风险评估。");
                 list.add("未按国家标准分区分类储存危险化学品，超量、超品种储存危险化学品，相互禁配物质混放混存。");
 
-            }else if (company.getIndustry().contains("烟花爆竹经营(批发)企业")) {
+            } else if (company.getIndustry().contains("烟花爆竹经营(批发)企业")) {
 
                 list = new ArrayList<>();
                 list.add("主要负责人、安全生产管理人员未依法经考核合格。");
@@ -240,7 +237,7 @@ public class CompanyController_safety extends BaseController {
         }
 
 
-        if ( null != company.getDangers() && company.getDangers().contains("粉尘涉爆")) {
+        if (null != company.getDangers() && company.getDangers().contains("粉尘涉爆")) {
 
             list.add("粉尘爆炸危险场所设置在非框架结构的多层建构筑物内，或与居民区、员工宿舍、会议室等人员密集场所安全距离不足。");
             list.add("可燃性粉尘与可燃气体等易加剧爆炸危险的介质共用一套除尘系统，不同防火分区的除尘系统互联互通。");
@@ -293,10 +290,11 @@ public class CompanyController_safety extends BaseController {
     }*/
 
     /*
-    *  清空高危风险数据
-    * */
+     *  清空高危风险数据
+     * */
     @RequestMapping(value = "risk-list-adddel1")
-    public @ResponseBody Result adddel1(HttpServletRequest request,Model model,Integer type){
+    public @ResponseBody
+    Result adddel1(HttpServletRequest request, Model model, Integer type) {
 
         Result result = new ResultImpl();
         User user = getLoginUser(request);
@@ -308,7 +306,7 @@ public class CompanyController_safety extends BaseController {
             aCompanyManualMapper.updateAll(aCompanyManualList.get(i).getId());
         }
 
-        return  result;
+        return result;
     }
 
 
@@ -389,7 +387,14 @@ public class CompanyController_safety extends BaseController {
         return "company/safety-system/risk-list1";
     }*/
 
-
+    /**
+     * 风险辨识,其他因素
+     * @param model
+     * @param request
+     * @param type
+     * @return
+     * @throws Exception
+     */
     @RequestMapping({"risk-list"})
     public String riskList(Model model, HttpServletRequest request, Integer type) throws Exception {
         User user = this.getLoginUser(request);
@@ -414,15 +419,15 @@ public class CompanyController_safety extends BaseController {
                 acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);
                 Iterator it = acL.iterator();
 
-                while(it.hasNext()) {
-                    Map<String, Object> ac = (Map)it.next();
+                while (it.hasNext()) {
+                    Map<String, Object> ac = (Map) it.next();
                     String level1 = ac.get("level1").toString();
                     String level2 = ac.get("level2").toString();
                     boolean has = false;
                     Iterator var15 = zzjg.iterator();
 
-                    while(var15.hasNext()) {
-                        Map<Object, Object> zz = (Map)var15.next();
+                    while (var15.hasNext()) {
+                        Map<Object, Object> zz = (Map) var15.next();
                         String p = zz.get("parName").toString();
                         String name = zz.get("name").toString();
                         if (p.equals(level1) && name.equals(level2)) {
@@ -441,11 +446,9 @@ public class CompanyController_safety extends BaseController {
         }
     }
 
-
-
     /*
-    * 风险点辨识表
-    * */
+     * TODO 风险点辨识表
+     * */
     @RequestMapping({"risk-list-update"})
     public String riskList1(Model model, HttpServletRequest request, Integer type) throws Exception {
         User user = this.getLoginUser(request);
@@ -463,15 +466,6 @@ public class CompanyController_safety extends BaseController {
             model.addAttribute("list", acL);
             return "company/safety-system/risk-list-update";
         }
-    }
-	
-	/**
-	* 截图
-	*/
-    @RequestMapping({"jietu"})
-    public String jietu(Model model, HttpServletRequest request) throws Exception {
-        
-        return "company/safety-system/jietu";
     }
 
     /*
@@ -491,17 +485,17 @@ public class CompanyController_safety extends BaseController {
         for (int i = 0; i < aCompanyManualList.size(); i++) {
             aCompanyManualMapper.updateAll(aCompanyManualList.get(i).getId());
         }
-        ACompanyManual aCompanyManual1 ;
+        ACompanyManual aCompanyManual1;
         // 根据 行业 查询该行业中所有的较大风险信息
-        List<ADangerManual> aDangerManualList = aDangerManualMapper.selectFactors("1",company.getIndustry()) ;
+        List<ADangerManual> aDangerManualList = aDangerManualMapper.selectFactors("1", company.getIndustry());
 
 
-        if (aDangerManualList.size() != 0){
+        if (aDangerManualList.size() != 0) {
             for (int i = 0; i < aDangerManualList.size(); i++) {
 
                 aCompanyManual1 = new ACompanyManual();
                 aCompanyManual1.setUid(user.getId());
-                aCompanyManual1.setLevel3(aDangerManualList.get(i).getLevel1()+"/"+aDangerManualList.get(i).getLevel2()+"/"+aDangerManualList.get(i).getLevel3());
+                aCompanyManual1.setLevel3(aDangerManualList.get(i).getLevel1() + "/" + aDangerManualList.get(i).getLevel2() + "/" + aDangerManualList.get(i).getLevel3());
                 aCompanyManual1.setFactors(aDangerManualList.get(i).getFactors());
                 aCompanyManual1.setType(aDangerManualList.get(i).getType());
                 aCompanyManual1.setMeasures(aDangerManualList.get(i).getMeasures());
@@ -515,7 +509,7 @@ public class CompanyController_safety extends BaseController {
                 aCompanyManualMapper.save(aCompanyManual1);
             }
             return result;
-        }else {
+        } else {
             result.setStatus("1");
             result.setMess("该行业暂无较大风险！");
             return result;
@@ -524,8 +518,8 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-    * 清空较大风险
-    * */
+     * 清空较大风险
+     * */
     @RequestMapping({"risk-list-adddel"})
     @ResponseBody
     public Result riskListDel(Model model, HttpServletRequest request, Integer type) throws Exception {
@@ -543,10 +537,9 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-
     /*
-    * 导入一般和较小风险   3
-    * */
+     * 导入一般和较小风险   3
+     * */
     @RequestMapping({"risk-list-add2"})
     @ResponseBody
     public Result riskListAdd2(Model model, HttpServletRequest request, Integer type) throws Exception {
@@ -563,17 +556,17 @@ public class CompanyController_safety extends BaseController {
             aCompanyManualMapper.updateAll(aCompanyManualList.get(i).getId());
         }
 
-        ACompanyManual aCompanyManual1 ;
+        ACompanyManual aCompanyManual1;
 
         // 根据 行业 查询该行业中所有的较大风险信息
-        List<ADangerManual> aDangerManualList = aDangerManualMapper.selectFactors("3",company.getIndustry()) ;
+        List<ADangerManual> aDangerManualList = aDangerManualMapper.selectFactors("3", company.getIndustry());
 
-        if (aDangerManualList.size() != 0){
+        if (aDangerManualList.size() != 0) {
             for (int i = 0; i < aDangerManualList.size(); i++) {
 
                 aCompanyManual1 = new ACompanyManual();
                 aCompanyManual1.setUid(user.getId());
-                aCompanyManual1.setLevel3(aDangerManualList.get(i).getLevel()+"/"+aDangerManualList.get(i).getLevel2()+"/"+aDangerManualList.get(i).getLevel3());
+                aCompanyManual1.setLevel3(aDangerManualList.get(i).getLevel() + "/" + aDangerManualList.get(i).getLevel2() + "/" + aDangerManualList.get(i).getLevel3());
                 aCompanyManual1.setFactors(aDangerManualList.get(i).getFactors());
                 aCompanyManual1.setType(aDangerManualList.get(i).getType());
                 aCompanyManual1.setMeasures(aDangerManualList.get(i).getMeasures());
@@ -587,7 +580,7 @@ public class CompanyController_safety extends BaseController {
 
             }
             return result;
-        }else {
+        } else {
             result.setStatus("1");
             result.setMess("该行业暂无风险！");
             return result;
@@ -595,11 +588,9 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-
-
     /*
-    * 清空其它数据信息
-    * */
+     * 清空其它数据信息
+     * */
     @RequestMapping({"risk-list-adddels"})
     @ResponseBody
     public Result adddels(Model model, HttpServletRequest request, Integer type) throws Exception {
@@ -615,10 +606,6 @@ public class CompanyController_safety extends BaseController {
 
         return result;
     }
-
-
-
-
 
 
 //        Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
@@ -697,7 +684,7 @@ public class CompanyController_safety extends BaseController {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         if (StringUtils.isEmpty(company.getIndustry())) {
-            model.addAttribute("url",  request.getRequestURI() + "?id=" + id);
+            model.addAttribute("url", request.getRequestURI() + "?id=" + id);
             return "company/safety-system/type";
         }
         model.addAttribute("company", company);
@@ -709,9 +696,10 @@ public class CompanyController_safety extends BaseController {
      * 设置风险因素-保存
      */
     @RequestMapping(value = "set-risk-edit")
-    public @ResponseBody Result setRiskEdit(Model model, ACompanyManual ac,
-                                            HttpServletRequest request,
-                                            String gzkhxys, String gzkwlys) throws Exception {
+    public @ResponseBody
+    Result setRiskEdit(Model model, ACompanyManual ac,
+                       HttpServletRequest request,
+                       String gzkhxys, String gzkwlys) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         ACompanyManual a = aCompanyManualMapper.selectByPrimaryKey(ac.getId());
@@ -723,9 +711,9 @@ public class CompanyController_safety extends BaseController {
 
         aCompanyManualMapper.updateCompanyDlevel(user.getId());
 
-        if(null != gzkhxys || null != gzkwlys) {
+        if (null != gzkhxys || null != gzkwlys) {
             AGzk gzk = aGzkMapper.selectByPrimaryKey(ac.getId());
-            if(null == gzk) {
+            if (null == gzk) {
                 gzk = new AGzk(ac.getId(), gzkhxys, gzkwlys);
                 aGzkMapper.insertSelective(gzk);
             } else {
@@ -736,12 +724,12 @@ public class CompanyController_safety extends BaseController {
         }
 
         //处理两重点一重大的
-        if(null != ac.getGy()) {
+        if (null != ac.getGy()) {
             Regulation r = regulationGet(user.getId());
-            if(null == r) {
+            if (null == r) {
                 r = new Regulation();
                 r.setUserId(user.getId());
-                if("".equals(ac.getGy())) {
+                if ("".equals(ac.getGy())) {
                     r.setProcess(0);
                 } else {
                     r.setProcess(1);
@@ -749,16 +737,16 @@ public class CompanyController_safety extends BaseController {
                 r.setProcessName(ac.getGy());
                 regulationMapper.insertSelective(r);
             } else {
-                if(!"".equals(ac.getGy())) {
+                if (!"".equals(ac.getGy())) {
                     r.setProcess(1);
                     String process_name = r.getProcessName();
-                    if(StringUtils.isBlank(process_name)) {
+                    if (StringUtils.isBlank(process_name)) {
                         r.setProcessName(ac.getGy());
                         regulationMapper.updateByPrimaryKeySelective(r);
                     } else {
                         String[] gys = ac.getGy().split("!@#");
-                        for(String gy : gys) {
-                            if(process_name.indexOf(gy) == -1) {
+                        for (String gy : gys) {
+                            if (process_name.indexOf(gy) == -1) {
                                 process_name = process_name + "," + gy;
                             }
                         }
@@ -780,10 +768,10 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("ac", aCompanyManualMapper.selectByPrimaryKey(id));
         model.addAttribute("aGzk", aGzkMapper.selectByPrimaryKey(id));
         model.addAttribute("type", type);
-        if(type.intValue() == 1) {//物理因素
+        if (type.intValue() == 1) {//物理因素
             model.addAttribute("list", aHxysgzkMapper.selectAll());
         }
-        if(type.intValue() == 2) {//化学因素
+        if (type.intValue() == 2) {//化学因素
             List<AMaterial> list = aMaterialMapper.selectAll();//化学因素
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("userId", user.getId());
@@ -791,21 +779,21 @@ public class CompanyController_safety extends BaseController {
             List<Product> pL = productMapper.selectByUserId(m);//生产产品
 
             List<AMaterial> list2 = new ArrayList<AMaterial>();
-            for(AMaterial ama : list) {
+            for (AMaterial ama : list) {
                 Boolean x = false;
-                for(Material ma : mL) {
-                    if(ma.getMaterial().indexOf(ama.getName()) > -1 ||
+                for (Material ma : mL) {
+                    if (ma.getMaterial().indexOf(ama.getName()) > -1 ||
                             ama.getName().indexOf(ma.getMaterial()) > -1) {
                         list2.add(ama);
                         x = true;
                         break;
                     }
                 }
-                if(x) {
+                if (x) {
                     continue;
                 }
-                for(Product p : pL) {
-                    if(p.getProductName().indexOf(ama.getName()) > -1 ||
+                for (Product p : pL) {
+                    if (p.getProductName().indexOf(ama.getName()) > -1 ||
                             ama.getName().indexOf(p.getProductName()) > -1) {
                         list2.add(ama);
                         break;
@@ -815,10 +803,10 @@ public class CompanyController_safety extends BaseController {
 
             model.addAttribute("list", list2);
         }
-        if(type.intValue() == 3) {//工艺
+        if (type.intValue() == 3) {//工艺
             model.addAttribute("list", aGyMapper.selectAll());
         }
-        if(type.intValue() == 4) {//物料
+        if (type.intValue() == 4) {//物料
             Set<String> list = new HashSet<String>();
 
             List<AMaterial> amL = aMaterialMapper.selectAll();//化学因素
@@ -827,18 +815,18 @@ public class CompanyController_safety extends BaseController {
             List<Material> mL = materialMapper.selectByUserId(m);//原辅材料
             List<Product> pL = productMapper.selectByUserId(m);//生产产品
 
-            for(Material ma : mL) {
-                for(AMaterial ama : amL) {
-                    if(ma.getMaterial().indexOf(ama.getName()) > -1 ||
+            for (Material ma : mL) {
+                for (AMaterial ama : amL) {
+                    if (ma.getMaterial().indexOf(ama.getName()) > -1 ||
                             ama.getName().indexOf(ma.getMaterial()) > -1) {
                         list.add(ma.getMaterial());
                         break;
                     }
                 }
             }
-            for(Product p : pL) {
-                for(AMaterial ama : amL) {
-                    if(p.getProductName().indexOf(ama.getName()) > -1 ||
+            for (Product p : pL) {
+                for (AMaterial ama : amL) {
+                    if (p.getProductName().indexOf(ama.getName()) > -1 ||
                             ama.getName().indexOf(p.getProductName()) > -1) {
                         list.add(p.getProductName());
                         break;
@@ -848,9 +836,9 @@ public class CompanyController_safety extends BaseController {
 
             model.addAttribute("list", list);
         }
-        if(type.intValue() == 5) {//高危作业
+        if (type.intValue() == 5) {//高危作业
             Company company = companyMapper.selectByPrimaryKey(user.getId());
-            if(StringUtils.isBlank(company.getDangers())) {
+            if (StringUtils.isBlank(company.getDangers())) {
                 model.addAttribute("list", new ArrayList<String>());
             } else {
                 model.addAttribute("list", company.getDangers().split(","));
@@ -867,12 +855,12 @@ public class CompanyController_safety extends BaseController {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         if (StringUtils.isEmpty(company.getIndustry())) {
-            model.addAttribute("url",  request.getRequestURI());
+            model.addAttribute("url", request.getRequestURI());
             return "company/safety-system/type";
         }
         AGzk gzk = aGzkMapper.selectByPrimaryKey(user.getId());
-        if(null != gzk) {
-            if(StringUtils.isNotBlank(gzk.getWlys())) {//物理因素
+        if (null != gzk) {
+            if (StringUtils.isNotBlank(gzk.getWlys())) {//物理因素
                 model.addAttribute("list", aHxysgzkMapper.selectByIds(gzk.getWlys()));
             }
         }
@@ -894,8 +882,8 @@ public class CompanyController_safety extends BaseController {
             return "company/safety-system/type";
         }
         AGzk gzk = aGzkMapper.selectByPrimaryKey(user.getId());
-        if(null != gzk) {
-            if(StringUtils.isNotBlank(gzk.getHxys())) {//化学因素
+        if (null != gzk) {
+            if (StringUtils.isNotBlank(gzk.getHxys())) {//化学因素
                 model.addAttribute("list", aMaterialMapper.selectByIds(gzk.getHxys()));
             }
         }
@@ -912,12 +900,12 @@ public class CompanyController_safety extends BaseController {
         User user = getLoginUser(request);
         List<AGzk> gzk = aGzkMapper.selectByUid(user.getId());
         Set<String> s = new HashSet<String>();
-        for(AGzk a : gzk) {
-            if(StringUtils.isNotBlank(a.getWlys())) {
+        for (AGzk a : gzk) {
+            if (StringUtils.isNotBlank(a.getWlys())) {
                 s.addAll(Arrays.asList(a.getWlys().split(",")));
             }
         }
-        if(s.size() > 0) {//物理因素
+        if (s.size() > 0) {//物理因素
             model.addAttribute("wlysL", aHxysgzkMapper.selectByIds(StringUtils.join(s, ",")));
         }
         return "company/safety-system/harm-list";
@@ -931,12 +919,12 @@ public class CompanyController_safety extends BaseController {
         User user = getLoginUser(request);
         List<AGzk> gzk = aGzkMapper.selectByUid(user.getId());
         Set<String> s = new HashSet<String>();
-        for(AGzk a : gzk) {
-            if(StringUtils.isNotBlank(a.getHxys())) {
+        for (AGzk a : gzk) {
+            if (StringUtils.isNotBlank(a.getHxys())) {
                 s.addAll(Arrays.asList(a.getHxys().split(",")));
             }
         }
-        if(s.size() > 0) {//物理因素
+        if (s.size() > 0) {//物理因素
             model.addAttribute("list", aMaterialMapper.selectByIds(StringUtils.join(s, ",")));
         }
         return "company/safety-system/risk-information-list2";
@@ -989,18 +977,18 @@ public class CompanyController_safety extends BaseController {
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("uid", user.getId());
         //m.put("flag2", 1);
-        m.put("levels", new String[]{"红色","橙色","黄色","蓝色"});
+        m.put("levels", new String[]{"红色", "橙色", "黄色", "蓝色"});
         List<Map<String, Object>> acL = aCompanyManualMapper.selectByMap(m);
         //所有重大较大风险
-        List<Map<String, Object>> acL_f = new ArrayList<Map<String,Object>>();
-        for(Map<String, Object> ac : acL) {
+        List<Map<String, Object>> acL_f = new ArrayList<Map<String, Object>>();
+        for (Map<String, Object> ac : acL) {
             String level = getStringFromMap(ac, "level");
-            if(level.equals("红色") || level.equals("橙色")) {
+            if (level.equals("红色") || level.equals("橙色")) {
                 acL_f.add(ac);
             }
         }
 
-        if(acL_f.size() == 0) {//没有重大较大隐患
+        if (acL_f.size() == 0) {//没有重大较大隐患
             model.addAttribute("flag", flag);
             return "company/safety-system/risk-information-list_0";
         }
@@ -1010,10 +998,10 @@ public class CompanyController_safety extends BaseController {
         //List<String> adanerTypeList = aDangerTypeMapper.selectAll();
 
         //公司级公告牌
-        if(flag.intValue() == 1) {
+        if (flag.intValue() == 1) {
             AFxgzp ggp = aFxgzpMapper.selectFlag1(user.getId());
-            if(null == ggp || ggp.getIsedit().intValue() == 0) {//没有公告牌或没有修改过，重新生成
-                if(null == ggp) {
+            if (null == ggp || ggp.getIsedit().intValue() == 0) {//没有公告牌或没有修改过，重新生成
+                if (null == ggp) {
                     ggp = new AFxgzp();
                 }
                 ggp.setFlag(1);
@@ -1027,11 +1015,11 @@ public class CompanyController_safety extends BaseController {
 
                 //公司的应急处置措施按照危险来
                 StringBuilder yjczcs = new StringBuilder();
-                for(AGwyjSh s : shL) {
+                for (AGwyjSh s : shL) {
                     yjczcs.append("<b>").append(s.getName()).append("：</b>").append(s.getMeasures()).append("<br>");
                 }
                 ggp.setYjczcs(yjczcs.toString());
-                if(null == ggp.getId()) {
+                if (null == ggp.getId()) {
                     aFxgzpMapper.insertSelective(ggp);
                 } else {
                     aFxgzpMapper.updateByPrimaryKeySelective(ggp);
@@ -1043,9 +1031,9 @@ public class CompanyController_safety extends BaseController {
         }
 
         //车间级
-        if(flag.intValue() == 2) {
+        if (flag.intValue() == 2) {
             Set<String> nameL = new HashSet<String>();//二级分类作为名称
-            for(Map<String, Object> ac : acL_f) {
+            for (Map<String, Object> ac : acL_f) {
                 String level1 = getStringFromMap(ac, "level1");
 //                String level2 = getStringFromMap(ac, "level2");
 //                String gkzt = getStringFromMap(ac, "gkzt");
@@ -1053,13 +1041,13 @@ public class CompanyController_safety extends BaseController {
 //                    continue;
 //                }
 //                nameL.add(gkzt);
-                if(StringUtils.isBlank(level1)) {
+                if (StringUtils.isBlank(level1)) {
                     continue;
                 }
                 nameL.add(level1);
             }
 
-            if(nameL.size() == 0) {//没有重大较大隐患
+            if (nameL.size() == 0) {//没有重大较大隐患
                 model.addAttribute("flag", flag);
                 return "company/safety-system/risk-information-list_0";
             }
@@ -1068,13 +1056,13 @@ public class CompanyController_safety extends BaseController {
         }
 
         //岗位级
-        if(flag.intValue() == 3) {
+        if (flag.intValue() == 3) {
             Set<String> nameL = new HashSet<String>();//二级分类作为名称
-            for(Map<String, Object> ac : acL_f) {
+            for (Map<String, Object> ac : acL_f) {
                 String level1 = getStringFromMap(ac, "level1");
                 String level2 = getStringFromMap(ac, "level2");
 //                String level3 = getStringFromMap(ac, "level3");
-                if(StringUtils.isBlank(level1)) {
+                if (StringUtils.isBlank(level1)) {
                     continue;
                 }
                 nameL.add(level1 + "/" + level2);
@@ -1085,7 +1073,7 @@ public class CompanyController_safety extends BaseController {
 //                }
             }
 
-            if(nameL.size() == 0) {//没有重大较大隐患
+            if (nameL.size() == 0) {//没有重大较大隐患
                 model.addAttribute("flag", flag);
                 return "company/safety-system/risk-information-list_0";
             }
@@ -1107,11 +1095,11 @@ public class CompanyController_safety extends BaseController {
         Set<String> fxys = new HashSet<String>();//风险因素
         Set<String> fxys_zd = new HashSet<String>();//重大风险因素
         Set<String> ffcs = new HashSet<String>();//防范措施
-        for(Map<String, Object> ac : acL) {
+        for (Map<String, Object> ac : acL) {
             //风险等级
             String level = getStringFromMap(ac, "level");
-            if(fxdj.toString().indexOf(level.replace("色", "")) == -1) {
-                if(!"".equals(fxdj.toString())) {
+            if (fxdj.toString().indexOf(level.replace("色", "")) == -1) {
+                if (!"".equals(fxdj.toString())) {
                     fxdj.append(",");
                 }
                 fxdj.append(level.replace("色", ""));
@@ -1119,20 +1107,21 @@ public class CompanyController_safety extends BaseController {
 
             //事故类型
             String type = getStringFromMap(ac, "type");
-            if(StringUtils.isNotBlank(type)) {
-                for(AGwyjSh e : shList) {
-                    if(type.indexOf(e.getName()) > -1) {
-                        if(sglx.add(e.getName())) {
+            if (StringUtils.isNotBlank(type)) {
+                for (AGwyjSh e : shList) {
+                    if (type.indexOf(e.getName()) > -1) {
+                        if (sglx.add(e.getName())) {
                             shL.add(e);
-                        };
+                        }
+                        ;
                     }
                 }
             }
 
             //风险因素
             String factors = getStringFromMap(ac, "factors");
-            if(StringUtils.isNotBlank(factors)) {
-                if(level.equals("红色")) {
+            if (StringUtils.isNotBlank(factors)) {
+                if (level.equals("红色")) {
                     fxys_zd.add(factors);
                 } else {
                     fxys.add(factors);
@@ -1141,13 +1130,13 @@ public class CompanyController_safety extends BaseController {
 
             //措施
             String measures = getStringFromMap(ac, "measures");
-            if(StringUtils.isNotBlank(measures)) {
+            if (StringUtils.isNotBlank(measures)) {
                 ffcs.add(measures);
             }
         }
 
         ggp.setFxdj(fxdj.toString());//风险等级
-        if(sglx.size() > 0) {//事故类型
+        if (sglx.size() > 0) {//事故类型
             ggp.setSglx(StringUtils.join(sglx, "、") + "等");
         }
         ggp.setFxys(StringUtils.join(fxys, "\n"));
@@ -1171,8 +1160,8 @@ public class CompanyController_safety extends BaseController {
         m.put("name", name);
         //m.put("flag2", 1);
         AFxgzp be = aFxgzpMapper.selectByName(m);
-        if(null == be || be.getIsedit().intValue() == 0) {//没有公告牌或没有修改过，重新生成
-            if(null == be) {
+        if (null == be || be.getIsedit().intValue() == 0) {//没有公告牌或没有修改过，重新生成
+            if (null == be) {
                 be = new AFxgzp();
             }
             be.setFlag(2);
@@ -1185,16 +1174,16 @@ public class CompanyController_safety extends BaseController {
 
 
             m.put("uid", user.getId());
-            m.put("levels", new String[]{"红色","橙色"});
+            m.put("levels", new String[]{"红色", "橙色"});
             List<Map<String, Object>> acL = aCompanyManualMapper.selectByMap(m);
             //所有重大较大风险
-            List<Map<String, Object>> acL_f = new ArrayList<Map<String,Object>>();
-            for(Map<String, Object> ac : acL) {
+            List<Map<String, Object>> acL_f = new ArrayList<Map<String, Object>>();
+            for (Map<String, Object> ac : acL) {
                 String level1 = getStringFromMap(ac, "level1");
-                if(StringUtils.isBlank(level1)) {
+                if (StringUtils.isBlank(level1)) {
                     continue;
                 }
-                if((level1).equals(name)) {
+                if ((level1).equals(name)) {
                     acL_f.add(ac);
                 }
 //                String level1 = getStringFromMap(ac, "level1");
@@ -1216,7 +1205,7 @@ public class CompanyController_safety extends BaseController {
 
             setGgpXx(acL_f, be, adanerTypeList);
 
-            if(null == be.getId()) {
+            if (null == be.getId()) {
                 aFxgzpMapper.insertSelective(be);
             } else {
                 aFxgzpMapper.updateByPrimaryKeySelective(be);
@@ -1241,8 +1230,8 @@ public class CompanyController_safety extends BaseController {
         //事故类型列表，用于处理其中的风险
         List<AGwyjSh> adanerTypeList = aGwyjShMapper.selectAll();
         //List<String> adanerTypeList = aDangerTypeMapper.selectAll();
-        if(null == be || be.getIsedit().intValue() == 0) {//没有公告牌或没有修改过，重新生成
-            if(null == be) {
+        if (null == be || be.getIsedit().intValue() == 0) {//没有公告牌或没有修改过，重新生成
+            if (null == be) {
                 be = new AFxgzp();
             }
             be.setFlag(3);
@@ -1253,18 +1242,18 @@ public class CompanyController_safety extends BaseController {
             be.setName(name);
 
             m.put("uid", user.getId());
-            m.put("levels", new String[]{"红色","橙色"});
+            m.put("levels", new String[]{"红色", "橙色"});
             List<Map<String, Object>> acL = aCompanyManualMapper.selectByMap(m);
             //所有重大较大风险
-            List<Map<String, Object>> acL_f = new ArrayList<Map<String,Object>>();
-            for(Map<String, Object> ac : acL) {
+            List<Map<String, Object>> acL_f = new ArrayList<Map<String, Object>>();
+            for (Map<String, Object> ac : acL) {
                 String level1 = getStringFromMap(ac, "level1");
                 String level2 = getStringFromMap(ac, "level2");
 //                String level3 = getStringFromMap(ac, "level3");
-                if(StringUtils.isBlank(level1)) {
+                if (StringUtils.isBlank(level1)) {
                     continue;
                 }
-                if((level1 + "/" + level2).equals(name)) {
+                if ((level1 + "/" + level2).equals(name)) {
                     acL_f.add(ac);
                     continue;
                 }
@@ -1281,10 +1270,10 @@ public class CompanyController_safety extends BaseController {
 
             }
 
-            be.setGlzrr((String)acL_f.get(0).get("fjgkfzr"));//责任人
+            be.setGlzrr((String) acL_f.get(0).get("fjgkfzr"));//责任人
 
             setGgpXx(acL_f, be, adanerTypeList);
-            if(null == be.getId()) {
+            if (null == be.getId()) {
                 aFxgzpMapper.insertSelective(be);
             } else {
                 aFxgzpMapper.updateByPrimaryKeySelective(be);
@@ -1298,7 +1287,7 @@ public class CompanyController_safety extends BaseController {
 
     String getStringFromMap(Map<String, Object> m, String key) {
         Object o = m.get(key);
-        if(null != o) {
+        if (null != o) {
             return o.toString();
         }
         return null;
@@ -1329,15 +1318,15 @@ public class CompanyController_safety extends BaseController {
     public String riskListLoad(Model model, HttpServletRequest request, String industry,
                                Integer depId) throws Exception {
         User user = getLoginUser(request);
-        if(StringUtils.isNotBlank(industry)) {
+        if (StringUtils.isNotBlank(industry)) {
             industry = utf8Str(industry);
         }
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         model.addAttribute("company", company);
-        if(StringUtils.isBlank(industry)) {
+        if (StringUtils.isBlank(industry)) {
             industry = company.getIndustry();
-            if(industry.equals("化工企业（危险化学品生产、经营、使用）、加油站")) {
-                if(company.getName().contains("油")) {
+            if (industry.equals("化工企业（危险化学品生产、经营、使用）、加油站")) {
+                if (company.getName().contains("油")) {
                     industry = "加油站";
                 }
             }
@@ -1357,7 +1346,7 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("list", list);
         model.addAttribute("dL", dL);
         model.addAttribute("depId", depId);
-        log.error("risk-list-load depId:"+depId);
+        log.error("risk-list-load depId:" + depId);
         return "company/safety-system/risk-list1-load";
     }
 
@@ -1373,7 +1362,7 @@ public class CompanyController_safety extends BaseController {
             return "company/safety-system/type";
         }
         AImplementation im = aImplementationMapper.selectByPrimaryKey(user.getId());
-        if(null != im) {
+        if (null != im) {
             model.addAttribute("im", gson.toJson(im));
         } else {
             model.addAttribute("im", gson.toJson(new AImplementation()));
@@ -1477,7 +1466,7 @@ public class CompanyController_safety extends BaseController {
             model.addAttribute("url", request.getRequestURI());
             return "company/safety-system/type";
         }
-        List<ACompanyManual> aCompanyManualList = aCompanyManualMapper.findALLsss("2",user.getId());
+        List<ACompanyManual> aCompanyManualList = aCompanyManualMapper.findALLsss("2", user.getId());
         model.addAttribute("company", company);
         model.addAttribute("list", aCompanyManualList);
         return "company/safety-system/assess5-2";
@@ -1510,11 +1499,11 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("list", list);
         Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
 
-        for(Map<String, Object> m1 : list) {
+        for (Map<String, Object> m1 : list) {
             String level1 = null == m1.get("level1") ? "" : m1.get("level1").toString();
             String level2 = null == m1.get("level2") ? "" : m1.get("level2").toString();
             LinkedHashSet<String> l2s = levmap.get(level1);
-            if(null == l2s) {
+            if (null == l2s) {
                 l2s = new LinkedHashSet<String>();
                 levmap.put(level1, l2s);
             }
@@ -1535,22 +1524,18 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-
-
-
     /**
      * 查询相应管控主体下的部门信息
      */
     @RequestMapping(value = "control-list-one")
     public @ResponseBody
-    List<ZzjgDepartment> controlLists(Model model, HttpServletRequest request, String name,Integer pid) throws Exception {
+    List<ZzjgDepartment> controlLists(Model model, HttpServletRequest request, String name, Integer pid) throws Exception {
 
         User user = getLoginUser(request);
         List<ZzjgDepartment> zzjgDepartmentList1 = zzjgDepartmentMapper.selectOnes(pid);
 
         return zzjgDepartmentList1;
     }
-
 
 
     /**
@@ -1562,10 +1547,10 @@ public class CompanyController_safety extends BaseController {
         AImplementation im = aImplementationMapper.selectByPrimaryKey(user.getId());
         model.addAttribute("im", im);
         model.addAttribute("now", new Date());
-        if(null != im && StringUtils.isNotBlank(im.getTextz1())) {
+        if (null != im && StringUtils.isNotBlank(im.getTextz1())) {
             model.addAttribute("per", im.getTextz1().split("\\|"));
         } else {
-            model.addAttribute("per", new String[]{"","",""});
+            model.addAttribute("per", new String[]{"", "", ""});
         }
         return "company/safety-system/plan-add2";
     }
@@ -1583,10 +1568,10 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("im", im);
         model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
         model.addAttribute("now", new Date());
-        if(null != im && StringUtils.isNotBlank(im.getTextz1())) {
+        if (null != im && StringUtils.isNotBlank(im.getTextz1())) {
             model.addAttribute("per", im.getTextz1().split("\\|"));
         } else {
-            model.addAttribute("per", new String[]{"","","",""});
+            model.addAttribute("per", new String[]{"", "", "", ""});
         }
         return "company/safety-system/plan-add1";
     }
@@ -1635,13 +1620,13 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("list", list);
 
         Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
-        for(Map<String, Object> m1 : list) {
+        for (Map<String, Object> m1 : list) {
             String level1 = null == m1.get("level1") ? "" : m1.get("level1").toString();
             //log.error("level1：-----------start------------"+level1);
             String level2 = null == m1.get("level2") ? "" : m1.get("level2").toString();
             //log.error("level2："+level2);
             LinkedHashSet<String> l2s = levmap.get(level1);
-            if(null == l2s) {
+            if (null == l2s) {
                 l2s = new LinkedHashSet<String>();
                 //log.error("level1："+level1);
                 levmap.put(level1, l2s);
@@ -1665,11 +1650,10 @@ public class CompanyController_safety extends BaseController {
         List<Map<String, Object>> list22 = aCompanyManualMapper.selectByMap(m);
         model.addAttribute("list22", list22);
 
-        if(flag.equals("2")){
+        if (flag.equals("2")) {
             //log.error("zhangcl 2018.10.18 controlList3,area_range="+company.getAreaRange());
             return "company/safety-system/control-list3";
-        }
-        else{
+        } else {
             return "company/safety-system/control-list2";
         }
 
@@ -1681,7 +1665,7 @@ public class CompanyController_safety extends BaseController {
     @RequestMapping(value = "control-list3")//zhangcl 2018.10.13
     public String controlList3(Model model, HttpServletRequest request, Integer id, String lnglat) throws Exception {
         //log.error("zhangcl 2018.10.13 controlList3,id="+id+",lnglat="+lnglat);
-        aCompanyManualMapper.updateLnglat(id,lnglat);
+        aCompanyManualMapper.updateLnglat(id, lnglat);
         return controlList2(model, request, "2");
     }
 
@@ -1698,7 +1682,8 @@ public class CompanyController_safety extends BaseController {
      * 实施方案-保存
      */
     @RequestMapping(value = "plan-save")
-    public @ResponseBody Result companySave(HttpServletRequest request, AImplementation i) throws Exception {
+    public @ResponseBody
+    Result companySave(HttpServletRequest request, AImplementation i) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         AImplementation im = aImplementationMapper.selectByPrimaryKey(user.getId());
@@ -1715,7 +1700,8 @@ public class CompanyController_safety extends BaseController {
      * 企业所属行业-保存
      */
     @RequestMapping(value = "company-industry")
-    public @ResponseBody Result companyIndustry(HttpServletRequest request, String industry) throws Exception {
+    public @ResponseBody
+    Result companyIndustry(HttpServletRequest request, String industry) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         Company c = new Company();
@@ -1729,7 +1715,8 @@ public class CompanyController_safety extends BaseController {
      * 企业风险辨识-保存
      */
     @RequestMapping(value = "aCompanyManual-save")
-    public @ResponseBody Result aCompanyManualSave(HttpServletRequest request, ACompanyManual be,Integer ids) throws Exception {
+    public @ResponseBody
+    Result aCompanyManualSave(HttpServletRequest request, ACompanyManual be, Integer ids) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         be.setUid(user.getId());
@@ -1754,8 +1741,9 @@ public class CompanyController_safety extends BaseController {
      * TODO 保存风险
      */
     @RequestMapping(value = "aCompanyManual-save1")
-    public @ResponseBody Result aCompanyManualSave1(HttpServletRequest request, Integer[] ids,
-                                                    Integer depId) throws Exception {
+    public @ResponseBody
+    Result aCompanyManualSave1(HttpServletRequest request, Integer[] ids,
+                               Integer depId) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         ZzjgDepartment dep = zzjgDepartmentMapper.selectByPrimaryKey(depId);
@@ -1767,11 +1755,11 @@ public class CompanyController_safety extends BaseController {
         lm.put("dpid", dep.getPid());
         List<LlHashMap<Object, Object>> personL = zzjgPersonnelMapper.selectByMap(lm);
         String fjgkfzr = "";//分级管控负责人
-        if(personL.size() > 0) {
+        if (personL.size() > 0) {
             fjgkfzr = personL.get(0).getString("name");
         }
         List<ACompanyManual> list = aDangerManualMapper.selectByIds(ids);
-        for(ACompanyManual a : list) {
+        for (ACompanyManual a : list) {
             a.setLevel3(a.getLevel1() + "/" + a.getLevel2() + "/" + a.getLevel3());
             a.setLevel1(level1);
             a.setLevel2(level2);
@@ -1795,7 +1783,8 @@ public class CompanyController_safety extends BaseController {
      * 危险化学品生产储存企业安全风险评估诊断分级指南（试行）-保存
      */
     @RequestMapping(value = "assess1-save")
-    public @ResponseBody Result assess1Save(HttpServletRequest request, AWhp be) throws Exception {
+    public @ResponseBody
+    Result assess1Save(HttpServletRequest request, AWhp be) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         be.setUid(user.getId());
@@ -1812,7 +1801,8 @@ public class CompanyController_safety extends BaseController {
      * 企业风险辨识-保存
      */
     @RequestMapping(value = "assess2-save")
-    public @ResponseBody Result assess2Save(HttpServletRequest request, AZytjfxcdpj be) throws Exception {
+    public @ResponseBody
+    Result assess2Save(HttpServletRequest request, AZytjfxcdpj be) throws Exception {
         Result result = new ResultImpl();
         AZytjfxcdpj a = aZytjfxcdpjMapper.selectByPrimaryKey(be.getUid());
         if (null != a) {
@@ -1824,11 +1814,11 @@ public class CompanyController_safety extends BaseController {
         String level = be.getLev();
         Integer id = be.getUid();
         AFxjz af = aFxjzMapper.selectByPrimaryKey(id);
-        if(null != af) {
+        if (null != af) {
             level = getDanger(af.getLev(), level);
         }
         ACompanyManualZp zp = aCompanyManualZpMapper.selectByPrimaryKey(id);
-        if(null != zp) {
+        if (null != zp) {
             level = getDanger(zp.getLevel(), level);
         }
 
@@ -1841,10 +1831,10 @@ public class CompanyController_safety extends BaseController {
     }
 
     String getDanger(String danger, String danger1) {
-        if(StringUtils.isBlank(danger)) {
+        if (StringUtils.isBlank(danger)) {
             return danger1;
         }
-        if(StringUtils.isBlank(danger1)) {
+        if (StringUtils.isBlank(danger1)) {
             return danger;
         }
         Map<String, Integer> mm = new HashMap<String, Integer>();
@@ -1852,7 +1842,7 @@ public class CompanyController_safety extends BaseController {
         mm.put("橙色", 3);
         mm.put("黄色", 2);
         mm.put("蓝色", 1);
-        if(mm.get(danger1).compareTo(mm.get(danger)) > 0) {
+        if (mm.get(danger1).compareTo(mm.get(danger)) > 0) {
             return danger1;
         }
         return danger;
@@ -1862,7 +1852,8 @@ public class CompanyController_safety extends BaseController {
      * 风险举证-保存
      */
     @RequestMapping(value = "assess3-save")
-    public @ResponseBody Result assess3Save(HttpServletRequest request, AFxjz be) throws Exception {
+    public @ResponseBody
+    Result assess3Save(HttpServletRequest request, AFxjz be) throws Exception {
         Result result = new ResultImpl();
         AFxjz a = aFxjzMapper.selectByPrimaryKey(be.getUid());
         if (null != a) {
@@ -1873,11 +1864,11 @@ public class CompanyController_safety extends BaseController {
         String level = be.getLev();
         Integer id = be.getUid();
         AZytjfxcdpj aZytjfxcdpj = aZytjfxcdpjMapper.selectByPrimaryKey(id);
-        if(null != aZytjfxcdpj) {
+        if (null != aZytjfxcdpj) {
             level = getDanger(aZytjfxcdpj.getLev(), level);
         }
         ACompanyManualZp zp = aCompanyManualZpMapper.selectByPrimaryKey(id);
-        if(null != zp) {
+        if (null != zp) {
             level = getDanger(zp.getLevel(), level);
         }
         ACompanyManual acm = new ACompanyManual();
@@ -1923,7 +1914,8 @@ public class CompanyController_safety extends BaseController {
      * 告知牌-保存
      */
     @RequestMapping(value = "risk-information-save")
-    public @ResponseBody Result riskInformationSave(HttpServletRequest request, AFxgzp be) throws Exception {
+    public @ResponseBody
+    Result riskInformationSave(HttpServletRequest request, AFxgzp be) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         be.setUid(user.getId());
@@ -1941,12 +1933,13 @@ public class CompanyController_safety extends BaseController {
      * 告知卡-保存
      */
     @RequestMapping(value = "gzk-save")
-    public @ResponseBody Result gzkSave(HttpServletRequest request, AGzk be) throws Exception {
+    public @ResponseBody
+    Result gzkSave(HttpServletRequest request, AGzk be) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         be.setUid(user.getId());
         AGzk g = aGzkMapper.selectByPrimaryKey(user.getId());
-        if(null == g) {
+        if (null == g) {
             aGzkMapper.insertSelective(be);
         } else {
             aGzkMapper.updateByPrimaryKeySelective(be);
@@ -1959,15 +1952,16 @@ public class CompanyController_safety extends BaseController {
      * 重大风险-保存
      */
     @RequestMapping(value = "a-zdfxys-save2")
-    public @ResponseBody Result assess5Save2(HttpServletRequest request, String json) throws Exception {
+    public @ResponseBody
+    Result assess5Save2(HttpServletRequest request, String json) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         aCompanyManualMapper.deleteFlag2(user.getId());
-        if(StringUtils.isBlank(json)) {
+        if (StringUtils.isBlank(json)) {
             return result;
         }
         List<LinkedHashMap<String, Object>> l = gson.fromJson(json, List.class);
-        for(Map<String, Object> l1 : l) {
+        for (Map<String, Object> l1 : l) {
             l1.put("level", "红色");
         }
         Map<String, Object> m = new HashMap<String, Object>();
@@ -1987,17 +1981,18 @@ public class CompanyController_safety extends BaseController {
      * 重大风险-保存
      */
     @RequestMapping(value = "a-zdfxys-save")
-    public @ResponseBody Result assess5Save(HttpServletRequest request, String zdfx) throws Exception {
+    public @ResponseBody
+    Result assess5Save(HttpServletRequest request, String zdfx) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         List<ACompanyManual> list = new ArrayList<ACompanyManual>();
         aCompanyManualMapper.deleteFlag2(user.getId());
 
-        if(StringUtils.isBlank(zdfx)) {
+        if (StringUtils.isBlank(zdfx)) {
             return result;
         }
         String[] ll = zdfx.split("!@#");
-        for(String l : ll) {
+        for (String l : ll) {
             ACompanyManual c = new ACompanyManual();
             //c.setLevel3(l);
             c.setFactors(l);
@@ -2009,7 +2004,7 @@ public class CompanyController_safety extends BaseController {
         m.put("del", 0);
         m.put("ctime", new Date());
         m.put("del", 0);
-        for(ACompanyManual l1 : list) {
+        for (ACompanyManual l1 : list) {
             l1.setLevel("红色");
         }
         m.put("list", list);
@@ -2042,7 +2037,7 @@ public class CompanyController_safety extends BaseController {
     public String yingLoad(Model model, HttpServletRequest request, Integer departId) throws Exception {
         ZzjgDepartment depat = zzjgDepartmentMapper.selectByPrimaryKey(departId);
         AGwyj yj = aGwyjMapper.selectByDepartId(departId);
-        if(null == yj) {
+        if (null == yj) {
             yj = new AGwyj(null, getLoginUser(request).getId(), departId, "", "", "", "");
             aGwyjMapper.insertSelective(yj);
         }
@@ -2055,7 +2050,8 @@ public class CompanyController_safety extends BaseController {
      * 岗位应急处置卡-更新
      */
     @RequestMapping(value = "ying-update")
-    public @ResponseBody Result yingUpdate(HttpServletRequest request, AGwyj be) throws Exception {
+    public @ResponseBody
+    Result yingUpdate(HttpServletRequest request, AGwyj be) throws Exception {
         Result result = new ResultImpl();
         aGwyjMapper.updateByPrimaryKeySelective(be);
         return result;

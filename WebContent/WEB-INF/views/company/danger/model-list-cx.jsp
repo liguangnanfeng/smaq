@@ -86,7 +86,10 @@ $(function(){
           <%--<a class="btn btn-primary radius" onclick="show_dialog('添加${x[type-1] }','${ly }/company/model-add?type=${type }&flag=1')" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加${x[type-1] }</a>--%>
         <%--</span> --%>
         <span class="l">
-          <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel')" onclick="Hui_admin_tab(this)" href="javascript:;">
+<%--          <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel')" onclick="Hui_admin_tab(this)" href="javascript:;">--%>
+<%--              <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加检查模版--%>
+<%--          </a>--%>
+            <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/getCheckModelBasic')" onclick="Hui_admin_tab(this)" href="javascript:;">
               <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加检查模版
           </a>
         </span>

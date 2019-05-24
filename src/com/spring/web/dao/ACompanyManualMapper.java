@@ -156,5 +156,19 @@ public interface ACompanyManualMapper {
 
     List<ACompanyManual> findALLsss(@Param("flag")String flag, @Param("uid")Integer uid);
 
+    /**
+     * 根据部门的名称和uid获取level3
+     */
+    List<String> selectlevel3BydmName(@Param("uid")Integer id, @Param("level1")String name);
+
+    /**
+     * 直接根据 level3 和uid 获取信息
+     * @param id
+     * @param level3
+     * @return
+     */
+    List selectAllByLevel3(@Param("uid")Integer id, @Param("level1")String name,@Param("level3")String level3);
+
+
 }
 

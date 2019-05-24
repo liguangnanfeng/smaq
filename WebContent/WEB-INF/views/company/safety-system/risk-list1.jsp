@@ -70,7 +70,7 @@
 </nav>
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
-        <a class="btn default ${empty type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list-update">风险点辨识表</a>
+        <a class="btn default ${empty type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list">风险点分布表</a>
         <a class="btn default ${1 eq type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=1">职业病风险物理因素分布表</a>
         <a class="btn default ${2 eq  type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=2">职业病风险化学因素分布表</a>
         <c:if test="${company.industry eq '化工企业（危险化学品生产、经营、使用）、加油站'}">
@@ -123,13 +123,15 @@
         <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan">
             <thead>
             <tr class="text-c">
-                <th>车间</th>
+                <th>辨识类型</th>
+                <th>车间/场所</th>
                 <th>岗位/部位</th>
                 <c:if test="${empty type}">
                     <th style="padding:0;width:50%"><!--添加风险点 zhangcl 2018.12.15-->
                         <table>
                             <tr>
-                                <td style="width:20%">风险点</td>
+                                <td style="width:20%">系统</td>
+                                <td style="width:20%">风险类型</td>
                                 <td>风险因素</td>
                             </tr>
                         </table>
@@ -161,9 +163,9 @@
             <c:if test="${empty type}">
                 <c:forEach items="${zzjgDep }" var="be">
                     <tr>
-                        <td class="text-c" colspan="1">${be.parName }</td>
+                        <td class="text-c">level1</td>
+                        <td class="text-c">${be.parName }</td>
                         <td class="text-c">${be.name }</td>
-
                         <td style="padding:0;" ><!--添加风险点 zhangcl 2018.12.15-->
                             <table style="border: 0px solid red;">
                                 <c:set value="0" var="x"/>
@@ -180,8 +182,12 @@
                                                     <c:set value="${l}" var="point"/>
                                                 </c:if>
                                             </c:forEach>
-                                            <p style="text-align:center;">${point}</p>
+                                            <p style="text-align:center;">level2 ${point}</p>
                                         </td>
+                                            <c:if test="${x==0}"><td style="width:20%;border-bottom: 0px;"></c:if>
+                                            <c:if test="${x==1}"><td style="width:20%;border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
+											<p style="text-align:center;">level ${point}</p>
+										</td>
                                             <c:if test="${x==0}"><td style="border-bottom: 0px;"></c:if>
                                             <c:if test="${x==1}"><td style="border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
                                             <p style="float:left;width:80%;">${ac.factors}</p>
@@ -194,8 +200,9 @@
 
                                 <c:if test="${x == 0}">
                                     <tr>
-                                        <td style="width:20%;border-bottom: 0px;"><p>无风险点</p></td>
-                                        <td style="border-bottom: 0px;"><p>无风险因素</p></td>
+                                        <td style="width:20%;border-bottom: 0px;"><p style="text-align:center;">无</p></td>
+                                        <td style="width:20%;border-bottom: 0px;"><p style="text-align:center;">无</p></td>
+                                        <td style="border-bottom: 0px;"><p style="text-align:center;">无风险因素</p></td>
                                     </tr>
                                 </c:if>
                             </table>

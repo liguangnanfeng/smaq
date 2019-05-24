@@ -38,21 +38,40 @@
             return false;
         }
         var i = layer.load();
-        if($("#password").val() != ''&&$("#addpw").val()!=""){
-            $.post(getRootPath() + "/district/off-save", {
-                id: id,
-                depart: $("#depart").val(),
-                name: $("#name").val(),
-                code: $("#code").val(),
-                password: $("#addpw").val()
-            }, function (result) {
-                layer.close(i);
-                if (result.status == '') {
-                    layer.alert(result.map.message);
-                } else {
-                    show_tab(x + "人员信息库", '/district/off-list');
-                }
-            })
+        if(${not empty p.id}){
+
+            if($("#addpw").val() != ''){
+                $.post(getRootPath() + "/district/off-save", {
+                    id: id,
+                    depart: $("#depart").val(),
+                    name: $("#name").val(),
+                    code: $("#code").val(),
+                    password: $("#addpw").val()
+                }, function (result) {
+                    layer.close(i);
+                    if (result.status == '') {
+                        layer.alert(result.map.message);
+                    } else {
+                        show_tab(x + "人员信息库", '/district/off-list');
+                    }
+                })
+            }else{
+                $.post(getRootPath() + "/district/off-save", {
+                    id: id,
+                    depart: $("#depart").val(),
+                    name: $("#name").val(),
+                    code: $("#code").val(),
+                    password: $("#password").val()
+                }, function (result) {
+                    layer.close(i);
+                    if (result.status == '') {
+                        layer.alert(result.map.message);
+                    } else {
+                        show_tab(x + "人员信息库", '/district/off-list');
+                    }
+                })
+            }
+
         }else {
             $.post(getRootPath() + "/district/off-save", {
                 id: id,

@@ -312,11 +312,11 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-  /*  *//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**
-     * 风险辨识
-     *//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//*
-    *//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//*@RequestMapping(value = "risk-list")
-    public String riskList(Model model, HttpServletRequest request, Integer type) throws Exception {
+    /*
+    * 风险辨识
+    * */
+ /*   @RequestMapping({"risk-list"})
+    public String riskLists(Model model, HttpServletRequest request, Integer type) throws Exception {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         if (StringUtils.isEmpty(company.getIndustry())) {
@@ -333,25 +333,20 @@ public class CompanyController_safety extends BaseController {
         if(null == type) {
 //        	m.put("order", 1);
             List<ACompanyManual> aCompanyManualList = aCompanyManualMapper.selectAll(company.getUserId());
-
             ACompanyManual aCompanyManual = new ACompanyManual();
-
             if (aCompanyManualList.size() == 0){
                 aCompanyManual.setLevel3("无数据信息");
                 aCompanyManual.setFactors("无数据信息");
-
                 aCompanyManualList.add(aCompanyManual);
 
                 model.addAttribute("aCompanyManualList", aCompanyManualList);
 
                 return "company/safety-system/risk-list1";
             }
-
             model.addAttribute("zzjgDep", zzjg);
             model.addAttribute("aCompanyManualList", aCompanyManualList);
             return "company/safety-system/risk-list1";
         }
-
         List<Map<String, Object>> acL = aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);
         Iterator <Map<String, Object>> it = acL.iterator();
         while(it.hasNext()){
@@ -367,11 +362,14 @@ public class CompanyController_safety extends BaseController {
                     break;
                 }
             }
-
             if(!has) {
                 it.remove();
             }
         }
+         model.addAttribute("dL", acL);
+        model.addAttribute("type", type);
+        return "company/safety-system/risk-list1";
+    }*/
 
 //        Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
 //        for (Map<String, Object> ad : acL) {
@@ -384,10 +382,7 @@ public class CompanyController_safety extends BaseController {
 //            s.add(l2);
 //        }
 //        model.addAttribute("list", list);
-        model.addAttribute("dL", acL);
-        model.addAttribute("type", type);
-        return "company/safety-system/risk-list1";
-    }*/
+
 
 
     @RequestMapping({"risk-list"})

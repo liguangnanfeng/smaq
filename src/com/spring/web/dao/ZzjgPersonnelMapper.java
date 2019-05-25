@@ -1,11 +1,11 @@
 package com.spring.web.dao;
 
-import java.util.List;
-import java.util.Map;
-
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.ZzjgPersonnel;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 public interface ZzjgPersonnelMapper {
     /**
@@ -90,4 +90,5 @@ public interface ZzjgPersonnelMapper {
      */
     List<Map<Integer, String>> findUserByIdAndStatus1(Integer id);
 
+    void updateIds(@Param("id") Integer id);
 }

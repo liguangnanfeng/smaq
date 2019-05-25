@@ -200,6 +200,20 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+
+
+
+    <update id="updateIds" parameterType="com.spring.web.model.ZzjgPersonnel">
+        update zzjg_personnel_tbl
+        set del = 1
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+
+
+
     <update id="updateByPrimaryKey" parameterType="com.spring.web.model.ZzjgPersonnel">
         <!--
           WARNING - @mbggenerated

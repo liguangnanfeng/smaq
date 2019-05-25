@@ -72,7 +72,7 @@ $(function() {
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<span class="l">
 				<button class="btn btn-primary radius" onclick="showadd('')">
-					<i class="Hui-iconfont">&#xe600;</i> 添加人员
+					<i class="Hui-iconfont">&#xe600;</i>2222 添加人员
 				</button>
 			</span> 
 			<span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>

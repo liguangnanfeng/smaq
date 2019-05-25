@@ -37,7 +37,7 @@
                 <button class="btn-depart" onclick="showadd(1)">
                     <i class="Hui-iconfont">&#xe600;</i>
                     <c:if test="${session_user.userType != 3}">
-                        添加分(子)公司
+                        添加公司名称
                     </c:if>
                     <c:if test="${session_user.userType == 3}">
                         添加单位</c:if>

@@ -405,7 +405,7 @@ function connect(){
 //		active_wnd($("#play_window_container .wnd")[0].id);
 
 	}else{
-		alert(P_Error.Detail(conn.rv));
+		/*alert(P_Error.Detail(conn.rv));*/
 	}
 }
 
@@ -1254,7 +1254,7 @@ setTimeout(function(){
 		}
 	}
 	if(!root){
-		alert("本公司无视频接入系统！");
+		/*alert("本公司无视频接入系统！");*/
 		return;
 	}
 	//alert(user);

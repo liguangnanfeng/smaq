@@ -996,7 +996,7 @@ function notify(args){
 						break;
 					}
 					var _bite = function(bite){
-						return (bite / 1000).toFixed(0) + "KB/s"; 
+						return (bite / 1000).toFixed(0) + "KB/s";
 					}
 					var bitrate = args.keyData.bit_rate;
 					var bite = _bite(bitrate)

@@ -31,6 +31,22 @@
     from t_level_tbl
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+
+
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_level_tbl
+  </select>
+
+
+
+
+
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     <!--
       WARNING - @mbggenerated
@@ -146,6 +162,23 @@
     from t_level_tbl
     where id in (${ids})
   </select>
+
+  <select id="selectAllIds" resultType="com.spring.web.model.TLevel">
+    select
+    <include refid="Base_Column_List" />
+    from t_level_tbl
+    where
+    id in
+    <foreach close=")" collection="ids" item="item" open="(" separator=",">
+      #{item}
+    </foreach>
+  </select>
+
+
+
+
+
+
 
   <!--根据industeyId(基础查询的选项) 查询所有的基础操作-->
   <select id="selectLevel1ByIndustry" resultType="String">

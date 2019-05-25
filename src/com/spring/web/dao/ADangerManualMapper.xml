@@ -214,6 +214,22 @@
     where 
         industry = #{industry }
   </select>
+
+
+  <select id="selectByIndustryAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from a_danger_manual_tbl
+    where
+    industry = #{industry } and level3 = #{level3}
+  </select>
+
+
+
+
+
+
+
   
   <select id="selectByIds" resultType="com.spring.web.model.ACompanyManual">
   	<!--

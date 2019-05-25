@@ -1,13 +1,11 @@
 package com.spring.web.dao;
 
-import java.util.List;
-import java.util.Map;
-
-import com.spring.web.model.TCheckItem;
-import com.sun.javafx.collections.MappingChange;
-import org.apache.ibatis.annotations.Param;
 import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.TCheck;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 public interface TCheckMapper {
     /**
@@ -97,4 +95,11 @@ public interface TCheckMapper {
      */
     List<Map> selectRecordByCreateUser(Integer id);
 
+    /*
+    * 根据企业ID 查询数据
+    * */
+    List<TCheck> selectAllLists(Integer userId);
+
+
+    List<Map<String,Object>> selectListAll(Map<String, Object> m);
 }

@@ -39,6 +39,13 @@
             show_dialog(" ", "/company/safety-system/risk-list-load?depId=" + depid);
         }
 
+        /* 弹窗工具添加 */
+        function addgjs(depid) {
+            show_dialog(" ", "/company/safety-system/risk-list-loads?depId=" + depid);
+        }
+
+
+
         function redit(id, type) {
             var titles;
             titles = ['',"职业危害物理因素选择",'职业危害化学因素选择','职业危害高危工艺选择','物料辨识选择','高危作业选择'];
@@ -70,7 +77,7 @@
 </nav>
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
-        <a class="btn default ${empty type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list-update">风险点辨识表</a>
+        <a class="btn default ${empty type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list">风险点分布表</a>
         <a class="btn default ${1 eq type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=1">职业病风险物理因素分布表</a>
         <a class="btn default ${2 eq  type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=2">职业病风险化学因素分布表</a>
         <c:if test="${company.industry eq '化工企业（危险化学品生产、经营、使用）、加油站'}">
@@ -102,7 +109,7 @@
       </div>
     </c:if> --%>
     <c:if test="${empty type}">
-        <h3 class="text-c">${company.name}较大危险因素辨识与防范</h3>
+        <h3 class="text-c">${company.name}风险因素辨识表</h3>
     </c:if>
     <c:if test="${type eq 1}">
         <h3 class="text-c">${company.name}职业病风险物理因素分布表</h3>
@@ -123,13 +130,15 @@
         <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan">
             <thead>
             <tr class="text-c">
-                <th>车间</th>
-                <th>岗位/部位</th>
+                <th>辨识类型</th>
+                <th>车间/场所/部位</th>
                 <c:if test="${empty type}">
                     <th style="padding:0;width:50%"><!--添加风险点 zhangcl 2018.12.15-->
                         <table>
                             <tr>
-                                <td style="width:20%">风险点</td>
+                                <td style="width:20%">系统</td>
+                                <td style="width:20%">环节</td>
+                                <td style="width:20%">风险类型</td>
                                 <td>风险因素</td>
                             </tr>
                         </table>
@@ -161,9 +170,8 @@
             <c:if test="${empty type}">
                 <c:forEach items="${zzjgDep }" var="be">
                     <tr>
-                        <td class="text-c" colspan="1">${be.parName }</td>
-                        <td class="text-c">${be.name }</td>
-
+                        <td class="text-c">${be.parName }</td>
+                        <td class="text-c">${be.parName } / ${be.name }</td>
                         <td style="padding:0;" ><!--添加风险点 zhangcl 2018.12.15-->
                             <table style="border: 0px solid red;">
                                 <c:set value="0" var="x"/>
@@ -172,15 +180,15 @@
                                         <tr>
                                             <c:if test="${x==0}"><td style="width:20%;border-bottom: 0px;"></c:if>
                                             <c:if test="${x==1}"><td style="width:20%;border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
-                                            <c:set value="${fn:split(ac.level3,'/')}" var="ls"></c:set>
-                                            <c:set value="0" var="y"/>
-                                            <c:forEach items="${ls}" var="l">
-                                                <c:set value="${y+1}" var="y"/>
-                                                <c:if test="${y==3}">
-                                                    <c:set value="${l}" var="point"/>
-                                                </c:if>
-                                            </c:forEach>
-                                            <p style="text-align:center;">${point}</p>
+                                            <p style="text-align:center;">${ac.level3}</p>
+                                        </td>
+                                            <c:if test="${x==0}"><td style="width:20%;border-bottom: 0px;"></c:if>
+                                            <c:if test="${x==1}"><td style="width:20%;border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
+                                            <p style="text-align:center;">${ac.level2}</p>
+                                        </td>
+                                            <c:if test="${x==0}"><td style="width:20%;border-bottom: 0px;"></c:if>
+                                            <c:if test="${x==1}"><td style="width:20%;border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
+                                            <p style="text-align:center;">${ac.level}</p>
                                         </td>
                                             <c:if test="${x==0}"><td style="border-bottom: 0px;"></c:if>
                                             <c:if test="${x==1}"><td style="border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
@@ -194,8 +202,10 @@
 
                                 <c:if test="${x == 0}">
                                     <tr>
-                                        <td style="width:20%;border-bottom: 0px;"><p>无风险点</p></td>
-                                        <td style="border-bottom: 0px;"><p>无风险因素</p></td>
+                                        <td style="width:20%;border-bottom: 0px;"><p style="text-align:center;">无</p></td>
+                                        <td style="width:20%;border-bottom: 0px;"><p style="text-align:center;">无</p></td>
+                                        <td style="width:20%;border-bottom: 0px;"><p style="text-align:center;">无</p></td>
+                                        <td style="border-bottom: 0px;"><p style="text-align:center;">无风险因素</p></td>
                                     </tr>
                                 </c:if>
                             </table>
@@ -203,7 +213,10 @@
 
                         <td class="text-c" style="width:90px">
                             <c:if test="${empty type}">
-                                <button class="btn btn-primary radius" onClick="addgj('${be.id}')">确定风险操作</button>
+                                <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
+                            </c:if></br></br>
+                            <c:if test="${empty type}">
+                                <button class="btn btn-primary radius" onClick="addgjs('${be.id}')">基础风险辨识</button>
                             </c:if>
                         </td>
                     </tr>

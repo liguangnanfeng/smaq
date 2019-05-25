@@ -1,10 +1,11 @@
 package com.spring.web.dao;
 
-import java.util.List;
-import java.util.Map;
-import org.apache.ibatis.annotations.Param;
 import com.spring.web.model.ACompanyManual;
 import com.spring.web.model.ADangerManual;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 public interface ADangerManualMapper {
     /**
@@ -66,4 +67,6 @@ public interface ADangerManualMapper {
     List<ADangerManual> selectByMap(Map<String, Object> m);
 
     List<ADangerManual> selectFactors(@Param("flag") String flag, @Param("industry") String industry);
+
+    List<ADangerManual> selectByIndustryAll(@Param("industry")String industry,@Param("level3")String level3);
 }

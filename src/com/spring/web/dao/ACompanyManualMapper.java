@@ -167,5 +167,17 @@ public interface ACompanyManualMapper {
 
     List<ACompanyManual> findALLsss(@Param("flag")String flag, @Param("uid")Integer uid);
 
+
+    void updateAllUid(@Param("uid")Integer uid, @Param("level1")String level1, @Param("level2")String level2);
+
+    void insertAdd(ACompanyManual aCompanyManual);
+
+    void updateAllUids(@Param("uid")Integer uid, @Param("level1")String level1, @Param("level2")String level2);
+
+    List<ACompanyManual> selectIdsAll(@Param("level1")String level1, @Param("level2")String level2,@Param("uid") Integer uid);
+
+    List<ACompanyManual> selectIdsAlls(@Param("level1")String level1, @Param("level2")String level2,@Param("uid") Integer uid);
+
+    List<Map<String, Object>> selectByAll(Map<String, Object> m);
 }
 

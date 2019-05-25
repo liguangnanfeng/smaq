@@ -1,11 +1,10 @@
 package com.spring.web.dao;
 
+import com.spring.web.model.TLevel;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-
-import com.spring.web.model.request.CheckLevel;
-import org.apache.ibatis.annotations.Param;
-import com.spring.web.model.TLevel;
 
 public interface TLevelMapper {
     /**
@@ -101,4 +100,8 @@ public interface TLevelMapper {
      * @return
      */
     List<Map<String, Object>> checkGaoWei2(Integer industryId);
+
+    List<TLevel> selectAll();
+
+    List<TLevel> selectAllIds( @Param("ids")Integer[] ids);
 }

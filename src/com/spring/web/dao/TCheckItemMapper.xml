@@ -455,6 +455,7 @@
         group by flag, status
     </select>
 
+
     <select id="selectCount2" resultType="java.util.Map">
         select
         count(0) c, flag, status, d
@@ -838,6 +839,18 @@
     </select>
 
 
+
+    <!-- 根据 检查ID 查询隐患总数!!! -->
+    <select id="selectCounts" resultType="java.lang.Integer">
+        select count(*) from t_check_item_tbl where status = 2 and check_id = {check_id};
+    </select>
+
+
+
+
+
+
+
     <!--TODO 根据checkId 查询psrt和item
     -->
     <select id="selectAllByCheckId" resultType="java.util.Map">
@@ -863,7 +876,6 @@
         JOIN t_recheck_tbl d ON c.recheck_id = d.id
         where d.user_id = #{userId}
         ORDER BY a.id
-
     </select>
 
 </mapper>

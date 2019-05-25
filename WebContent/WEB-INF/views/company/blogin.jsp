@@ -185,7 +185,7 @@
         <font>增值电信业务经营许可证：苏B1-20150079</font>
         </div>
         <div class="one-f">
-        <font>技术支撑方：无锡同翔科技有限公司</font><font>法律顾问：江苏欣林律师事务所</font>
+        <%--<font>技术支撑方：无锡同翔科技有限公司</font><font>法律顾问：江苏欣林律师事务所</font>--%>
         </div>
         <div class="one-f">
         <font size="2"><a href="http://www.miitbeian.gov.cn/" target="_blank">苏ICP备17056652号-1</a></font>

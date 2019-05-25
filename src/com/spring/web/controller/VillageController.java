@@ -1183,7 +1183,7 @@ public class VillageController extends BaseController {
         // 进行判断
         if (setUserId(user, m)) {
             clearVillageTown(m);
-            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            List<Map<String, Object>> list = tCheckMapper.selectListAll(m);
             model.addAttribute("list", list);
         }
         model.addAttribute("type", type);
@@ -1207,18 +1207,7 @@ public class VillageController extends BaseController {
 
 
 
-    /**
-     * 政府端隐患排查记录
-     * TODO 排查治理记录
-     * user. userType : 管理类型  1 超管 2普管 3镇 4 村 5 企业 6区县 7市 8省
-     * type 4 表示行政检查
-     */
-    @RequestMapping(value = "government-list")//flag:3 部门抽查
-    public String government(HttpServletRequest request, String title, Integer type, String companyName,
-                               Integer townId, Integer villageId,
-                               Integer status, Integer flag, Model model) throws Exception {
-        User user = getLoginUser(request);
-        Map<String, Object> m = new HashMap<String, Object>();
+        /*Map<String, Object> m = new HashMap<String, Object>();
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
         }
@@ -1250,13 +1239,11 @@ public class VillageController extends BaseController {
         String x = DateFormatUtils.format(d, "yyyy-MM-dd");
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
         model.addAttribute("t", d.getTime());
-        /*if (user.getUserType() == 5) {
+        *//*if (user.getUserType() == 5) {
             // 表示等于5的话就将页面进行跳转
             return "company/danger/check-list";
         }*/
-        // TODO 找到这个界面
-        return "village/danger/government-check";
-    }
+
 
 
 
@@ -1637,9 +1624,9 @@ public class VillageController extends BaseController {
         return result;
     }
 
-    /**
-     * 企业自查 删除
-     */
+    /*
+    * 企业隐患排查记录 删除按钮的使用
+    * */
     @RequestMapping(value = "check-del")
     public @ResponseBody
     Result checkDel(HttpServletRequest request, Integer id) throws Exception {
@@ -1934,27 +1921,58 @@ public class VillageController extends BaseController {
 
 
     /*
-    *  政府端 隐患治理
+    *  政府端隐患治理记录
     * */
     @RequestMapping(value = "government-lists")
     public String governmentList(HttpServletRequest request, Model model, Integer flag) throws Exception {
         User user = getLoginUser(request);
-        model.addAttribute("flag", flag);
-
-
-        // 企业登录
-//        if(1==flag){
-        List<Map> list = tCheckItemMapper.selectRecheckList(user.getId());
-        model.addAttribute("list", list);
-//        }
-
-
+        // 根据登录者ID 查询所有属于该级别下的所有公司信息
+        List<Company> companyList = companyMapper.selectAllList(user.getId());
+        // 根据得到的公司企业 ID 去复查表中 查找相对应的数据信息并且展示
+        for (int i = 0; i < companyList.size(); i++) {
+            List<Map> list = tCheckItemMapper.selectRecheckList(companyList.get(i).getUserId());
+            if (list.size() != 0){
+                model.addAttribute("list", list);
+            }
+        }
         return "company/danger/government-lists";
     }
 
 
 
+    /**
+     * 政府端隐患排查记录
+     * user. userType : 管理类型  1 超管 2普管 3镇 4 村 5 企业 6区县 7市 8省
+     * type 4 表示行政检查
+     */
+    @RequestMapping(value = "government-list")//flag:3 部门抽查
+    public String government(HttpServletRequest request, String title, Integer type, String companyName,
+                             Integer townId, Integer villageId,
+                             Integer status, Integer flag, Model model) throws Exception {
+        User user = getLoginUser(request);
+        // 根据登录者ID 查询所有属于该级别下的所有公司信息
+        List<Company> companyList = companyMapper.selectAllList(user.getId());
 
+        // 根据得到的公司企业 ID 去检查表中 查找相对应的数据信息并且展示
+        for (int i = 0; i < companyList.size(); i++) {
+
+            Map<String, Object> m = new HashMap<String, Object>();
+            m.put("userId", companyList.get(i).getUserId()); //状态  null
+            // 进行判断
+            if (setUserId(user, m)) {
+                clearVillageTown(m);
+                List<Map<String, Object>> list = tCheckMapper.selectListAll(m);
+                if (list.size() != 0){
+                    model.addAttribute("list", list);
+                }
+            }
+
+            return "village/danger/government-check";
+
+        }
+        // TODO 找到这个界面
+        return "village/danger/government-check";
+    }
 
 
 

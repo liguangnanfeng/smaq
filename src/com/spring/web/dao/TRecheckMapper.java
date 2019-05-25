@@ -1,8 +1,9 @@
 package com.spring.web.dao;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 import com.spring.web.model.TRecheck;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TRecheckMapper {
     /**
@@ -54,4 +55,6 @@ public interface TRecheckMapper {
     int updateByPrimaryKey(TRecheck record);
     
     List<TRecheck> selectByCheckId(@Param("checkId") Integer checkId);
+
+    List<TRecheck> selectAll(@Param("userId")Integer userId);
 }

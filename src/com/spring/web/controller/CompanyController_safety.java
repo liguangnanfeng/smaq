@@ -312,10 +312,10 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-    /**
+  /*  *//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**
      * 风险辨识
-     */
-    /*@RequestMapping(value = "risk-list")
+     *//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//*
+    *//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//*@RequestMapping(value = "risk-list")
     public String riskList(Model model, HttpServletRequest request, Integer type) throws Exception {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
@@ -406,7 +406,7 @@ public class CompanyController_safety extends BaseController {
             List<Map<Object, Object>> zzjg = this.zzjgDepartmentMapper.selectLevel2ByUid(user.getId());
             List acL;
             if (type == null) {
-                acL = this.aCompanyManualMapper.selectByMap(m);
+                acL = this.aCompanyManualMapper.selectByAll(m);
                 model.addAttribute("zzjgDep", zzjg);
                 model.addAttribute("acL", acL);
                 return "company/safety-system/risk-list1";
@@ -1313,13 +1313,91 @@ public class CompanyController_safety extends BaseController {
         return "company/safety-system/risk-information-add";
     }
 
-    /**
-     * 实施方案
-     */
+    /*
+    * 风险辨识 : 现场风险操作!!!
+    * */
     @RequestMapping(value = "risk-list-load")//确认风险操作
     public String riskListLoad(Model model, HttpServletRequest request, String industry,
                                Integer depId) throws Exception {
         User user = getLoginUser(request);
+        // 根据传过来的 ID 查询对应的 岗位信息
+        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectNameAll(depId);
+        if(StringUtils.isNotBlank(industry)) {
+            industry = utf8Str(industry);
+        }
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        model.addAttribute("company", company);
+        if(StringUtils.isBlank(industry)) {
+            industry = company.getIndustry();
+            if(industry.equals("化工企业（危险化学品生产、经营、使用）、加油站")) {
+                if(company.getName().contains("油")) {
+                    industry = "加油站";
+                }
+            }
+        }
+        model.addAttribute("industry", industry);
+        List<ADangerManual> dL = aDangerManualMapper.selectByIndustryAll(industry,zzjgDepartment.getName());
+        Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
+        for (ADangerManual ad : dL) {
+            String l1 = ad.getLevel1();
+            String l2 = ad.getLevel2();
+            if (null == list.get(l1)) {
+                list.put(l1, new LinkedHashSet<String>());
+            }
+            Set<String> s = list.get(l1);
+            s.add(l2);
+        }
+        model.addAttribute("list", list);
+        model.addAttribute("dL", dL);
+        model.addAttribute("depId", depId);
+        log.error("risk-list-load depId:"+depId);
+        return "company/safety-system/risk-list1-load";
+    }
+
+
+    /*
+    *  确定基础风险操作
+    * */
+    @RequestMapping(value = "risk-list-loads")//确认风险操作
+    public String riskListLoads(Model model, HttpServletRequest request, String industry,
+                               Integer depId) throws Exception {
+        User user = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        model.addAttribute("company", company);
+        List<TLevel> dL = tLevelMapper.selectAll();
+        Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
+        for (TLevel ad : dL) {
+            String l1 = ad.getLevel1();
+            String l2 = ad.getLevel2();
+            String l3 = ad.getLevel3();
+            if (null == list.get(l1)) {
+                list.put(l1, new LinkedHashSet<String>());
+            }
+            Set<String> s = list.get(l1);
+            s.add(l2);
+/*
+            Set<String> s1 = list.get(l2);
+            s1.add(l3);*/
+        }
+        model.addAttribute("list", list);
+        model.addAttribute("dL", dL);
+        model.addAttribute("depId", depId);
+        log.error("risk-list-load depId:"+depId);
+        return "company/safety-system/risk-list1-loads";
+    }
+
+
+
+
+
+    /*
+  * 风险辨识 : 确定风险操作!!!
+  * */
+    /*@RequestMapping(value = "risk-list-load")//确认风险操作
+    public String riskListLoad(Model model, HttpServletRequest request, String industry,
+                               String name) throws Exception {
+        User user = getLoginUser(request);
+
         if(StringUtils.isNotBlank(industry)) {
             industry = utf8Str(industry);
         }
@@ -1347,10 +1425,18 @@ public class CompanyController_safety extends BaseController {
         }
         model.addAttribute("list", list);
         model.addAttribute("dL", dL);
-        model.addAttribute("depId", depId);
-        log.error("risk-list-load depId:"+depId);
+        *//*model.addAttribute("depId", depId);
+        log.error("risk-list-load depId:"+depId);*//*
         return "company/safety-system/risk-list1-load";
     }
+*/
+
+
+
+
+
+
+
 
     /**
      * 实施方案
@@ -1740,10 +1826,9 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-    /**
-     * 企业风险辨识-保存,从指导书中选择的
-     * TODO 保存风险
-     */
+    /*
+    * 现场管理数据的添加
+    * */
     @RequestMapping(value = "aCompanyManual-save1")
     public @ResponseBody Result aCompanyManualSave1(HttpServletRequest request, Integer[] ids,
                                                     Integer depId) throws Exception {
@@ -1753,6 +1838,8 @@ public class CompanyController_safety extends BaseController {
         ZzjgDepartment parDep = zzjgDepartmentMapper.selectByPrimaryKey(dep.getPid());
         String level1 = parDep.getName();
         String level2 = dep.getName();
+        // 根据企业 ID 将该企业中已经有的所有危险删除
+        aCompanyManualMapper.updateAllUid(user.getId(),level1,level2);
 
         LlHashMap<Object, Object> lm = new LlHashMap<Object, Object>();
         lm.put("dpid", dep.getPid());
@@ -1781,6 +1868,83 @@ public class CompanyController_safety extends BaseController {
         aCompanyManualMapper.updateCompanyDlevel(user.getId());
         return result;
     }
+
+
+
+
+
+    /*
+     * 基础风险保存数据的添加
+     * */
+    @RequestMapping(value = "aCompanyManual-save2")
+    public @ResponseBody Result aCompanyManualSave1s(HttpServletRequest request, Integer[] ids,
+                                                    Integer depId) throws Exception {
+        Result result = new ResultImpl();
+        User user = getLoginUser(request);
+        ZzjgDepartment dep = zzjgDepartmentMapper.selectByPrimaryKey(depId);
+        ZzjgDepartment parDep = zzjgDepartmentMapper.selectByPrimaryKey(dep.getPid());
+        String level1 = parDep.getName();
+        String level2 = dep.getName();
+        // 根据企业 ID 将该企业中已经有的所有危险删除
+        aCompanyManualMapper.updateAllUids(user.getId(),level1,level2);
+
+        LlHashMap<Object, Object> lm = new LlHashMap<Object, Object>();
+        lm.put("dpid", dep.getPid());
+        List<LlHashMap<Object, Object>> personL = zzjgPersonnelMapper.selectByMap(lm);
+        String fjgkfzr = "";//分级管控负责人
+        if(personL.size() > 0) {
+            fjgkfzr = personL.get(0).getString("name");
+        }
+
+        List<TLevel> tLevelList = tLevelMapper.selectAllIds(ids);
+        ACompanyManual aCompanyManual ;
+
+        for (TLevel a : tLevelList) {
+            aCompanyManual = new ACompanyManual();
+            aCompanyManual.setUid(user.getId());
+            aCompanyManual.setLevel1(level1);
+            aCompanyManual.setLevel2(level2);
+            aCompanyManual.setLevel3("基础管理" + "/" + a.getLevel1() + "/" + a.getLevel2());
+            aCompanyManual.setGkzt(level1);
+            aCompanyManual.setCtime(new Date());
+            aCompanyManual.setDel(0);
+
+            aCompanyManualMapper.insertAdd(aCompanyManual);
+        }
+
+
+        /*List<ACompanyManual> list = aDangerManualMapper.selectByIds(ids);
+        for(ACompanyManual a : list) {
+            a.setLevel3("基础管理" + "/" + a.getLevel1() + "/" + a.getLevel2());
+            a.setLevel1(level1);
+            a.setLevel2(level2);
+            a.setGkzt(level1);//管控主体
+            a.setFjgkfzr(fjgkfzr);
+        }
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("uid", user.getId());
+        m.put("issys", 0);
+        m.put("del", 0);
+        m.put("ctime", new Date());
+        m.put("del", 0);
+        m.put("list", list);
+        //m.put("flag", 1);
+        aCompanyManualMapper.insertBath(m);
+        aCompanyManualMapper.updateCompanyDlevel(user.getId());*/
+        return result;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 危险化学品生产储存企业安全风险评估诊断分级指南（试行）-保存

@@ -135,24 +135,16 @@
                     <c:set var="key_">${be3.level1}_${be3.level2}_${be3.level3}</c:set>
                     <c:if test="${be3.level1 eq be.key and be3.level2 eq be2 and !lanlin:constains(l3,key_,',')}">
                       <c:set var="l3">${l3 },${key_ }</c:set>
-                      <div class="three_danger">
-                        <div class="three_dtitle">
-                          <div class="check-box">
-                            <input type="checkbox" data-l="3" name="check" value="${be3.id }" class="xt">
-                            <label>${be3.level3 }</label>
+                      <c:if test="${ not empty be3.level3}" >
+                        <div class="three_danger">
+                          <div class="three_dtitle">
+                            <div class="check-box">
+                              <input type="checkbox" data-l="3" name="check" value="${be3.id }" class="xt">
+                              <label>${be3.level3 }</label>
+                            </div>
                           </div>
                         </div>
-                        <!-- 判断三级名称是否相同，循环 -->
-                        <c:forEach items="${dL }" var="be4">
-                          <c:if test="${be4.level1 eq be.key and be4.level2 eq be2 and be4.level3 eq be3.level3}">
-                            <p class="p-three">
-                              <!-- 判断三级相同，复选框显示 -->
-                              <input type="checkbox" data-l="4" name="check" value="${be4.id }" class="bxt">${be4.measures }
-                            </p>
-                          </c:if>
-                        </c:forEach>
-                        <!-- 循环结束 -->
-                      </div>
+                      </c:if>
                     </c:if>
                   </c:forEach>
                   <!-- 三级结束 -->
@@ -177,7 +169,7 @@
 <script type="text/javascript">
     var depId = '${depId}';
     function save_1() {
-        var l = $(":checkbox:checked[data-l='4']");
+        var l = $(":checkbox:checked[data-l='3']");
         if(l.length == 0) {
             layer.alert("请至少选择一个风险。");
             return false;
@@ -188,7 +180,7 @@
         })
         ids = ids.join(",");
         var i = layer.load();
-        $.post("/company/safety-system/aCompanyManual-save1", {
+        $.post("/company/safety-system/aCompanyManual-save2", {
             ids : ids,
             depId : depId
         },function(result) {

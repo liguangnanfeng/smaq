@@ -365,7 +365,20 @@
     </select>
 
 
-
+    <select id="selectByAll" resultType="java.util.HashMap">
+        select
+        T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
+        T1.flag,
+        T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
+        T1.wlbs,T1.gwzy,T1.lnglat
+        from
+        a_company_manual_tbl T1
+        where
+        T1.del = 0
+        <if test="uid != null">
+            and T1.uid = #{uid}
+        </if>
+    </select>
 
 
     <select id="selectByMap" resultType="java.util.HashMap">
@@ -904,6 +917,18 @@
 
 
 
+    <!--根据公司ID，风险等级 查询未删除的数据信息 -->
+    <select id="selectIdsAll"  resultType="com.spring.web.model.ACompanyManual">
+        select * from a_company_manual_tbl where level1 = #{level1} and level2 = #{level2} and del = 0 and uid = #{uid} and level3 like "%现场管理%" ;
+    </select>
+
+
+    <!--根据公司ID，风险等级 查询未删除的数据信息 -->
+    <select id="selectIdsAlls"  resultType="com.spring.web.model.ACompanyManual">
+        select * from a_company_manual_tbl where level1 = #{level1} and level2 = #{level2} and del = 0 and uid = #{uid};
+    </select>
+
+
 
     <update id="updateDelByUserId2">
         update
@@ -915,8 +940,23 @@
     </update>
 
 
+    <update id="updateAllUid">
+        update
+        a_company_manual_tbl
+        set
+        del = 1
+        where
+        uid = #{uid} and del = 0 and level1 = #{level1} and level2 = #{level2} and level3 like "%现场管理%"
+    </update>
 
-
+    <update id="updateAllUids">
+        update
+        a_company_manual_tbl
+        set
+        del = 1
+        where
+        uid = #{uid} and del = 0 and level1 = #{level1} and level2 = #{level2} and level3 like "%基础管理%"
+    </update>
 
 
     <insert id="insertBathByIndustry">
@@ -937,7 +977,15 @@
         </foreach>
     </insert>
 
-
+    <!-- 添加数据信息到数据库！！！ -->
+    <insert id="insertAdd">
+        insert into a_company_manual_tbl (uid,
+        level1, level2, level3, del, ctime,gkzt)
+        values (#{uid,jdbcType=INTEGER},
+        #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},
+        #{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP},
+        #{gkzt,jdbcType=VARCHAR})
+    </insert>
 
 
 

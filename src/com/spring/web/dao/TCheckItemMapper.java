@@ -164,4 +164,8 @@ public interface TCheckItemMapper {
      */
     List<Map> selectRecheckList(Integer userId);
 
+    int selectCounts(@Param("checkId")Integer checkId);
+
+
+
 }

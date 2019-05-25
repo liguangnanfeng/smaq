@@ -18,13 +18,13 @@
         .r strong {color: red;}
     </style>
     <script type="text/javascript">
-        function showpicture(memoImg){
+       /* function showpicture(memoImg){
             //memoImg = "";
             if (memoImg.length !== 0) {
                 $("#memoImg").attr("src",getRootPath()+memoImg);
             }
             $("#modal-plan").modal("show");
-        }
+        }*/
     </script>
 </head>
 <body>
@@ -38,10 +38,10 @@
 </nav>
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
-        <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/village/government-lists?flag=1">企业自查</a>
+        <%--<a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/village/government-lists?flag=1">企业自查</a>--%>
         <a class="btn default ${flag == 4 ? 'btn-primary' : 'radius'}" href="${ly }/village/government-lists?flag=4">行政检查</a>
-        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/village/government-lists?flag=3">部门抽查</a>
-        <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/government-lists?flag=2">执法检查</a>
+       <%-- <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/village/government-lists?flag=3">部门抽查</a>
+        <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/government-lists?flag=2">执法检查</a>--%>
     </div>
     <%--<div class="text-c">--%>
     <%--<form action="${ly }/village/danger-index-list?flag=${flag}" method="post">--%>
@@ -76,13 +76,13 @@
     <%--</button>--%>
     <%--</form>--%>
     <%--</div>--%>
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <%--<p class="paging">--%>
-        <%--<a href="${ly }/village/recheck-list?flag=${flag}&page=${page-1 }">    &lt; 上一页 </a>--%>
-        <%--<strong>第${page+1}页/共${count}页</strong>--%>
-        <%--<a href="${ly }/village/recheck-list?flag=${flag}&page=${page+1}">下一页 &gt;</a>--%>
-        <%--</p>--%>
-    </div>
+    <%--<div class="cl pd-5 bg-1 bk-gray mt-20">
+        <p class="paging">
+        <a href="${ly }/village/recheck-list?flag=${flag}&page=${page-1 }">    &lt; 上一页 </a>
+        <strong>第${page+1}页/共${count}页</strong>
+        <a href="${ly }/village/recheck-list?flag=${flag}&page=${page+1}">下一页 &gt;</a>
+        </p>
+    </div>--%>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
@@ -98,30 +98,16 @@
             </thead>
             <tbody>
             <!-- 循环开始 -->
-            <c:set  var="x" value="${fn:split('基础检查/现场检查/高危检查','/') }"/>
-            <c:forEach items="${list }" varStatus="index" var="list">
+           <%-- <c:set  var="x" value="${fn:split('基础检查/现场检查/高危检查','/') }"/>--%>
+            <c:forEach items="${list}" varStatus="index" var="bes">
                 <tr class="text-c">
                     <td>${index.index + 1}</td>
-                    <td>${list.checkId }</td>
-                    <td>${list.depart }</td>
-                    <td>${list.memo }</td>
-                    <td>${list.time }</td>
-                    <td>${list.status == 2 ? '不合格' : '合格'}</td>
-                    <td>${list.checker }</td>
-                        <%--<td>${list.d == 1 ? '重大隐患' : '一般隐患'}</td>--%>
-                        <%--&lt;%&ndash; <td>--%>
-                        <%--<c:if test="${list.status == '1'}">合格</c:if>--%>
-                        <%--<c:if test="${list.status == '2'}">未整改</c:if>--%>
-                        <%--<c:if test="${list.status == '3'}">已整改</c:if>--%>
-                        <%--</td> &ndash;%&gt;--%>
-                        <%--<td><fmt:formatDate value="${list.realTime }"/></td>--%>
-                        <%--&lt;%&ndash; <td>${flag != 1 ? list.checkCompany : list.depart}</td> &ndash;%&gt;--%>
-                        <%--<td>${list.cheker}</td>--%>
-                        <%--<td>--%>
-                        <%--<c:if test="${!empty list.files}">--%>
-                        <%--<img alt="" src="${list.files }" style="max-width: 200px;cursor:pointer;" onclick="showpicture('${list.files}')">--%>
-                        <%--</c:if>--%>
-                        <%--</td>--%>
+                    <td>${bes.checkId }</td>
+                    <td>${bes.depart }</td>
+                    <td>${bes.memo }</td>
+                    <td>${bes.time }</td>
+                    <td>${bes.status == 2 ? '不合格' : '合格'}</td>
+                    <td>${bes.checker}</td>
                 </tr>
             </c:forEach>
             <!-- 循环结束 -->

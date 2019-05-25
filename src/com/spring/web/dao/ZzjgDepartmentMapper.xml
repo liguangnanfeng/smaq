@@ -205,6 +205,13 @@
 
 
 
+    <!--  查询 ID 查询对应的 name 信息 -->
+    <select id="selectNameAll" resultType="com.spring.web.model.ZzjgDepartment">
+        select * from zzjg_department_tbl where del = 0 and  level = 2 and id = #{id}
+    </select>
+
+
+
 
 
     <select id="selectByUid" resultType="java.util.Map">

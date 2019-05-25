@@ -188,7 +188,13 @@
                                         </td>
                                             <c:if test="${x==0}"><td style="width:20%;border-bottom: 0px;"></c:if>
                                             <c:if test="${x==1}"><td style="width:20%;border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
-                                            <p style="text-align:center;">${ac.level}</p>
+                                            <c:if test="${empty  ac.type}" >
+                                                <p style="text-align:center;">无</p>
+                                            </c:if>
+
+                                            <c:if test="${not empty  ac.type}" >
+                                                <p style="text-align:center;">${ac.type}</p>
+                                            </c:if>
                                         </td>
                                             <c:if test="${x==0}"><td style="border-bottom: 0px;"></c:if>
                                             <c:if test="${x==1}"><td style="border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
@@ -202,8 +208,8 @@
 
                                 <c:if test="${x == 0}">
                                     <tr>
-                                        <td style="width:20%;border-bottom: 0px;"><p style="text-align:center;">无</p></td>
-                                        <td style="width:20%;border-bottom: 0px;"><p style="text-align:center;">无</p></td>
+                                        <td style="width:20%;border-bottom: 0px;"><p style="text-align:center;">未辨识</p></td>
+                                        <td style="width:20%;border-bottom: 0px;"><p style="text-align:center;">未辨识</p></td>
                                         <td style="width:20%;border-bottom: 0px;"><p style="text-align:center;">无</p></td>
                                         <td style="border-bottom: 0px;"><p style="text-align:center;">无风险因素</p></td>
                                     </tr>

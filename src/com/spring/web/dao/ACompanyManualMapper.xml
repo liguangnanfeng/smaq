@@ -395,7 +395,7 @@
         left join
             a_zytjfxcdpj_tbl T4 on T1.id = T4.uid -->
         where
-        T1.del = 0
+        T1.del = 0 and T1.level != ""
         <if test="uid != null">
             and T1.uid = #{uid}
         </if>
@@ -980,7 +980,7 @@
     <!-- 添加数据信息到数据库！！！ -->
     <insert id="insertAdd">
         insert into a_company_manual_tbl (uid,
-        level1, level2, level3, factors, del, ctime,gkzt)
+        level1, level2, level3,factors, del, ctime,gkzt)
         values (#{uid,jdbcType=INTEGER},
         #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},#{factors,jdbcType=VARCHAR},
         #{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP},

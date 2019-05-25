@@ -1802,13 +1802,14 @@ public class CompanyController_safety extends BaseController {
      * 企业风险辨识-保存
      */
     @RequestMapping(value = "aCompanyManual-save")
-    public @ResponseBody Result aCompanyManualSave(HttpServletRequest request, ACompanyManual be,Integer ids) throws Exception {
+    public @ResponseBody Result aCompanyManualSave(HttpServletRequest request, ACompanyManual be,Integer ids, String dianhuas) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         be.setUid(user.getId());
         be.setDmid(ids);
         be.setLevel1(be.getGkzt());
         be.setLevel2(be.getLevel2());
+        be.setFjgkfzr(be.getFjgkfzr() +"-"+ dianhuas);
         be.setType("重大");
         if (null == be.getId()) {
             be.setDel(0);

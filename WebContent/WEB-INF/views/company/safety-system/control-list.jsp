@@ -102,6 +102,7 @@
               "level2" : $("#buwei").val(),
               "id" : id,
               "ids": $("#gkztIds").val(),
+              "dianhuas" : $("#dianhuas").val(),
           }
           if(obj.gkzt == '') {
               $("#gkzt").focus();
@@ -119,7 +120,10 @@
               $("#level2").focus();
               return false;
           }
-
+          if(obj.dianhuas == '') {
+              $("#dianhuas").focus();
+              return false;
+          }
           var i = layer.load();
           $.post(getRootPath() + "/company/safety-system/aCompanyManual-save", obj, function(result) {
               layer.close(i);
@@ -164,12 +168,13 @@
         <th style="min-width:50px">风险等级</th>
         <th style="min-width:150px">风险类型</th>
         <th style="min-width:200px">风险因素</th>
-        <th style="min-width:50px">管控主体</th>
-        <th style="min-width:50px">责任人</th>
+        <th style="min-width:70px">管控主体</th>
+        <th style="min-width:150px">责任人</th>
         <th style="min-width:150px">管控措施</th>
         <th style="min-width:100px" class="div-pcz">操作</th>
       </tr>
       </thead>
+
       <tbody>
     <c:forEach items="${list }" var="be">
       <c:forEach items="${treeMap }" var="be1" varStatus="index">
@@ -257,7 +262,6 @@
         </div>
 
 
-
         <div class="row cl mt-15">
           <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">部位：</label>
           <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
@@ -271,9 +275,6 @@
             </c:if>
           </div>
         </div>
-
-
-
 
 
         <div class="row cl mt-15">
@@ -380,6 +381,8 @@
               <td>${be.level == 1 ? be.dname : be.dpname}</td>
               <td>${be.level == 1 ? '' : be.dname}</td>
               <td>${be.position }</td>
+
+              <input id = "dianhuas" type="hidden" value = "${be.mobile }">
             </tr>
           </c:forEach>
         </table>

@@ -980,9 +980,9 @@
     <!-- 添加数据信息到数据库！！！ -->
     <insert id="insertAdd">
         insert into a_company_manual_tbl (uid,
-        level1, level2, level3, del, ctime,gkzt)
+        level1, level2, level3, factors, del, ctime,gkzt)
         values (#{uid,jdbcType=INTEGER},
-        #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},
+        #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},#{factors,jdbcType=VARCHAR},
         #{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP},
         #{gkzt,jdbcType=VARCHAR})
     </insert>

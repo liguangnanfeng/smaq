@@ -130,8 +130,8 @@
         <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan">
             <thead>
             <tr class="text-c">
-                <th>辨识类型</th>
-                <th>车间/场所/部位</th>
+                <th style="width:10%" >辨识类型</th>
+                <th style="width:10%" >车间/场所/部位</th>
                 <c:if test="${empty type}">
                     <th style="padding:0;width:50%"><!--添加风险点 zhangcl 2018.12.15-->
                         <table>
@@ -161,7 +161,7 @@
                     <th>高危作业</th>
                 </c:if>
 
-                <th>操作</th>
+                <th style="width:3%" >操作</th>
 
             </tr>
             </thead>

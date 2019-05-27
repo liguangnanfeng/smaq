@@ -1011,6 +1011,20 @@
 
 
 
+    <!--根据部门的Uid和level1和level2-->
+
+
+    <select id="selectAllByLevel3" resultType="com.spring.web.model.ACompanyManual">
+        SELECT * FROM a_company_manual_tbl where uid=#{uid} and level1=#{level1} and level3=#{level3}
+  </select>
+
+    <!--根据部门的名称和uid获取数据-->
+
+
+    <select id="selectlevel3BydmName" resultType="String">
+        select level3 from a_company_manual_tbl where uid=#{uid} and level1=#{level1}group by level3
+    </select>
+
     <update id="updateDelByIds">
         update
         a_company_manual_tbl

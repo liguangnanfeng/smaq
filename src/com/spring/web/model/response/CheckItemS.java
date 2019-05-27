@@ -15,6 +15,8 @@ import java.util.Map;
 @Data
 public class CheckItemS {
 
+    public Integer checkId;
+
     public String levle1;
 
     public List<Map> items;

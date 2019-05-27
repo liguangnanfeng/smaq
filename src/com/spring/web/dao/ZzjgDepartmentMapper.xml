@@ -205,6 +205,13 @@
 
 
 
+    <!--  查询 ID 查询对应的 name 信息 -->
+    <select id="selectNameAll" resultType="com.spring.web.model.ZzjgDepartment">
+        select * from zzjg_department_tbl where del = 0 and  level = 2 and id = #{id}
+    </select>
+
+
+
 
 
     <select id="selectByUid" resultType="java.util.Map">
@@ -268,13 +275,9 @@
         group by parName, name
         order by t1.id asc
     </select>
-
-    <!--根据公司id查询分公司的所有部门(一级)
-
-    -->
     <select id="selectDepartmentByCompidAndLEvel" resultType="com.spring.web.model.ZzjgDepartment">
-    select * from zzjg_department_tbl where cid= #{companyId, jdbcType=INTEGER } and level = 1
-  </select>
+        select * from zzjg_department_tbl where cid= #{companyId, jdbcType=INTEGER } and level = 1
+    </select>
 
     <select id="selectDepByCompanyIdandSome" resultType="com.spring.web.model.ZzjgDepartment">
         select * from zzjg_department_tbl  where uid= #{0} and pid = #{1} and level = 2 and del = 0

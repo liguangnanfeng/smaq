@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.spring.web.service.CheckCompany.SaveMessageService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.log4j.Logger;
@@ -277,6 +278,9 @@ public class BaseController implements Serializable {
     @Autowired
     protected TradeCliqueMapper tradeCliqueMapper;
 
+    @Autowired
+    protected SaveMessageService saveMessageService;
+
     /** Mapper类引入结束 */
 
     /** Service类引入开始 */
@@ -379,7 +383,7 @@ public class BaseController implements Serializable {
         if (StringUtils.isEmpty(access_token)) {
             access_token =  request.getHeader("access_token");
             if (StringUtils.isEmpty(access_token)) {
-                    return null ;
+                return null ;
             }
         }
         AppToken at = appTokenMapper.selectByPrimaryKey(access_token);

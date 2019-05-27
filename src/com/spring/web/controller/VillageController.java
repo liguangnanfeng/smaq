@@ -9,6 +9,7 @@ import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.*;
 import com.spring.web.model.request.CheckItem;
 import com.spring.web.model.request.CheckLevel;
+import com.spring.web.model.response.CheckItemS;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
 import com.spring.web.result.Result;
@@ -50,7 +51,7 @@ import java.util.*;
 @SuppressWarnings("All")
 public class VillageController extends BaseController {
     /**
-     * @Fields serialVersionUID : 序列化编号
+     * 序列化编号
      */
     private static final long serialVersionUID = 3L;
     @Autowired
@@ -1316,7 +1317,7 @@ public class VillageController extends BaseController {
     /**
      * TODO 生成检查表数据
      *
-     * @param id
+     * @param id  model表的id
      * @param type
      * @param model
      * @param request
@@ -1327,12 +1328,15 @@ public class VillageController extends BaseController {
     public String checkNext(Integer id, Integer type, Model model, HttpServletRequest request) throws Exception {
         //log.error("checkNext checkid : "+id);
         User user = getLoginUser(request);
-        TCheck tc = tCheckMapper.selectByPrimaryKey(id);
+
+        CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(id);
+
+        TCheck tc = tCheckMapper.selectByPrimaryKey(checkItemByModelId.getCheckId());
 
         //log.error("tCheckMapper检查表信息:"+tc.toString());
         type = tc.getType();// add wz 190110
 
-        List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(id);
+        List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(checkItemByModelId.getCheckId());
         //log.error("tCheckPartMapper条目信息:"+partL.toString());
         for (TCheckPart a : partL) {
             String levels = a.getLevels();
@@ -1342,7 +1346,7 @@ public class VillageController extends BaseController {
         model.addAttribute("check", tc);
         model.addAttribute("partL", partL);
         //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
-        List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(id);
+        List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(checkItemByModelId.getCheckId());
         //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
 
         if (type != null && type == 9) {
@@ -1807,7 +1811,7 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 隐患汇总 cId 企业id  隐患排查记录
+     * TODO 隐患汇总 cId 企业id  隐患排查记录
      */
     @RequestMapping(value = "danger-index-list")
     public String modelList(HttpServletRequest request, Model model, Integer flag, Integer cId, Integer d,

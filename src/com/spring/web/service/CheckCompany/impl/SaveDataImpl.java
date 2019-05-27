@@ -400,6 +400,7 @@ public class SaveDataImpl implements SaveMessageService {
         // 查询风险点数据
         List<Map> list = tCheckItemMapper.selectAllByCheckId(checkId);
         checkItemS.setItems(list);
+        checkItemS.setCheckId(checkId);
 
         return checkItemS;
 

@@ -55,13 +55,13 @@ public interface TCheckMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TCheck record);
-    
+
     List<Map<String, Object>> selectList(Map<String, Object> m);
-    
+
     List<Map<String, Object>> selectList1(Map<String, Object> m);//APP端修改使用
-    
+
     List<Map<String, Object>> selectList2(Map<String, Object> m);//首页定期检查——企业自查修改使用
-    
+
     DynamicParameter<String, Object> selectCompany(@Param("id") Integer id);
 
     int deleteById(@Param("sql") String sql);
@@ -95,11 +95,4 @@ public interface TCheckMapper {
      */
     List<Map> selectRecordByCreateUser(Integer id);
 
-    /*
-    * 根据企业ID 查询数据
-    * */
-    List<TCheck> selectAllLists(Integer userId);
-
-
-    List<Map<String,Object>> selectListAll(Map<String, Object> m);
 }

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.spring.web.service.CheckCompany.SaveMessageService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.log4j.Logger;
@@ -276,6 +277,9 @@ public class BaseController implements Serializable {
     protected VideoInfoMapper videoInfoMapper;
     @Autowired
     protected TradeCliqueMapper tradeCliqueMapper;
+
+    @Autowired
+    protected SaveMessageService saveMessageService;
 
     /** Mapper类引入结束 */
 

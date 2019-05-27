@@ -953,7 +953,7 @@ public class CompanyController_safety extends BaseController {
             Map<String, Object> m = new HashMap();
             m.put("uid", user.getId());
             m.put("flag", "3");
-            List<Map<String, Object>> acL = this.aCompanyManualMapper.selectByMap(m);
+            List<Map<String, Object>> acL = this.aCompanyManualMapper.selectByFlag3(m);
             model.addAttribute("list", acL);
             return "company/safety-system/assess6";
         }

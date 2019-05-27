@@ -182,5 +182,7 @@ public interface ACompanyManualMapper {
     List selectAllByLevel3(@Param("uid")Integer id, @Param("level1")String name,@Param("level3")String level3);
 
 
+    List<Map<String, Object>> selectByFlag3(Map<String, Object> m);
+
 }
 

@@ -1361,10 +1361,6 @@ public class CompanyController_safety extends BaseController {
             industry = company.getIndustry();
         }
 
-
-
-
-
         List<TLevel> dL = tLevelMapper.selectAll();
         Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
         for (TLevel ad : dL) {
@@ -1854,6 +1850,7 @@ public class CompanyController_safety extends BaseController {
             a.setLevel2(level2);
             a.setGkzt(level1);//管控主体
             a.setFjgkfzr(fjgkfzr);
+            a.setDmid(depId);
         }
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("uid", user.getId());
@@ -1861,6 +1858,7 @@ public class CompanyController_safety extends BaseController {
         m.put("del", 0);
         m.put("ctime", new Date());
         m.put("del", 0);
+        /*m.put("dmid",depId);*/
         m.put("list", list);
         //m.put("flag", 1);
         aCompanyManualMapper.insertBath(m);
@@ -1903,11 +1901,15 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setUid(user.getId());
             aCompanyManual.setLevel1(level1);
             aCompanyManual.setLevel2(level2);
-            aCompanyManual.setLevel3("基础管理" + "/" + a.getLevel1() + "/" + a.getLevel2());
+            aCompanyManual.setLevel3(a.getLevel1() +
+                    "/" + a.getLevel2() + "/" + a.getLevel3());
             aCompanyManual.setFactors(a.getLevel3());
             aCompanyManual.setGkzt(level1);
             aCompanyManual.setCtime(new Date());
             aCompanyManual.setDel(0);
+            aCompanyManual.setDmid(depId);
+            aCompanyManual.setFlag("3");
+            aCompanyManual.setType(a.getType());
             aCompanyManualMapper.insertAdd(aCompanyManual);
         }
 

@@ -69,4 +69,5 @@ public interface ADangerManualMapper {
     List<ADangerManual> selectFactors(@Param("flag") String flag, @Param("industry") String industry);
 
     List<ADangerManual> selectByIndustryAll(@Param("industry")String industry,@Param("level3")String level3);
+
 }

@@ -273,5 +273,5 @@ checkstyle_checks.xml
 resources
 /html
 /images
-/WebContent/WEB-INF/views/company/checkModel/model-add222.jsp
-/WebContent/WEB-INF/views/company/checkModel/model-add222.jsp
+/WEB-INF/views/company/checkModel/model-add2.jsp
+/WEB-INF/views/company/checkModel/model-add2.jsp

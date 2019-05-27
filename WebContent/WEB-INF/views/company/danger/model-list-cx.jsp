@@ -92,6 +92,9 @@ $(function(){
             <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/getCheckModelBasic')" onclick="Hui_admin_tab(this)" href="javascript:;">
               <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加检查模版
           </a>
+               <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel')" onclick="Hui_admin_tab(this)" href="javascript:;">
+              <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加标准检查模版
+          </a>
         </span>
     </c:if>
     <c:if test="${flag == 3 }">

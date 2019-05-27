@@ -29,6 +29,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -1853,19 +1854,26 @@ public class VillageController extends BaseController {
         return "village/company/danger-index-list";
     }
 
+    /**
+     * 隐患治理记录,只要整改合格的
+     */
     @RequestMapping(value = "recheck-list")
-    public String modelList(HttpServletRequest request, Model model, Integer flag) throws Exception {
+    public String modelList(HttpServletRequest request, Model model, Integer flag, Integer status) throws Exception {
         User user = getLoginUser(request);
         model.addAttribute("flag", flag);
+        model.addAttribute("status", status);
+        // 只判断是否以检查出过合格的
 
+        List<Map> list = null;
 
-        // 企业登录
-//        if(1==flag){
-        List<Map> list = tCheckItemMapper.selectRecheckList(user.getId());
+        if (null != status && 1 == status) { //表示的是要查询整改合格的
+
+            list = tCheckItemMapper.selectRecheckListByRecheckStatus(user.getId(), status);
+        } else {
+            list = tCheckItemMapper.selectRecheckList(user.getId());
+        }
+
         model.addAttribute("list", list);
-//        }
-
-
         return "company/danger/recheck-list";
     }
 
@@ -2668,7 +2676,7 @@ public class VillageController extends BaseController {
 
         model.addAttribute("danger", list);
         model.addAttribute("map", names);
-        return "company/checkModel/model-add";
+        return "company/checkModel/model-add2";
     }
 
     /**
@@ -2738,7 +2746,7 @@ public class VillageController extends BaseController {
         ZzjgDepartment zzjg = zzjgDepartmentMapper.selectByPrimaryKey(depId);
         List<String> level3s = aCompanyManualMapper.selectlevel3BydmName(user.getId(), zzjg.getName());
         for (String level3 : level3s) {
-            LinkedHashMap<String,Object> map = new LinkedHashMap<String, Object>();
+            LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
             List l = aCompanyManualMapper.selectAllByLevel3(user.getId(), zzjg.getName(), level3);
             map.put("name", level3);
             map.put("list", l);
@@ -2757,7 +2765,7 @@ public class VillageController extends BaseController {
     @RequestMapping(value = "findInspection")
     @ResponseBody
     public List findInspection(Integer depId, String sName, HttpServletRequest request) {
-           User user = getLoginUser(request);
+        User user = getLoginUser(request);
 
         String dpName = zzjgDepartmentMapper.selectByPrimaryKey(depId).getName();// 部门名称
         //根据公司的id 部门名称和岗位信息获取该部门所有的风险点
@@ -2816,12 +2824,68 @@ public class VillageController extends BaseController {
         return list1;
     }
 
+
+    /**
+     * TODO PC 企业端保存标准检查模版
+     */
+    @ResponseBody
+    @RequestMapping(value = "saveCheckMenu3")
+    public AppResult saveCheckMenu3(HttpServletRequest request, String dmid) {
+        // 首先根据公司id查询部门的和其他的
+        try {
+            ZzjgDepartment zzjg = zzjgDepartmentMapper.selectByPrimaryKey(Integer.parseInt(dmid));
+            List<String> level3s = aCompanyManualMapper.selectlevel3BydmName(zzjg.getUid(), zzjg.getName());
+            List<ACompanyManual> list = null;
+            for (String level3 : level3s) {
+                list = aCompanyManualMapper.selectAllByLevel3(zzjg.getUid(), zzjg.getName(), level3);
+            }
+            // 对数据进行封装
+            List<CheckLevel> checkLevels = new ArrayList<>();
+            for (ACompanyManual companyManual : list) {
+                CheckLevel checkLevel = new CheckLevel();
+
+                checkLevel.setUid(companyManual.getUid());
+                checkLevel.setId(companyManual.getId());
+                checkLevel.setLevel1(companyManual.getLevel1());
+                checkLevel.setLevel2(companyManual.getLevel2());
+                checkLevel.setLevel3(companyManual.getLevel3());
+                checkLevel.setLevel4(companyManual.getMeasures());
+                checkLevel.setFactors(companyManual.getFactors());
+                checkLevel.setGkcs(companyManual.getGkcs());
+                checkLevel.setGkzt(companyManual.getGkzt());
+                checkLevels.add(checkLevel);
+            }
+
+            CheckItem checkItem = new CheckItem();
+            checkItem.setCheckLevels(checkLevels);
+            checkItem.setTemplate(zzjg.getName() + "检查表");
+            checkItem.setCheckType(-2);  // 表示是现场检查
+            checkItem.setTitle(1);       // 表示是日常检查
+            checkItem.setUid(zzjg.getUid());
+
+            return savemodel(request, checkItem);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            // 保存失败
+            AppResult result = new AppResultImpl();
+            result.setStatus("1");
+            return result;
+        }
+
+    }
+
     /**
      * TODO PC 企业端保存保存检查模板
      */
     @ResponseBody
     @RequestMapping(value = "saveCheckMenu2")
     public AppResult saveCheckMenu2(HttpServletRequest request, @RequestBody CheckItem checkItem) {
+        return savemodel(request, checkItem);
+
+    }
+
+
+    private AppResult savemodel(HttpServletRequest request, CheckItem checkItem) {
         AppResult result = new AppResultImpl();
         User user = getLoginUser(request); // 主账号登陆
         ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(checkItem.getCheckLevels().get(0).getId());
@@ -2875,7 +2939,7 @@ public class VillageController extends BaseController {
                     modelPart.setName(s);
                     tModelPartMapper.insertSelective(modelPart);
                 }
-            }else{   // 基础和高危
+            } else {   // 基础和高危
                 TModelPart modelPart = new TModelPart();
                 modelPart.setModelId(model.getId());
                 tModelPartMapper.insertSelective(modelPart);
@@ -2888,7 +2952,10 @@ public class VillageController extends BaseController {
             tCheck.setTitle(checkItem.getTemplate());                               // 被检查的标题
             if (-2 == checkItem.getCheckType()) { //只有现场才会存储部门
                 tCheck.setDepart(checkItem.getCheckLevels().get(0).getLevel1());        // 被检查的部门
-                tCheck.setDapartContact(companyManual.getDmid() + "");                 // 被检查部门的id
+                //但是会出现现场检查什么都没有的情况
+                if (null != checkItem.getCheckLevels().get(0).getLevel3() && "".equals(checkItem.getCheckLevels().get(0).getLevel3())) {
+                    tCheck.setDapartContact(companyManual.getDmid() + "");                 // 被检查部门的id
+                }
             }
             tCheck.setUserId(user.getId());                                         // 企业公司id
             tCheck.setCreateUser(user.getId());                                     // 被创建人的id
@@ -2930,7 +2997,7 @@ public class VillageController extends BaseController {
                         tCheckItemMapper.insertSelective(tCheckItem);
                     }
                 }
-            }else{
+            } else {
                 // 高危，现场检查  没有部门和岗位
                 if (null != checkItem.getCheckLevels() && checkItem.getCheckLevels().size() > 0) {
                     for (CheckLevel checkLevels : checkItem.getCheckLevels()) {
@@ -2955,7 +3022,6 @@ public class VillageController extends BaseController {
             result.setStatus("1");
             return result;
         }
-
     }
 
 }

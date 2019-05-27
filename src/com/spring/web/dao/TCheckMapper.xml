@@ -368,6 +368,7 @@
         order by T1.id desc
     </select>
 
+    <!--pc端查询检查记录-->
     <select id="selectList2" resultType="java.util.Map">
         select
         T1.id, T1.title, T1.depart, T1.model_id modelId, T1.type, T1.industry_id industryId, T1.industry_type

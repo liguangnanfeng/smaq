@@ -831,6 +831,7 @@
     select COUNT(*) from t_check_item_tbl where check_id = #{id} and status =2;
     </select>
 
+
     <select id="selectRecheckList" parameterType="java.lang.Integer" resultType="java.util.Map">
         select a.id as checkId,a.depart,b.status,b.memo,d.create_time as time,d.checker
         from t_check_tbl a JOIN t_check_item_tbl b ON a.id = b.check_id
@@ -839,6 +840,19 @@
         where d.user_id = #{userId}
         ORDER BY a.id
 
+    </select>
+
+    <!--只要整改复查合格的
+    -->
+    <select id="selectRecheckListByRecheckStatus" resultType="java.util.Map">
+        select a.id as checkId,a.depart,b.status,b.memo,d.create_time as time,d.checker
+        from t_check_tbl a JOIN t_check_item_tbl b ON a.id = b.check_id
+        JOIN t_recheck_item_tbl c ON b.id = c.check_item_id
+        JOIN t_recheck_tbl d ON c.recheck_id = d.id
+        where d.user_id = #{uid}
+        and b.status in ( #{status},3)
+
+        ORDER BY a.id
     </select>
 
     <!--根据checkId获取所有的数据

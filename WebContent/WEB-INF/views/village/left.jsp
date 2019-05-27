@@ -141,11 +141,7 @@ $(document).ready(function() {
             </ul>
           </div>
           <ul>
-            <li><a data-href="${ly }/village/government-list?flag=4" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
-
-            <li><a data-href="${ly }/village/government-lists?flag=4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
-
-
+            <li><a data-href="${ly }/village/check-list?flag=4" data-title="排查治理记录" href="javascript:void(0)">排查治理记录</a></li>
             <%-- <li><a data-href="${ly }/village/check-add-cho" data-title="检查表设置" href="javascript:void(0)">检查表设置</a></li>
             <li><a data-href="${ly }/village/rectification-list?flag=1" data-title="隐患治理复查" href="javascript:void(0)">隐患治理复查</a></li>
             <li><a data-href="${ly }/village/check-list?flag=1" data-title="排查治理记录" href="javascript:void(0)">排查治理记录</a></li>

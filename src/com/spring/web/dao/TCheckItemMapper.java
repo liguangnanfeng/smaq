@@ -143,7 +143,7 @@ public interface TCheckItemMapper {
      * @param checkId
      * @return
      */
-    List<TCheckItem> selectAllByCheckId(@Param("checkId") Integer checkId);
+    List<Map> selectAllByCheckId(@Param("checkId") Integer checkId);
 
     /**
      * 根据id查询数据
@@ -160,12 +160,23 @@ public interface TCheckItemMapper {
     Integer selectNumBytCheckId(Integer id);
 
     /**
-     * 2019-05-07  新增隐患治理记录(复查记录)
+     * 2019-05-07  新增隐患治理记录(复查记录,主要合格的)
      */
     List<Map> selectRecheckList(Integer userId);
 
-    int selectCounts(@Param("checkId")Integer checkId);
+    /**
+     * 根据检查记录主表id获取数据
+     */
+    List<TCheckItem> selectItemByCheckId(Integer checkId);
 
-
-
+    /**
+     * pc端查询所有的整改合格的记录
+     * @param id
+     * @param status
+     * @return
+     */
+    List<Map> selectRecheckListByRecheckStatus(@Param("uid") Integer id, @Param("status") Integer status);
 }
+
+
+

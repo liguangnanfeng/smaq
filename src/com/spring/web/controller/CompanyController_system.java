@@ -4,8 +4,23 @@
  */
 package com.spring.web.controller;
 
-import com.spring.web.BaseController;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.spring.web.dao.ZzjgPersonnelMapper;
 import com.spring.web.ibatis.LlHashMap;
+import com.spring.web.service.zzjgCompany.IzzjgCompanyService;
+import com.spring.web.util.EncryptUtil;
+import com.spring.web.util.MyMD5Util;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.spring.web.BaseController;
+
 import com.spring.web.model.User;
 import com.spring.web.model.ZzjgCompany;
 import com.spring.web.model.ZzjgDepartment;
@@ -14,17 +29,6 @@ import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
 import com.spring.web.service.cgf.CgfService;
 import com.spring.web.service.trouble.TroubleService;
-import com.spring.web.service.zzjgCompany.IzzjgCompanyService;
-import com.spring.web.util.EncryptUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @Title: CompanyController_cd
@@ -210,10 +214,14 @@ public class CompanyController_system extends BaseController {
         }
         dto.setUid(user.getId());
         // TODO 调用工具类生成密码 微信小程序端进行用户登陆密码请勿删除
-        String encryptedPwd = EncryptUtil.encrypt(dto.getPassword());
+        if(dto.getPassword().length()<30){
+            String encryptedPwd = EncryptUtil.encrypt(dto.getPassword());
+            dto.setPassword(encryptedPwd);
+        }
+
         dto.setCtime(d);
         dto.setDel(0);
-        dto.setPassword(encryptedPwd);
+
         if (null == dto.getId()) {
             zzjgPersonnelMapper.insertSelective(dto);
         } else {
@@ -223,12 +231,16 @@ public class CompanyController_system extends BaseController {
         return result;
     }
 
-    @RequestMapping(value = "user-update")
-    public @ResponseBody Result update(ZzjgPersonnel dto, HttpServletRequest request) throws Exception {
-        User user = getLoginUser(request);
+    /**
+     * 员工删除
+     */
+    @RequestMapping(value = "user-del")
+    public
+    @ResponseBody Result userDel(Integer id, Integer del ){
         Result result = new ResultImpl();
-        // 根据前台传送的ID 删除数据信息
-        zzjgPersonnelMapper.updateIds(dto.getId());
+        ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectByPrimaryKey(id);
+        zzjgPersonnel.setDel(del);
+        zzjgPersonnelMapper.updateByPrimaryKey(zzjgPersonnel);
         return result;
     }
 

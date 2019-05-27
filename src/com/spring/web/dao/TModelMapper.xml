@@ -72,6 +72,7 @@
       #{open,jdbcType=INTEGER}, #{useTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
+  <!--保存自定义记录,并返回一个主键id-->
   <insert id="insertSelective" parameterType="com.spring.web.model.TModel">
     <!--
       WARNING - @mbggenerated
@@ -254,7 +255,8 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
+
+  <!--pc端进行检查模版的查看-->
   <select id="selectByMap" parameterType="java.util.Map" resultType="java.util.Map">
     select 
       T1.id, T1.title, T1.type, T1.flag, T1.cycle, T1.industry_type industryType, T1.part,
@@ -389,7 +391,7 @@
       根据id进行排序
    -->
   <select id="selectModelByUid" resultType="Map" >
-    select id, title from t_model_tbl where  user_id =#{uid} and del=0 and flag=1 order by id ;
+    select id, title from t_model_tbl where  user_id =#{uid} and del=0 and flag=1 and part=#{dpName} order by id ;
   </select>
   <!--政府端查询模版信息
 

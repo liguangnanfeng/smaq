@@ -94,7 +94,9 @@ public class CheckLevel implements Serializable {
      */
     public Integer industryId;
 
+    /*令牌*/
     public String access_token;
+    /*sessionId*/
     public String sessionId;
 
 
@@ -209,5 +211,7 @@ public class CheckLevel implements Serializable {
     public void setFiles(String files) {
         this.files = files;
     }
+
+
 
 }

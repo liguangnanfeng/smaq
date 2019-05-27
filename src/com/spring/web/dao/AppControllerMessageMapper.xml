@@ -45,13 +45,12 @@
     </resultMap>
 
 
+    <!--获取消息通知列表
 
+    -->
     <select id="findMessageList" resultMap="ResultMapMessages">
-        select
-        *
-        from messages
-        where user_id = #{userId
-        limit #{pageNo},#{pageSize}
+        select * from messages where user_id = #{userId} limit #{pageNo} , #{pageSize};
+
     </select>
 
     <select id="findMessageDetail" parameterType="java.lang.String" resultMap="ResultMapMessages">
@@ -63,12 +62,13 @@
     <!--
         查询已检查过的记录
         or a.dapart_contact = #{cid}
+        findTCheckList
     -->
     <select id="findTCheckList"  resultType="java.util.Map">
         select
         a.*,count(b.id) as count
         from t_check_tbl a LEFT JOIN t_check_item_tbl b ON a.id = b.check_id
-        where a.status = 2 and a.create_user = #{cid}
+        where a.status = 2 and a.user_id = #{uid}
 		group BY a.id
         ORDER BY a.create_time DESC
         LIMIT #{pageNo},#{pageSize}
@@ -90,6 +90,28 @@
         LIMIT #{pageNo},#{pageSize}
     </select>
 
+    <!-- TODO  被检查人获取该部门的检查记录
+    -->
+    <select id="findTCheckListByStatusAndBJC" resultType="java.util.Map">
+         select
+        a.*,count(b.id) as count
+        from t_check_tbl a LEFT JOIN t_check_item_tbl b ON a.id = b.check_id
+        where a.status = 2 and a.user_id = #{uid} and a.depart=#{bm}
+		group BY a.id
+        ORDER BY a.create_time DESC
+        LIMIT #{pageNo},#{pageSize}
+    </select>
+    <!-- TODO  被检查人获取该部门的不合格检查记录-->
+    <select id="findTCheckItemByBJC" resultType="java.util.Map">
+        select
+        a.*,count(b.id) as count
+        from t_check_tbl a LEFT JOIN t_check_item_tbl b ON a.id = b.check_id
+        where a.status = 2 and a.user_id = #{uid} and  a.depart =#{bm} and b.status = 2
+		group BY a.id
+        ORDER BY a.create_time DESC
+        LIMIT #{pageNo},#{pageSize}
+    </select>
+
     <select id="findCheckById" parameterType="java.lang.String" resultType="com.spring.web.model.TCheck">
         select
         *
@@ -103,7 +125,9 @@
         from zzjg_personnel_tbl
         where id = #{userId}
     </select>
-    <!--整改意见查询不合格项-->
+    <!--整改意见查询不合格项
+        TODO
+    -->
     <select id="findRectificationList" parameterType="java.lang.String" resultType="java.util.Map">
         select a.*,b.`name`
         from t_check_item_tbl a left JOIN t_check_part_tbl b ON a.part_id = b.id
@@ -138,22 +162,39 @@
 
   </select>
 
+    <!--复查记录,主页面进入-->
     <select id="selectRecheckByCheckId2" resultType="java.util.Map">
       select a.*,b.name,c.title
         FROM t_check_tbl c JOIN t_recheck_tbl a ON a.check_id = c.id LEFT JOIN zzjg_personnel_tbl b ON a.dapart_contact = b.id
         where a.create_time = #{userId} or a.dapart_contact = #{userId}
     </select>
+    <!--政府端复查记录,主页面进入-->
+    <select id="selectRecheckByCheckId2ZF" resultType="java.util.Map" >
+        select a.*,c.title
+        FROM t_check_tbl c JOIN t_recheck_tbl a ON a.check_id = c.id
+        where a.user_id = #{uid} and a.create_user = #{userId} order by a.id desc ;
+    </select>
+
+    <!--企业端检查人员的复查记录-->
+    <select id="selectRecheckByCheckId2JCR" resultType="java.util.Map">
+        select a.*,c.title
+        FROM t_check_tbl c JOIN t_recheck_tbl a ON a.check_id = c.id
+        where a.user_id = #{uid} and a.create_user = #{userId} order by a.id desc ;
+    </select>
+
+    <!--企业端被检查人员的复查记录-->
+    <select id="selectRecheckByCheckId2BJCR" resultType="java.util.Map">
+        select a.*,c.title
+        FROM t_check_tbl c JOIN t_recheck_tbl a ON a.check_id = c.id
+        where a.user_id = #{uid} and a.dapart_contact=#{dpid} order by a.id desc ;
+    </select>
 
     <select id="selectCheckByFlag" resultType="java.util.Map">
       select  a.user_id as userId,u.user_name,
-
-    a.title,a.create_time as time,a.status,count(b.id) as count,a.check_company as checkCompany
-
-    from user_tbl u JOIN t_check_tbl a ON u.id = a.user_id LEFT JOIN t_check_item_tbl b ON a.id = b.check_id
-
-    WHERE u.user_type = 5
-
-    GROUP BY a.id
+      a.title,a.create_time as time,a.status,count(b.id) as count,a.check_company as checkCompany
+      from user_tbl u JOIN t_check_tbl a ON u.id = a.user_id LEFT JOIN t_check_item_tbl b ON a.id = b.check_id
+      WHERE u.user_type = 5
+      GROUP BY a.id
   </select>
 
 </mapper>

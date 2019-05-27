@@ -192,21 +192,4 @@
     where check_id = #{checkId}
     order by id desc
   </select>
-
-
-
-  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
-    <include refid="Base_Column_List" />
-    from t_recheck_tbl
-    where user_id = #{userId}
-  </select>
-
-
-
-
-
-
-
-
 </mapper>

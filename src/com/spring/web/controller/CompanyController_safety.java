@@ -22,11 +22,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
+ * @author CGF
+ * @version V1.0
  * @Title: CompanyController_cd
  * @Description: TODO(用一句话描述该文件做什么)
- * @author CGF
  * @date 2017年7月27日 上午9:49:51
- * @version V1.0
  */
 @Controller
 @RequestMapping("company/safety-system")
@@ -91,12 +91,9 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-
-
-
     /*
-    * 较大风险删除
-    * */
+     * 较大风险删除
+     * */
     @RequestMapping({"aCompanyManual-del"})
     @ResponseBody
     public Result aCompanyManualDel(HttpServletRequest request, Integer id) throws Exception {
@@ -106,13 +103,12 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-
-
     /*
-    *  重大风险一键导入 2
-    * */
+     *  重大风险一键导入 2
+     * */
     @RequestMapping(value = "risk-list-add1")
-    public @ResponseBody Result riskList(HttpServletRequest request){
+    public @ResponseBody
+    Result riskList(HttpServletRequest request) {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
@@ -125,8 +121,8 @@ public class CompanyController_safety extends BaseController {
         ACompanyManual aCompanyManuals;
         List<String> list = null;
 
-        if ( null != company.getIndustry()){
-            if (company.getIndustry().contains("化工企业（危险化学品生产、经营、使用）、加油站")){
+        if (null != company.getIndustry()) {
+            if (company.getIndustry().contains("化工企业（危险化学品生产、经营、使用）、加油站")) {
                 list = new ArrayList<>();
                 list.add("危险化学品生产、经营单位主要负责人和安全生产管理人员未依法经考核合格。");
                 list.add("特种作业人员未持证上岗。");
@@ -149,7 +145,7 @@ public class CompanyController_safety extends BaseController {
                 list.add("新开发的危险化学品生产工艺未经小试、中试、工业化试验直接进行工业化生产；国内首次使用的化工工艺未经过省级人民政府有关部门组织的安全可靠性论证；新建装置未制定试生产方案投料开车；精细化工企业未按规范性文件要求开展反应安全风险评估。");
                 list.add("未按国家标准分区分类储存危险化学品，超量、超品种储存危险化学品，相互禁配物质混放混存。");
 
-            }else if (company.getIndustry().contains("烟花爆竹经营(批发)企业")) {
+            } else if (company.getIndustry().contains("烟花爆竹经营(批发)企业")) {
 
                 list = new ArrayList<>();
                 list.add("主要负责人、安全生产管理人员未依法经考核合格。");
@@ -240,7 +236,7 @@ public class CompanyController_safety extends BaseController {
         }
 
 
-        if ( null != company.getDangers() && company.getDangers().contains("粉尘涉爆")) {
+        if (null != company.getDangers() && company.getDangers().contains("粉尘涉爆")) {
 
             list.add("粉尘爆炸危险场所设置在非框架结构的多层建构筑物内，或与居民区、员工宿舍、会议室等人员密集场所安全距离不足。");
             list.add("可燃性粉尘与可燃气体等易加剧爆炸危险的介质共用一套除尘系统，不同防火分区的除尘系统互联互通。");
@@ -293,10 +289,11 @@ public class CompanyController_safety extends BaseController {
     }*/
 
     /*
-    *  清空高危风险数据
-    * */
+     *  清空高危风险数据
+     * */
     @RequestMapping(value = "risk-list-adddel1")
-    public @ResponseBody Result adddel1(HttpServletRequest request,Model model,Integer type){
+    public @ResponseBody
+    Result adddel1(HttpServletRequest request, Model model, Integer type) {
 
         Result result = new ResultImpl();
         User user = getLoginUser(request);
@@ -308,14 +305,14 @@ public class CompanyController_safety extends BaseController {
             aCompanyManualMapper.updateAll(aCompanyManualList.get(i).getId());
         }
 
-        return  result;
+        return result;
     }
 
 
-  /*  *//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**
+    /**
      * 风险辨识
-     *//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//*
-    *//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//*@RequestMapping(value = "risk-list")
+     */
+    /*@RequestMapping(value = "risk-list")
     public String riskList(Model model, HttpServletRequest request, Integer type) throws Exception {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
@@ -389,7 +386,14 @@ public class CompanyController_safety extends BaseController {
         return "company/safety-system/risk-list1";
     }*/
 
-
+    /**
+     * 风险辨识,其他因素
+     * @param model
+     * @param request
+     * @param type
+     * @return
+     * @throws Exception
+     */
     @RequestMapping({"risk-list"})
     public String riskList(Model model, HttpServletRequest request, Integer type) throws Exception {
         User user = this.getLoginUser(request);
@@ -441,11 +445,9 @@ public class CompanyController_safety extends BaseController {
         }
     }
 
-
-
     /*
-    * 风险点辨识表
-    * */
+     * TODO 风险点辨识表
+     * */
     @RequestMapping({"risk-list-update"})
     public String riskList1(Model model, HttpServletRequest request, Integer type) throws Exception {
         User user = this.getLoginUser(request);
@@ -506,7 +508,7 @@ public class CompanyController_safety extends BaseController {
                 aCompanyManualMapper.save(aCompanyManual1);
             }
             return result;
-        }else {
+        } else {
             result.setStatus("1");
             result.setMess("该行业暂无较大风险！");
             return result;
@@ -515,8 +517,8 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-    * 清空较大风险
-    * */
+     * 清空较大风险
+     * */
     @RequestMapping({"risk-list-adddel"})
     @ResponseBody
     public Result riskListDel(Model model, HttpServletRequest request, Integer type) throws Exception {
@@ -534,10 +536,9 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-
     /*
-    * 导入一般和较小风险   3
-    * */
+     * 导入一般和较小风险   3
+     * */
     @RequestMapping({"risk-list-add2"})
     @ResponseBody
     public Result riskListAdd2(Model model, HttpServletRequest request, Integer type) throws Exception {
@@ -578,7 +579,7 @@ public class CompanyController_safety extends BaseController {
 
             }
             return result;
-        }else {
+        } else {
             result.setStatus("1");
             result.setMess("该行业暂无风险！");
             return result;
@@ -586,11 +587,9 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-
-
     /*
-    * 清空其它数据信息
-    * */
+     * 清空其它数据信息
+     * */
     @RequestMapping({"risk-list-adddels"})
     @ResponseBody
     public Result adddels(Model model, HttpServletRequest request, Integer type) throws Exception {
@@ -606,10 +605,6 @@ public class CompanyController_safety extends BaseController {
 
         return result;
     }
-
-
-
-
 
 
 //        Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
@@ -1401,14 +1396,15 @@ public class CompanyController_safety extends BaseController {
         User user = getLoginUser(request);
 
         if(StringUtils.isNotBlank(industry)) {
+        if (StringUtils.isNotBlank(industry)) {
             industry = utf8Str(industry);
         }
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         model.addAttribute("company", company);
-        if(StringUtils.isBlank(industry)) {
+        if (StringUtils.isBlank(industry)) {
             industry = company.getIndustry();
-            if(industry.equals("化工企业（危险化学品生产、经营、使用）、加油站")) {
-                if(company.getName().contains("油")) {
+            if (industry.equals("化工企业（危险化学品生产、经营、使用）、加油站")) {
+                if (company.getName().contains("油")) {
                     industry = "加油站";
                 }
             }

@@ -37,7 +37,7 @@
                 <button class="btn-depart" onclick="showadd(1)">
                     <i class="Hui-iconfont">&#xe600;</i>
                     <c:if test="${session_user.userType != 3}">
-                        添加公司名称
+                        添加分(子)公司
                     </c:if>
                     <c:if test="${session_user.userType == 3}">
                         添加单位</c:if>
@@ -52,7 +52,7 @@
           <tr class="text-c dantd customdantd" data-id="${be.id }" data-name="${be.name }">
             <td>${be.name }
               <i class="Hui-iconfont" name="edit" style="right:38px">&#xe6df;</i><!-- 修改 -->
-              <i class="Hui-iconfont" name="del">&#xe609;</i><!-- 删除 -->
+                <!--<i class="Hui-iconfont" name="del">&#xe609;</i>--><!-- 删除 -->
             </td>
           </tr>
           </c:forEach>

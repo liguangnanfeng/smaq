@@ -337,101 +337,6 @@
         order by T1.id desc
     </select>
 
-
-
-
-    <select id="selectListAll" resultType="java.util.Map">
-        select
-        T1.id, T1.title, T1.depart, T1.model_id modelId, T1.type, T1.industry_id industryId, T1.industry_type
-        industryType,
-        T1.expect_time expectTime, T1.real_time realTime, T1.cheker, T1.contact, T1.dapart_contact dapartContact,
-        T1.status, T1.create_time createTime, T1.flag, T1.check_company checkCompany, T2.name companyName,
-        (select count(0) from t_check_item_tbl where check_id = T1.id and status > 1) c,
-        (select count(0) from t_recheck_tbl where check_id = T1.id) c3,
-        (select count(0) from t_rectification_tbl where check_id = T1.id) t
-        from t_check_tbl T1
-        left join company_tbl T2 on T1.user_id = T2.user_id
-        <where>
-            T1.del = 0 and T1.status = 2
-            <if test="title != null and title != ''">
-                and T1.title LIKE CONCAT('%', #{title},'%')
-            </if>
-            <if test="type != null and type != ''">
-                and T1.industry_type = #{type}
-            </if>
-            <if test="status != null">
-                and T1.status = #{status}
-            </if>
-            <if test="flag != null">
-                and T1.flag = #{flag}
-            </if>
-            <if test="userIds != null and userIds != ''">
-                and T2.user_id in (${userIds})
-            </if>
-            <if test="userId != null and userId != ''">
-                and T2.user_id = #{userId}
-            </if>
-        </where>
-        order by T1.id desc
-    </select>
-
-
-    <!-- 根据企业 ID 查询对应的数据信息!!! -->
-    <select id="selectAllLists" resultMap="BaseResultMap">
-        select
-        T1.id, T1.title, T1.depart, T1.model_id modelId, T1.type, T1.industry_id industryId, T1.industry_type
-        industryType,
-        T1.expect_time expectTime, T1.real_time realTime, T1.cheker, T1.contact, T1.dapart_contact dapartContact,
-        T1.status, T1.create_time createTime, T1.flag, T1.check_company checkCompany, T2.name companyName,
-        (select count(0) from t_check_item_tbl where check_id = T1.id and status > 1) c,
-        (select count(0) from t_recheck_tbl where check_id = T1.id) c3,
-        (select count(0) from t_rectification_tbl where check_id = T1.id) t
-        from t_check_tbl T1
-        left join company_tbl T2 on T1.user_id = T2.user_id
-        <where>
-            T1.del = 0 and T1.status = 2
-            <if test="userId != null and userId != ''">
-                and T2.user_id = #{userId}
-            </if>
-        </where>
-        /*select
-        *
-        from t_check_tbl
-        where
-        del = 0 and status = 2 and user_id = #{user_id} ;*/
-    </select>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <select id="selectList1" resultType="java.util.Map">
         select
         T1.id, T1.title, T1.depart, T1.model_id modelId, T1.type, T1.industry_id industryId, T1.industry_type
@@ -539,10 +444,6 @@
     model_id = #{modelId} order by id desc limit 0 ,1 ;
   </select>
 
-
-
-
-
     <!--根据uid和id查询该人原本的检查表信息
     -->
     <select id="findAllByUidAndUserId" resultMap="BaseResultMap">
@@ -553,12 +454,13 @@
     </select>
 
 
+    <!--根据模版id查询最早的检查记录-->
     <select id="selectOldByModelId" resultMap="BaseResultMap" >
     select
         <include refid="Base_Column_List"/>
     from t_check_tbl
     where
-    model_id = #{modelId} order by id asc  limit 0 ,1;
+    model_id = #{modelId} order by id limit 0 ,1;
 
     </select>
 

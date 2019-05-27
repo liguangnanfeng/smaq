@@ -36,7 +36,7 @@ $(function() {
         })
       }
     })
-
+    
     $("#townId").change();
   }
 })
@@ -44,13 +44,13 @@ $(function() {
 </head>
 <body>
   <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-    <span class="c-gray en">&gt;</span> <span>${flag!=2 ? '隐患排查治理系统' : '行政执法系统'}</span>
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
+    <span class="c-gray en">&gt;</span> <span>${flag!=2 ? '隐患排查治理系统' : '行政执法系统'}</span> 
     <c:if test="${flag != 2}">
-      <span class="c-gray en">&gt;</span> <span>隐患排查记录</span>
+      <span class="c-gray en">&gt;</span> <span>隐患排查记录</span> 
     </c:if>
     <c:if test="${flag == 2}">
-      <span class="c-gray en">&gt;</span> <span>执法记录</span>
+      <span class="c-gray en">&gt;</span> <span>执法记录</span> 
     </c:if>
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>
@@ -58,23 +58,18 @@ $(function() {
   </nav>
   <div class="page-container">
     <c:if test="${flag != 2}">
-        <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
-            <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=1">企业自查</a>
-            <a class="btn default ${flag == 4 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=4">行政检查</a>
-            <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=3">部门抽查</a>
-            <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
-        </div>
+    <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
+        <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=1&status=2">企业自查</a> 
+        <a class="btn default ${flag == 4 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=4&status=2">行政检查</a>
+        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=3&status=2">部门抽查</a>
+        <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
+    </div>
     </c:if>
-
-
-            <div class="text-c">
-            <form action="${ly }/village/check-list?flag=${flag}" method="post">
-            <%--TODO 在进行判断--%>
-            </div>
-      <%--  </c:if> --%>
-
-
-      <c:if test="${session_user.userType == 6}">
+    <div class="text-c">
+      <form action="${ly }/village/check-list?flag=${flag}" method="post">
+        <%--TODO 在进行判断--%>
+        </div>
+        </c:if> <c:if test="${session_user.userType == 6}">
           <span>所在镇：</span>
           <select name="townId" id="townId" class="select" style="width:100px;">
               <option value="">全部</option>
@@ -88,21 +83,14 @@ $(function() {
           </select>
       </c:if>
           <c:if test="${session_user.userType == 3}">
-
-              <div class="dis-ib">
-                  <span>所在村：</span>
-                  <select id="villageId" name="villageId" class="select" style="width:100px;">
-                      <option value="">全部</option>
-                      <c:forEach items="${villageL }" var="be">
-                          <option value="${be.userId }" <c:if test="${villageId == be.userId}"> selected</c:if>>${be.name }</option>
-                      </c:forEach>
-                  </select>
-              </div>
-
-
-          </c:if>
-
-
+          <div class="dis-ib">
+              <span>所在村：</span>
+              <select id="villageId" name="villageId" class="select" style="width:100px;">
+                  <option value="">全部</option>
+                  <c:forEach items="${villageL }" var="be">
+                      <option value="${be.userId }" <c:if test="${villageId == be.userId}"> selected</c:if>>${be.name }</option>
+                  </c:forEach>
+              </select>
         <div class="dis-ib">
           <span>企业名称：</span>
           <input type="text" name="companyName" value="${companyName }" class="input-text mb-5 mt-5" style="width:150px;">
@@ -124,7 +112,7 @@ $(function() {
       <%-- <c:if test="${flag == 3}">
         <a class="btn btn-primary radius" data-title="添加线下检查记录" data-href="${ly }/company/check-add3?flag=3" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加线下检查记录</a>
       </c:if> --%>
-      <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
+      <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span> 
     </div>
     <div class="mt-20">
       <table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -159,7 +147,7 @@ $(function() {
             <td>${be.c }</td>
             <td>${flag == 1 ? be.depart : be.checkCompany}</td>
             <td>
-
+              
               <!-- 村镇 走这套 -->
               <c:if test="${session_user.userType == 4}">
               <!-- 判断能否录入 行政检查 没填过 没过期的 -->
@@ -177,7 +165,7 @@ $(function() {
                      </c:if> --%>
                 </c:otherwise>
               </c:choose>
-
+              
               <!-- 判断是否有整改意见 -->
               <c:if test="${be.c > 0 && be.status == 2 }"><!-- 已检查过且有隐患的需要整改意见 -->
               <c:choose>
@@ -206,13 +194,13 @@ $(function() {
               <c:if test="${be.flag == 4 || be.flag == 3}">
                 <a style="text-decoration:none" onClick="show_dialog('检查文书-现场检查记录_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=8')" href="javascript:;">查看检查文书</a><br>
               </c:if>
-
-
+              
+              
               <c:if test="${be.flag == 4 || be.flag == 3}">
               <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除检查记录</a>
               </c:if> --%>
               </c:if>
-
+              
               </c:if>
                <!-- 村镇 走这套 -->
              <%--  <c:if test="${session_user.userType == 3 || session_user.userType == 4}">
@@ -227,7 +215,7 @@ $(function() {
                      </c:if>
                 </c:otherwise>
               </c:choose>
-
+              
               <!-- 判断是否有整改意见 -->
               <c:if test="${be.c > 0 && be.status == 2 }">已检查过且有隐患的需要整改意见
               <c:choose>
@@ -282,7 +270,7 @@ $(function() {
                      </c:if> --%>
                 </c:otherwise>
               </c:choose>
-
+              
               <!-- 判断是否有整改意见 -->
               <c:if test="${be.c > 0 && be.status == 2 }"><%-- 已检查过且有隐患的需要整改意见--%>
               <c:choose>
@@ -307,7 +295,7 @@ $(function() {
                    <!-- <a style="text-decoration:none" onClick="layer.alert('还未设置整改意见')" href="javascript:;">整改意见</a><br> -->
                 </c:otherwise>
               </c:choose>
-
+                
                 <c:if test="${be.c3 > 0}">
                   <c:if test="${be.status != 2 || be.flag == 1}">
                   <a style="text-decoration:none" onClick="show_dialog('复查详情_${be.id}', '${ly }/company/recheck-detail?checkId=${be.id }')" href="javascript:;">复查详情</a><br>
@@ -316,18 +304,18 @@ $(function() {
                 <%-- <c:if test="${be.c3 == 0}">
                   <a style="text-decoration:none" onClick="layer.alert('还没有复查记录哦。。。')" href="javascript:;">复查详情</a><br>
                 </c:if> --%>
-
+                
               <%-- </c:if>
                <c:if test="${be.flag == 2 || be.flag == 3}">
                 <a style="text-decoration:none" onClick="show_dialog('检查文书-现场检查记录_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=8')" href="javascript:;">查看检查文书</a><br>
                </c:if>
-
+              
               <c:if test="${be.flag == 2 || be.flag == 3}">
                 <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除检查记录</a>
               </c:if>
               </c:if> --%>
               </c:if>
-
+              
             <%--   <c:if test="${flag == 4}">
                <a style="text-decoration:none" onClick="show_dialog('现场检查记录_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=8')" href="javascript:;">现场检查记录</a><br>
                </c:if>
@@ -376,6 +364,6 @@ function del_(id){
     })
   })
 }
-</script>
+</script> 
 </body>
 </html>

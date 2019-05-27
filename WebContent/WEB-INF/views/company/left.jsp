@@ -261,11 +261,14 @@
                 <li><a data-href="${ly }/village/evaluate/lawDoc-list?flag=4" data-title="上传图片视频资料" href="javascript:void(0)">上传图片视频资料</a></li>
                 <li><a data-href="${ly }/village/rectification-list?flag=1" data-title="隐患治理复查" href="javascript:void(0)">隐患治理复查</a></li> --%>
                 <%-- TODO 通过data-href  可以在域中通过getAttrbute 来进行获取内容--%>
-                <li><a data-href="${ly }/company/threeLeft?leftBasic=4" data-title="检查模版设置" href="javascript:void(0)">检查模版设置</a>
+                <%--<li><a data-href="${ly }/company/threeLeft?leftBasic=4" data-title="检查设置实施" href="javascript:void(0)">检查设置实施</a>--%>
+                <%--<li><a data-href="${ly }/company/model-list-cx?flag=1&type=1" data-title="检查设置实施" href="javascript:void(0)">检查设置实施</a>--%>
+                <li><a data-href="${ly }/company/model-list-cx?flag=1&type=1&template=1" data-title="检查设置实施" href="javascript:void(0)">检查设置实施</a>
                 </li>
-                <li><a data-href="${ly }/village/check-list?flag=1" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a>
+                    <%--调用综合检查记录信息--%>
+                <li><a data-href="${ly }/village/check-list?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a>
                 </li>
-                <li><a data-href="${ly }/village/recheck-list?flag=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a>
+                <li><a data-href="${ly }/village/recheck-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a>
                 </li>
                 <li><a data-href="${ly }/village/danger-index-list?flag=1" data-title="隐患统计汇总"
                 href="javascript:void(0)">隐患统计汇总</a></li>
@@ -440,9 +443,8 @@
 
                     <li><a data-href="${ly }/company/tables/tab-biaozhun" data-title="安全标准化"
                            href="javascript:void(0)">安全标准化</a></li>
-
-
-
+                    <li><a target="_blank" data-href="http://exam.dicarl.com/index.php?user-app-login&mobile=${userName }" data-title="安全培训"
+                           href="javascript:void(0)">安全培训</a></li>
 
                     <%--<li><a data-href="${ly }/company/threeLeft?leftBasic=8" data-title="责任制"
                            href="javascript:void(0)">安全台账</a></li>

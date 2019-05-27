@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+
+import com.spring.web.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -24,17 +26,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.spring.web.BaseController;
 import com.spring.web.ibatis.DynamicParameter;
-import com.spring.web.model.AppToken;
-import com.spring.web.model.Company;
-import com.spring.web.model.Library;
-import com.spring.web.model.TCheck;
-import com.spring.web.model.TCheckDocument;
-import com.spring.web.model.TCheckItem;
-import com.spring.web.model.TCheckPart;
-import com.spring.web.model.TItem;
-import com.spring.web.model.TLevel;
-import com.spring.web.model.TRectification;
-import com.spring.web.model.User;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
 import com.spring.web.result.Result;
@@ -58,6 +49,8 @@ public class AppController_village_xlb extends BaseController {
     private static final long serialVersionUID = 3074066448546610745L;
     @Autowired
     private CgfService cgfService;
+    @Autowired
+    private AppTokenData appTokenData;
 
     void setUserId(Integer userId, Map<String, Object> m) {
         User user = userMapper.selectByPrimaryKey(userId);
@@ -191,11 +184,19 @@ public class AppController_village_xlb extends BaseController {
      * 特种作业人员
      */
     @RequestMapping(value = "A003", method = RequestMethod.POST)
-    public @ResponseBody AppResult spersonList(HttpServletRequest request, String spFlag, Integer userId) {
+    public @ResponseBody AppResult spersonList(HttpServletRequest request, String spFlag, Integer userId, Integer type) {
         AppResult result = new AppResultImpl();
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> m = new HashMap<String, Object>();
-        Integer _userId = getAppUserId(request);
+        Integer _userId = null;
+        if(type==5){
+             ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
+             _userId = zzjgPersonnel.getUid();
+        }else{
+            Officials officials = (Officials) appTokenData.getAppUser(request);
+            _userId = officials.getUid();
+        }
+
         if (null == _userId) {
             result.setStatus("2");
             result.setMessage("登录超时");
@@ -213,11 +214,18 @@ public class AppController_village_xlb extends BaseController {
      * 安全评价档案
      */
     @RequestMapping(value = "A004", method = RequestMethod.POST)
-    public @ResponseBody AppResult evaluation(HttpServletRequest request, String flag, Integer userId) {
+    public @ResponseBody AppResult evaluation(HttpServletRequest request, String flag, Integer userId,Integer type) {
         AppResult result = new AppResultImpl();
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> m = new HashMap<String, Object>();
-        Integer _userId = getAppUserId(request);
+        Integer _userId = null;
+        if(type==5){
+            ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
+            _userId = zzjgPersonnel.getUid();
+        }else{
+            Officials officials = (Officials) appTokenData.getAppUser(request);
+            _userId = officials.getUid();
+        }
         if (null == _userId) {
             result.setStatus("2");
             result.setMessage("登录超时");
@@ -277,13 +285,21 @@ public class AppController_village_xlb extends BaseController {
 
     /**
      * 特种设备清单
+     *
      */
     @RequestMapping(value = "A007", method = RequestMethod.POST)
-    public @ResponseBody AppResult sequipmentList(HttpServletRequest request, Integer userId) {
+    public @ResponseBody AppResult sequipmentList(HttpServletRequest request, Integer userId,Integer type) {
         AppResult result = new AppResultImpl();
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> m = new HashMap<String, Object>();
-        Integer _userId = getAppUserId(request);
+        Integer _userId = null;
+        if(type==5){
+            ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
+            _userId = zzjgPersonnel.getUid();
+        }else{
+            Officials officials = (Officials) appTokenData.getAppUser(request);
+            _userId = officials.getUid();
+        }
         if (null == _userId) {
             result.setStatus("2");
             result.setMessage("登录超时");
@@ -346,11 +362,18 @@ public class AppController_village_xlb extends BaseController {
      * 职业卫生检测
      */
     @RequestMapping(value = "A010", method = RequestMethod.POST)
-    public @ResponseBody AppResult detList(HttpServletRequest request, Integer userId) {
+    public @ResponseBody AppResult detList(HttpServletRequest request, Integer userId,Integer type) {
         AppResult result = new AppResultImpl();
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> m = new HashMap<String, Object>();
-        Integer _userId = getAppUserId(request);
+        Integer _userId = null;
+        if(type==5){
+            ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
+            _userId = zzjgPersonnel.getUid();
+        }else{
+            Officials officials = (Officials) appTokenData.getAppUser(request);
+            _userId = officials.getUid();
+        }
         if (null == _userId) {
             result.setStatus("2");
             result.setMessage("登录超时");
@@ -367,11 +390,18 @@ public class AppController_village_xlb extends BaseController {
      * 职业健康检查
      */
     @RequestMapping(value = "A011", method = RequestMethod.POST)
-    public @ResponseBody AppResult hetList(HttpServletRequest request, Integer userId) {
+    public @ResponseBody AppResult hetList(HttpServletRequest request, Integer userId,Integer type) {
         AppResult result = new AppResultImpl();
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> m = new HashMap<String, Object>();
-        Integer _userId = getAppUserId(request);
+        Integer _userId = null;
+        if(type==5){
+            ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
+            _userId = zzjgPersonnel.getUid();
+        }else{
+            Officials officials = (Officials) appTokenData.getAppUser(request);
+            _userId = officials.getUid();
+        }
         if (null == _userId) {
             result.setStatus("2");
             result.setMessage("登录超时");
@@ -450,10 +480,17 @@ public class AppController_village_xlb extends BaseController {
      */
     @RequestMapping(value = "A015", method = RequestMethod.POST)
     public @ResponseBody AppResult modelList(HttpServletRequest request, Integer d, Integer status, Integer userId,
-            String flag, String companyName) {
+            String flag, String companyName,Integer type) {
         AppResult result = new AppResultImpl();
         Map<String, Object> m = new HashMap<String, Object>();
-        Integer _userId = getAppUserId(request);
+        Integer _userId = null;
+        if(type==5){
+            ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
+            _userId = zzjgPersonnel.getUid();
+        }else{
+            Officials officials = (Officials) appTokenData.getAppUser(request);
+            _userId = officials.getUid();
+        }
         if (null == _userId) {
             result.setStatus("2");
             result.setMessage("登录超时");
@@ -474,11 +511,18 @@ public class AppController_village_xlb extends BaseController {
      * 各类许可证
      */
     @RequestMapping(value = "A016", method = RequestMethod.POST)
-    public @ResponseBody AppResult zhengList(HttpServletRequest request, Integer userId) {
+    public @ResponseBody AppResult zhengList(HttpServletRequest request, Integer userId,Integer type) {
         AppResult result = new AppResultImpl();
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> m = new HashMap<String, Object>();
-        Integer _userId = getAppUserId(request);
+        Integer _userId = null;
+        if(type==5){
+            ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
+            _userId = zzjgPersonnel.getUid();
+        }else{
+            Officials officials = (Officials) appTokenData.getAppUser(request);
+            _userId = officials.getUid();
+        }
         if (null == _userId) {
             result.setStatus("2");
             result.setMessage("登录超时");
@@ -741,7 +785,7 @@ public class AppController_village_xlb extends BaseController {
     }
     
     /**
-     * @param 现场记录保存
+     * @param
      */
     @RequestMapping(value = "check-document-save8")
     public @ResponseBody

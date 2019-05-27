@@ -102,8 +102,18 @@ public interface ACompanyManualMapper {
      */
     List<String> selectDangerAndManual(@Param("uid") Integer uid, @Param("name") String name);
 
+    /**
+     * 查询level3
+     * @param check
+     * @return
+     */
     List<Map<String, Object>> selectLevel3AndId(CheckLevel check);
 
+    /**
+     * 直接根据 公司id  level1  level2  level3 获取level4 获取最后一步的数据
+     * @param checkLevel
+     * @return
+     */
     List<Map> selectLevel4AndId(CheckLevel checkLevel);
 
     int selectDmidById(String name);
@@ -116,29 +126,8 @@ public interface ACompanyManualMapper {
      */
     List<String> findLevel2ByPersonelId(@Param("name") String name, @Param("uid") Integer uid);
 
-    // 根据公司id，部门名，岗位名
-    List<ACompanyManual> findInspection(@Param("id") String id,@Param("dept") String dept,@Param("station") String station);
-
-    /**
-     * 根据level1 和Level 2 和检查的类型 (基础),查询level3
-     * @param checkLevel
-     * @return
-     */
-    List<CheckLevel> findLevel3ByjcType1(CheckLevel checkLevel);
-
-    /**
-     * 根据level1 和Level 2 和检查的类型 (现场),查询level3
-     * @param checkLevel
-     * @return
-     */
-    List<CheckLevel> findLevel3ByjcType2(CheckLevel checkLevel);
-
-    /**
-     * 根据level1 和Level 2 和检查的类型 (高危),查询level3
-     * @param checkLevel
-     * @return
-     */
-    List<CheckLevel> findLevel3ByjcType3(CheckLevel checkLevel);
+    // 根据公司id，部门名，岗位名获取详细信息 但是要去除重复
+    List<String> findInspection(@Param("id") String id,@Param("dept") String dept,@Param("station") String station);
 
     int add(ACompanyManual aCompanyManuals);
 
@@ -179,5 +168,19 @@ public interface ACompanyManualMapper {
     List<ACompanyManual> selectIdsAlls(@Param("level1")String level1, @Param("level2")String level2,@Param("uid") Integer uid);
 
     List<Map<String, Object>> selectByAll(Map<String, Object> m);
+    /**
+     * 根据部门的名称和uid获取level3
+     */
+    List<String> selectlevel3BydmName(@Param("uid")Integer id, @Param("level1")String name);
+
+    /**
+     * 直接根据 level3 和uid 获取信息
+     * @param id
+     * @param level3
+     * @return
+     */
+    List selectAllByLevel3(@Param("uid")Integer id, @Param("level1")String name,@Param("level3")String level3);
+
+
 }
 

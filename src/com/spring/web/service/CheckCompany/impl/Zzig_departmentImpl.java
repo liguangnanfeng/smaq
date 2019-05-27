@@ -29,7 +29,6 @@ public class Zzig_departmentImpl implements Zzig_departmentService {
 
         List<ZzjgDepartment> list =  zzjgDepartmentMapper.selectDepartmentByCompidAndLEvel(companyId);
 
-
         return list;
     }
 

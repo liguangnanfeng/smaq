@@ -1,6 +1,7 @@
 package com.spring.web.controller.api;
 
 import com.spring.web.BaseController;
+import com.spring.web.dao.ACompanyManualMapper;
 import com.spring.web.dao.TCheckMapper;
 import com.spring.web.listener.MySessionContext;
 import com.spring.web.model.*;
@@ -62,14 +63,14 @@ public class AppController_Custom_Check extends BaseController {
     private TCheckMapper tCheckMapper;
 
     /**
-     * TODO 获取部门,以及对应的岗位 level1 levle2
+     * TODO 获取部门,以及对应的岗位 level1(部门) levle2(岗位)
      *
      * @param request request请求
      * @return result 返回的基础信息
      */
     @RequestMapping(value = "A200", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult checkCompany(HttpServletRequest request,Integer dpid) {
+    AppResult checkCompany(HttpServletRequest request, Integer dpid) {
 
         AppResult result = new AppResultImpl();
 
@@ -165,8 +166,9 @@ public class AppController_Custom_Check extends BaseController {
 
             return result;
         } catch (NullPointerException e) {
-            result.setStatus("1");
+            result.setStatus("0");
             result.setMessage("未查询出数据");
+            result.setData(new ArrayList<Map>());
             return result;
         } catch (Exception e) {
             result.setStatus("1");
@@ -199,7 +201,7 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO pc端查询高危level1
+     * TODO pc端查询高危level1(细则)
      *
      * @return list  高危levelOne条目
      */
@@ -233,20 +235,35 @@ public class AppController_Custom_Check extends BaseController {
     AppResult checkJiChu(HttpServletRequest request) {
         // 获取登陆内容
         AppResult result = new AppResultImpl();
-        ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
-        if (zzjg == null) {
+        try {
+            ZzjgPersonnel zzjg = (ZzjgPersonnel) appTokenData.getAppUser(request);
+            if (zzjg == null) {
+                result.setStatus("1");
+                result.setMessage("未成功登陆,请重新登陆");
+                return result;
+            }
+
+            // 查询基础
+            Map map = checkManual.checkJiChu(zzjg.getUid());
+            result.setStatus("0");
+            result.setMessage("查询成功");
+            result.setData(map);
+
+            return result;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            result.setStatus("0");
+            result.setMessage("数据库为空");
+            result.setData(null);
+
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
             result.setStatus("1");
-            result.setMessage("未成功登陆,请重新登陆");
+            result.setMessage("网络异常");
+
             return result;
         }
-
-        // 查询高危风险
-        Map map = checkManual.checkJiChu(zzjg.getUid());
-        result.setStatus("0");
-        result.setMessage("查询成功");
-        result.setData(map);
-
-        return result;
     }
 
     /**
@@ -257,7 +274,7 @@ public class AppController_Custom_Check extends BaseController {
      */
     @RequestMapping(value = "A214", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult checkGaoWeiItem( Integer industryId) {
+    AppResult checkGaoWeiItem(Integer industryId) {
         // 获取登陆内容
         AppResult result = new AppResultImpl();
         try {
@@ -347,6 +364,43 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
+     * TODO pc端 现场检查/查询level3/level4
+     * 做一个二维数组,显示现在出现的问题的就是数组的嵌套
+     */
+    @RequestMapping(value = "A2022", method = RequestMethod.POST)
+    public @ResponseBody
+    AppResult PCcheckLevel3(HttpServletRequest request, @RequestBody CheckLevel checkLevel) {
+        AppResult result = new AppResultImpl();
+        try {
+            User user = getLoginUser(request);
+
+            // 取出数据对数据进行判断
+            ZzjgDepartment zzjg = zzjgDepartmentMapper.selectByPrimaryKey(Integer.parseInt(checkLevel.getLevel1()));
+            checkLevel.setLevel1(zzjg.getName());
+            checkLevel.setLevel3(checkLevel.getLevel3());
+            checkLevel.setUid(user.getId());
+            // 调用方法进行查询
+            List<Map> list = checkManual.selectLevel5AndId(checkLevel);
+
+            result.setStatus("0");
+            result.setMessage("查询成功");
+            result.setData(list);
+            return result;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMessage("未查询到数据");
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMessage("网络故障");
+            return result;
+        }
+
+    }
+
+    /**
      * TODO 查询level4
      *
      * @param checkLevel 前置的查询条件
@@ -422,15 +476,16 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO 根据用户点击查询(所有)模版
+     * TODO 根据用户点击查询(关联部门的)模版
      *
      * @param sessionId    sessionId
      * @param access_token 令牌
+     * @param dpName
      * @return list  企业关联的模版
      */
     @RequestMapping(value = "A205", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult checkDepartmentById(String sessionId, String access_token) {
+    AppResult checkDepartmentById(String sessionId, String access_token, String dpName) {
         AppResult result = new AppResultImpl();
 
         try {
@@ -440,7 +495,7 @@ public class AppController_Custom_Check extends BaseController {
             ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(access_token);
 
             // 根据公司id获取模版信息
-            List<Map<Integer, String>> list = checkManual.findModelByUid(zzjg.getUid());
+            List<Map<Integer, String>> list = checkManual.findModelByUid(zzjg.getUid(), dpName);
 
             result.setStatus("0");
             result.setData(list);
@@ -469,12 +524,13 @@ public class AppController_Custom_Check extends BaseController {
      */
     @RequestMapping(value = "A206", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult checkItemtById(@RequestBody CheckModel checkModel) {
+    AppResult checkItemtById(/*@RequestBody CheckModel checkModel*/ Integer modelId  ) {
         AppResult result = new AppResultImpl();
         try {
 
             // 根据id查询并进行封装数据
-            CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(checkModel.getModelId());
+           // CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(checkModel.getModelId());
+            CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(modelId);
 
             result.setStatus("0");
             result.setMessage("查询成功");
@@ -510,7 +566,7 @@ public class AppController_Custom_Check extends BaseController {
         AppResult result = new AppResultImpl();
 
         try {
-            if (sessionId == null || access_token == null ) {
+            if (sessionId == null || access_token == null) {
                 result.setStatus("1");
                 result.setMessage("查询失败,请重新查询");
                 return result;
@@ -585,8 +641,8 @@ public class AppController_Custom_Check extends BaseController {
 
     /**
      * TODO 根据当前用户查询所有的检查记录()  对根据判断求出这个责任人的部门和岗位
-     *  首先要判断他是检查人员还是被检查人员
-     *  根据状态进行查询,不同的检查详情在company_manul_tbl 获取岗位,来判断这个岗位的检查项是否合格,不合格进行显示
+     * 首先要判断他是检查人员还是被检查人员
+     * 根据状态进行查询,不同的检查详情在company_manul_tbl 获取岗位,来判断这个岗位的检查项是否合格,不合格进行显示
      *
      * @param checkModel access_token信息
      * @return list       关于当前企业的不合格信息
@@ -627,6 +683,7 @@ public class AppController_Custom_Check extends BaseController {
     /**
      * TODO 根据检查表信息 查询检查记录中不合格项查询出来
      * 首先根据用户id 进行判断获取他的部门 ,根据检查表的详细信息表示的是这个
+     *
      * @param checkId 检查表id
      * @return map     不合格的复查记录
      */
@@ -756,11 +813,10 @@ public class AppController_Custom_Check extends BaseController {
                     path = realPath2 + "images/upload/" + trueFileName;
 
                     // 判断是否存在
-                    File file1 =new File(realPath2+"images/upload/");
-                    if  (!file1 .exists()  && !file1 .isDirectory())
-                    {
+                    File file1 = new File(realPath2 + "images/upload/");
+                    if (!file1.exists() && !file1.isDirectory()) {
                         System.out.println("//不存在");
-                        file1 .mkdir();
+                        file1.mkdir();
                     }
 
                     realPath1 += trueFileName;

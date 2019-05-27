@@ -13,9 +13,8 @@ public interface TMapMapper {
     /**保存图片*/
     void  insertTMap(TMap tMap);
 
-    /**修改图片*/
+    /**查询图片*/
     TMap selectByUserId(Integer id);
-
 
     /**
      * 删除图片

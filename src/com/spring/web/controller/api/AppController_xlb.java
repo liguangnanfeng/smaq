@@ -53,6 +53,9 @@ public class AppController_xlb extends BaseController {
     @Autowired
     private CgfService cgfService;
 
+    @Autowired
+    private AppTokenData appTokenData;
+
     /**
      * 用户登录
      */
@@ -487,12 +490,13 @@ public class AppController_xlb extends BaseController {
      */
     @RequestMapping(value = "A015", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult noticeDetail(HttpServletRequest request, Integer id,@RequestBody Map<String, Object> params) {
+    AppResult noticeDetail(HttpServletRequest request,@RequestBody Map<String, Object> params) {
         AppResult result = new AppResultImpl();
         Map<String, Object> map = new HashMap<String, Object>();
         String basic = String.valueOf(params.get("basic"));
-        if(null == basic){
-            map.put("notice", noticeMapper.selectByPrimaryKey(id));
+        String id = (String) params.get("id");
+        if(null == basic||"null".equals(basic)){
+            map.put("notice", noticeMapper.selectByPrimaryKey(Integer.parseInt(id)));
         }else{
             map.put("notice", noticeMapper.selectByPrimaryKey(Integer.valueOf(basic)));
         }
@@ -1167,9 +1171,16 @@ public class AppController_xlb extends BaseController {
      * 应急预案列表
      */
     @RequestMapping(value = "A044", method = RequestMethod.POST)
-    public @ResponseBody AppResult yuan(HttpServletRequest request) {
+    public @ResponseBody AppResult yuan(HttpServletRequest request,Integer type) {
         AppResult result = new AppResultImpl();
-        Integer userId = getAppUserId(request);
+        Integer userId =null;
+        if(type==5){
+            ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
+            userId = zzjgPersonnel.getUid();
+        }else{
+            Officials officials = (Officials) appTokenData.getAppUser(request);
+            userId = officials.getUid();
+        }
         if (null == userId) {
             result.setStatus("2");
             result.setMessage("登录超时");
@@ -1180,21 +1191,23 @@ public class AppController_xlb extends BaseController {
         result.setData(tContingencyPlanMapper.selectTable(m));
         return result;
     }
-    
+
     /**
-     * 执法复查
+     * TODO  执法复查
      */
     @RequestMapping(value = "A045", method = RequestMethod.POST)
     public @ResponseBody AppResult fucha(HttpServletRequest request) {
         AppResult result = new AppResultImpl();
+
+        Officials zzjg = (Officials) appTokenData.getAppUser(request);
         Integer userId = getAppUserId(request);
-        if (null == userId) {
+        if (null == zzjg) {
             result.setStatus("2");
             result.setMessage("登录超时");
             return result;
         }
         Map<String, Object> m = new HashMap<String, Object>();
-        setUserId(userId, m);
+        setUserId(zzjg.getUid(), m);
         m.put("flag", 2);
         result.setData(tRectificationMapper.selectRectificationList(m));
         return result;

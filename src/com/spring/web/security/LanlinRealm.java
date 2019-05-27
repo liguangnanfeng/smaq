@@ -29,7 +29,7 @@ public class LanlinRealm extends AuthorizingRealm {
     private UserMapper userMapper;
 
     /**
-     * @param arg0
+     * @param
      * @return
      * @see org.apache.shiro.realm.AuthorizingRealm#doGetAuthorizationInfo(org.apache.shiro.subject.PrincipalCollection)
      */

@@ -382,6 +382,8 @@ public class CountryCheckImpl implements CountryCheck {
         tCheck.setDapartContact(String.valueOf(checkItem.getDepartmentId()));      // 被检查人的id
         tCheck.setStatus(1);              // 1. 未检查
         tCheck.setCreateTime(new Date()); // 创建时间
+        User user = userMapper.selectByPrimaryKey(officials.getUid());
+        tCheck.setCheckCompany(user.getUserName());         // 检查单位
 
         int i = tCheckMapper.insertSelective(tCheck);
         Integer checkId = tCheck.getId();  //获取检查表id
@@ -459,7 +461,6 @@ public class CountryCheckImpl implements CountryCheck {
 
             tCheckItem.setContent(checkLevel.getLevel4()); //检查标准详情
             tCheckItem.setLevelId(checkItem.getTitle());   //检查分类
-
             if(null==checkLevel.getLevel3()){
                 tCheckItem.setLevels(checkLevel.getLevel1());   // 检查等级
             }else{
@@ -613,7 +614,8 @@ public class CountryCheckImpl implements CountryCheck {
 
             TCheck tCheck = tCheckMapper.selectByPrimaryKey(item1.getCheckId());
             tRecheck.setChecker(officials.getName());       // 检查人员名称
-            tRecheck.setDapartContact(tCheck.getDapartContact());   // 被检查部门的负责人
+            tRecheck.setUserId(tCheck.getUserId());//被检查的企业id
+            tRecheck.setDapartContact(tCheck.getDapartContact());   // 被的检查部门
             if(!flag){
                 int i = 7 * 24 * 60 * 60; // 限期时间
                 long time = new Date().getTime();

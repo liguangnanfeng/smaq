@@ -221,7 +221,7 @@
     <include refid="Base_Column_List" />
     from a_danger_manual_tbl
     where
-    industry = #{industry } and level3 = #{level3}
+    industry = #{industry }
   </select>
 
 

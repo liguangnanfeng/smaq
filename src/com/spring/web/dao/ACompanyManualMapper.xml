@@ -364,7 +364,6 @@
         T1.del = 0 and (T1.flag = "1" or T1.flag = "2" or T1.flag = "3")  and T1.uid = #{uid}
     </select>
 
-
     <select id="selectByAll" resultType="java.util.HashMap">
         select
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
@@ -381,6 +380,7 @@
     </select>
 
 
+
     <select id="selectByMap" resultType="java.util.HashMap">
         select
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
@@ -395,7 +395,7 @@
         left join
             a_zytjfxcdpj_tbl T4 on T1.id = T4.uid -->
         where
-        T1.del = 0 and T1.level != ""
+        T1.del = 0
         <if test="uid != null">
             and T1.uid = #{uid}
         </if>
@@ -917,18 +917,6 @@
 
 
 
-    <!--根据公司ID，风险等级 查询未删除的数据信息 -->
-    <select id="selectIdsAll"  resultType="com.spring.web.model.ACompanyManual">
-        select * from a_company_manual_tbl where level1 = #{level1} and level2 = #{level2} and del = 0 and uid = #{uid} and level3 like "%现场管理%" ;
-    </select>
-
-
-    <!--根据公司ID，风险等级 查询未删除的数据信息 -->
-    <select id="selectIdsAlls"  resultType="com.spring.web.model.ACompanyManual">
-        select * from a_company_manual_tbl where level1 = #{level1} and level2 = #{level2} and del = 0 and uid = #{uid};
-    </select>
-
-
 
     <update id="updateDelByUserId2">
         update
@@ -940,23 +928,8 @@
     </update>
 
 
-    <update id="updateAllUid">
-        update
-        a_company_manual_tbl
-        set
-        del = 1
-        where
-        uid = #{uid} and del = 0 and level1 = #{level1} and level2 = #{level2} and level3 like "%现场管理%"
-    </update>
 
-    <update id="updateAllUids">
-        update
-        a_company_manual_tbl
-        set
-        del = 1
-        where
-        uid = #{uid} and del = 0 and level1 = #{level1} and level2 = #{level2} and level3 like "%基础管理%"
-    </update>
+
 
 
     <insert id="insertBathByIndustry">
@@ -977,15 +950,7 @@
         </foreach>
     </insert>
 
-    <!-- 添加数据信息到数据库！！！ -->
-    <insert id="insertAdd">
-        insert into a_company_manual_tbl (uid,
-        level1, level2, level3,factors, del, ctime,gkzt)
-        values (#{uid,jdbcType=INTEGER},
-        #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},#{factors,jdbcType=VARCHAR},
-        #{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP},
-        #{gkzt,jdbcType=VARCHAR})
-    </insert>
+
 
 
 
@@ -1041,50 +1006,20 @@ select level2  from a_company_manual_tbl where uid=#{uid} and level1 = #{name} g
     from a_company_manual_tbl
     where uid=#{uid}
     and level1 = #{level1}
-    and level2=#{level2};
+    and level2 = #{level2};
   </select>
-    <!--获取风险点及其id-->
+    <!--获取风险点及其id
+        直接根据level1 公司id  level2 level3 确定level4
+        measures可能就是一个null，前端人员做出判断
+    -->
     <select id="selectLevel4AndId" resultType="java.util.Map">
     select id, uid , level1,level2, level3 ,measures as level4 , factors,reference, type as types,flag,gkcs,gkzt
     from a_company_manual_tbl
     where uid=#{uid}
     and level1 = #{level1}
     and level2=#{level2}
-    and level3=#{level3};
+    and level3=#{level3}
   </select>
-
-    <!--level1 和Level 2 和检查的类型 (基础),查询level3-->
-    <select id="findLevel3ByjcType1" resultType="com.spring.web.model.request.CheckLevel">
-        select id, uid , level1,level2, level3 ,measures as level4
-        from a_company_manual_tbl
-        where uid=#{uid}
-        and level1 = #{level1}
-        and level2=#{level2};
-        and level3 like "%基础管理%";
-    </select>
-
-
-    <!--level1 和Level 2 和检查的类型 (基础),查询level3-->
-    <select id="findLevel3ByjcType2" resultType="com.spring.web.model.request.CheckLevel">
-        select id, uid , level1,level2, level3 ,measures as level4
-        from a_company_manual_tbl
-        where uid=#{uid}
-        and level1 = #{level1}
-        and level2 = #{level2};
-        and level3 like "%现场管理%";
-    </select>
-
-    <!--level1 和Level 2 和检查的类型 (基础),查询level3-->
-    <select id="findLevel3ByjcType3" resultType="com.spring.web.model.request.CheckLevel">
-        select id, uid , level1,level2, level3 ,measures as level4
-        from a_company_manual_tbl
-        where uid=#{uid}
-        and level1 = #{level1}
-        and level2=#{level2};
-        and level3 not like "%现场管理%";
-        and level3 not like "%基础管理%";
-    </select>
-
 
     <!--查询行业id
     -->
@@ -1102,16 +1037,47 @@ select level2  from a_company_manual_tbl where uid=#{uid} and level1 = #{name} g
     </select>
 
     <!--根根据公司id，部门，岗位名-->
-    <select id="findInspection"  parameterType="java.lang.String" resultMap="BaseResultMap">
-        select  * from a_company_manual_tbl WHERE uid=#{id} and level1 like CONCAT('%',#{dept},'%') and level2 like CONCAT('%',#{station},'%')
+    <select id="findInspection" resultType="java.lang.String">
+        select  level3 from a_company_manual_tbl
+        WHERE uid=#{id} and level1 like CONCAT('%',#{dept},'%') and level2 like CONCAT('%',#{station},'%')
+        and level3 not like '%高危%'
+        group by level3;
     </select>
-
 
     <!--根据公司ID，风险程度，是否删除 来查询数据信息-->
     <select id="selectAll"  resultType="com.spring.web.model.ACompanyManual">
         select * from a_company_manual_tbl where level= "红色" and del = 0 and uid = #{uid};
     </select>
 
+    <!--根据部门的名称和uid获取数据-->
+    <select id="selectlevel3BydmName" resultType="String">
+        select level3 from a_company_manual_tbl where uid=#{uid} and level1=#{level1}
+        group by level3;
+    </select>
+
+    <!--根据部门的Uid和level1和level2-->
+    <select id="selectAllByLevel3" resultType="com.spring.web.model.ACompanyManual">
+        SELECT * FROM a_company_manual_tbl where uid=#{uid}  and level1=#{level1} and level3=#{level3};
+    </select>
+
+
+    <update id="updateAllUid">
+        update
+        a_company_manual_tbl
+        set
+        del = 1
+        where
+        uid = #{uid} and del = 0 and level1 = #{level1} and level2 = #{level2} and level3 like "%现场管理%"
+    </update>
+
+    <update id="updateAllUids">
+        update
+        a_company_manual_tbl
+        set
+        del = 1
+        where
+        uid = #{uid} and del = 0 and level1 = #{level1} and level2 = #{level2} and level3 like "%基础管理%"
+    </update>
 
 
 

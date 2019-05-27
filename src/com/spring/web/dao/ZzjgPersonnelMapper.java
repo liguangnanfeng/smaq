@@ -1,5 +1,8 @@
 package com.spring.web.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.ZzjgPersonnel;
 import org.apache.ibatis.annotations.Param;
@@ -90,5 +93,10 @@ public interface ZzjgPersonnelMapper {
      */
     List<Map<Integer, String>> findUserByIdAndStatus1(Integer id);
 
-    void updateIds(@Param("id") Integer id);
+    /**
+     * 根据部门查询该部门所有被检查人员的id
+     * @param dpid 部门id
+     * @return
+     */
+    List<String> selectByDpid(Integer dpid);
 }

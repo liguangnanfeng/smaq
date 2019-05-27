@@ -126,7 +126,7 @@
     from t_industry_tbl
     where id in (${ids})
   </select>
-
+  
   <select id="selectByType" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

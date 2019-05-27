@@ -27,6 +27,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +49,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/village")
+@Transactional
 @SuppressWarnings("All")
 public class VillageController extends BaseController {
     /**
@@ -1317,7 +1319,7 @@ public class VillageController extends BaseController {
     /**
      * TODO 生成检查表数据
      *
-     * @param id  model表的id
+     * @param id      model表的id
      * @param type
      * @param model
      * @param request
@@ -2887,7 +2889,6 @@ public class VillageController extends BaseController {
 
     }
 
-
     private AppResult savemodel(HttpServletRequest request, CheckItem checkItem) {
         AppResult result = new AppResultImpl();
         User user = getLoginUser(request); // 主账号登陆
@@ -3016,7 +3017,6 @@ public class VillageController extends BaseController {
                         tCheckItemMapper.insertSelective(tCheckItem);
                     }
                 }
-
             }
             result.setStatus("0");
             return result;

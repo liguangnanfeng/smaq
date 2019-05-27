@@ -12,7 +12,7 @@ import java.util.Map;
  * 组合实体类
  *
  */
-@Data
+
 public class CheckItemS {
 
     public Integer checkId;
@@ -23,7 +23,13 @@ public class CheckItemS {
 
     public Integer type;
 
+    public Integer getCheckId() {
+        return checkId;
+    }
 
+    public void setCheckId(Integer checkId) {
+        this.checkId = checkId;
+    }
 
     public String getLevle1() {
         return levle1;
@@ -46,6 +52,16 @@ public class CheckItemS {
     }
 
     public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public CheckItemS() {
+    }
+
+    public CheckItemS(Integer checkId, String levle1, List<Map> items, Integer type) {
+        this.checkId = checkId;
+        this.levle1 = levle1;
+        this.items = items;
         this.type = type;
     }
 }

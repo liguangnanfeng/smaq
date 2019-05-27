@@ -128,7 +128,6 @@ public interface TCheckItemMapper {
      * @return 隐患排查治理汇总 根据企业类型汇总
      */
     List<Map<String, Object>> selectDangerCollectGroup(Map<String, Object> m);
-    
 
     /** 
     * @param

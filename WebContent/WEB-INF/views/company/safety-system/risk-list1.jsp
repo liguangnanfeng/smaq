@@ -133,6 +133,9 @@
            <!-- <th style="width:10%" >辨识类型</th>
                 <th style="width:10%" >车间/场所/部位</th>-->
                 <th style="padding:0;width:50%"><!--添加风险点 zhangcl 2018.12.15-->
+                <c:if test="${!empty type}">
+                车间/场所
+                </c:if>
                 <c:if test="${empty type}">
                         <table height="100px" border="0" bordercolor="#cccccc">
                             <tr>
@@ -145,6 +148,9 @@
                             </tr>
                         </table>
                     </th>
+                </c:if>
+                <c:if test="${!empty type}">
+                <th style="width:10%" >岗位/部位</th>
                 </c:if>
                 <c:if test="${type eq 1}">
                     <th>职业危害物理因素</th>
@@ -161,7 +167,6 @@
                 <c:if test="${type eq 5}">
                     <th>高危作业</th>
                 </c:if>
-
             <th style="width:3%" >操作</th>
 
             </tr>
@@ -257,7 +262,6 @@
                         <c:if test="${type eq 5}">
                             <td>${fn:replace(be3.gwzy, '!@#', ",") }</td>
                         </c:if>
-
                         <td class="text-c" style="width:90px">
                             <a class="btn-cz" onclick="redit(${be3.id}, ${type })" href="javascript:;" title="选择">选择</a>
                         </td>

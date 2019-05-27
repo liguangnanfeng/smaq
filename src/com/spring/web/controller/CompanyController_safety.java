@@ -1329,11 +1329,6 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("company", company);
         if(StringUtils.isBlank(industry)) {
             industry = company.getIndustry();
-            if(industry.equals("化工企业（危险化学品生产、经营、使用）、加油站")) {
-                if(company.getName().contains("油")) {
-                    industry = "加油站";
-                }
-            }
         }
         model.addAttribute("industry", industry);
         List<ADangerManual> dL = aDangerManualMapper.selectByIndustryAll(industry,zzjgDepartment.getName());
@@ -1362,8 +1357,19 @@ public class CompanyController_safety extends BaseController {
     public String riskListLoads(Model model, HttpServletRequest request, String industry,
                                Integer depId) throws Exception {
         User user = getLoginUser(request);
+        if(StringUtils.isNotBlank(industry)) {
+            industry = utf8Str(industry);
+        }
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         model.addAttribute("company", company);
+        if(StringUtils.isBlank(industry)) {
+            industry = company.getIndustry();
+        }
+
+
+
+
+
         List<TLevel> dL = tLevelMapper.selectAll();
         Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
         for (TLevel ad : dL) {
@@ -1378,7 +1384,7 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("list", list);
         model.addAttribute("dL", dL);
         model.addAttribute("depId", depId);
-        log.error("risk-list-load depId:"+depId);
+        log.error("risk-list-loads depId:"+depId);
         return "company/safety-system/risk-list1-loads";
     }
 

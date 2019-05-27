@@ -130,21 +130,22 @@
         <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan">
             <thead>
             <tr class="text-c">
-                <th style="width:10%" >辨识类型</th>
-                <th style="width:10%" >车间/场所/部位</th>
+           <!-- <th style="width:10%" >辨识类型</th>
+                <th style="width:10%" >车间/场所/部位</th>-->
+                <th style="padding:0;width:50%"><!--添加风险点 zhangcl 2018.12.15-->
                 <c:if test="${empty type}">
-                    <th style="padding:0;width:50%"><!--添加风险点 zhangcl 2018.12.15-->
-                        <table>
+                        <table height="100px" border="0" bordercolor="#cccccc">
                             <tr>
-                                <td style="width:20%">系统</td>
-                                <td style="width:20%">环节</td>
-                                <td style="width:20%">风险类型</td>
-                                <td>风险因素</td>
+                                <td style="width:10%;align:center;"><p style="text-align:center;">辨识类型</p></td>
+                                <td style="width:10%;align:center;"><p style="text-align:center;">车间/场所</p></td>
+                                <td style="width:10%;align:center;"><p style="text-align:center;">系统</p></td>
+                                <td style="width:10%;align:center;"><p style="text-align:center;">环节/部位</p></td>
+                                <td style="width:10%;align:center;"><p style="text-align:center;">风险类型</p></td>
+                                <td style="width:30%;align:center;"><p style="text-align:center;">风险因素</p></td>
                             </tr>
                         </table>
                     </th>
                 </c:if>
-
                 <c:if test="${type eq 1}">
                     <th>职业危害物理因素</th>
                 </c:if>
@@ -161,7 +162,7 @@
                     <th>高危作业</th>
                 </c:if>
 
-                <th style="width:3%" >操作</th>
+            <th style="width:3%" >操作</th>
 
             </tr>
             </thead>
@@ -170,33 +171,40 @@
             <c:if test="${empty type}">
                 <c:forEach items="${zzjgDep }" var="be">
                     <tr>
-                        <td class="text-c">${be.parName }</td>
-                        <td class="text-c">${be.parName } / ${be.name }</td>
                         <td style="padding:0;" ><!--添加风险点 zhangcl 2018.12.15-->
-                            <table style="border: 0px solid red;">
+                            <table border="0" bordercolor="#cccccc">
                                 <c:set value="0" var="x"/>
                                 <c:forEach items="${acL }" var="ac">
                                     <c:if test="${be.parName eq ac.level1 && be.name eq ac.level2}">
                                         <tr>
-                                            <c:if test="${x==0}"><td style="width:20%;border-bottom: 0px;"></c:if>
-                                            <c:if test="${x==1}"><td style="width:20%;border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
-                                            <p style="text-align:center;">${ac.level3}</p>
+                        <td style="width:10%;border-bottom: 0px; height:80px;" class="text-c"><script>
+						str="${ac.level3}";
+						arr=str.split("/");
+						document.write(arr[0]);						
+						</script></td>
+                        <td style="width:10%;border-bottom: 0px;" class="text-c">${be.parName }</td>
+                                            <c:if test="${x==0}"><td style="width:10%;border-bottom: 0px;"></c:if>
+                                            <c:if test="${x==1}"><td style="width:10%;border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
+                                            <p style="text-align:center;"><script>
+						document.write(arr[1]);						
+						</script></p>
                                         </td>
-                                            <c:if test="${x==0}"><td style="width:20%;border-bottom: 0px;"></c:if>
-                                            <c:if test="${x==1}"><td style="width:20%;border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
-                                            <p style="text-align:center;">${ac.level2}</p>
-                                        </td>
-                                            <c:if test="${x==0}"><td style="width:20%;border-bottom: 0px;"></c:if>
-                                            <c:if test="${x==1}"><td style="width:20%;border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
+                                            <c:if test="${x==0}"><td style="width:10%;border-bottom: 0px;"></c:if>
+                                            <c:if test="${x==1}"><td style="width:10%;border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
+                                            <p style="text-align:center;"><script>
+						document.write(arr[2]);						
+						</script></td>
+                                            <c:if test="${x==0}"><td style="width:10%;border-bottom: 0px;"></c:if>
+                                            <c:if test="${x==1}"><td style="width:10%;border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
                                             <c:if test="${empty  ac.type}" >
-                                                <p style="text-align:center;">无</p>
+                                                <p style="text-align:center;">未识别</p>
                                             </c:if>
 
                                             <c:if test="${not empty  ac.type}" >
                                                 <p style="text-align:center;">${ac.type}</p>
                                             </c:if>
                                         </td>
-                                            <c:if test="${x==0}"><td style="border-bottom: 0px;"></c:if>
+                                            <c:if test="${x==0}"><td style="width:30%;border-bottom: 0px;"></c:if>
                                             <c:if test="${x==1}"><td style="border-bottom: 0px;border-top: 1px solid #ddd;"></c:if>
                                             <p style="float:left;width:80%;">${ac.factors}</p>
                                             <a class="btn-cz" style="float:right;text-decoration:none;margin-left:8px" onClick="del(${ac.id})" href="javascript:;" title="删除">删除</a>
@@ -205,24 +213,24 @@
                                         <c:set value="1" var="x"/>
                                     </c:if>
                                 </c:forEach>
-
                                 <c:if test="${x == 0}">
                                     <tr>
-                                        <td style="width:20%;border-bottom: 0px;"><p style="text-align:center;">未辨识</p></td>
-                                        <td style="width:20%;border-bottom: 0px;"><p style="text-align:center;">未辨识</p></td>
-                                        <td style="width:20%;border-bottom: 0px;"><p style="text-align:center;">无</p></td>
-                                        <td style="border-bottom: 0px;"><p style="text-align:center;">无风险因素</p></td>
+                                        <td style="width:10%;border-bottom: 0px; height:80px;"><p style="text-align:center;">未辨识</p><p style="display:none">${be.id}</p></td>
+                                        <td style="width:10%;border-bottom: 0px;"><p style="text-align:center;">${be.parName }</p></td>
+                                        <td style="width:10%;border-bottom: 0px;"><p style="text-align:center;">未关联</p></td>
+                                        <td style="width:10%;border-bottom: 0px;"><p style="text-align:center;">${be.name }</p></td>
+                                        <td style="width:10%;border-bottom: 0px;"><p style="text-align:center;">未识别</p></td>
+                                        <td style="width:30%;border-bottom: 0px;"><p style="text-align:center;">未辨识风险因素</p></td>
                                     </tr>
                                 </c:if>
                             </table>
                         </td>
-
                         <td class="text-c" style="width:90px">
                             <c:if test="${empty type}">
                                 <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
-                            </c:if></br></br>
+                            </c:if>
                             <c:if test="${empty type}">
-                                <button class="btn btn-primary radius" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
                             </c:if>
                         </td>
                     </tr>

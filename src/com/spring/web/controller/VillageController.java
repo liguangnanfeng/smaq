@@ -2696,8 +2696,7 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 传递json格式字符串
-     *
+     * model-add2 跳转页面进行显示现场检查
      * @param request
      * @return
      */
@@ -2711,7 +2710,6 @@ public class VillageController extends BaseController {
          */
         List<Map<Object, Object>> maps = zzjgDepartmentMapper.selectByUid(user.getId());
 
-        // 获取所有的部门 使用list集合
         Map<String, Integer> names = new HashMap<>();
         for (Map<Object, Object> map : maps) {
             if (1 == map.get("level")) { //表示是一级目录
@@ -2731,6 +2729,31 @@ public class VillageController extends BaseController {
 
         return map;
     }
+
+    /**
+     * 选择基础和高危的部门的名称
+     * @param request
+     * @param type
+     * @return
+     */
+    @RequestMapping(value="findItemAll",method=RequestMethod.POST)
+    public String findItemAll(HttpServletRequest request,Integer type ){
+        User user = getLoginUser(request);
+        if(type==-1){
+            // 基础检查 保存基础检查的数据
+            List<Map<Object, Object>> list =   aCompanyManualMapper.findJiChuItem(user.getId(),"基础管理");
+            System.out.println(list);
+
+
+        }else {
+            // 高危检查
+
+        }
+
+
+        return null;
+    }
+
 
     /**
      * TODO 根据公司和部门获取对应岗位
@@ -2760,6 +2783,9 @@ public class VillageController extends BaseController {
         }
         return list;
     }
+
+
+
 
     /**
      * 根据公司和部门,岗位获取检查项
@@ -2831,7 +2857,7 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * TODO PC 企业端保存标准检查模版
+     * TODO PC 标准检查模版
      */
     @ResponseBody
     @RequestMapping(value = "saveCheckMenu3")
@@ -2880,7 +2906,7 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * TODO PC 企业端保存保存检查模板
+     * TODO PC 自定义检查模板
      */
     @ResponseBody
     @RequestMapping(value = "saveCheckMenu2")
@@ -2976,7 +3002,7 @@ public class VillageController extends BaseController {
             tCheck.setCheker(user.getUserName());                                  // 检查人 当前的公司名称
             //tCheck.setContact(user.getUserName());                               // 检查人的联系方式无
 
-            tCheck.setStatus(1);                                                   // 表示未检查
+            tCheck.setStatus(0);                                                   // 表示未检查
             tCheck.setCreateTime(new Date());                                      // 创建时间
             tCheck.setCheckCompany(user.getUserName());                            // 检查公司
 

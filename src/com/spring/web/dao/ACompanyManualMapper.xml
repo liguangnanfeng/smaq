@@ -1012,10 +1012,15 @@ select level2  from a_company_manual_tbl where uid=#{uid} and level1 = #{name} g
     -->
     <select id="selectDmidById" resultType="Integer">
     -- 查询行业id
-    select id
+    select id from a_industry_tbl where name =#{name};
+    </select>
 
-    from a_industry_tbl where
-    name =#{name};
+    <!--根据高危/基础查询所有的部门的id和名称-->
+    <select id="findJiChuItem" resultType="java.util.Map">
+        select id,level1
+        from a_company_manual_tbl
+        where uid=#{uid}  and  level3 LIKE CONCAT('%', #{name},'%')
+        group By level1;
     </select>
 
     <!--根据总公司的id和部门名称查询level2-->

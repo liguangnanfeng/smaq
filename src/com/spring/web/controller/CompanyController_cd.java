@@ -2092,9 +2092,7 @@ public class CompanyController_cd extends BaseController {
         return "company/danger/print-plan-next";
     }
 
-    /**
-     * 检查计划 详情
-     */
+
 //    @RequestMapping(value = "model-show/{id}")
 //    public String modelShow(@PathVariable Integer id, Model model,Integer flag) throws Exception {
 //        TModel tc = tModelMapper.selectByPrimaryKey(id);
@@ -2113,6 +2111,17 @@ public class CompanyController_cd extends BaseController {
 //        model.addAttribute("flag", flag);
 //        return "company/danger/model-show";
 //    }
+
+    /**
+     * TODO 查询检查表详情
+     * @param id    modelId
+     * @param model 前端model
+     * @param flag  类型
+     * @param type   数据
+     * @return       url地址
+     * 可以从ite表中获取的详情
+     * @throws Exception
+     */
     @RequestMapping(value = "model-show/{id}")//modify by zhangcl 2018.10.28
     public String modelShow(@PathVariable Integer id, Model model, Integer flag, Integer type) throws Exception {
         log.error("type:" + type);
@@ -2127,7 +2136,7 @@ public class CompanyController_cd extends BaseController {
             }
             levelIds = levelIds.append(p.getLevels());
         }
-        if (type != null && type == 9) {
+       // if (type != null && type == 9) {
             List<Map<String, Object>> iteml = new ArrayList<Map<String, Object>>();
             String[] levelsArr = levelIds.toString().split(",");
             for (int i = 0; i < levelsArr.length; i++) {
@@ -2155,9 +2164,9 @@ public class CompanyController_cd extends BaseController {
                 iteml.add(a);
             }
             model.addAttribute("itemL", iteml);
-        } else {
+       /* } else {
             model.addAttribute("itemL", tItemMapper.selectByLevelIdsModel(levelIds.toString()));
-        }
+        }*/
         model.addAttribute("now", new Date());
         model.addAttribute("flag", flag);
         if (type != null && type == 9) {
@@ -2242,7 +2251,6 @@ public class CompanyController_cd extends BaseController {
             m.remove("type");
              list = tModelMapper.selectByMap(m);
         } else if(null != template && template == 2) { //日检查表
-
             list = tModelMapper.selectByMap(m);
         }else{
             list = tModelMapper.selectByMap(m);
@@ -2261,7 +2269,7 @@ public class CompanyController_cd extends BaseController {
             model.addAttribute("rjcbxs", 1);
 
         }
-        if (type == 2) {
+        /*if (type == 2) {
 
             if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {//取数据
                 //log.error("查询出日检查表和定期检查表检查周期不为1表单！");
@@ -2280,7 +2288,7 @@ public class CompanyController_cd extends BaseController {
                 List<Map<String, Object>> list1 = tModelMapper.selectByMap(m);
                 list.addAll(list1);
             }
-        }
+        }*/
         model.addAttribute("list", list);
 
         return "company/danger/model-list-cx";

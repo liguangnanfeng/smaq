@@ -169,6 +169,13 @@ public interface ACompanyManualMapper {
      */
     List selectAllByLevel3(@Param("uid")Integer id, @Param("level1")String name,@Param("level3")String level3);
 
+    /**
+     * 选择基础和高危的部门的名称
+     * @param id  公司的id
+     * @param name 基础/高危
+     * @return
+     */
+    List<Map<Object, Object>> findJiChuItem(@Param("uid")Integer id, @Param("name")String name);
 
 }
 

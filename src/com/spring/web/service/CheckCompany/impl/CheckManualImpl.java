@@ -398,7 +398,7 @@ public class CheckManualImpl implements ICheckManual {
         tCheck.setCheker(zzjg.getName());            // 检查人
         tCheck.setContact(zzjg.getMobile());            // 检查人的联系方式
         tCheck.setDapartContact(String.valueOf(checkItem.getDepartmentId()));      // 被检查人的部门的id
-        tCheck.setStatus(1);              //  表示未检查
+        tCheck.setStatus(0);              //  表示未检查
         tCheck.setCreateTime(new Date()); // 创建时间
         int i = tCheckMapper.insertSelective(tCheck);
         return tCheck.getId();

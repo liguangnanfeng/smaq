@@ -577,7 +577,6 @@ public class AppController_Country_Check {
     AppResult saveModel(@RequestBody CheckItem checkItem) {
         AppResult result = new AppResultImpl();
 
-
         try {
             // 从session中获取数据
             MySessionContext sess = MySessionContext.getInstance();

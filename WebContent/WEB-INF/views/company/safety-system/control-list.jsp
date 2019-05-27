@@ -82,6 +82,57 @@
           });
       }
 
+
+    /* 弹窗管控信息添加 */
+    function edits(id, obj){
+        window.id = id;
+        var p = $(obj).parent();
+        $("#gkzt").val(p.find("input[name='gkzt']").val());
+        $("#gkcs").val(p.find("input[name='gkcs']").val());
+        $("#fjgkfzr").val(p.find("input[name='fjgkfzr']").val().split("-")[0]);
+        $("#buwei").val(p.find("input[name='buwei']").val());
+        $("#win-add").modal("show");
+    }
+
+    function chosem(){
+        $("#win-add2").modal("show");
+    }
+
+    function chosem2(){
+        $("#win-add3").modal("show");
+    }
+
+    function chosem3() {
+
+        $("#win-add4").modal("show");
+        var name = $("#gkzt").val();
+        var id = $("#gkztIds").val();
+
+        $.ajax({ //post也可
+            type: "POST",
+            url: getRootPath() + "/company/safety-system/control-list-one",
+            data: {name: name, pid:id},
+            dataType: 'json',
+            success: function (result) {
+                var dataObj = result,
+                    con = "";
+                $.each(dataObj, function (index, item) {
+                    con += "<tr class=\"text-c\">";
+                    con += "<td style=\"width:30px;\" align=\"center\" valign=\"middle\"><input  type=\"radio\" name=\"radio-1\" value='" + item.name + "'></td>";
+                    con += "<td align=\"center\" valign=\"middle\">"+item.name+"</td>";
+                    con += "</tr>";
+                });
+                $("#test").html(con);
+            }
+        });
+    }
+
+
+
+
+
+
+
       function per_chooses() {
 
           var list = $("#win-add4 :checked");
@@ -221,7 +272,7 @@
                     <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑">编辑管控信息</a>
                 </c:if>
                 <c:if test="${not empty be.gkzt}">
-                    <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑">编辑</a>
+                    <a style="text-decoration:none" onClick="edits(${be.id}, this)" href="javascript:;" title="编辑">编辑</a>
 <%--                     <input type="button" style="text-decoration:none;" onClick='copy_('"${be}") title="复制" value="复制"></input>--%>
 
                   <a style="text-decoration:none;" onClick="copy_('${be.fjgkfzr}','${be.gkcs}','${be.gkzt}','${be.level2}','${be.level}','${be.factors}','${be.flag}','${be.uid}' )" href="javascript:;" title="复制" >复制</a>

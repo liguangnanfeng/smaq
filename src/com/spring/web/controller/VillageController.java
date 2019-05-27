@@ -27,6 +27,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +49,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/village")
+@Transactional
 @SuppressWarnings("All")
 public class VillageController extends BaseController {
     /**
@@ -239,7 +241,7 @@ public class VillageController extends BaseController {
         User user = getLoginUser(request);
         //log.error("zhangcl 2018.11.8 companyList start1 userid:"+user.getId());
         cgfService.selectCompanyWithPage(dto, user, model);
-        //log.error("zhangcl 2018.11.8 companyList end1:"+ System.currentTimeMillis());    
+        //log.error("zhangcl 2018.11.8 companyList end1:"+ System.currentTimeMillis());
         if (user.getUserType().intValue() == 3) {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("townId", dto.getTownId());
@@ -760,14 +762,14 @@ public class VillageController extends BaseController {
 //        m.put("page", 0);
 //        m.put("limit", 20);
 //        List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyMap(m);
-//        
+//
 //        for (int i = 0; i < list.size(); i++) {
 //            DynamicParameter<String, Object> item = list.get(i);
 //            item.put("id", i + 1 + "");
 //        }
-//        Integer count = companyMapper.selectCountMap(m);      
-//        String listStr = JSONArray.toJSONString(list);       
-//        String userStr = JSONObject.toJSONString(user);     
+//        Integer count = companyMapper.selectCountMap(m);
+//        String listStr = JSONArray.toJSONString(list);
+//        String userStr = JSONObject.toJSONString(user);
 //        model.addAttribute("count", count);
 //        model.addAttribute("companyList", listStr);
 //        model.addAttribute("user", userStr);
@@ -1307,7 +1309,7 @@ public class VillageController extends BaseController {
 //        }
 //        model.addAttribute("now", new Date());
 //        model.addAttribute("company", companyMapper.selectByPrimaryKey(tc.getUserId()));
-//        
+//
 //        Map<String, Object> m = new HashMap<String, Object>();
 //        m.put("userId", user.getId());
 //        model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
@@ -1317,7 +1319,7 @@ public class VillageController extends BaseController {
     /**
      * TODO 生成检查表数据
      *
-     * @param id  model表的id
+     * @param id      model表的id
      * @param type
      * @param model
      * @param request
@@ -2395,7 +2397,7 @@ public class VillageController extends BaseController {
             model.addAttribute("townL", townMapper.selectListByDistrict(m));
         }
         model.addAttribute("m", m);
-        //log.error("list："+aCompanyManualMapper.selectByMap3(m));  
+        //log.error("list："+aCompanyManualMapper.selectByMap3(m));
         if (level.equals("红色")) {
             return "village/safety-system/control-listmenu";
         } else {
@@ -2887,7 +2889,6 @@ public class VillageController extends BaseController {
 
     }
 
-
     private AppResult savemodel(HttpServletRequest request, CheckItem checkItem) {
         AppResult result = new AppResultImpl();
         User user = getLoginUser(request); // 主账号登陆
@@ -3016,7 +3017,6 @@ public class VillageController extends BaseController {
                         tCheckItemMapper.insertSelective(tCheckItem);
                     }
                 }
-
             }
             result.setStatus("0");
             return result;

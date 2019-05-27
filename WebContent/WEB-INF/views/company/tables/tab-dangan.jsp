@@ -39,7 +39,7 @@
 </nav>
 <div class="page-container">
     <div class="text-c">
-        <form <%--action="${ly }/company/tables/tab-weilist"--%> method="post">
+        <form action="${ly }/company/tables/tab-weilist" method="post">
             <div class="dis-ib">
                 <span>资料类型：</span>
                 <span class="select-box inline">
@@ -59,9 +59,9 @@
         </span>
             </div>
             <button class="btn btn-success" type="submit">
-                <i <%--class="Hui-iconfont"--%>>&#xe665;</i> 查询
+                <i class="Hui-iconfont">&#xe665;</i> 查询
             </button>
-            <button class="btn btn-warning ml-10" type="button" <%--onclick="openzl(-1)"--%>><i class="Hui-iconfont" style="font-size:15px;">&#xe642;</i> 上传资料</button>
+            <button class="btn btn-warning ml-10" type="button" onclick="openzl(-1)"><i class="Hui-iconfont" style="font-size:15px;">&#xe642;</i> 上传资料</button>
         </form>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -96,11 +96,11 @@
                     <td><fmt:formatDate value="${t.createTime }" pattern="yyyy-MM-dd"/></td>
                     <td>
                         <div class="btn-upload">
-                            <div class="btn btn-primary-outline radius" <%--onclick="openzl(${t.id})"--%> style="height: 21px;line-height: 21px;padding: 0 2px;margin-top: 6px;">更改资料</div>
-                            <!--                 <input type="file" multiple name="file_0" class="input-file"> -->
+                            <div class="btn btn-primary-outline radius" onclick="openzl(${t.id})" style="height: 21px;line-height: 21px;padding: 0 2px;margin-top: 6px;">更改资料</div>
+                                           <input type="file" multiple name="file_0" class="input-file">
                         </div>
-                        <a style="text-decoration:none" <%-- href="${ly}/common/download?filename=${t.name}&fileurl=${t.url}" --%>  title="查看资料" target="_blank">查看资料</a>
-                        <a style="text-decoration:none" <%--onclick="del(${t.id})"--%> href="javascript:;" title="删除">删除</a>
+                        <a style="text-decoration:none"  href="${ly}/common/download?filename=${t.name}&fileurl=${t.url}"   title="查看资料" target="_blank">查看资料</a>
+                        <a style="text-decoration:none" onclick="del(${t.id})" href="javascript:;" title="删除">删除</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -153,7 +153,7 @@
 
 
 <script type="text/javascript">
-    /*$(function() {
+    $(function() {
         $('.table-sort').dataTable({
             "aaSorting": [[0, "asc"]],//默认第几个排序
             "bStateSave": false,//状态保存
@@ -162,19 +162,19 @@
             "aoColumnDefs": [
             ]
         });
-    });*/
+    });
 
     /*删除*/
-    /* function del(id){
+     function del(id){
          $.post(getRootPath()+"/company/tables/tab-del",{
              id:id,
          },function(reuslt){
              location.reload()
          })
-     }*/
+     }
 
     /*上传*/
-    /*function upload(isType) {
+    function upload(isType) {
         $.ajaxFileUpload({
             url: getRootPath() + '/company/tables/tab-leadin?isType='+ isType + "&id="+id, //用于文件上传的服务器端请求地址
             secureuri: false, //一般设置为false
@@ -200,7 +200,7 @@
                 alert("文件上传失败");
             }
         })
-    }*/
+    }
 </script>
 </body>
 </html>

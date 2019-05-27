@@ -457,14 +457,11 @@ public class SaveDataImpl implements SaveMessageService {
 
             tCheckItemMapper.insertSelective(tCheckItem);
         }
-
-
         // 新增tCheckPart 能确定只有一条记录所有现在出现的就是新的记录数据
 
         return tCheckId;
 
     }
-
 
     /**
      * TODO 修改tRectificationConfirm数据

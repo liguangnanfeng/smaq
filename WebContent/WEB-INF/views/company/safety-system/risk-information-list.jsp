@@ -23,7 +23,7 @@ body .dis-ib{margin-right:15px;}
 </head>
 <body>
   <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>风险分级管控</span> 
     <span class="c-gray en">&gt;</span> <span>公告警示</span> 
     <span class="c-gray en">&gt;</span> <span><c:if test="${flag == 1}">公司</c:if><c:if test="${flag == 2}">车间</c:if><c:if test="${flag == 3}">岗位</c:if>风险公告牌</span> 

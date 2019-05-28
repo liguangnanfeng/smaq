@@ -48,18 +48,25 @@ function save() {
     layer.alert("请输入应急防范措施");
     return false;
   }
-  obj.fxdj = obj.fxdj.join(",");
+
+  if (obj.fxdj.length < 1 || obj.fxdj.length == 1 ){
+      obj.fxdj = obj.fxdj;
+  } else {
+      obj.fxdj = obj.fxdj.join(",");
+  }
+
   var i = layer.load();
   obj.id = id_;
   obj.flag = flag;
   obj.isedit = 1;
   $.post("/company/safety-system/risk-information-save", obj, function(result) {
     layer.close(i);
-    if(flag == 1) {
+    parent.location.reload();
+    /*if(flag == 1) {
       parent.location.reload();
     } else {
       parent.load_();
-    }
+    }*/
   })
 }
 </script>

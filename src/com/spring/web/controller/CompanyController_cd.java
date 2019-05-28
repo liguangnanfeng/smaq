@@ -115,7 +115,10 @@ public class CompanyController_cd extends BaseController {
         m.put("type", "1");
         m.clear();
         setUserId(user, m);
-
+        // TODO 判断该公司的行业是否为化工行业,为化工行业就显示内容
+        if(c.getIndustry().contains("化工")){
+            model.addAttribute("industry", 5);
+        }
         List<Integer> count = userService.selectCount(new CompanyListReqDTO(), user);
 
         model.addAttribute("lib", libraryMapper.selectLibraryList(2));
@@ -176,13 +179,14 @@ public class CompanyController_cd extends BaseController {
     }
 
     /**
-     * 前台首页
+     * TODO 企业端 前台首页 如果是化工行业的内容就显示 研判承诺公告/重大危险源长制
      *
      * @throws Exception
      */
     @RequestMapping("main")
     public String main(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
+
         model.addAttribute("userName", companyMapper.selectByPrimaryKey(user.getId()).getName());
         model.addAttribute("loginUserId", user.getId());
         return "company/main";
@@ -196,15 +200,22 @@ public class CompanyController_cd extends BaseController {
     @RequestMapping("threeLeft")
     public String threeLeft(Model model, HttpServletRequest request, String leftBasic) throws Exception {
         User user = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+
+        // TODO 判断该公司的行业是否为化工行业,为化工行业就显示内容
+        if(company.getIndustry().contains("化工")){
+            model.addAttribute("industry", 5);
+        }
+
         model.addAttribute("leftBasic", leftBasic);
         model.addAttribute("userName", user.getUserName());
+
         return "company/threeLeft";
     }
 
     /**
-     * 基本信息页面
+     * TODO 基本信息页面
      */
-
     @RequestMapping("basic-information")
     public String basicInformation(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
@@ -227,6 +238,7 @@ public class CompanyController_cd extends BaseController {
         if (null != company.getRegionId()) {
             model.addAttribute("regionName", globalRegionMapper.selectRegionName(company.getRegionId()));
         }
+
         model.addAttribute("c", company);
         Regulation r = regulationGet(user.getId());
         model.addAttribute("r", r);
@@ -2136,7 +2148,7 @@ public class CompanyController_cd extends BaseController {
             }
             levelIds = levelIds.append(p.getLevels());
         }
-       // if (type != null && type == 9) {
+        if (type != null && type == 9) {
             List<Map<String, Object>> iteml = new ArrayList<Map<String, Object>>();
             String[] levelsArr = levelIds.toString().split(",");
             for (int i = 0; i < levelsArr.length; i++) {
@@ -2164,9 +2176,9 @@ public class CompanyController_cd extends BaseController {
                 iteml.add(a);
             }
             model.addAttribute("itemL", iteml);
-       /* } else {
+        } else {
             model.addAttribute("itemL", tItemMapper.selectByLevelIdsModel(levelIds.toString()));
-        }*/
+        }
         model.addAttribute("now", new Date());
         model.addAttribute("flag", flag);
         if (type != null && type == 9) {
@@ -3672,4 +3684,27 @@ public class CompanyController_cd extends BaseController {
             out.close();
         }
     }
+
+    /**
+     * 判断行业
+     */
+    @ResponseBody
+    @RequestMapping(value="judgeIndustry")
+    public Result judgeIndustry(HttpServletRequest request){
+        User user = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        if(company.getIndustry().contains("化工")){
+            Result result =new ResultImpl();
+            result.setStatus("0");
+            result.setMess("化工行业");
+            return result;
+        }else{
+            Result result =new ResultImpl();
+            result.setStatus("1");
+            return result;
+        }
+
+    }
+
+
 }

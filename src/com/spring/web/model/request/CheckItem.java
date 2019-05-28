@@ -30,9 +30,7 @@ public class CheckItem {
      */
     public Integer title;
 
-
     public Integer checkType;
-
 
     /**
      * 检查时间

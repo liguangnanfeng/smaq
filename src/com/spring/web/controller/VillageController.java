@@ -1158,8 +1158,9 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 隐患排查 检查历史
-     * TODO 排查治理记录
+     *
+     * 检查历史
+     * TODO 排查治理记录 隐患排查记录(只需要已经检查过的)
      * user. userType : 管理类型  1 超管 2普管 3镇 4 村 5 企业 6区县 7市 8省
      */
     @RequestMapping(value = "check-list")//flag:3 部门抽查

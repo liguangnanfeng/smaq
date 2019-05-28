@@ -157,7 +157,7 @@ public interface ACompanyManualMapper {
     List<ACompanyManual> findALLsss(@Param("flag")String flag, @Param("uid")Integer uid);
 
     /**
-     * 根据部门的名称和uid获取level3
+     * 根据部门的名称和uid获取level3(现场)
      */
     List<String> selectlevel3BydmName(@Param("uid")Integer id, @Param("level1")String name);
 
@@ -177,5 +177,13 @@ public interface ACompanyManualMapper {
      */
     List<Map<Object, Object>> findJiChuItem(@Param("uid")Integer id, @Param("name")String name);
 
+    /**
+     * 根据基础/现场/高危获取数据
+     * @param uid   公司id
+     * @param dpName 部门名称
+     * @param level3 level3字段
+     * @return
+     */
+    List<String> selectlevel3BydmNameAndLevel3(@Param("uid")Integer uid, @Param("level1")String dpName, @Param("level3")String level3);
 }
 

@@ -914,11 +914,6 @@
           uid = #{uid} and flag = 3
     </update>
 
-
-
-
-
-
     <insert id="insertBathByIndustry">
         insert into a_company_manual_tbl (uid, dmid, level3, factors, type, measures, reference,
         flag, level, issys, del, ctime,flag2)
@@ -936,10 +931,6 @@
             #{item.level}, #{issys}, #{del}, #{ctime},#{item.flag2})
         </foreach>
     </insert>
-
-
-
-
 
     <!-- 修改数据信息达到删除的目的 -->
     <update id="updateDeltess">
@@ -960,8 +951,6 @@
         where
         id = #{id}
     </update>
-
-
 
     <update id="updateDelByIds">
   update
@@ -1017,7 +1006,7 @@ select level2  from a_company_manual_tbl where uid=#{uid} and level1 = #{name} g
 
     <!--根据高危/基础查询所有的部门的id和名称-->
     <select id="findJiChuItem" resultType="java.util.Map">
-        select id,level1
+        select dmid,level1
         from a_company_manual_tbl
         where uid=#{uid}  and  level3 LIKE CONCAT('%', #{name},'%')
         group By level1;
@@ -1041,9 +1030,15 @@ select level2  from a_company_manual_tbl where uid=#{uid} and level1 = #{name} g
         select * from a_company_manual_tbl where level= "红色" and del = 0 and uid = #{uid};
     </select>
 
-    <!--根据部门的名称和uid获取数据-->
+    <!--根据部门的名称和uid获取数据(现场)-->
     <select id="selectlevel3BydmName" resultType="String">
-        select level3 from a_company_manual_tbl where uid=#{uid} and level1=#{level1}
+        select level3 from a_company_manual_tbl where uid=#{uid} and level1=#{level1} and level3  not LIKE '基础管理'
+        group by level3;
+    </select>
+    <!--根据基础/高危(备用)获取level3的数据,然后根据level3的数据获取到响应的部门-->
+    <select id="selectlevel3BydmNameAndLevel3" resultType="String">
+         select level3 from a_company_manual_tbl where uid=#{uid}
+         and level1=#{level1} and level3 LIKE CONCAT('%', #{level3},'%')
         group by level3;
     </select>
 

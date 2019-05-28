@@ -2224,7 +2224,9 @@ public class CompanyController_cd extends BaseController {
     /**
      * 检查设置与实施-企业自查1
      * TODO
-     * 综合检查表(Template 1)  日检查表(Template 2)
+     * 综合检查表(Template 1)
+     * 日检查表(Template 2)
+     * 临时检查表(template 4)
      * type  =1(日常)  flag=1()自查
      *
      */

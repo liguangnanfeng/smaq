@@ -409,9 +409,6 @@ public class SaveDataImpl implements SaveMessageService {
     /**
      * TODO 根据最早插入的check数据,从新生成一条新的数据,并进行返回
      * 根据检查记录id获取数据,part item 进行新的数据的修改
-     * <p>
-     * <p>
-     * <p>
      * part和item一一对应
      *
      * @param checkId

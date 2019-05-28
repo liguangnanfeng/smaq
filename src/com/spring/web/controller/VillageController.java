@@ -2878,10 +2878,17 @@ public class VillageController extends BaseController {
                 level3s = aCompanyManualMapper.selectlevel3BydmName(user.getId(), dmid);
             }
 
-            List<ACompanyManual> list = null;
+            List<ACompanyManual> list = new ArrayList<ACompanyManual>();
+
             for (String level3 : level3s) {
-                list = aCompanyManualMapper.selectAllByLevel3(user.getId(),dmid, level3);
+                List<ACompanyManual> list1 = aCompanyManualMapper.selectAllByLevel3(user.getId(), dmid, level3);
+                if(null!=list1){
+                    for (ACompanyManual companyManual : list1) {
+                        list.add(companyManual);
+                    }
+                }
             }
+
             // 对数据进行封装
             List<CheckLevel> checkLevels = new ArrayList<>();
             for (ACompanyManual companyManual : list) {
@@ -2908,7 +2915,6 @@ public class VillageController extends BaseController {
             } else {
                 checkItem.setTemplate(dmid + "高危标准检查表");
             }
-
 
             checkItem.setCheckType(type);      // 检查类型
             checkItem.setTitle(dptitle);       // 检查方式
@@ -2980,18 +2986,25 @@ public class VillageController extends BaseController {
             tModelMapper.insertSelective(model);
             // 存储part表数据
 
-            if (-2 == checkItem.getCheckType()||-1==checkItem.getCheckType()) { // 现场
+            if (-2 == checkItem.getCheckType()||-1==checkItem.getCheckType()) { // 现场和基础
                 List<CheckLevel> checkLevels1 = checkItem.getCheckLevels();
                 Set<String> set = new LinkedHashSet<>();
-                for (CheckLevel checkLevel : checkLevels1) {
-                    set.add(checkLevel.getLevel2());
+                String str = new String();
+                for (int i = 0; i < checkLevels1.size(); i++) {
+                    set.add(checkLevels1.get(i).getLevel2());
+                    if(i<checkLevels1.size()-1){
+                        str+=checkLevels1.get(i).getId()+",";
+                    }else{
+                        str+=checkLevels1.get(i).getId()+"";
+                    }
                 }
                 for (String s : set) {
                     TModelPart modelPart = new TModelPart();
-                    modelPart.setModelId(model.getId());
-                    modelPart.setName(s);
-                    tModelPartMapper.insertSelective(modelPart);
-                }
+                modelPart.setModelId(model.getId());
+                modelPart.setName(s);
+                modelPart.setLevels(str);
+                tModelPartMapper.insertSelective(modelPart);
+            }
             } else {   // 基础和高危
                 TModelPart modelPart = new TModelPart();
                 modelPart.setModelId(model.getId());
@@ -3032,7 +3045,7 @@ public class VillageController extends BaseController {
             tCheckMapper.insertSelective(tCheck);
             Integer tCheckId = tCheck.getId();
 
-            if (-2 == checkItem.getCheckType()||-1==checkItem.getCheckType()) {          //表示现场
+            if (-2 == checkItem.getCheckType()||-1==checkItem.getCheckType()) {          //表示现场/基础
                 if (null != checkItem.getCheckLevels() && checkItem.getCheckLevels().size() > 0) {
                     for (CheckLevel checkLevels : checkItem.getCheckLevels()) {
 
@@ -3051,7 +3064,7 @@ public class VillageController extends BaseController {
                     }
                 }
             } else {
-                // 高危，现场检查  没有部门和岗位
+                // 高危检查  没有部门和岗位
                 if (null != checkItem.getCheckLevels() && checkItem.getCheckLevels().size() > 0) {
                     for (CheckLevel checkLevels : checkItem.getCheckLevels()) {
 

@@ -570,16 +570,25 @@ public class CheckManualImpl implements ICheckManual {
         // 获取部门名称list的str
         List<CheckLevel> checkLevels = checkItem.getCheckLevels();
         List<String> departmentName = new ArrayList<>();
-        for (CheckLevel checkLevel : checkLevels) {
-            departmentName.add(checkLevel.getLevel1());
+        String str = new  String ();
+        for (int i = 0; i < checkLevels.size(); i++) {
+            departmentName.add(checkLevels.get(i).getLevel1());
+            if(i<checkLevels.size()-1){
+                str+=checkLevels.get(i).getId()+",";
+            }else{
+                str+=checkLevels.get(i).getId()+"";
+            }
+
+
         }
+
         String departmentNametr = JSON.toJSONString(departmentName);
 
         String NameStr = JSON.toJSONString(list);
 
         tModelPart.setModelId(Tmodel);
 
-        tModelPart.setLevels(NameStr); //检查分类
+        tModelPart.setLevels(str); //检查分类
         tModelPart.setName(departmentNametr);   // 检查的部门
 
         tModelPartMapper.insertSelective(tModelPart);

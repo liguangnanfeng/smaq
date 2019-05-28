@@ -1042,9 +1042,9 @@ select level2  from a_company_manual_tbl where uid=#{uid} and level1 = #{name} g
         group by level3;
     </select>
 
-    <!--根据部门的Uid和level1和level2-->
+    <!--根据部门的Uid和level1和level3获取详细信息 -->
     <select id="selectAllByLevel3" resultType="com.spring.web.model.ACompanyManual">
-        SELECT * FROM a_company_manual_tbl where uid=#{uid}  and level1=#{level1} and level3=#{level3};
+        SELECT * FROM a_company_manual_tbl where uid=#{uid}  and level1 = #{level1} and level3 = #{level3};
     </select>
 
 </mapper>

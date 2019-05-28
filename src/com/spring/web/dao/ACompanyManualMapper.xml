@@ -1140,6 +1140,16 @@
     <!--查询行业id
     -->
     <select id="selectDmidById" resultType="Integer">
+    -- 查询行业id
+    select id from a_industry_tbl where name =#{name};
+    </select>
+
+    <!--根据高危/基础查询所有的部门的id和名称-->
+    <select id="findJiChuItem" resultType="java.util.Map">
+        select dmid,level1
+        from a_company_manual_tbl
+        where uid=#{uid}  and  level3 LIKE CONCAT('%', #{name},'%')
+        group By level1;
         -- 查询行业id
         select id
 
@@ -1166,5 +1176,21 @@
 
 
 
+    <!--根据部门的名称和uid获取数据(现场)-->
+    <select id="selectlevel3BydmName" resultType="String">
+        select level3 from a_company_manual_tbl where uid=#{uid} and level1=#{level1} and level3  not LIKE '基础管理'
+        group by level3;
+    </select>
+    <!--根据基础/高危(备用)获取level3的数据,然后根据level3的数据获取到响应的部门-->
+    <select id="selectlevel3BydmNameAndLevel3" resultType="String">
+         select level3 from a_company_manual_tbl where uid=#{uid}
+         and level1=#{level1} and level3 LIKE CONCAT('%', #{level3},'%')
+        group by level3;
+    </select>
+
+    <!--根据部门的Uid和level1和level2-->
+    <select id="selectAllByLevel3" resultType="com.spring.web.model.ACompanyManual">
+        SELECT * FROM a_company_manual_tbl where uid=#{uid}  and level1=#{level1} and level3=#{level3};
+    </select>
 
 </mapper>

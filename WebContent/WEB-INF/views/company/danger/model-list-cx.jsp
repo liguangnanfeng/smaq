@@ -227,7 +227,7 @@
         </div>
     </div>
 
-    <c:if test="${type == 1 || type == 2 || type == 9}">
+    <c:if test="${type == 1 || type == 2 || type == 3}">
         <div class="mt-20">
             <table class="table table-border table-bordered table-bg table-hover table-sort">
                 <thead>
@@ -258,8 +258,18 @@
                                 <c:when test="${be.industryType == 3}">高危作业</c:when>
                             </c:choose>
                         </td>
+                            <%--检查部位--%>
                         <td>${be.partName }</td>
-                        <td>${be.c2 }/${be.c }</td>
+                            <%--最近的检查时间--%>
+                        <td>
+                                <%--${be.c2 }/${be.c }--%>
+                            <c:if test="${be.useTime !=null}">
+                                        ${be.useTime}
+                            </c:if>
+                            <c:if test="${be.useTime ==null}">
+                                未检查状态
+                            </c:if>
+                        </td>
                         <c:if test="${type == 2 || type==9}">
                             <td>
                                 <span>开启/关闭状态：${be.open == 1 ? '开启':'关闭'}</span><br>
@@ -294,7 +304,7 @@
         </div>
     </c:if>
 
-    <c:if test="${type == 3}">
+    <%--<c:if test="${type == 3}">
         <div class="mt-20">
             <table class="table table-border table-bordered table-bg table-hover table-sort">
                 <thead>
@@ -332,7 +342,7 @@
                             <c:if test="${be.c > 0 && be.status == 2 }">
                                 <c:choose>
                                     <c:when test="${be.t > 0}"><!-- 已设置整改意见 -->
-                                        <%-- <a style="text-decoration:none" onClick="show_dialog('整改意见_${be.id }', '${ly}/village/check-rectification?flag=${flag }&id=${be.id }')" href="javascript:;">整改意见</a><br> --%>
+                                        &lt;%&ndash; <a style="text-decoration:none" onClick="show_dialog('整改意见_${be.id }', '${ly}/village/check-rectification?flag=${flag }&id=${be.id }')" href="javascript:;">整改意见</a><br> &ndash;%&gt;
                                     </c:when>
                                     <c:otherwise><!-- 未设置整改意见 -->
                                         <c:if test="${flag == 1}">
@@ -353,7 +363,7 @@
                                     </c:otherwise>
                                 </c:choose>
                                 <c:if test="${be.c3 > 0}">
-                                    <%-- <a style="text-decoration:none" onClick="show_dialog('整改复查_${be.checkId}', '${ly }/company/recheck-add?checkId=${be.checkId }')" href="javascript:;">整改复查</a><br> --%>
+                                    &lt;%&ndash; <a style="text-decoration:none" onClick="show_dialog('整改复查_${be.checkId}', '${ly }/company/recheck-add?checkId=${be.checkId }')" href="javascript:;">整改复查</a><br> &ndash;%&gt;
                                 </c:if>
                                 <c:if test="${be.c3 == 0}">
                                     <c:if test="${flag == 1}">
@@ -369,7 +379,7 @@
                                 </c:if>
                             </c:if>
                             <c:if test="${flag == 1}">
-                                <%--TODO 查看检查记录 --%>
+                                &lt;%&ndash;TODO 查看检查记录 &ndash;%&gt;
                                 <a style="text-decoration:none"
                                    onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')"
                                    href="javascript:;">查看检查记录</a>
@@ -388,7 +398,7 @@
                 </tbody>
             </table>
         </div>
-    </c:if>
+    </c:if>--%>
 
 </div>
 <script type="text/javascript">

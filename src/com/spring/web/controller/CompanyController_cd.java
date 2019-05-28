@@ -115,7 +115,10 @@ public class CompanyController_cd extends BaseController {
         m.put("type", "1");
         m.clear();
         setUserId(user, m);
-
+        // TODO 判断该公司的行业是否为化工行业,为化工行业就显示内容
+        if(c.getIndustry().contains("化工")){
+            model.addAttribute("industry", 5);
+        }
         List<Integer> count = userService.selectCount(new CompanyListReqDTO(), user);
 
         model.addAttribute("lib", libraryMapper.selectLibraryList(2));
@@ -176,13 +179,14 @@ public class CompanyController_cd extends BaseController {
     }
 
     /**
-     * 前台首页
+     * TODO 企业端 前台首页 如果是化工行业的内容就显示 研判承诺公告/重大危险源长制
      *
      * @throws Exception
      */
     @RequestMapping("main")
     public String main(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
+
         model.addAttribute("userName", companyMapper.selectByPrimaryKey(user.getId()).getName());
         model.addAttribute("loginUserId", user.getId());
         return "company/main";
@@ -196,15 +200,22 @@ public class CompanyController_cd extends BaseController {
     @RequestMapping("threeLeft")
     public String threeLeft(Model model, HttpServletRequest request, String leftBasic) throws Exception {
         User user = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+
+        // TODO 判断该公司的行业是否为化工行业,为化工行业就显示内容
+        if(company.getIndustry().contains("化工")){
+            model.addAttribute("industry", 5);
+        }
+
         model.addAttribute("leftBasic", leftBasic);
         model.addAttribute("userName", user.getUserName());
+
         return "company/threeLeft";
     }
 
     /**
-     * 基本信息页面
+     * TODO 基本信息页面
      */
-
     @RequestMapping("basic-information")
     public String basicInformation(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
@@ -227,6 +238,7 @@ public class CompanyController_cd extends BaseController {
         if (null != company.getRegionId()) {
             model.addAttribute("regionName", globalRegionMapper.selectRegionName(company.getRegionId()));
         }
+
         model.addAttribute("c", company);
         Regulation r = regulationGet(user.getId());
         model.addAttribute("r", r);
@@ -2099,9 +2111,7 @@ public class CompanyController_cd extends BaseController {
         return "company/danger/print-plan-next";
     }
 
-    /**
-     * 检查计划 详情
-     */
+
 //    @RequestMapping(value = "model-show/{id}")
 //    public String modelShow(@PathVariable Integer id, Model model,Integer flag) throws Exception {
 //        TModel tc = tModelMapper.selectByPrimaryKey(id);
@@ -2120,6 +2130,17 @@ public class CompanyController_cd extends BaseController {
 //        model.addAttribute("flag", flag);
 //        return "company/danger/model-show";
 //    }
+
+    /**
+     * TODO 查询检查表详情
+     * @param id    modelId
+     * @param model 前端model
+     * @param flag  类型
+     * @param type   数据
+     * @return       url地址
+     * 可以从ite表中获取的详情
+     * @throws Exception
+     */
     @RequestMapping(value = "model-show/{id}")//modify by zhangcl 2018.10.28
     public String modelShow(@PathVariable Integer id, Model model, Integer flag, Integer type) throws Exception {
         log.error("type:" + type);
@@ -2222,7 +2243,9 @@ public class CompanyController_cd extends BaseController {
     /**
      * 检查设置与实施-企业自查1
      * TODO
-     * 综合检查表(Template 1)  日检查表(Template 2)
+     * 综合检查表(Template 1)
+     * 日检查表(Template 2)
+     * 临时检查表(template 4)
      * type  =1(日常)  flag=1()自查
      *
      */
@@ -2249,7 +2272,6 @@ public class CompanyController_cd extends BaseController {
             m.remove("type");
              list = tModelMapper.selectByMap(m);
         } else if(null != template && template == 2) { //日检查表
-
             list = tModelMapper.selectByMap(m);
         }else{
             list = tModelMapper.selectByMap(m);
@@ -2268,7 +2290,7 @@ public class CompanyController_cd extends BaseController {
             model.addAttribute("rjcbxs", 1);
 
         }
-        if (type == 2) {
+        /*if (type == 2) {
 
             if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {//取数据
                 //log.error("查询出日检查表和定期检查表检查周期不为1表单！");
@@ -2287,7 +2309,7 @@ public class CompanyController_cd extends BaseController {
                 List<Map<String, Object>> list1 = tModelMapper.selectByMap(m);
                 list.addAll(list1);
             }
-        }
+        }*/
         model.addAttribute("list", list);
 
         return "company/danger/model-list-cx";
@@ -3669,4 +3691,27 @@ public class CompanyController_cd extends BaseController {
             out.close();
         }
     }
+
+    /**
+     * 判断行业
+     */
+    @ResponseBody
+    @RequestMapping(value="judgeIndustry")
+    public Result judgeIndustry(HttpServletRequest request){
+        User user = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        if(company.getIndustry().contains("化工")){
+            Result result =new ResultImpl();
+            result.setStatus("0");
+            result.setMess("化工行业");
+            return result;
+        }else{
+            Result result =new ResultImpl();
+            result.setStatus("1");
+            return result;
+        }
+
+    }
+
+
 }

@@ -380,7 +380,7 @@ public class CountryCheckImpl implements CountryCheck {
         tCheck.setCheker(officials.getName());            // 检查人
         tCheck.setContact(officials.getDepart());            // 检查人的部门
         tCheck.setDapartContact(String.valueOf(checkItem.getDepartmentId()));      // 被检查人的id
-        tCheck.setStatus(1);              // 1. 未检查
+        tCheck.setStatus(0);              // 1. 未检查
         tCheck.setCreateTime(new Date()); // 创建时间
         User user = userMapper.selectByPrimaryKey(officials.getUid());
         tCheck.setCheckCompany(user.getUserName());         // 检查单位

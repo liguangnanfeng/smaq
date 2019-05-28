@@ -1158,8 +1158,9 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 隐患排查 检查历史
-     * TODO 排查治理记录
+     *
+     * 检查历史
+     * TODO 排查治理记录 隐患排查记录(只需要已经检查过的)
      * user. userType : 管理类型  1 超管 2普管 3镇 4 村 5 企业 6区县 7市 8省
      */
     @RequestMapping(value = "check-list")//flag:3 部门抽查
@@ -2696,7 +2697,7 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 传递json格式字符串
+     * model-add2 跳转页面进行显示现场检查
      *
      * @param request
      * @return
@@ -2711,7 +2712,6 @@ public class VillageController extends BaseController {
          */
         List<Map<Object, Object>> maps = zzjgDepartmentMapper.selectByUid(user.getId());
 
-        // 获取所有的部门 使用list集合
         Map<String, Integer> names = new HashMap<>();
         for (Map<Object, Object> map : maps) {
             if (1 == map.get("level")) { //表示是一级目录
@@ -2733,8 +2733,32 @@ public class VillageController extends BaseController {
     }
 
     /**
+     * 选择基础和高危的部门的名称
+     *
+     * @param request
+     * @param type
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "findItemAll", method = RequestMethod.POST)
+    public List findItemAll(HttpServletRequest request, Integer type, Model model) {
+        User user = getLoginUser(request);
+
+        List<Map<Object, Object>> list = new ArrayList<>();
+
+        if (type == -1) {
+            // 基础检查 保存基础检查的数据
+            list = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");
+        } else if (type == -2) {
+            // 高危检查
+            list = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
+        }
+        System.out.println(list);
+        return list;
+    }
+
+    /**
      * TODO 根据公司和部门获取对应岗位
-     * <p>
      * 获取岗位
      *
      * @return
@@ -2750,7 +2774,7 @@ public class VillageController extends BaseController {
         List<Map> list = new ArrayList<Map>();
 
         ZzjgDepartment zzjg = zzjgDepartmentMapper.selectByPrimaryKey(depId);
-        List<String> level3s = aCompanyManualMapper.selectlevel3BydmName(user.getId(), zzjg.getName());
+        List<String> level3s = aCompanyManualMapper.selectlevel3BydmName(user.getId(), zzjg.getName());// 直接就是现场
         for (String level3 : level3s) {
             LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
             List l = aCompanyManualMapper.selectAllByLevel3(user.getId(), zzjg.getName(), level3);
@@ -2831,18 +2855,32 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * TODO PC 企业端保存标准检查模版
+     * TODO PC 标准检查模版
+     * 还要多传递一个值,只获取数据是基础检查的数据
+     * 被检查的天数
      */
     @ResponseBody
     @RequestMapping(value = "saveCheckMenu3")
-    public AppResult saveCheckMenu3(HttpServletRequest request, String dmid) {
+    public AppResult saveCheckMenu3(HttpServletRequest request, String dmid, Integer type, Integer dptitle,Integer times) {
         // 首先根据公司id查询部门的和其他的
         try {
-            ZzjgDepartment zzjg = zzjgDepartmentMapper.selectByPrimaryKey(Integer.parseInt(dmid));
-            List<String> level3s = aCompanyManualMapper.selectlevel3BydmName(zzjg.getUid(), zzjg.getName());
+            User user = getLoginUser(request);
+            //  ZzjgDepartment zzjg = zzjgDepartmentMapper.selectByPrimaryKey(Integer.parseInt(dmid));
+
+            List<String> level3s = null;
+
+            //做出判断基础还是现场还是高危
+            if (type == -1) { //基础
+                level3s = aCompanyManualMapper.selectlevel3BydmNameAndLevel3(user.getId(), dmid,"基础");
+            } else if (type == -2) { //现场
+                level3s = aCompanyManualMapper.selectlevel3BydmName(user.getId(), dmid);
+            } else {             // 高危
+                level3s = aCompanyManualMapper.selectlevel3BydmName(user.getId(), dmid);
+            }
+
             List<ACompanyManual> list = null;
             for (String level3 : level3s) {
-                list = aCompanyManualMapper.selectAllByLevel3(zzjg.getUid(), zzjg.getName(), level3);
+                list = aCompanyManualMapper.selectAllByLevel3(user.getId(),dmid, level3);
             }
             // 对数据进行封装
             List<CheckLevel> checkLevels = new ArrayList<>();
@@ -2863,10 +2901,21 @@ public class VillageController extends BaseController {
 
             CheckItem checkItem = new CheckItem();
             checkItem.setCheckLevels(checkLevels);
-            checkItem.setTemplate(zzjg.getName() + "标准检查表");
-            checkItem.setCheckType(-2);  // 表示是现场检查
-            checkItem.setTitle(1);       // 表示是日常检查
-            checkItem.setUid(zzjg.getUid());
+            if (type == -1) { //基础
+                checkItem.setTemplate(dmid + "基础标准检查表");
+            } else if (type == -2) {
+                checkItem.setTemplate(dmid+ "现场标准检查表");
+            } else {
+                checkItem.setTemplate(dmid + "高危标准检查表");
+            }
+
+
+            checkItem.setCheckType(type);      // 检查类型
+            checkItem.setTitle(dptitle);       // 检查方式
+            checkItem.setUid(user.getId());
+            if(null!=times){
+                checkItem.setCycle(times);
+            }
 
             return savemodel(request, checkItem);
         } catch (NumberFormatException e) {
@@ -2880,7 +2929,7 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * TODO PC 企业端保存保存检查模板
+     * TODO PC 自定义检查模板
      */
     @ResponseBody
     @RequestMapping(value = "saveCheckMenu2")
@@ -2903,7 +2952,7 @@ public class VillageController extends BaseController {
             model.setUserId(user.getId());    // 企业id
             model.setFlag(1);        //自查
             model.setType(checkItem.getTitle()); //  检查类型  日常, 定期, 临时
-            if (-2 == checkItem.getCheckType()) { //只有现场才会存储部门
+            if (-2 == checkItem.getCheckType()||-1==checkItem.getCheckType()) { //只有现场才会存储部门
                 model.setPart(checkItem.getCheckLevels().get(0).getLevel1()); // 被检查的部门
             }
             //基础, 现场, 高危
@@ -2931,7 +2980,7 @@ public class VillageController extends BaseController {
             tModelMapper.insertSelective(model);
             // 存储part表数据
 
-            if (-2 == checkItem.getCheckType()) { // 现场
+            if (-2 == checkItem.getCheckType()||-1==checkItem.getCheckType()) { // 现场
                 List<CheckLevel> checkLevels1 = checkItem.getCheckLevels();
                 Set<String> set = new LinkedHashSet<>();
                 for (CheckLevel checkLevel : checkLevels1) {
@@ -2954,7 +3003,7 @@ public class VillageController extends BaseController {
 
             tCheck.setFlag(1);                                                      // 企业自查
             tCheck.setTitle(checkItem.getTemplate());                               // 被检查的标题
-            if (-2 == checkItem.getCheckType()) { //只有现场才会存储部门
+            if (-2 == checkItem.getCheckType()||-1==checkItem.getCheckType()) { //只有现场才会存储部门
                 tCheck.setDepart(checkItem.getCheckLevels().get(0).getLevel1());        // 被检查的部门
                 //但是会出现现场检查什么都没有的情况
                 if (null != checkItem.getCheckLevels().get(0).getLevel3() && "".equals(checkItem.getCheckLevels().get(0).getLevel3())) {
@@ -2976,14 +3025,14 @@ public class VillageController extends BaseController {
             tCheck.setCheker(user.getUserName());                                  // 检查人 当前的公司名称
             //tCheck.setContact(user.getUserName());                               // 检查人的联系方式无
 
-            tCheck.setStatus(1);                                                   // 表示未检查
+            tCheck.setStatus(0);                                                   // 表示未检查
             tCheck.setCreateTime(new Date());                                      // 创建时间
             tCheck.setCheckCompany(user.getUserName());                            // 检查公司
 
             tCheckMapper.insertSelective(tCheck);
             Integer tCheckId = tCheck.getId();
 
-            if (-2 == checkItem.getCheckType()) {          //表示现场
+            if (-2 == checkItem.getCheckType()||-1==checkItem.getCheckType()) {          //表示现场
                 if (null != checkItem.getCheckLevels() && checkItem.getCheckLevels().size() > 0) {
                     for (CheckLevel checkLevels : checkItem.getCheckLevels()) {
 

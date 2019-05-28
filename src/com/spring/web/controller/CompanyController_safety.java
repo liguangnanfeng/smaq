@@ -420,24 +420,27 @@ public class CompanyController_safety extends BaseController {
 
                 while(it.hasNext()) {
                     Map<String, Object> ac = (Map)it.next();
-                    String level1 = ac.get("level1").toString();
-                    String level2 = ac.get("level2").toString();
-                    boolean has = false;
-                    Iterator var15 = zzjg.iterator();
 
-                    while(var15.hasNext()) {
-                        Map<Object, Object> zz = (Map)var15.next();
-                        String p = zz.get("parName").toString();
-                        String name = zz.get("name").toString();
-                        if (p.equals(level1) && name.equals(level2)) {
-                            has = true;
-                            break;
+                    if (ac.get("level1") != null && ac.get("level2") != null){
+                        String level1 = ac.get("level1").toString();
+                        String level2 = ac.get("level2").toString();
+                        boolean has = false;
+                        Iterator var15 = zzjg.iterator();
+
+                        while(var15.hasNext()) {
+                            Map<Object, Object> zz = (Map)var15.next();
+                            String p = zz.get("parName").toString();
+                            String name = zz.get("name").toString();
+                            if (p.equals(level1) && name.equals(level2)) {
+                                has = true;
+                                break;
+                            }
+                        } if (!has) {
+                            it.remove();
                         }
                     }
-                    if (!has) {
-                        it.remove();
-                    }
                 }
+                System.out.println(type);
                 model.addAttribute("dL", acL);
                 model.addAttribute("type", type);
                 return "company/safety-system/risk-list1";

@@ -326,7 +326,7 @@
             <ul>
             <li><a href="${ly }/company/study/department-list?sign=2" data-title="管控架构"
             href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/zhiyejiankang.png"/>管控架构</a></li>
-            <li><a data-href="${ly }/company/source/management-guide" data-title="机制文件"
+            <li><a href="${ly }/company/source/management-guide" data-title="机制文件"
             href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/teshuzuoye.png"/>机制文件</a></li>
             </ul>
         </c:if>
@@ -340,7 +340,7 @@
             href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/pingjiapinggu.png"/>在线检测</a></li>
             <li><a href="${ly }/company/source/distribution" data-title="风险分布图"
             href="javascript:void(0)"><img alt="" src="${ly }
-            /images/companyImg/icon/fengxianfenbubiao.png"/>风险分布图</a></li>
+            /images/companyImg/icon/fengxianfenbutu.png"/>风险分布图</a></li>
             <li><a href="${ly }/company/source/publicity?flag=1" data-title="公示"
             href="javascript:void(0)"><img alt="" src="${ly }/images/companyImg/icon/gaozhipai.png"/>公示</a></li>
             </ul>

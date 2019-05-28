@@ -39,7 +39,7 @@
 </nav>
 <div class="page-container">
     <div class="text-c">
-        <form action="${ly }/company/tables/tab-weilist" method="post">
+        <%--<form &lt;%&ndash;action="${ly }/company/tables/tab-weilist"&ndash;%&gt; method="post">
             <div class="dis-ib">
                 <span>资料类型：</span>
                 <span class="select-box inline">
@@ -60,21 +60,11 @@
             </div>
             <button class="btn btn-success" type="submit">
                 <i class="Hui-iconfont">&#xe665;</i> 查询
-            </button>
+            </button>--%>
             <button class="btn btn-warning ml-10" type="button" onclick="openzl(-1)"><i class="Hui-iconfont" style="font-size:15px;">&#xe642;</i> 上传资料</button>
-        </form>
+        <%--</form>--%>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <%-- <div class="l">
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=12"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看动火作业证</a>
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=13"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看受限空间安全作业证</a>
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=14"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看盲板抽堵安全作业证</a>
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=15"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看高处安全作业证</a>
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=16"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看吊装安全作业证</a>
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=17"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看临时用电安全作业证</a>
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=18"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看动土安全作业证</a>
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=19"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看断路安全作业证</a>
-         </div>--%>
         <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
     </div>
     <div class="mt-20">
@@ -93,7 +83,7 @@
                 <tr class="text-c">
                     <td>${index.index+1 }</td>
                     <td>${t.name }</td>
-                    <td><fmt:formatDate value="${t.createTime }" pattern="yyyy-MM-dd"/></td>
+                    <td><fmt:formatDate value="${t.create_time }" pattern="yyyy-MM-dd"/></td>
                     <td>
                         <div class="btn-upload">
                             <div class="btn btn-primary-outline radius" onclick="openzl(${t.id})" style="height: 21px;line-height: 21px;padding: 0 2px;margin-top: 6px;">更改资料</div>
@@ -122,14 +112,16 @@
                     <label class="form-label col-xs-4 col-sm-2" style="width:20%;text-align:right;">资料类型：</label>
                     <div class="formControls col-xs-8 col-sm-9" style="width:70%;">
                         <select name="isTab" id="b" class="select" style="height:31px;">
-                            <option value="12">目标</option>
-                            <option value="13">组织机构和职责</option>
-                            <option value="14">安全生产投入</option>
-                            <option value="15">法律法规与安全管理制度</option>
-                            <option value="16">教育培训</option>
-                            <option value="17">生产设备设施</option>
-                            <%--<option value="18">动土安全作业证</option>
-                            <option value="19">断路安全作业证</option>--%>
+                            <option value="12" >重大危险源档案</option>
+                            <option value="13" >重大隐患档案</option>
+                            <option value="14" >特种设备档案</option>
+                            <option value="15" >从业人员安全培训教育档案</option>
+                            <option value="16" >关键装置、重点部位档案</option>
+                            <option value="17" >承包商档案</option>
+                            <option value="18" >供应商档案</option>
+                            <option value="19" >化学品档案</option>
+                            <option value="20" >职业卫生档案</option>
+                            <option value="21" >从业人员健康监护档案</option>
                         </select>
                     </div>
                 </div>

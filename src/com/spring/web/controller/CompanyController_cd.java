@@ -1755,15 +1755,16 @@ public class CompanyController_cd extends BaseController {
         if (null != isType) {
             m.put("isType", isType);
         } else {
-            m.put("code", 5);
+            m.put("code", 10);
         }
-        model.addAttribute("list", table2mapper.selectTable(m));
+        model.addAttribute("list", table2mapper.selectBiaoZhun(m));
         model.addAttribute("isType", isType);
         return "company/tables/tab-biaozhun";
     }
 
 
     /**
+     * 8:安全工作台账    9:安全档案    10：安全标准化
      * 安全工作台账
      */
     @RequestMapping(value = "tables/tab-taizhang")
@@ -1774,9 +1775,12 @@ public class CompanyController_cd extends BaseController {
         if (null != isType) {
             m.put("isType", isType);
         } else {
-            m.put("code", 5);
+            m.put("code", 8);
         }
-        model.addAttribute("list", table2mapper.selectTable(m));
+
+        List<DynamicParameter<String, Object>> list = table2mapper.selectTaiZhang(m);
+
+        model.addAttribute("list",list);
         model.addAttribute("isType", isType);
         return "company/tables/tab-taizhang";
     }
@@ -1793,9 +1797,9 @@ public class CompanyController_cd extends BaseController {
         if (null != isType) {
             m.put("isType", isType);
         } else {
-            m.put("code", 5);
+            m.put("code", 9);
         }
-        model.addAttribute("list", table2mapper.selectTable(m));
+        model.addAttribute("list", table2mapper.selectDangAn(m));
         model.addAttribute("isType", isType);
         return "company/tables/tab-dangan";
     }
@@ -1908,6 +1912,8 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * c 1 : 建设项目职业卫生“三同时” 2:职业卫生管理台账 3：职业卫生宣传培训 4 ：职业病危害因素监测与检测评价 5：用人单位职业健康监护管理 6 ：劳动者个人职业健康监护 7:职业卫生管理台账-其他
+     *
+     *  8:安全工作台账    9:安全档案    10：安全标准化
      */
     @RequestMapping(value = "tables/tab-health/{c}")
     public String heath1(HttpServletRequest request, @PathVariable Integer c, Model model, String seName, String isType)
@@ -1922,6 +1928,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("list", table3mapper.selectTable(m));
         model.addAttribute("isType", isType);
         model.addAttribute("seName", seName);
+
         return "company/tables/tab-health" + c;
     }
 

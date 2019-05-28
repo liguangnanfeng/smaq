@@ -197,5 +197,7 @@ public interface ACompanyManualMapper {
      * @return
      */
     List<String> selectlevel3BydmNameAndLevel3(@Param("uid")Integer uid, @Param("level1")String dpName, @Param("level3")String level3);
+
+    List<Map<String, Object>> selectByFlag3(Map<String, Object> var1);
 }
 

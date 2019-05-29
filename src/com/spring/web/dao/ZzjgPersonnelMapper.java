@@ -7,6 +7,9 @@ import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.ZzjgPersonnel;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Map;
+
 public interface ZzjgPersonnelMapper {
     /**
      *

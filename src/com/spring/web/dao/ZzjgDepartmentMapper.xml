@@ -203,74 +203,81 @@
         select * from zzjg_department_tbl where del = 0 and  level = 2 and pid = #{pid}
     </select>
 
-    <!--pc端获取该公司所有的部门-->
+
+
+    <!--  查询 ID 查询对应的 name 信息 -->
+    <select id="selectNameAll" resultType="com.spring.web.model.ZzjgDepartment">
+        select * from zzjg_department_tbl where del = 0 and  level = 2 and id = #{id}
+    </select>
+
+
+
+
+
     <select id="selectByUid" resultType="java.util.Map">
-    select
-    t1.id, t1.name, t1.level
-    from zzjg_department_tbl t1
-    where t1.del = 0
-    and t1.uid =#{uid,jdbcType=INTEGER}
-    and t1.level =1
-    order by t1.id desc;
-  </select>
+        select
+        t1.id, t1.name, t1.level,
+        (select name from zzjg_company_tbl where id = t1.cid) companyName,
+        (select name from zzjg_department_tbl where id = t1.pid) parName
+        from zzjg_department_tbl t1
+        where
+        t1.del = 0
+        and t1.uid = #{uid,jdbcType=INTEGER}
+        order by t1.id desc
+    </select>
 
     <select id="selectLevel1ByUid" resultType="java.util.Map">
-    select 
+        select
         t1.id, t1.name, t1.level,t1.cid,
         (select name from zzjg_company_tbl where id = t1.cid) companyName
-    from zzjg_department_tbl t1
-    where 
+        from zzjg_department_tbl t1
+        where
         t1.del = 0 and t1.level = 1
         and t1.uid = #{uid,jdbcType=INTEGER}
-    order by t1.id desc
-  </select>
+        order by t1.id desc
+    </select>
 
     <select id="selectLevel2ByUid" resultType="java.util.Map">
-    select 
+        select
         t1.id, t1.name, t1.level,
         (select name from zzjg_company_tbl where id = t1.cid) companyName,
         t2.name parName
-    from zzjg_department_tbl t1
-    left join
+        from zzjg_department_tbl t1
+        left join
         zzjg_department_tbl t2 on t1.pid = t2.id
-    where 
+        where
         t1.del = 0 and t2.del = 0
         and t1.uid = #{uid,jdbcType=INTEGER} and t1.level = 2
-    group by parName, name
-    order by t2.id asc, t1.id asc
-  </select>
+        group by parName, name
+        order by t2.id asc, t1.id asc
+    </select>
 
     <select id="selectFullName" resultType="java.util.Map">
-    select
+        select
         T2.name pname, T1.name name, T1.id
-    from
+        from
         zzjg_department_tbl T1
-    left join
+        left join
         zzjg_department_tbl T2 on T1.pid = T2.id
-    where
+        where
         T1.cid = #{cid} and T1.del = 0
-  </select>
+    </select>
 
     <select id="selectNameParnameById" resultType="java.util.Map">
-    select 
+        select
         t1.id, t1.name, t2.name parName
-    from zzjg_department_tbl t1
-    left join
+        from zzjg_department_tbl t1
+        left join
         zzjg_department_tbl t2 on t1.pid = t2.id
-    where 
+        where
         t1.del = 0 and t2.del = 0
         and t1.id = #{id,jdbcType=INTEGER} and t1.level = 2
-    group by parName, name
-    order by t1.id asc
-  </select>
-
-
-    <!--根据公司id查询分公司的所有部门(一级)
-
-    -->
+        group by parName, name
+        order by t1.id asc
+    </select>
     <select id="selectDepartmentByCompidAndLEvel" resultType="com.spring.web.model.ZzjgDepartment">
-    select * from zzjg_department_tbl where cid= #{companyId, jdbcType=INTEGER } and level = 1
-  </select>
+        select * from zzjg_department_tbl where cid= #{companyId, jdbcType=INTEGER } and level = 1
+    </select>
 
     <select id="selectDepByCompanyIdandSome" resultType="com.spring.web.model.ZzjgDepartment">
         select * from zzjg_department_tbl  where uid= #{0} and pid = #{1} and level = 2 and del = 0

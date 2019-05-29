@@ -200,6 +200,20 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+
+
+
+    <update id="updateIds" parameterType="com.spring.web.model.ZzjgPersonnel">
+        update zzjg_personnel_tbl
+        set del = 1
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+
+
+
     <update id="updateByPrimaryKey" parameterType="com.spring.web.model.ZzjgPersonnel">
         <!--
           WARNING - @mbggenerated
@@ -362,8 +376,7 @@
         select * from zzjg_personnel_tbl where id=#{userId ,jdbcType=INTEGER };
     </select>
 
-    <!--
-    登陆
+    <!--登陆
     -->
     <select id="selectPersonnelByNameAndPwd" resultType="com.spring.web.model.ZzjgPersonnel">
      select * from zzjg_personnel_tbl where  mobile= #{name,jdbcType = VARCHAR} limit 0,1
@@ -371,7 +384,7 @@
 
     <!--查询公司信息 ,包括部门信息 和岗位信息
     -->
-    <select id="selectAll1" resultType="java.util.Map" parameterType="java.lang.Integer">
+    <select id="selectAll1"  resultType="java.util.Map" parameterType="java.lang.Integer" >
 
     select p.id as id , p.name as name, p.mobile as mobile, p.status as status ,p.position as position, p.uid, d.name as department  , c.name as company
     from zzjg_personnel_tbl as  p join zzjg_department_tbl  as d  on d.id=p.dpid join zzjg_company_tbl  as c
@@ -381,22 +394,16 @@
 
     <!--查询相应企业所有的安全责任人-->
     <select id="findUserByIdAndSTatus" resultType="MAP">
-        select id,name from zzjg_personnel_tbl where cid=#{cid} and status="2" and del=0 ;
+        select id,name from zzjg_personnel_tbl where cid=#{cid} and status="2";
     </select>
 
     <!--政府端查询企业所有的安全责任人-->
     <select id="findUserByIdAndStatus1" resultType="java.util.Map">
-         select id,name from zzjg_personnel_tbl where uid=#{id} and status="1" and del=0;
+         select id,name from zzjg_personnel_tbl where uid=#{id} and status="1";
     </select>
 
     <!--根据id查询部门名称-->
     <select id="selectdpidById" resultType="String">
         select name from zzjg_department_tbl where id=(select dpid  from zzjg_personnel_tbl where id = #{personnelId});
     </select>
-
-    <!--根据部门id查询这个部门所有的被检查人员的手机号-->
-    <select id="selectByDpid" resultType="String">
-        SELECT mobile FROM zzjg_personnel_tbl WHERE dpid = #{dpid} and del=0 ;
-    </select>
-
 </mapper>

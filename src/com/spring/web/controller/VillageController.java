@@ -241,7 +241,7 @@ public class VillageController extends BaseController {
         User user = getLoginUser(request);
         //log.error("zhangcl 2018.11.8 companyList start1 userid:"+user.getId());
         cgfService.selectCompanyWithPage(dto, user, model);
-        //log.error("zhangcl 2018.11.8 companyList end1:"+ System.currentTimeMillis());    
+        //log.error("zhangcl 2018.11.8 companyList end1:"+ System.currentTimeMillis());
         if (user.getUserType().intValue() == 3) {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("townId", dto.getTownId());
@@ -762,14 +762,14 @@ public class VillageController extends BaseController {
 //        m.put("page", 0);
 //        m.put("limit", 20);
 //        List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyMap(m);
-//        
+//
 //        for (int i = 0; i < list.size(); i++) {
 //            DynamicParameter<String, Object> item = list.get(i);
 //            item.put("id", i + 1 + "");
 //        }
-//        Integer count = companyMapper.selectCountMap(m);      
-//        String listStr = JSONArray.toJSONString(list);       
-//        String userStr = JSONObject.toJSONString(user);     
+//        Integer count = companyMapper.selectCountMap(m);
+//        String listStr = JSONArray.toJSONString(list);
+//        String userStr = JSONObject.toJSONString(user);
 //        model.addAttribute("count", count);
 //        model.addAttribute("companyList", listStr);
 //        model.addAttribute("user", userStr);
@@ -1310,7 +1310,7 @@ public class VillageController extends BaseController {
 //        }
 //        model.addAttribute("now", new Date());
 //        model.addAttribute("company", companyMapper.selectByPrimaryKey(tc.getUserId()));
-//        
+//
 //        Map<String, Object> m = new HashMap<String, Object>();
 //        m.put("userId", user.getId());
 //        model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
@@ -2397,7 +2397,7 @@ public class VillageController extends BaseController {
             model.addAttribute("townL", townMapper.selectListByDistrict(m));
         }
         model.addAttribute("m", m);
-        //log.error("list："+aCompanyManualMapper.selectByMap3(m));  
+        //log.error("list："+aCompanyManualMapper.selectByMap3(m));
         if (level.equals("红色")) {
             return "village/safety-system/control-listmenu";
         } else {

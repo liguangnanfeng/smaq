@@ -365,7 +365,20 @@
     </select>
 
 
-
+    <select id="selectByAll" resultType="java.util.HashMap">
+        select
+        T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
+        T1.flag,
+        T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
+        T1.wlbs,T1.gwzy,T1.lnglat
+        from
+        a_company_manual_tbl T1
+        where
+        T1.del = 0
+        <if test="uid != null">
+            and T1.uid = #{uid}
+        </if>
+    </select>
 
 
     <select id="selectByMap" resultType="java.util.HashMap">
@@ -382,7 +395,7 @@
         left join
             a_zytjfxcdpj_tbl T4 on T1.id = T4.uid -->
         where
-        T1.del = 0
+        T1.del = 0 and T1.level != ""
         <if test="uid != null">
             and T1.uid = #{uid}
         </if>
@@ -425,6 +438,44 @@
            and (T1.wlbs is not null and T1.wlbs != '')
        </if> -->
     </select>
+
+
+
+
+
+    <select id="selectByFlag3" resultType="java.util.HashMap">
+        select
+        T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
+        T1.flag,
+        T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
+        T1.wlbs,T1.gwzy,T1.lnglat
+        from
+        a_company_manual_tbl T1
+        where
+        T1.uid = #{uid} and T1.del = 0 and T1.flag = #{flag}
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <select id="selectByMapGroupByLevel1Level2" resultType="java.util.HashMap">
         select
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
@@ -902,6 +953,21 @@
         select * from a_company_manual_tbl where del = 0 and flag = #{flag} and uid = #{uid} order by id asc;
     </select>
 
+
+
+    <!--根据公司ID，风险等级 查询未删除的数据信息 -->
+    <select id="selectIdsAll"  resultType="com.spring.web.model.ACompanyManual">
+        select * from a_company_manual_tbl where level1 = #{level1} and level2 = #{level2} and del = 0 and uid = #{uid} and level3 like "%现场管理%" ;
+    </select>
+
+
+    <!--根据公司ID，风险等级 查询未删除的数据信息 -->
+    <select id="selectIdsAlls"  resultType="com.spring.web.model.ACompanyManual">
+        select * from a_company_manual_tbl where level1 = #{level1} and level2 = #{level2} and del = 0 and uid = #{uid};
+    </select>
+
+
+
     <update id="updateDelByUserId2">
         update
           a_company_manual_tbl
@@ -910,6 +976,26 @@
         where
           uid = #{uid} and flag = 3
     </update>
+
+
+    <update id="updateAllUid">
+        update
+        a_company_manual_tbl
+        set
+        del = 1
+        where
+        uid = #{uid} and del = 0 and level1 = #{level1} and level2 = #{level2} and level3 like "%现场管理%"
+    </update>
+
+    <update id="updateAllUids">
+        update
+        a_company_manual_tbl
+        set
+        del = 1
+        where
+        uid = #{uid} and del = 0 and level1 = #{level1} and level2 = #{level2} and level3 like "%基础管理%"
+    </update>
+
 
     <insert id="insertBathByIndustry">
         insert into a_company_manual_tbl (uid, dmid, level3, factors, type, measures, reference,
@@ -928,6 +1014,18 @@
             #{item.level}, #{issys}, #{del}, #{ctime},#{item.flag2})
         </foreach>
     </insert>
+
+    <!-- 添加数据信息到数据库！！！ -->
+    <insert id="insertAdd">
+        insert into a_company_manual_tbl (uid,dmid,
+        level1, level2, level3, factors, type, flag, del, ctime,gkzt)
+        values (#{uid,jdbcType=INTEGER}, #{dmid,jdbcType=INTEGER},
+        #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},#{factors,jdbcType=VARCHAR},
+        #{type,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR},#{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP},
+        #{gkzt,jdbcType=VARCHAR})
+    </insert>
+
+
 
     <!-- 修改数据信息达到删除的目的 -->
     <update id="updateDeltess">
@@ -948,6 +1046,9 @@
         where
         id = #{id}
     </update>
+
+
+
 
     <update id="updateDelByIds">
   update
@@ -982,19 +1083,49 @@ select level2  from a_company_manual_tbl where uid=#{uid}  and del=0 and level1 
     and del=0
     and level2 = #{level2};
   </select>
-    <!--获取风险点及其id
-        直接根据level1 公司id  level2 level3 确定level4
-        measures可能就是一个null，前端人员做出判断
-    -->
+    <!--获取风险点及其id-->
     <select id="selectLevel4AndId" resultType="java.util.Map">
     select id, uid , level1,level2, level3 ,measures as level4 , factors,reference, type as types,flag,gkcs,gkzt
     from a_company_manual_tbl
     where uid=#{uid}
     and level1 = #{level1}
     and level2=#{level2}
-    and level3=#{level3}
+        and level3=#{level3};
     and del=0
   </select>
+
+    <!--level1 和Level 2 和检查的类型 (基础),查询level3-->
+    <select id="findLevel3ByjcType1" resultType="com.spring.web.model.request.CheckLevel">
+        select id, uid , level1,level2, level3 ,measures as level4
+        from a_company_manual_tbl
+        where uid=#{uid}
+        and level1 = #{level1}
+        and level2=#{level2};
+        and level3 like "%基础管理%";
+    </select>
+
+
+    <!--level1 和Level 2 和检查的类型 (基础),查询level3-->
+    <select id="findLevel3ByjcType2" resultType="com.spring.web.model.request.CheckLevel">
+        select id, uid , level1,level2, level3 ,measures as level4
+        from a_company_manual_tbl
+        where uid=#{uid}
+        and level1 = #{level1}
+        and level2 = #{level2};
+        and level3 like "%现场管理%";
+    </select>
+
+    <!--level1 和Level 2 和检查的类型 (基础),查询level3-->
+    <select id="findLevel3ByjcType3" resultType="com.spring.web.model.request.CheckLevel">
+        select id, uid , level1,level2, level3 ,measures as level4
+        from a_company_manual_tbl
+        where uid=#{uid}
+        and level1 = #{level1}
+        and level2=#{level2};
+        and level3 not like "%现场管理%";
+        and level3 not like "%基础管理%";
+    </select>
+
 
     <!--查询行业id
     -->
@@ -1010,6 +1141,11 @@ select level2  from a_company_manual_tbl where uid=#{uid}  and del=0 and level1 
         where uid=#{uid}  and  level3 LIKE CONCAT('%', #{name},'%')
         and del=0
         group By level1;
+        -- 查询行业id
+        select id
+
+        from a_industry_tbl where
+        name =#{name};
     </select>
 
     <!--根据总公司的id和部门名称查询level2-->
@@ -1018,6 +1154,7 @@ select level2  from a_company_manual_tbl where uid=#{uid}  and del=0 and level1 
     </select>
 
     <!--根根据公司id，部门，岗位名-->
+  
     <select id="findInspection" resultType="java.lang.String">
         select  level3 from a_company_manual_tbl
         WHERE uid=#{id} and level1 like CONCAT('%',#{dept},'%') and level2 like CONCAT('%',#{station},'%')
@@ -1026,10 +1163,14 @@ select level2  from a_company_manual_tbl where uid=#{uid}  and del=0 and level1 
         group by level3;
     </select>
 
+
     <!--根据公司ID，风险程度，是否删除 来查询数据信息-->
     <select id="selectAll"  resultType="com.spring.web.model.ACompanyManual">
         select * from a_company_manual_tbl where level= "红色" and del = 0 and  and del=0 uid = #{uid};
     </select>
+
+
+
 
     <!--根据部门的名称和uid获取数据(现场)-->
     <select id="selectlevel3BydmName" resultType="String">

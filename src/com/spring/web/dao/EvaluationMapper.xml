@@ -205,7 +205,6 @@
         </foreach>
     </insert>
 
-    <!--安全评估-->
     <select id="selectEvaluationList" parameterType="java.util.Map" resultType="com.spring.web.ibatis.DynamicParameter">
         select
           T1.id, T1.user_id userId, T1.flag, T1.type, T1.report_name reportName, T1.report_time reportTime, 

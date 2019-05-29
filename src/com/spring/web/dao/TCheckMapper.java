@@ -1,13 +1,11 @@
 package com.spring.web.dao;
 
-import java.util.List;
-import java.util.Map;
-
-import com.spring.web.model.TCheckItem;
-import com.sun.javafx.collections.MappingChange;
-import org.apache.ibatis.annotations.Param;
 import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.TCheck;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 public interface TCheckMapper {
     /**
@@ -57,13 +55,13 @@ public interface TCheckMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TCheck record);
-    
+
     List<Map<String, Object>> selectList(Map<String, Object> m);
-    
+
     List<Map<String, Object>> selectList1(Map<String, Object> m);//APP端修改使用
-    
+
     List<Map<String, Object>> selectList2(Map<String, Object> m);//首页定期检查——企业自查修改使用
-    
+
     DynamicParameter<String, Object> selectCompany(@Param("id") Integer id);
 
     int deleteById(@Param("sql") String sql);

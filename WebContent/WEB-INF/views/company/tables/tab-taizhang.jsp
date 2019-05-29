@@ -39,45 +39,35 @@
 </nav>
 <div class="page-container">
     <div class="text-c">
-        <form <%--action="${ly }/company/tables/tab-weilist"--%> method="post">
+        <%--<form &lt;%&ndash;action="${ly }/company/tables/tab-weilist"&ndash;%&gt; method="post">
             <div class="dis-ib">
                 <span>资料类型：</span>
                 <span class="select-box inline">
           <select name="isType" class="select">
             <option value="">全部</option>
-            <option value="12" <c:if test="${12==isType}">selected</c:if>>生产设施台账</option>
-            <option value="13" <c:if test="${13==isType}">selected</c:if>>职业卫生防护设施台账</option>
-            <option value="14" <c:if test="${14==isType}">selected</c:if>>防护急救器具台账</option>
-            <option value="15" <c:if test="${15==isType}">selected</c:if>>个体防护用品发放台账</option>
-            <option value="16" <c:if test="${16==isType}">selected</c:if>>安全警示标识台账</option>
-            <option value="17" <c:if test="${17==isType}">selected</c:if>>灭火器材台账</option>
-            <option value="18" <c:if test="${18==isType}">selected</c:if>>事故台账</option>
-            <option value="19" <c:if test="${19==isType}">selected</c:if>>隐患整改台账</option>
-            <option value="20" <c:if test="${20==isType}">selected</c:if>>安全检查台账</option>
-            <option value="21" <c:if test="${21==isType}">selected</c:if>>各类作业证审批台账</option>
-            <option value="22" <c:if test="${22==isType}">selected</c:if>>安全费用提取及使用台账</option>
-            <option value="23" <c:if test="${23==isType}">selected</c:if>>新职工三级安全教育台账</option>
-            <option value="24" <c:if test="${24==isType}">selected</c:if>>特种作业人员台账</option>
+            <option value="22" <c:if test="${22==isType}">selected</c:if>>生产设施台账</option>
+            <option value="23" <c:if test="${23==isType}">selected</c:if>>职业卫生防护设施台账</option>
+            <option value="24" <c:if test="${24==isType}">selected</c:if>>防护急救器具台账</option>
+            <option value="25" <c:if test="${25==isType}">selected</c:if>>个体防护用品发放台账</option>
+            <option value="26" <c:if test="${26==isType}">selected</c:if>>安全警示标识台账</option>
+            <option value="27" <c:if test="${27==isType}">selected</c:if>>灭火器材台账</option>
+            <option value="28" <c:if test="${28==isType}">selected</c:if>>事故台账</option>
+            <option value="29" <c:if test="${29==isType}">selected</c:if>>隐患整改台账</option>
+            <option value="30" <c:if test="${30==isType}">selected</c:if>>安全检查台账</option>
+            <option value="31" <c:if test="${31==isType}">selected</c:if>>各类作业证审批台账</option>
+            <option value="32" <c:if test="${32==isType}">selected</c:if>>安全费用提取及使用台账</option>
+            <option value="33" <c:if test="${33==isType}">selected</c:if>>新职工三级安全教育台账</option>
+            <option value="34" <c:if test="${34==isType}">selected</c:if>>特种作业人员台账</option>
         </select>
         </span>
             </div>
             <button class="btn btn-success" type="submit">
-                <i <%--class="Hui-iconfont"--%>>&#xe665;</i> 查询
-            </button>
-            <button class="btn btn-warning ml-10" type="button" <%--onclick="openzl(-1)"--%>><i <%--class="Hui-iconfont"--%> style="font-size:15px;">&#xe642;</i> 上传资料</button>
-        </form>
+                <i class="Hui-iconfont">&#xe665;</i> 查询
+            </button>--%>
+            <button class="btn btn-warning ml-10" type="button" onclick="openzl(-1)"><i class="Hui-iconfont" style="font-size:15px;">&#xe642;</i> 上传资料</button>
+        <%--</form>--%>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <%-- <div class="l">
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=12"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看动火作业证</a>
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=13"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看受限空间安全作业证</a>
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=14"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看盲板抽堵安全作业证</a>
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=15"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看高处安全作业证</a>
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=16"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看吊装安全作业证</a>
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=17"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看临时用电安全作业证</a>
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=18"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看动土安全作业证</a>
-             <a class="btn btn-primary radius mt-5 mb-5"   href="${ly}/company/tables/templetDownload?isType=19"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看断路安全作业证</a>
-         </div>--%>
         <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
     </div>
     <div class="mt-20">
@@ -96,14 +86,14 @@
                 <tr class="text-c">
                     <td>${index.index+1 }</td>
                     <td>${t.name }</td>
-                    <td><fmt:formatDate value="${t.createTime }" pattern="yyyy-MM-dd"/></td>
+                    <td><fmt:formatDate value="${t.create_time }" pattern="yyyy-MM-dd"/></td>
                     <td>
                         <div class="btn-upload">
-                            <div class="btn btn-primary-outline radius" <%--onclick="openzl(${t.id})"--%> style="height: 21px;line-height: 21px;padding: 0 2px;margin-top: 6px;">更改资料</div>
-                            <!--                 <input type="file" multiple name="file_0" class="input-file"> -->
+                            <div class="btn btn-primary-outline radius" onclick="openzl(${t.id})" style="height: 21px;line-height: 21px;padding: 0 2px;margin-top: 6px;">更改资料</div>
+                            <input type="file" multiple name="file_0" class="input-file">
                         </div>
-                        <a style="text-decoration:none" <%-- href="${ly}/common/download?filename=${t.name}&fileurl=${t.url}" --%>  title="查看资料" target="_blank">查看资料</a>
-                        <a style="text-decoration:none" <%--onclick="del(${t.id})"--%> href="javascript:;" title="删除">删除</a>
+                        <a style="text-decoration:none"  href="${ly}/common/download?filename=${t.name}&fileurl=${t.url}"   title="查看资料" target="_blank">查看资料</a>
+                        <a style="text-decoration:none" onclick="del(${t.id})" href="javascript:;" title="删除">删除</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -125,14 +115,19 @@
                     <label class="form-label col-xs-4 col-sm-2" style="width:20%;text-align:right;">资料类型：</label>
                     <div class="formControls col-xs-8 col-sm-9" style="width:70%;">
                         <select name="isTab" id="b" class="select" style="height:31px;">
-                            <option value="12">目标</option>
-                            <option value="13">组织机构和职责</option>
-                            <option value="14">安全生产投入</option>
-                            <option value="15">法律法规与安全管理制度</option>
-                            <option value="16">教育培训</option>
-                            <option value="17">生产设备设施</option>
-                            <%--<option value="18">动土安全作业证</option>
-                            <option value="19">断路安全作业证</option>--%>
+                            <option value="22" >生产设施台账</option>
+                            <option value="23" >职业卫生防护设施台账</option>
+                            <option value="24" >防护急救器具台账</option>
+                            <option value="25" >个体防护用品发放台账</option>
+                            <option value="26" >安全警示标识台账</option>
+                            <option value="27" >灭火器材台账</option>
+                            <option value="28" >事故台账</option>
+                            <option value="29" >隐患整改台账</option>
+                            <option value="30" >安全检查台账</option>
+                            <option value="31" >各类作业证审批台账</option>
+                            <option value="32" >安全费用提取及使用台账</option>
+                            <option value="33" >新职工三级安全教育台账</option>
+                            <option value="34" >特种作业人员台账</option>
                         </select>
                     </div>
                 </div>
@@ -156,7 +151,7 @@
 
 
 <script type="text/javascript">
-    /*$(function() {
+    $(function() {
         $('.table-sort').dataTable({
             "aaSorting": [[0, "asc"]],//默认第几个排序
             "bStateSave": false,//状态保存
@@ -165,19 +160,19 @@
             "aoColumnDefs": [
             ]
         });
-    });*/
+    });
 
     /*删除*/
-    /* function del(id){
+     function del(id){
          $.post(getRootPath()+"/company/tables/tab-del",{
              id:id,
          },function(reuslt){
              location.reload()
          })
-     }*/
+     }
 
     /*上传*/
-    /*function upload(isType) {
+    function upload(isType) {
         $.ajaxFileUpload({
             url: getRootPath() + '/company/tables/tab-leadin?isType='+ isType + "&id="+id, //用于文件上传的服务器端请求地址
             secureuri: false, //一般设置为false
@@ -203,7 +198,7 @@
                 alert("文件上传失败");
             }
         })
-    }*/
+    }
 </script>
 </body>
 </html>

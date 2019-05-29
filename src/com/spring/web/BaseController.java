@@ -383,7 +383,7 @@ public class BaseController implements Serializable {
         if (StringUtils.isEmpty(access_token)) {
             access_token =  request.getHeader("access_token");
             if (StringUtils.isEmpty(access_token)) {
-                    return null ;
+                return null ;
             }
         }
         AppToken at = appTokenMapper.selectByPrimaryKey(access_token);

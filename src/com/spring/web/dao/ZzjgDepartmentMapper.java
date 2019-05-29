@@ -1,9 +1,10 @@
 package com.spring.web.dao;
 
+import com.spring.web.model.ZzjgDepartment;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-import org.apache.ibatis.annotations.Param;
-import com.spring.web.model.ZzjgDepartment;
 
 public interface ZzjgDepartmentMapper {
     /**
@@ -102,5 +103,5 @@ public interface ZzjgDepartmentMapper {
 
     List<ZzjgDepartment> selectOnes(@Param("pid") Integer pid);
 
-
+    ZzjgDepartment selectNameAll(@Param("id")Integer id);
 }

@@ -1,9 +1,10 @@
 package com.spring.web.dao;
 
-import java.util.List;
-import java.util.Map;
 import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.Table2;
+
+import java.util.List;
+import java.util.Map;
 
 public interface Table2Mapper {
     /**
@@ -59,4 +60,10 @@ public interface Table2Mapper {
     * @return 
     */
     List<DynamicParameter<String, Object>> selectTable(Map<String, Object> m);
+
+    List<DynamicParameter<String, Object>> selectDangAn(Map<String, Object> m);
+
+    List<DynamicParameter<String, Object>> selectTaiZhang(Map<String, Object> m);
+
+    List<DynamicParameter<String, Object>> selectBiaoZhun(Map<String, Object> m);
 }

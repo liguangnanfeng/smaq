@@ -428,18 +428,18 @@
     </select>
 
     <delete id="deleteById">
-    ${sql}
-  </delete>
+        ${sql}
+    </delete>
     <!--表示
         查询该模版对应的最新的检查记录,但是只查询一条
      -->
     <select id="selectByModelId" resultMap="BaseResultMap">
-    select
-    *
-    from t_check_tbl
-    where
-    model_id = #{modelId} order by id desc limit 0 ,1 ;
-  </select>
+        select
+        *
+        from t_check_tbl
+        where
+        model_id = #{modelId} order by id desc limit 0 ,1 ;
+    </select>
 
     <!--根据uid和id查询该人原本的检查表信息-->
     <select id="findAllByUidAndUserId" resultMap="BaseResultMap">

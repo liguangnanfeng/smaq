@@ -1873,10 +1873,8 @@ public class CompanyController_safety extends BaseController {
 
 
 
-
-
     /*
-     * 基础风险保存数据的添加
+     * 基础风险保存数据的添加 !!!
      * */
     @RequestMapping(value = "aCompanyManual-save2")
     public @ResponseBody Result aCompanyManualSave1s(HttpServletRequest request, Integer[] ids,
@@ -1916,39 +1914,11 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setDmid(zzjgDepartment.getPid());
             aCompanyManual.setFlag("3");
             aCompanyManual.setType(a.getType());
+            aCompanyManual.setMeasures(a.getMeasures());
             aCompanyManualMapper.insertAdd(aCompanyManual);
         }
-
-
-        /*List<ACompanyManual> list = aDangerManualMapper.selectByIds(ids);
-        for(ACompanyManual a : list) {
-            a.setLevel3("基础管理" + "/" + a.getLevel1() + "/" + a.getLevel2());
-            a.setLevel1(level1);
-            a.setLevel2(level2);
-            a.setGkzt(level1);//管控主体
-            a.setFjgkfzr(fjgkfzr);
-        }
-        Map<String, Object> m = new HashMap<String, Object>();
-        m.put("uid", user.getId());
-        m.put("issys", 0);
-        m.put("del", 0);
-        m.put("ctime", new Date());
-        m.put("del", 0);
-        m.put("list", list);
-        //m.put("flag", 1);
-        aCompanyManualMapper.insertBath(m);
-        aCompanyManualMapper.updateCompanyDlevel(user.getId());*/
         return result;
     }
-
-
-
-
-
-
-
-
-
 
 
 

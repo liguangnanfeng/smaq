@@ -1570,9 +1570,9 @@ public class CompanyController_safety extends BaseController {
         return "company/safety-system/assess5-2-choose";
     }
 
-    /**
-     * 分级管控
-     */
+   /*
+   * 分级管控页面展示
+   * */
     @RequestMapping(value = "control-list")
     public String controlList(Model model, HttpServletRequest request, Integer type) throws Exception {
         User user = getLoginUser(request);

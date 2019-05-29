@@ -55,22 +55,22 @@
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>姓名：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <input type="text" id="name" name="name" value="${user.name }" placeholder="输入姓名" style="width:350px"
-                       class="input-text required" maxlength="50">
+                       class="input-text required" maxlength="10">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">职务：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <input type="text" id="position" name="position" value="${user.position }" placeholder="输入职务"
-                       style="width:350px" class="input-text required" maxlength="50">
+                       style="width:350px" class="input-text required" maxlength="10">
             </div>
         </div>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>手机：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" id="mobile" name="mobile" value="${user.mobile }" placeholder="输入手机号"
-                       style="width:350px" class="input-text required" maxlength="50">
+                <input  oninput = "value=value.replace(/[^\d]/g,'')" ype="text" id="mobile" name="mobile" value="${user.mobile }" placeholder="输入手机号"
+                       style="width:350px" class="input-text required" maxlength="11">
             </div>
         </div>
 
@@ -79,7 +79,7 @@
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>密码：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input type="text" id="pwd" name="password" value="${user.password}" placeholder="密码,非安全负责人员可不填"
-                           style="width:350px" class="input-text required" maxlength="50">
+                           style="width:350px" class="input-text required" maxlength="11">
 
                 </div>
             </div>

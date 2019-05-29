@@ -122,7 +122,7 @@ public class CompanyController_safety extends BaseController {
         List<String> list = null;
 
         if (null != company.getIndustry()) {
-            if (company.getIndustry().contains("化工企业（危险化学品生产、经营、使用）、加油站")) {
+            if (company.getIndustry().contains("化工企业（危化生产、使用）")) {
                 list = new ArrayList<>();
                 list.add("危险化学品生产、经营单位主要负责人和安全生产管理人员未依法经考核合格。");
                 list.add("特种作业人员未持证上岗。");
@@ -1838,6 +1838,8 @@ public class CompanyController_safety extends BaseController {
         String level2 = dep.getName();
         // 根据企业 ID 将该企业中已经有的所有危险删除
         aCompanyManualMapper.updateAllUid(user.getId(),level1,level2);
+        // 根据部门 ID 查询对应的 车间信息
+        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectLevel1(depId);
 
         LlHashMap<Object, Object> lm = new LlHashMap<Object, Object>();
         lm.put("dpid", dep.getPid());
@@ -1853,7 +1855,7 @@ public class CompanyController_safety extends BaseController {
             a.setLevel2(level2);
             a.setGkzt(level1);//管控主体
             a.setFjgkfzr(fjgkfzr);
-            a.setDmid(depId);
+            a.setDmid(zzjgDepartment.getPid());
         }
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("uid", user.getId());
@@ -1887,7 +1889,8 @@ public class CompanyController_safety extends BaseController {
         String level2 = dep.getName();
         // 根据企业 ID 将该企业中已经有的所有危险删除
         aCompanyManualMapper.updateAllUids(user.getId(),level1,level2);
-
+// 根据部门 ID 查询对应的 车间信息
+        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectLevel1(depId);
         LlHashMap<Object, Object> lm = new LlHashMap<Object, Object>();
         lm.put("dpid", dep.getPid());
         List<LlHashMap<Object, Object>> personL = zzjgPersonnelMapper.selectByMap(lm);
@@ -1910,7 +1913,7 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setGkzt(level1);
             aCompanyManual.setCtime(new Date());
             aCompanyManual.setDel(0);
-            aCompanyManual.setDmid(depId);
+            aCompanyManual.setDmid(zzjgDepartment.getPid());
             aCompanyManual.setFlag("3");
             aCompanyManual.setType(a.getType());
             aCompanyManualMapper.insertAdd(aCompanyManual);

@@ -37,47 +37,47 @@ $(function() {
       <div class="row cl">
         <h4 class="mt-20">选择行业</h4>
         <div class="radio-box">
-          <input type="radio" id="" name="type">
-          <label>化工企业（危险化学品生产、经营、使用）、加油站</label>
+          <input type="radio" name="type">
+          <label>化工企业（危化生产、使用）</label>
         </div>
         <div class="radio-box">
-          <input type="radio" id="" name="type">
+          <input type="radio" name="type">
           <label>冶金行业</label>
         </div>
         <div class="radio-box">
-          <input type="radio" id="" name="type">
+          <input type="radio" name="type">
           <label>有色行业</label>
         </div>
         <div class="radio-box">
-          <input type="radio" id="" name="type">
+          <input type="radio" name="type">
           <label>建材行业</label>
         </div>
         <div class="radio-box">
-          <input type="radio" id="" name="type">
+          <input type="radio"  name="type">
           <label>机械行业</label>
         </div>
         <div class="radio-box">
-          <input type="radio" id="" name="type">
+          <input type="radio"  name="type">
           <label>轻工行业</label>
         </div>
         <div class="radio-box">
-          <input type="radio" id="" name="type">
+          <input type="radio"  name="type">
           <label>纺织行业</label>
         </div>
         <div class="radio-box">
-          <input type="radio" id="" name="type">
+          <input type="radio"  name="type">
           <label>烟草行业</label>
         </div>
         <div class="radio-box">
-          <input type="radio" id="" name="type">
+          <input type="radio"  name="type">
           <label>商贸行业</label>
         </div>
         <div class="radio-box">
-          <input type="radio" id="" name="type">
+          <input type="radio"  name="type">
           <label>非煤矿山行业</label>
         </div>
         <div class="radio-box">
-          <input type="radio" id="" name="type">
+          <input type="radio"  name="type">
           <label>其他行业</label>
         </div>
         <button onClick="save_ind()" class="btn btn-primary radius mt-20" type="button" style="padding: 0 70px;">

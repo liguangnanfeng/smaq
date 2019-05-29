@@ -72,13 +72,13 @@ var industry2_to_industry = [{
   "industry" : "纺织行业"
 }, {
   "industry2" : "化学原料和化学制品制造业",
-  "industry" : "化工企业（危险化学品生产、经营、使用）、加油站"
+  "industry" : "化工企业（危化生产、使用）"
 }, {
   "industry2" : "医药制造业",
-  "industry" : "化工企业（危险化学品生产、经营、使用）、加油站"
+  "industry" : "化工企业（危化生产、使用）"
 }, {
   "industry2" : "化学纤维制造业",
-  "industry" : "化工企业（危险化学品生产、经营、使用）、加油站"
+  "industry" : "化工企业（危化生产、使用）"
 }, {
   "industry2" : "橡胶和塑料制品业",
   "industry" : "轻工行业"
@@ -162,7 +162,7 @@ var industry2_to_industry = [{
   "industry" : "轻工行业"
 }, {
   "industry2" : "石油加工、炼焦和核燃料加工业",
-  "industry" : "化工企业（危险化学品生产、经营、使用）、加油站"
+  "industry" : "化工企业（危化生产、使用）"
 }, {
   "industry2" : "批发业",
   "industry" : "商贸行业"

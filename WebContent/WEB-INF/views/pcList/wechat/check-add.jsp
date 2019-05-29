@@ -106,7 +106,7 @@
       <font class="bt_apply">行业选择</font>
       <div class="list_apply">
         <div class="dan_apply" onclick="chosedan(this,'.font-a1')">
-          <font>化工企业（危险化学品生产、经营、使用）、加油站</font>
+          <font>化工企业（危化生产、使用）</font>
           <img alt="" src="${ly }/images/weixin/cxxz.png" class="wxz"/>
           <img alt="" src="${ly }/images/weixin/cxxzg.png" class="xz"/>
         </div>

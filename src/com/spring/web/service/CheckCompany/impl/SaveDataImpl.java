@@ -193,16 +193,16 @@ public class SaveDataImpl implements SaveMessageService {
      * 每一个岗位出现不合格，就给这个岗位被检查人员发送短信
      */
     private void Sms(List<SaveDataMessage> list) {
-       List<String>  personnelList = null ;
+        List<String> personnelList = null;
 
         for (SaveDataMessage saveDataMessage : list) {
             if ("2".equals(saveDataMessage.getValue())) {
                 Integer id = saveDataMessage.getId();
                 ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(id);
-                personnelList= zzjgPersonnelMapper.selectByDpid(companyManual.getDmid());
+                personnelList = zzjgPersonnelMapper.selectByDpid(companyManual.getDmid());
             }
         }
-        if(null!=personnelList && personnelList.size()>0) {
+        if (null != personnelList && personnelList.size() > 0) {
             for (String mobile : personnelList) {
                 System.out.println("发送短信==============");
                 smsUtil.sendSMS(mobile, "112221");
@@ -396,7 +396,7 @@ public class SaveDataImpl implements SaveMessageService {
         Integer checkId = insertCheck(tCheck.getId());  //表示是新的数据,然后将新的数据进行传递
 
         checkItemS.setLevle1(tCheck.getDepart()); //  部门信息
-        checkItemS.setType(tCheck.getIndustryType());              // 检查类型
+        checkItemS.setType(tModel.getIndustryType());              // 检查类型
         // 查询风险点数据
         List<Map> list = tCheckItemMapper.selectAllByCheckId(checkId);
         checkItemS.setItems(list);
@@ -409,9 +409,6 @@ public class SaveDataImpl implements SaveMessageService {
     /**
      * TODO 根据最早插入的check数据,从新生成一条新的数据,并进行返回
      * 根据检查记录id获取数据,part item 进行新的数据的修改
-     * <p>
-     * <p>
-     * <p>
      * part和item一一对应
      *
      * @param checkId
@@ -435,7 +432,6 @@ public class SaveDataImpl implements SaveMessageService {
         Integer tCheckId = tCheck.getId(); //获取检查的id
 
         // 现在唯一能够确定的就是part和item一一对应
-
         for (int i = 0; i < tCheckParts.size(); i++) {
             TCheckPart tCheckPart = tCheckParts.get(i);
 
@@ -443,9 +439,7 @@ public class SaveDataImpl implements SaveMessageService {
             tCheckPart.setId(null);
             tCheckPartMapper.insertSelective(tCheckPart);
             Integer checkPartId = tCheckPart.getId();
-
             TCheckItem tCheckItem = tCheckItems.get(i);
-
             tCheckItem.setId(null);
             tCheckItem.setCheckId(tCheckId);
             tCheckItem.setPartId(checkPartId);
@@ -458,10 +452,9 @@ public class SaveDataImpl implements SaveMessageService {
             tCheckItemMapper.insertSelective(tCheckItem);
         }
         // 新增tCheckPart 能确定只有一条记录所有现在出现的就是新的记录数据
-
         return tCheckId;
-
     }
+
 
     /**
      * TODO 修改tRectificationConfirm数据

@@ -812,8 +812,6 @@
                     </div>
                 )
             }
-
-
         }
 
         ReactDOM.render(<AddModel/>,

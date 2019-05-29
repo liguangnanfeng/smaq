@@ -179,7 +179,7 @@ public interface ACompanyManualMapper {
      * @param level3
      * @return
      */
-    List selectAllByLevel3(@Param("uid")Integer id, @Param("level1")String name,@Param("level3")String level3);
+    List<ACompanyManual> selectAllByLevel3(@Param("uid")Integer id, @Param("level1")String name,@Param("level3")String level3);
 
     /**
      * 选择基础和高危的部门的名称

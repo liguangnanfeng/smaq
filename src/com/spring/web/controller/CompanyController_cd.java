@@ -116,7 +116,7 @@ public class CompanyController_cd extends BaseController {
         m.clear();
         setUserId(user, m);
         // TODO 判断该公司的行业是否为化工行业,为化工行业就显示内容
-        if(c.getIndustry().contains("化工")){
+        if (c.getIndustry().contains("化工")) {
             model.addAttribute("industry", 5);
         }
         List<Integer> count = userService.selectCount(new CompanyListReqDTO(), user);
@@ -2131,16 +2131,16 @@ public class CompanyController_cd extends BaseController {
 //        return "company/danger/model-show";
 //    }
 
-    /**
+    /* *//**
      * TODO 查询检查表详情
      * @param id    modelId
      * @param model 前端model
      * @param flag  类型
      * @param type   数据
-     * @return       url地址
+     * @return url地址
      * 可以从ite表中获取的详情
      * @throws Exception
-     */
+     *//*
     @RequestMapping(value = "model-show/{id}")//modify by zhangcl 2018.10.28
     public String modelShow(@PathVariable Integer id, Model model, Integer flag, Integer type) throws Exception {
         log.error("type:" + type);
@@ -2186,9 +2186,75 @@ public class CompanyController_cd extends BaseController {
         } else {
             model.addAttribute("itemL", tItemMapper.selectByLevelIdsModel(levelIds.toString()));
         }
+
         model.addAttribute("now", new Date());
         model.addAttribute("flag", flag);
+
         if (type != null && type == 9) {
+            log.error("company/danger/model-show1");
+            return "company/danger/model-show1";
+        } else {
+            return "company/danger/model-show";
+        }
+    }*/
+
+
+    /**
+     * TODO 查询检查表详情(已修改)
+     *
+     * @param id    modelId
+     * @param model 前端model
+     * @param flag  类型
+     * @param type  数据
+     * @return url地址
+     * 可以从ite表中获取的详情
+     * @throws Exception
+     */
+    @RequestMapping(value = "model-show/{id}")//modify by zhangcl 2018.10.28
+    public String modelShow(@PathVariable Integer id, Model model, Integer flag, Integer type) throws Exception {
+        log.error("type:" + type);
+        TModel tc = tModelMapper.selectByPrimaryKey(id);
+        List<TModelPart> partL = tModelPartMapper.selectByModelId(id);
+        model.addAttribute("model", tc);
+        model.addAttribute("partL", partL);
+        StringBuffer levelIds = new StringBuffer();
+        // 第一次我要将里面的数据便利出来获取唯一的值
+        Set<String> set = new LinkedHashSet<String>();
+        for (TModelPart tModelPart : partL) {
+            set.add(tModelPart.getLevels());
+        }
+        for (String s : set) {
+            if (!"".equals(levelIds.toString())) {
+                levelIds = levelIds.append(",");
+            }
+            levelIds = levelIds.append(s);
+        }
+
+        //要对其进行判断,是否为现场/基础
+        if (type != null && tc.getIndustryType() <= 2) {
+            List<Map<String, Object>> iteml = new ArrayList<Map<String, Object>>();
+            String[] levelsArr = levelIds.toString().split(",");
+            for (int i = 0; i < levelsArr.length; i++) {
+                Map<String, Object> a = new HashMap<String, Object>();
+                if (!"null".equals(levelsArr[i]) && null != levelsArr[i]) {
+                    int i1 = Integer.parseInt(levelsArr[i]);
+                    ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(i1);
+                    a.put("levelId", Integer.parseInt(levelsArr[i]));
+                    a.put("dangerType", companyManual.getType());
+                    a.put("factors", companyManual.getFactors());
+                    a.put("measures", companyManual.getMeasures());
+                    log.error("a:" + a.toString());
+                    iteml.add(a);
+                }
+            }
+            model.addAttribute("itemL", iteml);
+        } else {
+
+            model.addAttribute("itemL", tItemMapper.selectByLevelIdsModel(levelIds.toString()));
+        }
+        model.addAttribute("now", new Date());
+        model.addAttribute("flag", flag);
+        if (type != null && tc.getIndustryType() <= 2) {
             log.error("company/danger/model-show1");
             return "company/danger/model-show1";
         } else {
@@ -2247,7 +2313,6 @@ public class CompanyController_cd extends BaseController {
      * 日检查表(Template 2)
      * 临时检查表(template 4)
      * type  =1(日常)  flag=1()自查
-     *
      */
     @RequestMapping(value = "model-list-cx")
     public String modelList1(Integer type, Integer flag, String title, Integer industryType, HttpServletRequest request,
@@ -2257,7 +2322,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
         model.addAttribute("industryType", industryType);
-        model.addAttribute("template",template);
+        model.addAttribute("template", template);
         Map<String, Object> m = new HashMap<String, Object>();
         //log.error("type数据类型："+type.getClass());
         m.put("type", type);
@@ -2267,13 +2332,13 @@ public class CompanyController_cd extends BaseController {
         setUserId(user, m);
         //log.error("m："+m.toString());
         //log.error("定期检查表type=2："+tModelMapper.selectByMap(m).get(0));
-        List<Map<String, Object>> list=null;
+        List<Map<String, Object>> list = null;
         if (null != template && template == 1) { //综合检查表
             m.remove("type");
-             list = tModelMapper.selectByMap(m);
-        } else if(null != template && template == 2) { //日检查表
             list = tModelMapper.selectByMap(m);
-        }else{
+        } else if (null != template && template == 2) { //日检查表
+            list = tModelMapper.selectByMap(m);
+        } else {
             list = tModelMapper.selectByMap(m);
         }
 
@@ -2284,11 +2349,13 @@ public class CompanyController_cd extends BaseController {
          * 监管行业不能为空
          */
         //log.error("监管行业："+ company.getIndustry());
-        if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危化生产、使用）")) {//显示效果需要
-            //log.error("监管行业："+company.getIndustry());
-            //log.error("是否构成重大危险源、1是："+company.getHazard());
-            model.addAttribute("rjcbxs", 1);
+        if (null != company.getHazard()) {
+            if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {//显示效果需要
+                //log.error("监管行业："+company.getIndustry());
+                //log.error("是否构成重大危险源、1是："+company.getHazard());
+                model.addAttribute("rjcbxs", 1);
 
+            }
         }
         /*if (type == 2) {
 
@@ -2388,7 +2455,7 @@ public class CompanyController_cd extends BaseController {
         User user = getLoginUser(request);
         //企业类型为 化工 或 构成重大危险源 则企业自查处 日检查表显示 wz 190108
         Company company = companyMapper.selectByPrimaryKey(user.getId());
-        if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危化生产、使用）")) {
+        if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {
             //log.error("监管行业："+company.getIndustry());
             //log.error("是否构成重大危险源、1是："+company.getHazard());
             model.addAttribute("rjcbxs", 1);
@@ -2433,7 +2500,7 @@ public class CompanyController_cd extends BaseController {
 
         //企业类型为 化工 或 构成重大危险源 则企业自查处 日检查表显示 wz 190108
         Company company = companyMapper.selectByPrimaryKey(user.getId());
-        if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危化生产、使用）")) {
+        if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {
             //log.error("监管行业："+company.getIndustry());
             //log.error("是否构成重大危险源、1是："+company.getHazard());
             model.addAttribute("rjcbxs", 1);
@@ -3712,6 +3779,4 @@ public class CompanyController_cd extends BaseController {
         }
 
     }
-
-
 }

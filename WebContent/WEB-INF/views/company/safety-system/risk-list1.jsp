@@ -132,10 +132,10 @@ function pr_() {
                 <c:if test="${empty type}">
                 <th style="width:8%">辨识类型</th>
                 <th style="width:8%">车间/场所</th>
-                <th style="width:8%">系统</th>      
+                <th style="width:8%">系统</th>
                 <th style="width:8%">环节/部位</th> 
                 <th style="width:8%">风险类型</th>  
-                <th style="width:50%">风险因素</th> 
+                <th style="width:50%">风险因素</th>
                 </c:if>
                 <c:if test="${!empty type}">
                 <th style="padding:0;width:20%">车间/场所</th>
@@ -175,27 +175,27 @@ function pr_() {
 						document.write(arr[0]);
 						</script></td>
                         <td style="width:10%;border-bottom: 0px;" class="text-c">${be.parName }</td>
-                                            <c:if test="${x==0}"><td style="width:10%;" class="text-c"></c:if>
-                                            <c:if test="${x==1}"><td style="width:10%;" class="text-c"></c:if>
-                                            <p style="text-align:center;"><script>document.write(arr[1]);</script></p>
-                                            </td>
-                                            <c:if test="${x==0}"><td style="width:10%;" class="text-c"></c:if>
-                                            <c:if test="${x==1}"><td style="width:10%;" class="text-c"></c:if>
-                                            <p style="text-align:center;"><script>document.write(arr[2]);</script></td>
-                                            <c:if test="${x==0}"><td style="width:10%;" class="text-c"></c:if>
-                                            <c:if test="${x==1}"><td style="width:10%;" class="text-c"></c:if>
-                                            <c:if test="${empty  ac.type}" >
-                                                <p style="text-align:center;">未识别</p>
-                                            </c:if>
-                                            <c:if test="${not empty  ac.type}" >
-                                                <p style="text-align:center;">${ac.type}</p>
-                                            </c:if>
-                                            </td>
-                                            <c:if test="${x==0}"><td style="width:30%;" class="text-c"></c:if>
-                                            <c:if test="${x==1}"><td style="width:30%;" class="text-c"></c:if>
-                                            <p style="float:left;width:80%;">${ac.factors}</p>
-                                            </td>
-										    <td class="text-c">
+                            <c:if test="${x==0}"><td style="width:10%;" class="text-c"></c:if>
+                            <c:if test="${x==1}"><td style="width:10%;" class="text-c"></c:if>
+                            <p style="text-align:center;"><script>document.write(arr[1]);</script></p>
+                            </td>
+                            <c:if test="${x==0}"><td style="width:10%;" class="text-c"></c:if>
+                            <c:if test="${x==1}"><td style="width:10%;" class="text-c"></c:if>
+                            <p style="text-align:center;"><script>document.write(arr[2]);</script></td>
+                            <c:if test="${x==0}"><td style="width:10%;" class="text-c"></c:if>
+                            <c:if test="${x==1}"><td style="width:10%;" class="text-c"></c:if>
+                            <c:if test="${empty  ac.type}" >
+                                <p style="text-align:center;">未识别</p>
+                            </c:if>
+                            <c:if test="${not empty  ac.type}" >
+                                <p style="text-align:center;">${ac.type}</p>
+                            </c:if>
+                            </td>
+                            <c:if test="${x==0}"><td style="width:30%;" class="text-c"></c:if>
+                            <c:if test="${x==1}"><td style="width:30%;" class="text-c"></c:if>
+                            <p style="float:left;width:80%;">${ac.factors}</p>
+                            </td>
+                            <td class="text-c">
                             <c:if test="${empty type}">
                                 <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
                             </c:if>
@@ -345,7 +345,7 @@ function pr_() {
         })
     }
 
-    function del(id) {
+    /*function del(id) {
         layer.confirm("确定删除该记录?", function(r) {
             $.post(getRootPath() + "/company/safety-system/aCompanyManual-save", {
                 id : id,
@@ -355,6 +355,6 @@ function pr_() {
                 location.reload();
             })
         })
-    }
+    }*/
 </script>
 </html>

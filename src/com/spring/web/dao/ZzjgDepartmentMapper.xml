@@ -287,4 +287,12 @@
         select name from zzjg_department_tbl  where uid= #{id} and level=1;
     </select>
 
+    <!-- 根据 id 查询对应的 level=2 的 pid 信息 -->
+    <select id="selectLevel1" resultType="com.spring.web.model.ZzjgDepartment" parameterType="Integer">
+        select * from zzjg_department_tbl  where id = #{id} and level = 2 and del = 0;
+    </select>
+
+
+
+
 </mapper>

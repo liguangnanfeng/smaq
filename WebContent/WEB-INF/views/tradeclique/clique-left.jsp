@@ -96,7 +96,7 @@ $(document).ready(function() {
         </dt>
         <dd>     
         	<ul>
-        	 <li><a data-href="${ly }/tradeclique/clique/basic-information" data-title="基本信息" href="javascript:void(0)">基本信息</a></li>	
+        	 <li><a data-href="${ly }/tradeclique/clique/basic-information" data-title="基本信息" href="javascript:void(0)">基本信息</a></li>
        <%--  	 <div class="div_omenu">
                 <div  class="div_otop">所属企业<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
                 <ul>

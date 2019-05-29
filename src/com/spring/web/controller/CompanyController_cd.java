@@ -202,6 +202,11 @@ public class CompanyController_cd extends BaseController {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
 
+        // TODO 判断该公司的行业是否为化工行业,为化工行业就显示内容
+        if(company.getIndustry().contains("化工")){
+            model.addAttribute("industry", 5);
+        }
+
         model.addAttribute("leftBasic", leftBasic);
         model.addAttribute("userName", user.getUserName());
 
@@ -3758,17 +3763,17 @@ public class CompanyController_cd extends BaseController {
      * 判断行业
      */
     @ResponseBody
-    @RequestMapping(value = "judgeIndustry")
-    public Result judgeIndustry(HttpServletRequest request) {
+    @RequestMapping(value="judgeIndustry")
+    public Result judgeIndustry(HttpServletRequest request){
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
-        if (company.getIndustry().contains("化工")) {
-            Result result = new ResultImpl();
+        if(company.getIndustry().contains("化工")){
+            Result result =new ResultImpl();
             result.setStatus("0");
             result.setMess("化工行业");
             return result;
-        } else {
-            Result result = new ResultImpl();
+        }else{
+            Result result =new ResultImpl();
             result.setStatus("1");
             return result;
         }

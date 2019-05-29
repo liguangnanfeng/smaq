@@ -61,7 +61,7 @@
         //var c = result.map.c;
         var ind = result.map.ind;
         //if(c == -1 || c > 0) {
-        if (ind == '化工企业（危险化学品生产、经营、使用）、加油站') {
+        if (ind == '化工企业（危化生产、使用）') {
         //$("#whp_").show();
         //$("#gm1_,#gm2_,#gm3_").hide(); wz 20181030
 

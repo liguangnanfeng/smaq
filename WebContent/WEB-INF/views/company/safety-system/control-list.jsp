@@ -129,10 +129,6 @@
 
 
 
-
-
-
-
       function per_chooses() {
 
           var list = $("#win-add4 :checked");
@@ -214,7 +210,9 @@
     <table id="xxx" class="table table-border table-bordered table-bg table-hover table-sort">
       <thead>
       <tr class="text-c">
-        <th style="min-width:80px">车间</th>
+        <th style="min-width:80px">辨识类型</th>
+        <th style="min-width:80px">车间/场所</th>
+        <th style="min-width:80px">系统</th>
         <th style="min-width:80px">岗位/部位</th>
         <th style="min-width:50px">风险等级</th>
         <th style="min-width:150px">风险类型</th>
@@ -232,6 +230,9 @@
         <c:forEach items="${be1.value }" var="be2">
             <c:if test="${(be.level1 eq be1.key && be.level2 eq be2) || (empty be1.key && empty be.level1)}">
               <tr>
+                <c:set value="${fn:split(be.level3,'/')}" var="ls"></c:set>
+
+                <td class="text-c">${ls[0] != null ? ls[0] : "无数据" }</td>
 
                 <c:if test="${empty be.gkzt}">
                     <td class="text-c">暂无数据</td>
@@ -240,6 +241,9 @@
                 <c:if test="${not empty be.gkzt}">
                   <td class="text-c">${be.gkzt}</td>
                 </c:if>
+
+                <td class="text-c">${ls[1] != null ? ls[1] : "无数据" }</td>
+
 
                 <c:if test="${empty be.level2}">
                     <td class="text-c">暂无数据</td>

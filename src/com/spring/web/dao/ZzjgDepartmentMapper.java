@@ -104,4 +104,6 @@ public interface ZzjgDepartmentMapper {
     List<ZzjgDepartment> selectOnes(@Param("pid") Integer pid);
 
     ZzjgDepartment selectNameAll(@Param("id")Integer id);
+
+    ZzjgDepartment selectLevel1(@Param("id")Integer id);
 }

@@ -234,6 +234,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.spring.web.model.ACompanyManual">
+      
 
         update a_company_manual_tbl
         <set>
@@ -313,7 +314,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.spring.web.model.ACompanyManual">
-
+     
         update a_company_manual_tbl
         set uid = #{uid,jdbcType=INTEGER},
         dmid = #{dmid,jdbcType=INTEGER},
@@ -375,13 +376,9 @@
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
         T1.wlbs,T1.gwzy,T1.lnglat
-        <!-- ,T3.score, T3.lev lev1, T4.score score2, T4.lev lev2,(select level from a_company_manual_zp_tbl where acm_id = T1.id) zpLevel -->
         from
         a_company_manual_tbl T1
-        <!-- left join
-            a_fxjz_tbl T3 on T1.id = T3.uid
-        left join
-            a_zytjfxcdpj_tbl T4 on T1.id = T4.uid -->
+   
         where
         T1.del = 0 and T1.level != ""
         <if test="uid != null">
@@ -412,19 +409,6 @@
         <if test="order == null">
             order by T1.id asc
         </if>
-
-        <!-- <if test="type == 1">
-           and (T1.hxys is not null and T1.hxys != '')
-       </if>
-       <if test="type == 2">
-           and (T1.material is not null and T1.material != '')
-       </if>
-       <if test="type == 3">
-           and (T1.gy is not null and T1.gy != '')
-       </if>
-       <if test="type == 4">
-           and (T1.wlbs is not null and T1.wlbs != '')
-       </if> -->
     </select>
 
     <select id="selectByFlag3" resultType="java.util.HashMap">
@@ -438,6 +422,7 @@
         where
         T1.uid = #{uid} and T1.del = 0 and T1.flag = #{flag}
     </select>
+
 
     <select id="selectByMapGroupByLevel1Level2" resultType="java.util.HashMap">
         select
@@ -981,10 +966,12 @@
     <!-- 添加数据信息到数据库！！！ -->
     <insert id="insertAdd">
         insert into a_company_manual_tbl (uid,dmid,
-        level1, level2, level3, factors, type, flag, del, ctime,gkzt)
+   
+        level1, level2, level3, factors, type, measures, flag, del, ctime,gkzt)
         values (#{uid,jdbcType=INTEGER}, #{dmid,jdbcType=INTEGER},
         #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},#{factors,jdbcType=VARCHAR},
-        #{type,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR},#{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP},
+    
+        #{type,jdbcType=VARCHAR}, #{measures,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR},#{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP},
         #{gkzt,jdbcType=VARCHAR})
     </insert>
 
@@ -1057,6 +1044,7 @@ select level2  from a_company_manual_tbl where uid=#{uid}  and del=0 and level1 
     and del=0
   </select>
 
+  
     <!--查询行业id
     -->
     <select id="selectDmidById" resultType="Integer">
@@ -1064,17 +1052,19 @@ select level2  from a_company_manual_tbl where uid=#{uid}  and del=0 and level1 
     select id from a_industry_tbl where name =#{name};
     </select>
 
-    <!--根据现场/基础查询所有的部门的id和名称-->
+ 
     <select id="findJiChuItem" resultType="java.util.Map">
         select dmid,level1
         from a_company_manual_tbl
         where uid=#{uid}  and  level3 LIKE CONCAT('%', #{name},'%')
         and del=0
         group By level1;
+       
     </select>
 
     <!--根据总公司的id和部门名称查询level2-->
     <select id="findLevel2ByPersonelId"  resultType="List">
+      
         select level2
         from a_company_manual_tbl
         where level1=#{name}
@@ -1097,8 +1087,10 @@ select level2  from a_company_manual_tbl where uid=#{uid}  and del=0 and level1 
         select * from a_company_manual_tbl where level= "红色" and del = 0 and  and del=0 uid = #{uid};
     </select>
 
+
     <!--根据部门的名称和uid获取数据(现场)-->
     <select id="selectlevel3BydmName" resultType="String">
+        
         select level3 from a_company_manual_tbl where uid=#{uid}
         and level1=#{level1}
         and level3  not LIKE '基础管理'
@@ -1109,6 +1101,7 @@ select level2  from a_company_manual_tbl where uid=#{uid}  and del=0 and level1 
     <!--根据基础/高危(备用)获取level3的数据,然后根据level3的数据获取到响应的部门-->
     <select id="selectlevel3BydmNameAndLevel3" resultType="String">
          select level3 from a_company_manual_tbl where uid=#{uid}
+       
          and level1=#{level1} and level3 LIKE CONCAT('%', #{level3},'%')  and del=0 and measures !=''
          group by level3;
     </select>

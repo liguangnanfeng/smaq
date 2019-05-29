@@ -390,9 +390,9 @@ public class AppController_Country_Check {
     /**
      * TODO 高危检查选项
      *
-     * @param request    请求
-     * @param industryId 行业
-     * @return 根据行业id 查询高危检查选项 level1 level2 level 3
+     * @param request       请求
+     * @param industryId    行业
+     * @return 根据行业id    查询高危检查选项 level1 level2 level 3
      */
     @RequestMapping(value = "B214")
     public @ResponseBody
@@ -431,8 +431,8 @@ public class AppController_Country_Check {
     /**
      * TODO 高危/基础 检查细则
      *
-     * @param request    请求
-     * @param checkLevel 查询条件
+     * @param request          请求
+     * @param checkLevel       查询条件
      * @return checkLevel集合  根据原有的数据进一步查询更详细的数据
      */
     @RequestMapping(value = "B215", method = RequestMethod.POST)
@@ -495,9 +495,7 @@ public class AppController_Country_Check {
                 result.setMessage("登陆失败");
                 result.setStatus("1");
                 return result;
-
             }
-
             List<String> list = zzjgDepartmentMapper.selectNameByUid(id);
             Map<String, List> stringListMap = checkManual.selectDangerAndManual(id, list);
 
@@ -522,7 +520,7 @@ public class AppController_Country_Check {
     }
 
     /**
-     * TODO 查询企业的安全责任人(安全责任人是相对的,政府端对应的安全责任人就是企业端的检查人员)
+     * TODO 查询企业的安全责任人(安全责任人是相对的,政府端对应的安全责任人就是企业端的检查人员)(废弃)
      *
      * @param id 企业id
      * @return 企业所有的安全责任人
@@ -539,7 +537,6 @@ public class AppController_Country_Check {
                 result.setMessage("登陆失败");
                 result.setStatus("1");
                 return result;
-
             }
 
             // 根据id查询安全责任人

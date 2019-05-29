@@ -1,7 +1,6 @@
 package com.spring.web.controller.api;
 
 import com.spring.web.BaseController;
-import com.spring.web.dao.ACompanyManualMapper;
 import com.spring.web.dao.TCheckMapper;
 import com.spring.web.listener.MySessionContext;
 import com.spring.web.model.*;
@@ -32,45 +31,35 @@ import java.util.*;
 @RequestMapping(value = "api/custom/check")
 public class AppController_Custom_Check extends BaseController {
 
-    /**
-     * 查询部门
-     */
+    /*查询部门*/
     @Autowired
     private Zzig_departmentService zzig_departmentService;
 
-    /**
-     * 查询风险点
-     */
+    /* 查询风险点*/
     @Autowired
     private ICheckManual checkManual;
 
-    /**
-     * 检查以及复查信息
-     */
+    /*检查以及复查信息*/
     @Autowired
     private SaveMessageService saveMessageService;
 
-    /**
-     * token验证
-     */
+    /*token验证*/
     @Autowired
     private AppTokenData appTokenData;
 
-    /**
-     * 检查记录
-     */
+    /*检查记录*/
     @Autowired
     private TCheckMapper tCheckMapper;
 
     /**
-     * TODO 获取部门,以及对应的岗位 level1(部门) levle2(岗位)
+     * TODO 根据域中的数据 获取部门&岗位   level1(部门) level2(岗位)
      *
      * @param request request请求
      * @return result 返回的基础信息
      */
     @RequestMapping(value = "A200", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult checkCompany(HttpServletRequest request, Integer dpid) {
+    AppResult checkCompany(HttpServletRequest request) {
 
         AppResult result = new AppResultImpl();
 
@@ -109,7 +98,7 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO 查询安全责任人
+     * TODO 查询安全责任人(废弃)
      *
      * @param request request请求
      * @return result 安全责任人
@@ -146,7 +135,7 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO 查询企业对应的高危检查
+     * TODO 查询企业对应的高危检查(一开始就进行获取)
      *
      * @param request request请求
      * @return result 高危检查条目
@@ -174,53 +163,6 @@ public class AppController_Custom_Check extends BaseController {
             result.setStatus("1");
             result.setMessage("网络故障");
             return result;
-        }
-    }
-
-    /**
-     * TODO 查询基础选项  jsp页面
-     *
-     * @param request request 请求
-     * @return result 基础条目
-     */
-    @RequestMapping(value = "A2132", method = RequestMethod.POST)
-    public @ResponseBody
-    AppResult checkJiChu2(HttpServletRequest request) {
-
-        User user = getLoginUser(request);
-
-        AppResult result = new AppResultImpl();
-
-        Map map = checkManual.checkJiChu(user.getId());
-        result.setStatus("0");
-        result.setMessage("查询成功");
-        result.setData(map);
-
-        return result;
-
-    }
-
-    /**
-     * TODO pc端查询高危level1(细则)
-     *
-     * @return list  高危levelOne条目
-     */
-    @RequestMapping(value = "A2133", method = RequestMethod.POST)
-    public @ResponseBody
-    List checkGaoWei2(@RequestBody Map<String, Object> params) {
-        // 获取登陆内容
-        try {
-
-            String id = String.valueOf(params.get("id"));
-
-            Integer industryId = Integer.valueOf(id);
-
-            List<Map<String, Object>> GaoWeilist = checkManual.checkGaoWei2(industryId);
-
-            return GaoWeilist;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -364,43 +306,6 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO pc端 现场检查/查询level3/level4
-     * 做一个二维数组,显示现在出现的问题的就是数组的嵌套
-     */
-    @RequestMapping(value = "A2022", method = RequestMethod.POST)
-    public @ResponseBody
-    AppResult PCcheckLevel3(HttpServletRequest request, @RequestBody CheckLevel checkLevel) {
-        AppResult result = new AppResultImpl();
-        try {
-            User user = getLoginUser(request);
-
-            // 取出数据对数据进行判断
-            ZzjgDepartment zzjg = zzjgDepartmentMapper.selectByPrimaryKey(Integer.parseInt(checkLevel.getLevel1()));
-            checkLevel.setLevel1(zzjg.getName());
-            checkLevel.setLevel3(checkLevel.getLevel3());
-            checkLevel.setUid(user.getId());
-            // 调用方法进行查询
-            List<Map> list = checkManual.selectLevel5AndId(checkLevel);
-
-            result.setStatus("0");
-            result.setMessage("查询成功");
-            result.setData(list);
-            return result;
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            result.setStatus("1");
-            result.setMessage("未查询到数据");
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.setStatus("1");
-            result.setMessage("网络故障");
-            return result;
-        }
-
-    }
-
-    /**
      * TODO 查询level4
      *
      * @param checkLevel 前置的查询条件
@@ -524,12 +429,12 @@ public class AppController_Custom_Check extends BaseController {
      */
     @RequestMapping(value = "A206", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult checkItemtById(/*@RequestBody CheckModel checkModel*/  Integer modelId  ) {
+    AppResult checkItemtById(/*@RequestBody CheckModel checkModel*/  Integer modelId) {
         AppResult result = new AppResultImpl();
         try {
 
             // 根据id查询并进行封装数据
-           // CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(checkModel.getModelId());
+            // CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(checkModel.getModelId());
             CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(modelId);
 
             result.setStatus("0");
@@ -764,7 +669,7 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO 企业端复查详情
+     * TODO 企业端复查详情(废弃)
      *
      * @param request   请求
      * @param reCheckId 复查表id
@@ -773,8 +678,6 @@ public class AppController_Custom_Check extends BaseController {
     @RequestMapping(value = "B215", method = RequestMethod.POST)
     public @ResponseBody
     AppResult rechekItem(HttpServletRequest request, Integer reCheckId) {
-
-
         return null;
     }
 

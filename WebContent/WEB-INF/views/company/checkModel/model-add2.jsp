@@ -39,7 +39,7 @@
             $.ajax({
                 type: "POST",
                 url: getRootPath() + '/village/findItemAll',
-                data: {type: type},
+                data: {checkType: type},
                 success: function (list) {
                     if (list != null && list.length>=1&&list!=[null]) {
                         console.log(list);
@@ -193,7 +193,7 @@
             $.ajax({
                 type: "POST",
                 url: getRootPath() + '/village/saveCheckMenu3',
-                data: {dmid: dmid,type:type,dptitle:dptitle,times:times},
+                data: {dmid: dmid,checkType:type,dptitle:dptitle,times:times},
                 success: function (result) {
                     if (result.status == 0) {
                         alert('保存成功');

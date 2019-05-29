@@ -560,41 +560,32 @@ public class CheckManualImpl implements ICheckManual {
 
     /**
      * 检查计划模板 模块表
+     * 使用循环保存数据
      * name     varchar(30)   null comment '部门 或装置',
      * model_id int           null comment '模板id',
      * levels   varchar(2000) null comment '检查分类s',
      */
     private void saveTmodelPath(Integer Tmodel, CheckItem checkItem, List<Integer> list) {
-        TModelPart tModelPart = new TModelPart();
-
         // 获取部门名称list的str
         List<CheckLevel> checkLevels = checkItem.getCheckLevels();
-        List<String> departmentName = new ArrayList<>();
         String str = new  String ();
         for (int i = 0; i < checkLevels.size(); i++) {
-            departmentName.add(checkLevels.get(i).getLevel1());
             if(i<checkLevels.size()-1){
                 str+=checkLevels.get(i).getId()+",";
             }else{
                 str+=checkLevels.get(i).getId()+"";
             }
-
-
         }
 
-        String departmentNametr = JSON.toJSONString(departmentName);
-
-        String NameStr = JSON.toJSONString(list);
-
-        tModelPart.setModelId(Tmodel);
-
-        tModelPart.setLevels(str); //检查分类
-        tModelPart.setName(departmentNametr);   // 检查的部门
-
-        tModelPartMapper.insertSelective(tModelPart);
+        for (CheckLevel checkLevel : checkItem.getCheckLevels()) {
+            TModelPart tModelPart = new TModelPart();
+            tModelPart.setModelId(Tmodel);
+            tModelPart.setLevels(str); //检查分类
+            tModelPart.setName(checkLevel.getLevel1());   // 检查的部门
+            tModelPartMapper.insertSelective(tModelPart);
+        }
 
     }
-
 }
 
 

@@ -1874,7 +1874,6 @@ public class VillageController extends BaseController {
         List<Map> list = null;
 
         if (null != status && 1 == status) { //表示的是要查询整改合格的
-
             list = tCheckItemMapper.selectRecheckListByRecheckStatus(user.getId(), status);
         } else {
             list = tCheckItemMapper.selectRecheckList(user.getId());

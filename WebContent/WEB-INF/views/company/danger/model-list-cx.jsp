@@ -236,6 +236,9 @@
                     <th>检查表名称</th>
                     <th>受检${flag == 1 ? '部门' : '单位'}</th>
                     <th>检查类型</th>
+                    <c:if test="${flag == 1&&template==1}">
+                        <th>检查方式</th>
+                    </c:if>
                     <th>检查部位</th>
                     <th>最近${flag == 1 ? '检查' : '录入'}时间</th>
                     <c:if test="${type == 2 || type == 9}">
@@ -258,6 +261,20 @@
                                 <c:when test="${be.industryType == 3}">高危作业</c:when>
                             </c:choose>
                         </td>
+                        <c:if test="${flag == 1&&template==1}">
+                            <td>
+                               <c:if test="${be.type==1}" >
+                                   日常
+                               </c:if>
+                                <c:if test="${be.type==2}" >
+                                    定期
+                                </c:if>
+                                <c:if test="${be.type==3}" >
+                                    临时
+                                </c:if>
+                                
+                            </td>
+                        </c:if>
                             <%--检查部位--%>
                         <td>${be.partName }</td>
                             <%--最近的检查时间--%>

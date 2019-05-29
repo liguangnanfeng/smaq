@@ -997,9 +997,6 @@
         id = #{id}
     </update>
 
-
-
-
     <update id="updateDelByIds">
   update
     a_company_manual_tbl
@@ -1040,19 +1037,16 @@ select level2  from a_company_manual_tbl where uid=#{uid}  and del=0 and level1 
     where uid=#{uid}
     and level1 = #{level1}
     and level2=#{level2}
-        and level3=#{level3};
+    and level3=#{level3};
     and del=0
   </select>
 
-  
     <!--查询行业id
     -->
     <select id="selectDmidById" resultType="Integer">
-    -- 查询行业id
     select id from a_industry_tbl where name =#{name};
     </select>
 
- 
     <select id="findJiChuItem" resultType="java.util.Map">
         select dmid,level1
         from a_company_manual_tbl
@@ -1064,7 +1058,6 @@ select level2  from a_company_manual_tbl where uid=#{uid}  and del=0 and level1 
 
     <!--根据总公司的id和部门名称查询level2-->
     <select id="findLevel2ByPersonelId"  resultType="List">
-      
         select level2
         from a_company_manual_tbl
         where level1=#{name}
@@ -1087,7 +1080,6 @@ select level2  from a_company_manual_tbl where uid=#{uid}  and del=0 and level1 
         select * from a_company_manual_tbl where level= "红色" and del = 0 and  and del=0 uid = #{uid};
     </select>
 
-
     <!--根据部门的名称和uid获取数据(现场)-->
     <select id="selectlevel3BydmName" resultType="String">
         
@@ -1101,7 +1093,6 @@ select level2  from a_company_manual_tbl where uid=#{uid}  and del=0 and level1 
     <!--根据基础/高危(备用)获取level3的数据,然后根据level3的数据获取到响应的部门-->
     <select id="selectlevel3BydmNameAndLevel3" resultType="String">
          select level3 from a_company_manual_tbl where uid=#{uid}
-       
          and level1=#{level1} and level3 LIKE CONCAT('%', #{level3},'%')  and del=0 and measures !=''
          group by level3;
     </select>

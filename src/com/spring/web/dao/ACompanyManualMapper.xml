@@ -944,7 +944,6 @@
         uid = #{uid} and del = 0 and level1 = #{level1} and level2 = #{level2} and level3 like "%基础管理%"
     </update>
 
-
     <insert id="insertBathByIndustry">
         insert into a_company_manual_tbl (uid, dmid, level3, factors, type, measures, reference,
         flag, level, issys, del, ctime,flag2)
@@ -974,8 +973,6 @@
         #{type,jdbcType=VARCHAR}, #{measures,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR},#{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP},
         #{gkzt,jdbcType=VARCHAR})
     </insert>
-
-
 
     <!-- 修改数据信息达到删除的目的 -->
     <update id="updateDeltess">

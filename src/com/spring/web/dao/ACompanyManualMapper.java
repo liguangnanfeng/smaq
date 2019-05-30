@@ -139,8 +139,8 @@ public interface ACompanyManualMapper {
 
     /**
      * 直接根据 level3 和uid 获取信息
-     * @param id
-     * @param level3
+     * @param id      公司id
+     * @param level3  风险点
      * @return
      */
     List<ACompanyManual> selectAllByLevel3(@Param("uid")Integer id, @Param("level1")String name,@Param("level3")String level3);

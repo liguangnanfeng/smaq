@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/taglibs.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -63,8 +64,11 @@ function pr_() {
         </c:forEach>
         <tr>
           <td class="text-c" rowspan="${x }">${pi.index + 1}</td>
-          <td class="text-c" rowspan="${x }" data-partid="${part.id }" data-partimg="${part.partImg }">${part.name }
-          </td>
+          <c:if test="${pi.first}">
+            <td class="text-c" rowspan="${x }" data-partid="${part.id }" data-partimg="${part.partImg }">${part.name }</td>
+          </c:if>
+
+
           <c:set var="y" value="0"/>
           <c:forEach items="${itemL }" var="ch">
           <c:if test="${ch.partId == part.id}">

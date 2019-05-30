@@ -148,7 +148,7 @@
 
                     }).catch(error => {
                     console.log(error);
-                    alert('网络错误')
+                    /*alert('网络错误')*/
                 })
             }
 
@@ -157,7 +157,6 @@
                     [key]: e.target.value
                 })
             }
-
 
             addInputChange = (key, index, e) => {
                 const val = e.target.value;

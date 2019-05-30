@@ -546,8 +546,6 @@ public class AppController_Custom_Check extends BaseController {
 
     /**
      * TODO 根据当前用户查询所有的检查记录()  对根据判断求出这个责任人的部门和岗位
-     * 首先要判断他是检查人员还是被检查人员
-     * 根据状态进行查询,不同的检查详情在company_manul_tbl 获取岗位,来判断这个岗位的检查项是否合格,不合格进行显示
      *
      * @param checkModel access_token信息
      * @return list       关于当前企业的不合格信息

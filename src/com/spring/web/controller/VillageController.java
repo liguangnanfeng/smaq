@@ -1381,7 +1381,7 @@ public class VillageController extends BaseController {
                 a.put("level1", level1);
                 a.put("level2", level2);
                 a.put("level3", level3);
-                //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
+                log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
             }
         }
         //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
@@ -1395,6 +1395,7 @@ public class VillageController extends BaseController {
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("userId", user.getId());
+
         model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
         log.error("plan-next：" + 6);
         if (type == 9)
@@ -2773,7 +2774,6 @@ public class VillageController extends BaseController {
         } else {
 
         }
-
         LinkedList linkedList = new LinkedList();
         if (null!=list&&list.size()>0){
             for (String level3 : list) {
@@ -2784,9 +2784,7 @@ public class VillageController extends BaseController {
                 linkedList.add(map);
             }
         }
-
         return linkedList;
-
     }
 
     /**
@@ -2850,7 +2848,6 @@ public class VillageController extends BaseController {
     public @ResponseBody
     AppResult saveCheckMenu2(HttpServletRequest request, @RequestBody CheckItem checkItem) {
         return savemodel(request, checkItem);
-
     }
 
     /**

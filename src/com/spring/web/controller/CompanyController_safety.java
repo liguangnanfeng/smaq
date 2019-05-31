@@ -1318,8 +1318,6 @@ public class CompanyController_safety extends BaseController {
     public String riskListLoad(Model model, HttpServletRequest request, String industry,
                                Integer depId) throws Exception {
         User user = getLoginUser(request);
-        // 根据传过来的 ID 查询对应的 岗位信息
-        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectNameAll(depId);
         if(StringUtils.isNotBlank(industry)) {
             industry = utf8Str(industry);
         }
@@ -1329,7 +1327,7 @@ public class CompanyController_safety extends BaseController {
             industry = company.getIndustry();
         }
         model.addAttribute("industry", industry);
-        List<ADangerManual> dL = aDangerManualMapper.selectByIndustryAll(industry,zzjgDepartment.getName());
+        List<ADangerManual> dL = aDangerManualMapper.selectByIndustry(industry);
         Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
         for (ADangerManual ad : dL) {
             String l1 = ad.getLevel1();
@@ -1828,46 +1826,56 @@ public class CompanyController_safety extends BaseController {
     * 现场管理数据的添加
     * */
     @RequestMapping(value = "aCompanyManual-save1")
-    public @ResponseBody Result aCompanyManualSave1(HttpServletRequest request, Integer[] ids,
-                                                    Integer depId) throws Exception {
+    public @ResponseBody Result aCompanyManualSave1(HttpServletRequest request, Integer[] ids, Integer depId) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
+        // 根据 ID 查询对应的车间名称
         ZzjgDepartment dep = zzjgDepartmentMapper.selectByPrimaryKey(depId);
-        ZzjgDepartment parDep = zzjgDepartmentMapper.selectByPrimaryKey(dep.getPid());
-        String level1 = parDep.getName();
-        String level2 = dep.getName();
-        // 根据企业 ID 将该企业中已经有的所有危险删除
-        aCompanyManualMapper.updateAllUid(user.getId(),level1,level2);
-        // 根据部门 ID 查询对应的 车间信息
-        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectLevel1(depId);
+        String level1 = dep.getName();
+        List<ADangerManual> list = aDangerManualMapper.selectByAllIds(ids);
+        for (int i = 0; i < list.size() ; i++) {
+            // 根据企业 ID 将该企业中已经有的所有危险删除
+            aCompanyManualMapper.updateAllUid(user.getId(),level1,list.get(i).getName());
+        }
+        ACompanyManual aCompanyManual ;
+        for (ADangerManual a : list) {
+            aCompanyManual = new ACompanyManual();
+            aCompanyManual.setUid(user.getId());
+            aCompanyManual.setLevel1(level1);
+            aCompanyManual.setLevel2(a.getName());
+            aCompanyManual.setLevel3(a.getLevel1() + "/" + a.getName() + "/" + a.getLevel3());
+            aCompanyManual.setFactors(a.getLevel3());
+            aCompanyManual.setReference(a.getReference());
+            aCompanyManual.setGkzt(level1);
+            aCompanyManual.setCtime(new Date());
+            aCompanyManual.setDel(0);
+            aCompanyManual.setDmid(depId);
+            aCompanyManual.setLevel(a.getLevel());
+            aCompanyManual.setFlag(a.getFlag());
+            aCompanyManual.setType(a.getType());
+            aCompanyManual.setMeasures(a.getMeasures());
+            aCompanyManualMapper.insert(aCompanyManual);
+            // 给 zzjg_department_tbl 添加数据信息
+            List<ZzjgDepartment> zzjgDepartmentList = zzjgDepartmentMapper.selectCount(depId,a.getName());
+            if (zzjgDepartmentList.size() != 0){
+                for (int i = 0; i <zzjgDepartmentList.size(); i++) {
+                    zzjgDepartmentMapper.updateAll(new Date(),zzjgDepartmentList.get(i).getId());
+                }
+            }else {
+                ZzjgDepartment zzjgDepartment = new ZzjgDepartment();
+                zzjgDepartment.setCtime(new Date());
+                zzjgDepartment.setUtime(new Date());
+                zzjgDepartment.setDel(0);
+                zzjgDepartment.setName(a.getName());
+                zzjgDepartment.setCid(257);
+                zzjgDepartment.setPid(depId);
+                zzjgDepartment.setLevel(2);
+                zzjgDepartment.setUid(user.getId());
 
-        LlHashMap<Object, Object> lm = new LlHashMap<Object, Object>();
-        lm.put("dpid", dep.getPid());
-        List<LlHashMap<Object, Object>> personL = zzjgPersonnelMapper.selectByMap(lm);
-        String fjgkfzr = "";//分级管控负责人
-        if(personL.size() > 0) {
-            fjgkfzr = personL.get(0).getString("name");
+                zzjgDepartmentMapper.add(zzjgDepartment);
+            }
+
         }
-        List<ACompanyManual> list = aDangerManualMapper.selectByIds(ids);
-        for(ACompanyManual a : list) {
-            a.setLevel3(a.getLevel1() + "/" + a.getLevel2() + "/" + a.getLevel3());
-            a.setLevel1(level1);
-            a.setLevel2(level2);
-            a.setGkzt(level1);//管控主体
-            a.setFjgkfzr(fjgkfzr);
-            a.setDmid(zzjgDepartment.getPid());
-        }
-        Map<String, Object> m = new HashMap<String, Object>();
-        m.put("uid", user.getId());
-        m.put("issys", 0);
-        m.put("del", 0);
-        m.put("ctime", new Date());
-        m.put("del", 0);
-        /*m.put("dmid",depId);*/
-        m.put("list", list);
-        //m.put("flag", 1);
-        aCompanyManualMapper.insertBath(m);
-        aCompanyManualMapper.updateCompanyDlevel(user.getId());
         return result;
     }
 
@@ -1877,41 +1885,28 @@ public class CompanyController_safety extends BaseController {
      * 基础风险保存数据的添加 !!!
      * */
     @RequestMapping(value = "aCompanyManual-save2")
-    public @ResponseBody Result aCompanyManualSave1s(HttpServletRequest request, Integer[] ids,
-                                                    Integer depId) throws Exception {
+    public @ResponseBody Result aCompanyManualSave1s(HttpServletRequest request, Integer[] ids, Integer depId) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         ZzjgDepartment dep = zzjgDepartmentMapper.selectByPrimaryKey(depId);
-        ZzjgDepartment parDep = zzjgDepartmentMapper.selectByPrimaryKey(dep.getPid());
-        String level1 = parDep.getName();
-        String level2 = dep.getName();
-        // 根据企业 ID 将该企业中已经有的所有危险删除
-        aCompanyManualMapper.updateAllUids(user.getId(),level1,level2);
-// 根据部门 ID 查询对应的 车间信息
-        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectLevel1(depId);
-        LlHashMap<Object, Object> lm = new LlHashMap<Object, Object>();
-        lm.put("dpid", dep.getPid());
-        List<LlHashMap<Object, Object>> personL = zzjgPersonnelMapper.selectByMap(lm);
-        String fjgkfzr = "";//分级管控负责人
-        if(personL.size() > 0) {
-            fjgkfzr = personL.get(0).getString("name");
-        }
-
+        String level1 = dep.getName();
         List<TLevel> tLevelList = tLevelMapper.selectAllIds(ids);
+        for (int i = 0; i < tLevelList.size() ; i++) {
+            // 根据企业 ID 将该企业中已经有的所有危险删除
+            aCompanyManualMapper.updateAllUid(user.getId(),level1,tLevelList.get(i).getName());
+        }
         ACompanyManual aCompanyManual ;
-
         for (TLevel a : tLevelList) {
             aCompanyManual = new ACompanyManual();
             aCompanyManual.setUid(user.getId());
             aCompanyManual.setLevel1(level1);
-            aCompanyManual.setLevel2(level2);
-            aCompanyManual.setLevel3(a.getLevel1() +
-                    "/" + a.getLevel2() + "/" + a.getLevel3());
+            aCompanyManual.setLevel2(a.getName());
+            aCompanyManual.setLevel3(a.getLevel1() + "/" + a.getLevel2() + "/" + a.getLevel3());
             aCompanyManual.setFactors(a.getLevel3());
             aCompanyManual.setGkzt(level1);
             aCompanyManual.setCtime(new Date());
             aCompanyManual.setDel(0);
-            aCompanyManual.setDmid(zzjgDepartment.getPid());
+            aCompanyManual.setDmid(depId);
             aCompanyManual.setFlag("3");
             aCompanyManual.setType(a.getType());
             aCompanyManual.setMeasures(a.getMeasures());

@@ -197,10 +197,10 @@ function pr_() {
                             </td>
                             <td class="text-c">
                             <c:if test="${empty type}">
-                                <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
+                                <button class="btn btn-primary radius" onClick="addgj('${be.pid}')">现场风险辨识</button>
                             </c:if>
                             <c:if test="${empty type}">
-                                <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.pid}')">基础风险辨识</button>
                             </c:if>
 										    </td>
                                         </tr>
@@ -217,10 +217,10 @@ function pr_() {
                                         <td style="width:40%;"><p style="text-align:center;">未辨识风险因素</p></td>
 										<td style="width:10%;">
                             <c:if test="${empty type}">
-                                <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
+                                <button class="btn btn-primary radius" onClick="addgj('${be.pid}')">现场风险辨识</button>
                             </c:if>
                             <c:if test="${empty type}">
-                                <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.pid}')">基础风险辨识</button>
                             </c:if>
 										</td>
                                     </tr>

@@ -3,6 +3,7 @@ package com.spring.web.dao;
 import com.spring.web.model.ZzjgDepartment;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -106,4 +107,11 @@ public interface ZzjgDepartmentMapper {
     ZzjgDepartment selectNameAll(@Param("id")Integer id);
 
     ZzjgDepartment selectLevel1(@Param("id")Integer id);
+
+    List<ZzjgDepartment> selectCount(@Param("pid")Integer pid, @Param("name")String name);
+
+    void add(ZzjgDepartment zzjgDepartment);
+
+
+    void updateAll(@Param("utime")Date date, @Param("id")Integer id);
 }

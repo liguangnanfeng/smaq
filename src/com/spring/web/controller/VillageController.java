@@ -1209,7 +1209,7 @@ public class VillageController extends BaseController {
 
 
     /*
-    * 企业端隐患排查记录 !!!     逻辑问题
+    * 企业端隐患排查记录 !!!    数据显示问题
     * */
     @RequestMapping(value = "check-list3")
     public String troubleList2(HttpServletRequest request, String title, Integer type, String companyName,
@@ -1226,9 +1226,11 @@ public class VillageController extends BaseController {
             m.put("userId",companyList.get(i).getVillageId());
 
             list = tCheckMapper.selectList(m);
+
             model.addAttribute("list", list);
         }
 
+        model.addAttribute("list", list);
 
         return "village/danger/check-list";
     }

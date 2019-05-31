@@ -297,7 +297,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <!--显示的数据格式不为空-->
+    <!-- 政府端隐患排查记录数据查询 -->
     <select id="selectList" resultType="java.util.Map">
         select
         T1.id, T1.title, T1.depart, T1.model_id modelId, T1.type, T1.industry_id industryId, T1.industry_type
@@ -322,6 +322,9 @@
             </if>
             <if test="flag != null">
                 and T1.flag = #{flag}
+            </if>
+            <if test="extime != null">
+                and expect_time is not null and expect_time &lt; #{now1}
             </if>
             <if test="userIds != null and userIds != ''">
                 and T2.user_id in (${userIds})

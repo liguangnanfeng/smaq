@@ -62,8 +62,12 @@
             position: relative;
             top:2px;
             font-weight: bold;
-
         }
+
+        .my_left{
+            margin-left: 12%;
+        }
+
     </style>
     <script>
 
@@ -144,7 +148,7 @@
 
                     }).catch(error => {
                     console.log(error);
-                    alert('网络错误')
+                    /*alert('网络错误')*/
                 })
             }
 
@@ -153,7 +157,6 @@
                     [key]: e.target.value
                 })
             }
-
 
             addInputChange = (key, index, e) => {
                 const val = e.target.value;
@@ -184,7 +187,8 @@
                 if(val==0){
                     this.setState({
                         checkedLeixin: val,
-                        bmId: null,     //  以选择的部门id
+                        bm:[],           //部门数组
+                        bmId: 0,     //  以选择的部门id
                         bmName: null,   //  已选择部门名字
                         list:[],
                         myChecks: [],
@@ -194,12 +198,12 @@
                 const _self = this;
                 this.setState({
                     checkedLeixin: val,
-                    bmId: null,     //  以选择的部门id
+                    bmId: 0,     //  以选择的部门id
                     bmName: null,   //  已选择部门名字
                     list:[],
                     myChecks: [],
                 }, () => {
-                    if (val != -2) {
+                    if (val != -2&&val !=-1) {   //如果选择的是高危
                         let postData = {"type": parseInt(val)};
                         $.ajax({
                             type: "POST",
@@ -224,6 +228,32 @@
                             }
 
                         })
+                    }else{   //如果选择的是基础或现场
+                        let postData = {"checkType": parseInt(val)};
+                        $.ajax({
+                            type: "POST",
+                            url: `${host}/village/findItemAll`,
+                            data: postData,
+                            async: false,
+                            dataType: "json",
+                            success: function (result) {
+                                if (result.length == 0) {
+                                    alert('没有可检查部门,请先添加风险点')
+                                }
+                                _self.setState({
+                                    bm: result,
+                                    myChecks: [],
+                                })
+                            },
+                            complete: function (XMLHttpRequest, textStatus) {
+                                // layer.close(index);
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                console.log("查询失败");
+                            }
+
+                        })
+
                     }
                 })
             }
@@ -233,9 +263,18 @@
                 const val = e.target.value;
                 const _self = this;
                 let name = '';
+                if(val==0){
+                    this.setState({
+                        bmId: val,
+                        bmName: null,
+                        current:null,
+                        list:[],
+                    })
+                    return;
+                }
                 for (let key in this.state.bm) {
-                    if (this.state.bm[key].id == val) {
-                        name = this.state.bm[key].name
+                    if (this.state.bm[key].dmid == val) {
+                        name = this.state.bm[key].level1
                         break;
                     }
                 }
@@ -244,30 +283,29 @@
                     bmName: name,
 					current:null
                 })
-                if (this.state.checkedLeixin == -2) {    //如果检查类型是现场检查
-                    $.ajax({
-                        type: "POST",
-                        url: `${host}/village/selectDep`,
-                        data: {"depId": val},
-                        async: false,
-                        dataType: "json",
-                        success: function (result) {
-                            if (result.length == 0) {
-                                alert('没有可选择的检查项,请自定义检查')
-                            }
-                            _self.setState({
-                                list: result,
-                                myChecks: [],
-                            })
-                        },
-                        complete: function (XMLHttpRequest, textStatus) {
-                            // layer.close(index);
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            console.log("查询失败");
+                $.ajax({
+                    type: "POST",
+                    url: `${host}/village/selectDep`,
+                    data: {"depId": val,'dpName':name,'checkType':parseInt(this.state.checkedLeixin)},
+                    async: false,
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result);
+                        if (result.length == 0) {
+                            alert('没有可选择的检查项,请自定义检查')
                         }
-                    });
-                }
+                        _self.setState({
+                            list: result,
+                            myChecks: [],
+                        })
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        // layer.close(index);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log("查询失败");
+                    }
+                });
             }
 
 
@@ -348,10 +386,10 @@
 
             renderLevel4 = (arr, index1) => {
                 let html = [];
-                if (this.state.checkedLeixin == -2) {
+                if (this.state.checkedLeixin == -2||this.state.checkedLeixin == -1) {
                     arr.map((item, index2) => {
                         html.push(
-                            <div className="row" key={item}>
+                            <div className="row" key={index2} style={index2==0?{marginTop:'10px'}:{}}>
                                 <input type="checkbox"
                                        checked={this.state.list[index1].list[index2].checked == 1 ? true : false}
                                        style={{marginTop: '0px', marginRight: '5px'}} onClick={() => {
@@ -364,7 +402,7 @@
                 } else {
                     arr.map((item, index2) => {
                         html.push(
-                            <div className="row" key={item}>
+                            <div className="row" key={index2} style={index2==0?{marginTop:'10px'}:{}}>
                                 <input type="checkbox"
                                        checked={this.state.list[index1].list[index2].checked == 1 ? true : false}
                                        style={{marginTop: '0px', marginRight: '5px'}} onClick={() => {
@@ -410,7 +448,7 @@
                     cycle: parseInt(state.days),   //检查周期天数
                     checkLevels: []                 //检查项
                 }
-                let isXc = state.checkedLeixin == -2 ? true : false;  //是否为先查检查
+                let isXc = state.checkedLeixin == -2||state.checkedLeixin == -1 ? true : false;  //是否为现场和基础检查
                 state.list.map((item) => {
                     item.list.map((item2) => {
                         if (item2.checked == 1) {
@@ -525,7 +563,7 @@
             }
 
             render = () => {
-                const xc =      //如果是现场检查 渲染这个
+                const xcjc =      //如果是现场基础检查 渲染这个
                     <div>
                         <div className="row cl">
                             <label className="form-label col-xs-4 col-sm-2"><span className="c-red">*</span>请选择检查部位
@@ -533,11 +571,11 @@
                             <div className="formControls col-xs-8 col-sm-9">
                                     <span className="select-box inline">
                                         <select className="select" style={{width: '200px'}}
-                                                onChange={this.bmSelect}>
+                                                onChange={this.bmSelect} value={this.state.bmId}>
                                              <option value="0">请选择检查部位</option>
                                             {this.state.bm.map((item, index) => {
                                                 return (
-                                                    <option value={item.id}>{item.name}</option>
+                                                    <option value={item.dmid}>{item.level1}</option>
                                                 )
                                             })}
                                         </select>
@@ -567,21 +605,27 @@
                             this.state.list.map((item, index) => {
                                 if (item.list.length > 0) {
                                     return (
-                                        <div className="row cl" key={index}>
-                                            <label className="form-label col-lg-3 col-xs-3 col-sm-3"><span
-                                                className="c-red">*</span>{item.name}
+                                    <div key={index}>
+                                        <div className="row cl" >
+                                            <label className="form-label col-lg-7 col-xs-7 col-sm-7 col-offset-1" style={{textAlign:'left'}}>
                                                 {this.state.current == index ?
                                                     <i class="Hui-iconfont my_icon" onClick={() => {
                                                         this.zhankai(index)
                                                     }}></i> : <i class="Hui-iconfont my_icon" onClick={() => {
                                                         this.zhankai(index)
-                                                    }}></i>}</label>
-                                                     {this.state.current == index ?
-                                            <div className="formControls col-lg-7 col-xs-7 col-sm-7">
+                                                    }}></i>}
+                                                <span className="c-red">*</span>{item.name}
+                                            </label>
+                                        </div>
+                                       {this.state.current == index ?
+                                         <div className="row cl"  style={{marginTop:'0px'}}>
+                                            <div className="formControls col-lg-7 col-xs-7 col-sm-7 my_left">
                                                 {this.renderLevel4(item.list, index)}
                                             </div>
-                                            :null}
-                                        </div>
+                                         </div>
+                                        :null}
+                                    </div>
+
                                     )
                                 }
                             })
@@ -603,7 +647,7 @@
                                                    value={this.state.myChecks[index].title}/>
 
                                             <i class="Hui-iconfont"
-                                               style={{position: 'absolute', left: '380px'}}
+                                             style={{position: 'absolute', left: '380px',fontSize:'20px',fontWeight:'bold', cursor:'pointer'}}
                                                onClick={() => {
                                                    this.deleteCheck(index)
                                                }}></i>
@@ -644,28 +688,33 @@
                     </div>
 
 
-                const jcgw =         //如果是基础检查和高危 渲染这个
+                const gw =         //如果是高危 渲染这个
                     <div>
                         {
                             this.state.list.map((item, index) => {
                                 if (item.list.length > 0) {
                                     return (
-                                        <div className="row cl" key={index}>
-                                            <label className="form-label col-lg-3 col-xs-3 col-sm-3">
-                                                <span className="c-red">*</span>{item.name}
-                                                {this.state.current == index ?
-                                                    <i class="Hui-iconfont my_icon" onClick={() => {
-                                                        this.zhankai(index)
-                                                    }}></i> : <i class="Hui-iconfont my_icon" onClick={() => {
-                                                        this.zhankai(index)
-                                                    }}></i>}
-                                            </label>
+                                        <div key={index}>
+                                            <div className="row cl" >
+                                                <label className="form-label col-lg-7 col-xs-7 col-sm-7 col-offset-1" style={{textAlign:'left'}}>
+                                                    {this.state.current == index ?
+                                                        <i class="Hui-iconfont my_icon" onClick={() => {
+                                                            this.zhankai(index)
+                                                        }}></i> : <i class="Hui-iconfont my_icon" onClick={() => {
+                                                            this.zhankai(index)
+                                                        }}></i>}
+                                                    <span className="c-red">*</span>{item.name}
+                                                </label>
+                                            </div>
                                             {this.state.current == index ?
-                                                <div className="formControls col-lg-7 col-xs-7 col-sm-7" style={{height:this.state.current == index ?'':'0px'}}>
-                                                    {this.renderLevel4(item.list, index)}
-                                                </div> : null}
-
+                                                <div className="row cl"  style={{marginTop:'0px'}}>
+                                                    <div className="formControls col-lg-7 col-xs-7 col-sm-7 my_left">
+                                                        {this.renderLevel4(item.list, index)}
+                                                    </div>
+                                                </div>
+                                                :null}
                                         </div>
+
                                     )
                                 }
                             })
@@ -688,7 +737,7 @@
                                                    value={this.state.myChecks[index].title}/>
 
                                             <i class="Hui-iconfont"
-                                               style={{position: 'absolute', left: '380px'}}
+                                               style={{position: 'absolute', left: '380px',fontSize:'20px',fontWeight:'bold', cursor:'pointer'}}
                                                onClick={() => {
                                                    this.deleteCheck(index)
                                                }}></i>
@@ -788,7 +837,10 @@
                                     </span>
                                     </div>
                                 </div>
-                                {this.state.checkedLeixin != null&& this.state.checkedLeixin!=0? this.state.checkedLeixin == -2 ? xc : jcgw : null}
+                                {this.state.checkedLeixin != null&& this.state.checkedLeixin!=0?
+                                    this.state.checkedLeixin == -2||this.state.checkedLeixin == -1 ?
+                                        xcjc : gw : null
+                                }
 
                             </div>
                         </form>

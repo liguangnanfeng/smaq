@@ -39,7 +39,6 @@ public class AppController_Map extends BaseController {
 
     private String pathStr;
 
-
     /**
      * TODO 保存图片并保存到数据库
      * @param request 请求

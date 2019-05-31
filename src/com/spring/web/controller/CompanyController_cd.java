@@ -203,7 +203,7 @@ public class CompanyController_cd extends BaseController {
         Company company = companyMapper.selectByPrimaryKey(user.getId());
 
         // TODO 判断该公司的行业是否为化工行业,为化工行业就显示内容
-        if(company.getIndustry().contains("化工")){
+        if (company.getIndustry().contains("化工")) {
             model.addAttribute("industry", 5);
         }
 
@@ -429,7 +429,7 @@ public class CompanyController_cd extends BaseController {
     }
 
     /**
-     * 主要设备清单页面
+     * TODO (设备设施管理)  主要设备清单页面
      */
     @RequestMapping("product/mequipment-list")
     public String mainEquipmentList(Model model, HttpServletRequest request, String equipmentName) throws Exception {
@@ -899,7 +899,7 @@ public class CompanyController_cd extends BaseController {
     }
 
     /**
-     * 批量导入主要设备
+     * TODO 批量导入主要设备
      *
      * @param file
      * @param
@@ -1792,7 +1792,7 @@ public class CompanyController_cd extends BaseController {
 
         List<DynamicParameter<String, Object>> list = table2mapper.selectTaiZhang(m);
 
-        model.addAttribute("list",list);
+        model.addAttribute("list", list);
         model.addAttribute("isType", isType);
         return "company/tables/tab-taizhang";
     }
@@ -1924,8 +1924,8 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * c 1 : 建设项目职业卫生“三同时” 2:职业卫生管理台账 3：职业卫生宣传培训 4 ：职业病危害因素监测与检测评价 5：用人单位职业健康监护管理 6 ：劳动者个人职业健康监护 7:职业卫生管理台账-其他
-     *
-     *  8:安全工作台账    9:安全档案    10：安全标准化
+     * <p>
+     * 8:安全工作台账    9:安全档案    10：安全标准化
      */
     @RequestMapping(value = "tables/tab-health/{c}")
     public String heath1(HttpServletRequest request, @PathVariable Integer c, Model model, String seName, String isType)
@@ -2229,29 +2229,48 @@ public class CompanyController_cd extends BaseController {
             }
             levelIds = levelIds.append(s);
         }
-
         //要对其进行判断,是否为现场/基础
         if (type != null && tc.getIndustryType() <= 2) {
             List<Map<String, Object>> iteml = new ArrayList<Map<String, Object>>();
             String[] levelsArr = levelIds.toString().split(",");
+
             for (int i = 0; i < levelsArr.length; i++) {
                 Map<String, Object> a = new HashMap<String, Object>();
                 if (!"null".equals(levelsArr[i]) && null != levelsArr[i]) {
                     int i1 = Integer.parseInt(levelsArr[i]);
                     ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(i1);
+                    if (null == companyManual) {
+                        break;
+                    }
                     a.put("levelId", Integer.parseInt(levelsArr[i]));
                     a.put("dangerType", companyManual.getType());
                     a.put("factors", companyManual.getFactors());
                     a.put("measures", companyManual.getMeasures());
-                    log.error("a:" + a.toString());
+                    log.info("a:" + a.toString());
                     iteml.add(a);
                 }
             }
+            // 为空 表示从别的表中进行查询
+            if (iteml.size() == 0) {
+                TCheck tCheck = tCheckMapper.selectByModelId(id);
+                List<Map<String, Object>> maps = tCheckItemMapper.selectByCheckId(tCheck.getId());
+                for (Map<String, Object> map : maps) {
+                    Map<String, Object> a = new HashMap<String, Object>();
+                    a.put("levelId", map.get("level_id"));
+                    a.put("dangerType", tCheck.getType());
+                    a.put("factors", map.get("content"));
+                    a.put("measures", map.get("reference"));
+                    log.info("a:" + a.toString());
+                    iteml.add(a);
+                }
+
+            }
+
             model.addAttribute("itemL", iteml);
         } else {
-
             model.addAttribute("itemL", tItemMapper.selectByLevelIdsModel(levelIds.toString()));
         }
+
         model.addAttribute("now", new Date());
         model.addAttribute("flag", flag);
         if (type != null && tc.getIndustryType() <= 2) {
@@ -3763,17 +3782,17 @@ public class CompanyController_cd extends BaseController {
      * 判断行业
      */
     @ResponseBody
-    @RequestMapping(value="judgeIndustry")
-    public Result judgeIndustry(HttpServletRequest request){
+    @RequestMapping(value = "judgeIndustry")
+    public Result judgeIndustry(HttpServletRequest request) {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
-        if(company.getIndustry().contains("化工")){
-            Result result =new ResultImpl();
+        if (company.getIndustry().contains("化工")) {
+            Result result = new ResultImpl();
             result.setStatus("0");
             result.setMess("化工行业");
             return result;
-        }else{
-            Result result =new ResultImpl();
+        } else {
+            Result result = new ResultImpl();
             result.setStatus("1");
             return result;
         }

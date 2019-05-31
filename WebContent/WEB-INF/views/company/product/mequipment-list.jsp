@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/taglibs.jsp"%>
 <!DOCTYPE HTML>
 <html>
-<head>
+<head
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -12,6 +12,7 @@
 <%@ include file="/WEB-INF/inc/print.inc"%>
 <script src="${ly }/js/jquery-migrate-1.2.1.min.js"></script>
 <script src="${ly }/js/jquery.jqprint-0.3.js"></script>
+<script type="text/javascript" src="${ly}/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="${ly}/js/H-ui.admin_v3.0/lib/layer/2.4/layer.js"></script> 
 <title>风险分级管控   隐患排查治理智能化平台</title>
 <meta name="keywords" content="风险分级管控   隐患排查治理智能化平台">
@@ -180,6 +181,7 @@ function majorequipmentImportBoxShow() {
 
 function majorequipmentImportSave() {
   var index = layer.load();
+  console.log("到这了吗");
   $.ajaxFileUpload({
       url: getRootPath() + '/company/importMajorequipmentExcel',
       secureuri: false, //一般设置为false

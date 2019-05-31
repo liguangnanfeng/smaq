@@ -1580,7 +1580,7 @@ public class CompanyController_safety extends BaseController {
         m.put("uid", user.getId());
         m.put("order", 1);
 
-        List<Map<String, Object>> list = aCompanyManualMapper.selectByMap(m);
+        List<Map<String, Object>> list = aCompanyManualMapper.selectByAcs(m);
         model.addAttribute("list", list);
         Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
 

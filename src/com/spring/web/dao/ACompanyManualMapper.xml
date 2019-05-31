@@ -411,6 +411,48 @@
         </if>
     </select>
 
+
+
+    <!-- 分级管控数据显示排序 -->
+    <select id="selectByAcs" resultType="java.util.HashMap">
+        select
+        T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
+        T1.flag,
+        T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
+        T1.wlbs,T1.gwzy,T1.lnglat
+        from
+        a_company_manual_tbl T1
+        where
+        T1.del = 0 and T1.level != ""
+        <if test="uid != null">
+            and T1.uid = #{uid}
+        </if>
+        <if test="flag != null">
+            and T1.flag in (${flag})
+        </if>
+        <if test="flag2 != null">
+            and T1.flag2 = #{flag2}
+        </if>
+
+        <if test="level != null and level != ''">
+            and T1.level = #{level}
+        </if>
+        <if test="levels != null">
+            and T1.level in
+            <foreach close=")" collection="levels" item="item" open="(" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="userId != null">
+            and T1.uid = #{userId}
+        </if>
+        order by dmid asc , find_in_set(T1.level,'红色,橙色,黄色,蓝色')
+    </select>
+
+
+
+
+
     <select id="selectByFlag3" resultType="java.util.HashMap">
         select
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,

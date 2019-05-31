@@ -1230,7 +1230,7 @@ public class VillageController extends BaseController {
             model.addAttribute("list", list);
         }
 
-        model.addAttribute("list", list);
+       /* model.addAttribute("list", list);*/
 
         return "village/danger/check-list";
     }

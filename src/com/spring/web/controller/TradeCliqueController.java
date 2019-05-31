@@ -4,24 +4,18 @@
  */
 package com.spring.web.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import com.alibaba.fastjson.JSON;
+import com.spring.web.BaseController;
+import com.spring.web.ibatis.DynamicParameter;
+import com.spring.web.ibatis.LlHashMap;
+import com.spring.web.model.*;
+import com.spring.web.result.Result;
+import com.spring.web.result.ResultImpl;
+import com.spring.web.service.cgf.CgfService;
+import com.spring.web.service.user.UserService;
+import com.spring.web.tobject.cgf.CompanyListReqDTO;
+import com.spring.web.util.DateConvertUtil;
+import com.spring.web.util.SessionUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,38 +26,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alibaba.fastjson.JSON;
-import com.spring.web.BaseController;
-import com.spring.web.ibatis.DynamicParameter;
-import com.spring.web.ibatis.LlHashMap;
-import com.spring.web.model.Company;
-import com.spring.web.model.Detection;
-import com.spring.web.model.Evaluation;
-import com.spring.web.model.Examination;
-import com.spring.web.model.Library;
-import com.spring.web.model.LightningProtection;
-import com.spring.web.model.Material;
-import com.spring.web.model.Mequipment;
-import com.spring.web.model.Product;
-import com.spring.web.model.ProductionProcessDiagram;
-import com.spring.web.model.Regulation;
-import com.spring.web.model.Sequipment;
-import com.spring.web.model.Sperson;
-import com.spring.web.model.Standard;
-import com.spring.web.model.TContingencyPlan;
-import com.spring.web.model.TDrill;
-import com.spring.web.model.Trade;
-import com.spring.web.model.TradeClique;
-import com.spring.web.model.User;
-import com.spring.web.model.ZzjgDepartment;
-import com.spring.web.model.ZzjgPersonnel;
-import com.spring.web.result.Result;
-import com.spring.web.result.ResultImpl;
-import com.spring.web.service.cgf.CgfService;
-import com.spring.web.service.user.UserService;
-import com.spring.web.tobject.cgf.CompanyListReqDTO;
-import com.spring.web.util.DateConvertUtil;
-import com.spring.web.util.SessionUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.*;
+import java.net.URLEncoder;
+import java.util.*;
 
 /**
  * @Title: TradeCliqueController
@@ -732,6 +700,41 @@ public class TradeCliqueController extends BaseController {
         }
         return "village/danger/check-list1";
     }
+
+
+
+
+
+
+    /*
+    * 政府端隐患排查信息查询 ！！！
+    * */
+    @RequestMapping(value = "check-list3")//flag:3 部门抽查
+    public String troubleList2(HttpServletRequest request, String title, Integer type, String companyName,
+                               Integer townId, Integer villageId,
+                               Integer status, Integer flag, Model model) throws Exception {
+        User user = getLoginUser(request);
+
+        // 根据登录 ID 查询所有属于这个地区中的所有公司信息
+        List<Company> companyList = companyMapper.selectAllList(user.getId());
+
+
+        for (int i = 0; i < companyList.size(); i++) {
+            Map<String, Object> m = new HashMap<String, Object>();
+            m.put("userId",companyList.get(i).getUserId());
+            List<Map<String, Object>> list = tCheckMapper.selectAll(m);
+            model.addAttribute("list", list);
+        }
+
+        return "village/danger/check-list1";
+    }
+
+
+
+
+
+
+
 
     /**
      * 行业端——集团企业——企业自查

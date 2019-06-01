@@ -114,4 +114,5 @@ public interface ZzjgDepartmentMapper {
 
 
     void updateAll(@Param("utime")Date date, @Param("id")Integer id);
+
 }

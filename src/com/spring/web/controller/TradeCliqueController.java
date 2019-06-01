@@ -731,7 +731,34 @@ public class TradeCliqueController extends BaseController {
 
 
 
+  /*
+   * 政府端隐患治理信息查询 ！！！
+   * */
+    @RequestMapping(value = "check-list4")//flag:3 部门抽查
+    public String troubleList3(HttpServletRequest request, String title, Integer type, String companyName,
+                               Integer townId, Integer villageId,
+                               Integer status, Integer flag, Model model) throws Exception {
+        User user = getLoginUser(request);
+        // 根据登录 ID 查询所有属于这个地区中的所有公司信息
+        List<Company> companyList = companyMapper.selectAllList(user.getId());
+        model.addAttribute("flag", flag);
+        model.addAttribute("status", 1);
+        // 只判断是否以检查出过合格的
+        List<Map> list = null;
+        for (int i = 0; i < companyList.size(); i++) {
 
+            if (null != status && 1 == status) { //表示的是要查询整改合格的
+                list = tCheckItemMapper.selectRecheckListByRecheckStatus(companyList.get(i).getUserId(), 1);
+            } else {
+                list = tCheckItemMapper.selectRecheckList(companyList.get(i).getUserId());
+            }
+        }
+
+        model.addAttribute("list", list);
+
+        return "village/danger/recheck-list";
+
+    }
 
 
 

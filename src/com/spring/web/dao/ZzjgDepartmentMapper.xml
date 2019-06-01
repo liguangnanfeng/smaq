@@ -234,7 +234,7 @@
         where
         t1.del = 0 and t1.level = 1
         and t1.uid = #{uid,jdbcType=INTEGER}
-        order by t1.id desc
+        order by t1.id asc
     </select>
 
     <select id="selectLevel2ByUid" resultType="java.util.Map">

@@ -144,7 +144,7 @@ $(document).ready(function() {
             <li><a data-href="${ly }/tradeclique/check-list3?flag=4" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
 
 
-            <li><a data-href="${ly }/village/check-list?flag=4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
+            <li><a data-href="${ly }/tradeclique/check-list4?flag=4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
 
 
             <%-- <li><a data-href="${ly }/village/check-add-cho" data-title="检查表设置" href="javascript:void(0)">检查表设置</a></li>

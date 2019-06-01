@@ -1208,45 +1208,6 @@ public class VillageController extends BaseController {
 
 
 
-    /*
-    * 企业端隐患排查记录 !!!    数据显示问题
-    * */
-    @RequestMapping(value = "check-list3")
-    public String troubleList2(HttpServletRequest request, String title, Integer type, String companyName,
-                               Integer townId, Integer villageId,
-                               Integer status, Integer flag, Model model) throws Exception {
-        User user = getLoginUser(request);
-        // 根据登录 ID 查询所有属于这个地区中的所有公司名称
-        List<Company> companyList = companyMapper.selectAllList(user.getId());
-        Map<String, Object> m = new HashMap<String, Object>();
-        List<Map<String, Object>> list = null;
-
-        for (int i = 0; i < companyList.size(); i++) {
-
-            m.put("userId",companyList.get(i).getVillageId());
-
-            list = tCheckMapper.selectList(m);
-
-            model.addAttribute("list", list);
-        }
-
-       /* model.addAttribute("list", list);*/
-
-        return "village/danger/check-list";
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * 村级账号 隐患排查 检查历史
      */

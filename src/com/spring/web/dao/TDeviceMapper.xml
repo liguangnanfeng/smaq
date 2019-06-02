@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.web.dao.TDeviceMapper">
+  <resultMap id="BaseResultMap" type="com.spring.web.model.TDevice">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="device_sn" jdbcType="VARCHAR" property="deviceSn" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="site" jdbcType="VARCHAR" property="site" />
+    <result column="phonename" jdbcType="VARCHAR" property="phonename" />
+    <result column="sensors" jdbcType="INTEGER" property="sensors" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_name" jdbcType="INTEGER" property="updateName" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, device_sn, name, company_id, site, phonename, sensors, creator, create_time, 
+    update_name, update_time,last_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_device
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_device
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.spring.web.model.TDevice">
+    insert into t_device (id, device_sn, name, 
+      company_id, site, phonename, 
+      sensors, creator, create_time, 
+      update_name, update_time,last_time)
+    values (#{id,jdbcType=INTEGER}, #{deviceSn,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{companyId,jdbcType=INTEGER}, #{site,jdbcType=VARCHAR}, #{phonename,jdbcType=VARCHAR}, 
+      #{sensors,jdbcType=INTEGER}, #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateName,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},#{lastTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.spring.web.model.TDevice">
+    insert into t_device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="deviceSn != null">
+        device_sn,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="site != null">
+        site,
+      </if>
+      <if test="phonename != null">
+        phonename,
+      </if>
+      <if test="sensors != null">
+        sensors,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="lastTime != null">
+        last_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deviceSn != null">
+        #{deviceSn,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="site != null">
+        #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="phonename != null">
+        #{phonename,jdbcType=VARCHAR},
+      </if>
+      <if test="sensors != null">
+        #{sensors,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.spring.web.model.TDevice">
+    update t_device
+    <set>
+      <if test="deviceSn != null">
+        device_sn = #{deviceSn,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="site != null">
+        site = #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="phonename != null">
+        phonename = #{phonename,jdbcType=VARCHAR},
+      </if>
+      <if test="sensors != null">
+        sensors = #{sensors,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastTime != null">
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.spring.web.model.TDevice">
+    update t_device
+    set device_sn = #{deviceSn,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=INTEGER},
+      site = #{site,jdbcType=VARCHAR},
+      phonename = #{phonename,jdbcType=VARCHAR},
+      sensors = #{sensors,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      last_time = #{lastTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="checkDeviceSnExsits" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	SELECT 
+	  td.id 
+	FROM
+	  `t_device` td 
+	WHERE td.`device_sn` = #{deviceSn}
+  </select>
+  
+  <select id="getDeviceCompanyList" resultType="java.util.Map">
+   SELECT 
+	  td.`company_id` AS userId,
+	  cv.name AS companyName 
+	FROM
+	  `t_device` td 
+	  LEFT JOIN `company_view` cv 
+	    ON td.`company_id` = cv.`user_id` 
+	    GROUP BY td.`company_id`
+  </select>
+  
+  <select id="getDeviceListByCondition" parameterType="java.util.Map" resultType="java.util.Map">
+  	SELECT 
+	  td.id AS id,
+	  td.`device_sn` AS deviceSn,
+	  td.`name` AS deviceName,
+	  td.`phonename` AS phoneName,
+	  td.`site` AS site,
+	  td.`create_time` AS createTime,
+	  td.`last_time` AS lastTime,
+	  cv.name AS companyName,
+	  COUNT(ts.`device_sn`) AS sensorsCount 
+	FROM
+	  `t_device` td 
+	  LEFT JOIN `company_view` cv 
+	    ON td.`company_id` = cv.`user_id` 
+	  LEFT JOIN `t_sensors` ts 
+	    ON ts.`device_sn` = td.`device_sn` 
+    <where>
+    	<if test="null != map.deviceName">
+    	 	td.`name` LIKE CONCAT('%', #{map.deviceName},'%')
+    	</if>
+    	<if test="null != map.companyId">
+	  		AND td.`company_id` = #{map.companyId}
+    	</if>
+    </where>
+	GROUP BY td.`device_sn` 
+	ORDER BY td.`last_time` DESC , td.`create_time` DESC 
+	LIMIT #{map.page},#{map.limit}
+  </select>
+  
+  <select id="getDeviceCountByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	SELECT 
+	  count(*)
+	FROM
+	  `t_device` td 
+	  LEFT JOIN `company_view` cv 
+	    ON td.`company_id` = cv.`user_id` 
+    <where>
+    	<if test="null != map.deviceName">
+    	 	td.`name` LIKE CONCAT('%', #{map.deviceName},'%')
+    	</if>
+    	<if test="null != map.companyId">
+	  		AND td.`company_id` = #{map.companyId}
+    	</if>
+    </where>
+	</select>
+	
+	<delete id="deleteDeviceWithSensors" parameterType="java.lang.String">
+		DELETE 
+		  td,
+		  ts
+		FROM
+		  `t_device` td  
+		  LEFT JOIN `t_sensors` ts 
+		    ON td.`device_sn` = ts.`device_sn`
+		WHERE td.`device_sn` = #{deviceSn}
+	</delete>
+	
+	<select id="getCompanyIdByDeviceSn" parameterType="java.lang.String" resultType="java.lang.Integer">
+	SELECT 
+	  td.company_id AS companyId 
+	FROM
+	  `t_device` td 
+	WHERE td.device_sn = #{deviceSn} 
+	</select>
+</mapper>

@@ -1,4 +1,4 @@
-# Created by .ignore support plugin (hsz.mobi)
+﻿# Created by .ignore support plugin (hsz.mobi)
 ### My template template
 # Created by .ignore support plugin (hsz.mobi)
 ### JetBrains template
@@ -16,6 +16,10 @@ doc
 .settings
 ## Directory-based project format:
 .idea/
+test.jsp
+smaq.iml
+smaq.sql
+
 # if you remove the above rule, at least ignore the following:
 
 # User-specific stuff:
@@ -277,3 +281,7 @@ resources
 /WEB-INF/views/company/checkModel/model-add2.jsp
 /WebContent/upload
 /WebContent/home
+/uploadImageDemo.jsp
+/test.jsp
+/mysql-view.txt
+/index.jsp

@@ -1,0 +1,11 @@
+.idea
+.settings
+doc
+js
+out
+smaq.sql
+smaq.iml
+codeStyle.xml
+code_template.xml
+.project
+checkstyle_checks.xml

@@ -1850,7 +1850,7 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setUid(user.getId());
             aCompanyManual.setLevel1(level1);
             aCompanyManual.setLevel2(a.getName());
-            aCompanyManual.setLevel3(a.getLevel1() + "/" + a.getName() + "/" + a.getLevel3());
+            aCompanyManual.setLevel3(a.getLevel1() + "/" + a.getLevel2() + "/" + a.getLevel3());
             aCompanyManual.setFactors(a.getFactors());
             aCompanyManual.setReference(a.getReference());
             aCompanyManual.setGkzt(level1);

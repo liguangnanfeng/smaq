@@ -58,26 +58,15 @@ $(function() {
     </a>
   </nav>
   <div class="page-container">
-<<<<<<< HEAD
    <%-- <c:if test="${flag != 2}">
-=======
-    <c:if test="${flag != 2}">
->>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
         <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/tradeclique/check-list?flag=1&status=1">企业自查</a> 
         <a class="btn default ${flag == 4 ? 'btn-primary' : 'radius'}" href="${ly }/tradeclique/check-list?flag=4">行政检查</a>
         <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/tradeclique/check-list?flag=3">部门抽查</a>
-<<<<<<< HEAD
         &lt;%&ndash; <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> &ndash;%&gt;
     </div>
     </c:if>--%>
     <%--<div class="text-c">
-=======
-        <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
-    </div>
-    </c:if>
-    <div class="text-c">
->>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
       <form action="${ly }/village/check-list?flag=${flag}" method="post">
         <c:if test="${session_user.userType == 6}">
             <span>所在镇：</span>
@@ -119,11 +108,7 @@ $(function() {
           <i class="Hui-iconfont">&#xe665;</i> 查询
         </button>
       </form>
-<<<<<<< HEAD
     </div>--%>
-=======
-    </div>
->>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <%-- <c:if test="${flag == 3}">
         <a class="btn btn-primary radius" data-title="添加线下检查记录" data-href="${ly }/company/check-add3?flag=3" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加线下检查记录</a>

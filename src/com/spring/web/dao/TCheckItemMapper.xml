@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.web.dao.TCheckItemMapper">
+    <resultMap id="BaseResultMap" type="com.spring.web.model.TCheckItem">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="level_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="levels" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="reference" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="part_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="check_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="memo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="files" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="suggest" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="deadline" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="plan_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="recheck_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="recheck_file" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="recheck_memo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, content, level_id, levels, reference, part_id, check_id, status, memo, files,
+        suggest, deadline, plan_time, recheck_time, recheck_file, recheck_memo
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_item_tbl
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_check_item_tbl
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.spring.web.model.TCheckItem">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_check_item_tbl (content, level_id, levels,
+        reference, part_id, check_id,
+        status, memo, files,
+        suggest, deadline, plan_time,
+        recheck_time, recheck_file, recheck_memo
+        )
+        values (#{content,jdbcType=VARCHAR}, #{levelId,jdbcType=INTEGER}, #{levels,jdbcType=VARCHAR},
+        #{reference,jdbcType=VARCHAR}, #{partId,jdbcType=INTEGER}, #{checkId,jdbcType=INTEGER},
+        #{status,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, #{files,jdbcType=VARCHAR},
+        #{suggest,jdbcType=INTEGER}, #{deadline,jdbcType=TIMESTAMP}, #{planTime,jdbcType=TIMESTAMP},
+        #{recheckTime,jdbcType=TIMESTAMP}, #{recheckFile,jdbcType=VARCHAR}, #{recheckMemo,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.spring.web.model.TCheckItem">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_check_item_tbl
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="content != null">
+                content,
+            </if>
+            <if test="levelId != null">
+                level_id,
+            </if>
+            <if test="levels != null">
+                levels,
+            </if>
+            <if test="reference != null">
+                reference,
+            </if>
+            <if test="partId != null">
+                part_id,
+            </if>
+            <if test="checkId != null">
+                check_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="memo != null">
+                memo,
+            </if>
+            <if test="files != null">
+                files,
+            </if>
+            <if test="suggest != null">
+                suggest,
+            </if>
+            <if test="deadline != null">
+                deadline,
+            </if>
+            <if test="planTime != null">
+                plan_time,
+            </if>
+            <if test="recheckTime != null">
+                recheck_time,
+            </if>
+            <if test="recheckFile != null">
+                recheck_file,
+            </if>
+            <if test="recheckMemo != null">
+                recheck_memo,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="levelId != null">
+                #{levelId,jdbcType=INTEGER},
+            </if>
+            <if test="levels != null">
+                #{levels,jdbcType=VARCHAR},
+            </if>
+            <if test="reference != null">
+                #{reference,jdbcType=VARCHAR},
+            </if>
+            <if test="partId != null">
+                #{partId,jdbcType=INTEGER},
+            </if>
+            <if test="checkId != null">
+                #{checkId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="memo != null">
+                #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="files != null">
+                #{files,jdbcType=VARCHAR},
+            </if>
+            <if test="suggest != null">
+                #{suggest,jdbcType=INTEGER},
+            </if>
+            <if test="deadline != null">
+                #{deadline,jdbcType=TIMESTAMP},
+            </if>
+            <if test="planTime != null">
+                #{planTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="recheckTime != null">
+                #{recheckTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="recheckFile != null">
+                #{recheckFile,jdbcType=VARCHAR},
+            </if>
+            <if test="recheckMemo != null">
+                #{recheckMemo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.spring.web.model.TCheckItem">
+        <!--
+          WARNING - @mbggenerated
+          This element is automatically generated by MyBatis Generator, do not modify.
+        -->
+        update t_check_item_tbl
+        <set>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="levelId != null">
+                level_id = #{levelId,jdbcType=INTEGER},
+            </if>
+            <if test="levels != null">
+                levels = #{levels,jdbcType=VARCHAR},
+            </if>
+            <if test="reference != null">
+                reference = #{reference,jdbcType=VARCHAR},
+            </if>
+            <if test="partId != null">
+                part_id = #{partId,jdbcType=INTEGER},
+            </if>
+            <if test="checkId != null">
+                check_id = #{checkId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="memo != null">
+                memo = #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="files != null">
+                files = #{files,jdbcType=VARCHAR},
+            </if>
+            <if test="suggest != null">
+                suggest = #{suggest,jdbcType=INTEGER},
+            </if>
+            <if test="deadline != null">
+                deadline = #{deadline,jdbcType=TIMESTAMP},
+            </if>
+            <if test="planTime != null">
+                plan_time = #{planTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="recheckTime != null">
+                recheck_time = #{recheckTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="recheckFile != null">
+                recheck_file = #{recheckFile,jdbcType=VARCHAR},
+            </if>
+            <if test="recheckMemo != null">
+                recheck_memo = #{recheckMemo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.spring.web.model.TCheckItem">
+        <!--
+          WARNING - @mbggenerated
+          This element is automatically generated by MyBatis Generator, do not modify.
+        -->
+        update t_check_item_tbl
+        set content = #{content,jdbcType=VARCHAR},
+        level_id = #{levelId,jdbcType=INTEGER},
+        levels = #{levels,jdbcType=VARCHAR},
+        reference = #{reference,jdbcType=VARCHAR},
+        part_id = #{partId,jdbcType=INTEGER},
+        check_id = #{checkId,jdbcType=INTEGER},
+        status = #{status,jdbcType=INTEGER},
+        memo = #{memo,jdbcType=VARCHAR},
+        files = #{files,jdbcType=VARCHAR},
+        suggest = #{suggest,jdbcType=INTEGER},
+        deadline = #{deadline,jdbcType=TIMESTAMP},
+        plan_time = #{planTime,jdbcType=TIMESTAMP},
+        recheck_time = #{recheckTime,jdbcType=TIMESTAMP},
+        recheck_file = #{recheckFile,jdbcType=VARCHAR},
+        recheck_memo = #{recheckMemo,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <insert id="insertBath">
+        insert into t_check_item_tbl (content, level_id, levels, reference, part_id,
+        check_id, status)
+        values
+        <foreach close="" collection="list" index="" item="item" open="" separator=",">
+            (#{item.content}, #{item.levelId}, #{item.levels} ,#{item.reference}, ${partId},
+            ${checkId}, 1)
+        </foreach>
+    </insert>
+
+    <insert id="insertThreeBath">
+        insert into t_check_item_tbl (content, level_id, levels, reference, part_id,
+        check_id, status, memo, files)
+        values
+        <foreach close="" collection="list" index="" item="item" open="" separator=",">
+            (#{item.content}, #{item.levelId}, #{item.levels} ,#{item.reference}, ${partId},
+            ${checkId}, #{item.status}, #{item.memo}, #{item.files})
+        </foreach>
+    </insert>
+
+    <!---->
+    <select id="selectByCheckId" resultType="java.util.Map">
+        select
+        <!--zhangcl 2018.10.28  T1.id, T1.content, T1.reference, T1.part_id partId, T1.check_id checkId, T1.status, T1.memo, T1.files, T1.memo,-->
+        T1.id, T1.level_id levelId, T1.content, T1.reference, T1.part_id partId, T1.check_id checkId, T1.status,
+        T1.memo, T1.files, T1.memo,
+        T1.levels, T2.name
+        from
+        t_check_item_tbl T1
+        left join t_check_part_tbl T2 on T2.id = T1.part_id
+        where
+        T1.check_id = #{checkId}
+
+    </select>
+
+    <select id="selectByAppCheckId" resultType="java.util.Map">
+    select 
+       T1.id, T1.content, T1.reference, T1.part_id partId, T1.check_id checkId, T1.status, T1.memo, T1.files, T1.memo, T1.level_id levelId,
+       T2.level1, T2.level2, T2.level3
+    from 
+      t_check_item_tbl T1
+    left join
+      t_level_tbl T2 on T1.level_id = T2.id
+    where
+      check_id = #{checkId}
+      group by part_id , level_id
+  </select>
+
+    <select id="selectByAppList" resultType="java.util.Map">
+        select
+        T1.id, T1.content, T1.reference, T1.part_id partId, T1.check_id checkId, T1.status, T1.memo, T1.files, T1.memo,
+        T1.level_id levelId,
+        T2.level1, T2.level2, T2.level3
+        from
+        t_check_item_tbl T1
+        left join
+        t_level_tbl T2 on T1.level_id = T2.id
+        <where>
+            <if test="partId != null and partId != ''">
+                T1.part_id = #{partId}
+            </if>
+            <if test="levelId != null and levelId != ''">
+                and T2.level1 = (select level1 from t_level_tbl where id = #{levelId})
+            </if>
+        </where>
+        order by T1.id desc
+    </select>
+
+    <select id="selectByList3" resultType="java.util.Map">
+        select
+        T1.id, T1.content, T1.reference, T1.part_id partId, T1.check_id checkId, T1.status, T1.memo, T1.files, T1.memo,
+        T1.level_id levelId,
+        T2.level1, T2.level2, T2.level3
+        from
+        t_check_item_tbl T1
+        left join
+        t_level_tbl T2 on T1.level_id = T2.id
+        <where>
+            <if test="checkId != null and checkId != ''">
+                T1.check_id = #{checkId}
+            </if>
+            <if test="partId != null and partId != ''">
+                and T1.part_id = #{partId}
+            </if>
+            <if test="levelId != null and levelId != ''">
+                and T1.level_id = #{levelId}
+            </if>
+            and T1.status &gt; 1
+        </where>
+        order by T1.id desc
+    </select>
+
+    <select id="selectByMap1" resultType="java.util.Map"> <!--   zhangcl 2018.12.29 -->
+        select
+        T1.id, T1.reference, T1.part_id partId, T1.check_id checkId, T1.status, T1.files, T1.memo, T1.level_id levelId,
+        T2.level1, T2.level2, T2.level3,T2.type,T2.factors,T2.measures ,T2.measures as content
+        from
+        t_check_item_tbl T1
+        left join
+        a_danger_manual_tbl T2 on T1.level_id = T2.id
+        <where>
+            <if test="checkId != null and checkId != ''">
+                T1.check_id = #{checkId}
+            </if>
+            <if test="partId != null and partId != ''">
+                and T1.part_id = #{partId}
+            </if>
+            <if test="levelId != null and levelId != ''">
+                and T1.level_id = #{levelId}
+            </if>
+        </where>
+        order by T1.id desc
+    </select>
+
+
+    <!--复查,查询不合格项并返回-->
+    <select id="selectDangerByCheckId" resultType="java.util.Map">
+        select
+        T1.id, T1.content, T1.reference, T1.status, T1.memo, T1.files, T1.level_id levelId, T1.part_id partId,
+        T1.suggest, T1.deadline, T1.recheck_time recheckTime, T1.recheck_file recheckFile, T1.plan_time planTime,
+        T1.levels, (select level1 from t_level_tbl where id = T1.level_id) level1,
+        T3.name partName, T4.depart, T3.part_img partImg
+        from
+        t_check_item_tbl T1
+        left join
+        t_check_part_tbl T3 on T1.part_id = T3.id
+        left join
+        t_check_tbl T4 on T1.check_id = T4.id
+        where
+        T1.check_id = #{checkId}
+        <choose>
+            <when test="status != null and status != ''">
+                and T1.status = #{status}
+            </when>
+            <otherwise>
+                and T1.status > 1
+            </otherwise>
+        </choose>
+
+    </select>
+
+    <update id="updSuggest">
+    update t_check_item_tbl
+    set 
+      suggest = #{suggest},
+      deadline = #{deadline},
+      plan_time = #{planTime}
+    where id in (${ids})
+  </update>
+
+    <update id="updRecheck">
+        update t_check_item_tbl
+        set
+        status = #{status},
+        <if test="deadline != null">
+            deadline = #{deadline},
+        </if>
+        <if test="planTime != null">
+            plan_time = #{planTime},
+        </if>
+        <![CDATA[recheck_file = (select group_concat(file) from t_recheck_item_tbl where check_item_id = #{id} and file != '' and file is not null),
+      recheck_memo = (select group_concat(memo SEPARATOR '</br>') from t_recheck_item_tbl where check_item_id = #{id} and memo != '' and memo is not null),
+      ]]>
+        recheck_time = #{recheckTime}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteByCheckId">
+    delete from t_check_item_tbl
+    where check_id = #{checkId}
+  </delete>
+
+    <select id="selectCount" resultType="java.util.Map">
+        select
+        count(0) c, flag, status
+        from
+        t_check_item_view2 T4
+        <where>
+            <if test="userId != null">
+                and user_id = ${userId}
+            </if>
+            <if test="userIds != null">
+                and user_id in (${userIds})
+            </if>
+            <if test="villageId != null">
+                and village_id = ${villageId}
+            </if>
+            <if test="townId != null">
+                and town_id = ${townId}
+            </if>
+            <if test="districtId != null">
+                and district_id = ${districtId}
+            </if>
+            <if test="tradeId != null">
+                and user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid = #{tradeId} )
+            </if>
+        </where>
+        group by flag, status
+    </select>
+
+    <select id="selectCount2" resultType="java.util.Map">
+        select
+        count(0) c, flag, status, d
+        from
+        t_check_item_view2 T4
+        <where>
+            <if test="userId != null">
+                and user_id = ${userId}
+            </if>
+            <if test="villageId != null">
+                and village_id = ${villageId}
+            </if>
+            <if test="townId != null">
+                and town_id = ${townId}
+            </if>
+            <if test="districtId != null">
+                and district_id = ${districtId}
+            </if>
+            <if test="tradeId != null">
+                and user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid = #{tradeId} )
+            </if>
+        </where>
+        group by flag, status, d
+    </select>
+
+    <select id="selectZhongCount" resultType="java.util.Map">
+        select
+        count(0) c, flag, status
+        from
+        t_check_item_view2
+        <where>
+            d = 1
+            <if test="userId != null">
+                and user_id = ${userId}
+            </if>
+            <if test="userIds != null">
+                and user_id in (${userIds})
+            </if>
+            <if test="villageId != null">
+                and village_id = ${villageId}
+            </if>
+            <if test="townId != null">
+                and town_id = ${townId}
+            </if>
+            <if test="districtId != null">
+                and district_id = ${districtId}
+            </if>
+            <if test="tradeId != null">
+                and user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid = #{tradeId} )
+            </if>
+        </where>
+        group by flag, status
+    </select>
+
+    <select id="selectGroupIndustryType" resultType="com.spring.web.ibatis.DynamicParameter">
+        SELECT
+        count(0) c, DATE_FORMAT(real_time, '%Y-%m') time,
+        case WHEN industry_type is not NULL and industry_type != '' THEN industry_type
+        WHEN levels = '基础管理' THEN 1
+        WHEN levels = '现场管理' THEN 2
+        ELSE 2
+        end t
+        from
+        t_check_item_view2
+        <where>
+            <![CDATA[DATE_FORMAT(real_time, '%Y-%m') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m') <= #{endTime1}]]>
+            <if test="userId != null">
+                and user_id = ${userId}
+            </if>
+            <if test="villageId != null">
+                and village_id = ${villageId}
+            </if>
+            <if test="townId != null">
+                and town_id = ${townId}
+            </if>
+            <if test="districtId != null">
+                and district_id = ${districtId}
+            </if>
+            <if test="tradeId != null">
+                and user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid = #{tradeId} )
+            </if>
+        </where>
+        GROUP BY time, t
+    </select>
+
+    <select id="selectGroupItem3" resultType="com.spring.web.ibatis.DynamicParameter">
+        SELECT
+        count(0) c, DATE_FORMAT(real_time, '%Y-%m') time, d
+        from
+        t_check_item_view2
+        <where>
+            <![CDATA[DATE_FORMAT(real_time, '%Y-%m') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m') <= #{endTime1}]]>
+            <if test="userId != null">
+                and user_id = ${userId}
+            </if>
+            <if test="villageId != null">
+                and village_id = ${villageId}
+            </if>
+            <if test="townId != null">
+                and town_id = ${townId}
+            </if>
+            <if test="districtId != null">
+                and district_id = ${districtId}
+            </if>
+            <if test="tradeId != null">
+                and user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid = #{tradeId} )
+            </if>
+        </where>
+        GROUP BY time, d
+    </select>
+
+    <select id="selectGroupItemStatus" resultType="com.spring.web.ibatis.DynamicParameter">
+        SELECT
+        count(0) c, DATE_FORMAT(real_time, '%Y-%m') time, status
+        from
+        t_check_item_view2
+        <where>
+            <![CDATA[ DATE_FORMAT(real_time, '%Y-%m') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m') <= #{endTime1}]]>
+            <if test="userId != null">
+                and user_id = ${userId}
+            </if>
+            <if test="villageId != null">
+                and village_id = ${villageId}
+            </if>
+            <if test="townId != null">
+                and town_id = ${townId}
+            </if>
+            <if test="districtId != null">
+                and district_id = ${districtId}
+            </if>
+            <if test="tradeId != null">
+                and user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid = #{tradeId} )
+            </if>
+        </where>
+        GROUP BY time, status
+    </select>
+
+    <select id="selectGroupFlag" resultType="com.spring.web.ibatis.DynamicParameter">
+        SELECT
+        count(0) c, DATE_FORMAT(real_time, '%Y-%m') time, flag
+        from
+        t_check_item_view2
+        <where>
+            <![CDATA[DATE_FORMAT(real_time, '%Y-%m') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m') <= #{endTime1}]]>
+            <if test="userId != null">
+                and user_id = ${userId}
+            </if>
+            <if test="villageId != null">
+                and village_id = ${villageId}
+            </if>
+            <if test="townId != null">
+                and town_id = ${townId}
+            </if>
+            <if test="districtId != null">
+                and district_id = ${districtId}
+            </if>
+            <if test="tradeId != null">
+                and user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid = #{tradeId} )
+            </if>
+        </where>
+        GROUP BY time, flag
+    </select>
+
+    <select id="selectDangerIndexList" resultType="java.util.Map">
+        select
+        T4.name companyName, T2.real_time realTime,
+        T1.id, T1.content, T1.reference, T1.status, T1.memo, T1.files,
+        T1.levels,
+        tcp.name partName,
+        T2.depart, tcp.part_img partImg, T2.check_company checkCompany,
+        T2.flag, T2.cheker,T2.industry_type industryType,
+        IF(find_in_set(T1.id, T3.item3), 1, 0) AS d
+        from
+        t_check_item_tbl T1
+        left join t_check_tbl T2 on T1.check_id = T2.id
+        left join t_check_part_tbl tcp on T1.part_id = tcp.id
+        left join t_rectification_tbl T3 on T1.check_id = T3.check_id
+        left join company_view T4 on T2.user_id = T4.user_id
+        <where>
+            T2.del = 0 and T2.status = 2 and T1.status > 1 and T4.is_del = '0'
+            <if test="flag != null">
+                and T2.flag = #{flag}
+            </if>
+            <if test="userId != null">
+                and T4.user_id = ${userId}
+            </if>
+            <if test="villageId != null">
+                and T4.village_id = ${villageId}
+            </if>
+            <if test="townId != null">
+                and T4.town_id = ${townId}
+            </if>
+            <if test="districtId != null">
+                and T4.district_id = ${districtId}
+            </if>
+            <if test="tradeId != null">
+                and T4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid = #{tradeId} )
+            </if>
+            <if test="companyName != null and companyName != ''">
+                and T4.name LIKE CONCAT('%', #{companyName},'%')
+            </if>
+            <if test="partName != null and partName != ''">
+                and T1.part_name LIKE CONCAT('%', #{partName},'%')
+            </if>
+            <if test="villageName != null and villageName != ''">
+                and t4.village_name LIKE CONCAT('%', #{villageName},'%')
+            </if>
+            <if test="status != null and status != ''">
+                and T1.status = #{status}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and DATE_FORMAT(T2.real_time, '%Y-%m-%d') >= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                <![CDATA[and DATE_FORMAT(T2.real_time, '%Y-%m-%d') <= #{endTime}]]>
+            </if>
+        </where>
+        <if test="d != null">
+            having d = #{d}
+        </if>
+        order by T1.id desc, T2.real_time desc
+    </select>
+
+    <select id="selectDangerIndexListCount" resultType="java.lang.Integer">
+        select
+        count(0)
+        from
+        t_check_item_view2
+        <where>
+            <if test="flag != null">
+                and flag = #{flag}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="townId != null">
+                and town_id = #{townId}
+            </if>
+            <if test="districtId != null">
+                and district_id = #{districtId}
+            </if>
+            <if test="villageId != null">
+                and village_id = #{villageId}
+            </if>
+            <if test="tradeId != null">
+                and user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid = #{tradeId} )
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and DATE_FORMAT(real_time, '%Y-%m-%d') >= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                <![CDATA[and DATE_FORMAT(real_time, '%Y-%m-%d') <= #{endTime}]]>
+            </if>
+            <if test="d != null">
+                and d = #{d}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDangerCollectByCompany" resultType="java.util.Map">
+        select
+        t2.user_id userId, t4.name, count(0) c, t2.flag, t2.status, IF(find_in_set(t1.id, t3.item3), 1, 0) AS d
+        from
+        t_check_item_tbl t1
+        left join t_check_tbl t2 on t1.check_id = t2.id
+        left join t_check_part_tbl tcp on t1.part_id = tcp.id
+        left join t_rectification_tbl t3 on t1.check_id = t3.check_id
+        left join t_company_tbl t5 on t5.user_id = t2.user_id
+        left join company_view t4 on t2.user_id = t4.user_id
+        <where>
+            t2.del = 0 and t2.status = 2 and t1.status > 1 and t4.is_del = '0'
+            <if test="userId != null">and t4.user_id = ${userId}</if>
+            <if test="villageId != null">and t4.village_id = #{villageId}</if>
+            <if test="townId != null">and t4.town_id = #{townId}</if>
+            <if test="districtId != null">and t4.district_id = #{districtId}</if>
+            <if test="tradeId != null">
+                and t2.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid = #{tradeId} )
+            </if>
+            <if test="industryType == 1">and t5.industry_id = 76</if>
+            <if test="industryType == 2">and (t5.industry_id is null or t5.industry_id != 76)</if>
+            <if test="companyName != null and companyName != ''">
+                and t4.name LIKE CONCAT('%', #{companyName},'%')
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and DATE_FORMAT(t2.real_time, '%Y-%m-%d') >= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                <![CDATA[and DATE_FORMAT(t2.real_time, '%Y-%m-%d') <= #{endTime}]]>
+            </if>
+        </where>
+        GROUP BY t2.user_id, t2.flag, t1.status, d
+    </select>
+
+    <select id="selectDangerCollectGroup" resultType="java.util.Map">
+        select
+        count(0) c, industry_id
+        from
+        t_check_item_view2
+        <where>
+            <if test="userId != null">
+                and user_id = ${userId}
+            </if>
+            <if test="villageId != null">and village_id = #{villageId}</if>
+            <if test="townId != null">and town_id = #{townId}</if>
+            <if test="districtId != null">and district_id = #{districtId}</if>
+            <if test="tradeId != null">
+                and user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid = #{tradeId} )
+            </if>
+            <if test="industryType == 1">and industry_id = 76</if>
+            <if test="industryType == 2">and (industry_id is null or industry_id != 76)</if>
+        </where>
+        GROUP BY industry_id
+    </select>
+
+    <select id="selectNeedDangerIndexList" resultType="java.util.Map">
+        select
+        t4.name companyName, t2.real_time realTime,
+        t1.id, t1.content, t1.reference, t1.status, t1.memo, t1.files,
+        t1.levels,
+        tcp.name partName, t1.check_id checkId,
+        t2.depart, tcp.part_img partImg, t2.check_company checkCompany,
+        t2.flag, t2.cheker,t2.industry_type industryType,
+        IF(find_in_set(t1.id, t3.item3), 1, 0) AS d,
+        (select count(0) from t_recheck_tbl where check_id = T1.check_id) c3,
+        (select count(0) from t_rectification_tbl where check_id = T1.check_id) t
+        from
+        t_check_item_tbl t1
+        left join t_check_tbl t2 on t1.check_id = t2.id
+        left join t_check_part_tbl tcp on t1.part_id = tcp.id
+        left join t_rectification_tbl t3 on t1.check_id = t3.check_id
+        left join company_view t4 on t2.user_id = t4.user_id
+        <where>
+            t2.del = 0 and t2.status = 2 and t1.status > 1 and t4.is_del = '0'
+            <if test="flag != null">
+                and t2.flag = #{flag}
+            </if>
+            <if test="userId != null">
+                and t4.user_id = ${userId}
+            </if>
+            <if test="villageId != null">
+                and t4.village_id = ${villageId}
+            </if>
+            <if test="townId != null">
+                and t4.town_id = ${townId}
+            </if>
+            <if test="districtId != null">
+                and t4.district_id = ${districtId}
+            </if>
+            <if test="tradeId != null">
+                and t4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid = #{tradeId} )
+            </if>
+            <if test="memo != null and memo != ''">
+                and t1.memo LIKE CONCAT('%', #{memo},'%')
+            </if>
+            <if test="companyName != null and companyName != ''">
+                and t4.name LIKE CONCAT('%', #{companyName},'%')
+            </if>
+            <if test="partName != null and partName != ''">
+                and t1.part_name LIKE CONCAT('%', #{partName},'%')
+            </if>
+            <if test="villageName != null and villageName != ''">
+                and t4.village_name LIKE CONCAT('%', #{villageName},'%')
+            </if>
+            <if test="status != null and status != ''">
+                and t1.status = #{status}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and DATE_FORMAT(t2.real_time, '%Y-%m-%d') >= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                <![CDATA[and DATE_FORMAT(t2.real_time, '%Y-%m-%d') <= #{endTime}]]>
+            </if>
+        </where>
+        <if test="d != null">
+            having d = #{d}
+        </if>
+        order by t1.id desc, t2.real_time desc
+    </select>
+
+    <!--TODO 根据checkId     查询part和item
+                检查记录主表      部位   详情
+    -->
+    <select id="selectAllByCheckId" resultType="java.util.Map" parameterType="Integer">
+        select item.*, part.name
+        from t_check_item_tbl item join t_check_part_tbl part
+        on item.part_id = part.id
+        where item.check_id =#{checkId}  order by item.id;
+    </select>
+    <!--根据id查询部门数据  -->
+    <select id="selectAllById" resultMap="BaseResultMap">
+        select * from t_check_item_tbl where id=#{id};
+    </select>
+
+    <select id="selectNumBytCheckId" resultType="Integer">
+    select COUNT(*) from t_check_item_tbl where check_id = #{id} and status =2;
+    </select>
+
+
+    <select id="selectRecheckList" parameterType="java.lang.Integer" resultType="java.util.Map">
+        select a.id as checkId,a.depart,b.status,b.memo,d.create_time as time,d.checker
+        from t_check_tbl a JOIN t_check_item_tbl b ON a.id = b.check_id
+        JOIN t_recheck_item_tbl c ON b.id = c.check_item_id
+        JOIN t_recheck_tbl d ON c.recheck_id = d.id
+        where d.user_id = #{userId}
+        ORDER BY a.id
+
+    </select>
+
+    <!--只要整改复查合格的
+    -->
+    <select id="selectRecheckListByRecheckStatus" resultType="java.util.Map">
+          select a.id as checkId,a.depart,b.status,b.memo,d.create_time as time,d.checker
+        from t_check_tbl a JOIN t_check_item_tbl b ON a.id = b.check_id
+        JOIN t_recheck_tbl d ON d.check_id=a.id
+        where a.user_id = #{uid}
+        and a.status=2
+        and b.status in ( 1,3)
+        ORDER BY a.id
+    </select>
+
+    <!--根据checkId获取所有的数据
+    -->
+    <select id="selectItemByCheckId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_item_tbl
+        where check_id =#{checkId} ;
+    </select>
+
+</mapper>

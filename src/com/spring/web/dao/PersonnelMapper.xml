@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.web.dao.PersonnelMapper">
+
+    <resultMap id="ResultMap" type="com.spring.web.model.ZzjgPersonnel" >
+        <result column="id"  property="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="ctime" property="ctime" javaType="java.util.Date" jdbcType="DATE" />
+        <result column="utime"  property="utime" javaType="java.util.Date" jdbcType="DATE" />
+        <result column="del" property="del" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="name" property="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="mobile" property="mobile" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="position" property="position" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="cid" property="cid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="dpid" property="dpid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="did"  property="did" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="uid" property="uid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="status" property="status" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+
+
+    <select id="findPersonnel" parameterType="java.lang.String" resultMap="ResultMap">
+        select
+        *
+        from zzjg_personnel_tbl
+        where id = #{userId}
+    </select>
+
+
+</mapper>

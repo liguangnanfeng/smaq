@@ -1,0 +1,307 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/static/h-ui/css/H-ui.css" />
+<link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/lib/icheck/icheck.css" />
+<link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/lib/lightbox2/2.8.1/css/lightbox.css" />
+<link href="/js/H-ui.admin_v3.0/static/h-ui.admin/css/H-ui.login.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/styles/universal.css" />
+<link rel="stylesheet" type="text/css" href="/styles/common.css" />
+<link rel="stylesheet" type="text/css" href="/styles/fore.css" />
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/layer/2.4/layer.js"></script> 
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script> 
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/static/h-ui.admin/js/H-ui.admin.js"></script> 
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/icheck/jquery.icheck.min.js"></script> 
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/hcharts/Highcharts/5.0.6/js/highcharts.js"></script>
+<script type="text/javascript" src="/js/H-ui.admin_v3.0/lib/hcharts/Highcharts/5.0.6/js/themes/grid-light.js"></script> 
+<script type="text/javascript" src="/js/util/utils.js"></script>
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"/>
+<script type="text/javascript" src="/js/localresizeimg/lrz.all.bundle.js"></script>
+<script type="text/javascript" src="/js/util/jquery.md5.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/js/jquery.SuperSlide.2.1.1.js"></script>
+<link rel="stylesheet" type="text/css" href="/styles/imgUpload.css" />
+<script type="text/javascript" src="/js/util/ll-numberbox.js"></script><title>安全风险管控   隐患排查治理智能化信息平台</title>
+<meta name="keywords" content="安全风险管控   隐患排查治理智能化信息平台">
+<meta name="description" content="安全风险管控   隐患排查治理智能化信息平台">
+<style type="text/css">
+body .dis-ib{margin-right:15px;}
+.clearfix:after{content:"\20";display:block;height:0;clear:both;visibility:hidden}
+.clearfix{zoom:1}
+.tabBar {border-bottom: 2px solid #eee}
+.tabBar span {background-color: #fff;cursor: pointer;display: inline-block;float: left;font-weight: bold;height: 35px;line-height: 35px;padding: 0 15px}
+.tabBar span.current{background-color:#0a6999;color: #fff}
+.tabCon {display: none}
+</style>
+<script type="text/javascript">
+$(function() {
+  $.Huitab("#tab_demo .tabBar span","#tab_demo .tabCon","current","click","0");
+});
+</script>
+</head>
+<body>
+  <div class="page-container">
+    <div class="mt-20">
+      <div id="tab_demo" class="HuiTab">
+        <div class="tabBar clearfix"><span>基础管理</span><span>现场管理</span><span>高危作业</span></div>
+        <div class="tabCon">
+          <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+              <tr class="text-c">
+                <th width="5%">序号</th>
+                <th width="60%">资料名称</th>
+                <th width="35%">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- 循环-->
+              <tr class="text-c">
+                <td>1</td>
+                <td>化工企业基础管理部分.xls</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/2">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none"  href="/common/download?filename=化工企业基础管理部分.xls&fileurl=/upload/trouble/01.xls" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>2</td>
+                <td>工贸企业基础管理部分.xls</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/1">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none"  href="/common/download?filename=工贸企业基础管理部分.xls&fileurl=/upload/trouble/02.xls" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <!-- 循环结束 -->
+            </tbody>
+          </table>
+        </div>
+        <div class="tabCon">
+          <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+              <tr class="text-c">
+                <th width="5%">序号</th>
+                <th width="60%">资料名称</th>
+                <th width="35%">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- 循环-->
+              <tr class="text-c">
+                <td>1</td>
+                <td>纺织行业.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/8">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=纺织行业.doc&fileurl=/upload/trouble/08.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>2</td>
+                <td>非煤矿山行业.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/9">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=非煤矿山行业.doc&fileurl=/upload/trouble/09.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>3</td>
+                <td>化工企业.xls</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/10">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=化工企业.xls&fileurl=/upload/trouble/10.xls" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>4</td>
+                <td>机械行业.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/11">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=机械行业.doc&fileurl=/upload/trouble/11.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>5</td>
+                <td>加油站.xls</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/12">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=加油站.xls&fileurl=/upload/trouble/12.xls" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>6</td>
+                <td>建材.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/13">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=建材.doc&fileurl=/upload/trouble/13.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>7</td>
+                <td>其他.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/24">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=其他.doc&fileurl=/upload/trouble/14.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>8</td>
+                <td>商业零售经营单位(100㎡-1000㎡）.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/23">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=商业零售经营单位(100㎡-1000㎡）.doc&fileurl=/upload/trouble/15.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>9</td>
+                <td>商业零售经营单位(1000m2以上）.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/22">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=商业零售经营单位(1000m2以上）.doc&fileurl=/upload/trouble/16.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>10</td>
+                <td>食品和饮料.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/21">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=食品和饮料.doc&fileurl=/upload/trouble/17.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>11</td>
+                <td>市场事故隐患.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/20">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=市场事故隐患.doc&fileurl=/upload/trouble/18.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>12</td>
+                <td>特种设备隐患检查.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/common/download?filename=特种设备隐患检查.doc&fileurl=/upload/trouble/19.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>13</td>
+                <td>危化品经营.xls</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/18">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=危化品经营.xls&fileurl=/upload/trouble/20.xls" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>14</td>
+                <td>危化品生产企业.xls</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/17">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=危化品生产企业.xls&fileurl=/upload/trouble/21.xls" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>15</td>
+                <td>冶金.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/16">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=冶金.doc&fileurl=/upload/trouble/22.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>16</td>
+                <td>印刷包装.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/15">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=印刷包装.doc&fileurl=/upload/trouble/23.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>17</td>
+                <td>有色金属.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/14">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=有色金属.doc&fileurl=/upload/trouble/24.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <!-- 循环结束 -->
+            </tbody>
+          </table>
+        
+        </div>
+        <div class="tabCon">
+          <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+              <tr class="text-c">
+                <th width="5%">序号</th>
+                <th width="60%">资料名称</th>
+                <th width="35%">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- 循环-->
+              <tr class="text-c">
+                <td>1</td>
+                <td>非化工液氨使用企业隐患排查治理标准.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/3">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=非化工液氨使用企业隐患排查治理标准.doc&fileurl=/upload/trouble/03.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>2</td>
+                <td>粉尘涉爆企业隐患排查治理标准.xls</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/4">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=粉尘涉爆企业隐患排查治理标准.xls&fileurl=/upload/trouble/04.xls" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>3</td>
+                <td>高温熔融金属现场运输隐患排查治理标准.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/5">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=高温熔融金属现场运输隐患排查治理标准.doc&fileurl=/upload/trouble/05.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>4</td>
+                <td>工贸行业有限空间安全作业隐患排查治理标准.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/6">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=工贸行业有限空间安全作业隐患排查治理标准.doc&fileurl=/upload/trouble/06.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <tr class="text-c">
+                <td>5</td>
+                <td>冶金企业煤气隐患排查治理标准.doc</td>
+                <td>
+                  <a style="text-decoration:none" href="/api/village/xlb/t-industry/7">隐患排查治理标准详情</a>
+                  <a style="text-decoration:none" href="/common/download?filename=冶金企业煤气隐患排查治理标准.doc&fileurl=/upload/trouble/07.doc" title="下载资料">下载资料</a>
+                  </td>
+              </tr>
+              <!-- 循环结束 -->
+            </tbody>
+          </table>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  
+</body>
+</html>

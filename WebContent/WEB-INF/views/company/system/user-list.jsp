@@ -53,11 +53,7 @@ $(function() {
         </span>
         <span class="select-box inline"> 
           <select name="did" class="select" id="did">
-<<<<<<< HEAD
             <option value=""><c:if test="${session_user.userType != 3}">所在环节/部位</c:if><c:if test="${session_user.userType == 3}">所在科室</c:if></option>
-=======
-            <option value=""><c:if test="${session_user.userType != 3}">所在岗位/部位</c:if><c:if test="${session_user.userType == 3}">所在科室</c:if></option>
->>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
           </select>
         </span> 
         <button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
@@ -76,11 +72,7 @@ $(function() {
             <th>序号</th>
             <th>姓名</th>
             <th>联系手机</th>
-<<<<<<< HEAD
             <th>所属部位/车间</th>
-=======
-            <th>所属部门/车间</th>
->>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
             <th>职务</th>
             <th>权限</th>
             <th>操作</th>

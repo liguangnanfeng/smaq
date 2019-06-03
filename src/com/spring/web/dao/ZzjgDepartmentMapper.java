@@ -3,10 +3,7 @@ package com.spring.web.dao;
 import com.spring.web.model.ZzjgDepartment;
 import org.apache.ibatis.annotations.Param;
 
-<<<<<<< HEAD
 import java.util.Date;
-=======
->>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +55,7 @@ public interface ZzjgDepartmentMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(ZzjgDepartment record);
-    
+
     /**
      * 根据公司名字查询部门
      */
@@ -71,11 +68,11 @@ public interface ZzjgDepartmentMapper {
      * @return
      */
     List<Map<Object, Object>> selectByUid(@Param("uid") Integer uid);
-    
+
     List<Map<Object, Object>> selectLevel1ByUid(@Param("uid") Integer uid);
-    
+
     List<Map<Object, Object>> selectLevel2ByUid(@Param("uid") Integer uid);
-    
+
     /**
      * 根据岗位id查询岗位名字和部门名字
      * @param id
@@ -110,7 +107,6 @@ public interface ZzjgDepartmentMapper {
     ZzjgDepartment selectNameAll(@Param("id")Integer id);
 
     ZzjgDepartment selectLevel1(@Param("id")Integer id);
-<<<<<<< HEAD
 
     List<ZzjgDepartment> selectCount(@Param("pid")Integer pid, @Param("name")String name);
 
@@ -119,6 +115,4 @@ public interface ZzjgDepartmentMapper {
 
     void updateAll(@Param("utime")Date date, @Param("id")Integer id);
 
-=======
->>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
 }

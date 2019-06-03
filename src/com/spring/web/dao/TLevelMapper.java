@@ -54,15 +54,15 @@ public interface TLevelMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TLevel record);
-    
+
     List<TLevel> selectByIndustry(@Param("industryId") Integer industryId);
-    
-    /** 
-    * @param industryId
-    * @return 返回现场检查分类，包含特种设备
-    */
+
+    /**
+     * @param industryId
+     * @return 返回现场检查分类，包含特种设备
+     */
     List<TLevel> selectByIndustryAndTz(@Param("industryId") Integer industryId);
-    
+
     List<TLevel> selectByIds(@Param("ids") String ids);
 
     /**

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -177,7 +176,7 @@ public class SaveDataImpl implements SaveMessageService {
 
             }
             // 内容发送短信内容
-            //Sms(saveDataMessageItem.getList());
+            Sms(saveDataMessageItem.getList());
             return "插入成功";
 
         } catch (Exception e) {
@@ -342,7 +341,6 @@ public class SaveDataImpl implements SaveMessageService {
                 } else if ("2".equals(saveDataMessage.getValue())) {
 
                     checkItem.setStatus(2); //复查不合格
-                    checkItem.setFiles(saveDataMessage.getFile());      //TODO 暂时覆盖之前的不合格照片
                     checkItem.setRecheckFile(saveDataMessage.getFile());//复查照片
                     checkItem.setPlanTime(new Date());                  // 实际的复查时间
                     checkItem.setMemo(saveDataMessage.getMemo());      // 复查描述

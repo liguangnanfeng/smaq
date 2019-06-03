@@ -25,12 +25,16 @@
         -->
         id, ctime, utime, del, name, cid, pid, level, uid
     </sql>
+
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from zzjg_department_tbl
         where id = #{id,jdbcType=INTEGER}
     </select>
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         <!--
           WARNING - @mbggenerated
@@ -230,12 +234,12 @@
         where
         t1.del = 0 and t1.level = 1
         and t1.uid = #{uid,jdbcType=INTEGER}
-        order by t1.id desc
+        order by t1.id asc
     </select>
 
     <select id="selectLevel2ByUid" resultType="java.util.Map">
         select
-        t1.id, t1.name, t1.level,
+        t1.id, t1.name, t1.level,t1.pid,
         (select name from zzjg_company_tbl where id = t1.cid) companyName,
         t2.name parName
         from zzjg_department_tbl t1
@@ -289,6 +293,25 @@
     </select>
 
 
+    <!-- 根据 pid , name ,level=2 ,del = 0 查询是否有数据 -->
+    <select id="selectCount" resultType="com.spring.web.model.ZzjgDepartment" parameterType="Integer">
+        select * from zzjg_department_tbl  where pid = #{pid} and name = #{name} and level = 2 and del = 0;
+    </select>
 
+    <!-- 添加数据信息 -->
+    <insert id="add" parameterType="com.spring.web.model.ZzjgDepartment">
+        insert into zzjg_department_tbl (ctime, utime, del,
+        name, cid, pid, level,
+        uid)
+        values (#{ctime,jdbcType=TIMESTAMP}, #{utime,jdbcType=TIMESTAMP}, #{del,jdbcType=INTEGER},
+        #{name,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{level,jdbcType=INTEGER},
+        #{uid,jdbcType=INTEGER})
+    </insert>
 
+    <!-- 修改数据信息 -->
+    <update id="updateAll" parameterType="com.spring.web.model.ZzjgDepartment">
+        update zzjg_department_tbl
+        set utime = #{utime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

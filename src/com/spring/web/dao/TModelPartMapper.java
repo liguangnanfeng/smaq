@@ -1,9 +1,10 @@
 package com.spring.web.dao;
 
+import com.spring.web.model.TModelPart;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-import org.apache.ibatis.annotations.Param;
-import com.spring.web.model.TModelPart;
 
 public interface TModelPartMapper {
     /**
@@ -53,10 +54,10 @@ public interface TModelPartMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TModelPart record);
-    
+
     List<TModelPart> selectByModelId(@Param("modelId") Integer modelId);
 
     int deleteByModelId(@Param("modelId") Integer modelId);
-    
+
     int insertBath(Map<String, Object> m);
 }

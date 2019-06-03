@@ -2242,7 +2242,6 @@ public class CompanyController_cd extends BaseController {
                     if (null == companyManual) {
                         break;
                     }
-
                     a.put("levelId", Integer.parseInt(levelsArr[i]));
                     a.put("dangerType", companyManual.getType());
                     a.put("factors", companyManual.getFactors());
@@ -2528,10 +2527,8 @@ public class CompanyController_cd extends BaseController {
 //    }
 
     /**
-     * TODO 隐患排查治理板块 => 检查设置实施中首页表显示车间
-     * 是根据conpanyManual这张表中的数据车间数据进行查询
-     * 有两种方式
-     * 基础检查/现场管理
+     * TODO 临时检查表
+     * 在model表查询获取数据
      */
     @RequestMapping(value = "model-list-bm")
     public String modelLinShi(HttpServletRequest request, Integer flag, Integer type, Integer template,
@@ -2539,19 +2536,43 @@ public class CompanyController_cd extends BaseController {
     ) throws ParseException {
         // 获取用户信息
         User user = getLoginUser(request);
-        // 根据用户获取用户信息
-        model.addAttribute("flag", flag);
+        //企业类型为 化工 或 构成重大危险源 则企业自查处 日检查表显示 wz 190108
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {
+            //log.error("监管行业："+company.getIndustry());
+            //log.error("是否构成重大危险源、1是："+company.getHazard());
+            model.addAttribute("rjcbxs", 1);
+        }
+
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("flag", flag);
+        m.put("title", title);
+        m.put("companyName", companyName);
+        m.put("status", status);
+        if (setUserId(user, m)) {
+            clearVillageTown(m);
+            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            model.addAttribute("list", list);
+        }
         model.addAttribute("type", type);
-        model.addAttribute("template", template);
+        model.addAttribute("flag", flag);
+        model.addAttribute("companyName", companyName);
+        model.addAttribute("title", title);
+        model.addAttribute("status", status);
+        Date d = new Date();
+        String x = DateFormatUtils.format(d, "yyyy-MM-dd");
+        d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
+        model.addAttribute("t", d.getTime());
+        if (user.getUserType() == 5) {//企业用户
+            return "company/danger/model-list-cx";
+        }
+        return "village/danger/check-list";
 
         List<Map<Object, Object>> jiChuItem = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");
         List<Map<Object, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
 
-        return "company/danger/model-list-cx";
-
-    }
 
     /**
      * TODO 跳转中转页面==> 跳转到自定义/标准保存模版

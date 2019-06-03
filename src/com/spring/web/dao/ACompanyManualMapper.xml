@@ -1081,7 +1081,7 @@
     <!--查询行业id
     -->
     <select id="selectDmidById" resultType="Integer">
-    select id from a_industry_tbl where name =#{name};
+        select id from a_industry_tbl where name =#{name};
     </select>
 
     <select id="findJiChuItem" resultType="java.util.Map">
@@ -1090,7 +1090,7 @@
         where uid=#{uid}  and  level3 LIKE CONCAT('%', #{name},'%')
         and del=0
         group By level1;
-       
+
     </select>
 
     <!--根据总公司的id和部门名称查询level2-->

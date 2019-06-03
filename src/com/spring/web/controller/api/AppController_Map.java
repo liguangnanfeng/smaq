@@ -7,7 +7,6 @@ import com.spring.web.model.request.TMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +19,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -96,13 +94,13 @@ public class AppController_Map extends BaseController {
             ops.close();
 
             // 根据id进行查询, 是否为保存还是修改
-              TMap tMap = tMapMapper.selectByUserId(user.getId());
+            TMap tMap = tMapMapper.selectByUserId(user.getId());
             //TMap tMap = tMapMapper.selectByUserId(6);
             if(tMap==null){
                 // 表示是新增
                 TMap tMap1 = new TMap();
                 tMap1.setUserId(user.getId());
-               // tMap1.setUserId(6);
+                // tMap1.setUserId(6);
                 tMap1.setFiles(filePath);
                 tMapMapper.insertTMap(tMap1);
 
@@ -111,7 +109,7 @@ public class AppController_Map extends BaseController {
                 tMapMapper.updateMap(tMap);
             }
             return tMapMapper.selectByUserId(user.getId()).getFiles();
-           //return tMapMapper.selectByUserId(6).getFiles();
+            //return tMapMapper.selectByUserId(6).getFiles();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -147,7 +145,7 @@ public class AppController_Map extends BaseController {
     @RequestMapping("B003")
     public String findMap(HttpServletRequest request){
         User user = getLoginUser(request);
-      if(user==null){
+        if(user==null){
             return null;
         }
         TMap tMap = tMapMapper.selectByUserId(user.getId());

@@ -95,7 +95,7 @@ public interface TCheckMapper {
      */
     List<Map> selectRecordByCreateUser(Integer id);
 
-    List<Map<String, Object>> selectAll(@Param("userIds") String userIds);
+    List<Map<String, Object>> selectAll(@Param("userIds")String userIds);
 
-    void updateDel(Integer id);
+    void updateDel(@Param("id")Integer id);
 }

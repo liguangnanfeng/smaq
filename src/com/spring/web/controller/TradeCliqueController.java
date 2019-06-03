@@ -1,6 +1,6 @@
 /**
- * Copyright(c)2017 Wuxi TongXiang Co.,Ltd. 
- * All right reserved. 
+ * Copyright(c)2017 Wuxi TongXiang Co.,Ltd.
+ * All right reserved.
  */
 package com.spring.web.controller;
 
@@ -704,6 +704,8 @@ public class TradeCliqueController extends BaseController {
 
 
 
+
+
     /*
     * 政府端隐患排查信息查询 ！！！
     * */
@@ -771,10 +773,16 @@ public class TradeCliqueController extends BaseController {
         }
         String userIds = sb.toString();
 
+        List<Map> list = tCheckItemMapper.selectAll(userIds);
+
+        model.addAttribute("list", list);
+
+        return "village/danger/recheck-list";
+
        /* model.addAttribute("flag", flag);
         model.addAttribute("status", 1);*/
         // 只判断是否以检查出过合格的
-        List<Map> list = tCheckItemMapper.selectAll(userIds);
+
 
 
         /*for (int i = 0; i < companyList.size(); i++) {
@@ -786,9 +794,6 @@ public class TradeCliqueController extends BaseController {
             }
         }*/
 
-        model.addAttribute("list", list);
-
-        return "village/danger/recheck-list";
 
     }
 
@@ -973,7 +978,7 @@ public class TradeCliqueController extends BaseController {
 //    public String sequipmentList(Model model, HttpServletRequest request, Integer companyId, String seName, Integer isTime)
 //            throws Exception {
 //    	//TradeComapnyHide(model,companyId);
-//    	
+//
 //        User user = userMapper.selectByPrimaryKey(companyId);
 //        Map<String, Object> m = new HashMap<String, Object>();
 //        setUserId(user, m);

@@ -429,11 +429,9 @@
         (select count(0) from t_rectification_tbl where check_id = T1.id) t
         from t_check_tbl T1
         left join company_tbl T2 on T1.user_id = T2.user_id
-        where T1.del = 0
-        and T1.STATUS = 2
-        and T2.user_id in (${userIds})
+        where
+        T1.del = 0 and T1.status = 2 and T2.user_id in (${userIds})
     </select>
-
 
 
 
@@ -443,18 +441,6 @@
         del = 1
         where id = #{id,jdbcType=INTEGER}
     </update>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

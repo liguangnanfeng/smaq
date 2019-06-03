@@ -437,7 +437,7 @@ public class AppController_Custom_Check extends BaseController {
 
             // 根据id查询并进行封装数据
 
-             CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(checkModel.getModelId());
+            CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(checkModel.getModelId());
             //CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(modelId);
 
             result.setStatus("0");

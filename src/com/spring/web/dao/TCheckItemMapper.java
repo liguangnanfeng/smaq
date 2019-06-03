@@ -54,87 +54,87 @@ public interface TCheckItemMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TCheckItem record);
-    
+
     int insertBath(@Param("list") List<Map<String, Object>> list, @Param("checkId") Integer checkId, @Param("partId") Integer partId);
-    
+
     int insertThreeBath(@Param("list") List<TCheckItem> list, @Param("checkId") Integer checkId, @Param("partId") Integer partId);
-    
+
     List<Map<String, Object>> selectByCheckId(@Param("checkId") Integer checkId);
-    
+
     List<Map<String, Object>> selectByAppCheckId(@Param("checkId") Integer checkId);
-    
+
     List<TCheckItem> selectByAppList(Map<String, Object> m);
-    
+
     List<TCheckItem> selectByList3(Map<String, Object> m);
-    
+
     List<TCheckItem> selectByMap1(Map<String, Object> m); //zhangcl 2018.12.29
-    
+
     List<Map<String, Object>> selectDangerByCheckId(@Param("checkId") Integer checkId, @Param("status") Integer status);
-    
+
     int updSuggest(Map<String, Object> m);
-    
+
     int updRecheck(Map<String, Object> m);
-    
+
     int deleteByCheckId(@Param("checkId") Integer checkId);
-    
-    /** 
-    * @param userId
-    * @return 企业/村/镇/区首页 隐患汇总数据
-    */
+
+    /**
+     * @param userId
+     * @return 企业/村/镇/区首页 隐患汇总数据
+     */
     List<Map<String, Object>> selectCount(Map<String, Object> m);
-    
-    /** 
+
+    /**
      * @param userId
      * @return 企业/村/镇/区首页 隐患汇总数据 重大隐患
      */
     List<Map<String, Object>> selectZhongCount(Map<String, Object> m);
-    
-    /** 
-    * @return 根据隐患类型汇总
-    */
+
+    /**
+     * @return 根据隐患类型汇总
+     */
     List<DynamicParameter<String, Object>> selectGroupIndustryType(Map<String, Object> m);
-    
-    /** 
+
+    /**
      * @return 根据隐患等级汇总
      */
     List<DynamicParameter<String, Object>> selectGroupItem3(Map<String, Object> m);
-    
-    /** 
+
+    /**
      * @return 根据整改率汇总
      */
     List<DynamicParameter<String, Object>> selectGroupItemStatus(Map<String, Object> m);
-    
-    /** 
+
+    /**
      * @return 根据整改来源汇总
      */
     List<DynamicParameter<String, Object>> selectGroupFlag(Map<String, Object> m);
-    
-    /** 
+
+    /**
      * @return 隐患排查治理汇总
      */
     List<Map<String, Object>> selectDangerIndexList(Map<String, Object> m);
-    
-    /** 
+
+    /**
      * @return 隐患排查治理汇总
      */
     Integer selectDangerIndexListCount(Map<String, Object> m);
-    
-    /** 
+
+    /**
      * @return 隐患排查治理汇总 根据企业
      */
     List<Map<String, Object>> selectDangerCollectByCompany(Map<String, Object> m);
-    
-    /** 
+
+    /**
      * @return 隐患排查治理汇总 根据企业类型汇总
      */
     List<Map<String, Object>> selectDangerCollectGroup(Map<String, Object> m);
 
-    /** 
-    * @param
-    * @return 监管端 隐患汇总数据
-    */
+    /**
+     * @param
+     * @return 监管端 隐患汇总数据
+     */
     List<Map<String, Object>> selectCount2(Map<String, Object> m);
-    
+
     List<Map<String, Object>> selectNeedDangerIndexList(Map<String, Object> m);
 
     /**
@@ -176,7 +176,7 @@ public interface TCheckItemMapper {
      */
     List<Map> selectRecheckListByRecheckStatus(@Param("uid") Integer id, @Param("status") Integer status);
 
-    List<Map> selectAll(@Param("userIds") String userIds);
+    List<Map> selectAll(@Param("userIds")String userIds);
 }
 
 

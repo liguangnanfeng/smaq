@@ -387,12 +387,19 @@ public class SaveDataImpl implements SaveMessageService {
 
         // 通过modelId
         TModel tModel = modelMapper.selectByPrimaryKey(modelId);
-        tModel.setUseTime(new Date()); // 模版的使用时间
-        modelMapper.updateByPrimaryKey(tModel);
-
         // 每一次都是查询最开始的那一条检查记录然后进行复制保存
         // 这时候按照时间的进行检查，找到最早的那一个存储的模板，然后进行修改保存
-        TCheck tCheck = tCheckMapper.selectOldByModelId(tModel.getId());
+        TCheck tCheck =  null;
+        if(null != tModel){
+            tModel.setUseTime(new Date()); // 模版的使用时间
+            modelMapper.updateByPrimaryKey(tModel);
+            tCheck= tCheckMapper.selectOldByModelId(tModel.getId());
+        }else{
+            // 就表示是checkId,
+            tCheck= tCheckMapper.selectByPrimaryKey(modelId);
+            tModel= modelMapper.selectByPrimaryKey(tCheck.getModelId());
+            tCheck= tCheckMapper.selectOldByModelId(tModel.getId()); // 重复之前的套路
+        }
 
         Integer checkId = insertCheck(tCheck.getId());  //表示是新的数据,然后将新的数据进行传递
 
@@ -475,7 +482,6 @@ public class SaveDataImpl implements SaveMessageService {
                     }
                     tRectificationConfirmMapper.updateByTRectificationConfirm(tRectificationConfirm);
                 }
-
 
             }
 

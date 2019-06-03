@@ -2689,6 +2689,7 @@ public class VillageController extends BaseController {
         return "company/checkModel/model-add2";
     }
 
+
     /**
      * TODO model-add.jsp 页面跳转
      *
@@ -2697,6 +2698,21 @@ public class VillageController extends BaseController {
     @RequestMapping(value = "getCheckModelBasic")
     public String getCheckModelBasic() {
         return "company/checkModel/model-add";
+    }
+
+    /**
+     * TODO 跳转中转页面==> 跳转到自定义/标准保存模版
+     * @return
+     */
+    @RequestMapping(value="model-add4")
+    public String modelAdd4(HttpServletRequest request ,Model model,String dmname,Integer dmid, Integer checkType,
+                               Integer industryType
+    ){
+        model.addAttribute("dmname",dmname);
+        model.addAttribute("dmid",dmid);
+        model.addAttribute("checkType",checkType);
+        model.addAttribute("industryType",industryType);
+        return"company/checkModel/model-add4";
     }
 
     /**
@@ -2734,7 +2750,7 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 跳转到添加基础检查的页面显示
+     * TODO 跳转到添加基础检查的页面显示
      * @return
      */
     @RequestMapping("addCheckModel3")

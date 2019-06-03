@@ -55,9 +55,15 @@ public interface ADangerManualMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(ADangerManual record);
+<<<<<<< HEAD
 
     List<ADangerManual> selectByIndustry(@Param("industry") String industry);
 
+=======
+    
+    List<ADangerManual> selectByIndustry(@Param("industry") String industry);
+    
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
     List<ACompanyManual> selectByIds(@Param("ids") Integer[] ids);
 
     List<ACompanyManual> selectById(@Param("id") Integer ids);
@@ -68,5 +74,10 @@ public interface ADangerManualMapper {
 
     List<ADangerManual> selectFactors(@Param("flag") String flag, @Param("industry") String industry);
 
+<<<<<<< HEAD
     List<ADangerManual> selectByAllIds(@Param("ids") Integer[] ids);
+=======
+    List<ADangerManual> selectByIndustryAll(@Param("industry")String industry,@Param("level3")String level3);
+
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 }

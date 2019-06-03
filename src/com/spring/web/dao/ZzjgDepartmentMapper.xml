@@ -25,16 +25,22 @@
         -->
         id, ctime, utime, del, name, cid, pid, level, uid
     </sql>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from zzjg_department_tbl
         where id = #{id,jdbcType=INTEGER}
     </select>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         <!--
           WARNING - @mbggenerated
@@ -234,12 +240,20 @@
         where
         t1.del = 0 and t1.level = 1
         and t1.uid = #{uid,jdbcType=INTEGER}
+<<<<<<< HEAD
         order by t1.id asc
+=======
+        order by t1.id desc
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
     </select>
 
     <select id="selectLevel2ByUid" resultType="java.util.Map">
         select
+<<<<<<< HEAD
         t1.id, t1.name, t1.level,t1.pid,
+=======
+        t1.id, t1.name, t1.level,
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
         (select name from zzjg_company_tbl where id = t1.cid) companyName,
         t2.name parName
         from zzjg_department_tbl t1
@@ -293,6 +307,7 @@
     </select>
 
 
+<<<<<<< HEAD
     <!-- 根据 pid , name ,level=2 ,del = 0 查询是否有数据 -->
     <select id="selectCount" resultType="com.spring.web.model.ZzjgDepartment" parameterType="Integer">
         select * from zzjg_department_tbl  where pid = #{pid} and name = #{name} and level = 2 and del = 0;
@@ -314,4 +329,8 @@
         set utime = #{utime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
+=======
+
+
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 </mapper>

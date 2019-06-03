@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class TLevel implements Serializable {
 
+<<<<<<< HEAD
+=======
+    
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
     private static final long serialVersionUID = -9140465473993907575L;
 
     private Integer id;
@@ -22,7 +26,24 @@ public class TLevel implements Serializable {
 
     private Integer industryId;
 
+<<<<<<< HEAD
     private String name;
+=======
+    public TLevel() {
+    }
+
+    public TLevel(Integer id, String level1, String level2, String level3, String level4, String type, String measures, Integer industryId) {
+        this.id = id;
+        this.level1 = level1;
+        this.level2 = level2;
+        this.level3 = level3;
+        this.level4 = level4;
+        this.type = type;
+        this.measures = measures;
+        this.industryId = industryId;
+    }
+
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -91,6 +112,7 @@ public class TLevel implements Serializable {
     public void setIndustryId(Integer industryId) {
         this.industryId = industryId;
     }
+<<<<<<< HEAD
 
     public String getName() {
         return name;
@@ -114,4 +136,6 @@ public class TLevel implements Serializable {
         this.industryId = industryId;
         this.name = name;
     }
+=======
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 }

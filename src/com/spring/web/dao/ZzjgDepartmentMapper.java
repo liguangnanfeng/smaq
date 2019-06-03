@@ -3,7 +3,10 @@ package com.spring.web.dao;
 import com.spring.web.model.ZzjgDepartment;
 import org.apache.ibatis.annotations.Param;
 
+<<<<<<< HEAD
 import java.util.Date;
+=======
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +58,11 @@ public interface ZzjgDepartmentMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(ZzjgDepartment record);
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
     /**
      * 根据公司名字查询部门
      */
@@ -68,6 +75,7 @@ public interface ZzjgDepartmentMapper {
      * @return
      */
     List<Map<Object, Object>> selectByUid(@Param("uid") Integer uid);
+<<<<<<< HEAD
 
     List<Map<Object, Object>> selectLevel1ByUid(@Param("uid") Integer uid);
 
@@ -76,6 +84,15 @@ public interface ZzjgDepartmentMapper {
     /**
      * 根据岗位id查询岗位名字和部门名字
      *
+=======
+    
+    List<Map<Object, Object>> selectLevel1ByUid(@Param("uid") Integer uid);
+    
+    List<Map<Object, Object>> selectLevel2ByUid(@Param("uid") Integer uid);
+    
+    /**
+     * 根据岗位id查询岗位名字和部门名字
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
      * @param id
      * @return
      */
@@ -83,7 +100,10 @@ public interface ZzjgDepartmentMapper {
 
     /**
      * 根据公司id查询所有的部门
+<<<<<<< HEAD
      *
+=======
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
      * @param companyId
      * @return
      */
@@ -91,7 +111,10 @@ public interface ZzjgDepartmentMapper {
 
     /**
      * 根据公司id和部门id查询对应的所有岗位
+<<<<<<< HEAD
      *
+=======
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
      * @param companyId
      * @return
      */
@@ -99,7 +122,10 @@ public interface ZzjgDepartmentMapper {
 
     /**
      * 根据总公司id查询所有的部门 level
+<<<<<<< HEAD
      *
+=======
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
      * @param id
      * @return
      */
@@ -108,6 +134,7 @@ public interface ZzjgDepartmentMapper {
 
     List<ZzjgDepartment> selectOnes(@Param("pid") Integer pid);
 
+<<<<<<< HEAD
     ZzjgDepartment selectNameAll(@Param("id") Integer id);
 
     ZzjgDepartment selectLevel1(@Param("id") Integer id);
@@ -120,4 +147,9 @@ public interface ZzjgDepartmentMapper {
     void updateAll(@Param("utime") Date date, @Param("id") Integer id);
 
 
+=======
+    ZzjgDepartment selectNameAll(@Param("id")Integer id);
+
+    ZzjgDepartment selectLevel1(@Param("id")Integer id);
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 }

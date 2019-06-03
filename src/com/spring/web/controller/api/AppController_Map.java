@@ -5,9 +5,15 @@ import com.spring.web.dao.TMapMapper;
 import com.spring.web.model.User;
 import com.spring.web.model.request.TMap;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 
+=======
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Controller;
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -158,7 +164,10 @@ public class AppController_Map extends BaseController {
         return tMap.getFiles();
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
     /**
      * 跳转图片的路径
      */
@@ -167,4 +176,8 @@ public class AppController_Map extends BaseController {
         return "company/safety-system/jietu";
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 }

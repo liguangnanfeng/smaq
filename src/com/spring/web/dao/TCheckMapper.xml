@@ -297,7 +297,11 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+<<<<<<< HEAD
     <!-- 政府端隐患排查记录数据查询 -->
+=======
+    <!--显示的数据格式不为空-->
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
     <select id="selectList" resultType="java.util.Map">
         select
         T1.id, T1.title, T1.depart, T1.model_id modelId, T1.type, T1.industry_id industryId, T1.industry_type
@@ -310,7 +314,11 @@
         from t_check_tbl T1
         left join company_tbl T2 on T1.user_id = T2.user_id
         <where>
+<<<<<<< HEAD
             T1.del = 0 and T1.status = 2
+=======
+            T1.del = 0
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
             <if test="title != null and title != ''">
                 and T1.title LIKE CONCAT('%', #{title},'%')
             </if>
@@ -323,9 +331,12 @@
             <if test="flag != null">
                 and T1.flag = #{flag}
             </if>
+<<<<<<< HEAD
             <if test="extime != null">
                 and expect_time is not null and expect_time &lt; #{now1}
             </if>
+=======
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
             <if test="userIds != null and userIds != ''">
                 and T2.user_id in (${userIds})
             </if>
@@ -336,11 +347,14 @@
         order by T1.id desc
     </select>
 
+<<<<<<< HEAD
 
 
 
 
 
+=======
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
     <select id="selectList1" resultType="java.util.Map">
         select
         T1.id, T1.title, T1.depart, T1.model_id modelId, T1.type, T1.industry_id industryId, T1.industry_type
@@ -415,6 +429,7 @@
         order by T1.id desc
     </select>
 
+<<<<<<< HEAD
 
 
     <!-- 政府端查询检查记录！！！ -->
@@ -479,6 +494,8 @@
 
 
 
+=======
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
     <select id="selectCompany" resultType="com.spring.web.ibatis.DynamicParameter">
         select
         T1.id,T1.user_id userId, T1.title, T1.depart, T1.model_id modelId, T1.type, T1.industry_id industryId,

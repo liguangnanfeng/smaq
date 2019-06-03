@@ -113,12 +113,21 @@
       levels = #{levels,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+<<<<<<< HEAD
   
+=======
+
+  <!--TODO 修改-->
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
   <select id="selectByModelId" resultMap="BaseResultMap">
      select 
     <include refid="Base_Column_List" />
     from t_model_part_tbl
     where model_id = #{modelId}
+<<<<<<< HEAD
+=======
+    and name !='';
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
   </select>
   
    <delete id="deleteByModelId" parameterType="java.lang.Integer">

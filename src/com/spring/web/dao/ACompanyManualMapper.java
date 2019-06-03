@@ -169,9 +169,12 @@ public interface ACompanyManualMapper {
      */
     List<Map<String, Object>> selectByFlag3(Map<String, Object> var1);
 
+<<<<<<< HEAD
     /*
     * 分级管控数据显示排序
     * */
     List<Map<String, Object>> selectByAcs(Map<String, Object> m);
+=======
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 }
 

@@ -429,14 +429,21 @@ public class AppController_Custom_Check extends BaseController {
      */
     @RequestMapping(value = "A206", method = RequestMethod.POST)
     public @ResponseBody
+<<<<<<< HEAD
 
     AppResult checkItemtById(@RequestBody CheckModel checkModel  ) {
 
+=======
+    AppResult checkItemtById(@RequestBody CheckModel checkModel  ) {
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
         AppResult result = new AppResultImpl();
         try {
 
             // 根据id查询并进行封装数据
+<<<<<<< HEAD
 
+=======
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
              CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(checkModel.getModelId());
             //CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(modelId);
 

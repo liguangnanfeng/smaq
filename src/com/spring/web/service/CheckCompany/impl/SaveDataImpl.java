@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+<<<<<<< HEAD
+=======
+import java.text.DateFormat;
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -176,7 +180,11 @@ public class SaveDataImpl implements SaveMessageService {
 
             }
             // 内容发送短信内容
+<<<<<<< HEAD
             Sms(saveDataMessageItem.getList());
+=======
+            //Sms(saveDataMessageItem.getList());
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
             return "插入成功";
 
         } catch (Exception e) {
@@ -341,6 +349,10 @@ public class SaveDataImpl implements SaveMessageService {
                 } else if ("2".equals(saveDataMessage.getValue())) {
 
                     checkItem.setStatus(2); //复查不合格
+<<<<<<< HEAD
+=======
+                    checkItem.setFiles(saveDataMessage.getFile());      //TODO 暂时覆盖之前的不合格照片
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
                     checkItem.setRecheckFile(saveDataMessage.getFile());//复查照片
                     checkItem.setPlanTime(new Date());                  // 实际的复查时间
                     checkItem.setMemo(saveDataMessage.getMemo());      // 复查描述

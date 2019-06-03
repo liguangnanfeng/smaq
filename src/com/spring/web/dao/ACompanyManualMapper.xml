@@ -234,7 +234,11 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.spring.web.model.ACompanyManual">
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 
         update a_company_manual_tbl
         <set>
@@ -314,7 +318,11 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.spring.web.model.ACompanyManual">
+<<<<<<< HEAD
 
+=======
+     
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
         update a_company_manual_tbl
         set uid = #{uid,jdbcType=INTEGER},
         dmid = #{dmid,jdbcType=INTEGER},
@@ -378,7 +386,11 @@
         T1.wlbs,T1.gwzy,T1.lnglat
         from
         a_company_manual_tbl T1
+<<<<<<< HEAD
 
+=======
+   
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
         where
         T1.del = 0 and T1.level != ""
         <if test="uid != null">
@@ -411,6 +423,7 @@
         </if>
     </select>
 
+<<<<<<< HEAD
 
 
     <!-- 分级管控数据显示排序 -->
@@ -453,6 +466,8 @@
 
 
 
+=======
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
     <select id="selectByFlag3" resultType="java.util.HashMap">
         select
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
@@ -643,6 +658,7 @@
     </select>
 
     <update id="deleteFlag2">
+<<<<<<< HEAD
         update
         a_company_manual_tbl
         set
@@ -650,6 +666,15 @@
         where
         del = 0 and uid = #{uid} and flag = 2
     </update>
+=======
+    update
+        a_company_manual_tbl
+    set
+        del = 1
+    where
+        del = 0 and uid = #{uid} and flag = 2
+  </update>
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 
     <insert id="insertBath">
         insert into a_company_manual_tbl (uid, dmid, level1,
@@ -899,6 +924,7 @@
     </update>
 
     <update id="updateCompanyDlevel">
+<<<<<<< HEAD
         update
         company_tbl
         set
@@ -906,6 +932,15 @@
         where
         user_id = #{userId}
     </update>
+=======
+      update
+      company_tbl
+      set
+      dlevel = (select level from a_company_manual_tbl where uid = #{userId} and del = 0 order by find_in_set(level,'红色,橙色,黄色,蓝色') limit 1)
+      where
+      user_id = #{userId}
+  </update>
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 
 
 
@@ -960,11 +995,19 @@
 
     <update id="updateDelByUserId2">
         update
+<<<<<<< HEAD
         a_company_manual_tbl
         set
         del = 0
         where
         uid = #{uid} and flag = 3
+=======
+          a_company_manual_tbl
+        set
+          del = 0
+        where
+          uid = #{uid} and flag = 3
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
     </update>
 
 
@@ -1007,9 +1050,17 @@
     <!-- 添加数据信息到数据库！！！ -->
     <insert id="insertAdd">
         insert into a_company_manual_tbl (uid,dmid,
+<<<<<<< HEAD
         level1, level2, level3, factors, type, measures, flag, del, ctime,gkzt)
         values (#{uid,jdbcType=INTEGER}, #{dmid,jdbcType=INTEGER},
         #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},#{factors,jdbcType=VARCHAR},
+=======
+   
+        level1, level2, level3, factors, type, measures, flag, del, ctime,gkzt)
+        values (#{uid,jdbcType=INTEGER}, #{dmid,jdbcType=INTEGER},
+        #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},#{factors,jdbcType=VARCHAR},
+    
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
         #{type,jdbcType=VARCHAR}, #{measures,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR},#{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP},
         #{gkzt,jdbcType=VARCHAR})
     </insert>
@@ -1035,6 +1086,7 @@
     </update>
 
     <update id="updateDelByIds">
+<<<<<<< HEAD
         update
         a_company_manual_tbl
         set
@@ -1042,6 +1094,15 @@
         where
         id in (${ids})
     </update>
+=======
+  update
+    a_company_manual_tbl
+  set
+    del = 1
+  where
+    id in (${ids})
+  </update>
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 
     <update id="updateLnglat" parameterType="com.spring.web.model.ACompanyManual">
         update a_company_manual_tbl
@@ -1055,6 +1116,7 @@
 
     <!--  开始检查 获取level2 岗位和工位-->
     <select id="selectDangerAndManual" resultType="String">
+<<<<<<< HEAD
         select level2  from a_company_manual_tbl where uid=#{uid}  and del=0 and level1 = #{name} group by  level1, level2;
     </select>
 
@@ -1077,6 +1139,30 @@
         and level3=#{level3};
         and del=0
     </select>
+=======
+select level2  from a_company_manual_tbl where uid=#{uid}  and del=0 and level1 = #{name} group by  level1, level2;
+  </select>
+
+    <!--查询风险点-->
+    <select id="selectLevel3AndId" resultType="java.util.Map">
+    select id, uid , level1,level2, level3 ,measures as level4
+    from a_company_manual_tbl
+    where uid=#{uid}
+    and level1 = #{level1}
+    and del=0
+    and level2 = #{level2};
+  </select>
+    <!--获取风险点及其id-->
+    <select id="selectLevel4AndId" resultType="java.util.Map">
+    select id, uid , level1,level2, level3 ,measures as level4 , factors,reference, type as types,flag,gkcs,gkzt
+    from a_company_manual_tbl
+    where uid=#{uid}
+    and level1 = #{level1}
+    and level2=#{level2}
+    and level3=#{level3}
+    and del=0;
+  </select>
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
 
     <!--查询行业id
     -->
@@ -1103,7 +1189,11 @@
     </select>
 
     <!--根根据公司id，部门，岗位名-->
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
     <select id="findInspection" resultType="java.lang.String">
         select  level3 from a_company_manual_tbl
         WHERE uid=#{id} and level1 like CONCAT('%',#{dept},'%') and level2 like CONCAT('%',#{station},'%')

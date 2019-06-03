@@ -54,6 +54,7 @@ public interface TLevelMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TLevel record);
+<<<<<<< HEAD
 
     List<TLevel> selectByIndustry(@Param("industryId") Integer industryId);
 
@@ -63,6 +64,17 @@ public interface TLevelMapper {
      */
     List<TLevel> selectByIndustryAndTz(@Param("industryId") Integer industryId);
 
+=======
+    
+    List<TLevel> selectByIndustry(@Param("industryId") Integer industryId);
+    
+    /** 
+    * @param industryId
+    * @return 返回现场检查分类，包含特种设备
+    */
+    List<TLevel> selectByIndustryAndTz(@Param("industryId") Integer industryId);
+    
+>>>>>>> bb9d2e59f9102daf143f984963e2dbfe16b7792f
     List<TLevel> selectByIds(@Param("ids") String ids);
 
     /**

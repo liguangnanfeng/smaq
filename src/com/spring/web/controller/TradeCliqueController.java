@@ -704,8 +704,6 @@ public class TradeCliqueController extends BaseController {
 
 
 
-
-
     /*
     * 政府端隐患排查信息查询 ！！！
     * */
@@ -717,12 +715,20 @@ public class TradeCliqueController extends BaseController {
 
         // 根据登录 ID 查询所有属于这个地区中的所有公司信息
         List<Company> companyList = companyMapper.selectAllList(user.getId());
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < companyList.size() ; i++) {
+            if (i == companyList.size()-1){
+                sb.append(companyList.get(i).getUserId());
+            }else {
+                sb.append(companyList.get(i).getUserId()).append(",");
+            }
 
+        }
+        String userIds = sb.toString();
 
-        for (int i = 0; i < companyList.size(); i++) {
-            Map<String, Object> m = new HashMap<String, Object>();
-            m.put("userId",companyList.get(i).getUserId());
-            List<Map<String, Object>> list = tCheckMapper.selectAll(m);
+        List<Map<String, Object>> list = tCheckMapper.selectAll(userIds);
+
+        if (list.size() != 0){
             model.addAttribute("list", list);
         }
 
@@ -730,6 +736,19 @@ public class TradeCliqueController extends BaseController {
     }
 
 
+    /*
+    * 政府端数据删除 ！！！
+    * */
+    @RequestMapping(value = "check-update")
+    @ResponseBody
+    public Result delete3(HttpServletRequest request, Integer id) throws Exception {
+        User user = getLoginUser(request);
+        Result result = new ResultImpl();
+        // 根据 ID 更改数据 del 为 1
+        tCheckMapper.updateDel(id);
+
+        return result;
+    }
 
     /*
      * 政府端隐患治理信息查询 ！！！
@@ -741,18 +760,31 @@ public class TradeCliqueController extends BaseController {
         User user = getLoginUser(request);
         // 根据登录 ID 查询所有属于这个地区中的所有公司信息
         List<Company> companyList = companyMapper.selectAllList(user.getId());
-        model.addAttribute("flag", flag);
-        model.addAttribute("status", 1);
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < companyList.size() ; i++) {
+            if (i == companyList.size()-1){
+                sb.append(companyList.get(i).getUserId());
+            }else {
+                sb.append(companyList.get(i).getUserId()).append(",");
+            }
+
+        }
+        String userIds = sb.toString();
+
+       /* model.addAttribute("flag", flag);
+        model.addAttribute("status", 1);*/
         // 只判断是否以检查出过合格的
-        List<Map> list = null;
-        for (int i = 0; i < companyList.size(); i++) {
+        List<Map> list = tCheckItemMapper.selectAll(userIds);
+
+
+        /*for (int i = 0; i < companyList.size(); i++) {
 
             if (null != status && 1 == status) { //表示的是要查询整改合格的
                 list = tCheckItemMapper.selectRecheckListByRecheckStatus(companyList.get(i).getUserId(), 1);
             } else {
                 list = tCheckItemMapper.selectRecheckList(companyList.get(i).getUserId());
             }
-        }
+        }*/
 
         model.addAttribute("list", list);
 

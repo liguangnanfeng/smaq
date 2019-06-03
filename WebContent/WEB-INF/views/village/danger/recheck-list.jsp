@@ -87,13 +87,13 @@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
             <tr class="text-c">
-                <th width="10%">编号</th>
-                <th width="10%">检查表id</th>
-                <th width="10%">部门</th>
-                <th width="10%">检查内容</th>
-                <th width="20%">复查时间</th>
-                <th width="30%">复查结果</th>
-                <th width="10%">检查人</th>
+                <th width="5%">编号</th>
+                <th width="5%">检查表id</th>
+                <th width="8%">部门</th>
+                <th width="30%">检查内容</th>
+                <th width="10%">复查时间</th>
+                <th width="8%">复查结果</th>
+                <th width="6%">检查人</th>
             </tr>
             </thead>
             <tbody>

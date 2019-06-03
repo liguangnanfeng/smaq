@@ -175,6 +175,8 @@ public interface TCheckItemMapper {
      * @return
      */
     List<Map> selectRecheckListByRecheckStatus(@Param("uid") Integer id, @Param("status") Integer status);
+
+    List<Map> selectAll(@Param("userIds") String userIds);
 }
 
 

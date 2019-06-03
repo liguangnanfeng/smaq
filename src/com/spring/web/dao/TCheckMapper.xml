@@ -429,39 +429,20 @@
         (select count(0) from t_rectification_tbl where check_id = T1.id) t
         from t_check_tbl T1
         left join company_tbl T2 on T1.user_id = T2.user_id
-        <where>
-            T1.del = 0 and T1.status = 2
-            <if test="title != null and title != ''">
-                and T1.title LIKE CONCAT('%', #{title},'%')
-            </if>
-            <if test="type != null and type != ''">
-                and T1.industry_type = #{type}
-            </if>
-            <if test="status != null">
-                and T1.status = #{status}
-            </if>
-            <if test="flag != null">
-                and T1.flag = #{flag}
-            </if>
-            <if test="extime != null">
-                and expect_time is not null and expect_time &lt; #{now1}
-            </if>
-            <if test="userIds != null and userIds != ''">
-                and T2.user_id in (${userIds})
-            </if>
-            <if test="userId != null and userId != ''">
-                and T2.user_id = #{userId}
-            </if>
-        </where>
-        order by T1.id desc
+        where T1.del = 0
+        and T1.STATUS = 2
+        and T2.user_id in (${userIds})
     </select>
 
 
 
 
-
-
-
+    <update id="updateDel" parameterType="com.spring.web.model.TCheck">
+        update t_check_tbl
+        set
+        del = 1
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
 
 

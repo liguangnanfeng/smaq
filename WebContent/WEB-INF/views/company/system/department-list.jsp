@@ -79,7 +79,11 @@
         <thead>
           <tr class="text-c">
             <td><button class="btn-depart" onclick="showadd(3)">
+<<<<<<< HEAD
                 <i class="Hui-iconfont">&#xe600;</i> <c:if test="${session_user.userType != 3}">添加环节/部位</c:if><c:if test="${session_user.userType == 3}">添加科室</c:if>
+=======
+                <i class="Hui-iconfont">&#xe600;</i> <c:if test="${session_user.userType != 3}">添加岗位/部位</c:if><c:if test="${session_user.userType == 3}">添加科室</c:if>
+>>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
               </button></td>
           </tr>
         </thead>

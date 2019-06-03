@@ -424,18 +424,31 @@ public class AppController_Custom_Check extends BaseController {
     /**
      * TODO 根据模版id查询详细信息 > 开启检查
      *
+<<<<<<< HEAD
      * @param modelId 包含模版id信息
+=======
+     * @param checkModel 包含模版id信息
+>>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
      * @return checkItemByModelId 检查记录的详细信息
      */
     @RequestMapping(value = "A206", method = RequestMethod.POST)
     public @ResponseBody
+<<<<<<< HEAD
     AppResult checkItemtById(/*@RequestBody CheckModel checkModel*/  Integer modelId) {
+=======
+    AppResult checkItemtById(@RequestBody CheckModel checkModel  ) {
+>>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
         AppResult result = new AppResultImpl();
         try {
 
             // 根据id查询并进行封装数据
+<<<<<<< HEAD
             // CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(checkModel.getModelId());
             CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(modelId);
+=======
+             CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(checkModel.getModelId());
+            //CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(modelId);
+>>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
 
             result.setStatus("0");
             result.setMessage("查询成功");

@@ -55,9 +55,9 @@ public interface ADangerManualMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(ADangerManual record);
-    
+
     List<ADangerManual> selectByIndustry(@Param("industry") String industry);
-    
+
     List<ACompanyManual> selectByIds(@Param("ids") Integer[] ids);
 
     List<ACompanyManual> selectById(@Param("id") Integer ids);

@@ -213,7 +213,11 @@
         <th style="min-width:80px">辨识类型</th>
         <th style="min-width:80px">车间/场所</th>
         <th style="min-width:80px">系统</th>
+<<<<<<< HEAD
         <th style="min-width:80px">环节/部位</th>
+=======
+        <th style="min-width:80px">岗位/部位</th>
+>>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
         <th style="min-width:50px">风险等级</th>
         <th style="min-width:150px">风险类型</th>
         <th style="min-width:200px">风险因素</th>
@@ -232,7 +236,11 @@
               <tr>
                 <c:set value="${fn:split(be.level3,'/')}" var="ls"></c:set>
 
+<<<<<<< HEAD
                 <td class="text-c">${ls[0] != null ? ls[0] : "暂无数据" }</td>
+=======
+                <td class="text-c">${ls[0] != null ? ls[0] : "无数据" }</td>
+>>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
 
                 <c:if test="${empty be.gkzt}">
                     <td class="text-c">暂无数据</td>
@@ -242,7 +250,11 @@
                   <td class="text-c">${be.gkzt}</td>
                 </c:if>
 
+<<<<<<< HEAD
                 <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
+=======
+                <td class="text-c">${ls[1] != null ? ls[1] : "无数据" }</td>
+>>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
 
 
                 <c:if test="${empty be.level2}">

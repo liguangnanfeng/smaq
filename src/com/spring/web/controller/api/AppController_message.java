@@ -164,6 +164,10 @@ public class AppController_message extends BaseController {
             String name = zzjgDepartmentMapper.selectByPrimaryKey(zzjg.getDid()).getName(); //岗位
             System.out.println("被检查人员获取不合格检查记录列表==============");
             list = appMessageService.findTCheckItemByBJC(zzjg.getUid(), bm, name, pageNo, 10);
+<<<<<<< HEAD
+=======
+            System.out.println(list);
+>>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
 
         }
         result.setData(list);
@@ -191,7 +195,10 @@ public class AppController_message extends BaseController {
      * 整改意见列表
      * 1.获取checkId 查找t_check_item表，获取当前检查记录的整改意见列表     ,String checkId
      * 整改意见表就是在整改过程中
+<<<<<<< HEAD
      *
+=======
+>>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
      * @RequestBody Map<String, Object> params,
      */
     @RequestMapping(value = "findRectificationList", method = RequestMethod.POST)
@@ -265,6 +272,12 @@ public class AppController_message extends BaseController {
 
     /**
      * 整改意见回复(检查人读取)        , String checkId
+<<<<<<< HEAD
+=======
+     * 两种情况,一种是pc端保存的检查模版
+     * 一种是 小程序端保存的检查模版
+     *
+>>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
      */
     @RequestMapping(value = "findTRectificationConfirm", method = RequestMethod.POST)
     public @ResponseBody
@@ -272,9 +285,22 @@ public class AppController_message extends BaseController {
 
         String userId = String.valueOf(params.get("userId"));
         String checkId = String.valueOf(params.get("checkId"));
+<<<<<<< HEAD
 
         List<Map> confirmList = tRectificationConfirmService.findTRectificationConfirm(userId);
 
+=======
+        // 还得去获取公司id进行比较
+
+        List<Map> confirmList = tRectificationConfirmService.findTRectificationConfirm(userId);
+
+        if(null==confirmList||confirmList.size()==0){
+            // 表示是pc端进行检查的
+            Integer uid = zzjgPersonnelMapper.selectByPrimaryKey(Integer.parseInt(userId)).getUid();
+            confirmList = tRectificationConfirmService.findTRectificationConfirm(uid+"");
+        }
+
+>>>>>>> 62750a382b2898bf8dfbc00626a5a806f3be2008
         AppResult result = new AppResultImpl();
         result.setData(confirmList);
         return result;

@@ -1359,7 +1359,7 @@ public class CompanyController_safety extends BaseController {
     * */
     @RequestMapping(value = "risk-list-loads")//确认风险操作
     public String riskListLoads(Model model, HttpServletRequest request, String industry,
-                               Integer depId) throws Exception {
+                                Integer depId) throws Exception {
         User user = getLoginUser(request);
         if(StringUtils.isNotBlank(industry)) {
             industry = utf8Str(industry);
@@ -1576,9 +1576,9 @@ public class CompanyController_safety extends BaseController {
         return "company/safety-system/assess5-2-choose";
     }
 
-   /*
-   * 分级管控页面展示
-   * */
+    /*
+    * 分级管控页面展示
+    * */
     @RequestMapping(value = "control-list")
     public String controlList(Model model, HttpServletRequest request, Integer type) throws Exception {
         User user = getLoginUser(request);

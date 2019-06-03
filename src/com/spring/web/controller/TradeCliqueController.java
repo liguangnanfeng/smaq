@@ -1,4 +1,4 @@
-/**  
+/**
  * Copyright(c)2017 Wuxi TongXiang Co.,Ltd. 
  * All right reserved. 
  */
@@ -51,16 +51,16 @@ public class TradeCliqueController extends BaseController {
     private UserService userService;
     @Autowired
     private CgfService cgfService;
-    
+
     /**
      * 行业端——集团企业——所属企业首页，点击——隐藏不必要的信息
      * @param model
      * @param companyId
      */
-    public void TradeComapnyHide(Model model,Integer companyId){	
-    	if(companyId != null){		
-    		model.addAttribute("tradecompanyhide","hide");	
-    	}
+    public void TradeComapnyHide(Model model,Integer companyId){
+        if(companyId != null){
+            model.addAttribute("tradecompanyhide","hide");
+        }
     }
 
     /**
@@ -82,8 +82,8 @@ public class TradeCliqueController extends BaseController {
         m.clear();
         m.put("tradeId", user.getId());
         model.addAttribute("branches", aCompanyManualMapper.selectByMap2(m));
- 
-        Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();    
+
+        Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
         for(Map<String, Object> m1 : list) {
             String level1 = null == m1.get("level1") ? "" : m1.get("level1").toString();
             String level2 = null == m1.get("level2") ? "" : m1.get("level2").toString();
@@ -96,20 +96,20 @@ public class TradeCliqueController extends BaseController {
         }
         model.addAttribute("treeMap", levmap);
         model.addAttribute("flag", flag);
-        
+
         /*
          * 添加根据风险等级查询，查询结果可能会受到其他修改风险等级功能的影响	wz_20181116
          */
 //        m.put("level", "红色");
 //        List<Map<String, Object>> list11 = aCompanyManualMapper.selectByMap(m);
 //        model.addAttribute("list11", list11);
-//        
+//
 //        m.put("level", "橙色");
 //        List<Map<String, Object>> list22 = aCompanyManualMapper.selectByMap(m);
 //        model.addAttribute("list22", list22);
-        
+
 //        if(flag.equals("2")){
-        	return "tradeclique/clique/control-list3";
+        return "tradeclique/clique/control-list3";
 //        }
 //        else{
 //        	return "company/safety-system/control-list2";
@@ -120,11 +120,11 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping(value = "control-list3")
     public String controlList3(Model model, HttpServletRequest request, Integer id, String lnglat) throws Exception {
-    	log.error("zhangcl 2018.10.13 controlList3,id="+id+",lnglat="+lnglat);
-    	aCompanyManualMapper.updateLnglat(id,lnglat);
-    	return controlList2(model, request, "2");
+        log.error("zhangcl 2018.10.13 controlList3,id="+id+",lnglat="+lnglat);
+        aCompanyManualMapper.updateLnglat(id,lnglat);
+        return controlList2(model, request, "2");
     }
-    
+
     @RequestMapping(value = "area-range-save")
     public String AreaRangeSave(Model model, HttpServletRequest request, String arearange) throws Exception {
         User user = getLoginUser(request);
@@ -136,21 +136,21 @@ public class TradeCliqueController extends BaseController {
     /**
      * 行业端——集团企业——基本信息页面
      */
-	@RequestMapping("clique/basic-information")
+    @RequestMapping("clique/basic-information")
     public String basicInformation(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         //Company c = companyMapper.selectByPrimaryKey(user.getId());
         TradeClique tradeClique = tradeCliqueMapper.selectByPrimaryKey(user.getId());
         if(tradeClique == null){
-        	TradeClique tc = new TradeClique();
-        	Trade trade = tradeMapper.selectByPrimaryKey(user.getId());
-        	tc.setUserId(trade.getUserId());
-        	tc.setName(trade.getName());
-        	tradeCliqueMapper.insertSelective(tc);
-        	tradeClique = tc;
+            TradeClique tc = new TradeClique();
+            Trade trade = tradeMapper.selectByPrimaryKey(user.getId());
+            tc.setUserId(trade.getUserId());
+            tc.setName(trade.getName());
+            tradeCliqueMapper.insertSelective(tc);
+            tradeClique = tc;
         }else{
-        	tradeClique.setName(tradeMapper.selectByPrimaryKey(user.getId()).getName());
-        	tradeCliqueMapper.updateByPrimaryKeySelective(tradeClique);
+            tradeClique.setName(tradeMapper.selectByPrimaryKey(user.getId()).getName());
+            tradeCliqueMapper.updateByPrimaryKeySelective(tradeClique);
         }
         if (null != tradeClique.getRegionId()) {
             model.addAttribute("regionName", globalRegionMapper.selectRegionName(tradeClique.getRegionId()));
@@ -214,28 +214,28 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping(value = "information/user-list")
     public String userList(Model model, HttpServletRequest request, String companyName)throws Exception {
-    	User user = getLoginUser(request);
+        User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("tradeId", user.getId());
         m.put("companyName",companyName);
-    	List<Map<String, Object>> branches = zzjgPersonnelMapper.selectCountByTrade(m);
-    	Map<String, Object> clique = zzjgPersonnelMapper.selectCountForClique(m);
-    	branches.add(0, clique);
-    	Integer total = 0;
-    	for(Map<String, Object> branch : branches){
-    		total += Integer.valueOf(branch.get("count").toString());
-    	}
-    	model.addAttribute("branches",branches);
-    	model.addAttribute("total", total);
-    	model.addAttribute("companyName", companyName);
-    	return "tradeclique/information/user-list";
+        List<Map<String, Object>> branches = zzjgPersonnelMapper.selectCountByTrade(m);
+        Map<String, Object> clique = zzjgPersonnelMapper.selectCountForClique(m);
+        branches.add(0, clique);
+        Integer total = 0;
+        for(Map<String, Object> branch : branches){
+            total += Integer.valueOf(branch.get("count").toString());
+        }
+        model.addAttribute("branches",branches);
+        model.addAttribute("total", total);
+        model.addAttribute("companyName", companyName);
+        return "tradeclique/information/user-list";
     }
     /**
      * 集团下属企业部门人员详情
      */
     @RequestMapping(value = "information/user-details")
     public String userDetails(Model model, HttpServletRequest request,Integer userId,
-    		Integer cid, Integer dpid, Integer did, String name)
+                              Integer cid, Integer dpid, Integer did, String name)
             throws Exception {
         LlHashMap<Object, Object> m = getLlMap();
         m.put("cid", cid);
@@ -248,7 +248,7 @@ public class TradeCliqueController extends BaseController {
         model.addAttribute("m", m);
         model.addAttribute("companyL", zzjgCompanyMapper.selectAll(userId));
         model.addAttribute("userId", userId);
-        
+
         ZzjgDepartment dep = new ZzjgDepartment();
         dep.setUid(userId);
         dep.setLevel(1);
@@ -309,7 +309,7 @@ public class TradeCliqueController extends BaseController {
         userId.add(user.getId());
         m.put("userIds", StringUtils.join(userId, ","));
         //log.error(m.toString());
-        
+
         m.put("equipmentName", equipmentName);
         model.addAttribute("list", mequipmentMapper.selectByUserIdClique(m));
         model.addAttribute("equipmentName", equipmentName);
@@ -328,13 +328,13 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping(value = "product/mequipment-add")
     public String addMequipment(HttpServletRequest request, Model model) throws Exception {
-    	User user = getLoginUser(request);
-    	Map<String, Object> m = new HashMap<String, Object>();
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
         m.put("tradeId", user.getId());
         List<DynamicParameter<String, Object>> branches = companyMapper.selectCompanyList(m);
         Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
-    	model.addAttribute("branches", branches);
-    	model.addAttribute("clique", clique);
+        model.addAttribute("branches", branches);
+        model.addAttribute("clique", clique);
         return "tradeclique/product/mequipment-add";
     }
     /**
@@ -373,7 +373,7 @@ public class TradeCliqueController extends BaseController {
         userId.add(user.getId());
         m.put("userIds", StringUtils.join(userId, ","));
         //log.error(m.toString());
-        
+
         m.put("equipmentName", equipmentName);
         model.addAttribute("list", mequipmentMapper.selectByUserId(m));
         model.addAttribute("equipmentName", equipmentName);
@@ -431,7 +431,7 @@ public class TradeCliqueController extends BaseController {
         materialMapper.deleteByPrimaryKey(id);
         return result;
     }
-    
+
     /**
      * 行业端——集团企业——主要生产产品——页面
      */
@@ -450,7 +450,7 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping(value = "product/product-edit")
     public String proEdit(@RequestParam("id") int id, Model model) throws Exception {
-    	//log.error("pr："+ productMapper.selectByPrimaryKey(id));
+        //log.error("pr："+ productMapper.selectByPrimaryKey(id));
         model.addAttribute("pr", productMapper.selectByPrimaryKey(id));
         return "tradeclique/product/product-edit";
     }
@@ -516,7 +516,7 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping("process/process-save")
     public @ResponseBody Result processSave(HttpServletRequest request,
-            ProductionProcessDiagram productionProcessDiagram) throws Exception {
+                                            ProductionProcessDiagram productionProcessDiagram) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         productionProcessDiagram.setUserId(user.getId());
@@ -537,23 +537,23 @@ public class TradeCliqueController extends BaseController {
         productionProcessDiagramMapper.deleteByPrimaryKey(id);
         return result;
     }
-    
+
     /**
      * 行业端——集团企业首页——企业数量
      */
     @RequestMapping(value = "company/company-list")
     public String companyList(Model model, HttpServletRequest request, CompanyListReqDTO dto, Integer totalzc, Integer totalwyx) throws Exception {
         User user = getLoginUser(request);
-        cgfService.selectCompanyWithPage(dto, user, model);  
+        cgfService.selectCompanyWithPage(dto, user, model);
         if(user.getUserType().intValue() == 3) {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("townId", dto.getTownId());
             m.put("districtId", dto.getDistrictId());
             List<DynamicParameter<String, Object>> villagelist = villageMapper.selectListByTown(m);
             model.addAttribute("villagelist", villagelist);
-        }    
+        }
         model.addAttribute("lib", libraryMapper.selectLibraryList(1));
-        model.addAttribute("sk", request.getParameter("sk"));   
+        model.addAttribute("sk", request.getParameter("sk"));
         model.addAttribute("totalzc", totalzc);
         model.addAttribute("totalwyx", totalwyx);
         model.addAttribute("dto", dto);
@@ -569,87 +569,87 @@ public class TradeCliqueController extends BaseController {
     /**
      * 行业端——集团企业首页——企业数量——跳转到企业页面
      */
-	@RequestMapping(value = "move/company")
-	public String move(HttpServletRequest request, Model model,Integer uid) throws Exception {
-		User user = getLoginUser(request);
-		if(user.getUserType()!=5){
-			HttpSession session = request.getSession();
-			//log.error("moveBefore："+user.toString());
-			session.setAttribute("govUser",user); //跳转前user保存
-			user = userMapper.selectByPrimaryKey(uid);
-			SessionUtil.setUser(request, user);
-		}
-	    model.addAttribute("userName", companyMapper.selectByPrimaryKey(user.getId()).getName());
-	    model.addAttribute("loginUserId", user.getId());
-	    return "company/main";
-	}
+    @RequestMapping(value = "move/company")
+    public String move(HttpServletRequest request, Model model,Integer uid) throws Exception {
+        User user = getLoginUser(request);
+        if(user.getUserType()!=5){
+            HttpSession session = request.getSession();
+            //log.error("moveBefore："+user.toString());
+            session.setAttribute("govUser",user); //跳转前user保存
+            user = userMapper.selectByPrimaryKey(uid);
+            SessionUtil.setUser(request, user);
+        }
+        model.addAttribute("userName", companyMapper.selectByPrimaryKey(user.getId()).getName());
+        model.addAttribute("loginUserId", user.getId());
+        return "company/main";
+    }
     /**
      * 行业端——集团企业首页——企业数量——跳转返回
      */
-	@RequestMapping(value = "back/gov")
-	public String back(HttpServletRequest request, Model model) throws Exception {
-    	HttpSession session = request.getSession();
-    	User user =  (User)session.getAttribute("govUser");
-    	if(user == null){//返回后的刷新
-    		user = getLoginUser(request);
-    	}else{	
-    		SessionUtil.setUser(request, user);
-    		session.removeAttribute("govUser");//返回时将moveBefore的session删除
-    	}
-    	if(user.getUserType()==10){//行业端
-    		Trade trade = tradeMapper.selectByPrimaryKey(user.getId());
-    		model.addAttribute("name_", trade.getName());
-    		model.addAttribute("loginUserId", user.getId());
-    		if(trade.getIsClique() == 1){//集团型企业
-    			//model.addAttribute("list", tradeMapper.selectTradeCompany(user.getId()));
-    			//log.error("TradeCompany："+tradeMapper.selectTradeCompany(user.getId()));
-    			return "tradeclique/clique-main";	
-    		}
-    		return "trade/main";	
-    	}
-    	if(user.getUserType()==6){//区
-    		Map<String, Object> m = new HashMap<String, Object>();
+    @RequestMapping(value = "back/gov")
+    public String back(HttpServletRequest request, Model model) throws Exception {
+        HttpSession session = request.getSession();
+        User user =  (User)session.getAttribute("govUser");
+        if(user == null){//返回后的刷新
+            user = getLoginUser(request);
+        }else{
+            SessionUtil.setUser(request, user);
+            session.removeAttribute("govUser");//返回时将moveBefore的session删除
+        }
+        if(user.getUserType()==10){//行业端
+            Trade trade = tradeMapper.selectByPrimaryKey(user.getId());
+            model.addAttribute("name_", trade.getName());
+            model.addAttribute("loginUserId", user.getId());
+            if(trade.getIsClique() == 1){//集团型企业
+                //model.addAttribute("list", tradeMapper.selectTradeCompany(user.getId()));
+                //log.error("TradeCompany："+tradeMapper.selectTradeCompany(user.getId()));
+                return "tradeclique/clique-main";
+            }
+            return "trade/main";
+        }
+        if(user.getUserType()==6){//区
+            Map<String, Object> m = new HashMap<String, Object>();
             m.put("districtId", user.getId());
             List<Map<String, Object>> list = townMapper.selectListByDistrict(m);
             model.addAttribute("list", list);
-    		model.addAttribute("name_", districtMapper.selectByPrimaryKey(user.getId()).getName());
-    		model.addAttribute("loginUserId", user.getId());
-    		return "area/main";
-    	}
-    	if(user.getUserType()==3){//镇
-    		Map<String, Object> m = new HashMap<String, Object>();
+            model.addAttribute("name_", districtMapper.selectByPrimaryKey(user.getId()).getName());
+            model.addAttribute("loginUserId", user.getId());
+            return "area/main";
+        }
+        if(user.getUserType()==3){//镇
+            Map<String, Object> m = new HashMap<String, Object>();
             m.put("townId", user.getId());
             List<DynamicParameter<String, Object>> list = villageMapper.selectListByTown(m);
             model.addAttribute("list", list);
-    		model.addAttribute("name_", townMapper.selectByPrimaryKey(user.getId()).getName());
-    		model.addAttribute("loginUserId", user.getId());
-    		return "town/main";
-    	}
-    	if(user.getUserType()==4){//乡
-    		model.addAttribute("name_", villageMapper.selectByPrimaryKey(user.getId()).getName());
+            model.addAttribute("name_", townMapper.selectByPrimaryKey(user.getId()).getName());
+            model.addAttribute("loginUserId", user.getId());
+            return "town/main";
+        }
+        if(user.getUserType()==4){//乡
+            model.addAttribute("name_", villageMapper.selectByPrimaryKey(user.getId()).getName());
 //            if(user.getUserName().equals("港口")) {//港口特殊账号
 //                return "gang/main";
 //            }
             model.addAttribute("loginUserId", user.getId());
             return "village/main";
-    	}
-    	if(user.getUserType()==9){//安泰
-    		model.addAttribute("list", districtMapper.selectDistrict());
+        }
+        if(user.getUserType()==9){//安泰
+            model.addAttribute("list", districtMapper.selectDistrict());
             model.addAttribute("list1", tradeMapper.selectTrade());
             model.addAttribute("name_", user.getUserName());
             model.addAttribute("loginUserId", user.getId());
             return "country/main";
-    	}
-    	return "";	
-	}
-    
+        }
+        return "";
+    }
+
     /**
      * 行业端——集团企业首页——定期检查：flag=1&status=1 各账号首页定期检查均利用此端口；最好不要修改
      */
     @RequestMapping(value = "check-list")//flag:3 部门抽查
     public String troubleList1(HttpServletRequest request, String title, Integer type, String companyName,
-            Integer townId, Integer villageId,
-            Integer status, Integer flag, Model model) throws Exception {
+                               Integer townId, Integer villageId,
+                               Integer status, Integer flag, Model model) throws Exception {
         User user = getLoginUser(request);
         Date d = new Date();
         Map<String, Object> m = new HashMap<String, Object>();
@@ -667,8 +667,8 @@ public class TradeCliqueController extends BaseController {
         m.put("companyName", companyName);
         m.put("status", status);
         if(flag == 1){
-        	m.put("now1", DateFormatUtils.format(d, "yyyy-MM-dd"));
-        	m.put("extime", 1);
+            m.put("now1", DateFormatUtils.format(d, "yyyy-MM-dd"));
+            m.put("extime", 1);
         }
         if(setUserId(user, m)) {
             clearVillageTown(m);
@@ -688,14 +688,14 @@ public class TradeCliqueController extends BaseController {
         //log.error("user:"+user.toString());
         Integer jcxq = 1;
         model.addAttribute("jcxq",jcxq);//特制：将首页——定期检查——检查详情：显示显示未未检查 wz 0116
-        
+
         Trade trade = tradeMapper.selectByPrimaryKey(user.getId());//行业端集团型企业
         if (trade != null && trade.getIsClique() == 1) {
-        	//log.error("flag："+flag);
+            //log.error("flag："+flag);
             return "company/danger/check-list1";
         }
         if (user.getUserType() == 5) {
-        	//log.error("flag："+flag);
+            //log.error("flag："+flag);
             return "company/danger/check-list1";
         }
         return "village/danger/check-list1";
@@ -731,9 +731,9 @@ public class TradeCliqueController extends BaseController {
 
 
 
-  /*
-   * 政府端隐患治理信息查询 ！！！
-   * */
+    /*
+     * 政府端隐患治理信息查询 ！！！
+     * */
     @RequestMapping(value = "check-list4")//flag:3 部门抽查
     public String troubleList3(HttpServletRequest request, String title, Integer type, String companyName,
                                Integer townId, Integer villageId,
@@ -767,33 +767,33 @@ public class TradeCliqueController extends BaseController {
      * 行业端——集团企业——企业自查
      * TODO 企业自查详细信息   url参数 ?flag=1&type=1
      */
-	 @RequestMapping(value = "model-list-cx")
-	 public String modelList1(Integer type, Integer flag, String title, Integer industryType, HttpServletRequest request,
-	         Model model) throws Exception {
-	     //  TODO 获取登陆信息
-	     User user = getLoginUser(request); 
-	     //Company company = companyMapper.selectByPrimaryKey(user.getId());
-	     model.addAttribute("type", type);
-	     model.addAttribute("flag", flag);
-	     model.addAttribute("industryType", industryType);
-	     
-	     Map<String, Object> m = new HashMap<String, Object>();
-	     m.put("type", type);
-	     m.put("title", title);
-	     m.put("flag", flag);
-	     m.put("industryType", industryType);
-	     m.put("userId", user.getId());
-	     //setUserId(user, m);    
-	     model.addAttribute("list", tModelMapper.selectByMap(m));
-	
-	     return "tradeclique/danger/model-list-cx";
-	 }
-   /**
+    @RequestMapping(value = "model-list-cx")
+    public String modelList1(Integer type, Integer flag, String title, Integer industryType, HttpServletRequest request,
+                             Model model) throws Exception {
+        //  TODO 获取登陆信息
+        User user = getLoginUser(request);
+        //Company company = companyMapper.selectByPrimaryKey(user.getId());
+        model.addAttribute("type", type);
+        model.addAttribute("flag", flag);
+        model.addAttribute("industryType", industryType);
+
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("type", type);
+        m.put("title", title);
+        m.put("flag", flag);
+        m.put("industryType", industryType);
+        m.put("userId", user.getId());
+        //setUserId(user, m);
+        model.addAttribute("list", tModelMapper.selectByMap(m));
+
+        return "tradeclique/danger/model-list-cx";
+    }
+    /**
      * 行业端——集团企业——企业自查——复查整改
      */
     @RequestMapping(value = "check-list1")
     public String troubleList1(HttpServletRequest request, String title, Integer type, String companyName,
-            Integer status, Integer flag, Model model) throws Exception {
+                               Integer status, Integer flag, Model model) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("flag", flag);
@@ -809,8 +809,8 @@ public class TradeCliqueController extends BaseController {
         clearVillageTown(m);
         List<Map<String, Object>> list = tCheckMapper.selectList(m);
         model.addAttribute("list", list);
- 
-        
+
+
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
         model.addAttribute("companyName", companyName);
@@ -820,24 +820,24 @@ public class TradeCliqueController extends BaseController {
         String x = DateFormatUtils.format(d, "yyyy-MM-dd");
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
         model.addAttribute("t", d.getTime());
-        
+
         Trade trade = tradeMapper.selectByPrimaryKey(user.getId());//行业端集团型企业
         if (trade != null && trade.getIsClique() == 1) {
-        	return "tradeclique/danger/model-list-cx";
+            return "tradeclique/danger/model-list-cx";
         }
-        
+
         if (user.getUserType() == 5) {
             return "tradeclique/danger/model-list-cx";
         }
         return "village/danger/check-list";
     }
-    
-    
-    
-    
+
+
+
+
     /**
      * 行业端——所属企业——Company首页功能开始
-     * 
+     *
      * @throws Exception
      */
     @RequestMapping("welcomecompany")
@@ -849,24 +849,24 @@ public class TradeCliqueController extends BaseController {
         m.put("type", "1");
         m.clear();
         setUserId(user, m);
-        
+
         List<Integer> count = userService.selectCount(new CompanyListReqDTO(), user);
-        
+
         //log.error("count："+count.toString());
-        
+
         model.addAttribute("lib", libraryMapper.selectLibraryList(2));
         m.clear();
         setUserId(user, m);
         model.addAttribute("dangerC", tCheckItemMapper.selectCount(m));// 隐患情况汇总
         model.addAttribute("dangerC2", tCheckItemMapper.selectZhongCount(m));// 隐患情况汇总
-        
+
         model.addAttribute("mc", monitorMapper.selectCount(m));
         model.addAttribute("count", count);
-        
+
         model.addAttribute("loginUserId", user.getId());
         return "tradeclique/company/clique-companywelcome";
-    }    
-    
+    }
+
     /**
      * Company首页——企业基本信息
      */
@@ -902,15 +902,15 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping("train/special-list")
     public String spersonList(Model model, HttpServletRequest request, String spFlag, String spName, String spType,Integer companyId,
-            Integer isTime) throws Exception {
-    	TradeComapnyHide(model,companyId);
-    	
+                              Integer isTime) throws Exception {
+        TradeComapnyHide(model,companyId);
+
         if (spFlag == null || "".equals(spFlag)) {
             spFlag = "0";
         }
         int libraryType = 10;
         if ("0".equals(spFlag)) {
-            libraryType += 1; 
+            libraryType += 1;
         } else {
             libraryType += Integer.parseInt(spFlag);
         }
@@ -962,8 +962,8 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping("evaluate/detection-list")
     public String detList(Model model, HttpServletRequest request, String deType, Integer companyId,Integer isTime) throws Exception {
-    	//TradeComapnyHide(model,companyId);
-    	
+        //TradeComapnyHide(model,companyId);
+
         User user = userMapper.selectByPrimaryKey(companyId);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
@@ -985,9 +985,9 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping("evaluate/evaluation-list")
     public String evatList(Model model, HttpServletRequest request, Integer companyId, String reportName, String evaType, Integer isTime,
-            String flag) throws Exception {
-    	//TradeComapnyHide(model,companyId);
-    	
+                           String flag) throws Exception {
+        //TradeComapnyHide(model,companyId);
+
         if (flag == null || "".equals(flag)) {
             flag = "0";
         }
@@ -1015,8 +1015,8 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping("evaluate/zheng-list")
     public String zhengList(Model model, HttpServletRequest request, Integer companyId, Standard standard, Integer isTime) throws Exception {
-    	//TradeComapnyHide(model,companyId);
-    	
+        //TradeComapnyHide(model,companyId);
+
         User user = userMapper.selectByPrimaryKey(companyId);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
@@ -1037,9 +1037,9 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping(value = "tables/tab-yjlist")
     public String yjjyList(HttpServletRequest request, Model model, Integer companyId, String companyName, String name, Integer isTime, Integer c) throws Exception {
-    	//TradeComapnyHide(model,companyId);
-    	
-    	User user = userMapper.selectByPrimaryKey(companyId);
+        //TradeComapnyHide(model,companyId);
+
+        User user = userMapper.selectByPrimaryKey(companyId);
         Map<String, Object> m = new HashMap<String, Object>();
         if(null != c && c.compareTo(1) == 0) {
             m.put("ownerId", user.getId());
@@ -1061,18 +1061,18 @@ public class TradeCliqueController extends BaseController {
         model.addAttribute("c", c);
         return "tradeclique/company/tab-yjlist";
     }
-    
-    
+
+
     /**
      * Company首页——预警栏——定期检查
      */
     @RequestMapping(value = "tradecheck-list")//flag:3 部门抽查
     public String troubleList1(HttpServletRequest request, String title, Integer type, String companyName,
-            Integer townId, Integer villageId,Integer companyId,
-            Integer status, Integer flag, Model model) throws Exception {
-    	//TradeComapnyHide(model,companyId);
-    	model.addAttribute("companyId",companyId);
-    	User user = userMapper.selectByPrimaryKey(companyId);
+                               Integer townId, Integer villageId,Integer companyId,
+                               Integer status, Integer flag, Model model) throws Exception {
+        //TradeComapnyHide(model,companyId);
+        model.addAttribute("companyId",companyId);
+        User user = userMapper.selectByPrimaryKey(companyId);
         Date d = new Date();
         Map<String, Object> m = new HashMap<String, Object>();
         if (user.getUserType() == 3) {//镇
@@ -1089,8 +1089,8 @@ public class TradeCliqueController extends BaseController {
         m.put("companyName", companyName);
         m.put("status", status);
         if(flag == 1){
-        	m.put("now1", DateFormatUtils.format(d, "yyyy-MM-dd"));
-        	m.put("extime", 1);
+            m.put("now1", DateFormatUtils.format(d, "yyyy-MM-dd"));
+            m.put("extime", 1);
         }
         if(setUserId(user, m)) {
             clearVillageTown(m);
@@ -1107,10 +1107,10 @@ public class TradeCliqueController extends BaseController {
         String x = DateFormatUtils.format(d, "yyyy-MM-dd");
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
         model.addAttribute("t", d.getTime());
-        
+
         Integer jcxq = 1;
         model.addAttribute("jcxq",jcxq);//特制：将首页——定期检查——检查详情：显示显示未未检查 wz 0116
-        
+
         if (user.getUserType() == 5) {
             return "tradeclique/company/check-list";
         }
@@ -1122,8 +1122,8 @@ public class TradeCliqueController extends BaseController {
     @RequestMapping(value = "check-item3")
     public String checkItem3(HttpServletRequest request, Model model, Integer companyId,Integer flag, String companyName, Integer status)
             throws Exception {
-    	//TradeComapnyHide(model,companyId);
-    	
+        //TradeComapnyHide(model,companyId);
+
         User user = userMapper.selectByPrimaryKey(companyId);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
@@ -1148,7 +1148,7 @@ public class TradeCliqueController extends BaseController {
      * Company首页——排查治理统计分析
      */
     static String PP = "yyyy-MM";
-    
+
     /**
      * 折线图数据 根据隐患类型 sT 起始时间 eT 终止时间
      */
@@ -1457,13 +1457,13 @@ public class TradeCliqueController extends BaseController {
         List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
         DynamicParameter<String, Object> clique = tradeCliqueMapper.selectForCliqueByUserId(m);
         if(clique != null && clique.get("danger")!=null){
-        	if(clique.get("danger").toString().equals("1") && StringUtils.isNotBlank(clique.get("dangers").toString())){
-            	list.add(0 , clique);
+            if(clique.get("danger").toString().equals("1") && StringUtils.isNotBlank(clique.get("dangers").toString())){
+                list.add(0 , clique);
             }
         }
         model.addAttribute("list", list);
         model.addAttribute("companyName", companyName);
-        
+
         return "tradeclique/clique/dangerouswork-list";
     }
     /**
@@ -1471,14 +1471,14 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping(value = "dangerouswork-add")
     public String dangerousWorkAdd(Model model, HttpServletRequest request) throws Exception {
-    	User user = getLoginUser(request);
-    	Map<String, Object> m = new HashMap<String, Object>();
-    	m.put("tradeId", user.getId());
-    	List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
-    	list.add(0, tradeCliqueMapper.selectForCliqueByUserId(m));
-    	model.addAttribute("branches", list);
-    	model.addAttribute("ind3L", tIndustryMapper.selectByType(3));// 高危检查类别
-    	
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("tradeId", user.getId());
+        List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
+        list.add(0, tradeCliqueMapper.selectForCliqueByUserId(m));
+        model.addAttribute("branches", list);
+        model.addAttribute("ind3L", tIndustryMapper.selectByType(3));// 高危检查类别
+
         return "tradeclique/clique/dangerouswork-add";
     }
     /**
@@ -1489,33 +1489,33 @@ public class TradeCliqueController extends BaseController {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         if(c.getUserId().equals(user.getId())){
-        	TradeClique t = new TradeClique();
-        	t.setUserId(c.getUserId());
+            TradeClique t = new TradeClique();
+            t.setUserId(c.getUserId());
             if(StringUtils.isBlank(c.getDangers())){
-            	t.setDanger(0);
-            	t.setDangers("");
+                t.setDanger(0);
+                t.setDangers("");
             }else{
-            	t.setDanger(1);
-            	t.setDangers(c.getDangers());
+                t.setDanger(1);
+                t.setDangers(c.getDangers());
             }
             tradeCliqueMapper.updateByPrimaryKeySelective(t);
         }else{
             if(StringUtils.isBlank(c.getDangers())){
-            	c.setDanger(0);
+                c.setDanger(0);
             }else{
-            	c.setDanger(1);
+                c.setDanger(1);
             }
             companyMapper.updateByPrimaryKeySelective(c);
         }
         return result;
     }
-    
+
     /**
      * 持证上岗人员列表
      */
     @RequestMapping(value = "certified")
     public String spersonList(HttpServletRequest request, Model model, Integer isTime, Integer spFlag,
-            String companyName) throws Exception {
+                              String companyName) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
@@ -1530,7 +1530,7 @@ public class TradeCliqueController extends BaseController {
         List<DynamicParameter<String, Object>> list = spersonMapper.selectSpersonList(m);
         String cliqueName = tradeMapper.selectByPrimaryKey(user.getId()).getName();
         if(!(companyName != null && !cliqueName.contains(companyName))){
-        	model.addAttribute("cliqueList", spersonMapper.selectClique(m));
+            model.addAttribute("cliqueList", spersonMapper.selectClique(m));
             model.addAttribute("cliqueName", cliqueName);
         }
         model.addAttribute("list", list);
@@ -1544,27 +1544,27 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping(value = "certified-add")
     public String spersonAdd(HttpServletRequest request, Model model, Integer spFlag, Integer id) throws Exception {
-    	User user = getLoginUser(request);
-    	if(id!=null){
-    		Sperson sp = spersonMapper.selectByPrimaryKey(id);
-    		model.addAttribute("sp", sp);
-    		System.out.println(sp);
-    	}
+        User user = getLoginUser(request);
+        if(id!=null){
+            Sperson sp = spersonMapper.selectByPrimaryKey(id);
+            model.addAttribute("sp", sp);
+            System.out.println(sp);
+        }
         if (spFlag == null) {
             spFlag = (Integer) 0;
         }
         int libraryType = 10;
         if (spFlag == 0) {
-            libraryType += 1; 
+            libraryType += 1;
         } else {
             libraryType += spFlag;
         }
-    	Map<String, Object> m = new HashMap<String, Object>();
-    	m.put("tradeId", user.getId());
-    	List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
-    	Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
-    	model.addAttribute("branches", list);
-    	model.addAttribute("clique", clique);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("tradeId", user.getId());
+        List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
+        Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
+        model.addAttribute("branches", list);
+        model.addAttribute("clique", clique);
         model.addAttribute("spFlag", spFlag);
         model.addAttribute("lib", libraryMapper.selectLibraryList(libraryType));
         return "tradeclique/clique/certified-add";
@@ -1576,7 +1576,7 @@ public class TradeCliqueController extends BaseController {
     public @ResponseBody Result spersonSave(Sperson sperson, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
         if (null == sperson.getId()) {
-        	spersonMapper.insertSelective(sperson);
+            spersonMapper.insertSelective(sperson);
         } else {//编辑
             spersonMapper.updateByPrimaryKeySelective(sperson);
         }
@@ -1597,7 +1597,7 @@ public class TradeCliqueController extends BaseController {
     @RequestMapping(value = "sequipment/sequipment-list")
     public String sequipmentList(HttpServletRequest request, Model model, Integer isTime, String companyName)
             throws Exception {
-    	log.error("sequipmentList: zhangcl 2019.2.27");
+        log.error("sequipmentList: zhangcl 2019.2.27");
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
@@ -1610,7 +1610,7 @@ public class TradeCliqueController extends BaseController {
         }
         String cliqueName = tradeMapper.selectByPrimaryKey(user.getId()).getName();
         if(!(companyName != null && !cliqueName.contains(companyName))){
-        	model.addAttribute("cliqueList", sequipmentMapper.selectClique(m));
+            model.addAttribute("cliqueList", sequipmentMapper.selectClique(m));
             model.addAttribute("cliqueName", cliqueName);
         }
         model.addAttribute("list", sequipmentMapper.selectSequipmentList(m));
@@ -1623,17 +1623,17 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping(value = "sequipment/sequipment-add")
     public String addSequipment(HttpServletRequest request, Model model, Integer id) throws Exception {
-    	User user = getLoginUser(request);
-    	if(id != null){
-    		Sequipment edit = sequipmentMapper.selectByPrimaryKey(id);
-    		model.addAttribute("editEquip", edit);
-    	}
-    	Map<String, Object> m = new HashMap<String, Object>();
-    	m.put("tradeId", user.getId());
-    	List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
-    	Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
-    	model.addAttribute("branches", list);
-    	model.addAttribute("clique", clique);
+        User user = getLoginUser(request);
+        if(id != null){
+            Sequipment edit = sequipmentMapper.selectByPrimaryKey(id);
+            model.addAttribute("editEquip", edit);
+        }
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("tradeId", user.getId());
+        List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
+        Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
+        model.addAttribute("branches", list);
+        model.addAttribute("clique", clique);
         return "tradeclique/clique/sequipment-add";
     }
     /**
@@ -1664,7 +1664,7 @@ public class TradeCliqueController extends BaseController {
     @RequestMapping(value = "importSequipmentExcel", produces = "text/html;charset=utf-8")
     public void importSequipmentExcel(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {
         log.error("importSequipmentExcel: zhangcl 2019.2.27");
-    	Result result = new ResultImpl();
+        Result result = new ResultImpl();
         System.out.println("receive");//未输出
         userService.sequipmentImportSaveForClique(result, file);
         writeResponse(result, response);//该方法调用如下
@@ -1674,7 +1674,7 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping(value = "detection-list")
     public String detectionList(Model model, HttpServletRequest request, Integer isTime, String companyName,
-            String deType) throws Exception {
+                                String deType) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
@@ -1688,7 +1688,7 @@ public class TradeCliqueController extends BaseController {
         }
         String cliqueName = tradeMapper.selectByPrimaryKey(user.getId()).getName();
         if(!(companyName != null && !cliqueName.contains(companyName))){
-        	model.addAttribute("cliqueList", detectionMapper.selectClique(m));
+            model.addAttribute("cliqueList", detectionMapper.selectClique(m));
             model.addAttribute("cliqueName", cliqueName);
         }
         model.addAttribute("list", detectionMapper.selectDetectionList(m));
@@ -1707,12 +1707,12 @@ public class TradeCliqueController extends BaseController {
             model.addAttribute("d", de);
         }
         User user = getLoginUser(request);
-    	Map<String, Object> m = new HashMap<String, Object>();
-    	m.put("tradeId", user.getId());
-    	List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
-    	Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
-    	model.addAttribute("branches", list);
-    	model.addAttribute("clique", clique);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("tradeId", user.getId());
+        List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
+        Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
+        model.addAttribute("branches", list);
+        model.addAttribute("clique", clique);
         model.addAttribute("list", libraryMapper.selectLibraryList(6));
         return "tradeclique/clique/detection-edit";
     }
@@ -1757,7 +1757,7 @@ public class TradeCliqueController extends BaseController {
         }
         String cliqueName = tradeMapper.selectByPrimaryKey(user.getId()).getName();
         if(!(companyName != null && !cliqueName.contains(companyName))){
-        	model.addAttribute("cliqueList", examinationMapper.selectClique(m));
+            model.addAttribute("cliqueList", examinationMapper.selectClique(m));
             model.addAttribute("cliqueName", cliqueName);
         }
         model.addAttribute("list", examinationMapper.selectExaminationList(m));
@@ -1771,12 +1771,12 @@ public class TradeCliqueController extends BaseController {
     @RequestMapping(value = "health-add")
     public String healthEdit(Model model, Integer id, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
-    	Map<String, Object> m = new HashMap<String, Object>();
-    	m.put("tradeId", user.getId());
-    	List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
-    	Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
-    	model.addAttribute("branches", list);
-    	model.addAttribute("clique", clique);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("tradeId", user.getId());
+        List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
+        Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
+        model.addAttribute("branches", list);
+        model.addAttribute("clique", clique);
         if (null != id) {
             model.addAttribute("e", examinationMapper.selectByPrimaryKey(id));
         }
@@ -1804,7 +1804,7 @@ public class TradeCliqueController extends BaseController {
         examinationMapper.deleteByPrimaryKey(id);
         return result;
     }
-    
+
     /**
      * 防雷防静电设施页面列表
      */
@@ -1819,7 +1819,7 @@ public class TradeCliqueController extends BaseController {
         List<Map<String, Object>> list = lightningProtectionMapper.selectList(m);
         String cliqueName = tradeMapper.selectByPrimaryKey(user.getId()).getName();
         if(!(companyName != null && !cliqueName.contains(companyName))){
-        	model.addAttribute("cliqueList", lightningProtectionMapper.selectClique(m));
+            model.addAttribute("cliqueList", lightningProtectionMapper.selectClique(m));
             model.addAttribute("cliqueName", cliqueName);
         }
         model.addAttribute("list", list);
@@ -1832,13 +1832,13 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping("clique/lightning-edit")
     public String lightningEdit(Model model, HttpServletRequest request, Integer id) throws Exception {
-    	User user = getLoginUser(request);
-    	Map<String, Object> m = new HashMap<String, Object>();
-    	m.put("tradeId", user.getId());
-    	List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
-    	Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
-    	model.addAttribute("branches", list);
-    	model.addAttribute("clique", clique);
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("tradeId", user.getId());
+        List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
+        Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
+        model.addAttribute("branches", list);
+        model.addAttribute("clique", clique);
         if (null != id) {
             model.addAttribute("be", lightningProtectionMapper.selectByPrimaryKey(id));
         }
@@ -1866,13 +1866,13 @@ public class TradeCliqueController extends BaseController {
         lightningProtectionMapper.deleteByPrimaryKey(id);
         return result;
     }
-    
+
     /**
      * 评价评估
      */
     @RequestMapping("clique/evaluation-list")
     public String evatList(Model model, HttpServletRequest request, String reportName, String evaType, Integer isTime,
-            String companyName, String flag) throws Exception {
+                           String companyName, String flag) throws Exception {
         User user = getLoginUser(request);
         String cliqueName = tradeMapper.selectByPrimaryKey(user.getId()).getName();
         Map<String, Object> m = new HashMap<String, Object>();
@@ -1890,7 +1890,7 @@ public class TradeCliqueController extends BaseController {
         List<DynamicParameter<String, Object>> list = evaluationMapper.selectEvaluationList(m);
         model.addAttribute("list", list);
         if(!(companyName != null && !cliqueName.contains(companyName))){
-        	model.addAttribute("cliqueList", evaluationMapper.selectClique(m));
+            model.addAttribute("cliqueList", evaluationMapper.selectClique(m));
             model.addAttribute("cliqueName", cliqueName);
         }
         model.addAttribute("reportName", reportName);
@@ -1905,16 +1905,16 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping(value = "clique/evaluation-add")
     public String addEva(HttpServletRequest request, Model model, Integer id) throws Exception {
-    	User user = getLoginUser(request);
-    	if(null != id){
-    		model.addAttribute("ev", evaluationMapper.selectByPrimaryKey(id));
-    	}
-    	Map<String, Object> m = new HashMap<String, Object>();
-    	m.put("tradeId", user.getId());
-    	List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
-    	Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
-    	model.addAttribute("branches", list);
-    	model.addAttribute("clique", clique);
+        User user = getLoginUser(request);
+        if(null != id){
+            model.addAttribute("ev", evaluationMapper.selectByPrimaryKey(id));
+        }
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("tradeId", user.getId());
+        List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
+        Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
+        model.addAttribute("branches", list);
+        model.addAttribute("clique", clique);
         return "tradeclique/clique/evaluation-add";
     }
     /**
@@ -1969,13 +1969,13 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping("clique/license-add")
     public String licenseAdd(Model model, HttpServletRequest request, Integer id) throws Exception {
-    	User user = getLoginUser(request);
-    	Map<String, Object> m = new HashMap<String, Object>();
-    	m.put("tradeId", user.getId());
-    	List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
-    	Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
-    	model.addAttribute("branches", list);
-    	model.addAttribute("clique", clique);
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("tradeId", user.getId());
+        List<DynamicParameter<String, Object>> list = companyMapper.selectCompanyList(m);
+        Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
+        model.addAttribute("branches", list);
+        model.addAttribute("clique", clique);
         if (null != id) {
             model.addAttribute("standard", standardMapper.selectByPrimaryKey(id));
         }
@@ -2003,7 +2003,7 @@ public class TradeCliqueController extends BaseController {
         standardMapper.deleteByPrimaryKey(standard.getId());
         return "tradeclique/clique/license-list";
     }
-    
+
     /**
      * 应急救援页面
      */
@@ -2014,9 +2014,9 @@ public class TradeCliqueController extends BaseController {
         m.put("tradeId", user.getId());
         List<DynamicParameter<String, Object>> branches = companyMapper.selectCompanyList(m);
         Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
-    	model.addAttribute("branches", branches);
-    	model.addAttribute("clique", clique);
-    	
+        model.addAttribute("branches", branches);
+        model.addAttribute("clique", clique);
+
         m.put("name", name);
         m.put("companyName", companyName);
         if (null != isTime) {
@@ -2062,12 +2062,12 @@ public class TradeCliqueController extends BaseController {
         m.put("tradeId", user.getId());
         List<DynamicParameter<String, Object>> branches = companyMapper.selectCompanyList(m);
         Trade clique = tradeMapper.selectByPrimaryKey(user.getId());
-    	model.addAttribute("branches", branches);
-    	model.addAttribute("clique", clique);
-    	model.addAttribute("cliqueList", tDrillMapper.selectByUserId(user.getId()));
+        model.addAttribute("branches", branches);
+        model.addAttribute("clique", clique);
+        model.addAttribute("cliqueList", tDrillMapper.selectByUserId(user.getId()));
         model.addAttribute("list", tDrillMapper.selectTable(m));
         if(user.getUserType()==5){
-        	model.addAttribute("CompanyName", companyMapper.selectByPrimaryKey(user.getId()).getName());//应急预案演练所属企业显示企业名
+            model.addAttribute("CompanyName", companyMapper.selectByPrimaryKey(user.getId()).getName());//应急预案演练所属企业显示企业名
         }
         return "tradeclique/clique/emergency-drill";
     }
@@ -2077,7 +2077,7 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping(value = "clique/emergency-drill-add")
     public @ResponseBody Result emergencyDrillAdd(HttpServletRequest request, Model model, TDrill tDrill) throws Exception {
-    	Result result = new ResultImpl();
+        Result result = new ResultImpl();
         tDrillMapper.insertSelective(tDrill);
         return result;
     }
@@ -2090,7 +2090,7 @@ public class TradeCliqueController extends BaseController {
         tDrillMapper.deleteByPrimaryKey(id);
         return "tradeclique/clique/emergency-drill";
     }
-    
+
     /**
      * 下载资料
      */
@@ -2107,11 +2107,11 @@ public class TradeCliqueController extends BaseController {
             out.close();
             return;
         }
-        
+
         filename = URLEncoder.encode(new String(filename.getBytes("ISO-8859-1"), "UTF-8"), "UTF-8");
         response.setContentType(request.getServletContext().getMimeType(filename));
         response.setHeader("Content-Disposition", "attachment;filename=" + filename);
-        
+
         InputStream in = new FileInputStream(realPath);
         OutputStream out = response.getOutputStream();
         try {
@@ -2124,13 +2124,13 @@ public class TradeCliqueController extends BaseController {
             out.close();
         }
     }
-    
+
     /**
      * 批量导入持证上岗人员
      */
     @RequestMapping(value = "importSpersonExcelForClique", produces = "text/html;charset=utf-8")
     public void importSpersonExcelForClique(Model model, Integer flag,HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {
-    	log.error("importSpersonExcelForClique: zhangcl 2019.2.27");
+        log.error("importSpersonExcelForClique: zhangcl 2019.2.27");
         Result result = new ResultImpl();
         userService.spersonImportSaveForClique(result, flag, file);
         writeResponse(result, response);//该方法调用如下

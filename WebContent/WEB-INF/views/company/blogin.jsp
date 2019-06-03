@@ -29,8 +29,6 @@
             var pwd = getCookie('user-pwd');
             if (null != name && '' != name) {
             $("#userName").val(name);
-            $("#company_title").html(name);
-            $("#company_title").css("display","block");
             }
             if (null != pwd && '' != pwd) {
             $("#password").val(pwd);
@@ -108,7 +106,6 @@
         <div style="float:left;width:100%;">
         <div style="width:1366px;margin:auto;">
         <div class="div_login">
-        <h1  id="company_title" style="display: none;text-align: center"></h1>
         <img alt="" src="${ly }/images/home/sy_title1.jpg" class="img_dlogo" style="max-width: 48%;margin-left: 13%;"/>
 <%--        <img alt="" src="${ly }/images/llogo.jpg" class="img_dlogo" style="max-width: 48%;margin-left: 13%;"/>--%>
         <img alt="" src="${ly }/images/dit.png" class="img_dldt" style="top: 73px;max-width: 47%;"/>

@@ -1,0 +1,1010 @@
+
+
+
+ 
+
+
+    
+   
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache,must-revalidate" />
+<meta http-equiv="Expires" content="0" />
+<title>安徽省机动车检验监管平台</title>
+<link href="resource/css/css.css" rel="stylesheet" type="text/css" />
+<link href="resource/css/tab.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="resource/qxhl/mini-easyui/themes/gray/easyui.css"  />
+<link rel="stylesheet" type="text/css" href="resource/qxhl/mini-easyui/themes/icon.css"  />
+<link rel="stylesheet" type="text/css" href="resource/qxhl/gray/c.css" />
+
+<script src="resource/qxhl/lib/plugin.iface.js" type="text/javascript"></script> 
+<script src="resource/qxhl/lib/plugin.layer.js" type="text/javascript"></script>
+<script src="resource/qxhl/lib/demo_ocx.js" type="text/javascript"></script>
+<script src="resource/qxhl/mini-easyui/jquery.min.js" type="text/javascript"></script>
+<script src="resource/qxhl/mini-easyui/jquery.easyui.min.js" type="text/javascript"></script>
+<script src="resource/qxhl/mini-easyui/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
+	
+<script type="text/javascript">
+
+var file = new Array();
+var connectId = null;
+var puid = "";
+var idx = "";
+var beginTime = "";
+var endTime = "";
+var files = new Array();
+
+function StartPlayback(jylsh,jcxmmc,puidstr,tdh,kssj,jssj){
+	if(connectId == null){
+	connect();
+	}
+
+
+	SaveQueryLog(jylsh,jcxmmc);
+	query_record_file(puidstr,tdh,kssj,jssj);
+}
+
+function SaveQueryLog(jylsh,jcxmmc){
+	$.ajax({
+        type: "post",
+        url: "/vehcheckweb//query.html?method=savequerylog",
+        data: "jylsh="+jylsh+"&jcxmmc="+jcxmmc,
+        cache: false,
+        async: false,
+        dataType: "json",
+        success: function (data) {
+          
+        }
+    });
+}
+
+function load(){	
+
+	//初始化插件
+	try{	
+
+		var rv = P_LY.Init(new P_LY.Struct.InitParamStruct(
+			true, 
+			function(msg){
+				log(JSON.stringify(msg));
+			}
+		));
+		if(rv.rv != P_Error.SUCCESS){
+			
+			alert('视频控件未安装或视频控件访问权限被限制！');
+			window.name="videoWindow";	
+			var windowheight=screen.height;
+			var windowwidth =screen.width;
+			windowheight=(windowheight-600)/2;
+			windowwidth=(windowwidth-800)/2;			   		
+			window.open("videodownload.htm","videoWindow",'resizable=yes,scrollbars=no,status=yes,toolbar=no,menubar=no,location=no,directories=no,width=800,height=600,top='+windowheight+",left="+windowwidth);
+			
+			return false;
+		}
+		//	connect();
+		// 加载默认的连接参数	
+		
+		P_LY.NCNotifyManager.Add(P_LY.Enum.NCObjectNotify.stream_status_notify,notify);		
+	    return true;
+	}catch(e){
+		
+		$("#msg_bar").html(e.name + ","+ e.message);
+		return false;
+	}
+}
+
+//释放插件对象，网页退出必须释放插件，否则会出现浏览器异常的错误
+function unload(){
+	P_LY.UnLoad();
+}
+
+function get_querystr(name)
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+
+
+function connect(){	
+	//创建连接,并记录在P_LY.Connections中
+	var ip = '192.168.1.7';
+	var port ='9988';
+	var epId ='system';
+	var uid = 'hefei';
+	var pwd = '123456';
+	//var bfix = ($("#bfix").prop('checked') == true ? 1 : 0);
+	var bfix =1;
+	// 构造连接对象
+	var param = new P_IF.Struct.ConnParamStruct(ip,port,uid,epId,pwd,bfix || 0);
+
+    
+	// 连接平台
+	var conn = P_LY.Connect(param);
+	//console.log(conn);
+
+	if(conn.rv == P_Error.SUCCESS){
+		connectId = conn.response;// 连接成功，返回connectId，此参数很重要，后面很多操作都需要
+		
+		log("连接成功:connectId="+connectId);
+		$('#connect_btn').hide();
+		$('#disconnect_btn').show();
+		
+	//	query_record_file()
+		
+	//	fetch_resource();
+		
+		// 开接收流状态事件
+		P_LY.NCNotifyManager.Add(P_LY.Enum.NCObjectNotify.stream_status_notify,notify);
+
+
+	}else{
+		
+
+		alert(P_Error.Detail(conn.rv));
+	}
+}
+	
+function disconnect(){
+	stop();
+	var rv = P_LY.DisConnection(connectId);
+	if(rv.rv == P_Error.SUCCESS){
+		log("断开成功");		
+		connectId = null;
+		$('#connect_btn').show();
+		$('#disconnect_btn').hide();
+		$('#res_tree').tree('loadData',[]);
+	}else{
+		log(P_Error.Detail(rv.rv));
+	}
+}
+
+function fetch_resource(){
+	var offset = 0;
+	var cnt = 100;// 这里demo只查询100个资源，实际应用，可以根据需求，如果返回的节点数等于要查询的数，说明可能还有资源，可以继续获取	
+	var rv = P_LY. ForkResource(connectId,P_LY.Enum.ForkResourceLevel.nppForkPUInfo, offset,cnt, "","");
+	//console.log(rv);
+	var nodes = new Array();
+	
+	$('#vod_record_cameratree').tree({
+		onExpand:function(node){
+			
+			var childs = $(this).tree('getChildren', node.target);
+			
+			if (childs.length == 1) {
+			    var l = node.children[0];
+			    if (l.text == "正在查询资源……") {
+					var rv = P_LY. ForkResource(connectId,P_LY.Enum.ForkResourceLevel.nppForkPUResourceInfo, 0,120, "",{puid:node.attributes.pu.puid,_HANDLE:node.id});
+					if(rv.rv == P_Error.SUCCESS){
+						var nodes = new Array();
+						for(var j = 0;j < rv.response.length;j++){
+							var pures = rv.response[j];
+							
+							// 这里只列出视频输入资源
+							if(pures.type == P_LY.Enum.PuResourceType.VideoIn){
+								nodes.push({id:pures._HANDLE,text:pures.name,attributes:{pu:node.attributes.pu,self:pures}});	
+							}
+							
+						}
+						
+                        if (nodes.length > 0) {
+                            // 删除那个load节点
+                            for (var i = 0; i < childs.length; i++) {
+                                $('#vod_record_cameratree').tree('remove', childs[i].target);
+                            }
+
+                            $('#vod_record_cameratree').tree('append', {
+                                parent: node.target,
+                                data: nodes
+                            });
+                        }
+                        
+					}else{
+						l.text = "没有可用的资源";
+					}
+			    }
+			}
+		},
+		onCollapse:function(node){
+			//console.log(node)
+		},
+		onDblClick:function(node){
+			var attr = node.attributes;
+		//	if(attr.pu.online != "1"){
+		//		log(pu.name+"不在线");
+		//		return;
+		//	}
+			query_record(attr.pu,attr.self);
+			return true;
+		}
+	});
+	if(rv.rv == P_Error.SUCCESS){
+		for(var i =0;i <rv.response.length;i++){
+			var pu = rv.response[i];
+			if(pu.modelType == "ENC" || pu.modelType == "WENC"){
+				nodes.push({id:pu._HANDLE,text:pu.name,attributes:{pu:pu},state:"closed",children:[{text:'正在查询资源……'}]});
+			}
+		}
+	{
+			$('#vod_record_cameratree').tree('loadData',nodes);
+			
+		}
+	}else{
+		log("没有获取资源,rv="+rv.rv);
+	}
+}
+
+
+function query_record_file(puidstr,tdh,kssj,jssj){
+//	var windowId = "replayer_"+current;
+//	stopvod(current,windowId);
+	files = new Array();
+	var reasons="";
+	puid = puidstr;
+	idx =tdh;
+	beginTime =kssj;
+	endTime = jssj;
+	
+	beginTime = parseInt(P_Utils.DTStrToTimestamp(beginTime).getTime()/1000);
+	endTime = parseInt(P_Utils.DTStrToTimestamp(endTime)/1000);
+	
+	if(connectId == null){
+		alert("请先登录平台！");
+		return;
+	}
+	if(puid == "" || idx == "" || beginTime == "" || endTime == ""  ){
+		alert("参数不正确！");
+		return;
+	}
+
+		var paramAttrs =' Idx="'+idx+'" Offset="0" Count="1000" Type="0" Begin="'+beginTime+'" End="'+endTime+'" LogicMode="AND"  ';
+
+		var rv = P_LY.Control.CommonGet(
+		connectId,
+		{
+			puid:puid,
+			resType:"SG",
+			resIdx:0,
+			controlID:'C_SG_QueryRecordFiles',
+			xmlObjSets:'',
+			param:'<Param '+paramAttrs+' />'
+		}
+		).response;
+
+		if(rv.M && rv.M.C && rv.M.C.Res && rv.M.C.Res.Param && rv.M.C.Res.Param.File){
+			var f = rv.M.C.Res.Param.File;
+			if($.isArray(f)){
+				for(var i = 0;i <f.length;i++){
+					files.push({type:'local',offset:0,szId:null,puid:puid,idx:idx,name:f[i].Name,size:f[i].Size,beginTime:f[i].Begin,endTime:f[i].End,reason:f[i].Reason,path:f[i].Path});
+				}
+			}else{
+				files.push({type:'local',offset:0,szId:null,puid:puid,idx:idx,name:f.Name,size:f.Size,beginTime:f.Begin,endTime:f.End,reason:f.Reason,path:f.Path});
+			}
+		}
+		
+	
+
+   	if(files.length <= 0 ){
+   		alert("没有查询到录像!")
+   		return false
+   	}
+ 	replayer_record_file(0);
+}	
+
+
+function notify_downloadfile(notify){
+	if(notify.eventName != "stream_status_notify" ){
+		return;
+	}
+	try{
+		for(var i = 0;i < vodList.length;i++){
+			var v = vodList[i];	
+			if(typeof v.replayerHandler != "undefined" && v.replayerHandler == notify._HANDLE){
+				replayer_update_status(notify);
+			}
+		}
+		
+	}catch(e){	
+	}finally{
+		return;
+	}
+}
+
+var current = 0;
+var vod_wnd_opened = false;
+var flag = false;
+var offset = 0;
+var vodList = new Array();
+
+function replayer_record_file(rowIndex){
+	flag = true;
+	var windowId = "replayer_"+current;
+	stopvod(current,windowId);
+		
+	if(files.length < rowIndex) {
+	
+		return false;
+	}
+	var windowId = "replayer_"+rowIndex;
+	var windowTbarId = "replayer_tb_"+rowIndex;
+	if(vod_wnd_opened){
+		$('#replayer_wnd').window('close');
+	}
+
+	if($('.windowbox').length > 0){
+		$('.windowbox').attr("id",windowId);
+		$('.windowtoolbar').attr("id",windowTbarId);
+	}
+		
+		playvod(rowIndex);
+		
+	/*
+	$('#replayer_wnd').window({
+		width:720,
+		height:540,
+		title:files[rowIndex].name,
+		href:'replayer_wnd.html',
+		minimizable:false,
+		maximizable:true,
+		collapsible:false,
+		onLoad:function(){
+			if($('#replayerwnd').length > 0){
+				$('#replayerwnd').attr("id",windowId);
+				$('#repayerwnd_tb').attr("id",windowTbarId);
+			}
+			$(this).window('resize',{width:720,height:540});
+			//$('#'+windowTbarId+" .easyui-slider").slider('setValue',200);					
+			//return;
+			playvod(rowIndex);
+		},
+		onOpen:function(){
+			vod_wnd_opened = true;
+		},
+		onClose:function(){
+			vod_wnd_opened = false;
+			//alert(rowIndex+","+windowId)
+			stopvod(rowIndex,windowId);
+		},
+		
+		onResize:function(width,height){
+			if(width<720 ){
+				$(this).window('resize',{width:720,height:height});
+				return;
+			}
+			if(height<540){
+				$(this).window('resize',{width:width,height:540});
+				return;
+			}
+			$(this).find(".windowbox").height(height-72);
+			$(this).find(".windowbox").width(width-16);
+			$(this).find(".windowtoolbar").width(width-15);
+				
+			$(this).find(".easyui-slider").slider({
+				width:(width-170-40),
+				showTip:false
+			});
+		}
+	});*/
+
+}
+
+
+function playvod(rowIndex){
+
+	//console.log(rowIndex)
+	if(files[rowIndex]){
+		 windowId = "replayer_"+rowIndex;
+		var windowTbarId = "replayer_tb_"+rowIndex;
+		
+		var f = files[rowIndex];
+		//console.log(f.offset)
+		if(beginTime > f.beginTime && flag){
+			
+				f.offset = beginTime-f.beginTime
+			}
+		if($("#"+windowId)){
+			if(typeof f.replayerHandler != "undefined" && f.replayerHandler != null){
+				resumevod(connectId,windowId);
+				$('#'+windowTbarId+" .player_icon_play").hide();
+				$('#'+windowTbarId+" .player_icon_pause").show();
+				return;
+			}
+
+		//stopvod(rowIndex,windowId);
+		
+			$("#"+windowId+'_wnd').css("visibility","visible");
+				
+			var rv = playvods(connectId,windowId,{type:($('#storage_type_cloud').prop("checked") == true? "cloud" : "local"),szId:f.szId,puid:f.puid,beginTime:f.offset,endTime:f.endTime,path:f.path,name:f.name,speed:0,direction:1,duration:0});
+			
+			if(rv.rv !== 0){
+				$('#'+windowTbarId+" .player_icon_play").show();
+				$('#'+windowTbarId+" .player_icon_pause").hide();
+	            $.messager.show({
+	                title:"提示",
+	                msg:'点播失败，errorcode:'+rv.rv,
+	                timeout:4000,
+	                showType:'slide'
+	            });
+			}else{
+				$('#'+windowTbarId+" .easyui-slider").slider({disabled:false});
+				f.replayerHandler = rv.response;
+			
+				vodList.push(f);
+				var total = parseInt(f.endTime-f.beginTime);
+			
+				//
+				var t = format_secord(f.offset)+"/"+format_secord(total);
+				$("#"+windowTbarId+" .playtime").html(t);
+
+			try{
+
+				$('#'+windowTbarId+" .player_icon_stop").unbind().bind("click",function(){
+					//console.log(rowIndex,windowId);
+					fire_stopvod(windowId);return;
+					
+					stopvod(rowIndex,windowId);
+					f.offset = 0;
+					$('#'+windowTbarId+" .easyui-slider").slider("setValue",0);
+					$('#'+windowTbarId+" .player_icon_play").show();
+					$('#'+windowTbarId+" .player_icon_pause").hide();
+				});
+
+				$('#'+windowTbarId+" .player_icon_play").unbind().bind("click",function(){
+					playvod(rowIndex);
+				});
+				
+				$('#'+windowTbarId+" .player_icon_pause").unbind().bind("click",function(){
+					pausevod(connectId,windowId);
+					//.stopod(windowId);
+					//var offset = $('#'+windowTbarId+" .easyui-slider").slider("getValue");
+					//f.offset = offset;
+					$('#'+windowTbarId+" .player_icon_play").show();
+					$('#'+windowTbarId+" .player_icon_pause").hide();
+				});
+
+				$('#'+windowTbarId+" .player_icon_play").hide();
+				$('#'+windowTbarId+" .player_icon_pause").show();
+
+			}catch(e){
+			}
+				$('#'+windowTbarId+" .easyui-slider").slider({
+					"max":total,
+					"min":0,
+					"onComplete":function(newValue,oldValue){
+					
+						if(!files[rowIndex]) return;
+						
+						if(typeof f.replayerHandler != "undefined" && f.replayerHandler != null){
+							stopvod(rowIndex,windowId);
+							f.offset = newValue;
+							flag = false;
+							$('#'+windowTbarId+" .easyui-slider").slider({disabled:true});
+							setTimeout(function(){
+								playvod(rowIndex,windowId);
+							},100)
+							return;
+						}
+						
+					}
+					/*
+					"onChange":function(newValue,oldValue){
+					
+						var t = format_secord(newValue)+"/"+format_secord(parseInt(total));
+						$("#"+windowTbarId+" .playtime").html(t);
+						
+					},
+					onSlideStart:function(value){
+						//var opts = $(this).slider("options");
+						//opts.showTip = true;
+						$('#'+windowTbarId+" .player_icon_pause").trigger('click');
+					},
+					onSlideEnd:function(value){
+					}*/
+				});
+			}
+		}
+	}
+}	
+
+function playvods(connectId,wndId,options){
+
+	if($("#"+wndId)[0]){
+		var windowAttachEvent = new P_LY.Struct.WindowEventStruct();
+		windowAttachEvent.lbtn_click.status = true;
+		windowAttachEvent.lbtn_click.callback = function(){
+			//if(_cf.debug) console.log("鼠标左键单击响应回调函数")
+			//$("#replayerwindowtitle0")[0].innerHTML = "鼠标左键单击响应回调函数,";
+		}
+		windowAttachEvent.select_rect.status = false;
+		windowAttachEvent.select_rect.callback = function(){
+			//$("#loginMsg")[0].innerHTML = "鼠标拉选响应回调函数,";
+		}
+		windowAttachEvent.ptz_control.status = true;
+		windowAttachEvent.fsw_show.status = true;
+		windowAttachEvent.fsw_show.callback = function(){
+			//if(_cf.debug) console.log("窗口全屏后的回调函数")
+			//$("#replayerwindowtitle0")[0].innerHTML = "窗口全屏后的回调函数,";
+		}
+		windowAttachEvent.fsw_hide.status = true;
+		windowAttachEvent.fsw_hide.callback = function(){
+			//if(_cf.debug) console.log("窗口全屏恢复后的回调函数")
+			//$("#replayerwindowtitle0")[0].innerHTML = "窗口全屏恢复后的回调函数,";
+		}
+		windowAttachEvent.menu_command.status = false;
+		windowAttachEvent.menu_command.menu = [
+			{key:"stopvod",text:"停止"},
+			{key:"-",text:"split"},
+			{key:"playvodaudio",text:"静音"},
+			
+		]
+		windowAttachEvent.menu_command.callback = function(key){
+			switch(key){
+				case "stopvod":
+					//WebClient.StopVod();
+					fire_stopvod(wndId);
+					break;
+				case "playvodaudio":
+					fire_stopvod_audio(wndId);
+					break;
+			}
+		}
+		// - 创建窗口
+		
+
+	//	_p.set_wnd_conatiner(wndId,P_LY.Enum.WindowType.VOD);
+		P_LY.WindowContainers.set(wndId, new P_LY.Struct.WindowContainerStruct(wndId, P_LY.Enum.WindowType.VOD));
+		var window = create_window(connectId, wndId, P_LY.Enum.WindowType.VOD,"")
+	
+		//var window = P_LY.CreateWindow(connectId, wndId, "VOD", windowAttachEvent);
+		//var wnd = window.response;
+		
+		P_LY.WindowContainers.get(wndId).window = window;
+		
+		//WebClient.wnd = wnd;
+		// - 播放录像
+		var PlayVodOptions = {type:(options.type == "local" ? P_LY.Enum.StorageFileType.CEFS :  P_LY.Enum.StorageFileType.Cloud),szId:options.szId,puid:options.puid,sgIndex:0,filePath:options.path+options.name,beginTime:options.beginTime,endTime:options.endTime,speed:options.speed,direction:options.direction,duration:options.duration,ivIndex:0}
+	
+		var operator = P_LY.PlayVod(connectId,window,PlayVodOptions);
+		//console.log(operator)
+				
+		return operator;
+	}
+	else{
+	
+	}
+}
+
+function create_window(connectId, wndId, type,wndEvent)
+{
+	try
+	{
+		if(type == null || type == undefined) type = P_LY.Enum.WindowType.VIDEO;
+		
+		if(connectId && P_LY.Connections.get(connectId))
+		{
+			var operator = P_LY.CreateWindow(connectId, wndId, type, wndEvent);
+			//console.log(operator);
+			if(operator.rv != P_Error.SUCCESS)
+			{
+				return false;
+			}
+			return operator.response;
+		}
+		else
+		{
+			//if(_cf.debug) console.log("connectId error");
+			return false;
+		}
+	}
+	catch(e)
+	{
+		//if(_cf.debug) console.log(e)
+	}
+}
+function format_secord(sec){
+	
+	if(parseInt(sec) > 0){
+		if(sec <60){
+			return (sec > 9 ? "00:"+sec : "00:0"+sec);
+		}else if(sec < 3600){
+			var m = parseInt(sec/60);
+			var s = (sec%60);
+			return (m > 9 ? m : "0"+m)+":"+(s > 9 ? s : "0"+s);
+		}else{
+			var h = parseInt(sec/3600);// 不可以转为小时的秒数
+			var mm = (sec%3600);// 不可以转为小时的秒数
+			var s = (mm%60);
+			var m = parseInt(mm/60);
+			return h+":"+(m > 9 ? m : "0"+m)+":"+(s > 9 ? s : "0"+s);
+		}
+	}else{
+		return "00:00";
+	}
+}
+function fire_stopvod(windowId){
+	
+
+		var rowIndex = windowId.split('_')[1];
+	
+		if(!files[rowIndex]) return;
+						
+		stopvod(rowIndex,windowId);
+		//var windowId = "replayer_"+rowIndex;
+		var windowTbarId = "replayer_tb_"+rowIndex;
+		$('#'+windowTbarId+" .easyui-slider").slider("setValue",0);
+		$('#'+windowTbarId+" .player_icon_play").show();
+		$('#'+windowTbarId+" .player_icon_pause").hide();
+		files[rowIndex].offset = 0;
+}
+
+
+function resumevod(connectId,wndId){
+	if(!P_LY.WindowContainers.get(wndId) || !P_LY.WindowContainers.get(wndId).window){
+		return;
+	}
+	var operator = P_LY.ResumeVod(P_LY.WindowContainers.get(wndId).window);
+}
+    
+function pausevod(connectId,wndId){
+
+	if(!P_LY.WindowContainers.get(wndId) || !P_LY.WindowContainers.get(wndId).window){
+		return;
+	}
+	var operator = P_LY.PauseVod(P_LY.WindowContainers.get(wndId).window);
+}
+	
+function stopvod(rowIndex,windowId){
+	
+	if(!files[rowIndex]) return;
+	
+	var f = files[rowIndex];
+	
+	if(!P_LY.WindowContainers.get(windowId) || !P_LY.WindowContainers.get(windowId).window){
+		return false;
+	}
+	var operator = P_LY.StopVod(P_LY.WindowContainers.get(windowId).window);
+
+	f.replayerHandler = null;
+	$("#"+windowId+'_wnd').css("visibility","hidden");
+	$("#"+windowId.replace("replayer_","replayer_tb_")+" .playtime").html("00:00/00:00");
+	vodList.splice( $.inArray(f, vodList), 1 );
+}
+
+	
+function replayer_update_status(status){
+
+//	var rows = $('#record_file_dr').datagrid('getRows');
+
+	for(var i =0;i < vodList.length;i++){
+		var f = vodList[i];	
+		if(f.replayerHandler == status._HANDLE){
+		
+			var windowId = "replayer_"+current;
+			var windowTbarId = "replayer_tb_"+current;
+		
+			if(status.status == 4 || status.status == -1 ){
+				//console.log(status)
+				fire_stopvod(windowId);
+				current = current+1;
+				replayer_record_file(current)
+				return;
+			}
+			if(status.keyData == undefined || status.keyData.play_time == undefined) status.keyData.play_time = "0";
+			
+			//var t = .format_secord(status.keyData.play_time)+"/"+.format_secord(parseInt(f.endTime-f.beginTime));
+			var b = f.offset + parseInt(status.keyData.play_time);
+			
+			var t = format_secord(b)+"/"+format_secord(parseInt(f.endTime-f.beginTime));
+		
+			$("#"+windowTbarId+" .playtime").html(t);
+			try{
+				$('#'+windowTbarId+" .easyui-slider").slider("setValue",b);
+			}catch(e){
+				//console.log(e)
+			}
+			break;
+		}
+	}
+}
+	
+
+function notify(notify){
+
+	if(typeof notify_downloadfile == "function"){
+		notify_downloadfile(notify);    		
+	}
+	
+	var container = P_LY.WindowContainers.get('windowbox');
+	if(container){
+		if(container.window.status.playvideoing){
+			//console.log(container.window,notify);
+			if(notify.eventName == "stream_status_notify" &&  notify._HANDLE == container.window.params.ivStreamHandle){
+				var ivName = container.window.customParams.cameraName;
+				var status = "";
+				
+				switch(Number(notify.status)){//-1表示流已断开，0表示正在缓冲，1表示正在播放,2表示正在下载，3表示下载完成
+				case -1:
+					status = "流已断开"
+					break;
+				case 0:
+					status = "正在缓冲"
+					break;
+				case 1:
+					status = "正在播放"
+					break;
+				}
+				var _bite = function(bite){
+					return (bite / 1000).toFixed(0) + "KB/s"; 
+				}
+				var bitrate = notify.keyData.bit_rate;
+				var bite = _bite(bitrate)
+				var framerate = notify.keyData.frame_rate;
+				var frame = framerate;
+				var recStr = "";
+				if(container.window.status.recording){
+					status += ",正在录像"
+				}
+				
+				var audStr = "";
+				if(container.window.status.playaudioing){
+					status += ",正在播放声音"
+				}
+				
+				var upaudStr = "";
+				if(container.window.status.calling){
+					status += ",正在喊话"
+				}
+
+				var talkStr ="";
+				if(container.window.status.talking){
+					status += ",正在对讲"
+				}
+				
+				var fb = "帧率："+frame+"，码率："+bite;
+				$("#windowtitle").html(ivName+","+ fb +","+ status);
+				//log($("#windowtitle")[0].innerHTML);
+			}
+		}
+	}
+}
+
+function log(str){
+	var html = $("#msg_bar").html()+"<li><nobr>"+str+"</nobr></li>";
+	$("#msg_bar").html(html);
+}
+
+if(window.attachEvent){
+	window.attachEvent(
+		"onload",
+		function() {
+			load();  
+		} 
+	);
+	window.attachEvent(
+		"onunload",
+		function(){
+			unload();
+		}
+	);
+	window.attachEvent(
+		"onbeforeunload",
+		function(){
+			unload();
+		}
+	);
+}else{
+	window.addEventListener (
+        "load",
+        function() {
+			load();  
+        },
+        false
+    );
+	window.addEventListener (
+        "unload",
+        function() {
+			unload();
+        },
+        false
+    );
+	window.addEventListener (
+        "beforeunload",
+        function() {
+			unload();
+        },
+        false
+    );
+}
+	
+	
+
+
+
+</script>
+
+
+</head>
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" style="margin-top:10px;">
+	<tr>
+		<td>
+		<div style="float:left;margin-left:5px; margin-left: 10px; aling:center;">
+			<div id="replayerwnd" class="windowbox" style="width:540px;height:300px;border:0px solid #cecece;background-color: #000000;">
+			<div id="replayerwindowbox0" class="wnd"></div>
+			</div>
+			<div style="padding-left:1px;background-color:#000000;width:540px;">
+			<table id="repayerwnd_tb" border="0" class="windowtoolbar" cellpadding="0" cellspacing="0">
+				<tr>
+					<td width="150px">
+						<input type=button class="player_icon_stop" />
+						<input type=button class="player_icon_play" />
+						<input type=button class="player_icon_pause" />
+					</td>
+					<td>
+					<div class="playslider" style="height:20px;width:auto;display:inline-block;border:0px solid #cec;padding:2px 2px 0px 2px;">
+						<input class="easyui-slider" style="width:234px" data-options="showTip:false">
+					</div>
+					</td>
+					<td width="150px">
+						<div class="playtime" style="height:20px;border:0px solid red;padding-top:2px;width:150px;padding-left:30px">00:00/00:00</div>
+					</td>
+				</tr>
+			</table>
+			</div>
+		</div>
+		</td>
+		<td>
+		<table class="list_table" width="100%" border="0" align="left" cellpadding="0" cellspacing="1" style="margin-top:5px;">
+		<tr>
+		  <td class="list_headrig">检验流水</td>
+		  <td class="list_body_out" align="left">&nbsp;34010011610200051</td>
+		  <td class="list_headrig">检验类别</td>
+		  <td class="list_body_out" align="left">&nbsp;在用车检验（定检）</td>		  
+		</tr>  
+		<tr>
+		 <td class="list_headrig">号牌种类</td>
+		 <td class="list_body_out" align="left">&nbsp;小型汽车</td>
+		 <td class="list_headrig">号牌号码</td>
+		 <td class="list_body_out" align="left">&nbsp;皖ART528</td>
+		</tr>	
+		<tr>
+		 <td class="list_headrig">中文品牌</td>
+		 <td class="list_body_out" align="left">&nbsp;速腾牌</td>	
+		 <td class="list_headrig">车辆型号</td>
+		 <td class="list_body_out" align="left">&nbsp;FV7146TATG</td>
+		</tr> 
+		<tr>
+		 <td class="list_headrig">车辆识别代号</td>
+		 <td class="list_body_out" align="left">&nbsp;LFV2A21K893073445</td>
+		 <td class="list_headrig">发动机号</td>
+		 <td class="list_body_out" align="left">&nbsp;004443</td>
+		</tr> 
+		<tr>
+		  <td class="list_headrig">车辆类型</td>
+		  <td class="list_body_out" align="left">&nbsp;小型轿车</td>
+		  <td class="list_headrig">使用性质</td>
+		  <td class="list_body_out" align="left">&nbsp;非营运</td> 
+		</tr>     
+		<tr>
+		 <td class="list_headrig">车身颜色</td>
+		 <td class="list_body_out" align="left">&nbsp;红</td>
+		 <td class="list_headrig">检验次数</td>
+		 <td class="list_body_out" align="left">&nbsp;1</td>
+		</tr>		
+		<tr>
+		 <td class="list_headrig">初次登记日期</td>
+		 <td class="list_body_out" align="left">&nbsp;2009-11-10</td>
+		 <td class="list_headrig">出厂日期</td>
+		 <td class="list_body_out" align="left">&nbsp;2009-10-13</td>
+		</tr>
+		<tr>
+		  <td class="list_headrig">保险终止日期</td>
+		  <td class="list_body_out" align="left">&nbsp;</td>
+		  <td class="list_headrig">审验有效期</td>
+		  <td class="list_body_out" align="left">&nbsp;</td>
+		</tr>
+		<tr>
+		  <td class="list_headrig">车辆所有人</td>
+		  <td class="list_body_out" align="left" colspan="3">&nbsp;许晖</td>
+		</tr> 
+		<tr>
+		 <td class="list_headrig">检验项目</td>	 
+		 <td class="list_body_out" align="left" colspan="3">&nbsp;B1,B2,H1,H4,F1,</td>
+		</tr>
+		<tr>
+		  <td class="list_headrig">安检机构名称</td>
+		  <td class="list_body_out" align="left" colspan="3">&nbsp;合肥易佰龙机动车检测有限公司</td>
+		</tr>
+		<tr>
+		  <td class="list_headrig">车道名称</td>
+		  <td class="list_body_out" align="left" colspan="3">&nbsp;3吨小车线</td>
+		</tr>
+		<tr>
+		  <td class="list_headrig">检验结论</td>
+		  <td class="list_body_out" align="left">&nbsp;
+		  	
+		  	合格
+		  	
+		  </td>
+		  <td class="list_headrig">检验日期</td>
+		  <td class="list_body_out" align="left">&nbsp;2016-10-20 12:43:06</td>
+		</tr>		
+		</table>
+	</td>
+	</tr>
+</table>
+ <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#AACBEE" style="margin-top:5px; margin-right:3px;margin-bottom:5px;">
+	<tr height="23" background="resource/images/tab_titlebg.gif">     
+	 <td align="center" background="resource/images/tab_titlebg.gif" class="style1">检验流水号</td> 
+	 <td align="center" background="resource/images/tab_titlebg.gif" class="style1">检验次数</td>
+	 <td align="center" background="resource/images/tab_titlebg.gif" class="style1">工位号</td>
+	 <!--  
+	 <td align="center" background="resource/images/tab_titlebg.gif" class="style1">通道号</td>
+	 -->
+	 <td align="center" background="resource/images/tab_titlebg.gif" class="style1">检验项目</td>
+	 <td align="center" background="resource/images/tab_titlebg.gif" class="style1">检验起始时间</td>
+	 <td align="center" background="resource/images/tab_titlebg.gif" class="style1">检验截止时间</td>
+	 <td align="center" background="resource/images/tab_titlebg.gif" class="style1">操&nbsp;作</td>
+	</tr>
+	
+	<tr bgcolor="#FFFFFF" height="25" id="34010011610200051_1_2">
+	 <td align="center" class="style1">34010011610200051</td>
+	 <td align="center" class="style1">1</td>
+	 <td align="center" class="style1">2</td>
+	 <!--  
+	 <td align="center" class="style1">26</td>
+	 -->
+	 <td align="center" class="style1" style="width:350px;word-break:break-all;">一轴制动/驻车制动/二轴制动/三轴制动/四轴制动/五轴制动/六轴制动</td>
+	 <td align="center" class="style1">2016-10-20 12:51:15</td>
+	 <td align="center" class="style1">2016-10-20 12:51:39</td>
+	 <td align="center" class="style1">
+	 <a href="#" onclick="StartPlayback('34010011610200051','一轴制动/驻车制动/二轴制动/三轴制动/四轴制动/五轴制动/六轴制动','201000000000000016','26','2016-10-20 12:51:15','2016-10-20 12:51:39');">播放</a>	 
+	 <!--  
+	 <a href="#" onclick="SearchRecord(this,'192.168.64.12','26','2016-10-20 12:51:15','2016-10-20 12:51:39');">下载</a>
+	 -->
+	 </td>
+	</tr>
+	
+	<tr bgcolor="#FFFFFF" height="25" id="34010011610200051_1_3">
+	 <td align="center" class="style1">34010011610200051</td>
+	 <td align="center" class="style1">1</td>
+	 <td align="center" class="style1">3</td>
+	 <!--  
+	 <td align="center" class="style1">14</td>
+	 -->
+	 <td align="center" class="style1" style="width:350px;word-break:break-all;">左外灯或二三轮机动车的左灯/左内灯/右内灯/右外灯或二三轮机动车的右灯/侧滑</td>
+	 <td align="center" class="style1">2016-10-20 12:49:35</td>
+	 <td align="center" class="style1">2016-10-20 12:50:22</td>
+	 <td align="center" class="style1">
+	 <a href="#" onclick="StartPlayback('34010011610200051','左外灯或二三轮机动车的左灯/左内灯/右内灯/右外灯或二三轮机动车的右灯/侧滑','201000000000000016','14','2016-10-20 12:49:35','2016-10-20 12:50:22');">播放</a>	 
+	 <!--  
+	 <a href="#" onclick="SearchRecord(this,'192.168.64.12','14','2016-10-20 12:49:35','2016-10-20 12:50:22');">下载</a>
+	 -->
+	 </td>
+	</tr>
+	
+	<tr bgcolor="#FFFFFF" height="25" id="34010011610200051_1_4">
+	 <td align="center" class="style1">34010011610200051</td>
+	 <td align="center" class="style1">1</td>
+	 <td align="center" class="style1">4</td>
+	 <!--  
+	 <td align="center" class="style1">3</td>
+	 -->
+	 <td align="center" class="style1" style="width:350px;word-break:break-all;">车辆外观检验</td>
+	 <td align="center" class="style1">2016-10-20 12:52:00</td>
+	 <td align="center" class="style1">2016-10-20 12:54:09</td>
+	 <td align="center" class="style1">
+	 <a href="#" onclick="StartPlayback('34010011610200051','车辆外观检验','201000000000000016','3','2016-10-20 12:52:00','2016-10-20 12:54:09');">播放</a>	 
+	 <!--  
+	 <a href="#" onclick="SearchRecord(this,'192.168.64.12','3','2016-10-20 12:52:00','2016-10-20 12:54:09');">下载</a>
+	 -->
+	 </td>
+	</tr>
+	
+  </table>
+
+</body>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     

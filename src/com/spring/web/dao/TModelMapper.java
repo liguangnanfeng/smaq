@@ -63,6 +63,14 @@ public interface TModelMapper {
     List<Map<String, Object>> selectByMap(Map<String, Object> m);
     
     List<Map<String, Object>> selectByMap1(Map<String, Object> m);//检索条件增加，检查周期
+
+    /**
+     * 根据传递的条件进行查询数据
+     * 部门名称, 检查方式, 检查类型
+     * @param map
+     * @return
+     */
+    List<Map<String, Object>> selectByMap4(Map<String, Object> map);
     
     List<Map<String, Object>> selectByMap2(Map<String, Object> m);//检索条件增加，检查周期不为1
     
@@ -81,4 +89,6 @@ public interface TModelMapper {
      * @return
      */
     List<Map<Integer, String>> selectCountryModelByUid(Integer uid);
+
+
 }

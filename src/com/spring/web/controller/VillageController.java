@@ -2700,6 +2700,21 @@ public class VillageController extends BaseController {
     }
 
     /**
+     * TODO 跳转中转页面==> 跳转到自定义/标准保存模版
+     * @return
+     */
+    @RequestMapping(value="model-add4")
+    public String modelAdd4(HttpServletRequest request ,Model model,String dmname,Integer dmid, Integer checkType,
+                            Integer industryType
+    ){
+        model.addAttribute("dmname",dmname);
+        model.addAttribute("dmid",dmid);
+        model.addAttribute("checkType",checkType);
+        model.addAttribute("industryType",industryType);
+        return"company/checkModel/model-add4";
+    }
+
+    /**
      * TODO model-add.jsp 获取高危属性的检查
      *
      * @param request

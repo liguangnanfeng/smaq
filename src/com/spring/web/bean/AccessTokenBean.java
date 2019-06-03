@@ -3,10 +3,6 @@ package com.spring.web.bean;
 import java.io.Serializable;
 
 public class AccessTokenBean implements Serializable {
-    /**
-     * @Fields serialVersionUID
-     * ??
-     */
 
     private static final long serialVersionUID = -503761506219547958L;
     /**

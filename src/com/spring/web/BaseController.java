@@ -39,7 +39,6 @@ import com.spring.web.util.SessionUtil;
  * @author FL
  * @date 2016年1月19日 下午2:21:49
  * @version V1.0
- * @param  总控制器的概念
  *
  */
 public class BaseController implements Serializable {

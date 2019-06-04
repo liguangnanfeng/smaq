@@ -1,17 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=gbk" pageEncoding="gbk"%>
 <%@ include file="/WEB-INF/views/taglibs.jsp"%>
 <!DOCTYPE HTML>
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=gbk" />
   <meta name="renderer" content="webkit|ie-comp|ie-stand">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
   <%@ include file="/WEB-INF/inc/back-header.inc"%>
-  <title>Иё▌И≥╘Е┬├Г╨╖Г╝║Ф▌╖   И ░Ф┌ёФ▌▓Ф÷╔Ф╡╩Г░├Ф≥╨Х┐╫Е▄√Е╧ЁЕ▐╟</title>
-  <meta name="keywords" content="Иё▌И≥╘Е┬├Г╨╖Г╝║Ф▌╖   И ░Ф┌ёФ▌▓Ф÷╔Ф╡╩Г░├Ф≥╨Х┐╫Е▄√Е╧ЁЕ▐╟">
-  <meta name="description" content="Иё▌И≥╘Е┬├Г╨╖Г╝║Ф▌╖   И ░Ф┌ёФ▌▓Ф÷╔Ф╡╩Г░├Ф≥╨Х┐╫Е▄√Е╧ЁЕ▐╟">
+  <title>╥Гоу╥ж╪╤╧э©ь   рЧ╩╪ее╡ИжнюМжгдэ╩╞ф╫л╗</title>
+  <meta name="keywords" content="╥Гоу╥ж╪╤╧э©ь   рЧ╩╪ее╡ИжнюМжгдэ╩╞ф╫л╗">
+  <meta name="description" content="╥Гоу╥ж╪╤╧э©ь   рЧ╩╪ее╡ИжнюМжгдэ╩╞ф╫л╗">
   <style type="text/css">
     body .dis-ib{margin-right:15px;}
   </style>
@@ -19,19 +19,17 @@
 
 <body>
 <nav class="breadcrumb">
-  <i class="Hui-iconfont">&#xe67f;</i> <span>И╕√И║╣</span>
-  <span class="c-gray en">&gt;</span> <span>Д╪│Д╦ Е÷╨Г║─Д©║Ф│╞</span>
-  <span class="c-gray en">&gt;</span> <span>Г■÷Д╨╖Е╥╔Х┴╨Ф╣│Г╗▀Е⌡╬</span>
-  <span class="c-gray en">&gt;</span> <span>Ф÷╔Г°▀Ф√┤Ф║ё</span>
-  <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href=" " title="Е┬╥Ф√╟">
+  <i class="Hui-iconfont">&#xe67f;</i> <span>йврЁ</span>
+  <span class="c-gray en">&gt;</span> <span>фСр╣╩Ы╢║пео╒</span>
+  <span class="c-gray en">&gt;</span> <span>иЗ╡З╧╓руаВЁлм╪</span>
+  <span class="c-gray en">&gt;</span> <span>╡И©╢нд╣╣</span>
+  <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href=" " title="к╒пб">
     <i class="Hui-iconfont">&#xe68f;</i>
   </a>
 </nav>
 <p>${list}</p>
   <iframe src="${list}" width='100%' height='100%' frameborder='1'>
-    <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    </head>
+
   </iframe>
 </body>
 </html>

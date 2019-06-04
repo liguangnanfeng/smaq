@@ -72,7 +72,7 @@
             <u><span style="text-decoration:underline;" contenteditable="true">&nbsp;&nbsp;</span></u>
             <span>(&nbsp;)(&nbsp;)</span><span>号]，经对你单位整改情况进行复查，提出如下意见：</span></span>
         </p>
-        <%-- <div id="div_dangerm">-
+        <%-- <div id="div_dangerm">
             <c:forEach items="${itemL }" var="be" varStatus="index">
                 <p class="MsoNormal" style="text-indent:21.0000pt;">
                     <span style="font-family:'\4EFF\5B8B_GB2312';">${index.index + 1}．</span><u><span style="font-family:'\4EFF\5B8B_GB2312';text-decoration:underline;text-indent: 0;" contenteditable="true">&nbsp;${be.memo }</span></u><u><span style="font-family:'\4EFF\5B8B_GB2312';text-decoration:underline;text-indent: 0;"></span></u>

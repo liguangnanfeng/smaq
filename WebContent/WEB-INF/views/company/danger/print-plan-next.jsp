@@ -68,6 +68,7 @@ function pr_() {
             <td class="text-c" rowspan="${x }" data-partid="${part.id }" data-partimg="${part.partImg }">${part.name }</td>
           </c:if>
 
+
           <c:set var="y" value="0"/>
           <c:forEach items="${itemL }" var="ch">
           <c:if test="${ch.partId == part.id}">

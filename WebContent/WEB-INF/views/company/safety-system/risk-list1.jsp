@@ -164,7 +164,7 @@ function pr_() {
                 <c:forEach items="${zzjgDep }" var="be">
                                 <c:set value="0" var="x"/>
                                 <c:forEach items="${acL }" var="ac">
-                                    <c:if test="${be.parName eq ac.level1 && be.name eq ac.level2}">
+                                    <c:if test="${be.name eq ac.level1}">
  						<script>
 						str="${ac.level3}";
 						arr=str.split("/");
@@ -174,7 +174,7 @@ function pr_() {
 						<script>
 						document.write(arr[0]);
 						</script></td>
-                        <td style="width:10%;border-bottom: 0px;" class="text-c">${be.parName }</td>
+                        <td style="width:10%;border-bottom: 0px;" class="text-c">${be.name }</td>
                             <c:if test="${x==0}"><td style="width:10%;" class="text-c"></c:if>
                             <c:if test="${x==1}"><td style="width:10%;" class="text-c"></c:if>
                             <p style="text-align:center;"><script>document.write(arr[1]);</script></p>
@@ -210,9 +210,9 @@ function pr_() {
                                 <c:if test="${x == 0}">
                                     <tr>
                                         <td style="width:10%;height:80px;"><p style="text-align:center;">未辨识</p><p style="display:none">${be.id}</p></td>
-                                        <td style="width:10%;"><p style="text-align:center;">${be.parName }</p></td>
-                                        <td style="width:10%;"><p style="text-align:center;">未关联</p></td>
                                         <td style="width:10%;"><p style="text-align:center;">${be.name }</p></td>
+                                        <td style="width:10%;"><p style="text-align:center;">未关联</p></td>
+                                        <td style="width:10%;"><p style="text-align:center;">未关联</p></td>
                                         <td style="width:10%;"><p style="text-align:center;">未识别</p></td>
                                         <td style="width:40%;"><p style="text-align:center;">未辨识风险因素</p></td>
 										<td style="width:10%;">

@@ -171,8 +171,8 @@
           <%-- <a class="btn btn-primary radius" data-title="添加" data-href="${ly }/company/model-add?type=${type }&flag=1" onclick="Hui_admin_tab(this)" href="javascript:;"> <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 选择添加-部门抽查</a>--%>
           <input type="button" class="btn btn-primary radius" onClick="open_jian('.list_oth',3)" value="选择添加-部门抽查"/>
         </span>
-            </c:if>
-            <c:if test="${flag == 4 }">
+        </c:if>
+        <c:if test="${flag == 4 }">
         <span class="l">
           <%-- <a class="btn btn-primary radius" data-title="添加" data-href="${ly }/company/model-add?type=${type }&flag=1" onclick="Hui_admin_tab(this)" href="javascript:;"> <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 选择添加-行政检查</a>--%>
           <input type="button" class="btn btn-primary radius" onClick="open_jian('.list_oth',4)" value="选择添加-行政检查"/>
@@ -381,13 +381,13 @@
                         </td>
                         <c:if test="${flag == 1&&template==1}">
                             <td>
-                                <c:if test="${be.type==1}">
-                                    日常
-                                </c:if>
-                                <c:if test="${be.type==2}">
+                               <c:if test="${be.type==1}" >
+                                   日常
+                               </c:if>
+                                <c:if test="${be.type==2}" >
                                     定期
                                 </c:if>
-                                <c:if test="${be.type==3}">
+                                <c:if test="${be.type==3}" >
                                     季节
                                 </c:if>
                                 <c:if test="${be.type==4}">
@@ -405,7 +405,7 @@
                         <td>
                                 <%--${be.c2 }/${be.c }--%>
                             <c:if test="${be.useTime !=null}">
-                                ${be.useTime}
+                                        ${be.useTime}
                             </c:if>
                             <c:if test="${be.useTime ==null}">
                                 未检查状态

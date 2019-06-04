@@ -1206,6 +1206,8 @@ public class VillageController extends BaseController {
         return "village/danger/check-list";
     }
 
+
+
     /**
      * 村级账号 隐患排查 检查历史
      */
@@ -1339,12 +1341,8 @@ public class VillageController extends BaseController {
 
         List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(checkItemByModelId.getCheckId());
         //log.error("tCheckPartMapper条目信息:"+partL.toString());
-
-        Map<String,Object> map = new HashMap<>();
-
         for (TCheckPart a : partL) {
             String levels = a.getLevels();
-            map.put(levels, a);
             //log.error("levels:"+levels);
         }
 
@@ -2689,6 +2687,7 @@ public class VillageController extends BaseController {
         return "company/checkModel/model-add2";
     }
 
+
     /**
      * TODO model-add.jsp 页面跳转
      *
@@ -2749,7 +2748,7 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 跳转到添加基础检查的页面显示
+     * TODO 跳转到添加基础检查的页面显示
      * @return
      */
     @RequestMapping("addCheckModel3")
@@ -2891,7 +2890,7 @@ public class VillageController extends BaseController {
      * @param request 请求
      * @param dmid    部门名称(level1)
      * @param checkType    检查类型   -1 基础   -2 现场   其他高危
-     * @param dptitle 检查方式   1 日常   2 定期   3 季节  4 其他  5 综合
+     * @param dptitle 检查方式   1 日常   2 定期   3 临时
      * @param times   定期检查的天数
      * @return message
      */
@@ -2905,7 +2904,7 @@ public class VillageController extends BaseController {
 
             //做出判断基础还是现场还是高危
             if (checkType == -1) { //基础
-                level3s = aCompanyManualMapper.selectlevel3BydmNameAndLevel3(user.getId(), dmid, "基础管理");
+                level3s = aCompanyManualMapper.selectlevel3BydmNameAndLevel3(user.getId(), dmid, "基础");
             } else if (checkType == -2) { //现场
                 level3s = aCompanyManualMapper.selectlevel3BydmName(user.getId(), dmid);
             } else {             // 高危
@@ -2941,17 +2940,12 @@ public class VillageController extends BaseController {
 
             CheckItem checkItem = new CheckItem();
             checkItem.setCheckLevels(checkLevels);
-
-
-            String [] array= {"日常","定期","季节","其他","综合"};
-            String str = array[dptitle - 1];
             if (checkType == -1) { //基础
-
-                checkItem.setTemplate(dmid+str+ "基础标准检查表");
+                checkItem.setTemplate(dmid + "基础标准检查表");
             } else if (checkType == -2) {
-                checkItem.setTemplate(dmid+str+ "现场标准检查表");
+                checkItem.setTemplate(dmid + "现场标准检查表");
             } else {
-                checkItem.setTemplate(dmid+str+ "高危标准检查表");
+                checkItem.setTemplate(dmid + "高危标准检查表");
             }
 
             checkItem.setCheckType(checkType);      // 检查类型

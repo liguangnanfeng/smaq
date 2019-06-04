@@ -3,6 +3,7 @@ package com.spring.web.dao;
 import com.spring.web.model.ZzjgDepartment;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -54,7 +55,7 @@ public interface ZzjgDepartmentMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(ZzjgDepartment record);
-    
+
     /**
      * 根据公司名字查询部门
      */
@@ -67,13 +68,14 @@ public interface ZzjgDepartmentMapper {
      * @return
      */
     List<Map<Object, Object>> selectByUid(@Param("uid") Integer uid);
-    
+
     List<Map<Object, Object>> selectLevel1ByUid(@Param("uid") Integer uid);
-    
+
     List<Map<Object, Object>> selectLevel2ByUid(@Param("uid") Integer uid);
-    
+
     /**
      * 根据岗位id查询岗位名字和部门名字
+     *
      * @param id
      * @return
      */
@@ -81,6 +83,7 @@ public interface ZzjgDepartmentMapper {
 
     /**
      * 根据公司id查询所有的部门
+     *
      * @param companyId
      * @return
      */
@@ -88,6 +91,7 @@ public interface ZzjgDepartmentMapper {
 
     /**
      * 根据公司id和部门id查询对应的所有岗位
+     *
      * @param companyId
      * @return
      */
@@ -95,6 +99,7 @@ public interface ZzjgDepartmentMapper {
 
     /**
      * 根据总公司id查询所有的部门 level
+     *
      * @param id
      * @return
      */
@@ -103,7 +108,16 @@ public interface ZzjgDepartmentMapper {
 
     List<ZzjgDepartment> selectOnes(@Param("pid") Integer pid);
 
-    ZzjgDepartment selectNameAll(@Param("id")Integer id);
+    ZzjgDepartment selectNameAll(@Param("id") Integer id);
 
-    ZzjgDepartment selectLevel1(@Param("id")Integer id);
+    ZzjgDepartment selectLevel1(@Param("id") Integer id);
+
+    List<ZzjgDepartment> selectCount(@Param("pid") Integer pid, @Param("name") String name);
+
+    void add(ZzjgDepartment zzjgDepartment);
+
+
+    void updateAll(@Param("utime") Date date, @Param("id") Integer id);
+
+
 }

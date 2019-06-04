@@ -832,6 +832,13 @@
     </select>
 
 
+
+
+
+
+
+
+
     <select id="selectRecheckList" parameterType="java.lang.Integer" resultType="java.util.Map">
         select a.id as checkId,a.depart,b.status,b.memo,d.create_time as time,d.checker
         from t_check_tbl a JOIN t_check_item_tbl b ON a.id = b.check_id
@@ -850,7 +857,7 @@
         JOIN t_recheck_tbl d ON d.check_id=a.id
         where a.user_id = #{uid}
         and a.status=2
-        and b.status in ( 1,3)
+        and b.status in (1,3)
         ORDER BY a.id
     </select>
 
@@ -862,5 +869,20 @@
         from t_check_item_tbl
         where check_id =#{checkId} ;
     </select>
+
+
+
+    <select id="selectAll" resultType="java.util.Map">
+        select a.id as checkId,a.depart,b.status,b.memo,d.create_time as time,d.checker
+        from t_check_tbl a JOIN t_check_item_tbl b ON a.id = b.check_id
+        JOIN t_recheck_tbl d ON d.check_id=a.id
+        where a.user_id in (${userIds})
+        and a.status=2
+        and b.status in (1,3)
+        ORDER BY a.id
+    </select>
+
+
+
 
 </mapper>

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -177,7 +176,7 @@ public class SaveDataImpl implements SaveMessageService {
 
             }
             // 内容发送短信内容
-            //Sms(saveDataMessageItem.getList());
+            Sms(saveDataMessageItem.getList());
             return "插入成功";
 
         } catch (Exception e) {
@@ -342,7 +341,6 @@ public class SaveDataImpl implements SaveMessageService {
                 } else if ("2".equals(saveDataMessage.getValue())) {
 
                     checkItem.setStatus(2); //复查不合格
-                    checkItem.setFiles(saveDataMessage.getFile());      //TODO 暂时覆盖之前的不合格照片
                     checkItem.setRecheckFile(saveDataMessage.getFile());//复查照片
                     checkItem.setPlanTime(new Date());                  // 实际的复查时间
                     checkItem.setMemo(saveDataMessage.getMemo());      // 复查描述
@@ -387,12 +385,19 @@ public class SaveDataImpl implements SaveMessageService {
 
         // 通过modelId
         TModel tModel = modelMapper.selectByPrimaryKey(modelId);
-        tModel.setUseTime(new Date()); // 模版的使用时间
-        modelMapper.updateByPrimaryKey(tModel);
-
         // 每一次都是查询最开始的那一条检查记录然后进行复制保存
         // 这时候按照时间的进行检查，找到最早的那一个存储的模板，然后进行修改保存
-        TCheck tCheck = tCheckMapper.selectOldByModelId(tModel.getId());
+        TCheck tCheck =  null;
+        if(null != tModel){
+            tModel.setUseTime(new Date()); // 模版的使用时间
+            modelMapper.updateByPrimaryKey(tModel);
+            tCheck= tCheckMapper.selectOldByModelId(tModel.getId());
+        }else{
+            // 就表示是checkId,
+            tCheck= tCheckMapper.selectByPrimaryKey(modelId);
+            tModel= modelMapper.selectByPrimaryKey(tCheck.getModelId());
+            tCheck= tCheckMapper.selectOldByModelId(tModel.getId()); // 重复之前的套路
+        }
 
         Integer checkId = insertCheck(tCheck.getId());  //表示是新的数据,然后将新的数据进行传递
 
@@ -475,7 +480,6 @@ public class SaveDataImpl implements SaveMessageService {
                     }
                     tRectificationConfirmMapper.updateByTRectificationConfirm(tRectificationConfirm);
                 }
-
 
             }
 

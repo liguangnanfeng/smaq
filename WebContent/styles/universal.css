@@ -1,0 +1,153 @@
+.bg-000{background-color:#000;}
+.bg-333{background-color:#333;}
+.bg-666{background-color:#666;}
+.bg-999{background-color:#999;}
+.bg-ccc{background-color:#ccc;}
+.bg-ddd{background-color:#ddd;}
+.bg-eee{background-color:#eee;}
+.bg-fff{background-color:#fff;}
+.bg-t{background-color:transparent;}
+
+.bd-333{border:1px solid #333;}
+.bd-666{border:1px solid #666;}
+.bd-999{border:1px solid #999;}
+.bd-ccc{border:1px solid #ccc;}
+.bd-ddd{border:1px solid #ddd;}
+.bd-eee{border:1px solid #eee;}
+.bd-n{border:none;}
+
+.mt-23{margin-top:23px;}
+.mt-0{margin-top:0;}
+.mb-0{margin-bottom:0;}
+
+.lh-25{line-height:25px;}
+.lh-31{line-height:31px;}
+.lh-60{line-height:60px;}
+
+.h-20{height:20px;}
+.h-30{height:30px;}
+.h-40{height:40px;}
+.h-45{height:45px;}
+.h-50{height:50px;}
+.h-60{height:60px;}
+
+.dis-ib{display:inline-block;}
+.dis-b{display:block;}
+.dis-n{display:none;}
+.dis-fl{display:flex;}
+
+.td-manage {display:inline-block;}
+.td-manage2{display:inline-block;}
+.td-manage3{display:inline-block;}
+.td-manage4{display:inline-block;}
+
+.va-t{vertical-align:top;}
+.va-b{vertical-align:bottom;}
+.va-m{vertical-align:middle;}
+
+.p-a{position:absolute;}
+.p-r{position:relative;}
+.p-f{position:fixed;}
+
+.p-2{padding:2px;}
+.p-4{padding:4px;}
+.p-5{padding:5px;}
+.p-10{padding:10px;}
+.p-20{padding:20px;}
+
+.br-2{border-radius:2px}
+.br-3{border-radius:3px}
+.br-4{border-radius:4px}
+.br-5{border-radius:5px}
+
+.page-container .btn>.Hui-iconfont{margin-right:5px}
+.r{line-height:31px;}
+.brand_show{margin: auto;position:relative;height:60px;width:84px;border:1px solid transparent;cursor:pointer;}
+.brand_show:hover{background-color:#fff;border:1px solid #5a98de;background-image:none;}
+.brand_show img{margin:12px 0;height:35px;width:84px;}
+.brand_show p{position:absolute;left:0;display:none;margin:0;height:40px;line-height:40px;width:84px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.brand_show p.brand_cname{top:0}
+.brand_show p.brand_ename{bottom:0;}
+
+.table tbody tr td a{display: inline-block;margin: 1px 0;line-height: 18px;background-color: #eee;border: 1px solid #ddd;padding: 0 2px;border-radius: 4px;}
+.table tbody tr td a:hover{border: 1px solid #06c;}
+.dataTables_wrapper .dataTables_filter .input-text{margin-left:5px}
+.i_open, .i_close{margin-right: 10px;border: 1px solid #555;background-color: #fff;cursor:pointer;}
+.select-box{height:32px;}
+nav.breadcrumb>span {padding: 0;font-size:12px;}
+.page-container label, .page-container placeholder{font-size:12px;}
+
+.bs-5{box-shadow: 0px 2px 8px -2px #555555;border-radius:4px;}
+.bs-8{box-shadow: 0px 2px 8px -2px #888888;border-radius:4px;}
+/* modal¿ò */
+.fade {opacity: 0;
+	-webkit-transition: opacity .15s linear;
+	-o-transition: opacity .15s linear;
+	transition: opacity .15s linear}
+.fade.in {opacity: 1}
+.modal-open {overflow: hidden}
+.modal{ position:fixed; left:0; top:0; right:0; bottom:0; z-index:1040; display:none; overflow:hidden;-webkit-overflow-scrolling:touch; outline:0}
+.modal.fade .modal-dialog{
+	-webkit-transition: -webkit-transform .3s ease-out;
+	-o-transition: -o-transform .3s ease-out;
+	transition: transform .3s ease-out;
+	-webkit-transform: translate(0,-50%);
+	-ms-transform: translate(0,-50%);
+	-o-transform: translate(0,-50%);
+	transform: translate(0,-50%)}
+.modal.in .modal-dialog {
+	-webkit-transform: translate(0, 0);
+	-ms-transform: translate(0, 0);
+	-o-transform: translate(0, 0);
+	transform: translate(0, 0)}
+.modal-open .modal {overflow-x: hidden;overflow-y: auto}
+	.modal-backdrop {position: fixed;top: 0;right: 0;bottom: 0;left: 0;background-color: #000}
+	.modal-backdrop.fade {filter: alpha(opacity=0);opacity: 0}
+	.modal-backdrop.in {filter: alpha(opacity=50);opacity: .5}
+	.modal-dialog {position: relative;width: auto;margin: 10px}
+	.modal-content{position: relative;background-color: #fff;border: 1px solid #999;border: 1px solid rgba(0,0,0,.2);outline: 0;
+		-webkit-background-clip: padding-box;
+		background-clip: padding-box; 
+		-webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+		box-shadow: 0 3px 9px rgba(0,0,0,.5)}
+	
+		.modal-header {min-height: 16.42857143px;padding: 15px;border-bottom: 1px solid #eee; position:relative}
+		.modal-header .close{position:absolute; right:10px; top:10px}
+		.modal-header h3,.modal-header .modal-title{margin:0; padding:10px 0; font-size:16px}
+	
+		.modal-body {position:relative;padding: 15px;overflow-y:visible;word-break:break-all}
+			.modal-form {margin-bottom: 0}
+	
+		.modal-footer {padding:15px;margin-bottom: 0;text-align: right;background-color: #f5f5f5;border-top: 1px solid #eee;*zoom: 1}
+		.modal-footer:before,.modal-footer:after {display: table;content: ""}
+		.modal-footer:after {clear: both}
+		.modal-footer .btn + .btn {margin-left: 5px;margin-bottom: 0}
+		.modal-footer .btn-group .btn + .btn {margin-left: -1px}
+		.modal-footer .btn-block + .btn-block {margin-left: 0}
+		
+	.modal-scrollbar-measure {position: absolute;top: -9999px;width: 50px;height: 50px;overflow: scroll}
+	
+	.radius .modal-content{ border-radius:6px}
+	.radius .modal-footer{ border-bottom-left-radius:6px; border-bottom-right-radius:6px}
+	@media (min-width: 768px) {
+		.modal-dialog {width: 600px;margin: 30px auto}
+		.modal-content {-webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);box-shadow: 0 5px 15px rgba(0, 0, 0, .5)}
+		.modal-sm {width: 300px}
+	}
+	@media (min-width: 992px) {
+		.modal-lg {width: 900px}
+	}
+ 
+.modal-alert{position:fixed; right:auto; bottom:auto; width:300px; left:50%;margin-left:-150px; top:50%;margin-top:-30px; z-index:9999;background-color: #fff;border: 1px solid #999;border: 1px solid rgba(0,0,0,.2);outline: 0;
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box; 
+	-webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+	box-shadow: 0 3px 9px rgba(0,0,0,.5)}
+.modal-alert-info{padding:30px; text-align:center; font-size:14px; background-color:#fff}
+
+/* Ñ¡Ïî¿¨ */
+.clearfix:after{content:"\20";display:block;height:0;clear:both;visibility:hidden}.clearfix{zoom:1}
+.tabBar {border-bottom: none}
+.tabBar span {background-color: #e8e8e8;cursor: pointer;display: inline-block;float: left;font-weight: bold;height: 30px;line-height: 30px;padding: 0 15px;}
+.tabBar span.current{background-color: #fff;color: #333;margin-bottom:-1px;border:1px solid #ccc;border-bottom:none;}
+.tabCon {display: none;padding:10px;border:1px solid #ccc}

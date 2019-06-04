@@ -1,0 +1,26 @@
+@charset "utf-8";
+/* 默认 黑色 */	
+/*全站默认字体颜色*/
+a{color:#333}a:hover,a:focus,.maincolor,.maincolor a{color:#06c}
+.navbar{background:#222}/*顶部导航*/
+	.navbar-logo,.navbar-logo-m,.navbar-slogan,.navbar-userbar{color:#fff}/*logo 及 用户信息文字颜色*/
+	.navbar-logo:hover,.navbar-logo-m:hover{color:#fff;text-decoration: none}
+	
+.navbar-nav > ul > li, .navbar-nav > ul > li > a{ color:#fff}/*顶部导航文字颜色*/
+.navbar-userbar > ul> > li,.navbar-userbar > ul> > li > a{ color:#fff}
+
+.Hui-aside{}/*侧边栏*/
+	.Hui-aside .menu_dropdown dt{color:#fff;background-color:#34495E;border-right:5px solid transparent;/* color:#333 */}/*左侧二级导航菜单*/
+	.Hui-aside .menu_dropdown dt:hover{color:#eee;border-right:5px solid #f0f0f0;-webkit-transition: border-right 0.15s;-moz-transition: border-right 0.15s;-o-transition: border-right 0.15s;/* color:#148cf1 */}
+	.Hui-aside .menu_dropdown dt:hover>.Hui-iconfont{color:#f0f0f0}
+	.Hui-aside .menu_dropdown dt:hover>.menu_dropdown-arrow{margin-right:5px}
+	.Hui-aside .menu_dropdown dt:hover [class^="icon-"]{ color:#7e8795}
+	.Hui-aside .menu_dropdown li{border-right:5px solid #29394a;}
+	.Hui-aside .menu_dropdown li:hover{}
+	.Hui-aside .menu_dropdown li a{color:#fff;background-color:#29394a/* border-bottom: 1px solid #e5e5e5 */}
+	.Hui-aside .menu_dropdown li a:hover{color:#29394a;background-color:#fff/*color:#148cf1;background-color:#fafafa */}
+	.Hui-aside .menu_dropdown li.current a,.menu_dropdown li.current a:hover{color:#29394a}
+	.Hui-aside .menu_dropdown dt .Hui-iconfont{ color:#fff;/* color:#a0a7b1; */margin-right:6px;}
+	.Hui-aside .menu_dropdown dt .menu_dropdown-arrow{ color:#fff;margin-right:5px;/* color:#b6b7b8 */}	
+	.dislpayArrow a{background:url(icon_arrow.png) no-repeat 0 0};
+	.l_active{background-color:rgba(54,114,177,0.4)}

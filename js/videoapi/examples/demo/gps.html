@@ -1,0 +1,415 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Demo-playvideo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<link rel="stylesheet" type="text/css" href="../../utility/mini-easyui/themes/gray/easyui.css"  />
+	<link rel="stylesheet" type="text/css" href="../../utility/mini-easyui/themes/icon.css"  />
+	<link rel="stylesheet" type="text/css" href="demo.css" />
+	
+	<script src="../conf.js" type="text/javascript"></script>
+	
+	<script src="../../lib/plugin.iface.js" type="text/javascript"></script> 
+	<script src="../../lib/plugin.layer.js" type="text/javascript"></script>
+	
+	<script src="../../utility/json2.js" type="text/javascript"></script>
+	<script src="../../utility/mini-easyui/jquery.min.js" type="text/javascript"></script>
+	<script src="../../utility/mini-easyui/jquery.easyui.min.js" type="text/javascript"></script>
+	
+</head>
+<body>
+	<table>
+		<tr>
+			<td valign="top" >
+				<div id="res_tree" class="easyui-tree" style="width:180px;height:310px;border:1px solid #bebebe;overflow:auto;"></div>
+			</td>
+		
+			<td valign="top" align="center" style="line-height: 120%;">
+				<a id="connect_btn" class="easyui-linkbutton" onclick="connect()">连接平台</a>
+				<a id="disconnect_btn" class="easyui-linkbutton" onclick="disconnect()" style="display:none;">断开平台</a><br /><br />
+				<a id="gps_btn" class="easyui-linkbutton" onclick="startGPS()">开启GPS</a><br /><br />
+				<a id="gps_btn1" class="easyui-linkbutton" onclick="stopGPS()">关闭GPS</a><br /><br />
+				<a id="gps_btn1" class="easyui-linkbutton" onclick="QueryHistoryGPSData()">历史GPS查询</a>
+			
+			</td>
+			<td width="15">&nbsp;</td>
+			<td valign="top">
+				<div style="border:1px solid #bebebe;padding-top:2px;height:310px;width:550px;overflow:auto;">
+					<ol style="text-indent:2em;text-align:left;" id="msg_bar">
+					</ol>
+				</div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
+<script>
+var connectId = null;
+var resOAIndex = null;
+var ResOAChannels = new P_Utils.Hash();
+var	ResGPS = new P_Utils.Hash();
+
+// 初始化插件对象，必须初始化成功后才可以调用所有接口
+function load(){	
+		//初始化插件
+		try{
+			var rv = P_LY.Init(new P_LY.Struct.InitParamStruct(
+				true, 
+				function(msg)
+				{
+					log(JSON.stringify(msg));
+				}
+			));
+			if(rv.rv != P_Error.SUCCESS)
+			{
+				return false;
+			}
+			// 加载默认的连接参数			
+	        return true;
+		}
+		catch(e){
+			$("#msg_bar").html(e.name + ","+ e.message);
+			return false;
+		}
+}
+
+// 释放插件对象，网页退出必须释放插件，否则会出现浏览器异常的错误
+function unload(){
+	P_LY.UnLoad();
+}
+	
+function connect(){
+	
+	//创建连接,并记录在P_LY.Connections中
+	var ip = _cf.connParams.ip;
+	var port = _cf.connParams.port;
+	var epId = _cf.connParams.epId;
+	var uid = _cf.connParams.uid;
+	var pwd = _cf.connParams.pwd; 
+	var bfix = _cf.connParams.bfix;
+
+	// 构造连接对象
+	var param = new P_IF.Struct.ConnParamStruct(ip,port,uid,epId,pwd,bfix || 0);
+	log("登录参数:"+JSON.stringify(param));
+			
+	// 连接平台
+	var conn = P_LY.Connect(param);
+	
+	if(conn.rv == P_Error.SUCCESS){
+		connectId = conn.response;// 连接成功，返回connectId，此参数很重要，后面很多操作都需要
+		log("连接成功:connectId="+connectId);
+		$('#connect_btn').hide();
+		$('#disconnect_btn').show();
+		
+		fetch_resource();
+		
+		// 开接收流状态事件
+
+		
+		//开启GPS接受事件
+		P_LY.NCNotifyManager.Add(P_LY.Enum.NCObjectNotify.gps_data_notify,gps_notify);
+
+	}else{
+		log(P_Error.Detail(conn.rv));
+	}
+}
+
+function disconnect(){
+	stop();
+	var rv = P_LY.DisConnection(connectId);
+	if(rv.rv == P_Error.SUCCESS){
+		log("断开成功");		
+		connectId = null;
+		$('#connect_btn').show();
+		$('#disconnect_btn').hide();
+		$('#res_tree').tree('loadData',[]);
+	}else{
+		log(P_Error.Detail(rv.rv));
+	}
+}
+
+function fetch_resource(){
+	var offset = 0;
+	var cnt = 200;// 这里demo只查询100个资源，实际应用，可以根据需求，如果返回的节点数等于要查询的数，说明可能还有资源，可以继续获取	
+	var pulist = new Array();
+	var rv = P_LY. ForkResource(connectId,P_LY.Enum.ForkResourceLevel.nppForkPUInfo, offset,cnt, "");
+	if(rv.rv == P_Error.SUCCESS){
+		var pu = rv.response;
+		if (pu && typeof pu == "object" ) {
+			pulist = pulist.concat(pu);
+		}
+	}
+
+		
+	var domainRoads = P_LY.Connections.get(connectId).domainRoad;
+    if(domainRoads && $.isArray(domainRoads)){
+		for(var j = 0; j < domainRoads.length; j++){
+			var dr = domainRoads[j].domain_road;
+			var operator = P_LY.ForkResource(connectId, P_LY.Enum.ForkResourceLevel.nppForkPUInfo, 0, 200, dr);
+			if(operator.rv == P_Error.SUCCESS){
+				pulist = pulist.concat(operator.response);
+			}
+		}
+    }
+
+	var nodes = new Array();
+	
+	$('#res_tree').tree({
+		onExpand:function(node){
+			
+			var childs = $(this).tree('getChildren', node.target);
+			
+			if (childs.length == 1) {
+			    var l = node.children[0];
+			    if (l.text == "正在查询资源……") {
+					var rv = P_LY.ForkResource(connectId,P_LY.Enum.ForkResourceLevel.nppForkOnePUInfo, 0, 0 , null,{PUID:node.attributes.pu.puid,_HANDLE:node.id});
+					if(rv.rv == P_Error.SUCCESS){
+						var nodes = new Array();
+						for(var j = 0;j < rv.response.childResource.length;j++){
+							var pures = rv.response.childResource[j];
+							
+							// 这里只列出视频输入资源
+							if(pures.type == P_LY.Enum.PuResourceType.VideoIn){
+								nodes.push({id:pures._HANDLE,text:pures.name,attributes:{pu:node.attributes.pu,self:pures}});	
+							}
+							
+						}
+						
+                        if (nodes.length > 0) {
+                            // 删除那个load节点
+                            for (var i = 0; i < childs.length; i++) {
+                                $('#res_tree').tree('remove', childs[i].target);
+                            }
+
+                            $('#res_tree').tree('append', {
+                                parent: node.target,
+                                data: nodes
+                            });
+                        }
+                        
+					}else{
+						l.text = "没有可用的资源";
+					}
+			    }
+			}
+		},
+		onCollapse:function(node){
+			//console.log(node)
+		},
+		onDblClick:function(node){
+			var attr = node.attributes;
+			if(attr.pu.online != "1"){
+				log(pu.name+"不在线");
+				return;
+			}
+			play(attr.pu,attr.self);
+			return true;
+		}
+	});
+	if(pulist.length > 0){
+	
+		
+		for(var i =0;i <pulist.length;i++){
+			var pu = pulist[i];
+		//	if(pu.modelType == "ENC" || pu.modelType == "WENC"){
+				nodes.push({id:pu._HANDLE,text:pu.name,attributes:{pu:pu},state:"closed",children:[{text:'正在查询资源……'}]});
+		//	}
+		}
+		if(nodes.length > 0){
+			$('#res_tree').tree('loadData',nodes);
+			
+		}
+	}else{
+		log("没有获取资源,rv="+rv.rv);
+	}
+}
+
+
+//查询GPS历史数据
+
+function QueryHistoryGPSData(){
+
+
+	var begin = (new Date(new Date().toLocaleDateString()).getTime())/1000;
+	var end = (new Date(new Date().toLocaleDateString()).getTime())/1000+86400;
+
+	var node = $('#res_tree').tree('getSelected');  
+	if(node){
+		log("正在获取历史GPS数据");
+		var puid = node.attributes.pu.puid;
+		var xmlObjSets = '<OSets><Res OType="151" OID="'+puid+'" Type="GNNS" Idx="0" /></OSets>';
+		var param = '<Param Offset="1" Count="10" Begin="'+begin+'" End="'+end+'"/>';
+	
+		var rv = P_LY.Control.CommonGet(
+			connectId,
+			{
+				puid: puid,
+				resType:"ST",
+				resIdx:0,
+				controlID:"C_GS_QueryHistoryGPSData",
+				xmlObjSets:xmlObjSets,
+				param:param
+			}
+		).response;
+		
+		console.log(rv)
+		var gpsdata = new Array();
+		if(rv.M.C.Res && rv.M.C.Res.Error == "0"){
+			var gpsPage = rv.M.C.Res.Param.Res.GPS;
+			gpsdata = gpsdata.concat(gpsPage);
+		}
+		
+	}else{
+		log("请选中设备");	
+	}
+
+	log(JSON.stringify(gpsdata))
+}
+
+function startGPS(){
+	var node = $('#res_tree').tree('getSelected');  
+   
+	if(node){
+		 if(node.attributes.pu.online != "1"){
+			log(node.attributes.pu.name+"不在线，无法查询GPS，请查询GPS历史数据");
+			return;
+		 }
+		log("正在获取GPS数据");
+		var puid = node.attributes.pu.puid;
+	
+		var rv = P_LY.ForkResource(connectId,P_LY.Enum.ForkResourceLevel.nppForkPUResourceInfo,0,200,null,{PUID:puid});
+		var re = rv.response;
+	
+		var t = P_LY.Connections.get(connectId);
+		if(t.connType == "Device"){
+			re = rv.response.childResource;
+		}
+		var flag = true;
+		ResGPS.each(function(item){
+			if(item.key == puid){
+				flag = false;
+			}
+		}); 
+		if(flag){
+			for (var i = 0; i < re.length; i++) {
+			
+				var childRes = re[i];
+		
+				if(childRes.type == P_LY.Enum.PuResourceType.GPS){
+					ResGPS.set(puid, {connectId:connectId, puid: puid, gpsIndex : childRes.idx,gpshandle:"",dtname:"",longitude:"",gps_status:"",latitude:"",speed:"",flag: false });
+				}
+			}
+		}
+		
+		ResGPS.each(function(item){
+			console.log(item)
+			if(item.value.puid == puid){
+				
+				var rv = P_LY.StartGPSStream(connectId,item.value.puid,item.value.gpsIndex);
+				console.log(rv)
+				if(rv.rv == P_Error.SUCCESS){
+					item.value.gpshandle = rv.response;
+				}
+			}
+		});
+	
+	}
+	else{
+		log("请选中设备");	
+	}
+
+
+}
+
+
+function stopGPS(){
+	var node = $('#res_tree').tree('getSelected');  
+	
+	if(node){
+		var puid = node.attributes.pu.puid;
+		log("停止获取GPS数据");
+		ResGPS.each(function(item){
+			if(item.key == puid){
+				P_LY.StopGPSStream(connectId, puid,0);
+				item.value.gpshandle = "";
+			}
+		});
+
+	}else{
+		log("请选中设备");	
+	}
+
+}
+		
+ function gps_notify(notify){
+ console.log(notify)
+		if(typeof notify == "object"){
+			var htmlstr="";
+			if(notify.errorCode == P_Error.SUCCESS){
+				ResGPS.each(function(item){
+					var node =item.value;
+				
+					if(notify._HANDLE == item.value.gpshandle){
+						node.longitude = notify.keyData.longitude;
+						node.latitude = notify.keyData.latitude;
+						node.speed = notify.keyData.speed;
+					}
+				
+					htmlstr = "<tr>经度:<td>"+node.longitude+"&nbsp</td>纬度：<td>"+node.latitude+"</td>&nbsp速度：<td>"+node.speed+"</td></tr>";
+				
+				});
+				console.log(htmlstr)
+				log(htmlstr);
+			}
+		}	
+	}
+
+function log(str){
+	var html = $("#msg_bar").html()+"<li><nobr>"+str+"</nobr></li>";
+	$("#msg_bar").html(html);
+}
+
+if(window.attachEvent){
+	window.attachEvent(
+		"onload",
+		function() {
+			load();  
+		} 
+	);
+	window.attachEvent(
+		"onunload",
+		function(){
+			unload();
+		}
+	);
+	window.attachEvent(
+		"onbeforeunload",
+		function(){
+			unload();
+		}
+	);
+}else{
+	window.addEventListener (
+        "load",
+        function() {
+			load();  
+        },
+        false
+    );
+	window.addEventListener (
+        "unload",
+        function() {
+			unload();
+        },
+        false
+    );
+	window.addEventListener (
+        "beforeunload",
+        function() {
+			unload();
+        },
+        false
+    );
+}
+
+</script>

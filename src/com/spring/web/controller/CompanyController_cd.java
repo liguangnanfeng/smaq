@@ -2572,7 +2572,7 @@ public class CompanyController_cd extends BaseController {
         List<Map<Object, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
-
+    }
 
     /**
      * TODO 跳转中转页面==> 跳转到自定义/标准保存模版
@@ -2587,7 +2587,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("dmid", dmid);
         model.addAttribute("checkType", checkType);
         model.addAttribute("industryType", industryType);
-        return "company/danger/model-add-main";
+        return "company/checkModel/model-add-main";
     }
 
     /**

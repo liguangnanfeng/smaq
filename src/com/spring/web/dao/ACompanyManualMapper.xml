@@ -1084,6 +1084,7 @@
         select id from a_industry_tbl where name =#{name};
     </select>
 
+    <!--根据公司id和风险点进行查询-->
     <select id="findJiChuItem" resultType="java.util.Map">
         select dmid,level1
         from a_company_manual_tbl

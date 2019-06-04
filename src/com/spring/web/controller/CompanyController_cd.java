@@ -2236,7 +2236,7 @@ public class CompanyController_cd extends BaseController {
 
             for (int i = 0; i < levelsArr.length; i++) {
                 Map<String, Object> a = new HashMap<String, Object>();
-                if (!"null".equals(levelsArr[i]) && null != levelsArr[i]&&!"".equals(levelsArr[i])) {
+                if (!"null".equals(levelsArr[i]) && null != levelsArr[i] && !"".equals(levelsArr[i])) {
                     int i1 = Integer.parseInt(levelsArr[i]);
                     ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(i1);
                     if (null == companyManual) {
@@ -2260,7 +2260,7 @@ public class CompanyController_cd extends BaseController {
                     a.put("dangerType", tCheck.getType());
                     a.put("factors", map.get("content"));
                     a.put("measures", map.get("reference"));
-                    if (null==a.get("measures")||"".equals(a.get("measures"))){
+                    if (null == a.get("measures") || "".equals(a.get("measures"))) {
                         a.put("measures", map.get("content"));
 
                     }
@@ -2409,43 +2409,44 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * 根据前端条件==> 查询对应的model模版
-     * @param request  前端请求
-     * @param model    mvc数据存储
-     * @param dmname   部门名称
-     * @param dmid     部门id
-     * @param checkType 检查方式
-     * @param industryType   检查类型 基础/现场
+     *
+     * @param request      前端请求
+     * @param model        mvc数据存储
+     * @param dmname       部门名称
+     * @param dmid         部门id
+     * @param checkType    检查方式
+     * @param industryType 检查类型 基础/现场
      * @return
      */
     @RequestMapping(value = "model-list-tj")
-    public String modelListtj(HttpServletRequest request ,Model model,String dmname,Integer dmid, Integer checkType,
-                              Integer industryType,Integer template,Integer flag){
+    public String modelListtj(HttpServletRequest request, Model model, String dmname, Integer dmid, Integer checkType,
+                              Integer industryType, Integer template, Integer flag) {
         User user = getLoginUser(request);
-        Map<String,Object> map = new LinkedHashMap<String,Object>();
-        map.put("userId",user.getId());    // 公司id,必要
-        map.put("dmname",dmname);          // 部门名称
-        map.put("dmid",dmid);              // 部门id
-        map.put("type",checkType);         // 检查方式
-        if(industryType==-1){
-            map.put("industryType",1);  // 基础类型
-        }else if(industryType==-2){
-            map.put("industryType",2);  // 现场类型
-        }else{
-            map.put("industryType",3);  // 高危类型
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        map.put("userId", user.getId());    // 公司id,必要
+        map.put("dmname", dmname);          // 部门名称
+        map.put("dmid", dmid);              // 部门id
+        map.put("type", checkType);         // 检查方式
+        if (industryType == -1) {
+            map.put("industryType", 1);  // 基础类型
+        } else if (industryType == -2) {
+            map.put("industryType", 2);  // 现场类型
+        } else {
+            map.put("industryType", 3);  // 高危类型
         }
 
-        map.put("flag",flag);
+        map.put("flag", flag);
 
 
         List<Map<String, Object>> list = tModelMapper.selectByMap4(map);
-        model.addAttribute("list",list);
-        model.addAttribute("dmname",dmname);
-        model.addAttribute("dmid",dmid);
-        model.addAttribute("type",checkType);
-        model.addAttribute("industryType",industryType);
-        model.addAttribute("userId",user.getId());
-        model.addAttribute("template",template);
-        model.addAttribute("flag",flag);
+        model.addAttribute("list", list);
+        model.addAttribute("dmname", dmname);
+        model.addAttribute("dmid", dmid);
+        model.addAttribute("type", checkType);
+        model.addAttribute("industryType", industryType);
+        model.addAttribute("userId", user.getId());
+        model.addAttribute("template", template);
+        model.addAttribute("flag", flag);
 
         //企业类型为 化工 或 构成重大危险源 则企业自查处 日检查表显示 wz 190108
         Company company = companyMapper.selectByPrimaryKey(user.getId());
@@ -2462,9 +2463,8 @@ public class CompanyController_cd extends BaseController {
 
             }
         }
-        return"company/danger/model-list-cx";
+        return "company/danger/model-list-cx";
     }
-
 
 
     /**
@@ -2540,6 +2540,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "model-list-bm")
     public String modelLinShi(HttpServletRequest request, Integer flag, Integer type, Integer template,
+                              Integer status,String title, String companyName,
                               Model model
     ) throws ParseException {
         // 获取用户信息
@@ -2571,16 +2572,18 @@ public class CompanyController_cd extends BaseController {
         String x = DateFormatUtils.format(d, "yyyy-MM-dd");
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
         model.addAttribute("t", d.getTime());
-        if (user.getUserType() == 5) {//企业用户
-            return "company/danger/model-list-cx";
-        }
-        return "village/danger/check-list";
 
         List<Map<Object, Object>> jiChuItem = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");
         List<Map<Object, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
 
+        if (user.getUserType() == 5) {//企业用户
+            return "company/danger/model-list-cx";
+        }
+        return "village/danger/check-list";
+
+    }
 
     /**
      * TODO 跳转中转页面==> 跳转到自定义/标准保存模版
@@ -2595,22 +2598,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("dmid", dmid);
         model.addAttribute("checkType", checkType);
         model.addAttribute("industryType", industryType);
-        return "company/danger/model-add-main";
-    }
-
-    /**
-     * TODO 跳转中转页面==> 跳转到自定义/标准保存模版
-     * @return
-     */
-    @RequestMapping(value="model-add-main")
-    public String modelAddMain(HttpServletRequest request ,Model model,String dmname,Integer dmid, Integer checkType,
-                               Integer industryType
-                               ){
-        model.addAttribute("dmname",dmname);
-        model.addAttribute("dmid",dmid);
-        model.addAttribute("checkType",checkType);
-        model.addAttribute("industryType",industryType);
-        return"company/checkModel/model-add-main";
+        return "company/checkModel/model-add-main";
     }
 
     /**
@@ -2620,15 +2608,15 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "model-list-main")
     public String modelListMain(HttpServletRequest request,
-                              Model model
+                                Model model
     ) throws ParseException {
         // 获取用户信息
         User user = getLoginUser(request);
         // 根据用户获取用户信息
         List<Map<Object, Object>> jiChuItem = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");
         List<Map<Object, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
-        model.addAttribute("jiChuItem",jiChuItem);
-        model.addAttribute("xianChangItem",XianChangItem);
+        model.addAttribute("jiChuItem", jiChuItem);
+        model.addAttribute("xianChangItem", XianChangItem);
 
         return "company/danger/model-list-main";
 
@@ -3151,10 +3139,11 @@ public class CompanyController_cd extends BaseController {
             check.setUserId(user.getId());
             check.setCreateUser(user.getId());
             //log.error("planSave2 modelId:"+modelId+", type : "+type);//zhangcl 2018.10.29
-            if (type != null && type == 9)
+            if (type != null && type == 9){
                 cgfService.checkSave1(check);
-            else
+            }else{
                 cgfService.checkSave(check);
+            }
             log.error("planSave2:" + 6);//zhangcl 2018.10.29
             result.setMap("id", check.getId());
         } catch (Exception e) {

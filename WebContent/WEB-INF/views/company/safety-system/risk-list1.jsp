@@ -126,7 +126,7 @@ function pr_() {
         <h3 class="text-c">${company.name}高危作业分布表</h3>
     </c:if>
     <div class="mt-20">
-        <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan">
+        <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan"  >
             <thead>
             <tr class="text-c">
                 <c:if test="${empty type}">
@@ -159,7 +159,7 @@ function pr_() {
             <th style="width:10%" >操作</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody style="display: none" id="myTable" >
             <c:if test="${empty type}">
                 <c:forEach items="${zzjgDep }" var="be">
                                 <c:set value="0" var="x"/>

@@ -173,5 +173,7 @@ public interface ACompanyManualMapper {
     * 分级管控数据显示排序
     * */
     List<Map<String, Object>> selectByAcs(Map<String, Object> m);
+
+    List<Map<String, Object>> selectNum(Map<String, Object> m);
 }
 

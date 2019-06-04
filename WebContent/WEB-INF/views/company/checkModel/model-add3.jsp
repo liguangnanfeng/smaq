@@ -109,7 +109,7 @@
             success: function (result) {
                 if (result.status == 0) {
                     alert('保存成功');
-                    window.parent.location.href = '${ly}/company/model-list-cx?flag=1&type='+checkType+'&template='+tem;
+                    window.parent.location.href = '${ly }/company/model-list-main';
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
 

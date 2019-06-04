@@ -2236,7 +2236,7 @@ public class CompanyController_cd extends BaseController {
 
             for (int i = 0; i < levelsArr.length; i++) {
                 Map<String, Object> a = new HashMap<String, Object>();
-                if (!"null".equals(levelsArr[i]) && null != levelsArr[i]) {
+                if (!"null".equals(levelsArr[i]) && null != levelsArr[i] && !"".equals(levelsArr[i])) {
                     int i1 = Integer.parseInt(levelsArr[i]);
                     ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(i1);
                     if (null == companyManual) {
@@ -2260,6 +2260,10 @@ public class CompanyController_cd extends BaseController {
                     a.put("dangerType", tCheck.getType());
                     a.put("factors", map.get("content"));
                     a.put("measures", map.get("reference"));
+                    if (null == a.get("measures") || "".equals(a.get("measures"))) {
+                        a.put("measures", map.get("content"));
+
+                    }
                     log.info("a:" + a.toString());
                     iteml.add(a);
                 }
@@ -2416,21 +2420,23 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "model-list-tj")
     public String modelListtj(HttpServletRequest request, Model model, String dmname, Integer dmid, Integer checkType,
-                              Integer industryType, Integer template,Integer flag) {
+                              Integer industryType, Integer template, Integer flag) {
         User user = getLoginUser(request);
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         map.put("userId", user.getId());    // 公司id,必要
         map.put("dmname", dmname);          // 部门名称
         map.put("dmid", dmid);              // 部门id
         map.put("type", checkType);         // 检查方式
-        if(industryType==-1){
-            map.put("industryType",1);  // 基础类型
-        }else if(industryType==-2){
-            map.put("industryType",2);  // 现场类型
-        }else{
-            map.put("industryType",3);  // 高危类型
+        if (industryType == -1) {
+            map.put("industryType", 1);  // 基础类型
+        } else if (industryType == -2) {
+            map.put("industryType", 2);  // 现场类型
+        } else {
+            map.put("industryType", 3);  // 高危类型
         }
+
         map.put("flag", flag);
+
 
         List<Map<String, Object>> list = tModelMapper.selectByMap4(map);
         model.addAttribute("list", list);
@@ -2439,8 +2445,9 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("type", checkType);
         model.addAttribute("industryType", industryType);
         model.addAttribute("userId", user.getId());
-        model.addAttribute("template",template);
-        model.addAttribute("flag",flag);
+        model.addAttribute("template", template);
+        model.addAttribute("flag", flag);
+
         //企业类型为 化工 或 构成重大危险源 则企业自查处 日检查表显示 wz 190108
         Company company = companyMapper.selectByPrimaryKey(user.getId());
 
@@ -2458,6 +2465,7 @@ public class CompanyController_cd extends BaseController {
         }
         return "company/danger/model-list-cx";
     }
+
 
     /**
      * 检查设置与实施-企业自查1-日检查表 wz 190109
@@ -2532,6 +2540,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "model-list-bm")
     public String modelLinShi(HttpServletRequest request, Integer flag, Integer type, Integer template,
+                              Integer status,String title, String companyName,
                               Model model
     ) throws ParseException {
         // 获取用户信息
@@ -2563,15 +2572,18 @@ public class CompanyController_cd extends BaseController {
         String x = DateFormatUtils.format(d, "yyyy-MM-dd");
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
         model.addAttribute("t", d.getTime());
-        if (user.getUserType() == 5) {//企业用户
-            return "company/danger/model-list-cx";
-        }
-        return "village/danger/check-list";
 
         List<Map<Object, Object>> jiChuItem = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");
         List<Map<Object, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
+    }
+
+        if (user.getUserType() == 5) {//企业用户
+            return "company/danger/model-list-cx";
+        }
+        return "village/danger/check-list";
+
     }
 
     /**
@@ -2587,6 +2599,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("dmid", dmid);
         model.addAttribute("checkType", checkType);
         model.addAttribute("industryType", industryType);
+  
         return "company/checkModel/model-add-main";
     }
 
@@ -3128,10 +3141,13 @@ public class CompanyController_cd extends BaseController {
             check.setUserId(user.getId());
             check.setCreateUser(user.getId());
             //log.error("planSave2 modelId:"+modelId+", type : "+type);//zhangcl 2018.10.29
-            if (type != null && type == 9)
+          
+            if (type != null && type == 9){
                 cgfService.checkSave1(check);
-            else
+          
+            }else{
                 cgfService.checkSave(check);
+            }
             log.error("planSave2:" + 6);//zhangcl 2018.10.29
             result.setMap("id", check.getId());
         } catch (Exception e) {

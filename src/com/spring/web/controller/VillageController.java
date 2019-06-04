@@ -2704,7 +2704,7 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value="model-add4")
     public String modelAdd4(HttpServletRequest request ,Model model,String dmname,Integer dmid, Integer checkType,
-                               Integer industryType
+                            Integer industryType
     ){
         model.addAttribute("dmname",dmname);
         model.addAttribute("dmid",dmid);

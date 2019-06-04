@@ -125,43 +125,48 @@
 </nav>
 <div class="page-container">
     <c:set var="x" value="${fn:split('检查实施/检查表/定期检查表/临时检查表','/') }"/>
-    <div class="text-c">
-        <c:if test="${flag == 1 }">
-            <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;margin-top:20px;">
-                <a class="btn default ${flag == 1&&template==1 ? 'btn-primary' : 'radius'}"
-                   href="${ly }/company/model-list-cx?flag=1&type=1&template=1">综合检查表</a>
-                <c:if test="${rjcbxs == 1 }">
-                    <a class="btn default ${flag == 1&&template==2 ? 'btn-primary' : 'radius'}"
-                       href="${ly }/company/model-list-cx?flag=1&type=1&template=2">日检查表</a>
-                </c:if>
-                <a class="btn default ${flag == 1&&template==3 ? 'btn-primary' : 'radius'}"
-                   href="${ly }/company/model-list-cx?flag=1&type=2&template=3">定期检查表</a>
-                <a class="btn default ${flag == 1&&template==4 ? 'btn-primary' : 'radius'}"
-                   href="${ly }/company/model-list-cx?flag=1&type=3&template=4">临时检查表</a>
-            </div>
-        </c:if>
-    </div>
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <%--<c:if test="${flag == 1 && type != 3 && type!=9}">--%>
-        <c:if test="${template != 1}">
-            <%--<span class="l">--%>
-            <%--<a class="btn btn-primary radius" onclick="show_dialog('添加${x[type-1] }','${ly }/company/model-add?type=${type }&flag=1')" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加${x[type-1] }</a>--%>
-            <%--</span> --%>
-            <span class="l">
-<%--          <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel')" onclick="Hui_admin_tab(this)" href="javascript:;">--%>
+<%--    <div class="text-c">--%>
+<%--        <c:if test="${flag == 1 }">--%>
+<%--            <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;margin-top:20px;">--%>
+<%--                <a class="btn default ${flag == 1&&template==10 ? 'btn-primary' : 'radius'}"--%>
+<%--                   href="${ly }/company/model-list-bm?flag=1&type=10&template=10">检查设置</a>--%>
+<%--                    &lt;%&ndash;                <c:if test="${rjcbxs == 1 }">&ndash;%&gt;--%>
+<%--                <a class="btn default ${flag == 1&&template==6 ? 'btn-primary' : 'radius'}"--%>
+<%--                   href="${ly }/company/model-list-cx?flag=1&type=5&template=6">综合检查表</a>--%>
+<%--                <a class="btn default ${flag == 1&&template==2 ? 'btn-primary' : 'radius'}"--%>
+<%--                   href="${ly }/company/model-list-cx?flag=1&type=1&template=2">日检查表</a>--%>
+<%--                    &lt;%&ndash;                </c:if>&ndash;%&gt;--%>
+<%--                <a class="btn default ${flag == 1&&template==3 ? 'btn-primary' : 'radius'}"--%>
+<%--                   href="${ly }/company/model-list-cx?flag=1&type=2&template=3">定期检查表</a>--%>
+<%--                <a class="btn default ${flag == 1&&template==4 ? 'btn-primary' : 'radius'}"--%>
+<%--                   href="${ly }/company/model-list-cx?flag=1&type=3&template=4">季节检查表</a>--%>
+<%--                <a class="btn default ${flag == 1&&template==5 ? 'btn-primary' : 'radius'}"--%>
+<%--                   href="${ly }/company/model-list-cx?flag=1&type=4&template=5">其他检查表</a>--%>
+
+<%--            </div>--%>
+<%--        </c:if>--%>
+<%--    </div>--%>
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+<%--            <c:if test="${flag == 1 && type != 3 && type!=9}">--%>
+<%--            <c:if test="${template != 1}">--%>
+<%--                &lt;%&ndash;<span class="l">&ndash;%&gt;--%>
+<%--                &lt;%&ndash;<a class="btn btn-primary radius" onclick="show_dialog('添加${x[type-1] }','${ly }/company/model-add?type=${type }&flag=1')" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加${x[type-1] }</a>&ndash;%&gt;--%>
+<%--                &lt;%&ndash;</span> &ndash;%&gt;--%>
+<%--                <span class="l">--%>
+<%--&lt;%&ndash;          <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel')" onclick="Hui_admin_tab(this)" href="javascript:;">&ndash;%&gt;--%>
+<%--&lt;%&ndash;              <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加检查模版&ndash;%&gt;--%>
+<%--&lt;%&ndash;          </a>&ndash;%&gt;--%>
+<%--            <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/getCheckModelBasic')"--%>
+<%--               onclick="Hui_admin_tab(this)" href="javascript:;">--%>
 <%--              <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加检查模版--%>
 <%--          </a>--%>
-            <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/getCheckModelBasic')"
-               onclick="Hui_admin_tab(this)" href="javascript:;">
-              <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加检查模版
-          </a>
-               <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel')"
-                  onclick="Hui_admin_tab(this)" href="javascript:;">
-              <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加标准检查模版
-          </a>
-        </span>
-        </c:if>
-        <c:if test="${flag == 3 }">
+<%--               <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel')"--%>
+<%--                  onclick="Hui_admin_tab(this)" href="javascript:;">--%>
+<%--              <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加标准检查模版--%>
+<%--          </a>--%>
+<%--        </span>--%>
+<%--            </c:if>--%>
+            <c:if test="${flag == 3 }">
         <span class="l">
           <%-- <a class="btn btn-primary radius" data-title="添加" data-href="${ly }/company/model-add?type=${type }&flag=1" onclick="Hui_admin_tab(this)" href="javascript:;"> <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 选择添加-部门抽查</a>--%>
           <input type="button" class="btn btn-primary radius" onClick="open_jian('.list_oth',3)" value="选择添加-部门抽查"/>
@@ -172,9 +177,9 @@
           <%-- <a class="btn btn-primary radius" data-title="添加" data-href="${ly }/company/model-add?type=${type }&flag=1" onclick="Hui_admin_tab(this)" href="javascript:;"> <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 选择添加-行政检查</a>--%>
           <input type="button" class="btn btn-primary radius" onClick="open_jian('.list_oth',4)" value="选择添加-行政检查"/>
         </span>
-        </c:if>
-        <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
-    </div>
+            </c:if>
+            <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
+        </div>
     <!-- 弹窗选择 -->
     <div id="win_jian" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -227,7 +232,120 @@
         </div>
     </div>
 
-    <c:if test="${type == 1 || type == 2 || type == 3}">
+    <%-- 添加标准检查设置  定位--%>
+<%--    <c:if test="${type == 10}">--%>
+<%--        <c:if test="${not empty jiChuItem}">--%>
+<%--            <div class="mt-20">--%>
+<%--                <h3>基础检查</h3>--%>
+<%--                <table class="table table-border table-bordered table-bg table-hover table-sort">--%>
+<%--                    <thead>--%>
+<%--                    <tr class="text-c">--%>
+<%--                        <th width="5%">序号</th>--%>
+<%--                        <th>受检车间/场所</th>--%>
+<%--                        <th>综合检查</th>--%>
+<%--                        <th>日常检查</th>--%>
+<%--                        <th>定期检查</th>--%>
+<%--                        <th>季节检查</th>--%>
+<%--                        <th>其他检查</th>--%>
+<%--                    </tr>--%>
+<%--                    </thead>--%>
+<%--                    <tbody>--%>
+<%--                    <!-- 循环-->--%>
+<%--                    <c:forEach items="${jiChuItem}" varStatus="index" var="be">--%>
+<%--                        <tr class="text-c">--%>
+<%--                            <td>${index.index + 1}</td>--%>
+<%--                            <td>${be.level1 }</td>--%>
+<%--                            <td>--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/addCheckModel3?dmname=${be.level1 }&dmid${be.dmid }&checkType=5&industryType=-1')"--%>
+<%--                                   href="javascript:;">设定</a>--%>
+<%--                            </td>--%>
+<%--                            <td>--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/addCheckModel3?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-1')"--%>
+<%--                                   href="javascript:;">设定</a>--%>
+<%--                            </td>--%>
+<%--                            <td>--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/addCheckModel3?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-1')"--%>
+<%--                                   href="javascript:;">设定</a>--%>
+<%--                            </td>--%>
+<%--                            <td>--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/addCheckModel3?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-1')"--%>
+<%--                                   href="javascript:;">设定</a>--%>
+<%--                            </td>--%>
+<%--                            <td>--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/addCheckModel3?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-1')"--%>
+<%--                                   href="javascript:;">设定</a>--%>
+<%--                            </td>--%>
+
+<%--                        </tr>--%>
+<%--                    </c:forEach>--%>
+<%--                    <!-- 循环结束 -->--%>
+<%--                    </tbody>--%>
+<%--                </table>--%>
+<%--            </div>--%>
+<%--        </c:if>--%>
+<%--        <c:if test="${not empty xianChangItem}">--%>
+<%--            <div class="mt-20" style="margin-top: 50px">--%>
+<%--                <h3>现场检查</h3>--%>
+<%--                <table class="table table-border table-bordered table-bg table-hover table-sort">--%>
+<%--                    <thead>--%>
+<%--                    <tr class="text-c">--%>
+<%--                        <th width="5%">序号</th>--%>
+<%--                        <th>受检车间/场所</th>--%>
+<%--                        <th>综合检查</th>--%>
+<%--                        <th>日常检查</th>--%>
+<%--                        <th>定期检查</th>--%>
+<%--                        <th>季节检查</th>--%>
+<%--                        <th>其他检查</th>--%>
+<%--                    </tr>--%>
+<%--                    </thead>--%>
+<%--                    <tbody>--%>
+<%--                    <!-- 循环-->--%>
+<%--                    <c:forEach items="${xianChangItem}" varStatus="index" var="be">--%>
+<%--                        <tr class="text-c">--%>
+<%--                            <td>${index.index + 1}</td>--%>
+<%--                            <td>${be.level1 }</td>--%>
+<%--                            <td>--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/addCheckModel3?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-2')"--%>
+<%--                                   href="javascript:;">设定</a>--%>
+<%--                            </td>--%>
+<%--                            <td>--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/addCheckModel3?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-2')"--%>
+<%--                                   href="javascript:;">设定</a>--%>
+<%--                            </td>--%>
+<%--                            <td>--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/addCheckModel3?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-2')"--%>
+<%--                                   href="javascript:;">设定</a>--%>
+<%--                            </td>--%>
+<%--                            <td>--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/addCheckModel3?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-2')"--%>
+<%--                                   href="javascript:;">设定</a>--%>
+<%--                            </td>--%>
+<%--                            <td>--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/addCheckModel3?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-2')"--%>
+<%--                                   href="javascript:;">设定</a>--%>
+<%--                            </td>--%>
+
+<%--                        </tr>--%>
+<%--                    </c:forEach>--%>
+<%--                    <!-- 循环结束 -->--%>
+<%--                    </tbody>--%>
+<%--                </table>--%>
+<%--            </div>--%>
+<%--        </c:if>--%>
+<%--    </c:if>--%>
+
+
+    <c:if test="${type == 1 || type == 2 || type == 3|| type == 4|| type == 5}">
         <div class="mt-20">
             <table class="table table-border table-bordered table-bg table-hover table-sort">
                 <thead>
@@ -270,9 +388,15 @@
                                     定期
                                 </c:if>
                                 <c:if test="${be.type==3}" >
-                                    临时
+                                    季节
                                 </c:if>
-                                
+                                <c:if test="${be.type==4}">
+                                    其他
+                                </c:if>
+                                <c:if test="${be.type==5}">
+                                    综合
+                                </c:if>
+
                             </td>
                         </c:if>
                             <%--检查部位--%>

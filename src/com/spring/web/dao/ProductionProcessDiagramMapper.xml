@@ -39,6 +39,22 @@
     from production_process_diagram_tbl
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+
+
+  <select id="selectAddress" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from production_process_diagram_tbl
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+
+
+
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--
       WARNING - @mbggenerated

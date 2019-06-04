@@ -84,7 +84,7 @@ body .dis-ib{margin-right:15px;}
             <td>${list.operatingRules }</td>
             <td>${list.equipment }</td> --%>
             <td>
-              <a style="text-decoration:none" href="${ly}/common/download?filename=${list.docName}&fileurl=${list.docUrl}" title="查看文档" target="_blank">查看文档</a>
+              <a style="text-decoration:none" onClick="lock(${list.id })" title="查看文档" target="_blank">查看文档</a>
               <a style="text-decoration:none" onClick="admin_edit(${list.id })" href="javascript:;" title="编辑">查看/编辑</a>
               <a style="text-decoration:none" onClick="del(${list.id })" href="javascript:;" title="删除">删除</a>
             </td>
@@ -110,6 +110,16 @@ $(function() {
 function admin_edit(id){
   show_tab("编辑生产工艺流程图", getRootPath() + "/company/process/process-edit?id=" + id);
 }
+
+/*
+* 查看文档
+* */
+function lock(id){
+    show_tab("编辑生产工艺流程图", getRootPath() + "/company/process/lockAll?id=" + id);
+}
+
+
+
 
 /*删除*/
 function del(id){

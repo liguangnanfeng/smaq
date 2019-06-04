@@ -1,8 +1,9 @@
 package com.spring.web.dao;
 
+import com.spring.web.model.ProductionProcessDiagram;
+
 import java.util.List;
 import java.util.Map;
-import com.spring.web.model.ProductionProcessDiagram;
 
 public interface ProductionProcessDiagramMapper {
     /**
@@ -56,4 +57,6 @@ public interface ProductionProcessDiagramMapper {
     List<Map<String, Object>> selectList(Map<String, Object> map);
     
     List<Map<String, Object>> selectList1(Map<String, Object> map);//add 190130 新三洲集团生产工艺流程图查询
+
+    List<ProductionProcessDiagram> selectAddress(Integer id);
 }

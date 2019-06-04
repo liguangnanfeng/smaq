@@ -67,12 +67,12 @@
             layer.full(index);
         }
     </script>
-<script type="text/javascript">
-function pr_() {
-  $("#div_container").jqprint();
-}
-</script>
-<script src="/js/jquery.jqprint-0.3.js"></script>
+    <script type="text/javascript">
+        function pr_() {
+            $("#div_container").jqprint();
+        }
+    </script>
+    <script src="/js/jquery.jqprint-0.3.js"></script>
 </head>
 <body>
 <nav class="breadcrumb">
@@ -99,202 +99,202 @@ function pr_() {
         <a class="btn default ${5 eq  type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=5">高危作业分布表</a>
     </div>
 
-  <div class="text-c mt-20">
-    <button onClick="pr_()" class="btn btn-primary radius" type="button">
-        <i class="Hui-iconfont">&#xe652;</i>打印
-    </button>
-  </div>
-  <div class="page-container" id="div_container" >
-    <div class="div-print">
-	
-    <c:if test="${empty type}">
-        <h3 class="text-c">${company.name}风险因素辨识表</h3>
-    </c:if>
-    <c:if test="${type eq 1}">
-        <h3 class="text-c">${company.name}职业病风险物理因素分布表</h3>
-    </c:if>
-    <c:if test="${type eq 2}">
-        <h3 class="text-c">${company.name}职业病风险化学因素分布表</h3>
-    </c:if>
-    <c:if test="${type eq 3}">
-        <h3 class="text-c">${company.name}高危工艺分布表</h3>
-    </c:if>
-    <c:if test="${type eq 4}">
-        <h3 class="text-c">${company.name}物料风险分布表</h3>
-    </c:if>
-    <c:if test="${type eq 5}">
-        <h3 class="text-c">${company.name}高危作业分布表</h3>
-    </c:if>
-    <div class="mt-20">
-        <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan"  >
-            <thead>
-            <tr class="text-c">
-                <c:if test="${empty type}">
-                <th style="width:8%">辨识类型</th>
-                <th style="width:8%">车间/场所</th>
-                <th style="width:8%">系统</th>
-                <th style="width:8%">环节/部位</th> 
-                <th style="width:8%">风险类型</th>  
-                <th style="width:50%">风险因素</th>
-                </c:if>
-                <c:if test="${!empty type}">
-                <th style="padding:0;width:20%">车间/场所</th>
-                <th style="width:10%" >岗位/部位</th>
-                </c:if>
-                <c:if test="${type eq 1}">
-                    <th>职业危害物理因素</th>
-                </c:if>
-                <c:if test="${type eq 2}">
-                    <th>职业危害化学因素</th>
-                </c:if>
-                <c:if test="${type eq 3}">
-                    <th>高危工艺</th>
-                </c:if>
-                <c:if test="${type eq 4}">
-                    <th>物料辨识</th>
-                </c:if>
-                <c:if test="${type eq 5}">
-                    <th>高危作业</th>
-                </c:if>
-            <th style="width:10%" >操作</th>
-            </tr>
-            </thead>
-            <tbody style="display: none" id="myTable" >
-            <c:if test="${empty type}">
-                <c:forEach items="${zzjgDep }" var="be">
-                                <c:set value="0" var="x"/>
-                                <c:forEach items="${acL }" var="ac">
-                                    <c:if test="${be.name eq ac.level1}">
- 						<script>
-						str="${ac.level3}";
-						arr=str.split("/");
-						</script>
-                                        <tr>
-						<td style="width:10%;height:80px;" class="text-c">
-						<script>
-						document.write(arr[0]);
-						</script></td>
-                        <td style="width:10%;border-bottom: 0px;" class="text-c">${be.name }</td>
-                            <c:if test="${x==0}"><td style="width:10%;" class="text-c"></c:if>
-                            <c:if test="${x==1}"><td style="width:10%;" class="text-c"></c:if>
-                            <p style="text-align:center;"><script>document.write(arr[1]);</script></p>
-                            </td>
-                            <c:if test="${x==0}"><td style="width:10%;" class="text-c"></c:if>
-                            <c:if test="${x==1}"><td style="width:10%;" class="text-c"></c:if>
-                            <p style="text-align:center;"><script>document.write(arr[2]);</script></td>
-                            <c:if test="${x==0}"><td style="width:10%;" class="text-c"></c:if>
-                            <c:if test="${x==1}"><td style="width:10%;" class="text-c"></c:if>
-                            <c:if test="${empty  ac.type}" >
-                                <p style="text-align:center;">未识别</p>
-                            </c:if>
-                            <c:if test="${not empty  ac.type}" >
-                                <p style="text-align:center;">${ac.type}</p>
-                            </c:if>
-                            </td>
-                            <c:if test="${x==0}"><td style="width:30%;" class="text-c"></c:if>
-                            <c:if test="${x==1}"><td style="width:30%;" class="text-c"></c:if>
-                            <p style="float:left;width:80%;">${ac.factors}</p>
-                            </td>
-                            <td class="text-c">
-                            <c:if test="${empty type}">
-                                <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
-                            </c:if>
-                            <c:if test="${empty type}">
-                                <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
-                            </c:if>
-										    </td>
-                                        </tr>
-                                        <c:set value="1" var="x"/>
-                                    </c:if>
-                                </c:forEach>
-                                <c:if test="${x == 0}">
-                                    <tr>
-                                        <td style="width:10%;height:80px;"><p style="text-align:center;">未辨识</p><p style="display:none">${be.id}</p></td>
-                                        <td style="width:10%;"><p style="text-align:center;">${be.name }</p></td>
-                                        <td style="width:10%;"><p style="text-align:center;">未关联</p></td>
-                                        <td style="width:10%;"><p style="text-align:center;">未关联</p></td>
-                                        <td style="width:10%;"><p style="text-align:center;">未识别</p></td>
-                                        <td style="width:40%;"><p style="text-align:center;">未辨识风险因素</p></td>
-										<td style="width:10%;">
-                            <c:if test="${empty type}">
-                                <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
-                            </c:if>
-                            <c:if test="${empty type}">
-                                <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
-                            </c:if>
-										</td>
-                                    </tr>
-                                </c:if>
-                </c:forEach>
-            </c:if>
+    <div class="text-c mt-20">
+        <button onClick="pr_()" class="btn btn-primary radius" type="button">
+            <i class="Hui-iconfont">&#xe652;</i>打印
+        </button>
+    </div>
+    <div class="page-container" id="div_container" >
+        <div class="div-print">
 
-            <c:if test="${not empty type }">
-                <c:forEach items="${dL }" var="be3">
-                    <tr>
-                        <td class="text-c" rowspan="1">${be3.level1 }</td>
-                        <td class="text-c">${be3.level2 }</td>
+            <c:if test="${empty type}">
+                <h3 class="text-c">${company.name}风险因素辨识表</h3>
+            </c:if>
+            <c:if test="${type eq 1}">
+                <h3 class="text-c">${company.name}职业病风险物理因素分布表</h3>
+            </c:if>
+            <c:if test="${type eq 2}">
+                <h3 class="text-c">${company.name}职业病风险化学因素分布表</h3>
+            </c:if>
+            <c:if test="${type eq 3}">
+                <h3 class="text-c">${company.name}高危工艺分布表</h3>
+            </c:if>
+            <c:if test="${type eq 4}">
+                <h3 class="text-c">${company.name}物料风险分布表</h3>
+            </c:if>
+            <c:if test="${type eq 5}">
+                <h3 class="text-c">${company.name}高危作业分布表</h3>
+            </c:if>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan"  >
+                    <thead>
+                    <tr class="text-c">
+                        <c:if test="${empty type}">
+                            <th style="width:8%">辨识类型</th>
+                            <th style="width:8%">车间/场所</th>
+                            <th style="width:8%">系统</th>
+                            <th style="width:8%">环节/部位</th>
+                            <th style="width:8%">风险类型</th>
+                            <th style="width:50%">风险因素</th>
+                        </c:if>
+                        <c:if test="${!empty type}">
+                            <th style="padding:0;width:20%">车间/场所</th>
+                            <th style="width:10%" >岗位/部位</th>
+                        </c:if>
                         <c:if test="${type eq 1}">
-                            <td>${fn:replace(be3.hxys, '!@#', ",") }</td>
+                            <th>职业危害物理因素</th>
                         </c:if>
                         <c:if test="${type eq 2}">
-                            <td>${fn:replace(be3.material, '!@#', ",") }</td>
+                            <th>职业危害化学因素</th>
                         </c:if>
                         <c:if test="${type eq 3}">
-                            <td>${fn:replace(be3.gy, '!@#', ",") }</td>
+                            <th>高危工艺</th>
                         </c:if>
                         <c:if test="${type eq 4}">
-                            <td>${fn:replace(be3.wlbs, '!@#', ",") }</td>
+                            <th>物料辨识</th>
                         </c:if>
                         <c:if test="${type eq 5}">
-                            <td>${fn:replace(be3.gwzy, '!@#', ",") }</td>
+                            <th>高危作业</th>
                         </c:if>
-                        <td class="text-c" style="width:90px">
-                            <a class="btn-cz" onclick="redit(${be3.id}, ${type })" href="javascript:;" title="选择">选择</a>
-                        </td>
+                        <th style="width:10%" >操作</th>
                     </tr>
-                </c:forEach>
-            </c:if>
-            </tbody>
-        </table>
-    </div>
-</div>
+                    </thead>
+                    <tbody style="display: none" id="myTable" >
+                    <c:if test="${empty type}">
+                        <c:forEach items="${zzjgDep }" var="be">
+                            <c:set value="0" var="x"/>
+                            <c:forEach items="${acL }" var="ac">
+                                <c:if test="${be.name eq ac.level1}">
+                                    <script>
+                                        str="${ac.level3}";
+                                        arr=str.split("/");
+                                    </script>
+                                    <tr>
+                                        <td style="width:10%;height:80px;" class="text-c">
+                                            <script>
+                                                document.write(arr[0]);
+                                            </script></td>
+                                        <td style="width:10%;" class="text-c">${be.name }</td>
+                                        <c:if test="${x==0}"><td style="width:10%;" class="text-c"></c:if>
+                                        <c:if test="${x==1}"><td style="width:10%;" class="text-c"></c:if>
+                                        <p style="text-align:center;"><script>document.write(arr[1]);</script></p>
+                                    </td>
+                                        <c:if test="${x==0}"><td style="width:10%;" class="text-c"></c:if>
+                                        <c:if test="${x==1}"><td style="width:10%;" class="text-c"></c:if>
+                                        <p style="text-align:center;"><script>document.write(arr[2]);</script></td>
+                                        <c:if test="${x==0}"><td style="width:10%;" class="text-c"></c:if>
+                                        <c:if test="${x==1}"><td style="width:10%;" class="text-c"></c:if>
+                                        <c:if test="${empty  ac.type}" >
+                                            <p style="text-align:center;">未识别</p>
+                                        </c:if>
+                                        <c:if test="${not empty  ac.type}" >
+                                            <p style="text-align:center;">${ac.type}</p>
+                                        </c:if>
+                                    </td>
+                                        <c:if test="${x==0}"><td style="width:30%;" class="text-c"></c:if>
+                                        <c:if test="${x==1}"><td style="width:30%;" class="text-c"></c:if>
+                                        <p style="float:left;width:80%;">${ac.factors}</p>
+                                    </td>
+                                        <td class="text-c">
+                                            <c:if test="${empty type}">
+                                                <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
+                                            </c:if>
+                                            <c:if test="${empty type}">
+                                                <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                            </c:if>
+                                        </td>
+                                    </tr>
+                                    <c:set value="1" var="x"/>
+                                </c:if>
+                            </c:forEach>
+                            <c:if test="${x == 0}">
+                                <tr>
+                                    <td style="width:10%;height:80px;"><p style="text-align:center;">未辨识</p><p style="display:none">${be.id}</p></td>
+                                    <td style="width:10%;"><p style="text-align:center;">${be.name }</p></td>
+                                    <td style="width:10%;"><p style="text-align:center;">未关联</p></td>
+                                    <td style="width:10%;"><p style="text-align:center;">未关联</p></td>
+                                    <td style="width:10%;"><p style="text-align:center;">未识别</p></td>
+                                    <td style="width:40%;"><p style="text-align:center;">未辨识风险因素</p></td>
+                                    <td style="width:10%;">
+                                        <c:if test="${empty type}">
+                                            <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
+                                        </c:if>
+                                        <c:if test="${empty type}">
+                                            <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                        </c:if>
+                                    </td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                    </c:if>
 
-<div id="win-add2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 760px">
-        <div class="modal-content radius">
-            <div class="modal-header">
-                <h3 class="modal-title">编辑</h3>
-                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                    <c:if test="${not empty type }">
+                        <c:forEach items="${dL }" var="be3">
+                            <tr>
+                                <td class="text-c" rowspan="1">${be3.level1 }</td>
+                                <td class="text-c">${be3.level2 }</td>
+                                <c:if test="${type eq 1}">
+                                    <td>${fn:replace(be3.hxys, '!@#', ",") }</td>
+                                </c:if>
+                                <c:if test="${type eq 2}">
+                                    <td>${fn:replace(be3.material, '!@#', ",") }</td>
+                                </c:if>
+                                <c:if test="${type eq 3}">
+                                    <td>${fn:replace(be3.gy, '!@#', ",") }</td>
+                                </c:if>
+                                <c:if test="${type eq 4}">
+                                    <td>${fn:replace(be3.wlbs, '!@#', ",") }</td>
+                                </c:if>
+                                <c:if test="${type eq 5}">
+                                    <td>${fn:replace(be3.gwzy, '!@#', ",") }</td>
+                                </c:if>
+                                <td class="text-c" style="width:90px">
+                                    <a class="btn-cz" onclick="redit(${be3.id}, ${type })" href="javascript:;" title="选择">选择</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:if>
+                    </tbody>
+                </table>
             </div>
-            <div class="modal-body">
-                <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">系统/车间：</label>
-                    <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
-                        <input type="text" id="level1" value="" style="width: 557px" class="input-text required">
+        </div>
+
+        <div id="win-add2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width: 760px">
+                <div class="modal-content radius">
+                    <div class="modal-header">
+                        <h3 class="modal-title">编辑</h3>
+                        <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">系统/车间：</label>
+                            <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
+                                <input type="text" id="level1" value="" style="width: 557px" class="input-text required">
+                            </div>
+                        </div>
+                        <div class="row cl mt-15">
+                            <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">工段/班组：</label>
+                            <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
+                                <input type="text" id="level2" value="" style="width: 557px" class="input-text required">
+                            </div>
+                        </div>
+                        <div class="row cl mt-15">
+                            <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">岗位/部位：</label>
+                            <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
+                                <input type="text" id="level3" value="" style="width: 557px" class="input-text required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" onclick="save()">确定</button>
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
                     </div>
                 </div>
-                <div class="row cl mt-15">
-                    <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">工段/班组：</label>
-                    <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
-                        <input type="text" id="level2" value="" style="width: 557px" class="input-text required">
-                    </div>
-                </div>
-                <div class="row cl mt-15">
-                    <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">岗位/部位：</label>
-                    <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
-                        <input type="text" id="level3" value="" style="width: 557px" class="input-text required">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" onclick="save()">确定</button>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
             </div>
         </div>
     </div>
 </div>
-    </div>
-  </div>
 </body>
 <script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset.js"></script>
 <script type="text/javascript">

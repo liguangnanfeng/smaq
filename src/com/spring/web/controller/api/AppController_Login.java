@@ -12,6 +12,7 @@ import com.spring.web.service.CheckCompany.Zzjg_PersonnelService;
 import com.spring.web.util.EncryptUtil;
 import com.spring.web.util.RandomUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,36 +35,28 @@ import java.util.Map;
 @RequestMapping(value = "api/custom/login")
 public class AppController_Login {
 
-    /**
-     * 企业端
-     */
+    /*企业端*/
     @Autowired
     private Zzjg_PersonnelService zzjgPersonnelService;
 
-    /**
-     * token验证
-     */
+    /*token验证*/
     @Autowired
     private AppTokenMapper appTokenMapper;
 
-    /**
-     * 直接去查询
-     */
+    /*直接去查询*/
     @Autowired
     private ZzjgPersonnelMapper zzjgPersonnelMapper;
 
-    /**
-     * 政府检查人员进行登陆
-     */
+    /*政府检查人员进行登陆*/
     @Autowired
     private OfficialsMapper officialsMapper;
 
-    /**
-     * 政府端查询数据
-     */
+    /*政府端查询数据*/
     @Autowired
     private CountryCheck countryCheck;
 
+    /*日志*/
+    private static final Logger log =Logger.getLogger("R");
     /**
      * TODO 用户登陆功能
      *
@@ -87,11 +80,12 @@ public class AppController_Login {
             }
             // 企业
             if ("1".equals(Integer.toString(type))) {
+                log.info("小程序企业端登陆");
                 result = CommonLogin(request, username, password);
             }
             // 政府
             if ("2".equals(Integer.toString(type))) {
-                //政府端登陆 写一个登陆接口
+                log.info("小程序政府端登陆");
                 result = countryLogin(request, username, password);
             }
             return result;
@@ -270,13 +264,13 @@ public class AppController_Login {
 
         // 获取session对象
         HttpSession session = request.getSession();
-
         session.setAttribute(token, zzjgPersonnel);
         // 并存入map集合中
         MySessionContext myc = MySessionContext.getInstance();
         myc.addSession(session);
 
         String sessionId = request.getSession().getId();
+        log.error("存储到session中的数据"+zzjgPersonnel);
         return sessionId;
     }
 

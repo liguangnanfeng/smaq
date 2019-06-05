@@ -37,6 +37,7 @@
         <include refid="Base_Column_List"/>
         from t_check_tbl
         where id = #{id,jdbcType=INTEGER}
+
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from t_check_tbl

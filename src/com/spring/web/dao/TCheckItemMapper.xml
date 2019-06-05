@@ -251,7 +251,9 @@
         </foreach>
     </insert>
 
-    <!---->
+    <!--
+        根据checkid(检查记录id获取数据)并进行显示和数据
+    -->
     <select id="selectByCheckId" resultType="java.util.Map">
         select
         <!--zhangcl 2018.10.28  T1.id, T1.content, T1.reference, T1.part_id partId, T1.check_id checkId, T1.status, T1.memo, T1.files, T1.memo,-->
@@ -263,6 +265,7 @@
         left join t_check_part_tbl T2 on T2.id = T1.part_id
         where
         T1.check_id = #{checkId}
+        order by T2.name;
 
     </select>
 
@@ -369,7 +372,7 @@
                 and T1.status > 1
             </otherwise>
         </choose>
-
+        order by T3.name
     </select>
 
     <update id="updSuggest">

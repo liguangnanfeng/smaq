@@ -20,76 +20,53 @@ import java.util.*;
  */
 @Service
 @Transactional
-@SuppressWarnings("all")
 public class SaveDataImpl implements SaveMessageService {
 
-    /**
-     * 检查 检查项
-     */
+    /*检查 检查项*/
     @Autowired
     private TCheckItemMapper tCheckItemMapper;
 
-    /**
-     * 检查部位
-     */
+    /*检查部位*/
     @Autowired
     private TCheckPartMapper tCheckPartMapper;
 
-
-    /**
-     * 整改记录表
-     */
+    /*整改记录表*/
     @Autowired
     private TRectificationMapper tRectificationMapper;
 
-    /**
-     * 检查主表
-     */
+    /*检查主表*/
     @Autowired
     private TCheckMapper tCheckMapper;
 
-    /**
-     * 复查意见表主表
-     */
+    /*复查意见表主表*/
     @Autowired
     private TRecheckMapper tRecheckMapper;
 
-    /**
-     * 复查意见表
-     */
+    /*复查意见表*/
     @Autowired
     private TRecheckItemMapper tRecheckItemMapper;
 
-    /**
-     * 主账号
-     */
+    /*主账号*/
     @Autowired
     private UserMapper userMapper;
-    /**
-     * 用户表
-     */
+
+    /*用户表*/
     @Autowired
     private ZzjgPersonnelMapper zzjgPersonnelMapper;
 
-    /**
-     * 模版表
-     */
+    /*模版表*/
     @Autowired
     private TModelMapper modelMapper;
 
-    /**
-     * 复查记录表
-     */
+    /*复查记录表*/
     @Autowired
     private TRectificationConfirmMapper tRectificationConfirmMapper;
-    /**
-     * 短信功能
-     */
+
+    /*短信功能*/
     @Autowired
     private SmsUtil smsUtil;
-    /**
-     * 查询部门短信单独发送
-     */
+
+    /*查询部门短信单独发送*/
     @Autowired
     private ACompanyManualMapper aCompanyManualMapper;
 
@@ -101,14 +78,13 @@ public class SaveDataImpl implements SaveMessageService {
      */
     @Override
     public String saveCheckMessage(SaveDataMessageItem saveDataMessageItem, ZzjgPersonnel zzjg) {
-
         try {
-
+            Integer checkId= null;
             for (SaveDataMessage saveDataMessage : saveDataMessageItem.getList()) {
 
                 // id查询CheckItem
                 TCheckItem item = tCheckItemMapper.selectAllById(saveDataMessage.getId());
-
+                checkId=item.getCheckId();
                 if (item == null) {
                     // 表示没有数据 直接返回
                     return null;
@@ -120,12 +96,6 @@ public class SaveDataImpl implements SaveMessageService {
 
                 } else if ("2".equals(saveDataMessage.getValue())) {
 
-                    // 不合格下达检查结果整改意见表
-                    TRectification tRectification = new TRectification();
-                    tRectification.setCheckId(item.getCheckId()); // 检查表id
-                    tRectification.setUserId(zzjg.getUid()); // 企业id
-                    tRectification.setCreateUser(zzjg.getId()); // 创建人的id
-                    tRectification.setCreateTime(new Date()); //生成时间
                     item.setStatus(2); // 状态 不合格
                     item.setMemo(saveDataMessage.getMemo()); //不合格描述
                     item.setFiles(saveDataMessage.getFile()); //不合规照片
@@ -133,14 +103,11 @@ public class SaveDataImpl implements SaveMessageService {
                     if (saveDataMessageItem.getType() == null) { // 立即整改
 
                         long time = new Date().getTime();
-                        long i = 24 * 60 * 60; //一天
-                        long l = time + i; //
+                        long i = 24 * 60 * 60;
+                        long l = time + i;
                         Date date = new Date(l); // 一天后的时间
                         item.setSuggest(1);  // 1.立即整改 2. 限期整改
                         item.setPlanTime(date); //预期检查时间
-                        tRectification.setDeadline(date); // 限期时间
-                        tRectification.setPlanTime(date); // 计划复查时间
-                        tRectification.setItem1(item.getContent()); // 立即整改项
 
                     } else {
                         //表示限期整改
@@ -151,14 +118,8 @@ public class SaveDataImpl implements SaveMessageService {
                         item.setDeadline(date); // 限期整改期限
                         item.setSuggest(2);  // 1.立即整改 2. 限期整改
                         item.setPlanTime(date); // 预期检查时间
-                        tRectification.setDeadline(date); // 限期时间
-                        tRectification.setPlanTime(date); // 计划复查时间
-                        tRectification.setItem2(item.getContent()); //限期整改项
-
                     }
 
-                    // 保存检查结果整改意见表
-                    tRectificationMapper.insertSelective(tRectification);
                 } else {
                     return null;
                 }
@@ -175,6 +136,9 @@ public class SaveDataImpl implements SaveMessageService {
                 tCheckMapper.updateByPrimaryKey(tCheck); // 更新到数据库
 
             }
+            // 和check_tbl对应,每一次检查只对应一条数据
+            saveTRectification(checkId,zzjg,saveDataMessageItem);
+
             // 内容发送短信内容
             Sms(saveDataMessageItem.getList());
             return "插入成功";
@@ -461,6 +425,57 @@ public class SaveDataImpl implements SaveMessageService {
         return tCheckId;
     }
 
+    /**
+     * TODO 将不合格信息记录插入到 TRectification_tbl表中,一次检查就对应一条记录
+     * 为了pc显示整改详情内容进行显示每一次只查询一次数据
+     */
+    private void saveTRectification(Integer checkId,ZzjgPersonnel zzjg,SaveDataMessageItem saveDataMessageItem){
+        // 保存检查结果整改意见表 保存的就是一次检查记录里面的数据
+        TRectification tRectification = new TRectification();
+        tRectification.setCheckId(checkId); // 检查表id
+        tRectification.setUserId(zzjg.getUid()); // 企业id
+        tRectification.setCreateUser(zzjg.getId()); // 创建人的id
+        tRectification.setCreateTime(new Date()); //生成时间
+
+        String str = new String();
+
+        List<SaveDataMessage> list = saveDataMessageItem.getList();
+        for (int i = 0; i < list.size(); i++) {
+            if("2".equals(list.get(i))){
+                // 表示检查不合格
+                if(i<list.size()-1){
+                    str+=list.get(i).getId()+",";
+                }
+                str+=list.get(i).getId();
+            }
+
+        }
+        // 小程序一般要么就是立即整改要么就是限期整改
+        if(null==saveDataMessageItem.getType()){
+            //立即整改
+            tRectification.setItem1(str); // 立即整改项
+
+            long time = new Date().getTime();
+            long i = 24 * 60 * 60;
+            long l = time + i;
+            Date date = new Date(l); // 一天后的时间
+            tRectification.setDeadline(date); // 限期时间
+            tRectification.setPlanTime(date); // 计划复查时间
+
+        }else{
+            //限期整改
+            int i = Integer.parseInt(saveDataMessageItem.getType()) * 24 * 60 * 60; // 限期时间
+            long time = new Date().getTime();
+            long l = time + i; //
+            Date date = new Date(l);
+
+            tRectification.setItem2(str); //限期整改项
+            tRectification.setDeadline(date); // 限期时间
+            tRectification.setPlanTime(date); // 计划复查时间
+        }
+
+        tRectificationMapper.insertSelective(tRectification);
+    }
 
     /**
      * TODO 修改tRectificationConfirm数据

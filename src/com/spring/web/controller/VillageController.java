@@ -1433,8 +1433,9 @@ public class VillageController extends BaseController {
         Integer type = tc.getType();
         //log.error("检查表type："+type);
 
+        // TODO 这里只保存一条数据,并返回到前端
         TRectification rectification = tRectificationMapper.selectByCheckId(id);
-        //log.error(rectification.toString());
+        log.error(rectification.toString());
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
         model.addAttribute("check", check);
         //model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(id, null));
@@ -2216,7 +2217,7 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 设置检查表
+     * TODO (隐患数据分析)设置检查表
      */
     @RequestMapping("danger-chart")
     public String dangerChart() {

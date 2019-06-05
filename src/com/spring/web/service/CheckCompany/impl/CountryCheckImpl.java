@@ -679,6 +679,61 @@ public class CountryCheckImpl implements CountryCheck {
         }
     }
 
+
+    /**
+     * TODO 将不合格信息记录插入到 TRectification_tbl表中,一次检查就对应一条记录
+     * 政府的检查记录是为了什么???
+     * 为了pc显示整改详情内容进行显示每一次只查询一次数据
+     */
+    private void saveTRectification(Integer checkId,ZzjgPersonnel zzjg,SaveDataMessageItem saveDataMessageItem){
+        // 保存检查结果整改意见表 保存的就是一次检查记录里面的数据
+        TRectification tRectification = new TRectification();
+        tRectification.setCheckId(checkId); // 检查表id
+        tRectification.setUserId(zzjg.getUid()); // 企业id
+        tRectification.setCreateUser(zzjg.getId()); // 创建人的id
+        tRectification.setCreateTime(new Date()); //生成时间
+
+        String str = new String();
+
+        List<SaveDataMessage> list = saveDataMessageItem.getList();
+        for (int i = 0; i < list.size(); i++) {
+            if("2".equals(list.get(i))){
+                // 表示检查不合格
+                if(i<list.size()-1){
+                    str+=list.get(i).getId()+",";
+                }
+                str+=list.get(i).getId();
+            }
+
+        }
+        // 小程序一般要么就是立即整改要么就是限期整改
+        if(null==saveDataMessageItem.getType()){
+            //立即整改
+            tRectification.setItem1(str); // 立即整改项
+
+            long time = new Date().getTime();
+            long i = 24 * 60 * 60;
+            long l = time + i;
+            Date date = new Date(l); // 一天后的时间
+            tRectification.setDeadline(date); // 限期时间
+            tRectification.setPlanTime(date); // 计划复查时间
+
+        }else{
+            //限期整改
+            int i = Integer.parseInt(saveDataMessageItem.getType()) * 24 * 60 * 60; // 限期时间
+            long time = new Date().getTime();
+            long l = time + i; //
+            Date date = new Date(l);
+
+            tRectification.setItem2(str); //限期整改项
+            tRectification.setDeadline(date); // 限期时间
+            tRectification.setPlanTime(date); // 计划复查时间
+        }
+
+        //tRectificationMapper.insertSelective(tRectification);
+    }
+
+
     /**
      * TODO 修改tRectificationConfirm数据
      * 当为空的时候就不进行检查

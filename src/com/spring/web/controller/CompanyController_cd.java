@@ -1353,7 +1353,7 @@ public class CompanyController_cd extends BaseController {
     static String PP = "yyyy-MM";
 
     /**
-     * 折线图数据 根据隐患类型 sT 起始时间 eT 终止时间
+     * TODO 折线图数据 根据隐患类型 sT 起始时间 eT 终止时间
      */
     @RequestMapping(value = "lineChartData")
     public @ResponseBody
@@ -2577,7 +2577,7 @@ public class CompanyController_cd extends BaseController {
         List<Map<Object, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
-    }
+
 
         if (user.getUserType() == 5) {//企业用户
             return "company/danger/model-list-cx";
@@ -2593,8 +2593,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "model-add-main")
     public String modelAddMain(HttpServletRequest request, Model model, String dmname, Integer dmid, Integer checkType,
-                               Integer industryType
-    ) {
+                               Integer industryType) {
         model.addAttribute("dmname", dmname);
         model.addAttribute("dmid", dmid);
         model.addAttribute("checkType", checkType);
@@ -2928,7 +2927,7 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * 检查表 详情
-     * TODO 查看检查记录
+     * TODO 隐患排查记录/检查详情查看检查记录
      */
     @RequestMapping(value = "check-detail")
     public String checkDetail(Integer id, Model model, Integer jcxq) throws Exception {
@@ -2986,6 +2985,7 @@ public class CompanyController_cd extends BaseController {
             if (type == 9) {
                 return "company/danger/plan-detailrjcb";
             } else {
+                // 走的是这里
                 return "company/danger/plan-detail";
             }
         } else {
@@ -2995,7 +2995,6 @@ public class CompanyController_cd extends BaseController {
                 return "company/danger/plan-detailjcxq";
             }
         }
-
 
     }
 

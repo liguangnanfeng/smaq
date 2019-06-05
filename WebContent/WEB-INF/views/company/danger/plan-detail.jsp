@@ -168,6 +168,7 @@ function showpicture(src){
           </tr>
         </thead>
         <tbody>
+        <%--TODO 这里进行合并的话,会没有检查合格的图片--%>
           <c:forEach items="${partL }" var="part" varStatus="pi">
             <c:set var="x" value="0" />
             <c:forEach items="${itemL }" var="ch">
@@ -181,7 +182,18 @@ function showpicture(src){
               <c:if test="${!empty part.partImg}">
                   <img src="${part.partImg }" class="mr-10" style="height:100px;"/>
               </c:if>
-              ${part.name }
+<%--
+                <c:forTokens items=" ${part.name}" delims="!@#" var="splitSubname">             
+                                 <c:if test="${!fn:contains(tempSubname,splitSubname)}">                
+                                               ${splitSubname}
+
+                                    <c:set var="tempSubname" value="${tempSubname}${splitSubname}"/>
+                                   </c:if>
+
+                </c:forTokens>--%>
+
+              ${part.name}
+
               <button class="btn radius btn-danger size-S ml-20" onClick="showpicture('${part.partImg }')">
                 <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 查看大图
               </button>

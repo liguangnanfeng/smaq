@@ -32,14 +32,15 @@ import java.util.UUID;
 @PropertySource("classpath:resources/resources.properties")
 public class AppController_Map extends BaseController {
 
-    /**map对象*/
+    /*map对象*/
     @Autowired
     private TMapMapper tMapMapper;
-
+    /*保存图片的路径*/
     private String pathStr;
 
     /**
      * TODO 保存图片并保存到数据库
+     *
      * @param request 请求
      * @return 返回到地址
      */
@@ -51,41 +52,40 @@ public class AppController_Map extends BaseController {
         InetAddress address = InetAddress.getLocalHost();
         User user = getLoginUser(request);
         String images = request.getParameter("images");
-        if(null == images){
+        if (null == images) {
             return null;
         }
 
         BASE64Decoder decoder = new BASE64Decoder();
         try {
-            images  = images.replaceAll(" ", "+");
+            images = images.replaceAll(" ", "+");
 
             byte[] bytes = decoder.decodeBuffer(images.substring(images.indexOf(",") + 1));
             images = images.replace("base64", "");
             for (int i = 0; i < bytes.length; i++) {
-                if(bytes[i]<0){
+                if (bytes[i] < 0) {
                     //调整异常数据
-                    bytes[i]+= 256;
+                    bytes[i] += 256;
                 }
             }
 
             String realPath = request.getSession().getServletContext().getRealPath("/");
 
-            String path= "/images/upload/";
+            String path = "/images/upload/";
             String s = UUID.randomUUID().toString().replaceAll("-", "");
 
             // 判断是否存在
-            File file =new File(realPath+path);
-            if  (!file .exists()  && !file .isDirectory())
-            {
+            File file = new File(realPath + path);
+            if (!file.exists() && !file.isDirectory()) {
                 System.out.println("//不存在");
-                file .mkdir();
+                file.mkdir();
             }
 
             // 生成jpeg图片
-            String imgFilePath =realPath+path+s+".jpg";
+            String imgFilePath = realPath + path + s + ".jpg";
             // 数据库图片路径
             //String filePath =  InetAddress.getLocalHost().getHostAddress()+":"+ request.getLocalPort()+path+s+".jpg";
-            String filePath =  "https://sec.dicarl.com"+path+s+".jpg";
+            String filePath = "https://sec.dicarl.com" + path + s + ".jpg";
             //String filePath =  path+s+".jpg";
 
             OutputStream ops = new FileOutputStream(imgFilePath);
@@ -96,7 +96,7 @@ public class AppController_Map extends BaseController {
             // 根据id进行查询, 是否为保存还是修改
             TMap tMap = tMapMapper.selectByUserId(user.getId());
             //TMap tMap = tMapMapper.selectByUserId(6);
-            if(tMap==null){
+            if (tMap == null) {
                 // 表示是新增
                 TMap tMap1 = new TMap();
                 tMap1.setUserId(user.getId());
@@ -104,7 +104,7 @@ public class AppController_Map extends BaseController {
                 tMap1.setFiles(filePath);
                 tMapMapper.insertTMap(tMap1);
 
-            }else{
+            } else {
                 tMap.setFiles(filePath);
                 tMapMapper.updateMap(tMap);
             }
@@ -123,15 +123,15 @@ public class AppController_Map extends BaseController {
      */
     @ResponseBody
     @RequestMapping("B002")
-    public String dropMap( HttpServletRequest request){
+    public String dropMap(HttpServletRequest request) {
         User user = getLoginUser(request);
-        if(user==null){
+        if (user == null) {
             return null;
         }
         try {
             tMapMapper.dropByUserId(user.getId());
             return "删除成功";
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -143,26 +143,33 @@ public class AppController_Map extends BaseController {
      */
     @ResponseBody
     @RequestMapping("B003")
-    public String findMap(HttpServletRequest request){
+    public String findMap(HttpServletRequest request) {
         User user = getLoginUser(request);
-        if(user==null){
+        if (user == null) {
             return null;
         }
         TMap tMap = tMapMapper.selectByUserId(user.getId());
         //TMap tMap = tMapMapper.selectByUserId(6);
-        if(tMap==null){
+        if (tMap == null) {
             return null;
         }
         return tMap.getFiles();
     }
 
-
     /**
-     * 跳转图片的路径
+     * 跳转截图的路径
      */
     @RequestMapping("jietu")
-    public String jietu(Model model, HttpServletRequest request) throws Exception {
+    public String jietu(HttpServletRequest request) throws Exception {
         return "company/safety-system/jietu";
+    }
+
+    /**
+     * 跳转到地图的截图页面
+     */
+    @RequestMapping(value="control-list4")
+    public String jumpHtml(){
+        return "company/safety-system/control-list4";
     }
 
 }

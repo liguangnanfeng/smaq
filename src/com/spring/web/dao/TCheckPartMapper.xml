@@ -130,6 +130,7 @@
         <include refid="Base_Column_List"/>
         from t_check_part_tbl
         where check_id = #{checkId}
+        order by name;
     </select>
 
     <select id="selectDyByCheckId" parameterType="java.lang.Integer"

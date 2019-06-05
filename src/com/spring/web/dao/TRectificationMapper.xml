@@ -195,10 +195,11 @@
       del = #{del,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
-  <select id="selectByCheckId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+
+  <select id="selectByCheckId" parameterType="java.lang.Integer" resultType="com.spring.web.model.TRectification">
     select 
-    <include refid="Base_Column_List" />
+    *
     from t_rectification_tbl
     where check_id = #{checkId} 
   </select>

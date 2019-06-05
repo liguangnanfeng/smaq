@@ -177,6 +177,14 @@ public interface TCheckItemMapper {
     List<Map> selectRecheckListByRecheckStatus(@Param("uid") Integer id, @Param("status") Integer status);
 
     List<Map> selectAll(@Param("userIds")String userIds);
+
+    /**
+     * 隐患治理记录查询
+     * 该公司全部的未删除的, 已检查的,和部门 不合格和已复查的
+     * @param userId 公司id
+     * @return
+     */
+    List<Map> selectListBystatus(Integer userId);
 }
 
 

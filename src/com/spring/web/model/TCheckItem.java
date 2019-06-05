@@ -1,6 +1,7 @@
 package com.spring.web.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class TCheckItem implements Serializable {
@@ -137,7 +138,15 @@ public class TCheckItem implements Serializable {
      */
     private String recheckMemo;
 
+    /**
+     * 检查文件地址
+     */
     private String fileAddress;
+
+    /**
+     * 治理投入
+     */
+    private BigDecimal money;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -279,10 +288,15 @@ public class TCheckItem implements Serializable {
         this.fileAddress = fileAddress;
     }
 
-    public TCheckItem() {
+    public BigDecimal getMoney() {
+        return money;
     }
 
-    public TCheckItem(Integer id, String content, Integer levelId, String levels, String reference, Integer partId, Integer checkId, Integer status, String memo, String files, Integer suggest, Date deadline, Date planTime, Date recheckTime, String recheckFile, String recheckMemo, String fileAddress) {
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
+
+    public TCheckItem(Integer id, String content, Integer levelId, String levels, String reference, Integer partId, Integer checkId, Integer status, String memo, String files, Integer suggest, Date deadline, Date planTime, Date recheckTime, String recheckFile, String recheckMemo, String fileAddress, BigDecimal money) {
         this.id = id;
         this.content = content;
         this.levelId = levelId;
@@ -300,6 +314,10 @@ public class TCheckItem implements Serializable {
         this.recheckFile = recheckFile;
         this.recheckMemo = recheckMemo;
         this.fileAddress = fileAddress;
+        this.money = money;
+    }
+
+    public TCheckItem() {
     }
 
     @Override
@@ -322,6 +340,7 @@ public class TCheckItem implements Serializable {
                 ", recheckFile='" + recheckFile + '\'' +
                 ", recheckMemo='" + recheckMemo + '\'' +
                 ", fileAddress='" + fileAddress + '\'' +
+                ", money=" + money +
                 '}';
     }
 }

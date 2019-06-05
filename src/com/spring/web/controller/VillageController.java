@@ -1897,8 +1897,8 @@ public class VillageController extends BaseController {
     /**
      * TODO 隐患治理记录, 整改不合格的 新建立的页面
      * @param request  请求
-     * @param flag
-     * @param status
+     * @param flag     方式
+     * @param status   状态
      * @return
      */
     @RequestMapping(value="hidden-danger-list")
@@ -1906,7 +1906,9 @@ public class VillageController extends BaseController {
         User user = getLoginUser(request);
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
-
+        model.addAttribute("userId",user.getId());
+        List<Map> list = tCheckItemMapper.selectListBystatus(user.getId());
+        model.addAttribute("list",list);
         return "company/danger/hidden-danger-list";
     }
 
@@ -2809,7 +2811,6 @@ public class VillageController extends BaseController {
         return "company/checkModel/model-add3";
 
     }
-
 
     /**
      * TODO 根据页面进行选择的基础/现场,查询基础/现场对应的部门

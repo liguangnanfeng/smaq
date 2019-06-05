@@ -443,8 +443,18 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+    <!-- 根据 ID 查询对应的数据信息 -->
+    <select id="selectByAppCheckId" resultType="java.util.Map">
+        select
+        T1.flag, T1.type, T1.industry_type,
+        from
+        t_check_tbl T1
+        left join
+        t_level_tbl T2 on T1.level_id = T2.id
+        left join
+      t_level_tbl T2 on T1.level_id = T2.id
 
-
+    </select>
 
 
     <select id="selectCompany" resultType="com.spring.web.ibatis.DynamicParameter">

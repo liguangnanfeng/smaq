@@ -1239,8 +1239,6 @@ public class VillageController extends BaseController {
         return "village/danger/check-list";
     }
 
-
-
     /**
      * 村级账号 隐患排查 检查历史
      */
@@ -1897,7 +1895,15 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 隐患治理记录,只要整改合格的
+     * TODO 隐患治理记录, 主要整改不合格的
+     */
+
+
+
+
+
+    /**
+     * TODO 隐患治理记录,只要整改合格的
      */
     @RequestMapping(value = "recheck-list")
     public String modelList(HttpServletRequest request, Model model, Integer flag, Integer status) throws Exception {

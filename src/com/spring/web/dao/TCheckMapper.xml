@@ -368,7 +368,7 @@
                 and T1.status = #{status}
             </if>
             <if test="status == null">
-                and T1.status !=0
+                and T1.status =2
             </if>
             <if test="flag != null">
                 and T1.flag = #{flag}

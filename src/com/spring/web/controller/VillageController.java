@@ -1165,7 +1165,7 @@ public class VillageController extends BaseController {
      * @param flag    1 自查  4 行政  3 部门抽查
      * @return        该公司所有的检查的记录
      */
-    @RequestMapping(value="check-list-item")
+    @RequestMapping(value="check-list-two")
     public String checkListItem(HttpServletRequest request,String title, Integer type, Integer status, Integer flag, Model model){
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
@@ -1180,10 +1180,10 @@ public class VillageController extends BaseController {
             List<Map<String, Object>> list = tCheckMapper.selectListByMap(m);
             model.addAttribute("list", list);
         }
-        m.put("type", type);
-        m.put("flag", flag);
-        m.put("title", title);
-        m.put("status", status); 
+        model.addAttribute("type", type);
+        model.addAttribute("flag", flag);
+        model.addAttribute("title", title);
+        model.addAttribute("status", status);
         return "company/danger/check-list";
     }
 

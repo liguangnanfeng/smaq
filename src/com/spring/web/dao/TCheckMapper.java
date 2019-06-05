@@ -68,5 +68,6 @@ public interface TCheckMapper {
 
     void updateDel(@Param("id")Integer id);
 
+    List<Map<String, Object>> selectLevels(@Param("id") Integer id);
 
 }

@@ -281,6 +281,22 @@
 
     </select>
 
+
+
+
+    <select id="selectAllLevelId" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
+        select *
+        from
+        t_check_item_tbl
+        where
+        check_id = #{checkId}
+    </select>
+
+
+
+
+
+
     <select id="selectByAppCheckId" resultType="java.util.Map">
     select 
        T1.id, T1.content, T1.reference, T1.part_id partId, T1.check_id checkId, T1.status, T1.memo, T1.files, T1.memo, T1.level_id levelId,

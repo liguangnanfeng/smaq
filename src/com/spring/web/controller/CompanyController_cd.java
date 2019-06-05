@@ -2939,7 +2939,10 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("check", tc);
         model.addAttribute("partL", partL);
         //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
-        List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(id);
+        /*List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(id);*/
+
+        List<Map<String, Object>> iteml = tCheckMapper.selectLevels(id);
+
         //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
         if (type != null && type == 9) {
             for (Map<String, Object> a : iteml) {

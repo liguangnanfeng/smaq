@@ -177,6 +177,8 @@ public interface TCheckItemMapper {
     List<Map> selectRecheckListByRecheckStatus(@Param("uid") Integer id, @Param("status") Integer status);
 
     List<Map> selectAll(@Param("userIds")String userIds);
+
+    List<TCheckItem> selectAllLevelId(@Param("checkId")Integer checkId);
 }
 
 

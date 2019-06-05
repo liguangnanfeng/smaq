@@ -63,19 +63,17 @@
             top: 2px;
             font-weight: bold;
         }
-        .my_left{
+
+        .my_left {
             margin-left: 12%;
         }
+
         .my_left2 {
             margin-left: 14%;
         }
 
     </style>
     <script>
-        console.log("${dmname}");
-        console.log("${dmid}");
-        console.log("${checkType}");
-        console.log("${industryType}");
         var dmname = "${dmname}";
         var dmid = "${dmid}";
         var checkType = "${checkType}";
@@ -113,6 +111,14 @@
                 this.dmid = dmid;
                 this.checkType = checkType;
                 this.industryType = industryType;
+                const arrs = ['日常', '定期', '季节', '其他', '综合'];
+                const aa = arrs[checkType - 1];
+                const objs = {
+                    '-1': '基础',
+                    '-2': '现场'
+                };
+                const bb = objs[industryType];
+                this.tableName =dmname+aa+bb+'检查表';
             }
 
             componentWillMount() {
@@ -137,7 +143,7 @@
                     async: false,
                     dataType: "json",
                     success: function (result) {
-                        // console.log(result);
+                        console.log(result);
                         if (result.length == 0) {
                             alert('没有可选择的检查项,请自定义检查')
                         }
@@ -243,10 +249,10 @@
 
             save = () => {
                 let state = this.state;
-                if (!state.tableName) {    //验证检查表名字是否填写
-                    alert('检查表名字必须填写');
-                    return
-                }
+                // if (!state.tableName) {    //验证检查表名字是否填写
+                //     alert('检查表名字必须填写');
+                //     return
+                // }
 
                 if (this.checkType == 2 && state.days == null) {    //验证周期天数是否填写
                     alert('填写周期天数,只能输入数字');
@@ -262,8 +268,8 @@
                 }
 
                 let postData = {
-                    template: state.tableName,     //表名字
-                    title: this.checkType,        //检查方式 1:日常  2:定期  3:临时
+                    template: this.tableName,     //表名字
+                    title: this.checkType,        //检查方式 1:日常  2:定期  3:季节 4:其他 5:综合
                     checkType: this.industryType, //檢查類型 -1基础 -2现场   其他高危
                     cycle: parseInt(state.days),   //检查周期天数
                     checkLevels: []                 //检查项
@@ -291,18 +297,18 @@
                 state.myChecks.map((item) => {
                     if (item.title != '' && item.value != '') {
                         let checkItem = {};
-                            checkItem.id = null;
-                            checkItem.level1 = this.dmname;
-                            checkItem.level2 = null;
-                            checkItem.level3 = item.title;
-                            checkItem.level4 = item.value;
-                            checkItem.reference = null;
-                            checkItem.factors = null;
-                            checkItem.types = null;
-                            checkItem.gkcs = null;
-                            checkItem.gkzt = null;
-                            checkItem.checkType = this.industryType;
-                            industryId:null
+                        checkItem.id = null;
+                        checkItem.level1 = this.dmname;
+                        checkItem.level2 = null;
+                        checkItem.level3 = item.title;
+                        checkItem.level4 = item.value;
+                        checkItem.reference = null;
+                        checkItem.factors = null;
+                        checkItem.types = null;
+                        checkItem.gkcs = null;
+                        checkItem.gkzt = null;
+                        checkItem.checkType = this.industryType;
+                        industryId:null
                         postData.checkLevels.push(checkItem);
                     }
                 })
@@ -363,17 +369,17 @@
 
                 const xcjc =      //如果是现场基础检查 渲染这个
                     <div>
-                        <div className="row cl">
-                            <label className="form-label col-xs-4 col-sm-2"><span className="c-red">*</span>检查部位
-                                :</label>
-                            <div className="formControls col-xs-8 col-sm-9">
-                                <input type="text"
-                                       style={{width: '350px'}} className="input-text"
-                                       maxLength="50" placeholder="检查部位"
-                                       value={this.dmname}
-                                       disabled/>
-                            </div>
-                        </div>
+                        <%--<div className="row cl">--%>
+                        <%--    <label className="form-label col-xs-4 col-sm-2"><span className="c-red">*</span>检查部位--%>
+                        <%--        :</label>--%>
+                        <%--    <div className="formControls col-xs-8 col-sm-9">--%>
+                        <%--        <input type="text"--%>
+                        <%--               style={{width: '350px'}} className="input-text"--%>
+                        <%--               maxLength="50" placeholder="检查部位"--%>
+                        <%--               value={this.dmname}--%>
+                        <%--               disabled/>--%>
+                        <%--    </div>--%>
+                        <%--</div>--%>
                         {
                             this.state.list.map((item, index) => {
                                 if (item.list.length > 0) {
@@ -468,27 +474,27 @@
                     <div>
                         <form className="form form-horizontal" id="form">
                             <div className="page-container">
-                                <div className="row cl">
-                                    <label className="form-label col-xs-4 col-sm-2"><span
-                                        className="c-red">*</span>检查表名称：</label>
-                                    <div className="formControls col-xs-8 col-sm-9">
-                                        <input type="text" onChange={(e) => this.inputChange('tableName', e)}
-                                               style={{width: '350px'}} className="input-text"
-                                               maxLength="50" placeholder="请填写检查表名称(必填)"
-                                               value={this.state.tableName} autoFocus/>
-                                    </div>
-                                </div>
-                                <div className="row cl">
-                                    <label className="form-label col-xs-4 col-sm-2"><span
-                                        className="c-red">*</span>检查方式
-                                        :</label>
-                                    <div className="formControls col-xs-8 col-sm-9">
-                                        <input type="text"
-                                               style={{width: '350px'}} className="input-text"
-                                               maxLength="50" placeholder="检查方式"
-                                               value={checkType} disabled/>
-                                    </div>
-                                </div>
+                                <%--<div className="row cl">--%>
+                                <%--    <label className="form-label col-xs-4 col-sm-2"><span--%>
+                                <%--        className="c-red">*</span>检查表名称：</label>--%>
+                                <%--    <div className="formControls col-xs-8 col-sm-9">--%>
+                                <%--        <input type="text" onChange={(e) => this.inputChange('tableName', e)}--%>
+                                <%--               style={{width: '350px'}} className="input-text"--%>
+                                <%--               maxLength="50" placeholder="请填写检查表名称(必填)"--%>
+                                <%--               value={this.state.tableName} autoFocus/>--%>
+                                <%--    </div>--%>
+                                <%--</div>--%>
+                                <%--<div className="row cl">--%>
+                                <%--    <label className="form-label col-xs-4 col-sm-2"><span--%>
+                                <%--        className="c-red">*</span>检查方式--%>
+                                <%--        :</label>--%>
+                                <%--    <div className="formControls col-xs-8 col-sm-9">--%>
+                                <%--        <input type="text"--%>
+                                <%--               style={{width: '350px'}} className="input-text"--%>
+                                <%--               maxLength="50" placeholder="检查方式"--%>
+                                <%--               value={checkType} disabled/>--%>
+                                <%--    </div>--%>
+                                <%--</div>--%>
                                 {this.checkType == 2 ?
                                     <div className="row cl dq">
                                         <label className="form-label col-xs-4 col-sm-2"><span
@@ -503,17 +509,17 @@
                                     </div> : null
                                 }
 
-                                <div className="row cl">
-                                    <label className="form-label col-xs-4 col-sm-2"><span
-                                        className="c-red">*</span>检查类型
-                                        :</label>
-                                    <div className="formControls col-xs-8 col-sm-9">
-                                        <input type="text"
-                                               style={{width: '350px'}} className="input-text"
-                                               maxLength="50" placeholder="检查类型"
-                                               value={industryType} disabled/>
-                                    </div>
-                                </div>
+                                <%--<div className="row cl">--%>
+                                <%--    <label className="form-label col-xs-4 col-sm-2"><span--%>
+                                <%--        className="c-red">*</span>检查类型--%>
+                                <%--        :</label>--%>
+                                <%--    <div className="formControls col-xs-8 col-sm-9">--%>
+                                <%--        <input type="text"--%>
+                                <%--               style={{width: '350px'}} className="input-text"--%>
+                                <%--               maxLength="50" placeholder="检查类型"--%>
+                                <%--               value={industryType} disabled/>--%>
+                                <%--    </div>--%>
+                                <%--</div>--%>
                                 {xcjc}
                             </div>
                         </form>

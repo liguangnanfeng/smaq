@@ -160,11 +160,17 @@ function showpicture(src){
       <table class="f-l table table-border table-bordered table-bg table-hover table-sort">
         <thead>
           <tr class="text-c">
-            <th width="3%">序号</th>
-            <th width="15%">检查部位</th>
-            <th width="30%">检查项目</th>
-            <th width="40%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>
+            <th width="3%">检查类型</th>
+            <th width="15%">车间/场所</th>
+            <th width="30%">系统</th>
+            <th width="30%">环节/部位</th>
+            <th width="30%">环节/部位</th>
+            <th width="30%">环节/部位</th>
+            <th width="30%">环节/部位</th>
             <th width="12%">检查结果</th>
+            <th width="40%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>
+            <th width="12%">隐患等级</th>
+            <th width="12%">查看</th>
           </tr>
         </thead>
         <tbody>

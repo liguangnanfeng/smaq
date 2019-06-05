@@ -44,7 +44,7 @@ body .dis-ib{margin-right:15px;}
       <form action="${ly }/village/check-list-two?flag=${flag}" method="post">
         <div class="dis-ib">
           <span>检查表名称：</span>
-          <input type="text" value="${title }" name="${title }" class="input-text mb-5 mt-5" style="width:150px;">
+          <input type="text" value="${title}" name="title" class="input-text mb-5 mt-5" style="width:150px;">
         </div>
 <%--        <div class="dis-ib">--%>
 <%--          <span>检查状态：</span>--%>

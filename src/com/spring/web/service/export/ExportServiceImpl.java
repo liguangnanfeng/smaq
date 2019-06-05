@@ -283,7 +283,7 @@ public class ExportServiceImpl implements ExportService {
                         if(StringUtils.isEmpty(tos(row, 0)) || StringUtils.isEmpty(tos(row, 1))) {
                             continue;
                         }
-                        itemL.add(new TCheckItem(null, null, null, tos(row, 1), null, null, null, 2, tos(row, 2), null, null, null, null, null, null, null,null));
+                        itemL.add(new TCheckItem(null, null, null, tos(row, 1), null, null, null, 2, tos(row, 2), null, null, null, null, null, null, null,null,null));
                         break;
                 }
                 

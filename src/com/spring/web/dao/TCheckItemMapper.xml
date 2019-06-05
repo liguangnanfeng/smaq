@@ -20,11 +20,12 @@
             <arg column="recheck_file" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="recheck_memo" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="file_address" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="money" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
         id, content, level_id, levels, reference, part_id, check_id, status, memo, files,
-        suggest, deadline, plan_time, recheck_time, recheck_file, recheck_memo,file_address
+        suggest, deadline, plan_time, recheck_time, recheck_file, recheck_memo,file_address,money
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -44,14 +45,14 @@
         reference, part_id, check_id,
         status, memo, files,
         suggest, deadline, plan_time,
-        recheck_time, recheck_file, recheck_memo,file_address
+        recheck_time, recheck_file, recheck_memo,file_address,money
         )
         values (#{content,jdbcType=VARCHAR}, #{levelId,jdbcType=INTEGER}, #{levels,jdbcType=VARCHAR},
         #{reference,jdbcType=VARCHAR}, #{partId,jdbcType=INTEGER}, #{checkId,jdbcType=INTEGER},
         #{status,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, #{files,jdbcType=VARCHAR},
         #{suggest,jdbcType=INTEGER}, #{deadline,jdbcType=TIMESTAMP}, #{planTime,jdbcType=TIMESTAMP},
         #{recheckTime,jdbcType=TIMESTAMP}, #{recheckFile,jdbcType=VARCHAR}, #{recheckMemo,jdbcType=VARCHAR}
-        #{fileAddress,jdbcType=VARCHAR}
+        #{fileAddress,jdbcType=VARCHAR},#{money,jdbcType="DECIMAL"}
         )
     </insert>
     <insert id="insertSelective" parameterType="com.spring.web.model.TCheckItem">
@@ -108,6 +109,9 @@
             <if test="fileAddress != null">
                 file_address,
             </if>
+            <if test="money != null">
+                money,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="content != null">
@@ -157,6 +161,9 @@
             </if>
             <if test="fileAddress != null">
                 #{file_address,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType="DECIMAL"}
             </if>
         </trim>
     </insert>
@@ -215,6 +222,9 @@
             <if test="fileAddress != null">
                 file_address = #{fileAddress,jdbcType=VARCHAR},
             </if>
+            <if test="money != null">
+                money = #{money,jdbcType="DECIMAL"}
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -239,7 +249,8 @@
         recheck_time = #{recheckTime,jdbcType=TIMESTAMP},
         recheck_file = #{recheckFile,jdbcType=VARCHAR},
         recheck_memo = #{recheckMemo,jdbcType=VARCHAR},
-        file_address = #{fileAddress,jdbcType=VARCHAR}
+        file_address = #{fileAddress,jdbcType=VARCHAR},
+        money = #{money,jdbcType="DECIMAL"}
         where id = #{id,jdbcType=INTEGER}
     </update>
 
@@ -863,13 +874,6 @@
     </select>
 
 
-
-
-
-
-
-
-
     <select id="selectRecheckList" parameterType="java.lang.Integer" resultType="java.util.Map">
         select a.id as checkId,a.depart,b.status,b.memo,d.create_time as time,d.checker
         from t_check_tbl a JOIN t_check_item_tbl b ON a.id = b.check_id
@@ -894,13 +898,12 @@
 
     <!--根据checkId获取所有的数据
     -->
-    <select id="selectItemByCheckId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <select id="selectItemByCheckId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from t_check_item_tbl
         where check_id =#{checkId} ;
     </select>
-
 
 
     <select id="selectAll" resultType="java.util.Map">
@@ -913,7 +916,26 @@
         ORDER BY a.id
     </select>
 
-
-
+    <!--隐患治理记录查询 -->
+    <select id="selectListBystatus" resultType="java.util.Map" parameterType="INTEGER">
+        select T2.type,
+               T2.depart,
+               T3.levels,
+               T2.real_time,
+               T1.content,
+               T1.files,
+               T1.file_address,
+               T4.level,
+               T4.fjgkfzr,
+               T1.money
+        from smaq.t_check_item_tbl T1
+             left join smaq.t_check_tbl T2 on T1.check_id = T2.id
+             left join smaq.t_check_part_tbl T3 on T1.part_id = T3.id
+             left join smaq.a_company_manual_tbl T4 on T1.level_id = T4.id
+        where T2.user_id = #{userId}
+          and T2.status = 2
+          and T1.status > 1
+          and T2.del= 0;
+    </select>
 
 </mapper>

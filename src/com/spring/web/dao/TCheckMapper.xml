@@ -337,9 +337,45 @@
         order by T1.id desc
     </select>
 
-
-
-
+    <!--查询该公司所有的查询记录,根据条件
+            <if test="extime != null">
+                and expect_time is not null and expect_time &lt; #{now1}
+            </if>
+            <if test="userIds != null and userIds != ''">
+                and T2.user_id in (${userIds})
+            </if>
+    -->
+    <select id="selectListByMap" resultType="java.util.Map">
+        select T1.id,T1.title,T1.depart,T1.model_id as modelId,T1.type,T1.industry_id as industryId, T1.industry_type as
+        industryType,
+        T1.expect_time as expectTime,T1.real_time as realTime, T1.cheker,T1.contact,
+        T1.dapart_contact as dapartContact, T1.status,T1.create_time as createTime, T1.flag, T1.check_company as
+        checkCompany,
+        T2.name as companyName,
+        (select count(0) from smaq.t_check_item_tbl where check_id = T1.id and status > 1) c,
+        (select count(0) from smaq.t_recheck_tbl where check_id = T1.id) c3,
+        (select count(0) from smaq.t_rectification_tbl where check_id = T1.id) t
+        from smaq.t_check_tbl T1
+        left join smaq.company_tbl T2 on T1.user_id = T2.user_id
+        <where>T1.del = 0 and T1.user_id = 26
+            <if test="title != null and title != ''">
+                and T1.title LIKE CONCAT('%', #{title},'%')
+            </if>
+            <if test="type != null and type != ''">
+                and T1.industry_type = #{type}
+            </if>
+            <if test="status != null">
+                and T1.status = #{status}
+            </if>
+            <if test="status == null">
+                and T1.status !=0
+            </if>
+            <if test="flag != null">
+                and T1.flag = #{flag}
+            </if>
+        </where>
+        order by T1.id desc
+    </select>
 
 
     <select id="selectList1" resultType="java.util.Map">
@@ -417,7 +453,6 @@
     </select>
 
 
-
     <!-- 政府端查询检查记录！！！ -->
     <select id="selectAll" resultType="java.util.Map">
         select
@@ -435,16 +470,12 @@
     </select>
 
 
-
     <update id="updateDel" parameterType="com.spring.web.model.TCheck">
         update t_check_tbl
         set
         del = 1
         where id = #{id,jdbcType=INTEGER}
     </update>
-
-
-
 
 
     <select id="selectCompany" resultType="com.spring.web.ibatis.DynamicParameter">

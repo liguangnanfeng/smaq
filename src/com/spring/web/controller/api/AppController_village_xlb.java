@@ -801,7 +801,7 @@ public class AppController_village_xlb extends BaseController {
             String[] iL = itms.split("!@#");
             for (String x : iL) {
                 itemL.add(new TCheckItem(null, null, null, "现场管理", null, null, null, 2, x, null, null, null, null,
-                        null, null, null));
+                        null, null, null,null));
             }
             check.setRealTime(d);
             check.setFlag(flag2);

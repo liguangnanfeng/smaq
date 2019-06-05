@@ -1895,12 +1895,20 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * TODO 隐患治理记录, 主要整改不合格的
+     * TODO 隐患治理记录, 整改不合格的 新建立的页面
+     * @param request  请求
+     * @param flag
+     * @param status
+     * @return
      */
+    @RequestMapping(value="hidden-danger-list")
+    public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status){
+        User user = getLoginUser(request);
+        model.addAttribute("flag", flag);
+        model.addAttribute("status", status);
 
-
-
-
+        return "company/danger/hidden-danger-list";
+    }
 
     /**
      * TODO 隐患治理记录,只要整改合格的
@@ -3114,6 +3122,7 @@ public class VillageController extends BaseController {
                         tCheckPart.setName(checkLevels.getLevel2());  //岗位/部位信息
                         tCheckPartMapper.insertSelective(tCheckPart);
                         TCheckItem tCheckItem = new TCheckItem();
+                        tCheckItem.setLevelId(checkLevels.getId());     // companyManulTbl的id
                         tCheckItem.setContent(checkLevels.getLevel4()); //检查内容
                         tCheckItem.setLevels(checkLevels.getLevel3());
                         tCheckItem.setReference(checkLevels.getReference());

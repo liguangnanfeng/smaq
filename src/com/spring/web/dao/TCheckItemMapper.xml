@@ -19,11 +19,12 @@
             <arg column="recheck_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="recheck_file" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="recheck_memo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="file_address" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
         id, content, level_id, levels, reference, part_id, check_id, status, memo, files,
-        suggest, deadline, plan_time, recheck_time, recheck_file, recheck_memo
+        suggest, deadline, plan_time, recheck_time, recheck_file, recheck_memo,file_address
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -43,13 +44,14 @@
         reference, part_id, check_id,
         status, memo, files,
         suggest, deadline, plan_time,
-        recheck_time, recheck_file, recheck_memo
+        recheck_time, recheck_file, recheck_memo,file_address
         )
         values (#{content,jdbcType=VARCHAR}, #{levelId,jdbcType=INTEGER}, #{levels,jdbcType=VARCHAR},
         #{reference,jdbcType=VARCHAR}, #{partId,jdbcType=INTEGER}, #{checkId,jdbcType=INTEGER},
         #{status,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, #{files,jdbcType=VARCHAR},
         #{suggest,jdbcType=INTEGER}, #{deadline,jdbcType=TIMESTAMP}, #{planTime,jdbcType=TIMESTAMP},
         #{recheckTime,jdbcType=TIMESTAMP}, #{recheckFile,jdbcType=VARCHAR}, #{recheckMemo,jdbcType=VARCHAR}
+        #{fileAddress,jdbcType=VARCHAR}
         )
     </insert>
     <insert id="insertSelective" parameterType="com.spring.web.model.TCheckItem">
@@ -103,6 +105,9 @@
             <if test="recheckMemo != null">
                 recheck_memo,
             </if>
+            <if test="fileAddress != null">
+                file_address,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="content != null">
@@ -149,6 +154,9 @@
             </if>
             <if test="recheckMemo != null">
                 #{recheckMemo,jdbcType=VARCHAR},
+            </if>
+            <if test="fileAddress != null">
+                #{file_address,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -204,6 +212,9 @@
             <if test="recheckMemo != null">
                 recheck_memo = #{recheckMemo,jdbcType=VARCHAR},
             </if>
+            <if test="fileAddress != null">
+                file_address = #{fileAddress,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -227,7 +238,8 @@
         plan_time = #{planTime,jdbcType=TIMESTAMP},
         recheck_time = #{recheckTime,jdbcType=TIMESTAMP},
         recheck_file = #{recheckFile,jdbcType=VARCHAR},
-        recheck_memo = #{recheckMemo,jdbcType=VARCHAR}
+        recheck_memo = #{recheckMemo,jdbcType=VARCHAR},
+        file_address = #{fileAddress,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
 

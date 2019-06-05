@@ -283,7 +283,7 @@ public class ExportServiceImpl implements ExportService {
                         if(StringUtils.isEmpty(tos(row, 0)) || StringUtils.isEmpty(tos(row, 1))) {
                             continue;
                         }
-                        itemL.add(new TCheckItem(null, null, null, tos(row, 1), null, null, null, 2, tos(row, 2), null, null, null, null, null, null, null));
+                        itemL.add(new TCheckItem(null, null, null, tos(row, 1), null, null, null, 2, tos(row, 2), null, null, null, null, null, null, null,null));
                         break;
                 }
                 
@@ -536,7 +536,7 @@ public class ExportServiceImpl implements ExportService {
      * @param request
      * @return
      * @throws Exception
-     * @see com.spring.web.service.export.ExportService#tableImport(org.springframework.web.multipart.MultipartFile, Integer, HttpServletRequest)
+     * @see com.spring.web.service.export.ExportService tableImport(org.springframework.web.multipart.MultipartFile, Integer, HttpServletRequest)
      */
     @Override
     public Result tableImport(MultipartFile file, Integer userId, Integer id, Integer isType, HttpServletRequest request)
@@ -587,7 +587,7 @@ public class ExportServiceImpl implements ExportService {
     *
     * @param file
     * @param id
-    * @param id2
+    * @param
     * @param isType
     * @param request
     * @return

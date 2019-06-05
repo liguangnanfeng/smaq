@@ -178,6 +178,8 @@ public interface TCheckItemMapper {
 
     List<Map> selectAll(@Param("userIds")String userIds);
 
+    List<TCheckItem> selectAllLevelId(@Param("checkId")Integer checkId);
+
     /**
      * 隐患治理记录查询
      * 该公司全部的未删除的, 已检查的,和部门 不合格和已复查的

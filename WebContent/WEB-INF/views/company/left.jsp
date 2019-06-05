@@ -292,7 +292,9 @@
         <li><a data-href="${ly }/village/check-list-two?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a>
                     </li>
                         <%--就是复查表的记录,--%>
-                    <li><a data-href="${ly }/village/recheck-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a>
+<%--                    <li><a data-href="${ly }/village/recheck-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a>--%>
+<%--                    </li>--%>
+                    <li><a data-href="${ly }/village/hidden-danger-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a>
                     </li>
                     <li><a data-href="${ly }/village/danger-index-list?flag=1" data-title="隐患统计汇总"
                            href="javascript:void(0)">隐患统计汇总</a></li>

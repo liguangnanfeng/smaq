@@ -1,10 +1,11 @@
 package com.spring.web.dao;
 
-import java.util.List;
-import java.util.Map;
-import org.apache.ibatis.annotations.Param;
 import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.TCheckPart;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 public interface TCheckPartMapper {
     /**
@@ -69,4 +70,5 @@ public interface TCheckPartMapper {
      * @return
      */
     List<TCheckPart> findAllByCheckId(Integer checkId);
+
 }

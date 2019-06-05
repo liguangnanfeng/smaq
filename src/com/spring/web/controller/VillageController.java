@@ -1934,7 +1934,6 @@ public class VillageController extends BaseController {
         return "company/danger/recheck-list";
     }
 
-
     /**
      * 隐患汇总 cId 企业id
      */

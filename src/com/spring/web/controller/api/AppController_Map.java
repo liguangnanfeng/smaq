@@ -2,21 +2,24 @@ package com.spring.web.controller.api;
 
 import com.spring.web.BaseController;
 import com.spring.web.dao.TMapMapper;
+import com.spring.web.model.TCheckItem;
 import com.spring.web.model.User;
 import com.spring.web.model.request.TMap;
+import com.spring.web.result.AppResult;
+import com.spring.web.result.AppResultImpl;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.UUID;
@@ -172,4 +175,73 @@ public class AppController_Map extends BaseController {
         return "company/safety-system/control-list4";
     }
 
+    /**
+     * 治理方案文件上传的接口
+     */
+    @RequestMapping("B004")
+    @SuppressWarnings("all")
+    @ResponseBody
+    public AppResult uploadFile(HttpServletRequest request, @RequestParam(value = "file", required = false) MultipartFile file,Integer itemId ) throws IOException {
+        AppResult result = new AppResultImpl();
+        System.out.println("执行文件上传");
+        request.setCharacterEncoding("UTF-8");
+
+        String realPath1 = "/images/upload/";
+        String path = null;
+        if (!file.isEmpty()) {
+            String fileName = file.getOriginalFilename();
+
+            String type = null;
+            type = fileName.indexOf(".") != -1 ? fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()) : null;
+            if (type != null) {
+                if ("TXT".equals(type.toUpperCase()) || "DOCX".equals(type.toUpperCase()) || "DOC".equals(type.toUpperCase())|| "DOTX".equals(type.toUpperCase())) {
+                    // 项目在容器中实际发布运行的根路径
+                    String realPath = request.getSession().getServletContext().getRealPath("/");
+                    String realPath2 = realPath.replaceAll("\\\\", "/");
+                    // 自定义的文件名称
+                    String trueFileName = /*String.valueOf(System.currentTimeMillis()) +*/ fileName;
+                    // 设置存放图片文件的路径
+                    path = realPath2 + "images/upload/" + trueFileName;
+
+                    // 判断是否存在
+                    File file1 = new File(realPath2 + "images/upload/");
+                    if (!file1.exists() && !file1.isDirectory()) {
+                        file1.mkdir();
+                    }
+
+                    realPath1 += trueFileName;
+
+                    file.transferTo(new File(path));
+                    TCheckItem tCheckItem = new TCheckItem();
+                    tCheckItem.setId(itemId);
+                    tCheckItem.setFileAddress(realPath1);
+                    tCheckItemMapper.updateByPrimaryKey(tCheckItem);
+
+                } else {
+                    result.setStatus("1");
+                    result.setMessage("不是我们想要的文件类型,请按要求重新上传");
+                    return result;
+
+                }
+            } else {
+                result.setStatus("1");
+                result.setMessage("文件类型为空");
+                return result;
+
+            }
+        } else {
+
+            result.setStatus("1");
+            result.setMessage("没有找到相对应的文件");
+
+            return result;
+
+        }
+        result.setStatus("0");
+        result.setMessage("保存成功");
+        realPath1.replace("\\", "/");
+        result.setData(realPath1);
+        return result;
+
+    }
 }

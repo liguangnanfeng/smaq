@@ -909,9 +909,13 @@
                T1.content,
                T1.files,
                T1.file_address,
-               T4.level,
+               T4.flag,
                T4.fjgkfzr,
-               T1.money
+               T1.money,
+               T1.id as checkItemId,
+               T2.id as checkId,
+               T4.id as companyManualId,
+               T3.id as checkPartId
         from smaq.t_check_item_tbl T1
              left join smaq.t_check_tbl T2 on T1.check_id = T2.id
              left join smaq.t_check_part_tbl T3 on T1.part_id = T3.id

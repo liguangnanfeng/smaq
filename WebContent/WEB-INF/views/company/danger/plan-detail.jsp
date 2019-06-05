@@ -161,21 +161,98 @@ function showpicture(src){
         <thead>
           <tr class="text-c">
             <th width="3%">检查类型</th>
-            <th width="15%">车间/场所</th>
-            <th width="30%">系统</th>
-            <th width="30%">环节/部位</th>
-            <th width="30%">环节/部位</th>
-            <th width="30%">环节/部位</th>
-            <th width="30%">环节/部位</th>
-            <th width="12%">检查结果</th>
-            <th width="40%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>
-            <th width="12%">隐患等级</th>
+            <th width="10%">车间/场所</th>
+            <th width="10%">系统</th>
+            <th width="10%">环节/部位</th>
+            <th width="10%">检查方式</th>
+            <th width="10%">检查形式</th>
+            <th width="10%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>
+            <th width="10%">检查结果</th>
+            <th width="10%">隐患内容</th>
+            <th width="10%">隐患等级</th>
             <th width="12%">查看</th>
           </tr>
         </thead>
         <tbody>
         <%--TODO 这里进行合并的话,会没有检查合格的图片--%>
-          <c:forEach items="${partL }" var="part" varStatus="pi">
+        <c:forEach items="${itemL }" var="ch">
+          <tr class="text-c" >
+            <c:if test="${ch.industry_type == 1}">
+              <td class="text-c" >基础</td>
+            </c:if>
+            <c:if test="${ch.industry_type == 2}">
+              <td class="text-c" >现场</td>
+            </c:if>
+            <c:if test="${ch.industry_type == 3}">
+              <td class="text-c" >高危</td>
+            </c:if>
+
+            <td class="text-c" >${ch.part}</td>
+
+            <c:set value="${fn:split(ch.levels,'/')}" var="ls"></c:set>
+            <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
+
+
+            <td class="text-c" >${ch.level2}</td>
+
+            <c:if test="${ch.flag == 1}">
+              <td class="text-c" >企业自查</td>
+            </c:if>
+            <c:if test="${ch.flag == 2}">
+              <td class="text-c" >行政执法</td>
+            </c:if>
+            <c:if test="${ch.flag == 3}">
+              <td class="text-c" >第三方排查</td>
+            </c:if>
+
+            <c:if test="${ch.type == 1}">
+              <td class="text-c" >日常</td>
+            </c:if>
+            <c:if test="${ch.type == 2}">
+              <td class="text-c" >定期</td>
+            </c:if>
+            <c:if test="${ch.type == 3}">
+              <td class="text-c" >季节</td>
+            </c:if>
+            <c:if test="${ch.type == 4}">
+              <td class="text-c" >其他</td>
+            </c:if>
+            <c:if test="${ch.type == 5}">
+              <td class="text-c" >综合</td>
+            </c:if>
+
+            <td class="text-c" >${ch.factors}</td>
+
+            <c:if test="${ch.status == 1}">
+              <td class="text-c" >合格</td>
+            </c:if>
+            <c:if test="${ch.status == 2}">
+              <td class="text-c" >不合格</td>
+            </c:if>
+            <c:if test="${ch.status == 3}">
+              <td class="text-c" >已复查</td>
+            </c:if>
+
+            <td class="text-c" >${ch.measures}</td>
+
+            <td>
+              <c:choose>
+                <c:when test="${ch.level eq '红色'}"><font class="col-a">${ch.level}</font></c:when>
+                <c:when test="${ch.level eq '橙色'}"><font class="col-b">${ch.level}</font></c:when>
+                <c:when test="${ch.level eq '黄色'}"><font class="col-c">${ch.level}</font></c:when>
+                <c:when test="${ch.level eq '蓝色'}"><font class="col-d">${ch.level}</font></c:when>
+              </c:choose>
+            </td>
+
+            <td class="text-c" >
+                <button class="btn radius btn-danger size-S ml-20" onClick="showpicture('${ch.files}')">
+                  <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 查看图片
+                </button>
+            </td>
+          </tr>
+        </c:forEach>
+
+          <%--<c:forEach items="${partL }" var="part" varStatus="pi">
             <c:set var="x" value="0" />
             <c:forEach items="${itemL }" var="ch">
               <c:if test="${ch.partId == part.id}">
@@ -183,12 +260,12 @@ function showpicture(src){
               </c:if>
             </c:forEach>
             <tr>
-              <td class="text-c" rowspan="${x }">${pi.index + 1}</td>
-              <td class="text-c" rowspan="${x }">
-              <c:if test="${!empty part.partImg}">
+              &lt;%&ndash;<td class="text-c" rowspan="${x }">${pi.index + 1}</td>
+              <td class="text-c" rowspan="${x }">&ndash;%&gt;
+             &lt;%&ndash; <c:if test="${!empty part.partImg}">
                   <img src="${part.partImg }" class="mr-10" style="height:100px;"/>
-              </c:if>
-<%--
+              </c:if>&ndash;%&gt;
+&lt;%&ndash;
                 <c:forTokens items=" ${part.name}" delims="!@#" var="splitSubname">             
                                  <c:if test="${!fn:contains(tempSubname,splitSubname)}">                
                                                ${splitSubname}
@@ -196,7 +273,7 @@ function showpicture(src){
                                     <c:set var="tempSubname" value="${tempSubname}${splitSubname}"/>
                                    </c:if>
 
-                </c:forTokens>--%>
+                </c:forTokens>&ndash;%&gt;
 
               ${part.name}
 
@@ -229,7 +306,7 @@ function showpicture(src){
             </c:if>
           </c:forEach>
           </tr>
-          </c:forEach>
+          </c:forEach>--%>
           <!--  <tr>
           <td colspan="5">
             <div class="div_pleft  mt-10">整改要求：</div>

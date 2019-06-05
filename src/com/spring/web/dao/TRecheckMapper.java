@@ -53,7 +53,12 @@ public interface TRecheckMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TRecheck record);
-    
+
+    /**
+     * 查询所有的复查选项
+     * @param checkId
+     * @return
+     */
     List<TRecheck> selectByCheckId(@Param("checkId") Integer checkId);
 
     List<TRecheck> selectAll(@Param("userId")Integer userId);

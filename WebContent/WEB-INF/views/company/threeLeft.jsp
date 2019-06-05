@@ -96,7 +96,7 @@
             <li><a href="${ly }/company/safety-system/control-list2?flag=3" data-title="风险分布表"
             href="javascript:void(0)"> <img alt="" src="${ly }
             /images/companyImg/icon/fengxianfenbubiao.png"/>风险分布表</a></li>
-            <li><a href="${ly }/company/safety-system/control-list2?flag=2" data-title="风险分布图"
+            <li><a href="${ly }/api/map/control-list4" data-title="风险分布图"
             href="javascript:void(0)"> <img alt="" src="${ly }
             /images/companyImg/icon/fengxianfenbutu.png"/>风险分布图</a></li>
             </ul>

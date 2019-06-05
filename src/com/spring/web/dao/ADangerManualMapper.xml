@@ -242,7 +242,7 @@
 
   <select id="selectByAllIds" resultType="com.spring.web.model.ADangerManual">
     select
-    id dmid, level1, level2, level3, factors, type, measures, reference, flag, flag2, level, name
+    id, level1, level2, level3, factors, type, measures, reference, flag, flag2, level, name
     from a_danger_manual_tbl
     where
     id in

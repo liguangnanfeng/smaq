@@ -58,7 +58,12 @@ function pr_() {
       <c:if test="${flag == 1}"><h3 class="text-c">${company.name}评估结果表</h3></c:if>
       <c:if test="${flag == 3}"><h3 class="text-c">${company.name}风险分布表</h3></c:if>
         <div class="cl pd-5 bg-1 bk-gray mt-20">
-     		<span class="r">共有数据：<strong>${fn:length(list) }</strong> 条；重大风险：<strong>${fn:length(list11) }</strong> 条；较大风险：<strong>${fn:length(list22) }</strong> 条</span> 
+     		<span class="r">共有数据：<strong>${fn:length(list) }</strong> 条；重大风险：<strong>${fn:length(list11) }</strong> 条；较大风险：<strong>${fn:length(list22) }</strong> 条
+             一般风险：<strong>${fn:length(list33) }</strong> 条；
+             较小风险：<strong>${fn:length(list44) }</strong> 条；
+             未辨识风险：<strong>${fn:length(list55) }</strong> 条；
+            </span>
+
     	</div>
       <table class="table table-border table-bordered table-bg table-hover table-sort">  
         <%-- <c:if test="${flag == 1}">

@@ -178,9 +178,9 @@ function openzl(Id){
   <div class="page-container">
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <div class="l">
-        <c:if test="${1!=isType && 0!=isType}">
+        <%--<c:if test="${1!=isType && 0!=isType}">
         <a class="btn btn-primary radius" href="${ly}/company/tables/templetDownload?isType=${isType}"><i class="Hui-iconfont" style="font-size:15px;">&#xe640;</i> 查看模板</a>
-        </c:if>
+        </c:if>--%>
         <button class="btn btn-warning radius ml-10" type="button" onclick="openzl(-1)"><i class="Hui-iconfont" style="font-size:15px;">&#xe642;</i> 上传资料</button>
       </div>
       <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span> 
@@ -208,7 +208,7 @@ function openzl(Id){
 <!--                 <input type="file" multiple name="file_0" class="input-file"> -->
               </div>
               <c:if test="${!empty tab.url}">
-              <a style="text-decoration:none" href="${ly}/common/download?filename=${tab.name}&fileurl=${tab.url}" title="查看资料" target="_blank">查看资料</a>
+              <a style="text-decoration:none" href="${ly}/common/download?filename=${tab.name}&fileurl=${tab.url}" title="查看资料" target="_blank">下载资料</a>
               </c:if>
               <a style="text-decoration:none" onclick="del(${tab.id})" href="javascript:;" title="删除">删除</a>
             </td>

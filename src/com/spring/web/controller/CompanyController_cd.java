@@ -3699,7 +3699,7 @@ public class CompanyController_cd extends BaseController {
 
             for (int i = 0; i < list.size(); i++) {
 
-                model.addAttribute("list","https://sec.dicarl.com"+list.get(i).getDocUrl());
+                model.addAttribute("list","http://localhost:8080"+list.get(i).getDocUrl());
 
                 return "company/process/process-see";
             }

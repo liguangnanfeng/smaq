@@ -1157,6 +1157,37 @@ public class VillageController extends BaseController {
     }
 
     /**
+     * TODO 隐患排查记录 2019/6/5 10:26修改(企业端查询)
+     * @param request 请求
+     * @param title   标题
+     * @param type    未知
+     * @param status  状态 1 未检查  2 已检查
+     * @param flag    1 自查  4 行政  3 部门抽查
+     * @return        该公司所有的检查的记录
+     */
+    @RequestMapping(value="check-list-two")
+    public String checkListItem(HttpServletRequest request,String title, Integer type, Integer status, Integer flag, Model model){
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("userid",user.getId());    //公司id
+        m.put("title",title);
+        m.put("type",type);
+        m.put("status",status);
+        m.put("flag",flag);
+        // 进行判断,将该公司所有的检查记录进行查询
+        if (setUserId(user, m)) {
+            clearVillageTown(m);
+            List<Map<String, Object>> list = tCheckMapper.selectListByMap(m);
+            model.addAttribute("list", list);
+        }
+        model.addAttribute("type", type);
+        model.addAttribute("flag", flag);
+        model.addAttribute("title", title);
+        model.addAttribute("status", status);
+        return "company/danger/check-list";
+    }
+
+    /**
      * 检查历史
      * TODO 排查治理记录 隐患排查记录(只需要已经检查过的)
      * user. userType : 管理类型  1 超管 2普管 3镇 4 村 5 企业 6区县 7市 8省
@@ -1167,12 +1198,14 @@ public class VillageController extends BaseController {
                                Integer status, Integer flag, Model model) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
+
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
         }
         if (user.getUserType() == 6) {//区
             model.addAttribute("townL", townMapper.selectListByDistrict(m));
         }
+
         // 向map集合进行存储
         m.put("type", type);  //
         m.put("flag", flag);  // 1
@@ -1205,8 +1238,6 @@ public class VillageController extends BaseController {
         // TODO 找到这个界面
         return "village/danger/check-list";
     }
-
-
 
     /**
      * 村级账号 隐患排查 检查历史
@@ -1864,7 +1895,23 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 隐患治理记录,只要整改合格的
+     * TODO 隐患治理记录, 整改不合格的 新建立的页面
+     * @param request  请求
+     * @param flag
+     * @param status
+     * @return
+     */
+    @RequestMapping(value="hidden-danger-list")
+    public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status){
+        User user = getLoginUser(request);
+        model.addAttribute("flag", flag);
+        model.addAttribute("status", status);
+
+        return "company/danger/hidden-danger-list";
+    }
+
+    /**
+     * TODO 隐患治理记录,只要整改合格的
      */
     @RequestMapping(value = "recheck-list")
     public String modelList(HttpServletRequest request, Model model, Integer flag, Integer status) throws Exception {
@@ -3075,6 +3122,7 @@ public class VillageController extends BaseController {
                         tCheckPart.setName(checkLevels.getLevel2());  //岗位/部位信息
                         tCheckPartMapper.insertSelective(tCheckPart);
                         TCheckItem tCheckItem = new TCheckItem();
+                        tCheckItem.setLevelId(checkLevels.getId());     // companyManulTbl的id
                         tCheckItem.setContent(checkLevels.getLevel4()); //检查内容
                         tCheckItem.setLevels(checkLevels.getLevel3());
                         tCheckItem.setReference(checkLevels.getReference());

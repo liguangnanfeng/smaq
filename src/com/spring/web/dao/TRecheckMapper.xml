@@ -184,7 +184,8 @@
       dapart_contact = #{dapartContact,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
+
+
    <select id="selectByCheckId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

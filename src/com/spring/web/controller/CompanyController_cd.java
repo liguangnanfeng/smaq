@@ -3255,7 +3255,7 @@ public class CompanyController_cd extends BaseController {
     }
 
     /**
-     * 隐患列表 复查详情
+     * TODO 隐患列表 复查详情
      */
     @RequestMapping(value = "recheck-detail")
     public String recheckDetail(Integer checkId, Model model) throws Exception {

@@ -2216,7 +2216,7 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 设置检查表
+     * TODO 设置检查表 生成图表功能
      */
     @RequestMapping("danger-chart")
     public String dangerChart() {

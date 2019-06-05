@@ -165,4 +165,12 @@ public class AppController_Map extends BaseController {
         return "company/safety-system/jietu";
     }
 
+    /**
+     * 跳转到地图的截图页面
+     */
+    @RequestMapping(value="control-list4")
+    public String jumpHtml(){
+        return "company/safety-system/control-list4";
+    }
+
 }

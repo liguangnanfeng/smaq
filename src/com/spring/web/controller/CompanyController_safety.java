@@ -386,22 +386,18 @@ public class CompanyController_safety extends BaseController {
         return "company/safety-system/risk-list1";
     }*/
 
-    /**
-     * 风险辨识,其他因素
+    /*
+     * 风险辨识,其他因素 !!!
      * @param model
      * @param request
      * @param type
      * @return
      * @throws Exception
-     */
+     **/
     @RequestMapping({"risk-list"})
     public String riskList(Model model, HttpServletRequest request, Integer type) throws Exception {
         User user = this.getLoginUser(request);
         Company company = this.companyMapper.selectByPrimaryKey(user.getId());
-        // 根据公司 ID 查询对应的 CID 信息
-        List<ZzjgCompany> zzjgCompanyList =  zzjgCompanyMapper.selectAll(user.getId());
-
-
         if (StringUtils.isEmpty(company.getIndustry())) {
             model.addAttribute("url", request.getRequestURI());
             return "company/safety-system/type";
@@ -411,19 +407,16 @@ public class CompanyController_safety extends BaseController {
             m.put("type", type);
             m.put("flag", "1,3,4,5");
             m.put("uid", user.getId());
-            List<Map<Object, Object>> zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
-            /*List<Map<Object, Object>> zzjg = null ;
-            for (int i = 0; i < zzjgCompanyList.size(); i++) {
-                zzjg = zzjgDepartmentMapper.selectLevel2ByUids(user.getId(),zzjgCompanyList.get(i).getId());
-            }*/
-
+            List<Map<Object, Object>> zzjg = null;
             List acL;
             if (type == null) {
+                zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
                 acL = this.aCompanyManualMapper.selectByAll(m);
                 model.addAttribute("zzjgDep", zzjg);
                 model.addAttribute("acL", acL);
                 return "company/safety-system/risk-list1";
             } else {
+                zzjg = this.zzjgDepartmentMapper.selectLevel1ByUids(user.getId());
                 acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);
                 Iterator it = acL.iterator();
 
@@ -438,11 +431,13 @@ public class CompanyController_safety extends BaseController {
 
                         while(var15.hasNext()) {
                             Map<Object, Object> zz = (Map)var15.next();
-                            String p = zz.get("parName").toString();
-                            String name = zz.get("name").toString();
-                            if (p.equals(level1) && name.equals(level2)) {
-                                has = true;
-                                break;
+                            if (zz.get("parName") != null ){
+                                String p = zz.get("parName").toString();
+                                String name = zz.get("name").toString();
+                                if (p.equals(level1) && name.equals(level2)) {
+                                    has = true;
+                                    break;
+                                }
                             }
                         } if (!has) {
                             it.remove();
@@ -1745,6 +1740,19 @@ public class CompanyController_safety extends BaseController {
         List<Map<String, Object>> list22 = aCompanyManualMapper.selectByMap(m);
         model.addAttribute("list22", list22);
 
+
+        m.put("level", "黄色");
+        List<Map<String, Object>> list33 = aCompanyManualMapper.selectByMap(m);
+        model.addAttribute("list33", list33);
+
+        m.put("level", "蓝色");
+        List<Map<String, Object>> list44 = aCompanyManualMapper.selectByMap(m);
+        model.addAttribute("list44", list44);
+
+        m.put("level", "");
+        List<Map<String, Object>> list55 = aCompanyManualMapper.selectNum(m);
+        model.addAttribute("list55", list55);
+
         if(flag.equals("2")){
             //log.error("zhangcl 2018.10.18 controlList3,area_range="+company.getAreaRange());
             return "company/safety-system/control-list3";
@@ -1843,7 +1851,6 @@ public class CompanyController_safety extends BaseController {
         ZzjgDepartment dep = zzjgDepartmentMapper.selectByPrimaryKey(depId);
         String level1 = dep.getName();
         List<ADangerManual> list = aDangerManualMapper.selectByAllIds(ids);
-
         ACompanyManual aCompanyManual ;
         for (ADangerManual a : list) {
             aCompanyManual = new ACompanyManual();
@@ -1861,6 +1868,7 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setFlag(a.getFlag());
             aCompanyManual.setType(a.getType());
             aCompanyManual.setMeasures(a.getMeasures());
+            aCompanyManual.setRiskId(a.getId());
             aCompanyManualMapper.insert(aCompanyManual);
             // 给 zzjg_department_tbl 添加数据信息
             List<ZzjgDepartment> zzjgDepartmentList = zzjgDepartmentMapper.selectCount(depId,a.getName());
@@ -1880,7 +1888,6 @@ public class CompanyController_safety extends BaseController {
                 zzjgDepartment.setPid(depId);
                 zzjgDepartment.setLevel(2);
                 zzjgDepartment.setUid(user.getId());
-
                 zzjgDepartmentMapper.add(zzjgDepartment);
             }
         }
@@ -1915,6 +1922,7 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setFlag("3");
             aCompanyManual.setType(a.getType());
             aCompanyManual.setMeasures(a.getMeasures());
+            aCompanyManual.setRiskId(a.getId());
             aCompanyManualMapper.insertAdd(aCompanyManual);
         }
         return result;

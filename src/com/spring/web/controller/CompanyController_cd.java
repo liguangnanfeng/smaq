@@ -3684,6 +3684,35 @@ public class CompanyController_cd extends BaseController {
         return "company/process/process-edit";
     }
 
+
+    /*
+     * 生产工艺流程页面 查看文档
+     */
+    @RequestMapping("process/lockAll")
+    public String lockAll(Model model, HttpServletRequest request, Integer id) throws Exception {
+        if (null != id) {
+
+        List<ProductionProcessDiagram> list = productionProcessDiagramMapper.selectAddress(id);
+
+            for (int i = 0; i < list.size(); i++) {
+
+                model.addAttribute("list","http://localhost:8080"+list.get(i).getDocUrl());
+
+                return "company/process/process-see";
+            }
+        }
+
+        return "company/process/process-see";
+    }
+
+
+
+
+
+
+
+
+
     /**
      * 生产工艺流程页面保存
      */

@@ -34,13 +34,14 @@
             <arg column="flag2" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="gwzy" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="lnglat" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="riskId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
 
         id, uid, dmid, level1, level2, level3, factors, type, measures, reference, flag,
         level, issys, del, ctime, gkcs, gkzt, fjgkfzr, material, gy, hxys, wlbs, flag2, gwzy,
-        lnglat
+        lnglat, riskId
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
 
@@ -55,7 +56,6 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.spring.web.model.ACompanyManual">
-
         insert into a_company_manual_tbl (id, uid, dmid,
         level1, level2, level3,
         factors, type, measures,
@@ -64,7 +64,7 @@
         gkcs, gkzt, fjgkfzr,
         material, gy, hxys,
         wlbs, flag2, gwzy,
-        lnglat)
+        lnglat, riskId)
         values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{dmid,jdbcType=INTEGER},
         #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},
         #{factors,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{measures,jdbcType=VARCHAR},
@@ -73,7 +73,7 @@
         #{gkcs,jdbcType=VARCHAR}, #{gkzt,jdbcType=VARCHAR}, #{fjgkfzr,jdbcType=VARCHAR},
         #{material,jdbcType=VARCHAR}, #{gy,jdbcType=VARCHAR}, #{hxys,jdbcType=VARCHAR},
         #{wlbs,jdbcType=VARCHAR}, #{flag2,jdbcType=VARCHAR}, #{gwzy,jdbcType=VARCHAR},
-        #{lnglat,jdbcType=VARCHAR})
+        #{lnglat,jdbcType=VARCHAR}, #{riskId,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.spring.web.model.ACompanyManual">
 
@@ -154,6 +154,9 @@
             <if test="lnglat != null">
                 lnglat,
             </if>
+            <if test="riskId != null">
+                riskId,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -231,11 +234,12 @@
             <if test="lnglat != null">
                 #{lnglat,jdbcType=VARCHAR},
             </if>
+            <if test="riskId != null">
+                #{riskId,jdbcType=VARCHAR},
+            </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.spring.web.model.ACompanyManual">
-
-
         update a_company_manual_tbl
         <set>
             <if test="uid != null">
@@ -310,6 +314,9 @@
             <if test="lnglat != null">
                 lnglat = #{lnglat,jdbcType=VARCHAR},
             </if>
+            <if test="riskId != null">   riskId
+                riskId = #{riskId,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -339,7 +346,8 @@
         wlbs = #{wlbs,jdbcType=VARCHAR},
         flag2 = #{flag2,jdbcType=VARCHAR},
         gwzy = #{gwzy,jdbcType=VARCHAR},
-        lnglat = #{lnglat,jdbcType=VARCHAR}
+        lnglat = #{lnglat,jdbcType=VARCHAR},
+        riskId = #{riskId,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
 
@@ -348,7 +356,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat
+        T1.wlbs,T1.gwzy,T1.lnglat , T1.riskId
         from
         a_company_manual_tbl T1
         where
@@ -360,7 +368,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
         from
         a_company_manual_tbl T1
         where
@@ -368,6 +376,7 @@
         <if test="uid != null">
             and T1.uid = #{uid}
         </if>
+        order by T1.level1 asc, T1.riskId asc
     </select>
 
     <select id="selectByMap" resultType="java.util.HashMap">
@@ -375,7 +384,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
         from
         a_company_manual_tbl T1
 
@@ -413,13 +422,57 @@
 
 
 
+
+    <select id="selectNum" resultType="java.util.HashMap">
+        select
+        T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
+        T1.flag,
+        T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
+        from
+        a_company_manual_tbl T1
+        where
+        T1.del = 0 and T1.level = ""
+        <if test="uid != null">
+            and T1.uid = #{uid}
+        </if>
+        <if test="flag != null">
+            and T1.flag in (${flag})
+        </if>
+        <if test="flag2 != null">
+            and T1.flag2 = #{flag2}
+        </if>
+
+        <if test="level != null and level != ''">
+            and T1.level = #{level}
+        </if>
+        <if test="levels != null">
+            and T1.level in
+            <foreach close=")" collection="levels" item="item" open="(" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="userId != null">
+            and T1.uid = #{userId}
+        </if>
+        <if test="order != null">
+            order by find_in_set(T1.level,'红色,橙色,黄色,蓝色')
+        </if>
+        <if test="order == null">
+            order by T1.id asc
+        </if>
+    </select>
+
+
+
+
     <!-- 分级管控数据显示排序 -->
     <select id="selectByAcs" resultType="java.util.HashMap">
         select
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
         from
         a_company_manual_tbl T1
         where
@@ -458,7 +511,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
         from
         a_company_manual_tbl T1
         where
@@ -1007,11 +1060,11 @@
     <!-- 添加数据信息到数据库！！！ -->
     <insert id="insertAdd">
         insert into a_company_manual_tbl (uid,dmid,
-        level1, level2, level3, factors, type, measures, flag, del, ctime,gkzt)
+        level1, level2, level3, factors, type, measures, flag, del, ctime,gkzt,riskId)
         values (#{uid,jdbcType=INTEGER}, #{dmid,jdbcType=INTEGER},
         #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},#{factors,jdbcType=VARCHAR},
         #{type,jdbcType=VARCHAR}, #{measures,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR},#{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP},
-        #{gkzt,jdbcType=VARCHAR})
+        #{gkzt,jdbcType=VARCHAR}, #{riskId,jdbcType=VARCHAR})
     </insert>
 
     <!-- 修改数据信息达到删除的目的 -->

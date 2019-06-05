@@ -237,6 +237,20 @@
         order by t1.id asc
     </select>
 
+    <select id="selectLevel1ByUids" resultType="java.util.Map">
+        select
+        t1.id, t1.name, t1.level,t1.cid,
+        (select name parName from zzjg_company_tbl where id = t1.cid) companyName,
+        t1.name parName
+        from zzjg_department_tbl t1
+        where
+        t1.del = 0 and t1.level = 1
+        and t1.uid = #{uid,jdbcType=INTEGER}
+        order by t1.id asc
+    </select>
+
+
+
     <select id="selectLevel2ByUid" resultType="java.util.Map">
         select
         t1.id, t1.name, t1.level,t1.pid,

@@ -78,7 +78,7 @@
 <nav class="breadcrumb text-c">
   <a class="btn-page pagexz" href="javascript:;">重大风险判定</a>
   <a class="btn-page" data-href="${ly }/company/safety-system/assess-list"  data-title="较大风险风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">较大风险风险判定</a>
-  <a class="btn-page"  data-href="${ly }/company/safety-system/assess6"  data-title="一般和较小风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">一般和较小风险判定</a>
+  <a class="btn-page"  data-href="${ly }/company/safety-system/assess6"  data-title="未定和一般风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">未定和一般风险判定</a>
   <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>
 </nav>
 <div class="page-container">
@@ -96,7 +96,7 @@
       <tr class="text-c">
         <th style="width:40px"><input type="checkbox" value="" class="check-all"/></th>
         <!-- <th>场所/部位/环节</th> -->
-        <th style="min-width:100px">场所/部位/环节</th>
+        <th style="min-width:100px">环节/部位</th>
         <th style="min-width:100px">风险等级</th>
         <th style="min-width:100px">风险因素</th>
         <%--<th style="min-width:100px">风险类型</th>--%>

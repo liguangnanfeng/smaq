@@ -92,7 +92,7 @@
                             <div class="btn btn-primary-outline radius" onclick="openzl(${t.id})" style="height: 21px;line-height: 21px;padding: 0 2px;margin-top: 6px;">更改资料</div>
                             <input type="file" multiple name="file_0" class="input-file">
                         </div>
-                        <a style="text-decoration:none"  href="${ly}/common/download?filename=${t.name}&fileurl=${t.url}"   title="查看资料" target="_blank">查看资料</a>
+                        <a style="text-decoration:none"  href="${ly}/common/download?filename=${t.name}&fileurl=${t.url}"   title="下载资料" target="_blank">下载资料</a>
                         <a style="text-decoration:none" onclick="del(${t.id})" href="javascript:;" title="删除">删除</a>
                     </td>
                 </tr>

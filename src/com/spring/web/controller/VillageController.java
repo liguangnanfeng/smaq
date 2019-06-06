@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -1908,6 +1909,12 @@ public class VillageController extends BaseController {
         model.addAttribute("status", status);
         model.addAttribute("userId",user.getId());
         List<Map> list = tCheckItemMapper.selectListBystatus(user.getId());
+        for (Map map : list) {
+            Date realTime = (Date) map.get("realTime");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+            String format = sdf.format(realTime);
+            map.put("realTimeStr",format);
+        }
         model.addAttribute("list",list);
         return "company/danger/hidden-danger-list";
     }

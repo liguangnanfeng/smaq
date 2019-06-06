@@ -52,7 +52,7 @@
         #{status,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, #{files,jdbcType=VARCHAR},
         #{suggest,jdbcType=INTEGER}, #{deadline,jdbcType=TIMESTAMP}, #{planTime,jdbcType=TIMESTAMP},
         #{recheckTime,jdbcType=TIMESTAMP}, #{recheckFile,jdbcType=VARCHAR}, #{recheckMemo,jdbcType=VARCHAR}
-        #{fileAddress,jdbcType=VARCHAR},#{money,jdbcType="DECIMAL"}
+        #{fileAddress,jdbcType=VARCHAR},#{money,jdbcType=DECIMAL}
         )
     </insert>
     <insert id="insertSelective" parameterType="com.spring.web.model.TCheckItem">
@@ -163,7 +163,7 @@
                 #{file_address,jdbcType=VARCHAR},
             </if>
             <if test="money != null">
-                #{money,jdbcType="DECIMAL"}
+                #{money,jdbcType=DECIMAL},
             </if>
         </trim>
     </insert>
@@ -223,7 +223,7 @@
                 file_address = #{fileAddress,jdbcType=VARCHAR},
             </if>
             <if test="money != null">
-                money = #{money,jdbcType="DECIMAL"}
+                money = #{money,jdbcType=DECIMAL}
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -911,7 +911,7 @@
     <select id="selectListBystatus" resultType="java.util.Map" parameterType="INTEGER">
         select T2.type,
                T2.depart,
-               T3.levels,
+               T1.levels,
                T2.real_time as realTime ,
                T1.content,
                T1.files,

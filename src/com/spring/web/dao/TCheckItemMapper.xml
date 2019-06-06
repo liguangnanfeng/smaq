@@ -916,6 +916,7 @@
                T1.content,
                T1.files,
                T1.file_address,
+               T1.status,
                T4.flag,
                T4.fjgkfzr,
                T1.money,

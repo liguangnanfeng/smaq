@@ -218,7 +218,7 @@ public class AppController_Map extends BaseController {
                     TCheckItem tCheckItem = new TCheckItem();
                     tCheckItem.setId(itemId);
                     tCheckItem.setFileAddress(realPath1);
-                    tCheckItemMapper.updateByPrimaryKey(tCheckItem);
+                    tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
                 } else {
                     result.setStatus("1");
                     result.setMessage("不是我们想要的文件类型,请按要求重新上传");

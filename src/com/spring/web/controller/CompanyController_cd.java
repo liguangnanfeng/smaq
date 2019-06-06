@@ -1360,15 +1360,18 @@ public class CompanyController_cd extends BaseController {
     Result lineChartData(String sT, String eT, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
+        // 传递的时间都为空
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
             eT = DateFormatUtils.format(d, PP);
             sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
         }
+        // 起始时间为空
         if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
             eT = DateFormatUtils.format(d, PP);
         }
+        // 截至时间为空
         if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
             Date d = DateConvertUtil.formateDate(eT, PP);
             sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);

@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -1917,6 +1918,31 @@ public class VillageController extends BaseController {
         }
         model.addAttribute("list",list);
         return "company/danger/hidden-danger-list";
+    }
+
+    /**
+     * 保存治理投入金额
+     * @return
+     */
+    @RequestMapping(value="save-money")
+    public @ResponseBody
+    Result saveMoney(Integer itemId, Integer money){
+        try {
+            TCheckItem tCheckItem = new TCheckItem();
+            BigDecimal big = new BigDecimal(money);
+            tCheckItem.setMoney(big);
+            tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
+            Result result = new ResultImpl();
+            result.setStatus("0");
+            result.setMess("保存成功");
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Result result = new ResultImpl();
+            result.setStatus("1");
+            result.setMess("保存失败");
+            return result;
+        }
     }
 
     /**

@@ -600,7 +600,7 @@
         </where>
         GROUP BY time, status
     </select>
-
+    <!--根据不同进行查询-->
     <select id="selectGroupFlag" resultType="com.spring.web.ibatis.DynamicParameter">
         SELECT
         count(0) c, DATE_FORMAT(real_time, '%Y-%m') time, flag

@@ -250,7 +250,7 @@
         recheck_file = #{recheckFile,jdbcType=VARCHAR},
         recheck_memo = #{recheckMemo,jdbcType=VARCHAR},
         file_address = #{fileAddress,jdbcType=VARCHAR},
-        money = #{money,jdbcType="DECIMAL"}
+        money = #{money,jdbcType=DECIMAL}
         where id = #{id,jdbcType=INTEGER}
     </update>
 
@@ -292,9 +292,6 @@
 
     </select>
 
-
-
-
     <select id="selectAllLevelId" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
         select *
         from
@@ -302,11 +299,6 @@
         where
         check_id = #{checkId}
     </select>
-
-
-
-
-
 
     <select id="selectByAppCheckId" resultType="java.util.Map">
     select 
@@ -386,7 +378,6 @@
         </where>
         order by T1.id desc
     </select>
-
 
     <!--复查,查询不合格项并返回-->
     <select id="selectDangerByCheckId" resultType="java.util.Map">

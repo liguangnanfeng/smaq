@@ -180,8 +180,8 @@ public class AppController_Map extends BaseController {
      */
     @RequestMapping("B004")
     @SuppressWarnings("all")
-    @ResponseBody
-    public AppResult uploadFile(HttpServletRequest request, @RequestParam(value = "file", required = false) MultipartFile file,Integer itemId ) throws IOException {
+    public @ResponseBody
+    AppResult uploadFile(@RequestParam(value = "file", required = false) MultipartFile file,Integer itemId,HttpServletRequest request) throws IOException {
         AppResult result = new AppResultImpl();
         System.out.println("执行文件上传");
         request.setCharacterEncoding("UTF-8");
@@ -198,8 +198,11 @@ public class AppController_Map extends BaseController {
                     // 项目在容器中实际发布运行的根路径
                     String realPath = request.getSession().getServletContext().getRealPath("/");
                     String realPath2 = realPath.replaceAll("\\\\", "/");
+
+                    String replace = UUID.randomUUID().toString().replace("-", "");
+
                     // 自定义的文件名称
-                    String trueFileName = /*String.valueOf(System.currentTimeMillis()) +*/ fileName;
+                    String trueFileName = /*String.valueOf(System.currentTimeMillis()) +*/ replace+fileName;
                     // 设置存放图片文件的路径
                     path = realPath2 + "images/upload/" + trueFileName;
 
@@ -216,7 +219,6 @@ public class AppController_Map extends BaseController {
                     tCheckItem.setId(itemId);
                     tCheckItem.setFileAddress(realPath1);
                     tCheckItemMapper.updateByPrimaryKey(tCheckItem);
-
                 } else {
                     result.setStatus("1");
                     result.setMessage("不是我们想要的文件类型,请按要求重新上传");

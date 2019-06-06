@@ -921,7 +921,7 @@
         select T2.type,
                T2.depart,
                T3.levels,
-               T2.realTime,
+               T2.real_time realTime,
                T1.content,
                T1.files,
                T1.file_address,

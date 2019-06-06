@@ -153,10 +153,34 @@
                             <td>综合</td>
                         </c:when>
                     </c:choose>
-                        <%--                    <c:set var="item" value="${fn:split(list.levels,'/') }"/>--%>
+                    <c:if test="${list.levels!=null}">
+                        <c:set var="item" value="${fn:split(list.levels,'/') }"/>
+                    </c:if>
                     <td>${list.depart }</td>
-                    <td>${list.levels }</td>
-                    <td>${list.levels }</td>
+                    <c:if test="${list.levels!=null}">
+                        <c:if test="${not empty item[0]}">
+                            <td>${item[0]}</td>
+                            <c:if test="${not empty item[1]&&not empty item[2]}">
+                                <td>${item[1]}/${item[2]}</td>
+                            </c:if>
+                            <c:if test="${not empty item[1]&& empty item[2]}">
+                                <td>${item[1]}</td>
+                            </c:if>
+                            <c:if test="${ empty item[1]&& empty item[2]}">
+                                <td>暂无数据</td>
+                            </c:if>
+                        </c:if>
+                        <c:if test="${empty item[0]}">
+                            <td>暂无数据</td>
+                            <td>暂无数据</td>
+                        </c:if>
+
+                    </c:if>
+                    <c:if test="${list.levels==null}">
+                        <td>暂无数据</td>
+                        <td>暂无数据</td>
+                    </c:if>
+
                         <%--                    <td>${item[0]}</td>--%>
                         <%--                    <td>${item[1]+item[2] }</td>--%>
                     <td>${list.realTimeStr}</td>
@@ -192,7 +216,13 @@
                         <a style="text-decoration:none" onclick="uploadfile(${list.checkItemId},this)"
                            href="javascript:void(0);">上传文件</a>
                     </td>
-                    <td>治理结果及日期</td>
+
+                    <td>
+                        <c:choose>
+                            <c:when test="${list.status eq 2}">未合格</c:when>
+                            <c:when test="${list.status eq 3}">复查通过</c:when>
+                        </c:choose>
+                    </td>
                     <td>${list.fjgkfzr}</td>
                     <c:if test="${list.money==null}">
                         <td onclick="touru(${list.checkItemId},this)">0</td>
@@ -313,7 +343,7 @@
 
     function yulan(dom) {
         var src = $(dom).attr('data-src');
-        show_dialog('查看方案', '${ly}/village/process-see?url='+src);
+        show_dialog('查看方案', '${ly}/village/process-see?url=' + src);
 
     }
 
@@ -330,14 +360,14 @@
     }
 
 
-    function bctr(){
+    function bctr() {
         var val = $('#trInput').val();
         $.ajax({
             url: getRootPath() + "/village/save-money",    //请求的url地址 
-            data: {itemId:item_id,money:val},    //参数值
+            data: {itemId: item_id, money: val},    //参数值
             type: "POST",   //请求方式
             success: function (res) {
-            //请求成功时处理
+                //请求成功时处理
                 if (res.status == 0) {
                     current.text(val);
                     $("#modal-plan2").modal("hide");
@@ -347,7 +377,7 @@
                 }
             },
             error: function (res) {
-            //请求出错处理
+                //请求出错处理
                 console.log(res, '请求失败');
                 layer.msg('修改失败');
             }

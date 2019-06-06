@@ -40,7 +40,7 @@
         }
     </style>
     <script type="text/javascript">
-        console.log('${list}')
+        <%--console.log('${list}');--%>
 
         function showpicture(memoImg) {
             //memoImg = "";
@@ -294,7 +294,7 @@
     <form enctype="multipart/form-data" id="fm1" method='post'>
         <input type="text" name="itemId" value='' style="display: none" id="fm1_imput"/>
         <input type="file" name="file"
-               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+               accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                id="upload" style="display: none">
     </form>
 

@@ -1818,7 +1818,6 @@ public class CompanyController_safety extends BaseController {
      */
     @RequestMapping(value = "aCompanyManual-save")
     public @ResponseBody Result aCompanyManualSave(HttpServletRequest request, ACompanyManual be,Integer ids, String dianhuas) throws Exception {
-
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         be.setUid(user.getId());

@@ -47,6 +47,7 @@ function pr_() {
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>
     </a>
+    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
   </nav>
   <div class="text-c mt-20">
     <button onClick="pr_()" class="btn btn-primary radius" type="button">
@@ -99,12 +100,14 @@ function pr_() {
         <%-- <c:if test="${flag == 2}"> --%>
         <thead>
           <tr class="text-c">
-            <th style="width:40px">车间</th>
-            <th style="min-width:100px">岗位/部位</th>
-            <th style="min-width:100px">风险点</th>
-            <th style="min-width:100px">风险等级</th>
-            <th style="min-width:150px">风险类型</th>
-            <th style="min-width:200px">风险因素</th>
+              <th style="width:6%">辨识类型</th>
+              <th style="width:6%">车间/场所</th>
+              <th style="width:10%">系统</th>
+              <th style="min-width:100px">环节/部位</th>
+              <th style="min-width:100px">风险点</th>
+              <th style="min-width:100px">风险等级</th>
+              <th style="min-width:150px">风险类型</th>
+              <th style="min-width:200px">风险因素</th>
           </tr>
         </thead>
         <tbody>
@@ -113,9 +116,16 @@ function pr_() {
           <c:forEach items="${list }" var="be">
           <c:if test="${(be.level1 eq be1.key && be.level2 eq be2) || (empty be1.key && empty be.level1)}">
           <tr>
+            <c:set value="${fn:split(be.level3,'/')}" var="ls"></c:set>
+            <td class="text-c">${ls[0] != null ? ls[0] : "暂无数据" }</td>
+
             <td class="text-c">${empty be1.key ? '公司' : be1.key}</td>
-            <td class="text-c">${be2}</td>
-            
+
+            <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
+
+            <td class="text-c">${be.level2 != null ? be.level2 : "暂无数据" }</td>
+
+
             <td class="text-c">
             	<c:set value="${fn:split(be.level3,'/')}" var="ls"></c:set>
               		<c:set value="0" var="y"/>

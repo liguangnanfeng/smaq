@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -3761,7 +3762,9 @@ public class CompanyController_cd extends BaseController {
 
             for (int i = 0; i < list.size(); i++) {
 
-                model.addAttribute("list","https://sec.dicarl.com"+list.get(i).getDocUrl());
+                model.addAttribute("list","http://localhost:8080"+list.get(i).getDocUrl());
+
+                System.out.println(InetAddress.getLocalHost().getHostAddress());
 
                 return "company/process/process-see";
             }

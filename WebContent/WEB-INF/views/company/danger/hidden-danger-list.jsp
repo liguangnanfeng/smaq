@@ -239,7 +239,7 @@
                     <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
                 </div>
                 <div class="modal-body" style="height: 200px; overflow-y: auto">
-                    <form class="form form-horizontal">
+                    <div class="form form-horizontal">
                         <div class="row cl dq">
                             <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入治理投入
                                 :</label>
@@ -254,7 +254,7 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -333,28 +333,26 @@
 
     function bctr(){
         var val = $('#trInput').val();
-        current.text(val)
-        // $.ajax({
-        //     url: getRootPath() + "/api/map/save-money",    //请求的url地址 
-        //     data: {itemId:item_id,money:val},    //参数值
-        //     type: "POST",   //请求方式
-        //     processData: false,
-        //     contentType: false,
-        //     success: function (res) {
-        //     //请求成功时处理
-        //         if (res.status == 0) {
-        //             current.html(val)
-        //             layer.msg('上传成功');
-        //         } else {
-        //             layer.msg('上传失败');
-        //         }
-        //     },
-        //     error: function (res) {
-        //     //请求出错处理
-        //         console.log(res, '请求失败');
-        //         layer.msg('上传失败');
-        //     }
-        // });
+        $.ajax({
+            url: getRootPath() + "/village/save-money",    //请求的url地址 
+            data: {itemId:item_id,money:val},    //参数值
+            type: "POST",   //请求方式
+            success: function (res) {
+            //请求成功时处理
+                if (res.status == 0) {
+                    current.text(val);
+                    $("#modal-plan2").modal("hide");
+                    layer.msg('修改成功');
+                } else {
+                    layer.msg('修改失败');
+                }
+            },
+            error: function (res) {
+            //请求出错处理
+                console.log(res, '请求失败');
+                layer.msg('修改失败');
+            }
+        });
     }
 
     $(function () {

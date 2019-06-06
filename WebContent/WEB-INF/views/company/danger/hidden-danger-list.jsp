@@ -40,7 +40,8 @@
         }
     </style>
     <script type="text/javascript">
-          console.log('${list}')
+        console.log('${list}')
+
         function showpicture(memoImg) {
             //memoImg = "";
             if (memoImg.length !== 0) {
@@ -152,10 +153,12 @@
                             <td>综合</td>
                         </c:when>
                     </c:choose>
-                    <c:set var="item" value="${fn:split(list.levels,'/') }"/>
+                        <%--                    <c:set var="item" value="${fn:split(list.levels,'/') }"/>--%>
                     <td>${list.depart }</td>
-                    <td>${item[0]}</td>
-                    <td>${item[1]+item[2] }</td>
+                    <td>${list.levels }</td>
+                    <td>${list.levels }</td>
+                        <%--                    <td>${item[0]}</td>--%>
+                        <%--                    <td>${item[1]+item[2] }</td>--%>
                     <td>${list.realTimeStr}</td>
                     <td>${list.content }</td>
                     <td><c:if test="${list.files!=null}">
@@ -166,27 +169,37 @@
                     </c:if>
                     </td>
                     <td>
-                    <c:choose>
-                        <c:when test="${list.flag eq '红色'}"><font class="col-a">${list.flag}</font></c:when>
-                        <c:when test="${list.flag eq '橙色'}"><font class="col-b">${list.flag}</font></c:when>
-                        <c:when test="${list.flag eq '黄色'}"><font class="col-c">${list.flag}</font></c:when>
-                        <c:when test="${list.flag eq '蓝色'}"><font class="col-d">${list.flag}</font></c:when>
-                    </c:choose>
+                        <c:choose>
+                            <c:when test="${list.flag eq '红色'}"><font class="col-a">${list.flag}</font></c:when>
+                            <c:when test="${list.flag eq '橙色'}"><font class="col-b">${list.flag}</font></c:when>
+                            <c:when test="${list.flag eq '黄色'}"><font class="col-c">${list.flag}</font></c:when>
+                            <c:when test="${list.flag eq '蓝色'}"><font class="col-d">${list.flag}</font></c:when>
+                        </c:choose>
                     </td>
                     <td>
-                    <c:if test="${list.file_address==null}">
-                        <a style="text-decoration:none;margin-bottom:5px;display: none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">预览文件</a>
-                        <a style="text-decoration:none;margin-bottom:5px;display: none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">下载文件</a>
-                    </c:if>
-                    <c:if test="${list.file_address!=null}">
-                        <a style="text-decoration:none;margin-bottom:5px;display: inline-block" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">预览文件</a>
-                        <a style="text-decoration:none;margin-bottom:5px;display: inline-block" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">下载文件</a>
-                    </c:if>
-                        <a style="text-decoration:none" onclick="uploadfile(${list.checkItemId},this)" href="javascript:void(0);">上传文件</a>
+                        <c:if test="${list.file_address==null}">
+                            <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="yulan(this)"
+                               href="javascript:;">预览文件</a>
+                            <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="xiazai(this) "
+                               href="javascript:;">下载文件</a>
+                        </c:if>
+                        <c:if test="${list.file_address!=null}">
+                            <a style="text-decoration:none;margin-bottom:5px;display: inline-block"
+                               data-src="${list.file_address}" onclick="yulan(this)" href="javascript:;">预览文件</a>
+                            <a style="text-decoration:none;margin-bottom:5px;display: inline-block"
+                               data-src="${list.file_address}" onclick="xiazai(this)" href="javascript:;">下载文件</a>
+                        </c:if>
+                        <a style="text-decoration:none" onclick="uploadfile(${list.checkItemId},this)"
+                           href="javascript:void(0);">上传文件</a>
                     </td>
                     <td>治理结果及日期</td>
                     <td>${list.fjgkfzr}</td>
-                    <td>${list.money}</td>
+                    <c:if test="${list.money==null}">
+                        <td onclick="touru(${list.checkItemId},this)">0</td>
+                    </c:if>
+                    <c:if test="${list.money!=null}">
+                        <td onclick="touru(${list.checkItemId},this)">list.money</td>
+                    </c:if>
                     <td>上报</td>
                 </tr>
             </c:forEach>
@@ -216,52 +229,137 @@
         </div>
     </div>
 
+    <!-- 弹窗输入 -->
+    <div id="modal-plan2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="margin-top: 150px">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">输入治理投入(只能输入数字)</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body" style="height: 200px; overflow-y: auto">
+                    <form class="form form-horizontal">
+                        <div class="row cl dq">
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入治理投入
+                                :</label>
+                            <div class="formControls col-xs-5 col-sm-5">
+                                <input class="input-text" type="text" name="" id="trInput"
+                                       oninput="value=value.replace(/[^\d]/g,'')"
+                                       style="width:150px">
+                            </div>
+                            <div class="col-xs-3 col-sm-3">
+                                <button class="btn radius btn-primary size-S" onclick="bctr()">
+                                    保存
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-    <form enctype="multipart/form-data" id="fm1"  method='post'>
+    </div>
+
+    <form enctype="multipart/form-data" id="fm1" method='post'>
         <input type="text" name="itemId" value='' style="display: none" id="fm1_imput"/>
-        <input type="file" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document" id="upload" style="display: none">
+        <input type="file" name="file"
+               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+               id="upload" style="display: none">
     </form>
 
 
 </div>
 <script type="text/javascript">
-    var item_id='';    //当前条目id
+    var item_id = '';    //当前条目id
     var current = '';  //要操作的dom节点
 
 
-    function uploadfile(id,dom) {
-        item_id=id;
-        current=dom;
+    function uploadfile(id, dom) {
+        item_id = id;
+        current = $(dom);
         $("#upload").click();
     }
 
-    $("#upload").change(function(){
+    $("#upload").change(function () {
         $('#fm1_imput').val(item_id);
-        var form=document.querySelector("#fm1");
-        var formdata=new FormData(form);
+        var form = document.querySelector("#fm1");
+        var formdata = new FormData(form);
         $.ajax({
-            url:getRootPath() + "/api/map/B004",    //请求的url地址 
-            data:formdata,    //参数值
-            type:"POST",   //请求方式
-            processData:false,
-            contentType : false,
-            success:function(res){
-                //请求成功时处理
-                console.log(res)
-                if(res.status==0){
+            url: getRootPath() + "/api/map/B004",    //请求的url地址 
+            data: formdata,    //参数值
+            type: "POST",   //请求方式
+            processData: false,
+            contentType: false,
+            success: function (res) {
+//请求成功时处理
+                if (res.status == 0) {
                     console.log(current);
-                    // current.prevAll().css('display', 'inline-block');
+                    current.prevAll().css('display', 'inline-block');//把隐藏的按钮显示出来
+                    current.prevAll().attr("data-src", getRootPath() + res);//为隐藏的按钮设置属性为返回的路径
+                    var file = document.getElementById('upload');
+                    file.value = ''; //把file 内容清空
+                    layer.msg('上传成功');
+                } else {
+                    layer.msg('上传失败');
                 }
             },
-            error:function(res){
-                //请求出错处理
-                console.log(res,'请求失败');
+            error: function (res) {
+//请求出错处理
+                console.log(res, '请求失败');
                 layer.msg('上传失败');
             }
         });
     });
 
+    function yulan(dom) {
+        var src = $(dom).attr('data-src');
+// $("#my_show").attr('src', src);
+// $("#modal-plan2").modal("show");
 
+    }
+
+    function xiazai(dom) {
+        var src = $(dom).attr('data-src');
+        window.location.href = src;
+
+    }
+
+    function touru(id, dom) {
+        item_id = id;
+        current = $(dom);
+        $("#modal-plan2").modal("show");
+    }
+
+
+    function bctr(){
+        var val = $('#trInput').val();
+        $.ajax({
+            url: getRootPath() + "/api/map/save-money",    //请求的url地址 
+            data: {itemId:item_id,money:val},    //参数值
+            type: "POST",   //请求方式
+            processData: false,
+            contentType: false,
+            success: function (res) {
+//请求成功时处理
+                if (res.status == 0) {
+                    console.log(current);
+                    current.prevAll().css('display', 'inline-block');//把隐藏的按钮显示出来
+                    current.prevAll().attr("data-src", getRootPath() + res);//为隐藏的按钮设置属性为返回的路径
+                    var file = document.getElementById('upload');
+                    file.value = ''; //把file 内容清空
+                    layer.msg('上传成功');
+                } else {
+                    layer.msg('上传失败');
+                }
+            },
+            error: function (res) {
+//请求出错处理
+                console.log(res, '请求失败');
+                layer.msg('上传失败');
+            }
+        });
+    }
 
     $(function () {
         $('.table-sort').dataTable({

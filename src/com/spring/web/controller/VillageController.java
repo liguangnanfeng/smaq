@@ -1930,6 +1930,7 @@ public class VillageController extends BaseController {
         try {
             TCheckItem tCheckItem = new TCheckItem();
             BigDecimal big = new BigDecimal(money);
+            tCheckItem.setId(itemId);
             tCheckItem.setMoney(big);
             tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
             Result result = new ResultImpl();

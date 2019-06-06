@@ -37,7 +37,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.math.BigDecimal;
+import java.net.InetAddress;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -1930,6 +1932,7 @@ public class VillageController extends BaseController {
         try {
             TCheckItem tCheckItem = new TCheckItem();
             BigDecimal big = new BigDecimal(money);
+            tCheckItem.setId(itemId);
             tCheckItem.setMoney(big);
             tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
             Result result = new ResultImpl();
@@ -1943,6 +1946,20 @@ public class VillageController extends BaseController {
             result.setMess("保存失败");
             return result;
         }
+    }
+
+    /**
+     *
+     * @return
+     */
+    @RequestMapping(value="process-see")
+    public String processSee(Model model ,String url,HttpServletRequest request) throws UnknownHostException {
+        InetAddress address = InetAddress.getLocalHost();
+        String url2 = InetAddress.getLocalHost().getHostAddress() + ":" + request.getLocalPort() + url;
+
+        model.addAttribute("list",url2);
+
+        return "company/process/process-see";
     }
 
     /**

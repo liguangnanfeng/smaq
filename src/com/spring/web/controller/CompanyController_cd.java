@@ -1645,6 +1645,8 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * TODO 排查数据分析图表数据 开始按照天算
+     * 查询应该按照以检查和为检查来进行查询, 获取以检查和未检查的数据
+     *
      * @param sT 起始时间
      * @param eT 截止时间
      * @param request 请求

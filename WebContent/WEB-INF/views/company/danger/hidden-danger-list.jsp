@@ -294,7 +294,6 @@
             success: function (res) {
 //请求成功时处理
                 if (res.status == 0) {
-                    console.log(current);
                     current.prevAll().css('display', 'inline-block');//把隐藏的按钮显示出来
                     current.prevAll().attr("data-src", getRootPath() + res);//为隐藏的按钮设置属性为返回的路径
                     var file = document.getElementById('upload');
@@ -334,31 +333,28 @@
 
     function bctr(){
         var val = $('#trInput').val();
-        $.ajax({
-            url: getRootPath() + "/api/map/save-money",    //请求的url地址 
-            data: {itemId:item_id,money:val},    //参数值
-            type: "POST",   //请求方式
-            processData: false,
-            contentType: false,
-            success: function (res) {
-//请求成功时处理
-                if (res.status == 0) {
-                    console.log(current);
-                    current.prevAll().css('display', 'inline-block');//把隐藏的按钮显示出来
-                    current.prevAll().attr("data-src", getRootPath() + res);//为隐藏的按钮设置属性为返回的路径
-                    var file = document.getElementById('upload');
-                    file.value = ''; //把file 内容清空
-                    layer.msg('上传成功');
-                } else {
-                    layer.msg('上传失败');
-                }
-            },
-            error: function (res) {
-//请求出错处理
-                console.log(res, '请求失败');
-                layer.msg('上传失败');
-            }
-        });
+        current.text(val)
+        // $.ajax({
+        //     url: getRootPath() + "/api/map/save-money",    //请求的url地址 
+        //     data: {itemId:item_id,money:val},    //参数值
+        //     type: "POST",   //请求方式
+        //     processData: false,
+        //     contentType: false,
+        //     success: function (res) {
+        //     //请求成功时处理
+        //         if (res.status == 0) {
+        //             current.html(val)
+        //             layer.msg('上传成功');
+        //         } else {
+        //             layer.msg('上传失败');
+        //         }
+        //     },
+        //     error: function (res) {
+        //     //请求出错处理
+        //         console.log(res, '请求失败');
+        //         layer.msg('上传失败');
+        //     }
+        // });
     }
 
     $(function () {

@@ -473,11 +473,7 @@ function showping(){
     </div>
   </div>
   </div>
-  
-  
-  
-  
-   
+
 </body>
 <script type="text/javascript" src="${ly }/js/c-chart.js"></script>
 <script type="text/javascript">

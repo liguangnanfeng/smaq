@@ -1365,8 +1365,9 @@ public class CompanyController_cd extends BaseController {
             Date d = new Date();
             eT = DateFormatUtils.format(d, PP);
             sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
+
         }
-        // 起始时间为空
+        // 截止时间为空
         if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
             eT = DateFormatUtils.format(d, PP);
@@ -1492,7 +1493,7 @@ public class CompanyController_cd extends BaseController {
     }
 
     /**
-     * 柱状图数据 根据隐患整改 sT 起始时间 eT 终止时间
+     * TODO 柱状图数据 根据隐患整改 sT 起始时间 eT 终止时间
      */
     @RequestMapping(value = "zhuChartData")
     public @ResponseBody
@@ -1570,7 +1571,7 @@ public class CompanyController_cd extends BaseController {
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, PP);
+            eT = DateFormatUtils.format(d, PP);// 当前时间
             sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
         }
         if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
@@ -1635,15 +1636,48 @@ public class CompanyController_cd extends BaseController {
         mm.add(m2);
         mm.add(m3);
         mm.add(m4);
-        result.setMap("categories", monthL);
+        result.setMap("categories", monthL);//时间段内所有的月
         result.setMap("series", mm);// List<Data{String name; Integer[] data}> Data
         return result;
     }
 
+     static final String TIME_STR ="yyyy-MM-dd";
+
+    /**
+     * TODO 排查数据分析图表数据 开始按照天算
+     * @param sT 起始时间
+     * @param eT 截止时间
+     * @param request 请求
+     * @return 图表数据
+     */
+    @RequestMapping(value="zhuChartData3")
+    public @ResponseBody
+    Result zhuChartData3(String sT, String eT, HttpServletRequest request) throws ParseException {
+        User user = getLoginUser(request);
+        Result result = new ResultImpl();
+        if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
+            Date d = new Date();
+            eT = DateFormatUtils.format(d, TIME_STR);// 当前时间
+            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+        }
+        if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
+            Date d = new Date();
+            eT = DateFormatUtils.format(d, TIME_STR);
+        }
+        if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
+            Date d = DateConvertUtil.formateDate(eT, TIME_STR);
+            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+        }
+
+        return  null;
+    }
+
+    // 进行解析
     List<String> monthB(String sT, String eT) throws Exception {
         List<String> l = new LinkedList<String>();
         Date s = DateConvertUtil.formateDate(sT, PP);
         Date e = DateConvertUtil.formateDate(eT, PP);
+        // 起始时间 比当前时间
         while (!s.after(e)) {
             l.add(DateFormatUtils.format(s, PP));
             s = DateConvertUtil.addMonths(s, 1);

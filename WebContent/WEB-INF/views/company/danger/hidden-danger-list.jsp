@@ -40,10 +40,7 @@
         }
     </style>
     <script type="text/javascript">
-
-
-        console.log("${list}");
-
+          console.log('${list}')
         function showpicture(memoImg) {
             //memoImg = "";
             if (memoImg.length !== 0) {
@@ -123,11 +120,11 @@
                 <th width="5%">系统</th>
                 <th width="5%">环节/部位</th>
                 <th width="5%">发生日期</th>
-                <th width="10%">隐患内容</th>
+                <th width="15%">隐患内容</th>
                 <th width="5%">隐患图片</th>
                 <th width="5%">隐患等级</th>
                 <th width="5%">治理方案</th>
-                <th width="10%">治理结果及日期</th>
+                <th width="5%">治理结果及日期</th>
                 <th width="5%">治理责任人</th>
                 <th width="5%">治理投入</th>
                 <th width="5%">上报</th>
@@ -168,27 +165,29 @@
                         </button>
                     </c:if>
                     </td>
-                    <td>${list.flag }</td>
                     <td>
-                        <c:if test="${list.address!=null}">
-                            <button class="btn radius btn-danger size-S ml-20"
-                                    onClick="showpicture(getRootPath()+'${list.files }')">
-                                <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 预览文件
-                            </button>
-                            <button class="btn radius btn-danger size-S ml-20"
-                                    onClick="showpicture(getRootPath()+'${list.files }')">
-                                <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 下载文件
-                            </button>
-                        </c:if>
-                        <button class="btn radius btn-danger size-S ml-20"
-                                onClick="showpicture(getRootPath()+'${list.files }')">
-                            <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 上传文件
-                        </button>
+                    <c:choose>
+                        <c:when test="${list.flag eq '红色'}"><font class="col-a">${list.flag}</font></c:when>
+                        <c:when test="${list.flag eq '橙色'}"><font class="col-b">${list.flag}</font></c:when>
+                        <c:when test="${list.flag eq '黄色'}"><font class="col-c">${list.flag}</font></c:when>
+                        <c:when test="${list.flag eq '蓝色'}"><font class="col-d">${list.flag}</font></c:when>
+                    </c:choose>
+                    </td>
+                    <td>
+                    <c:if test="${list.file_address==null}">
+                        <a style="text-decoration:none;margin-bottom:5px;display: none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">预览文件</a>
+                        <a style="text-decoration:none;margin-bottom:5px;display: none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">下载文件</a>
+                    </c:if>
+                    <c:if test="${list.file_address!=null}">
+                        <a style="text-decoration:none;margin-bottom:5px;display: inline-block" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">预览文件</a>
+                        <a style="text-decoration:none;margin-bottom:5px;display: inline-block" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">下载文件</a>
+                    </c:if>
+                        <a style="text-decoration:none" onclick="uploadfile(${list.checkItemId},this)" href="javascript:void(0);">上传文件</a>
                     </td>
                     <td>治理结果及日期</td>
                     <td>${list.fjgkfzr}</td>
                     <td>${list.money}</td>
-                    <td>上传</td>
+                    <td>上报</td>
                 </tr>
             </c:forEach>
             <!-- 循环结束 -->
@@ -216,8 +215,54 @@
             </div>
         </div>
     </div>
+
+
+    <form enctype="multipart/form-data" id="fm1"  method='post'>
+        <input type="text" name="itemId" value='' style="display: none" id="fm1_imput"/>
+        <input type="file" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document" id="upload" style="display: none">
+    </form>
+
+
 </div>
 <script type="text/javascript">
+    var item_id='';    //当前条目id
+    var current = '';  //要操作的dom节点
+
+
+    function uploadfile(id,dom) {
+        item_id=id;
+        current=dom;
+        $("#upload").click();
+    }
+
+    $("#upload").change(function(){
+        $('#fm1_imput').val(item_id);
+        var form=document.querySelector("#fm1");
+        var formdata=new FormData(form);
+        $.ajax({
+            url:getRootPath() + "/api/map/B004",    //请求的url地址 
+            data:formdata,    //参数值
+            type:"POST",   //请求方式
+            processData:false,
+            contentType : false,
+            success:function(res){
+                //请求成功时处理
+                console.log(res)
+                if(res.status==0){
+                    console.log(current);
+                    // current.prevAll().css('display', 'inline-block');
+                }
+            },
+            error:function(res){
+                //请求出错处理
+                console.log(res,'请求失败');
+                layer.msg('上传失败');
+            }
+        });
+    });
+
+
+
     $(function () {
         $('.table-sort').dataTable({
             "aaSorting": [[0, "asc"]],//默认第几个排序

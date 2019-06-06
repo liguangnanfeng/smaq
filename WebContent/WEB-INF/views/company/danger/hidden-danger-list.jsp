@@ -174,11 +174,15 @@
                     </c:choose>
                     </td>
                     <td>
-                        <c:if test="${list.address!=null}">
-                            <a style="text-decoration:none;margin-bottom:5px" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">预览文件</a><br>
-                             <a style="text-decoration:none;margin-bottom:5px" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">下载文件</a><br>
-                        </c:if>
-                            <a style="text-decoration:none" onclick="uploadfile(${list.checkItemId})" href="javascript:void(0);">上传文件</a>
+                    <c:if test="${list.file_address==null}">
+                        <a style="text-decoration:none;margin-bottom:5px;display: none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">预览文件</a>
+                        <a style="text-decoration:none;margin-bottom:5px;display: none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">下载文件</a>
+                    </c:if>
+                    <c:if test="${list.file_address!=null}">
+                        <a style="text-decoration:none;margin-bottom:5px;display: inline-block" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">预览文件</a>
+                        <a style="text-decoration:none;margin-bottom:5px;display: inline-block" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">下载文件</a>
+                    </c:if>
+                        <a style="text-decoration:none" onclick="uploadfile(${list.checkItemId},this)" href="javascript:void(0);">上传文件</a>
                     </td>
                     <td>治理结果及日期</td>
                     <td>${list.fjgkfzr}</td>
@@ -225,8 +229,9 @@
     var current = '';  //要操作的dom节点
 
 
-    function uploadfile(id) {
+    function uploadfile(id,dom) {
         item_id=id;
+        current=dom;
         $("#upload").click();
     }
 
@@ -242,8 +247,11 @@
             contentType : false,
             success:function(res){
                 //请求成功时处理
-
-                console.log(res,'请求成功')
+                console.log(res)
+                if(res.status==0){
+                    console.log(current);
+                    // current.prevAll().css('display', 'inline-block');
+                }
             },
             error:function(res){
                 //请求出错处理

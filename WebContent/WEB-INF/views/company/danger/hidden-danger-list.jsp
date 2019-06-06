@@ -313,7 +313,7 @@
 
     function yulan(dom) {
         var src = $(dom).attr('data-src');
-        show_dialog('', '${ly}/village/process-see?url='+src);
+        show_dialog('查看方案', '${ly}/village/process-see?url='+src);
 
     }
 

@@ -198,7 +198,7 @@
                         <td onclick="touru(${list.checkItemId},this)">0</td>
                     </c:if>
                     <c:if test="${list.money!=null}">
-                        <td onclick="touru(${list.checkItemId},this)">list.money</td>
+                        <td onclick="touru(${list.checkItemId},this)">${list.money}</td>
                     </c:if>
                     <td>上报</td>
                 </tr>
@@ -313,8 +313,7 @@
 
     function yulan(dom) {
         var src = $(dom).attr('data-src');
-// $("#my_show").attr('src', src);
-// $("#modal-plan2").modal("show");
+        show_dialog('', '${ly}/village/process-see?url='+src);
 
     }
 

@@ -33,6 +33,7 @@
   <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
     <i class="Hui-iconfont">&#xe68f;</i>
   </a>
+  <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
 </nav>
 <div class="page-container">
   <form class="form form-horizontal" id="form">
@@ -61,9 +62,9 @@
       </div> 
     </div>
     <div class="row cl">
-      <label class="form-label col-xs-4 col-sm-2">备注：</label>
+      <label class="form-label col-xs-4 col-sm-2">所在位置：</label>
       <div class="formControls col-xs-8 col-sm-9">
-        <textarea id="remark" class="textarea txtarea_sq"></textarea>
+        <input id="remark" style="width:350px" class="input-text required">
       </div> 
     </div>
     <div class="row cl">

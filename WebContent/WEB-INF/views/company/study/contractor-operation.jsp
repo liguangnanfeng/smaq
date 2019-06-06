@@ -57,8 +57,9 @@ body .check-box label{margin-left:5px;}
 	<nav class="breadcrumb">
 	    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
 	    <span class="c-gray en">&gt;</span> <span>风险研判与承诺公告</span> 
-	    <span class="c-gray en">&gt;</span> <span>承包商作业流程</span> 
-  	<c:if test="${action != 'read'}"><a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>   </c:if>
+	    <span class="c-gray en">&gt;</span> <span>承包商作业流程</span>
+    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;" href="javascript:history.back(-1)" title="返回">返回</a>
+  	<%--<c:if test="${action != 'read'}"><a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>   </c:if>--%>
 	</nav>
 	<h3 class="text-c">《承包商评价表》</h3>
     <div class="mt-20">

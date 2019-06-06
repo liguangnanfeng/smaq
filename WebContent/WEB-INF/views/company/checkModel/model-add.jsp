@@ -84,7 +84,7 @@
                 super();
                 this.state = {
                     tableName: '',
-                    checkType: null,  //检查方式 1:日常  2:定期  3:临时
+                    checkType: null,  //检查方式 1:日常  2:定期  3:季节  4:其他 5:综合
                     days: null,    //   定期检查天数
                     leixin: [{id: -1, name: '基础'}, {id: -2, name: '现场'}],  //可选的检查类型
                     checkedLeixin: null,   //以选择的检查类型
@@ -534,7 +534,12 @@
                     success: function (result) {
                         if (result.status == 0) {
                             alert('保存成功');
-							window.location.href='${ly }/company/model-list-cx?flag=1&type=1&template=1';
+                            var arr=[2,3,4,5,6];
+                            var tem = arr[state.checkType-1];
+                            window.parent.location.href='${ly}/company/model-list-cx?flag=1&type='+state.checkType+'&template='+tem;
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+
                         } else {
                             alert('保存失败');
                         }
@@ -775,9 +780,6 @@
 
                 return (
                     <div>
-                        <nav className="breadcrumb">
-                            <span>添加检查表</span>
-                        </nav>
                         <form className="form form-horizontal" id="form">
                             <div className="page-container">
                                 <div className="row cl">
@@ -801,7 +803,9 @@
                                         <option value="0">选择检查方式</option>
                                         <option value="1">日常</option>
                                         <option value="2">定期</option>
-                                        <option value="3">临时</option>
+                                        <option value="3">季节</option>
+                                        <option value="4">其他</option>
+                                        <option value="5">综合</option>
                                         </select>
                                     </span>
                                     </div>

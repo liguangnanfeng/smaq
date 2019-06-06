@@ -277,9 +277,7 @@
                 </c:if>
                 <c:if test="${not empty be.gkzt}">
                     <a style="text-decoration:none" onClick="edits(${be.id}, this)" href="javascript:;" title="编辑">编辑</a>
-<%--                     <input type="button" style="text-decoration:none;" onClick='copy_('"${be}") title="复制" value="复制"></input>--%>
-
-                  <a style="text-decoration:none;" onClick="copy_('${be.fjgkfzr}','${be.gkcs}','${be.gkzt}','${be.level2}','${be.level}','${be.factors}','${be.flag}','${be.uid}' )" href="javascript:;" title="复制" >复制</a>
+                    <%-- <a style="text-decoration:none;" onClick="copy_('${be.fjgkfzr}','${be.gkcs}','${be.gkzt}','${be.level2}','${be.level}','${be.factors}','${be.flag}','${be.uid}' )" href="javascript:;" title="复制" >复制</a>--%>
                 </c:if>
                 </td>
               </tr>
@@ -430,12 +428,12 @@
           </thead>
           <c:forEach items="${perL }" var="be">
             <tr class="text-c">
-              <td><input type="radio" name="radio-2" value="${be.name }"></td>
-              <td>${be.name }</td>
-              <td>${be.companyName }</td>
-              <td>${be.level == 1 ? be.dname : be.dpname}</td>
-              <td>${be.level == 1 ? '' : be.dname}</td>
-              <td>${be.position }</td>
+              <th><input type="radio" name="radio-2" value="${be.name }"></th>
+              <th>${be.name }</th>
+              <th>${be.companyName }</th>
+              <th>${be.level == 1 ? be.dname : be.dpname}</th>
+              <th>${be.level == 1 ? '' : be.dname}</th>
+              <th>${be.position }</th>
 
               <input id = "dianhuas" type="hidden" value = "${be.mobile }">
             </tr>

@@ -93,7 +93,9 @@
                 <select id="dptitle" name="dpid" class="select" value="" style="width:300px">
                     <option value="1">日常</option>
                     <option value="2">定时</option>
-                    <option value="3">临时</option>
+                    <option value="3">季节</option>
+                    <option value="4">其他</option>
+                    <option value="5">综合</option>
                 </select>
               </span>
             </div>
@@ -197,7 +199,11 @@
                 success: function (result) {
                     if (result.status == 0) {
                         alert('保存成功');
-                        window.location.href = '${ly }/company/model-list-cx?flag=1&type=1&template=1';
+                        var arr=[2,3,4,5,6];
+                        var tem = arr[dptitle-1];
+                        window.parent.location.href = '${ly}/company/model-list-cx?flag=1&type='+dptitle+'&template='+tem;
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
                     } else {
                         alert('保存失败');
                     }

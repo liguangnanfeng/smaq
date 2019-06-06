@@ -23,11 +23,12 @@ body .dis-ib{margin-right:15px;}
 </head>
 <body>
   <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
     <span class="c-gray en">&gt;</span> <span>风险分级管控</span> 
     <span class="c-gray en">&gt;</span> <span>公告警示</span> 
-    <span class="c-gray en">&gt;</span> <span><c:if test="${flag == 1}">公司</c:if><c:if test="${flag == 2}">车间</c:if><c:if test="${flag == 3}">岗位</c:if>风险公告牌</span> 
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>
+    <span class="c-gray en">&gt;</span> <span><c:if test="${flag == 1}">公司</c:if><c:if test="${flag == 2}">车间</c:if><c:if test="${flag == 3}">岗位</c:if>风险公告牌</span>
+  <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
+    <%--<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>--%>
   </nav>
   <div class="page-container">
     <div class="text-l">

@@ -64,7 +64,7 @@
     <a class="btn default ${empty type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list">风险点分布表</a>
     <a class="btn default ${1 eq type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=1">职业病风险物理因素分布表</a>
     <a class="btn default ${2 eq  type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=2">职业病风险化学因素分布表</a>
-    <c:if test="${company.industry eq '化工企业（危化生产、使用）'}">
+    <c:if test="${company.industry eq '化工企业（危险化学品生产、经营、使用）、加油站'}">
       <c:choose>
         <c:when test="${fn:contains(company.name, '油') }">
         </c:when>

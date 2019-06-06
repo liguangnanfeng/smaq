@@ -137,7 +137,7 @@
 
         .jt {
             max-width:80%;
-            width:auto;
+			width:auto;
             height: auto;
             max-height: 80%;
         }
@@ -165,6 +165,7 @@
         <i class="Hui-iconfont">&#xe68f;</i>
     </a>
 
+    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
     <a class="btn btn-success radius r " style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;"
        href="javascript:showMAp();" title="查看地图">
         查看地图

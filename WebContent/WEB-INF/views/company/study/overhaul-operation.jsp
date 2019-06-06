@@ -58,7 +58,10 @@ body .check-box label{margin-left:5px;}
 	    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
 	    <span class="c-gray en">&gt;</span> <span>风险研判与承诺公告</span> 
 	    <span class="c-gray en">&gt;</span> <span>检维修作业流程</span> 
-  	<c:if test="${action != 'read'}"><a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a></c:if>
+  	<c:if test="${action != 'read'}">
+        <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;" href="javascript:history.back(-1)" title="返回">返回</a>
+        <%--<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>--%>
+    </c:if>
 	</nav>
 	<h3 class="text-c">《对检修作业现场进行安全检查的记录》</h3>
     <div class="mt-20">

@@ -136,11 +136,14 @@ td input {
 	<nav class="breadcrumb">
 		<i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> <span
 			class="c-gray en">&gt;</span> <span>重大危险源源长制</span> <span
-			class="c-gray en">&gt;</span> <span>粉尘涉爆企业</span> <a
-			class="btn btn-success radius r"
-			style="line-height: 1.6em; margin-top: 3px"
-			href="javascript:void(0);" title="返回"
-			onclick="parent.close_tab(function(){})">返回</a>
+			class="c-gray en">&gt;</span> <span>粉尘涉爆企业</span>
+	<%--<a--%>
+			<%--class="btn btn-success radius r"--%>
+			<%--style="line-height: 1.6em; margin-top: 3px"--%>
+			<%--href="javascript:void(0);" title="返回"--%>
+			<%--onclick="parent.close_tab(function(){})">返回</a>--%>
+
+	<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;" href="javascript:history.back(-1)" title="返回">返回</a>
 	</nav>
 
 

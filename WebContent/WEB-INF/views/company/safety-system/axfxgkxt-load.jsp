@@ -8,11 +8,11 @@
   <div class="div_omenu">
     <div  class="div_otop">风险评估<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
     <ul>
-      <c:if test="${empty company.industry || company.industry eq '化工企业（危化生产、使用）'}">
+      <c:if test="${empty company.industry || company.industry eq '化工企业（危险化学品生产、经营、使用）、加油站'}">
         <!-- 判断危化品企业显示 -->
         <li><a data-href="${ly }/company/safety-system/assess1" data-title="危化品" href="javascript:void(0)">危化品</a></li>
       </c:if>
-      <c:if test="${company.industry != '化工企业（危化生产、使用）'}">
+      <c:if test="${company.industry != '化工企业（危险化学品生产、经营、使用）、加油站'}">
         <!-- 判断工贸企业显示：作业条件风险程度评价、风险矩阵法 -->
         <li><a data-href="${ly }/company/safety-system/assess2" data-title="作业条件风险程度评价" href="javascript:void(0)">作业条件风险程度评价</a></li>
         <li><a data-href="${ly }/company/safety-system/assess3" data-title="风险矩阵法" href="javascript:void(0)">风险矩阵法</a></li>

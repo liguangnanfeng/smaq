@@ -48,8 +48,8 @@
     <!-- </div>
   </div> -->
 </body>
-<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.1&key=441462b46b736497a5f2a377aafb5b69&plugin=AMap.PlaceSearch"></script>
-<script type="text/javascript" src="http://cache.amap.com/lbs/static/PlaceSearchRender.js"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.1&key=441462b46b736497a5f2a377aafb5b69&plugin=AMap.PlaceSearch"></script>
+<script type="text/javascript" src="https://cache.amap.com/lbs/static/PlaceSearchRender.js"></script>
 <script type="text/javascript">
 var jw = '${user.longitude},${user.latitude}';
 var userId = ${user.id};

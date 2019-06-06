@@ -38,7 +38,7 @@ $(function() {
         <h4 class="mt-20">选择行业</h4>
         <div class="radio-box">
           <input type="radio" id="" name="type">
-          <label>化工企业（危化生产、使用）</label>
+          <label>化工企业（危险化学品生产、经营、使用）、加油站</label>
         </div>
         <div class="radio-box">
           <input type="radio" id="" name="type">

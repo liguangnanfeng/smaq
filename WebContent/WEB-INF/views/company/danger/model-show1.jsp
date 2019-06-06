@@ -59,6 +59,7 @@ function uploadpicture(obj){
       </thead>
       <tbody>
         <c:forEach items="${partL }" var="part" varStatus="pi">
+
         <c:set var="x" value="0"/>
         <c:forEach items="${itemL }" var="ch">
           <c:if test="${lanlin:constains(part.levels, ch.levelId, ',')}">
@@ -93,7 +94,7 @@ function uploadpicture(obj){
           </c:if>
           </c:forEach>
         </tr>
-        
+
         </c:forEach>
         
         <tr>

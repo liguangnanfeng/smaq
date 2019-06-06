@@ -194,6 +194,7 @@
                                         <c:if test="${x==0}"><td style="width:30%;" class="text-c"></c:if>
                                         <c:if test="${x==1}"><td style="width:30%;" class="text-c"></c:if>
                                         <p style="float:left;width:80%;">${ac.factors}</p>
+                                        <button class="btn btn-success radius" onClick="del('${ac.id}')">删除</button>
                                     </td>
                                         <td class="text-c">
                                             <c:if test="${empty type}">
@@ -345,7 +346,7 @@
         })
     }
 
-    /*function del(id) {
+    function del(id) {
         layer.confirm("确定删除该记录?", function(r) {
             $.post(getRootPath() + "/company/safety-system/aCompanyManual-save", {
                 id : id,
@@ -355,6 +356,6 @@
                 location.reload();
             })
         })
-    }*/
+    }
 </script>
 </html>

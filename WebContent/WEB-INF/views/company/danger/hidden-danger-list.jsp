@@ -125,12 +125,12 @@
                 <th width="5%">发生日期</th>
                 <th width="10%">隐患内容</th>
                 <th width="5%">隐患图片</th>
-<%--                <th width="5%">隐患等级</th>--%>
-<%--                <th width="5%">治理方案</th>--%>
-<%--                <th width="10%">治理结果及日期</th>--%>
-<%--                <th width="5%">治理责任人</th>--%>
-<%--                <th width="5%">治理投入</th>--%>
-<%--                <th width="5%">上报</th>--%>
+                <th width="5%">隐患等级</th>
+                <th width="5%">治理方案</th>
+                <th width="10%">治理结果及日期</th>
+                <th width="5%">治理责任人</th>
+                <th width="5%">治理投入</th>
+                <th width="5%">上报</th>
             </tr>
             </thead>
             <tbody>
@@ -155,18 +155,40 @@
                             <td>综合</td>
                         </c:when>
                     </c:choose>
+                    <c:set var="item" value="${fn:split(list.levels,'/') }"/>
                     <td>${list.depart }</td>
-                    <td>${list.levels }</td>
-                    <td>${list.real_time }</td>
+                    <td>${item[0]}</td>
+                    <td>${item[1]+item[2] }</td>
+                    <td>${list.realTimeStr}</td>
                     <td>${list.content }</td>
-                    <c:if test="${list.files!=null}">
+                    <td><c:if test="${list.files!=null}">
                         <button class="btn radius btn-danger size-S ml-20"
                                 onClick="showpicture(getRootPath()+'${list.files }')">
                             <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 隐患图片
                         </button>
                     </c:if>
-<%--                    <td>${list.status == 2 ? '不合格' : '合格'}</td>--%>
-<%--                    <td>${list.checker }</td>--%>
+                    </td>
+                    <td>${list.flag }</td>
+                    <td>
+                        <c:if test="${list.address!=null}">
+                            <button class="btn radius btn-danger size-S ml-20"
+                                    onClick="showpicture(getRootPath()+'${list.files }')">
+                                <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 预览文件
+                            </button>
+                            <button class="btn radius btn-danger size-S ml-20"
+                                    onClick="showpicture(getRootPath()+'${list.files }')">
+                                <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 下载文件
+                            </button>
+                        </c:if>
+                        <button class="btn radius btn-danger size-S ml-20"
+                                onClick="showpicture(getRootPath()+'${list.files }')">
+                            <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 上传文件
+                        </button>
+                    </td>
+                    <td>治理结果及日期</td>
+                    <td>${list.fjgkfzr}</td>
+                    <td>${list.money}</td>
+                    <td>上传</td>
                 </tr>
             </c:forEach>
             <!-- 循环结束 -->
@@ -175,7 +197,9 @@
     </div>
     <!-- 弹窗图片 -->
 
-    <div id="modal-plan" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div id="modal-plan" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content radius">
                 <div class="modal-header">

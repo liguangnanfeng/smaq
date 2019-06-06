@@ -97,7 +97,7 @@
             type: "POST",
             url: getRootPath() + '/company/judgeIndustry',
             success: function (result) {
-                if (result.status==0) {
+                if (result.status == 0) {
                     // 表示是化工行业
                     console.log("咋回事");
                     console.log(result.mess);
@@ -136,10 +136,9 @@
                 $(this).parent().find(".div_omenu2").removeClass("div_omenu2xz");
             }
         });
-   
 
 
-        });
+    });
 </script>
 <body>
 <!-- 左侧导航 -->
@@ -283,18 +282,20 @@
                     <li><a data-href="${ly }/village/rectification-list?flag=1" data-title="隐患治理复查" href="javascript:void(0)">隐患治理复查</a></li> --%>
                     <%-- TODO 通过data-href  可以在域中通过getAttrbute 来进行获取内容--%>
                     <%--<li><a data-href="${ly }/company/threeLeft?leftBasic=4" data-title="检查设置实施" href="javascript:void(0)">检查设置实施</a>--%>
-<%--                    <li><a data-href="${ly }/company/model-list-bm?flag=1&type=10&template=10" data-title="检查设置实施"--%>
-<%--                           href="javascript:void(0)">检查设置实施</a>--%>
-<%--                    </li>--%>
+                    <%--                    <li><a data-href="${ly }/company/model-list-bm?flag=1&type=10&template=10" data-title="检查设置实施"--%>
+                    <%--                           href="javascript:void(0)">检查设置实施</a>--%>
+                    <%--                    </li>--%>
                     <li><a data-href="${ly }/company/model-list-main" data-title="检查设置实施"
                            href="javascript:void(0)">检查设置实施</a>
                     </li>
-        <li><a data-href="${ly }/village/check-list-two?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a>
+                    <li><a data-href="${ly }/village/check-list-two?flag=1&status=2" data-title="隐患排查记录"
+                           href="javascript:void(0)">隐患排查记录</a>
                     </li>
-                        <%--就是复查表的记录,--%>
-<%--                    <li><a data-href="${ly }/village/recheck-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a>--%>
-<%--                    </li>--%>
-                    <li><a data-href="${ly }/village/hidden-danger-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a>
+                    <%--就是复查表的记录,--%>
+                    <%--                    <li><a data-href="${ly }/village/recheck-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a>--%>
+                    <%--                    </li>--%>
+                    <li><a data-href="${ly }/village/hidden-danger-list?flag=1&status=1" data-title="隐患治理记录"
+                           href="javascript:void(0)">隐患治理记录</a>
                     </li>
                     <li><a data-href="${ly }/village/danger-index-list?flag=1" data-title="隐患统计汇总"
                            href="javascript:void(0)">隐患统计汇总</a></li>
@@ -310,6 +311,8 @@
                 </ul>
             </dd>
         </dl>
+
+        <div id="industryId" >
             <dl class="list_an">
                 <dt>
                     <i class="Hui-iconfont">&#xe687;</i>研判承诺公告
@@ -335,12 +338,11 @@
                                href="javascript:void(0)">承诺公告公示</a></li>
                     </ul>
                     <ul>
-        <li><a data-href="${ly }/company/study/files-select" data-title="档案管理" href="javascript:void(0)">档案管理</a>
+                        <li><a data-href="${ly }/company/study/files-select" data-title="档案管理" href="javascript:void(0)">档案管理</a>
                         </li>
                     </ul>
                 </dd>
             </dl>
-
             <dl class="list_an">
                 <dt>
                     <i class="Hui-iconfont">&#xe687;</i>重大危险源长制
@@ -412,11 +414,12 @@
                     <%--                </ul>--%>
                     <%--                </div>--%>
                     <ul>
-        <li><a data-href="${ly }/company/source/files-select" data-title="档案管理" href="javascript:void(0)">档案管理</a>
+                        <li><a data-href="${ly }/company/source/files-select" data-title="档案管理" href="javascript:void(0)">档案管理</a>
                         </li>
                     </ul>
                 </dd>
             </dl>
+        </div>
 
         <dl class="list_an">
             <dt>
@@ -653,7 +656,8 @@
                 <ul>
                     <li><a data-href="${ly }/company/labor/labor-list" data-title="劳动防护用品配备" href="javascript:void(0)">劳动防护用品配备</a>
                     </li>
-        <li><a data-href="${ly }/company/threeLeft?leftBasic=10" data-title="管理档案" href="javascript:void(0)">管理档案</a>
+                    <li><a data-href="${ly }/company/threeLeft?leftBasic=10" data-title="管理档案"
+                           href="javascript:void(0)">管理档案</a>
                     </li>
                     <%-- <li><a data-href="${ly }/company/tables/tab-list?isType=29" data-title="职业卫生管理制度" href="javascript:void(0)" style="color:#fff;">管理制度</a></li> --%>
                 </ul>

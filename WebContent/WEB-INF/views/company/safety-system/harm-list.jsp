@@ -47,7 +47,8 @@ function pr_() {
   <nav class="breadcrumb text-c">	
  	<a class="btn-page"  data-href="/company/safety-system/risk-information-list2"  data-title="职业危害（化学因素）告知牌" onclick="Hui_admin_tab(this)" href="javascript:;">职业危害（化学因素）告知牌</a>
     <a class="btn-page pagexz" href="javascript:;">职业危害（物理因素）告知牌</a>
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>
+    <%--<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>--%>
+  <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;" href="javascript:history.back(-1)" title="返回">返回</a>
   </nav>
   <div class="page-container">
     <div class="text-l">

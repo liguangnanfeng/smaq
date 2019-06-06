@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/taglibs.jsp"%>
 <!DOCTYPE HTML>
 <html>
-<head
+<head>
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -41,6 +41,7 @@ function pr_() {
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>
     </a>
+    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
   </nav>
   <div class="page-container">
     <div class="text-c">
@@ -75,7 +76,7 @@ function pr_() {
             <th width="15%">型号规格</th>
             <th width="15%">工艺参数</th>
             <th width="15%">数量</th>
-            <th width="20%">备注</th>
+            <th width="20%">所在位置</th>
             <th width="10%">操作</th>
           </tr>
         </thead>
@@ -181,7 +182,6 @@ function majorequipmentImportBoxShow() {
 
 function majorequipmentImportSave() {
   var index = layer.load();
-  console.log("到这了吗");
   $.ajaxFileUpload({
       url: getRootPath() + '/company/importMajorequipmentExcel',
       secureuri: false, //一般设置为false

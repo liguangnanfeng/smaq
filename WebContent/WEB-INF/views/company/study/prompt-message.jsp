@@ -45,7 +45,8 @@ function addgj() {
 		<nav class="breadcrumb">
 	    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
 	    <span class="c-gray en">&gt;</span> <span>风险研判与承诺公告</span> 
-	    <span class="c-gray en">&gt;</span> <span>目标履职考核提示</span> 
+	    <span class="c-gray en">&gt;</span> <span>目标履职考核提示</span>
+    <%--<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;" href="javascript:history.back(-1)" title="返回">返回</a>--%>
 	    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>
 	  </nav>
 

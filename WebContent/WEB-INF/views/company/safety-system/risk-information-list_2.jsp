@@ -49,7 +49,8 @@ function pr_() {
     <span class="c-gray en">&gt;</span> <span>风险分级管控</span> 
     <span class="c-gray en">&gt;</span> <span>公告警示</span> 
     <span class="c-gray en">&gt;</span> <span>车间风险公告牌</span> 
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>
+    <%--<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>--%>
+  <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;" href="javascript:history.back(-1)" title="返回">返回</a>
   </nav>
   <div class="page-container">
     <div class="text-l">

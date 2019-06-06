@@ -34,26 +34,26 @@ body .dis-ib{margin-right:15px;}
   <div class="page-container">
    <c:if test="${flag != 2}">
    <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
-        <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list-two?flag=1&status=2">企业自查</a>
-        <a class="btn default ${flag == 4 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list-two?flag=4&status=2">行政检查</a>
-        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list-two?flag=3&status=2">部门抽查</a>
+        <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=1&status=2">企业自查</a>
+        <a class="btn default ${flag == 4 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=4&status=2">行政检查</a>
+        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=3&status=2">部门抽查</a>
         <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
     </div>
     </c:if>
     <div class="text-c">
-      <form action="${ly }/village/check-list-two?flag=${flag}" method="post">
+      <form action="${ly }/village/check-list?flag=${flag}" method="post">
         <div class="dis-ib">
           <span>检查表名称：</span>
-          <input type="text" value="${title}" name="title" class="input-text mb-5 mt-5" style="width:150px;">
+          <input type="text" value="${title }" name="${title }" class="input-text mb-5 mt-5" style="width:150px;">
         </div>
-<%--        <div class="dis-ib">--%>
-<%--          <span>检查状态：</span>--%>
-<%--          <select class="input-text mb-5 mt-5" name="status" style="width:150px;">--%>
-<%--            <option value="">请选择</option>--%>
-<%--            <option value="1" <c:if test="${status == 1}"> selected</c:if>>未检查</option>--%>
-<%--            <option value="2" <c:if test="${status == 2}"> selected</c:if>>已检查</option>--%>
-<%--          </select>--%>
-<%--          </div>--%>
+        <div class="dis-ib">
+          <span>检查状态：</span>
+          <select class="input-text mb-5 mt-5" name="status" style="width:150px;">
+            <option value="">请选择</option>
+            <option value="1" <c:if test="${status == 1}"> selected</c:if>>未检查</option>
+            <option value="2" <c:if test="${status == 2}"> selected</c:if>>已检查</option>
+          </select>
+          </div>
         <button class="btn btn-success" type="submit">
           <i class="Hui-iconfont">&#xe665;</i> 查询
         </button>
@@ -101,23 +101,22 @@ body .dis-ib{margin-right:15px;}
             <td>${be.c }</td>
             <td>${flag == 1 ? be.depart : be.checkCompany}</td>
             <td>
-                <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">检查详情</a><br>
-             <%-- <c:if test="${flag != 4}">
+              <c:if test="${flag != 4}">
               <c:if test="${be.status == 1}">
-                &lt;%&ndash; <c:if test="${be.flag == 1 || be.flag == 3}">
+                <%-- <c:if test="${be.flag == 1 || be.flag == 3}">
                 <c:if test="${empty be.expectTime or be.expectTime.time >= t}">
                 <a style="text-decoration:none" onClick="show_tab('修改检查表_${be.id }', '${ly}/company/plan-edit?id=${be.id }')" href="javascript:;">修改检查表</a><br>
                 </c:if>
                 </c:if>
                 <c:if test="${be.flag == 2 }">
                 <a style="text-decoration:none" onClick="show_tab('修改检查表_${be.id }', '${ly}/company/check-edit?id=${be.id }')" href="javascript:;">修改检查表</a><br>
-                </c:if> &ndash;%&gt;
+                </c:if> --%>
               </c:if>
               
               <!-- 判断能否录入 -->
               <c:choose>
                 <c:when test="${be.status == 1 && (empty be.expectTime or be.expectTime.time >= t) && be.flag != 2}">
-                &lt;%&ndash; <c:when test="${be.status == 1 && (be.flag == 1 || be.flag == 3) && (empty be.expectTime or be.expectTime.time >= t) }"> &ndash;%&gt;
+                <%-- <c:when test="${be.status == 1 && (be.flag == 1 || be.flag == 3) && (empty be.expectTime or be.expectTime.time >= t) }"> --%>
                      <a style="text-decoration:none" onClick="show_dialog('实施检查_${be.id }', '${ly}/village/plan-next?flag=${flag }&id=${be.id }')" href="javascript:;">实施检查</a><br>
                 </c:when>
                 <c:otherwise>
@@ -125,21 +124,21 @@ body .dis-ib{margin-right:15px;}
                 <a style="text-decoration:none" onClick="show_dialog('现场检查记录_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=8')" href="javascript:;">现场检查记录</a><br>
                 </c:if>
                 <c:if test="${be.status != 2 || be.flag == 1}">
-
+                     <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">检查详情</a><br>
                      </c:if>
-                     &lt;%&ndash; <c:if test="${flag == 1 }">
+                     <%-- <c:if test="${flag == 1 }">
                      <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">检查详情</a><br>
                      </c:if>
                      <c:if test="${flag != 1 }">
                      <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '/village/check-document?checkId=${be.id}&flag=8')" href="javascript:;">检查详情</a><br>
-                     </c:if> &ndash;%&gt;
+                     </c:if> --%>
                 </c:otherwise>
               </c:choose>
               
               <!-- 判断是否有治理意见表 -->
-              <c:if test="${be.c > 0 && be.status == 2 }">&lt;%&ndash; 已检查过且有隐患的需要治理意见表&ndash;%&gt;
+              <c:if test="${be.c > 0 && be.status == 2 }"><%-- 已检查过且有隐患的需要治理意见表--%>
                   <c:choose>
-                    <c:when test="${be.t > 0}">&lt;%&ndash; 已设置整改意见 &ndash;%&gt;
+                    <c:when test="${be.t > 0}"><%-- 已设置整改意见 --%>
                     <c:if test="${be.status == 2 && be.flag != 1}">
                     <c:if test="${flag == 4 || flag == 2}">
                        <a style="text-decoration:none" onClick="show_dialog('责令限期整改意见书_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=1')" href="javascript:;">整改意见书</a><br>
@@ -151,16 +150,16 @@ body .dis-ib{margin-right:15px;}
                 <c:if test="${be.status != 2 || be.flag == 1}">
                        <a style="text-decoration:none" onClick="show_dialog('整改意见_${be.id }', '${ly}/village/check-rectification?flag=${flag }&id=${be.id }')" href="javascript:;">整改详情</a><br>
                        </c:if>
-                       &lt;%&ndash; <c:if test="${flag == 1 }">
+                       <%-- <c:if test="${flag == 1 }">
                        <a style="text-decoration:none" onClick="show_dialog('整改意见_${be.id }', '${ly}/village/check-rectification?flag=${flag }&id=${be.id }')" href="javascript:;">整改意见</a><br>
                        </c:if>
                        <c:if test="${flag != 1 }">
                        <a style="text-decoration:none" onClick="show_dialog('整改意见_${be.id }', '/village/check-document?checkId=${be.id}&flag=${flag == 3 ? 8 : 1}')" href="javascript:;">整改意见</a><br>
-                       </c:if> &ndash;%&gt;
+                       </c:if> --%>
                     </c:when>
-                    &lt;%&ndash; <c:otherwise>未设置整改意见
+                    <%-- <c:otherwise>未设置整改意见
                       <a style="text-decoration:none" onClick="show_dialog('整改意见_${be.id }', '${ly}/village/check-rectification?flag=${flag }&id=${be.id }')" href="javascript:;">整改详情</a><br>
-                    </c:otherwise> &ndash;%&gt;
+                    </c:otherwise> --%>
                   </c:choose>
               
               
@@ -173,10 +172,10 @@ body .dis-ib{margin-right:15px;}
                     <a style="text-decoration:none" onClick="show_dialog('复查详情_${be.id}', '${ly }/company/recheck-detail?checkId=${be.id }')" href="javascript:;">复查详情</a><br>
                  </c:if>
                   </c:if>
-                  &lt;%&ndash; <c:if test="${be.c3 == 0}">
+                  <%-- <c:if test="${be.c3 == 0}">
                     <a style="text-decoration:none" onClick="layer.alert('还没有复查记录哦。。。')" href="javascript:;">复查详情</a><br>
-                  </c:if> &ndash;%&gt;
-              &lt;%&ndash; <c:choose>
+                  </c:if> --%>
+              <%-- <c:choose>
                 <c:when test="${be.flag == 1 || be.flag == 3}">自查与委托可编辑可查看
                   <a style="text-decoration:none" onClick="show_dialog('整改意见_${be.id }', '${ly}/village/check-rectification?flag=${flag }&id=${be.id }')" href="javascript:;">整改意见</a><br>
                 </c:when>
@@ -186,16 +185,16 @@ body .dis-ib{margin-right:15px;}
                 <c:otherwise>未设置治理意见
                    <a style="text-decoration:none" onClick="layer.alert('还未设置整改意见')" href="javascript:;">整改意见</a><br>
                 </c:otherwise>
-              </c:choose> &ndash;%&gt;
-                &lt;%&ndash; <a style="text-decoration:none" onClick="show_tab('隐患汇总表_${be.id }', '${ly}/company/check-danger?id=${be.id }')" href="javascript:;">隐患汇总表</a><br> &ndash;%&gt;
+              </c:choose> --%>
+                <%-- <a style="text-decoration:none" onClick="show_tab('隐患汇总表_${be.id }', '${ly}/company/check-danger?id=${be.id }')" href="javascript:;">隐患汇总表</a><br> --%>
               </c:if>
               
-             &lt;%&ndash; <c:if test="${be.status == 2 && be.flag != 1}">
+             <%-- <c:if test="${be.status == 2 && be.flag != 1}">
                   <a style="text-decoration:none" onClick="show_dialog('检查文书-现场检查记录_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=8')" href="javascript:;">查看检查文书</a><br>
                   <a style="text-decoration:none" onClick="show_dialog('现场检查记录_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=8')" href="javascript:;">现场检查记录</a><br>
                   <a style="text-decoration:none" onClick="show_dialog('责令限期整改意见书_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=1')" href="javascript:;">整改意见书</a><br>
                   <a style="text-decoration:none" onClick="show_dialog('整改复查意见书_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=2')" href="javascript:;">整改复查意见书</a><br>
-              </c:if> &ndash;%&gt;
+              </c:if> --%>
                </c:if>
                <c:if test="${flag == 4}">
                <a style="text-decoration:none" onClick="show_dialog('现场检查记录_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=8')" href="javascript:;">现场检查记录</a><br>
@@ -205,12 +204,12 @@ body .dis-ib{margin-right:15px;}
                
                </c:if>
                </c:if>
-              &lt;%&ndash; <c:if test="${be.flag == 1 || be.flag == 3}">
+              <%-- <c:if test="${be.flag == 1 || be.flag == 3}">
                 <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除检查记录</a>
-              </c:if> &ndash;%&gt;
+              </c:if> --%>
               <c:if test="${flag != 1 && be.c > 0 }">
               <a style="text-decoration:none" onClick="show_dialog('隐患描述与图片_${be.id }', '${ly}/company/danger-detail?flag=${flag }&id=${be.id }')" href="javascript:;">隐患与图片</a><br>
-              </c:if>--%>
+              </c:if>
               <%-- <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除检查记录</a> --%>
               
             </td>

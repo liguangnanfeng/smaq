@@ -29,7 +29,7 @@
             list-style-type: none;
 
             text-align: center;
-            padding: 10px 40px;
+            padding: 10px 140px;
         }
 
         ul li a{
@@ -44,6 +44,17 @@
         ul li a img{
             display:block;
         }
+
+		 ul>li>a>img{
+           width:150px;
+		   height:150px
+        }
+
+		 ul>li>a{
+         font-size:20px;
+		 font-weight:bold;
+        }
+
         a:hover,a.active{
             color:rgb(35,126,255)
         }

@@ -1652,7 +1652,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value="zhuChartData3")
     public @ResponseBody
-    Result zhuChartData3(String sT, String eT, HttpServletRequest request) throws ParseException {
+    Result zhuChartData3(String sT, String eT, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
@@ -1668,9 +1668,29 @@ public class CompanyController_cd extends BaseController {
             Date d = DateConvertUtil.formateDate(eT, TIME_STR);
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
+        List<String> monthL = monthC(sT, eT);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("startTime1", sT);
+        m.put("endTime1", eT);
+        setUserId(user, m);//根据登陆的用户的不同插入不同的参数
+        List<DynamicParameter<String, Object>> ll = tCheckItemMapper.selectGroupFlag(m);
 
         return  null;
     }
+
+    // 进行解析
+    List<String> monthC(String sT, String eT) throws Exception {
+        List<String> l = new LinkedList<String>();
+        Date s = DateConvertUtil.formateDate(sT, TIME_STR);
+        Date e = DateConvertUtil.formateDate(eT, TIME_STR);
+        // 起始时间 比当前时间
+        while (!s.after(e)) {
+            l.add(DateFormatUtils.format(s, TIME_STR));
+            s = DateConvertUtil.addDays(s,1);
+        }
+        return l;
+    }
+
 
     // 进行解析
     List<String> monthB(String sT, String eT) throws Exception {

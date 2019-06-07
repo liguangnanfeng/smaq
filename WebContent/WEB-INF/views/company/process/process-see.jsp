@@ -28,8 +28,12 @@
   </a>
 </nav>
 <p>${list}</p>
-  <iframe src="${list}" width='100%' height='100%' frameborder='1'>
+<%--  <iframe src="${list}" width='100%' height='100%' frameborder='1'>--%>
 
-  </iframe>
+<%--  </iframe>--%>
+
+<iframe src='http://www.xdocin.com/xdoc?_func=to&_format=html&_cache=1&_xdoc=${list}' width='100%' height='100%' frameborder='1'>
+</iframe>
+
 </body>
 </html>

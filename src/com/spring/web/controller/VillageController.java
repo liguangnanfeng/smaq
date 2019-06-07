@@ -1956,8 +1956,9 @@ public class VillageController extends BaseController {
     public String processSee(Model model ,String url,HttpServletRequest request) throws UnknownHostException {
         InetAddress address = InetAddress.getLocalHost();
         String url2 = InetAddress.getLocalHost().getHostAddress() + ":" + request.getLocalPort() + url;
-
-        model.addAttribute("list",url2);
+        String url3 = "http://localhost:8080"+ url;
+        //model.addAttribute("list","http://localhost:8080"+list.get(i).getDocUrl());
+        model.addAttribute("list",url3);
 
         return "company/process/process-see";
     }

@@ -1524,6 +1524,7 @@ public class CompanyController_cd extends BaseController {
         for (int l = 0; l < d.length; l++) {
             d[l] = 0;
         }
+
         String[] xx = new String[]{"隐患条数", "整改项数"};
         List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
         Map<String, Object> m1 = new HashMap<String, Object>();

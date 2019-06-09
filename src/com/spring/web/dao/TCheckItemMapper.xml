@@ -292,7 +292,7 @@
 
     </select>
 
-    <select id="selectAllLevelId" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
+    <select id="selectAllLevelId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select *
         from
         t_check_item_tbl
@@ -933,5 +933,16 @@
           and T1.status > 1
           and T2.del= 0;
     </select>
+    <select id="selectFailedByMap" resultType="java.util.Map">
+        select DATE_FORMAT(create_time, '%Y-%m-%e') time, count(t1.id) c ,t1.status ,t2.flag
+        from smaq.t_check_item_tbl t1 inner join smaq.t_check_tbl t2 on t1.check_id=t2.id
+        where t2.status>1
+        and t2.del=0
+        and t2.user_id=#{uid}
+        and t1.status=#{status}
+        and  <![CDATA[DATE_FORMAT(real_time, '%Y-%m') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m') <= #{endTime1}]]>
+        group by time,flag;
+    </select>
+
 
 </mapper>

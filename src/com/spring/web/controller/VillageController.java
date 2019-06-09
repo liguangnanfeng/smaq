@@ -1470,7 +1470,7 @@ public class VillageController extends BaseController {
 
         // TODO 这里只保存一条数据,并返回到前端
         TRectification rectification = tRectificationMapper.selectByCheckId(id);
-        log.error(rectification.toString());
+
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
         model.addAttribute("check", check);
         //model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(id, null));

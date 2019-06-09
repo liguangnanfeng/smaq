@@ -35,8 +35,8 @@
 </style>
 <body ng-app="app" ng-controller="appCtrl">
 	<nav class="breadcrumb">
-		<i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-		<span class="c-gray en">&gt;</span> <span>企业信息库</span> 
+		<i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+		<span class="c-gray en">&gt;</span> <span>企业信息库</span>
 		<span class="c-gray en">&gt;</span> <span>企业分布图</span>
 		<div class="back" ng-click="back()" ng-hide="backBtn" style="display: inline-block;z-index: 99;position: absolute;right: 100px;cursor: pointer;">
         	<img src="${ly}/images/back.png" alt="" style="width: 20px;height: 20px;line-height: 20px;"> 返回列表页面
@@ -45,7 +45,7 @@
 			<i class="Hui-iconfont">&#xe68f;</i>
 		</a>
 	</nav>
-	
+
     <div class="main_map clearfix">
         <div class="left_map">
             <div class="search" ng-hide="search">
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="mb-10">
 	          <span>所属行业：</span>
 	          <select class="sel_area" id="industry2_" name="industry2_">
@@ -87,7 +87,7 @@
 	          })
 	          </script>
 	        </div>
-		        
+
             <div class="selects">
                 <select ng-model="level" class="input-text">
                     <option value="">--请选择等级--</option>
@@ -132,12 +132,12 @@
 var user = JSON.parse('${user}');
 var app = angular.module('app', ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
 app.controller('appCtrl', function($scope, $filter, $compile, $http) {
-  
+
   $scope.itemsPerPage = 20;
   $scope.maxSize = 5;
   $scope.totalItems = ${count};
   $scope.currentPage = 1;
-  
+
   $scope.setPage = function (pageNo) {
     $scope.currentPage = pageNo;
   };
@@ -166,7 +166,7 @@ app.controller('appCtrl', function($scope, $filter, $compile, $http) {
 	          layer.alert("请求失败！");
 	  });
   };
-  
+
 
   $scope.searchBtn = function() {
     var industry = angular.element("#industry2_").val();
@@ -197,13 +197,13 @@ app.controller('appCtrl', function($scope, $filter, $compile, $http) {
           layer.alert("请求失败！");
   });
   }
-  
+
   //企业列表初始化事件
   $scope.initCompanyList = function() {
-    
+
     //关闭信息窗体
     map.clearInfoWindow();
-    
+
     for (var i = 0; i < $scope.companyList.length; i++) {
       var dicolor = $scope.companyList[i].level;
   	if(dicolor == "红色"){
@@ -218,15 +218,15 @@ app.controller('appCtrl', function($scope, $filter, $compile, $http) {
         $scope.companyList[i].dicolorCss = "dicolor4";
       }
     }
-    
+
     //清除所有mark
     var mapList = $scope.markerList;
     for (var i = 0; i < mapList.length; i++) {
       	map.remove(mapList[i]);
     }
-    
+
     //return;
-    
+
     $scope.markerList = new Array();
     mapList = $scope.companyList;
     for (var i = 0; i < mapList.length; i++) {
@@ -240,7 +240,7 @@ app.controller('appCtrl', function($scope, $filter, $compile, $http) {
         //marker.on('click', markerClick);
         $scope.markerList.push(marker);
     }
-    
+
    	var time = setInterval(function() {
       if (document.querySelector(".mark") != null) {
           $(".mark").each(function(index, element) {
@@ -254,7 +254,7 @@ app.controller('appCtrl', function($scope, $filter, $compile, $http) {
       }
   }, 100);
   };
-  
+
   $scope.detail = true;
   $scope.backBtn = true;
   $scope.search = false;
@@ -311,10 +311,10 @@ $scope.saveLocation = function(userId, cname){
       console.log(cname);
       //layer.closeAll();
       if (status === 'complete' && result.info === 'OK') {
-        
+
         var tips = result.poiList.pois[0];
         var lnglatXY = tips.location.lng + "," + tips.location.lat;
-        
+
         $.post(getRootPath() + "/company/company-edit-do",{
           userId : userId,
           address : tips.address + "(" + tips.name + ")",
@@ -412,7 +412,7 @@ $scope.saveLocation = function(userId, cname){
   var mapList = $scope.companyList;
   for (var i = 0; i < mapList.length; i++) {
       var data = JSON.stringify(mapList[i]);
-      
+
       var marker = new AMap.Marker({
           content: "<div class='mark "+ mapList[i].dicolorCss +"' data='" + data + "'>" + mapList[i].id + "</div>",
           position: [mapList[i].longitude, mapList[i].latitude],

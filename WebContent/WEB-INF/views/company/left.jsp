@@ -299,7 +299,7 @@
                     <li><a data-href="${ly }/village/check-list-two?flag=1&status=2" data-title="隐患排查记录"
                            href="javascript:void(0)">隐患排查记录</a>
                     </li>
-                    <li><a data-href="${ly }/village/danger-chart" data-title="隐患数据分析"
+                    <li><a data-href="${ly }/company/danger/danger-chart-px" data-title="排查数据分析"
                            href="javascript:void(0)">排查数据分析</a></li>
                     <li><a data-href="${ly }/village/danger-chart" data-title="隐患数据分析"
                            href="javascript:void(0)">隐患数据分析</a></li>
@@ -313,7 +313,7 @@
 <%--                    <li><a data-href="${ly }/village/danger-index-list?flag=1" data-title="隐患统计汇总"--%>
 <%--                           href="javascript:void(0)">隐患统计汇总</a></li>--%>
                     <li><a data-href="${ly }/village/danger-chart" data-title="隐患数据分析"
-                           href="javascript:void(0)">隐患数据分析</a></li>
+                           href="javascript:void(0)">治理数据分析</a></li>
                     <%-- <li><a data-href="${ly }/html/about.html" data-title="新手指南" href="javascript:void(0)">新手指南</a></li> --%>
                     <%-- <li><a data-href="${ly }/company/tables/tab-list?isType=21" data-title="安全隐患整改通知单" href="javascript:void(0)">安全隐患整改通知单</a></li> --%>
                     <%-- <li><a data-href="${ly }/village/trouble-set" data-title="排查内容设置" href="javascript:void(0)">排查内容设置</a></li> --%>

@@ -177,7 +177,7 @@ function del(id){
 }
 
 function majorequipmentImportBoxShow() {
-  $("#majorequipmentImportBox").modal("show");
+    $("#majorequipmentImportBox").modal("show");
 }
 
 function majorequipmentImportSave() {

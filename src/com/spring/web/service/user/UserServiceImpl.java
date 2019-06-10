@@ -59,10 +59,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private SequipmentMapper sequipmentMapper;
     @Autowired
+    private ZzjgPersonnelMapper zzjgPersonnelMapper;
+    @Autowired
     private MequipmentMapper mequipmentMapper;
     @Autowired
     private TradeMapper tradeMapper;
-    
+
     @Autowired
     private CgfService cgfService;
     /** (非 Javadoc) 
@@ -914,5 +916,70 @@ public class UserServiceImpl implements UserService {
             result.setMap("message", "系统异常");
         }
     }
-    
+
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    public void importPersonExcel(Result result, Integer userId, MultipartFile file) throws Exception {
+        if (null != file) {
+            String fileName = file.getOriginalFilename();
+            // 检查扩展名
+            String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+            if (!"xlsx".equalsIgnoreCase(fileExt)) {
+                result.setStatus("1");
+                result.setMap("message", "上传文件扩展名是不允许的扩展名。只允许xlsx格式。");
+                return;
+            }
+        } else {
+            result.setStatus("1");
+            result.setMap("message", "请选择excel文件。");
+            return;
+        }
+
+        Workbook wb = null;
+        Set<String> set = new LinkedHashSet<String>();
+        try {
+            wb = new XSSFWorkbook(file.getInputStream());
+            Sheet sheet = wb.getSheetAt(0);
+            String title = tos(sheet, 0, 0);
+            if (!"人员名称".equals(title)) {
+                result.setStatus("1");
+                result.setMap("message", "此表不是人员表，请重新选择");
+                return;
+            }
+
+            int totalRows = sheet.getPhysicalNumberOfRows();
+            for (int i = 1; i < totalRows; i++) {
+                Row row = sheet.getRow(i);
+                String name = tos(row, 0);//人员姓名
+                String mobile = tos(row, 1);//人员电话
+                String cid = tos(row, 2);//所属公司编号
+                String dpid = tos(row, 3);//所属部门编号
+                String did = tos(row, 4);//所在班组
+                String uid = tos(row, 5);//所属公司ID
+                String position = tos(row, 6);//所属权限
+                String status = tos(row, 7);//所属状态
+
+                ZzjgPersonnel item = new ZzjgPersonnel();
+                item.setCtime(new Date());
+                item.setUtime(new Date());
+                item.setDel(0);
+                item.setName(name);
+                item.setMobile(mobile);
+                item.setCid(Integer.parseInt(cid));
+                item.setDpid(Integer.parseInt(dpid));
+                item.setDid(Integer.parseInt(did));
+                item.setUid(Integer.parseInt(uid));
+                item.setPosition(position);
+                item.setStatus(status);
+
+                zzjgPersonnelMapper.save(item);
+            }
+
+            result.setMap("message", StringUtils.join(set, "<br>"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMap("message", "系统异常");
+        }
+    }
+
 }

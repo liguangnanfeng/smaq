@@ -63,6 +63,8 @@ $(function() {
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <span class="l">
         <button class="btn btn-primary radius" onclick="showadd('')"><i class="Hui-iconfont">&#xe600;</i> 添加人员</button>
+        <button class="btn btn-success radius ml-10" type="button" onclick="importPerson()">批量导入人员</button>
+        <a class="btn btn-success radius ml-10" href="${ly}/company/download?filename=人员表.xlsx&fileurl=${ly}/upload/person.xlsx">人员模板下载</a>
       </span>
       <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
     </div>
@@ -114,7 +116,70 @@ $(function() {
     </div>
   </div>
 </body>
+
+<div id="importPersonBox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content radius">
+
+      <div class="modal-header">
+        <h3 class="modal-title">导入人员</h3>
+        <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+      </div>
+
+
+      <div class="modal-body" id="importBox">
+        <div class="one_txt cl">
+          <div class="text-left" style="float: left;width: 70px;">导入文件：</div>
+          <div class="text-right formControls">
+                           <span class="btn-upload form-group">
+                               <input type="file" id="file" name="file">
+                           </span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="importPersonImportSave()">保存</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript">
+
+    function importPerson() {
+        $("#importPersonBox").modal("show");
+    }
+
+    function importPersonImportSave() {
+        var index = layer.load();
+        $.ajaxFileUpload({
+            url: getRootPath() + '/company/importPersonExcel',
+            secureuri: false, //一般设置为false
+            fileElementId: 'file',
+            dataType: 'json',
+            async: false,
+            success: function (data, status) {
+                layer.close(index);
+                var status = data.status;
+                if (status != '1') {
+                    layer.alert("导入成功", {}, function (ind) {
+                        layer.close(ind);
+                        window.location.reload();
+                    });
+                }else {
+                    layer.alert(data.map.message ,{}, function (ind) {
+                        layer.close(ind);
+                        window.location.reload();
+                    });
+                }
+            },
+            error: function (data, status, e) {
+                layer.close(index);
+                alert("导入失败！请检查数据");
+            }
+        })
+    }
+
 var dep1= ${dep1};
 var dep2= ${dep2};
 var userType = '${session_user.userType}';

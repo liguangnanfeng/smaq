@@ -49,4 +49,9 @@ public interface UserService extends Serializable {
      * (非 Javadoc) 批量导入主要设备
      */
     public void importMajorequipmentExcel(Result result, Integer userId, MultipartFile file) throws Exception;
+
+    /*
+    * 批量导入人员！！！
+    * */
+    public void importPersonExcel(Result result, Integer userId, MultipartFile file) throws Exception;
 }

@@ -1377,7 +1377,7 @@ public class CompanyController_cd extends BaseController {
             Date d = DateConvertUtil.formateDate(eT, TIME_STR);
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
-        List<String> monthL = monthB(sT, eT);
+        List<String> monthL = monthC(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);

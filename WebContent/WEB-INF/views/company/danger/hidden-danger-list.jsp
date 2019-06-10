@@ -202,14 +202,14 @@
                     </td>
                     <td>
                         <c:if test="${list.file_address==null}">
-                            <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="yulan(this)"
-                               href="javascript:;">预览文件</a>
+<%--                            <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="yulan(this)"--%>
+<%--                               href="javascript:;">预览文件</a>--%>
                             <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="xiazai(this) "
                                href="javascript:;">下载文件</a>
                         </c:if>
                         <c:if test="${list.file_address!=null}">
-                            <a style="text-decoration:none;margin-bottom:5px;display: inline-block"
-                               data-src="${list.file_address}" onclick="yulan(this)" href="javascript:;">预览文件</a>
+<%--                            <a style="text-decoration:none;margin-bottom:5px;display: inline-block"--%>
+<%--                               data-src="${list.file_address}" onclick="yulan(this)" href="javascript:;">预览文件</a>--%>
                             <a style="text-decoration:none;margin-bottom:5px;display: inline-block"
                                data-src="${list.file_address}" onclick="xiazai(this)" href="javascript:;">下载文件</a>
                         </c:if>

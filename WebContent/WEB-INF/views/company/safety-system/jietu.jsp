@@ -1027,6 +1027,7 @@
                 
                                 setTimeout(function () {
                                     window.history.back();
+                                    window.location.href=getRootPath()+'/api/map/control-list4'
                                 },1000);
 
                             },

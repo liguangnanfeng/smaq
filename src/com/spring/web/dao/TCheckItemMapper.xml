@@ -520,7 +520,7 @@
 
     <select id="selectGroupIndustryType" resultType="com.spring.web.ibatis.DynamicParameter">
         SELECT
-        count(0) c, DATE_FORMAT(real_time, '%Y-%m') time,
+        count(0) c, DATE_FORMAT(real_time, '%Y-%m-%e') time,
         case WHEN industry_type is not NULL and industry_type != '' THEN industry_type
         WHEN levels = '基础管理' THEN 1
         WHEN levels = '现场管理' THEN 2
@@ -529,7 +529,7 @@
         from
         t_check_item_view2
         <where>
-            <![CDATA[DATE_FORMAT(real_time, '%Y-%m') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m') <= #{endTime1}]]>
+            <![CDATA[DATE_FORMAT(real_time, '%Y-%m-%e') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m-%e') <= #{endTime1}]]>
             <if test="userId != null">
                 and user_id = ${userId}
             </if>
@@ -551,11 +551,11 @@
 
     <select id="selectGroupItem3" resultType="com.spring.web.ibatis.DynamicParameter">
         SELECT
-        count(0) c, DATE_FORMAT(real_time, '%Y-%m') time, d
+        count(0) c, DATE_FORMAT(real_time, '%Y-%m-%e') time, d
         from
         t_check_item_view2
         <where>
-            <![CDATA[DATE_FORMAT(real_time, '%Y-%m') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m') <= #{endTime1}]]>
+            <![CDATA[DATE_FORMAT(real_time, '%Y-%m-%e') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m-%e') <= #{endTime1}]]>
             <if test="userId != null">
                 and user_id = ${userId}
             </if>
@@ -577,11 +577,11 @@
 
     <select id="selectGroupItemStatus" resultType="com.spring.web.ibatis.DynamicParameter">
         SELECT
-        count(0) c, DATE_FORMAT(real_time, '%Y-%m') time, status
+        count(0) c, DATE_FORMAT(real_time, '%Y-%m-%e') time, status
         from
         t_check_item_view2
         <where>
-            <![CDATA[ DATE_FORMAT(real_time, '%Y-%m') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m') <= #{endTime1}]]>
+            <![CDATA[ DATE_FORMAT(real_time, '%Y-%m-%e') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m-%e') <= #{endTime1}]]>
             <if test="userId != null">
                 and user_id = ${userId}
             </if>
@@ -603,11 +603,11 @@
     <!--根据不同进行查询-->
     <select id="selectGroupFlag" resultType="com.spring.web.ibatis.DynamicParameter">
         SELECT
-        count(0) c, DATE_FORMAT(real_time, '%Y-%m') time, flag
+        count(0) c, DATE_FORMAT(real_time, '%Y-%m-%e') time, flag
         from
         t_check_item_view2
         <where>
-            <![CDATA[DATE_FORMAT(real_time, '%Y-%m') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m') <= #{endTime1}]]>
+            <![CDATA[DATE_FORMAT(real_time, '%Y-%m-%e') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m-%e') <= #{endTime1}]]>
             <if test="userId != null">
                 and user_id = ${userId}
             </if>
@@ -933,6 +933,7 @@
           and T1.status > 1
           and T2.del= 0;
     </select>
+    <!--排查数据分析,合格/不合格/已复查-->
     <select id="selectFailedByMap" resultType="java.util.Map">
         select DATE_FORMAT(create_time, '%Y-%m-%e') time, count(t1.id) c ,t1.status ,t2.flag
         from smaq.t_check_item_tbl t1 inner join smaq.t_check_tbl t2 on t1.check_id=t2.id
@@ -940,7 +941,7 @@
         and t2.del=0
         and t2.user_id=#{uid}
         and t1.status=#{status}
-        and  <![CDATA[DATE_FORMAT(real_time, '%Y-%m') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m') <= #{endTime1}]]>
+        and  <![CDATA[DATE_FORMAT(real_time, '%Y-%m-%e') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m-%e') <= #{endTime1}]]>
         group by time,flag;
     </select>
 

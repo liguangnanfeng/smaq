@@ -913,6 +913,21 @@ public class CompanyController_cd extends BaseController {
         writeResponse(result, response);//该方法调用如下
     }
 
+
+   /*
+   * 批量导入人员！！！
+   * */
+    @RequestMapping(value = "importPersonExcel", produces = "text/html;charset=utf-8")
+    public void importPersonExcel(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {
+        Result result = new ResultImpl();
+        User user = getLoginUser(request);
+        userService.importPersonExcel(result, user.getId(), file);
+        writeResponse(result, response);//该方法调用如下
+    }
+
+
+
+
     /**
      * 安全评价档案页面
      */

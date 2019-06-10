@@ -1706,7 +1706,7 @@ public class CompanyController_cd extends BaseController {
 
     private List<Map<String, Object>> chartDataCheck(  List<String> monthL, Map<String, Object> m  ){
         // 根据合格不合格查询出数据.然后进行封装
-        List<DynamicParameter<String, Object>> ll = tCheckItemMapper.selectFailedByMap(m);
+        List<Map<String, Object>> ll = tCheckItemMapper.selectFailedByMap(m);
 
         // 进行循环使用一个月的天数
         Integer[] d = new Integer[monthL.size()];
@@ -1730,10 +1730,11 @@ public class CompanyController_cd extends BaseController {
         m2.put("data", d.clone());
         m3.put("data", d.clone());
         // 这次循环的就是每一天合格的信息
-        for (DynamicParameter<String, Object> dy : ll) {
-            String time = dy.getString("time");
-            Integer t = dy.getInteger("flag");// 1 自查 2行政 3第三方
-            Integer c = dy.getInteger("c");   // 每一天查询出来的数据 合格/不合格/复查的条数
+        for (Map<String, Object> dy : ll) {
+            String time = (String) dy.get("time");
+            Integer t = (Integer) dy.get("flag");// 1 自查 2行政 3第三方
+            Long c1 = (Long) dy.get("c");   // 每一天查询出来的数据 合格/不合格/复查的条数  (返回的是Long类型)
+            Integer c = Integer.valueOf(String.valueOf(c1));
             for (int i = 0; i < monthL.size(); i++) {
                 if (time.equals(monthL.get(i))) {
                     if (t.intValue() == 1) {

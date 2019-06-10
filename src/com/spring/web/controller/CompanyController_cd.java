@@ -1350,6 +1350,15 @@ public class CompanyController_cd extends BaseController {
         return result;
     }
 
+    /**
+     * 跳转页面(排查数据分析页面)
+     * @return
+     */
+    @RequestMapping("danger/danger-chart-px")
+    public String dangerChartPx(){
+        return "company/danger/danger-chart-px";
+    }
+
     static String PP = "yyyy-MM";
 
     /**
@@ -1835,6 +1844,9 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("list", table2mapper.selectTable(m));
         return "company/tables/tab-list";
     }
+
+
+
 
     /**
      * 表导入

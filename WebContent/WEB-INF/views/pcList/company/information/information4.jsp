@@ -13,8 +13,8 @@
 <meta name="keywords" content="风险分级管控   隐患排查治理智能化平台">
 <meta name="description" content="风险分级管控   隐患排查治理智能化平台">
 
-<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
-<link rel="stylesheet" href="http://cache.amap.com/lbs/static/AMap.PlaceSearchRender1120.css"/>
+<link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
+<link rel="stylesheet" href="https://cache.amap.com/lbs/static/AMap.PlaceSearchRender1120.css"/>
 <link rel="stylesheet" type="text/css" href="http://webapi.amap.com/css/v1.4.1/style1509024629605.css">
 
 <style type="text/css">
@@ -49,7 +49,7 @@
   </div> -->
 </body>
 <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.1&key=441462b46b736497a5f2a377aafb5b69&plugin=AMap.PlaceSearch"></script>
-<script type="text/javascript" src="http://cache.amap.com/lbs/static/PlaceSearchRender.js"></script>
+<script type="text/javascript" src="https://cache.amap.com/lbs/static/PlaceSearchRender.js"></script>
 <script type="text/javascript">
 var jw = '${user.longitude},${user.latitude}';
 var userId = ${user.id};

@@ -55,9 +55,12 @@ body .iconxw{transform: rotate(-90deg);float:right;margin-right:-5px;margin-top:
           <!-- 判断并提示至少选择3个月 -->
           <div class="search_rq pos-a">
             <font>查询时间段：</font>
-            <input type="text" class="Wdate input-text" id="sT" style="width:150px;" onfocus="WdatePicker({dateFmt:'yyyy-MM',maxDate:'#F{$dp.$D(\'eT\',{M:-3}) || \'%y-{%M-3}\'}'})"/>
+<%--            <input type="text" class="Wdate input-text" id="sT" style="width:150px;" onfocus="WdatePicker({dateFmt:'yyyy-MM',maxDate:'#F{$dp.$D(\'eT\',{M:-3}) || \'%y-{%M-3}\'}'})"/>--%>
+<%--            <font>-</font>--%>
+<%--            <input type="text" class="Wdate input-text" id="eT" style="width:150px;" onfocus="WdatePicker({dateFmt:'yyyy-MM',minDate:'#F{$dp.$D(\'sT\',{M:+3})}', maxDate : '%y-%M'})"/>--%>
+            <input type="text" class="Wdate input-text" id="sT" style="width:150px;" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'eT\',{M:-1})}',maxDate:'#F{$dp.$D(\'eT\',{d:-1}) || \'%y-%M\'}'})"/>
             <font>-</font>
-            <input type="text" class="Wdate input-text" id="eT" style="width:150px;" onfocus="WdatePicker({dateFmt:'yyyy-MM',minDate:'#F{$dp.$D(\'sT\',{M:+3})}', maxDate : '%y-%M'})"/>
+            <input type="text" class="Wdate input-text" id="eT" style="width:150px;" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'sT\',{d:+1})}',maxDate :'#F{$dp.$D(\'sT\',{M:+1}) && \'%y-%M\'}'})"/>
             <button class="btn btn-success" type="button" onclick="reload()">
               <i class="Hui-iconfont">&#xe665;</i> 查询
             </button>

@@ -1745,7 +1745,7 @@ public class CompanyController_cd extends BaseController {
             String time = (String) dy.get("time"); // 每一天的时间
             Integer t = (Integer) dy.get("flag");//
             Integer a = dy.getBigDecimalToInteger("a");
-            Integer b = dy.getBigDecimalToInteger("c");
+            Integer b = dy.getBigDecimalToInteger("b");
             Integer c = dy.getBigDecimalToInteger("c");
 
             for (int i = 0; i < monthL.size(); i++) {

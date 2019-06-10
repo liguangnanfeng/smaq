@@ -1783,14 +1783,8 @@ public class CompanyController_cd extends BaseController {
         List<String> monthL = monthC(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
 
-
-
-
         return null;
     }
-
-
-
 
     /**
      * 治理数据分析

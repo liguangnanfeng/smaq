@@ -1695,7 +1695,11 @@ public class CompanyController_cd extends BaseController {
             eT = DateFormatUtils.format(d, TIME_STR);
         }
         if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
+            Date date = new Date();
             Date d = DateConvertUtil.formateDate(eT, TIME_STR);
+            if(d.after(date)){ //就表示大于当前的时间
+                d=date;
+            }
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
 

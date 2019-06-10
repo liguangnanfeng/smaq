@@ -191,7 +191,7 @@ public interface TCheckItemMapper {
     /**
      * 根据合格不合格区生成图表
      */
-    List<Map<String, Object>> selectFailedByMap(Map<String, Object> m);
+    List<DynamicParameter<String, Object>> selectFailedByMap(Map<String, Object> m);
 }
 
 

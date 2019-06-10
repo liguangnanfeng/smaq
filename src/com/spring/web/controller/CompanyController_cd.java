@@ -1363,19 +1363,19 @@ public class CompanyController_cd extends BaseController {
         // 传递的时间都为空
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            eT = DateFormatUtils.format(d, PP);
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
 
         }
         // 截止时间为空
         if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);
+            eT = DateFormatUtils.format(d, PP);
         }
         // 截至时间为空
         if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
-            Date d = DateConvertUtil.formateDate(eT, TIME_STR);
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            Date d = DateConvertUtil.formateDate(eT, PP);
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
         }
         List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
@@ -1438,18 +1438,18 @@ public class CompanyController_cd extends BaseController {
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            eT = DateFormatUtils.format(d, PP);
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
         }
         if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);
+            eT = DateFormatUtils.format(d, PP);
         }
         if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
-            Date d = DateConvertUtil.formateDate(eT, TIME_STR);
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            Date d = DateConvertUtil.formateDate(eT, PP);
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
         }
-        List<String> monthL = monthC(sT, eT);
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
@@ -1502,18 +1502,18 @@ public class CompanyController_cd extends BaseController {
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            eT = DateFormatUtils.format(d, PP);
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -4), PP);
         }
         if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);
+            eT = DateFormatUtils.format(d, PP);
         }
         if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
-            Date d = DateConvertUtil.formateDate(eT, TIME_STR);
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            Date d = DateConvertUtil.formateDate(eT, PP);
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -4), PP);
         }
-        List<String> monthL = monthC(sT, eT);
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
@@ -1572,18 +1572,18 @@ public class CompanyController_cd extends BaseController {
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);// 当前时间
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            eT = DateFormatUtils.format(d, PP);// 当前时间
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
         }
         if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);
+            eT = DateFormatUtils.format(d, PP);
         }
         if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
-            Date d = DateConvertUtil.formateDate(eT, TIME_STR);
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            Date d = DateConvertUtil.formateDate(eT, PP);
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
         }
-        List<String> monthL = monthC(sT, eT);
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
@@ -1648,13 +1648,6 @@ public class CompanyController_cd extends BaseController {
      * TODO 排查数据分析图表数据 开始按照天算
      * 查询应该按照以检查和为检查来进行查询, 获取以检查和未检查的数据
      *
-     *  根据数据来算的话,请求不合格的数据 将全部类型的合格数据求出
-     *  然后将全部不合格的数据求出
-     *  然后将所有已复查的数据求出
-     *
-     *
-     *
-     * 所有检查合格不合格都会显示出来
      * @param sT 起始时间
      * @param eT 截止时间
      * @param request 请求
@@ -1662,7 +1655,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value="zhuChartData3")
     public @ResponseBody
-    Result zhuChartData3(String sT, String eT, HttpServletRequest request,Integer status) throws Exception {
+    Result zhuChartData3(String sT, String eT, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
@@ -1678,82 +1671,17 @@ public class CompanyController_cd extends BaseController {
             Date d = DateConvertUtil.formateDate(eT, TIME_STR);
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
-
         List<String> monthL = monthC(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
-        m.put("status",status);
-        m.put("uid",user.getId());
+        setUserId(user, m);//根据登陆的用户的不同插入不同的参数
+        List<DynamicParameter<String, Object>> ll = tCheckItemMapper.selectGroupFlag(m);
 
-        // 根据合格不合格查询出数据.然后进行封装
-        List<DynamicParameter<String, Object>> ll = tCheckItemMapper.selectFailedByMap(m);
-
-        // 进行循环使用一个月的天数
-        Integer[] d = new Integer[monthL.size()];
-        for (int l = 0; l < d.length; l++) {
-            d[l] = 0;
-        }
-
-        String[] xx = new String[]{"企业自查", "行政检查", "第三方检查"};
-        List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
-        Map<String, Object> m1 = new HashMap<String, Object>();
-        Map<String, Object> m2 = new HashMap<String, Object>();
-        Map<String, Object> m3 = new HashMap<String, Object>();
-
-        //
-        m1.put("name", xx[0]);
-        m2.put("name", xx[1]);
-        m3.put("name", xx[2]);
-
-        // 数据表示的是,选中的时间段内
-        m1.put("data", d.clone());
-        m2.put("data", d.clone());
-        m3.put("data", d.clone());
-        // 这次循环的就是每一天合格的信息
-        for (DynamicParameter<String, Object> dy : ll) {
-            String time = dy.getString("time");
-            Integer t = dy.getInteger("flag");// 1 自查 2行政 3第三方
-            Integer c = dy.getInteger("c");   // 每一天查询出来的数据 合格/不合格/复查的条数
-            for (int i = 0; i < monthL.size(); i++) {
-                if (time.equals(monthL.get(i))) {
-                    if (t.intValue() == 1) {
-                        // 自查 开始获取每一天对应的数据表示的是没一个出现的数据
-                        Integer[] x = (Integer[]) m1.get("data");
-                        x[i] = c;
-                        break;
-                    } else if (t.intValue() == 2) {
-                        // 行政
-                        Integer[] x = (Integer[]) m2.get("data");
-                        x[i] = c;
-                        break;
-                    } else if (t.intValue() == 3) {
-                        // 第三方
-                        Integer[] x = (Integer[]) m3.get("data");
-                        x[i] = c;
-                        break;
-                    }
-                }
-            }
-        }
-        mm.add(m1);
-        mm.add(m2);
-        mm.add(m3);
-        result.setMap("categories", monthL);//时间段内所有的天
-        result.setMap("series", mm);// List<Data{String name; Integer[] data}> Data
-        return result;
+        return  null;
     }
 
-    /**
-     * 治理数据分析
-     * 主要是复查结果是否合格
-     * @param sT
-     * @param eT
-     * @return
-     * @throws Exception
-     */
-
-    // 进行解析 - 天
+    // 进行解析
     List<String> monthC(String sT, String eT) throws Exception {
         List<String> l = new LinkedList<String>();
         Date s = DateConvertUtil.formateDate(sT, TIME_STR);
@@ -1766,7 +1694,8 @@ public class CompanyController_cd extends BaseController {
         return l;
     }
 
-    // 进行解析 - 月
+
+    // 进行解析
     List<String> monthB(String sT, String eT) throws Exception {
         List<String> l = new LinkedList<String>();
         Date s = DateConvertUtil.formateDate(sT, PP);

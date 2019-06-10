@@ -12,12 +12,12 @@
 <title>风险分级管控   隐患排查治理智能化平台</title>
 <meta name="keywords" content="风险分级管控   隐患排查治理智能化平台">
 <meta name="description" content="风险分级管控   隐患排查治理智能化平台">
-<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+<link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css" />
 <script src="https://cdn.bootcss.com/angular.js/1.3.2/angular.js"></script>
-<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+<script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
 <script src="http://webapi.amap.com/maps?v=1.4.2&key=441462b46b736497a5f2a377aafb5b69&plugin=AMap.PlaceSearch"></script>
-<script src="http://cache.amap.com/lbs/static/PlaceSearchRender.js"></script>
-<script src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+<script src="https://cache.amap.com/lbs/static/PlaceSearchRender.js"></script>
+<script src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
 </head>
 <style>
 	.main_map .left_map .selects select{width: 100%}

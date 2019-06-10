@@ -80,60 +80,49 @@ body .iconxw{transform: rotate(-90deg);float:right;margin-right:-5px;margin-top:
 
 <script>
   $(function () {
-    int();
+    int(1);
   })
-
- function int(){
+var categories = [];//日期数组
+var  series ={};  //数据数组
+ function int(status){
    $.post(getRootPath() + "/company/zhuChartData3", {
      sT: $("#sT").val(),
      eT: $("#eT").val()
    }, function (result) {
      console.log(result);
-     // var categories = result.map.categories;
-     // var series = result.map.series;
-     // var all = 0;
-     // for (var i = 0; i < series.length; i++) {
-     //   var data = series[i].data;
-     //   for (var j = 0; j < data.length; j++) {
-     //     all = all + data[j];
-     //   }
-     // }
-     // var hz = new Object();
-     // hz.name = '隐患汇总 ' + all + ' 条';
-     // var li = new Array();
-     // for (var i = 0; i < categories.length; i++) {
-     //   li.push(0);
-     // }
-     // hz.data = li;
-     // hz.visible = false;
-     // series.push(hz);
-     // $('#container3').highcharts({
-     //   credits: {enabled: false},
-     //   chart: {type: 'line'},
-     //   title: {text: ''},
-     //   legend: {
-     //     itemHiddenStyle: {
-     //       color: '#f00'
-     //     }
-     //   },
-     //   xAxis: {categories: categories},
-     //   yAxis: {title: {text: '数量'}, min: 0, tickAmount: 8},
-     //   plotOptions: {
-     //     line: {
-     //       dataLabels: {enabled: true},// 开启数据标签
-     //       enableMouseTracking: false // 关闭鼠标跟踪，对应的提示框、点击事件会失效
-     //     },
-     //     series: {
-     //       events: {
-     //         legendItemClick: function (e) {
-     //           return false; // 直接 return false 即可禁用图例点击事件
-     //         }
-     //       }
-     //     }
-     //   },
-     //   series: series
-     // });
+     categories = result.map.categories;
+     series = result.map.series;
+     createChart(categories,series);
    })
+ }
+
+ function createChart(categories,series) {
+   $('#container3').highcharts({
+     credits: {enabled: false},
+     chart: {type: 'column'},
+     title: {text: '排查数据分析'},
+     legend: {
+       itemHiddenStyle: {
+         color: '#f00'
+       }
+     },
+     xAxis: {categories: categories},
+     yAxis: {title: {text: '数量'}, min: 0},
+     plotOptions: {
+       line: {
+         dataLabels: {enabled: true},// 开启数据标签
+         // enableMouseTracking: false // 关闭鼠标跟踪，对应的提示框、点击事件会失效
+       },
+       // series: {
+       //   events: {
+       //     legendItemClick: function (e) {
+       //       return false; // 直接 return false 即可禁用图例点击事件
+       //     }
+       //   }
+       // }
+     },
+     series: series
+   });
  }
 
 

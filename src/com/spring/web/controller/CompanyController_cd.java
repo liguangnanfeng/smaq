@@ -1377,7 +1377,7 @@ public class CompanyController_cd extends BaseController {
             Date d = DateConvertUtil.formateDate(eT, TIME_STR);
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
-        List<String> monthL = monthB(sT, eT);
+        List<String> monthL = monthC(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
@@ -1645,16 +1645,9 @@ public class CompanyController_cd extends BaseController {
      static final String TIME_STR ="yyyy-MM-dd";
 
     /**
-     * TODO 排查数据分析图表数据 开始按照天算
-     * 查询应该按照以检查和为检查来进行查询, 获取以检查和未检查的数据
+     * TODO 排查数据分析图表数据(单位: 天)
+     *  一次性把检查合格/不合格/复查合格的数据全部查询出来然后生成图表
      *
-     *  根据数据来算的话,请求不合格的数据 将全部类型的合格数据求出
-     *  然后将全部不合格的数据求出
-     *  然后将所有已复查的数据求出
-     *
-     *
-     *
-     * 所有检查合格不合格都会显示出来
      * @param sT 起始时间
      * @param eT 截止时间
      * @param request 请求
@@ -1662,7 +1655,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value="zhuChartData3")
     public @ResponseBody
-    Result zhuChartData3(String sT, String eT, HttpServletRequest request,Integer status) throws Exception {
+    Result zhuChartData3(String sT, String eT, HttpServletRequest request/*,Integer status*/) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
@@ -1683,9 +1676,25 @@ public class CompanyController_cd extends BaseController {
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
-        m.put("status",status);
+       // m.put("status",status);
         m.put("uid",user.getId());
 
+        // 将 合格 不合格 复查合格的数据一次性的查询出来
+        m.put("status",1);
+        List<Map<String, Object>> maps1 = chartDataCheck(monthL, m);
+        m.put("status",2);
+        List<Map<String, Object>> maps2 = chartDataCheck(monthL, m);
+        m.put("status",3);
+        List<Map<String, Object>> maps3 = chartDataCheck(monthL, m);
+
+        result.setMap("categories", monthL);//时间段内所有的天
+        result.setMap("series1", maps1);// List<Data{String name; Integer[] data}> Data
+        result.setMap("series2", maps2);// List<Data{String name; Integer[] data}> Data
+        result.setMap("series3", maps3);// List<Data{String name; Integer[] data}> Data
+        return result;
+    }
+
+    private List<Map<String, Object>> chartDataCheck(  List<String> monthL, Map<String, Object> m  ){
         // 根据合格不合格查询出数据.然后进行封装
         List<DynamicParameter<String, Object>> ll = tCheckItemMapper.selectFailedByMap(m);
 
@@ -1739,10 +1748,49 @@ public class CompanyController_cd extends BaseController {
         mm.add(m1);
         mm.add(m2);
         mm.add(m3);
-        result.setMap("categories", monthL);//时间段内所有的天
-        result.setMap("series", mm);// List<Data{String name; Integer[] data}> Data
-        return result;
+        return mm;
     }
+
+    /**
+     *  TODO 治理数据分析图表(单位: 天)
+     *
+     * @param sT  起始时间 (天)
+     * @param eT  结束时间 (天)
+     * @param request
+     * @param status
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value="zhuChartData4")
+    public @ResponseBody
+    Result zhuChartData4(String sT, String eT, HttpServletRequest request,Integer status) throws Exception {
+        User user = getLoginUser(request);
+        Result result = new ResultImpl();
+        if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
+            Date d = new Date();
+            eT = DateFormatUtils.format(d, TIME_STR);// 当前时间
+            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+        }
+        if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
+            Date d = new Date();
+            eT = DateFormatUtils.format(d, TIME_STR);
+        }
+        if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
+            Date d = DateConvertUtil.formateDate(eT, TIME_STR);
+            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+        }
+
+        List<String> monthL = monthC(sT, eT);
+        Map<String, Object> m = new HashMap<String, Object>();
+
+
+
+
+        return null;
+    }
+
+
+
 
     /**
      * 治理数据分析

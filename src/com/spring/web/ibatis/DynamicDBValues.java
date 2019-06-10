@@ -2,6 +2,7 @@ package com.spring.web.ibatis;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -53,5 +54,8 @@ public interface DynamicDBValues extends Serializable {
 
     public abstract BigDecimal getBigDecimal(String s);
 
+    public abstract Integer getBigDecimalToInteger(String s);
+
     public abstract Object remove(Object o);
+
 }

@@ -86,4 +86,13 @@ public class DynamicParameter<K, V> extends HashMap implements DynamicDBValues {
             return null;
         }
     }
+
+    @Override
+    public Integer getBigDecimalToInteger(String s) {
+        if (super.get(s) != null) {
+            return (new BigDecimal(super.get(s).toString())).intValue();
+        } else {
+            return null;
+        }
+    }
 }

@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -913,6 +914,21 @@ public class CompanyController_cd extends BaseController {
         writeResponse(result, response);//该方法调用如下
     }
 
+
+   /*
+   * 批量导入人员！！！
+   * */
+    @RequestMapping(value = "importPersonExcel", produces = "text/html;charset=utf-8")
+    public void importPersonExcel(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {
+        Result result = new ResultImpl();
+        User user = getLoginUser(request);
+        userService.importPersonExcel(result, user.getId(), file);
+        writeResponse(result, response);//该方法调用如下
+    }
+
+
+
+
     /**
      * 安全评价档案页面
      */
@@ -1654,17 +1670,19 @@ public class CompanyController_cd extends BaseController {
      static final String TIME_STR ="yyyy-MM-dd";
 
     /**
-     * TODO 排查数据分析图表数据(单位: 天)
-     *  一次性把检查合格/不合格/复查合格的数据全部查询出来然后生成图表
-     *
-     * @param sT 起始时间
-     * @param eT 截止时间
+     *      * TODO 排查数据分析图表数据(单位: 天)
+     *      * 一次性把检查合格/不合格/复查合格的数据全部查询出来然后生成图表
+     * @param sT  起始
+     * @param eT  结束
      * @param request 请求
-     * @return 图表数据
+     * @param flag    检查方式 企业自查 行政检查  第三方检查
+     * @param type    基础  现场 高危
+     * @return 图表
+     * @throws Exception
      */
     @RequestMapping(value="zhuChartData3")
     public @ResponseBody
-    Result zhuChartData3(String sT, String eT, HttpServletRequest request/*,Integer status*/) throws Exception {
+    Result zhuChartData3(String sT, String eT, HttpServletRequest request,Integer flag,Integer type) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
@@ -1685,28 +1703,21 @@ public class CompanyController_cd extends BaseController {
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
-     
-       // m.put("status",status);
+        m.put("flag",flag);
+        m.put("type",type);
         m.put("uid",user.getId());
 
         // 将 合格 不合格 复查合格的数据一次性的查询出来
-        m.put("status",1);
-        List<Map<String, Object>> maps1 = chartDataCheck(monthL, m);
-        m.put("status",2);
-        List<Map<String, Object>> maps2 = chartDataCheck(monthL, m);
-        m.put("status",3);
-        List<Map<String, Object>> maps3 = chartDataCheck(monthL, m);
-
+        List<Map<String, Object>> maps = chartDataCheck(monthL, m);
         result.setMap("categories", monthL);//时间段内所有的天
-        result.setMap("series1", maps1);// List<Data{String name; Integer[] data}> Data
-        result.setMap("series2", maps2);// List<Data{String name; Integer[] data}> Data
-        result.setMap("series3", maps3);// List<Data{String name; Integer[] data}> Data
+        result.setMap("series", maps);// List<Data{String name; Integer[] data}> Data
+
         return result;
     }
 
     private List<Map<String, Object>> chartDataCheck(  List<String> monthL, Map<String, Object> m  ){
         // 根据合格不合格查询出数据.然后进行封装
-        List<Map<String, Object>> ll = tCheckItemMapper.selectFailedByMap(m);
+        List<DynamicParameter<String, Object>> ll = tCheckItemMapper.selectFailedByMap(m);
 
         // 进行循环使用一个月的天数
         Integer[] d = new Integer[monthL.size()];
@@ -1714,7 +1725,7 @@ public class CompanyController_cd extends BaseController {
             d[l] = 0;
         }
 
-        String[] xx = new String[]{"企业自查", "行政检查", "第三方检查"};
+        String[] xx = new String[]{"合格", "不合格", "已复查合格"};
         List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
         Map<String, Object> m1 = new HashMap<String, Object>();
         Map<String, Object> m2 = new HashMap<String, Object>();
@@ -1730,29 +1741,26 @@ public class CompanyController_cd extends BaseController {
         m2.put("data", d.clone());
         m3.put("data", d.clone());
         // 这次循环的就是每一天合格的信息
-        for (Map<String, Object> dy : ll) {
-            String time = (String) dy.get("time");
-            Integer t = (Integer) dy.get("flag");// 1 自查 2行政 3第三方
-            Long c1 = (Long) dy.get("c");   // 每一天查询出来的数据 合格/不合格/复查的条数  (返回的是Long类型)
-            Integer c = Integer.valueOf(String.valueOf(c1));
+        for (DynamicParameter<String, Object> dy : ll) {
+            String time = (String) dy.get("time"); // 每一天的时间
+            Integer t = (Integer) dy.get("flag");//
+            Integer a = dy.getBigDecimalToInteger("a");
+            Integer b = dy.getBigDecimalToInteger("c");
+            Integer c = dy.getBigDecimalToInteger("c");
+
             for (int i = 0; i < monthL.size(); i++) {
                 if (time.equals(monthL.get(i))) {
-                    if (t.intValue() == 1) {
-                        // 自查 开始获取每一天对应的数据表示的是没一个出现的数据
-                        Integer[] x = (Integer[]) m1.get("data");
-                        x[i] = c;
-                        break;
-                    } else if (t.intValue() == 2) {
-                        // 行政
-                        Integer[] x = (Integer[]) m2.get("data");
-                        x[i] = c;
-                        break;
-                    } else if (t.intValue() == 3) {
-                        // 第三方
-                        Integer[] x = (Integer[]) m3.get("data");
-                        x[i] = c;
-                        break;
-                    }
+                        // 合格
+                        Integer[] a2 = (Integer[]) m1.get("data");
+                        a2[i] = a;
+
+                        // 不合格
+                        Integer[] b2 = (Integer[]) m2.get("data");
+                        b2[i] = b;
+
+                        // 已复查合格
+                        Integer[] c2 = (Integer[]) m3.get("data");
+                        c2[i] = c;
                 }
             }
         }

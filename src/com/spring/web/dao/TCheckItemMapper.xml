@@ -933,17 +933,30 @@
           and T1.status > 1
           and T2.del= 0;
     </select>
-    <!--排查数据分析,合格/不合格/已复查-->
-    <select id="selectFailedByMap" resultType="java.util.Map">
-        select DATE_FORMAT(create_time, '%Y-%m-%e') time, count(t1.id) c ,t1.status ,t2.flag
-        from smaq.t_check_item_tbl t1 inner join smaq.t_check_tbl t2 on t1.check_id=t2.id
-        where t2.status>1
-        and t2.del=0
-        and t2.user_id=#{uid}
-        and t1.status=#{status}
-        and  <![CDATA[DATE_FORMAT(real_time, '%Y-%m-%e') >= #{startTime1} and DATE_FORMAT(real_time, '%Y-%m-%e') <= #{endTime1}]]>
-        group by time,flag;
-    </select>
+    <!--排查数据分析,合格/不合格/已复查
 
+    -->
+    <select id="selectFailedByMap" resultType="com.spring.web.ibatis.DynamicParameter" parameterType="java.util.Map" >
+        select  DATE_FORMAT(t2.real_time, '%Y-%m-%e') time,
+        sum(case t1.status when 1 then 1 else 0 end ) a,
+        sum(case t1.status when 2 then 1 else 0 end ) b,
+        sum(case t1.status when 3 then 1 else 0 end ) c,
+        t2.flag
+        from smaq.t_check_item_tbl t1
+        inner join smaq.t_check_tbl t2 on t1.check_id = t2.id
+        <where >
+            and  <![CDATA[DATE_FORMAT(t2.real_time, '%Y-%m-%e') >= #{startTime1} and DATE_FORMAT(t2.real_time, '%Y-%m-%e') <= #{endTime1}]]>
+            and t2.status = 2
+            and t2.del = 0
+            and t2.user_id = #{uid}
+            <if test="flag!=null">
+            and t2.flag=#{flag}
+            </if>
+            <if test="type!=null">
+                and t2.type=#{type}
+            </if>
+        </where>
+          group by time;
+    </select>
 
 </mapper>

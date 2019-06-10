@@ -1363,19 +1363,19 @@ public class CompanyController_cd extends BaseController {
         // 传递的时间都为空
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            eT = DateFormatUtils.format(d, PP);
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
 
         }
         // 截止时间为空
         if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);
+            eT = DateFormatUtils.format(d, PP);
         }
         // 截至时间为空
         if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
-            Date d = DateConvertUtil.formateDate(eT, TIME_STR);
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            Date d = DateConvertUtil.formateDate(eT, PP);
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
         }
         List<String> monthL = monthC(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
@@ -1438,18 +1438,18 @@ public class CompanyController_cd extends BaseController {
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            eT = DateFormatUtils.format(d, PP);
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
         }
         if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);
+            eT = DateFormatUtils.format(d, PP);
         }
         if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
-            Date d = DateConvertUtil.formateDate(eT, TIME_STR);
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            Date d = DateConvertUtil.formateDate(eT, PP);
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
         }
-        List<String> monthL = monthC(sT, eT);
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
@@ -1502,18 +1502,18 @@ public class CompanyController_cd extends BaseController {
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            eT = DateFormatUtils.format(d, PP);
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -4), PP);
         }
         if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);
+            eT = DateFormatUtils.format(d, PP);
         }
         if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
-            Date d = DateConvertUtil.formateDate(eT, TIME_STR);
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            Date d = DateConvertUtil.formateDate(eT, PP);
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -4), PP);
         }
-        List<String> monthL = monthC(sT, eT);
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
@@ -1572,18 +1572,18 @@ public class CompanyController_cd extends BaseController {
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);// 当前时间
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            eT = DateFormatUtils.format(d, PP);// 当前时间
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
         }
         if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
-            eT = DateFormatUtils.format(d, TIME_STR);
+            eT = DateFormatUtils.format(d, PP);
         }
         if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
-            Date d = DateConvertUtil.formateDate(eT, TIME_STR);
-            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+            Date d = DateConvertUtil.formateDate(eT, PP);
+            sT = DateFormatUtils.format(DateConvertUtil.addMonths(d, -11), PP);
         }
-        List<String> monthL = monthC(sT, eT);
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
@@ -1655,6 +1655,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value="zhuChartData3")
     public @ResponseBody
+    
     Result zhuChartData3(String sT, String eT, HttpServletRequest request/*,Integer status*/) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
@@ -1671,11 +1672,11 @@ public class CompanyController_cd extends BaseController {
             Date d = DateConvertUtil.formateDate(eT, TIME_STR);
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
-
         List<String> monthL = monthC(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
+     
        // m.put("status",status);
         m.put("uid",user.getId());
 
@@ -1751,6 +1752,8 @@ public class CompanyController_cd extends BaseController {
         return mm;
     }
 
+ 
+  
     /**
      *  TODO 治理数据分析图表(单位: 天)
      *
@@ -1815,6 +1818,7 @@ public class CompanyController_cd extends BaseController {
     }
 
     // 进行解析 - 月
+ 
     List<String> monthB(String sT, String eT) throws Exception {
         List<String> l = new LinkedList<String>();
         Date s = DateConvertUtil.formateDate(sT, PP);

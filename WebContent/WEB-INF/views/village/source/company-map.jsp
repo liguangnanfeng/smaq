@@ -12,10 +12,12 @@
 <title>风险分级管控   隐患排查治理智能化平台</title>
 <meta name="keywords" content="风险分级管控   隐患排查治理智能化平台">
 <meta name="description" content="风险分级管控   隐患排查治理智能化平台">
-<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
-<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
-<script src="http://webapi.amap.com/maps?v=1.4.2&key=441462b46b736497a5f2a377aafb5b69&plugin=AMap.PlaceSearch"></script>
-<script src="http://cache.amap.com/lbs/static/PlaceSearchRender.js"></script>
+<link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css" />
+<script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
+<!-- <script src="http://webapi.amap.com/maps?v=1.4.2&key=441462b46b736497a5f2a377aafb5b69&plugin=AMap.PlaceSearch"></script> -->
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=da3f11570a7a5d170923792f72357543&plugin=AMap.PolyEditor"></script>
+
+<script src="https://cache.amap.com/lbs/static/PlaceSearchRender.js"></script>
 
 <script src="${ly}/js/angular.js"></script>
 <script src="${ly}/js/angular-animate.js"></script>

@@ -1695,7 +1695,11 @@ public class CompanyController_cd extends BaseController {
             eT = DateFormatUtils.format(d, TIME_STR);
         }
         if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
+            Date date = new Date();
             Date d = DateConvertUtil.formateDate(eT, TIME_STR);
+            if(d.after(date)){ //就表示大于当前的时间
+                d=date;
+            }
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
 
@@ -1745,7 +1749,7 @@ public class CompanyController_cd extends BaseController {
             String time = (String) dy.get("time"); // 每一天的时间
             Integer t = (Integer) dy.get("flag");//
             Integer a = dy.getBigDecimalToInteger("a");
-            Integer b = dy.getBigDecimalToInteger("c");
+            Integer b = dy.getBigDecimalToInteger("b");
             Integer c = dy.getBigDecimalToInteger("c");
 
             for (int i = 0; i < monthL.size(); i++) {

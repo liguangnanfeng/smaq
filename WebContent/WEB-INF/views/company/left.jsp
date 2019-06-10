@@ -299,7 +299,7 @@
                     <li><a data-href="${ly }/village/check-list-two?flag=1&status=2" data-title="隐患排查记录"
                            href="javascript:void(0)">隐患排查记录</a>
                     </li>
-                    <li><a data-href="${ly }/village/danger-chart" data-title="隐患数据分析"
+                    <li><a data-href="${ly }/conpany/danger/danger-chart-px" data-title="排查数据分析"
                            href="javascript:void(0)">排查数据分析</a></li>
                     <li><a data-href="${ly }/village/danger-chart" data-title="隐患数据分析"
                            href="javascript:void(0)">隐患数据分析</a></li>

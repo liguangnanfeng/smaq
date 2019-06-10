@@ -1655,7 +1655,6 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value="zhuChartData3")
     public @ResponseBody
-    
     Result zhuChartData3(String sT, String eT, HttpServletRequest request/*,Integer status*/) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
@@ -1711,7 +1710,7 @@ public class CompanyController_cd extends BaseController {
         Map<String, Object> m2 = new HashMap<String, Object>();
         Map<String, Object> m3 = new HashMap<String, Object>();
 
-        //
+
         m1.put("name", xx[0]);
         m2.put("name", xx[1]);
         m3.put("name", xx[2]);
@@ -1752,8 +1751,6 @@ public class CompanyController_cd extends BaseController {
         return mm;
     }
 
- 
-  
     /**
      *  TODO 治理数据分析图表(单位: 天)
      *

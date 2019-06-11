@@ -362,7 +362,9 @@ public class SaveDataImpl implements SaveMessageService {
             tModel= modelMapper.selectByPrimaryKey(tCheck.getModelId());
             tCheck= tCheckMapper.selectOldByModelId(tModel.getId()); // 重复之前的套路
         }
-
+        if(null==tCheck ){
+            return null;
+        }
         Integer checkId = insertCheck(tCheck.getId());  //表示是新的数据,然后将新的数据进行传递
 
         checkItemS.setLevle1(tCheck.getDepart()); //  部门信息

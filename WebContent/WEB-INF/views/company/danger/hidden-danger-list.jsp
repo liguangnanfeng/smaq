@@ -157,10 +157,22 @@
                         <c:set var="item" value="${fn:split(list.levels,'/') }"/>
                     </c:if>
                     <td>${list.depart }</td>
-                    <c:if test="${list.levels!=null}">
+                    <c:if test="${empty item[1]}">
+                        <td>暂无数据</td>
+                    </c:if>
+                    <c:if test="${not empty item[1]}">
+                        <td>${item[1]}</td>
+                    </c:if>
+                    <c:if test="${empty list.level2}">
+                        <td>暂无数据</td>
+                    </c:if>
+                    <c:if test="${not empty list.level2}">
+                        <td>${list.level2 }</td>
+                    </c:if>
+                    <%--<c:if test="${list.levels!=null}">
                         <c:if test="${not empty item[0]}">
-                            <td>${item[0]}</td>
-                            <c:if test="${not empty item[1]&&not empty item[2]}">
+                            <td>${item[1]}</td>
+                            &lt;%&ndash;<c:if test="${not empty item[1]&&not empty item[2]}">
                                 <td>${item[1]}/${item[2]}</td>
                             </c:if>
                             <c:if test="${not empty item[1]&& empty item[2]}">
@@ -168,19 +180,15 @@
                             </c:if>
                             <c:if test="${ empty item[1]&& empty item[2]}">
                                 <td>暂无数据</td>
-                            </c:if>
+                            </c:if>&ndash;%&gt;
                         </c:if>
+
                         <c:if test="${empty item[0]}">
                             <td>暂无数据</td>
                             <td>暂无数据</td>
                         </c:if>
 
-                    </c:if>
-                    <c:if test="${list.levels==null}">
-                        <td>暂无数据</td>
-                        <td>暂无数据</td>
-                    </c:if>
-
+                    </c:if>--%>
                         <%--                    <td>${item[0]}</td>--%>
                         <%--                    <td>${item[1]+item[2] }</td>--%>
                     <td>${list.realTimeStr}</td>
@@ -202,14 +210,14 @@
                     </td>
                     <td>
                         <c:if test="${list.file_address==null}">
-<%--                            <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="yulan(this)"--%>
-<%--                               href="javascript:;">预览文件</a>--%>
+                            <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="yulan(this)"
+                               href="javascript:;">预览文件</a>
                             <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="xiazai(this) "
                                href="javascript:;">下载文件</a>
                         </c:if>
                         <c:if test="${list.file_address!=null}">
-<%--                            <a style="text-decoration:none;margin-bottom:5px;display: inline-block"--%>
-<%--                               data-src="${list.file_address}" onclick="yulan(this)" href="javascript:;">预览文件</a>--%>
+                            <a style="text-decoration:none;margin-bottom:5px;display: inline-block"
+                               data-src="${list.file_address}" onclick="yulan(this)" href="javascript:;">预览文件</a>
                             <a style="text-decoration:none;margin-bottom:5px;display: inline-block"
                                data-src="${list.file_address}" onclick="xiazai(this)" href="javascript:;">下载文件</a>
                         </c:if>

@@ -192,6 +192,14 @@ public interface TCheckItemMapper {
      * 根据合格不合格区生成图表
      */
     List<DynamicParameter<String, Object>> selectFailedByMap(Map<String, Object> m);
+
+    /**
+     * 治理数据分析<已复查合格/复查不合格的参数>(单位: 天)
+     * 根据检查详情获取复查合格/复查不合格
+     * @param m
+     * @return
+     */
+    List<DynamicParameter<String, Object>> selectRecheckFileByMap(Map<String, Object> m);
 }
 
 

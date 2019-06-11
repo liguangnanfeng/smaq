@@ -1160,7 +1160,7 @@
         
         select level3 from a_company_manual_tbl where uid=#{uid}
         and level1=#{level1}
-        and level3  not LIKE '基础管理'
+        and level3  not LIKE '%基础管理%'
         and del=0
         and measures !=''
         group by level3;
@@ -1180,7 +1180,7 @@
         and level1 = #{level1}
         and del=0
         and level3 = #{level3}
-        order by level3 desc;
+        order by id, level2,level3 asc ;
     </select>
 
 </mapper>

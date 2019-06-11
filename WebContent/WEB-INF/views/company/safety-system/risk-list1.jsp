@@ -83,20 +83,20 @@
 </nav>
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
-        <a class="btn default ${empty type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list">风险点分布表</a>
-        <a class="btn default ${1 eq type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=1">职业病风险物理因素分布表</a>
-        <a class="btn default ${2 eq  type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=2">职业病风险化学因素分布表</a>
+        <a class="btn default ${empty type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list">风险因素辨识表</a>
+        <a class="btn default ${1 eq type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=1">职业病风险物理因素辨识表</a>
+        <a class="btn default ${2 eq  type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=2">职业病风险化学因素辨识表</a>
         <c:if test="${company.industry eq '化工企业（危化生产、使用）'}">
             <c:choose>
                 <c:when test="${fn:contains(company.name, '油') }">
                 </c:when>
                 <c:otherwise>
-                    <a class="btn default ${3 eq  type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=3">高危工艺分布表</a>
+                    <a class="btn default ${3 eq  type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=3">高危工艺辨识表</a>
                 </c:otherwise>
             </c:choose>
-            <a class="btn default ${4 eq  type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=4">物料风险分布表</a>
+            <a class="btn default ${4 eq  type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=4">物料风险辨识表</a>
         </c:if>
-        <a class="btn default ${5 eq  type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=5">高危作业分布表</a>
+        <a class="btn default ${5 eq  type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list?type=5">高危作业辨识表</a>
     </div>
 
     <div class="text-c mt-20">
@@ -111,19 +111,19 @@
                 <h3 class="text-c">${company.name}风险因素辨识表</h3>
             </c:if>
             <c:if test="${type eq 1}">
-                <h3 class="text-c">${company.name}职业病风险物理因素分布表</h3>
+                <h3 class="text-c">${company.name}职业病风险物理因素辨识表</h3>
             </c:if>
             <c:if test="${type eq 2}">
-                <h3 class="text-c">${company.name}职业病风险化学因素分布表</h3>
+                <h3 class="text-c">${company.name}职业病风险化学因素辨识表</h3>
             </c:if>
             <c:if test="${type eq 3}">
-                <h3 class="text-c">${company.name}高危工艺分布表</h3>
+                <h3 class="text-c">${company.name}高危工艺辨识表</h3>
             </c:if>
             <c:if test="${type eq 4}">
-                <h3 class="text-c">${company.name}物料风险分布表</h3>
+                <h3 class="text-c">${company.name}物料风险辨识表</h3>
             </c:if>
             <c:if test="${type eq 5}">
-                <h3 class="text-c">${company.name}高危作业分布表</h3>
+                <h3 class="text-c">${company.name}高危作业辨识表</h3>
             </c:if>
             <div class="mt-20">
                 <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan"  >
@@ -198,10 +198,12 @@
                                     </td>
                                         <td class="text-c">
                                             <c:if test="${empty type}">
-                                                <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
-                                            </c:if>
-                                            <c:if test="${empty type}">
-                                                <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                                <c:if test="${be.dangerId == 1}">
+                                                    <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
+                                                </c:if>
+                                                <c:if test="${be.dangerId == 2}">
+                                                    <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                                </c:if>
                                             </c:if>
                                         </td>
                                     </tr>
@@ -218,10 +220,12 @@
                                     <td style="width:40%;"><p style="text-align:center;">未辨识风险因素</p></td>
                                     <td style="width:10%;">
                                         <c:if test="${empty type}">
-                                            <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
-                                        </c:if>
-                                        <c:if test="${empty type}">
-                                            <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                            <c:if test="${be.dangerId == 1}">
+                                                <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
+                                            </c:if>
+                                            <c:if test="${be.dangerId == 2}">
+                                                <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                            </c:if>
                                         </c:if>
                                     </td>
                                 </tr>

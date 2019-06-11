@@ -293,7 +293,7 @@
                     <%--                    <li><a data-href="${ly }/company/model-list-bm?flag=1&type=10&template=10" data-title="检查设置实施"--%>
                     <%--                           href="javascript:void(0)">检查设置实施</a>--%>
                     <%--                    </li>--%>
-                    <li><a data-href="${ly }/company/model-list-main" data-title="检查设置实施"
+                    <li><a data-href="${ly }/company/model-list-main?flag=1" data-title="检查设置实施"
                            href="javascript:void(0)">检查设置实施</a>
                     </li>
                     <li><a data-href="${ly }/village/check-list-two?flag=1&status=2" data-title="隐患排查记录"

@@ -115,6 +115,12 @@
     </a>
 </nav>
 <div class="page-container">
+    <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
+        <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/company/model-list-main?flag=1">企业自查</a>
+        <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/company/model-list-main?flag=2">行政检查</a>
+        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/company/model-list-main?flag=3">部门抽查</a>
+        <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
+    </div>
     <div id="tab-index-cartegory">
         <div class="tabBar">
             <span class="selected">现场管理</span>
@@ -148,7 +154,7 @@
 <%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-2&template=6&flag=1')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',5,-2,6,1)"
+                                   onClick="ss('${be.level1 }','${be.dmid }',5,-2,6,'${flag}')"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
@@ -159,7 +165,7 @@
 <%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-2&template=2&flag=1')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',1,-2,2,1)"
+                                   onClick="ss('${be.level1 }','${be.dmid }',1,-2,2,'${flag}')"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
@@ -170,7 +176,7 @@
 <%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-2&template=3&flag=1')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',2,-2,3,1)"
+                                   onClick="ss('${be.level1 }','${be.dmid }',2,-2,3,'${flag}')"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
@@ -181,7 +187,7 @@
 <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-2&template=4&flag=1')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',3,-2,4,1)"
+                                   onClick="ss('${be.level1 }','${be.dmid }',3,-2,4,'${flag}')"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
@@ -192,7 +198,7 @@
 <%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-2&template=5&flag=1')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',4,-2,5,1)"
+                                   onClick="ss('${be.level1 }','${be.dmid }',4,-2,5,'${flag}')"
                                    href="javascript:;">实施</a>
                             </td>
 
@@ -231,7 +237,7 @@
 <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',5,-1,6,1)"
+                                   onClick="ss('${be.level1 }','${be.dmid }',5,-1,6,'${flag}')"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
@@ -242,7 +248,7 @@
 <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-1&template=2&flag=1')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',1,-1,2,1)"
+                                   onClick="ss('${be.level1 }','${be.dmid }',1,-1,2,'${flag}')"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
@@ -253,7 +259,7 @@
 <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-1&template=3&flag=1')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',2,-1,3,1)"
+                                   onClick="ss('${be.level1 }','${be.dmid }',2,-1,3,'${flag}')"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
@@ -264,7 +270,7 @@
 <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-1&template=4&flag=1')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',3,-1,4,1)"
+                                   onClick="ss('${be.level1 }','${be.dmid }',3,-1,4,'${flag}')"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
@@ -275,7 +281,7 @@
 <%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-1&template=5&flag=1')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',4,-1,5,1)"
+                                   onClick="ss('${be.level1 }','${be.dmid }',4,-1,5,'${flag}')"
                                    href="javascript:;">实施</a>
                             </td>
                         </tr>

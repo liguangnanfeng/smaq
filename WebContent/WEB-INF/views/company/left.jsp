@@ -312,7 +312,7 @@
                     </li>
 <%--                    <li><a data-href="${ly }/village/danger-index-list?flag=1" data-title="隐患统计汇总"--%>
 <%--                           href="javascript:void(0)">隐患统计汇总</a></li>--%>
-                    <li><a data-href="${ly }/village/danger-chart-zl" data-title="隐患数据分析"
+                    <li><a data-href="${ly }/company/danger/danger-chart-zl" data-title="治理数据分析"
                            href="javascript:void(0)">治理数据分析</a></li>
                     <%-- <li><a data-href="${ly }/html/about.html" data-title="新手指南" href="javascript:void(0)">新手指南</a></li> --%>
                     <%-- <li><a data-href="${ly }/company/tables/tab-list?isType=21" data-title="安全隐患整改通知单" href="javascript:void(0)">安全隐患整改通知单</a></li> --%>

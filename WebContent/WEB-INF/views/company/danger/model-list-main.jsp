@@ -64,15 +64,18 @@
             margin-left: 15px;
             display: none;
         }
-        #tab-index-cartegory{
+
+        #tab-index-cartegory {
 
         }
-        #tab-index-cartegory .tabBar{
+
+        #tab-index-cartegory .tabBar {
             height: 40px;
             line-height: 40px;
             /*background: #666666;*/
         }
-        #tab-index-cartegory .tabBar span{
+
+        #tab-index-cartegory .tabBar span {
             display: inline-block;
             font-size: 16px;
             padding: 0 40px;
@@ -86,13 +89,15 @@
             margin-right: 5px;
             background: #ccc;
         }
-        #tab-index-cartegory .tabBar span.selected{
-            background: #0099CC  !important;
+
+        #tab-index-cartegory .tabBar span.selected {
+            background: #0099CC !important;
         }
-        .tabCon{
+
+        .tabCon {
             display: none;
             padding: 10px;
-            padding-bottom:80px;
+            padding-bottom: 80px;
             border: 1px solid #ccc;
         }
     </style>
@@ -139,40 +144,55 @@
                                 <a style="text-decoration:none"
                                    onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-2')"
                                    href="javascript:;">设置</a>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-2&template=6&flag=1')"--%>
+<%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-2&template=6&flag=1')"
+                                   onClick="ss(${be.level1 },${be.dmid },5,-2,6,1)"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
                                 <a style="text-decoration:none"
                                    onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-2')"
                                    href="javascript:;">设置</a>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-2&template=2&flag=1')"--%>
+<%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-2&template=2&flag=1')"
+                                   onClick="ss(${be.level1 },${be.dmid },1,-2,2,1)"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
                                 <a style="text-decoration:none"
                                    onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-2')"
                                    href="javascript:;">设置</a>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-2&template=3&flag=1')"--%>
+<%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-2&template=3&flag=1')"
+                                   onClick="ss(${be.level1 },${be.dmid },2,-2,3,1)"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
                                 <a style="text-decoration:none"
                                    onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-2')"
                                    href="javascript:;">设置</a>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-2&template=4&flag=1')"--%>
+<%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-2&template=4&flag=1')"
+                                   onClick="ss(${be.level1 },${be.dmid },3,-2,4,1)"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
                                 <a style="text-decoration:none"
                                    onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-2')"
                                    href="javascript:;">设置</a>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-2&template=5&flag=1')"--%>
+<%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-2&template=5&flag=1')"
+                                   onClick="ss(${be.level1 },${be.dmid },4,-2,5,1)"
                                    href="javascript:;">实施</a>
                             </td>
 
@@ -207,40 +227,55 @@
                                 <a style="text-decoration:none"
                                    onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1')"
                                    href="javascript:;">设置</a>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"--%>
+<%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"
+                                   onClick="ss(${be.level1 },${be.dmid },5,-1,6,1)"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
                                 <a style="text-decoration:none"
                                    onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-1')"
                                    href="javascript:;">设置</a>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-1&template=2&flag=1')"--%>
+<%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-1&template=2&flag=1')"
+                                   onClick="ss(${be.level1 },${be.dmid },1,-1,2,1)"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
                                 <a style="text-decoration:none"
                                    onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-1')"
                                    href="javascript:;">设置</a>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-1&template=3&flag=1')"--%>
+<%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-1&template=3&flag=1')"
+                                   onClick="ss(${be.level1 },${be.dmid },2,-1,3,1)"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
                                 <a style="text-decoration:none"
                                    onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-1')"
                                    href="javascript:;">设置</a>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-1&template=4&flag=1')"--%>
+<%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-1&template=4&flag=1')"
+                                   onClick="ss(${be.level1 },${be.dmid },3,-1,4,1)"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
                                 <a style="text-decoration:none"
                                    onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-1')"
                                    href="javascript:;">设置</a>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-1&template=5&flag=1')"--%>
+<%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
-                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-1&template=5&flag=1')"
+                                   onClick="ss(${be.level1 },${be.dmid },4,-1,5,1)"
                                    href="javascript:;">实施</a>
                             </td>
                         </tr>
@@ -253,167 +288,162 @@
     </div>
 
 
+    <%--    &lt;%&ndash; 添加标准检查设置  定位&ndash;%&gt;--%>
+    <%--        <c:if test="${not empty jiChuItem}">--%>
+    <%--            <div class="mt-20">--%>
+    <%--                <h3>基础检查</h3>--%>
+    <%--                <table class="table table-border table-bordered table-bg table-hover table-sort">--%>
+    <%--                    <thead>--%>
+    <%--                    <tr class="text-c">--%>
+    <%--                        <th width="5%">序号</th>--%>
+    <%--                        <th>受检车间/场所</th>--%>
+    <%--                        <th>综合检查</th>--%>
+    <%--                        <th>日常检查</th>--%>
+    <%--                        <th>定期检查</th>--%>
+    <%--                        <th>季节检查</th>--%>
+    <%--                        <th>其他检查</th>--%>
+    <%--                    </tr>--%>
+    <%--                    </thead>--%>
+    <%--                    <tbody>--%>
+    <%--                    <!-- 循环-->--%>
+    <%--                    <c:forEach items="${jiChuItem}" varStatus="index" var="be">--%>
+    <%--                        <tr class="text-c">--%>
+    <%--                            <td>${index.index + 1}</td>--%>
+    <%--                            <td>${be.level1 }</td>--%>
+    <%--                            <td>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1')"--%>
+    <%--                                   href="javascript:;">设置</a>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"--%>
+    <%--                                   href="javascript:;">执行</a>--%>
+    <%--                            </td>--%>
+    <%--                            <td>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-1')"--%>
+    <%--                                   href="javascript:;">设置</a>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-1&template=2&flag=1')"--%>
+    <%--                                   href="javascript:;">执行</a>--%>
+    <%--                            </td>--%>
+    <%--                            <td>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-1')"--%>
+    <%--                                   href="javascript:;">设置</a>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-1&template=3&flag=1')"--%>
+    <%--                                   href="javascript:;">执行</a>--%>
+    <%--                            </td>--%>
+    <%--                            <td>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-1')"--%>
+    <%--                                   href="javascript:;">设置</a>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-1&template=4&flag=1')"--%>
+    <%--                                   href="javascript:;">执行</a>--%>
+    <%--                            </td>--%>
+    <%--                            <td>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-1')"--%>
+    <%--                                   href="javascript:;">设置</a>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-1&template=5&flag=1')"--%>
+    <%--                                   href="javascript:;">执行</a>--%>
+    <%--                            </td>--%>
 
+    <%--                        </tr>--%>
+    <%--                    </c:forEach>--%>
+    <%--                    <!-- 循环结束 -->--%>
+    <%--                    </tbody>--%>
+    <%--                </table>--%>
+    <%--            </div>--%>
+    <%--        </c:if>--%>
+    <%--        <c:if test="${not empty xianChangItem}">--%>
+    <%--            <div class="mt-20" style="margin-top: 50px">--%>
+    <%--                <h3>现场检查</h3>--%>
+    <%--                <table class="table table-border table-bordered table-bg table-hover table-sort">--%>
+    <%--                    <thead>--%>
+    <%--                    <tr class="text-c">--%>
+    <%--                        <th width="5%">序号</th>--%>
+    <%--                        <th>受检车间/场所</th>--%>
+    <%--                        <th>综合检查</th>--%>
+    <%--                        <th>日常检查</th>--%>
+    <%--                        <th>定期检查</th>--%>
+    <%--                        <th>季节检查</th>--%>
+    <%--                        <th>其他检查</th>--%>
+    <%--                    </tr>--%>
+    <%--                    </thead>--%>
+    <%--                    <tbody>--%>
+    <%--                    <!-- 循环-->--%>
+    <%--                    <c:forEach items="${xianChangItem}" varStatus="index" var="be">--%>
+    <%--                        <tr class="text-c">--%>
+    <%--                            <td>${index.index + 1}</td>--%>
+    <%--                            <td>${be.level1 }</td>--%>
+    <%--                            <td>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-2')"--%>
+    <%--                                   href="javascript:;">设置</a>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-2&template=6&flag=1')"--%>
+    <%--                                   href="javascript:;">执行</a>--%>
+    <%--                            </td>--%>
+    <%--                            <td>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-2')"--%>
+    <%--                                   href="javascript:;">设置</a>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-2&template=2&flag=1')"--%>
+    <%--                                   href="javascript:;">执行</a>--%>
+    <%--                            </td>--%>
+    <%--                            <td>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-2')"--%>
+    <%--                                   href="javascript:;">设置</a>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-2&template=3&flag=1')"--%>
+    <%--                                   href="javascript:;">执行</a>--%>
+    <%--                            </td>--%>
+    <%--                            <td>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-2')"--%>
+    <%--                                   href="javascript:;">设置</a>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-2&template=4&flag=1')"--%>
+    <%--                                   href="javascript:;">执行</a>--%>
+    <%--                            </td>--%>
+    <%--                            <td>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-2')"--%>
+    <%--                                   href="javascript:;">设置</a>--%>
+    <%--                                <a style="text-decoration:none"--%>
+    <%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-2&template=5&flag=1')"--%>
+    <%--                                   href="javascript:;">执行</a>--%>
+    <%--                            </td>--%>
 
-
-<%--    &lt;%&ndash; 添加标准检查设置  定位&ndash;%&gt;--%>
-<%--        <c:if test="${not empty jiChuItem}">--%>
-<%--            <div class="mt-20">--%>
-<%--                <h3>基础检查</h3>--%>
-<%--                <table class="table table-border table-bordered table-bg table-hover table-sort">--%>
-<%--                    <thead>--%>
-<%--                    <tr class="text-c">--%>
-<%--                        <th width="5%">序号</th>--%>
-<%--                        <th>受检车间/场所</th>--%>
-<%--                        <th>综合检查</th>--%>
-<%--                        <th>日常检查</th>--%>
-<%--                        <th>定期检查</th>--%>
-<%--                        <th>季节检查</th>--%>
-<%--                        <th>其他检查</th>--%>
-<%--                    </tr>--%>
-<%--                    </thead>--%>
-<%--                    <tbody>--%>
-<%--                    <!-- 循环-->--%>
-<%--                    <c:forEach items="${jiChuItem}" varStatus="index" var="be">--%>
-<%--                        <tr class="text-c">--%>
-<%--                            <td>${index.index + 1}</td>--%>
-<%--                            <td>${be.level1 }</td>--%>
-<%--                            <td>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1')"--%>
-<%--                                   href="javascript:;">设置</a>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"--%>
-<%--                                   href="javascript:;">执行</a>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-1')"--%>
-<%--                                   href="javascript:;">设置</a>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-1&template=2&flag=1')"--%>
-<%--                                   href="javascript:;">执行</a>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-1')"--%>
-<%--                                   href="javascript:;">设置</a>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-1&template=3&flag=1')"--%>
-<%--                                   href="javascript:;">执行</a>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-1')"--%>
-<%--                                   href="javascript:;">设置</a>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-1&template=4&flag=1')"--%>
-<%--                                   href="javascript:;">执行</a>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-1')"--%>
-<%--                                   href="javascript:;">设置</a>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-1&template=5&flag=1')"--%>
-<%--                                   href="javascript:;">执行</a>--%>
-<%--                            </td>--%>
-
-<%--                        </tr>--%>
-<%--                    </c:forEach>--%>
-<%--                    <!-- 循环结束 -->--%>
-<%--                    </tbody>--%>
-<%--                </table>--%>
-<%--            </div>--%>
-<%--        </c:if>--%>
-<%--        <c:if test="${not empty xianChangItem}">--%>
-<%--            <div class="mt-20" style="margin-top: 50px">--%>
-<%--                <h3>现场检查</h3>--%>
-<%--                <table class="table table-border table-bordered table-bg table-hover table-sort">--%>
-<%--                    <thead>--%>
-<%--                    <tr class="text-c">--%>
-<%--                        <th width="5%">序号</th>--%>
-<%--                        <th>受检车间/场所</th>--%>
-<%--                        <th>综合检查</th>--%>
-<%--                        <th>日常检查</th>--%>
-<%--                        <th>定期检查</th>--%>
-<%--                        <th>季节检查</th>--%>
-<%--                        <th>其他检查</th>--%>
-<%--                    </tr>--%>
-<%--                    </thead>--%>
-<%--                    <tbody>--%>
-<%--                    <!-- 循环-->--%>
-<%--                    <c:forEach items="${xianChangItem}" varStatus="index" var="be">--%>
-<%--                        <tr class="text-c">--%>
-<%--                            <td>${index.index + 1}</td>--%>
-<%--                            <td>${be.level1 }</td>--%>
-<%--                            <td>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-2')"--%>
-<%--                                   href="javascript:;">设置</a>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-2&template=6&flag=1')"--%>
-<%--                                   href="javascript:;">执行</a>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-2')"--%>
-<%--                                   href="javascript:;">设置</a>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-2&template=2&flag=1')"--%>
-<%--                                   href="javascript:;">执行</a>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-2')"--%>
-<%--                                   href="javascript:;">设置</a>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-2&template=3&flag=1')"--%>
-<%--                                   href="javascript:;">执行</a>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-2')"--%>
-<%--                                   href="javascript:;">设置</a>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-2&template=4&flag=1')"--%>
-<%--                                   href="javascript:;">执行</a>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="show_dialog('生成检查表', '${ly}/company/model-add-main?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-2')"--%>
-<%--                                   href="javascript:;">设置</a>--%>
-<%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-2&template=5&flag=1')"--%>
-<%--                                   href="javascript:;">执行</a>--%>
-<%--                            </td>--%>
-
-<%--                        </tr>--%>
-<%--                    </c:forEach>--%>
-<%--                    <!-- 循环结束 -->--%>
-<%--                    </tbody>--%>
-<%--                </table>--%>
-<%--            </div>--%>
-<%--        </c:if>--%>
-
-
+    <%--                        </tr>--%>
+    <%--                    </c:forEach>--%>
+    <%--                    <!-- 循环结束 -->--%>
+    <%--                    </tbody>--%>
+    <%--                </table>--%>
+    <%--            </div>--%>
+    <%--        </c:if>--%>
 
 
 </div>
 <script type="text/javascript">
 
-    HUItab =function(tabBar,tabCon,class_name,tabEvent,i){
-        var $tab_menu=$(tabBar);
+    HUItab = function (tabBar, tabCon, class_name, tabEvent, i) {
+        var $tab_menu = $(tabBar);
         // 初始化操作
         $tab_menu.removeClass(class_name);
         $(tabBar).eq(i).addClass(class_name);
         $(tabCon).hide();
         $(tabCon).eq(i).show();
 
-        $tab_menu.bind(tabEvent,function(){
+        $tab_menu.bind(tabEvent, function () {
             $tab_menu.removeClass(class_name);
             $(this).addClass(class_name);
-            var index=$tab_menu.index(this);
+            var index = $tab_menu.index(this);
             $(tabCon).hide();
             $(tabCon).eq(index).show();
         });
@@ -427,12 +457,29 @@
             "aoColumnDefs": []
         });
         $(function () {
-            HUItab("#tab-index-cartegory .tabBar span","#tab-index-cartegory .tabCon","selected","click","0")
+            HUItab("#tab-index-cartegory .tabBar span", "#tab-index-cartegory .tabCon", "selected", "click", "0")
         })
     });
 
-    function tz(url){
-        window.location.href=url;
+    function tz(url) {
+        window.location.href = url;
+    }
+
+    function ss(dmname, dmid, checkType, industryType, template, flag) {   //点击实施方法
+        $.post(getRootPath() + "/company/zhuChartData3", {
+            dmname: dmname, dmid: dmid, checkType: checkType, industryType: industryType, template: template, flag: flag
+        }, function (result, status) {
+            if (status == 'success') {
+                if (result.status == 0) {
+                    var url = getRootPath()+'/village/plan-next?flag='+result.data.flag+'&id='+result.data.modelId;
+                    window.location.href=url;
+                } else {
+                    layer.msg('请先设置检查表');
+                }
+            } else {
+                layer.msg('网络错误');
+            }
+        })
     }
 </script>
 </body>

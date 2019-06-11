@@ -80,15 +80,15 @@ public class AppController_Map extends BaseController {
             // 判断是否存在
             File file = new File(realPath + path);
             if (!file.exists() && !file.isDirectory()) {
-                System.out.println("//不存在");
+                System.out.println("不存在");
                 file.mkdir();
             }
 
             // 生成jpeg图片
             String imgFilePath = realPath + path + s + ".jpg";
             // 数据库图片路径
-            //String filePath =  InetAddress.getLocalHost().getHostAddress()+":"+ request.getLocalPort()+path+s+".jpg";
-            String filePath = "https://sec.dicarl.com" + path + s + ".jpg";
+            String filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()  + path + s + ".jpg";
+            //String filePath = "https://sec.dicarl.com" + path + s + ".jpg";
             //String filePath =  path+s+".jpg";
 
             OutputStream ops = new FileOutputStream(imgFilePath);
@@ -170,8 +170,8 @@ public class AppController_Map extends BaseController {
     /**
      * 跳转到地图的截图页面
      */
-    @RequestMapping(value="control-list4")
-    public String jumpHtml(){
+    @RequestMapping(value = "control-list4")
+    public String jumpHtml() {
         return "company/safety-system/control-list4";
     }
 
@@ -181,7 +181,7 @@ public class AppController_Map extends BaseController {
     @RequestMapping("B004")
     @SuppressWarnings("all")
     public @ResponseBody
-    AppResult uploadFile(@RequestParam(value = "file", required = false) MultipartFile file,Integer itemId,HttpServletRequest request) throws IOException {
+    AppResult uploadFile(@RequestParam(value = "file", required = false) MultipartFile file, Integer itemId, HttpServletRequest request) throws IOException {
         AppResult result = new AppResultImpl();
         System.out.println("执行文件上传");
         request.setCharacterEncoding("UTF-8");
@@ -194,7 +194,7 @@ public class AppController_Map extends BaseController {
             String type = null;
             type = fileName.indexOf(".") != -1 ? fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()) : null;
             if (type != null) {
-                if ("TXT".equals(type.toUpperCase()) || "DOCX".equals(type.toUpperCase()) || "DOC".equals(type.toUpperCase())|| "DOTX".equals(type.toUpperCase())) {
+                if ("TXT".equals(type.toUpperCase()) || "DOCX".equals(type.toUpperCase()) || "DOC".equals(type.toUpperCase()) || "DOTX".equals(type.toUpperCase())) {
                     // 项目在容器中实际发布运行的根路径
                     String realPath = request.getSession().getServletContext().getRealPath("/");
                     String realPath2 = realPath.replaceAll("\\\\", "/");
@@ -202,7 +202,7 @@ public class AppController_Map extends BaseController {
                     String replace = UUID.randomUUID().toString().replace("-", "");
 
                     // 自定义的文件名称
-                    String trueFileName = /*String.valueOf(System.currentTimeMillis()) +*/ replace+fileName;
+                    String trueFileName = /*String.valueOf(System.currentTimeMillis()) +*/ replace + fileName;
                     // 设置存放图片文件的路径
                     path = realPath2 + "images/upload/" + trueFileName;
 

@@ -2915,7 +2915,7 @@ public class VillageController extends BaseController {
         } else {
 
         }
-        LinkedList linkedList = new LinkedList();
+        ArrayList linkedList= new ArrayList();
         if (null != list && list.size() > 0) {
             for (String level3 : list) {
                 LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
@@ -2925,6 +2925,7 @@ public class VillageController extends BaseController {
                 linkedList.add(map);
             }
         }
+
         return linkedList;
     }
 
@@ -2950,16 +2951,26 @@ public class VillageController extends BaseController {
         } else {
 
         }
-        LinkedList linkedList = new LinkedList();
+        ArrayList<ACompanyManual> linkedList= new ArrayList();
         if (null != list && list.size() > 0) {
             for (String level3 : list) {
-                linkedList.addAll(aCompanyManualMapper.selectAllByLevel3(user.getId(), dpName, level3));
+                List<ACompanyManual> aCompanyManuals = aCompanyManualMapper.selectAllByLevel3(user.getId(), dpName, level3);
+                for (ACompanyManual aCompanyManual : aCompanyManuals) {
+                    linkedList.add(aCompanyManual);
+                }
             }
         }
+        // 进行排序
+        Collections.sort(linkedList, new Comparator<ACompanyManual>() {
+            @Override
+            public int compare(ACompanyManual o1, ACompanyManual o2) {
+                return o2.getLevel2().length()-o1.getLevel2().length();
+            }
+        });
         return linkedList;
     }
 
-    
+
     /**
      * TODO 根据公司和部门,岗位获取检查项
      * 根据部门和岗位,获取风险点和对应的风险因素和数据

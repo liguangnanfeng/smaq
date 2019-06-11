@@ -444,4 +444,37 @@ public class ACompanyManual {
     public void setRiskId(Integer riskId) {
         this.riskId = riskId;
     }
+
+
+    @Override
+    public String toString() {
+        return "ACompanyManual{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", dmid=" + dmid +
+                ", level1='" + level1 + '\'' +
+                ", level2='" + level2 + '\'' +
+                ", level3='" + level3 + '\'' +
+                ", factors='" + factors + '\'' +
+                ", type='" + type + '\'' +
+                ", measures='" + measures + '\'' +
+                ", reference='" + reference + '\'' +
+                ", flag='" + flag + '\'' +
+                ", level='" + level + '\'' +
+                ", issys=" + issys +
+                ", del=" + del +
+                ", ctime=" + ctime +
+                ", gkcs='" + gkcs + '\'' +
+                ", gkzt='" + gkzt + '\'' +
+                ", fjgkfzr='" + fjgkfzr + '\'' +
+                ", material='" + material + '\'' +
+                ", gy='" + gy + '\'' +
+                ", hxys='" + hxys + '\'' +
+                ", wlbs='" + wlbs + '\'' +
+                ", flag2='" + flag2 + '\'' +
+                ", gwzy='" + gwzy + '\'' +
+                ", lnglat='" + lnglat + '\'' +
+                ", riskId=" + riskId +
+                '}';
+    }
 }

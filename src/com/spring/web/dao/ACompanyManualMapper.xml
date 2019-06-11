@@ -314,7 +314,7 @@
             <if test="lnglat != null">
                 lnglat = #{lnglat,jdbcType=VARCHAR},
             </if>
-            <if test="riskId != null">   riskId
+            <if test="riskId != null">riskId
                 riskId = #{riskId,jdbcType=VARCHAR},
             </if>
         </set>
@@ -421,8 +421,6 @@
     </select>
 
 
-
-
     <select id="selectNum" resultType="java.util.HashMap">
         select
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
@@ -464,8 +462,6 @@
     </select>
 
 
-
-
     <!-- 分级管控数据显示排序 -->
     <select id="selectByAcs" resultType="java.util.HashMap">
         select
@@ -501,9 +497,6 @@
         </if>
         order by dmid asc , find_in_set(T1.level,'红色,橙色,黄色,蓝色')
     </select>
-
-
-
 
 
     <select id="selectByFlag3" resultType="java.util.HashMap">
@@ -728,7 +721,7 @@
     </insert>
 
     <!-- 添加数据信息 -->
-    <insert id="add" parameterType="com.spring.web.model.ACompanyManual" >
+    <insert id="add" parameterType="com.spring.web.model.ACompanyManual">
         insert into a_company_manual_tbl (uid, dmid,
         level1, level2, level3,
         factors,flag, level,
@@ -742,9 +735,8 @@
     </insert>
 
 
-
     <!-- 添加数据信息 -->
-    <insert id="save" parameterType="com.spring.web.model.ACompanyManual" >
+    <insert id="save" parameterType="com.spring.web.model.ACompanyManual">
         insert into a_company_manual_tbl (uid,level3,
         factors, type, measures,reference, flag, level,
         del, ctime)
@@ -753,10 +745,6 @@
         #{reference,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR},
         #{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP})
     </insert>
-
-
-
-
 
 
     <select id="selectByMap2Limit" resultType="java.util.HashMap">
@@ -961,7 +949,6 @@
     </update>
 
 
-
     <update id="updateDelByUserId">
         update
         a_company_manual_tbl
@@ -972,43 +959,40 @@
     </update>
 
 
-
     <!--根据公司ID，风险等级 查询未删除的数据信息 -->
-    <select id="selectIdss"  resultType="com.spring.web.model.ACompanyManual">
+    <select id="selectIdss" resultType="com.spring.web.model.ACompanyManual">
         select id from a_company_manual_tbl where flag = "1" and del = 0 and uid = #{uid};
     </select>
 
 
     <!--根据公司ID，风险等级 查询未删除的数据信息 -->
-    <select id="selectAlls"  resultType="com.spring.web.model.ACompanyManual">
+    <select id="selectAlls" resultType="com.spring.web.model.ACompanyManual">
         select id from a_company_manual_tbl where flag = "3" and del = 0 and uid = #{uid};
     </select>
 
 
     <!--根据公司ID，风险等级 查询未删除的数据信息 -->
-    <select id="selectIds"  resultType="com.spring.web.model.ACompanyManual">
+    <select id="selectIds" resultType="com.spring.web.model.ACompanyManual">
         select id from a_company_manual_tbl where flag = "2" and del = 0 and uid = #{uid};
     </select>
 
 
     <!--根据公司ID，风险等级 查询未删除的数据信息 -->
-    <select id="findALLsss"  resultType="com.spring.web.model.ACompanyManual">
+    <select id="findALLsss" resultType="com.spring.web.model.ACompanyManual">
         select * from a_company_manual_tbl where del = 0 and flag = #{flag} and uid = #{uid} order by id asc;
     </select>
 
 
-
     <!--根据公司ID，风险等级 查询未删除的数据信息 -->
-    <select id="selectIdsAll"  resultType="com.spring.web.model.ACompanyManual">
+    <select id="selectIdsAll" resultType="com.spring.web.model.ACompanyManual">
         select * from a_company_manual_tbl where level1 = #{level1} and level2 = #{level2} and del = 0 and uid = #{uid} and level3 like "%现场管理%" ;
     </select>
 
 
     <!--根据公司ID，风险等级 查询未删除的数据信息 -->
-    <select id="selectIdsAlls"  resultType="com.spring.web.model.ACompanyManual">
+    <select id="selectIdsAlls" resultType="com.spring.web.model.ACompanyManual">
         select * from a_company_manual_tbl where level1 = #{level1} and level2 = #{level2} and del = 0 and uid = #{uid};
     </select>
-
 
 
     <update id="updateDelByUserId2">
@@ -1148,7 +1132,7 @@
     </select>
 
     <!--根据总公司的id和部门名称查询level2-->
-    <select id="findLevel2ByPersonelId"  resultType="List">
+    <select id="findLevel2ByPersonelId" resultType="List">
         select level2
         from a_company_manual_tbl
         where level1=#{name}
@@ -1167,7 +1151,7 @@
     </select>
 
     <!--根据公司ID，风险程度，是否删除 来查询数据信息-->
-    <select id="selectAll"  resultType="com.spring.web.model.ACompanyManual">
+    <select id="selectAll" resultType="com.spring.web.model.ACompanyManual">
         select * from a_company_manual_tbl where level= "红色" and del = 0 and  and del=0 uid = #{uid};
     </select>
 
@@ -1180,6 +1164,7 @@
         and del=0
         and measures !=''
         group by level3;
+
     </select>
     <!--根据基础/高危(备用)获取level3的数据,然后根据level3的数据获取到响应的部门-->
     <select id="selectlevel3BydmNameAndLevel3" resultType="String">
@@ -1190,7 +1175,12 @@
 
     <!--根据部门的Uid和level1和level3获取详细信息 -->
     <select id="selectAllByLevel3" resultType="com.spring.web.model.ACompanyManual">
-        SELECT * FROM a_company_manual_tbl where uid=#{uid}  and level1 = #{level1}  and del=0 and level3 = #{level3};
+        SELECT * FROM a_company_manual_tbl
+        where uid=#{uid}
+        and level1 = #{level1}
+        and del=0
+        and level3 = #{level3}
+        order by level3 desc;
     </select>
 
 </mapper>

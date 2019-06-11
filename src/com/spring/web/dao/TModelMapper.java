@@ -91,4 +91,10 @@ public interface TModelMapper {
     List<Map<Integer, String>> selectCountryModelByUid(Integer uid);
 
 
+    /**
+     * TODO 点击设定获取参数,每一次取出最新的数据,没有返回为空
+     * @param map
+     * @return
+     */
+    TModel selectModelByMapAndLimit1(Map<String, Object> map);
 }

@@ -429,18 +429,18 @@
     <select id="selectModelByMapAndLimit1" parameterType="java.util.Map" resultType="com.spring.web.model.TModel">
         select * from smaq.t_model_tbl
         <where>
-            and del=0
+             del=0
             <if test="userId!=null">
                 and user_id = #{userId}
             </if>
             <if test="dmname!=null and dmname!='' ">
                 and part = #{dmname}
             </if>
-            <if test="type!=null  ">
+            <if test="type!=null">
                 and type = #{type}
             </if>
         </where>
-        order by id,create_time desc
+        order by create_time desc
         limit 0,1;
     </select>
 

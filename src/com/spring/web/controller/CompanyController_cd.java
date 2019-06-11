@@ -556,7 +556,7 @@ public class CompanyController_cd extends BaseController {
         safetyFacilitiesMapper.deleteByPrimaryKey(id);
         return result;
     }
-    
+
     /**
      * 主要原辅材料页面
      */
@@ -2697,7 +2697,7 @@ public class CompanyController_cd extends BaseController {
 
         map.put("flag", flag);
         TModel tModel= tModelMapper.selectModelByMapAndLimit1(map);
-        if(null != tModel){
+        if(null == tModel){
             result.setStatus("1");
             return result;
         }

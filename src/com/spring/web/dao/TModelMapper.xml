@@ -418,6 +418,9 @@
             <if test="type!=null and type!= ''">
                 and T1.type =#{type}
             </if>
+            <if test="flag != null">
+                and T1.flag = #{flag}
+            </if>
             <if test="industryType!=null and industryType!=''">
                 and T1.industry_type = #{industryType}
             </if>
@@ -438,6 +441,9 @@
             </if>
             <if test="type!=null">
                 and type = #{type}
+            </if>
+            <if test="flag!=null">
+                and flag = #{flag}
             </if>
         </where>
         order by create_time desc

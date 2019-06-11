@@ -2999,7 +2999,6 @@ public class VillageController extends BaseController {
             checkItem.setTemplate(companyManual.getLevel1() + str[checkType] + "检查表");
         }
 
-
         return savemodel(request, checkItem);
     }
 

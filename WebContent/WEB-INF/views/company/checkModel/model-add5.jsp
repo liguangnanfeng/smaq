@@ -80,7 +80,57 @@
         var industryType = "${industryType}";
 
     </script>
+    <script type="text/javascript">
+        function eat() {
+            var b = null, l1 = '', c = 1;
+            var b2 = null, l2 = '', c2 = 1;
+            $("tbody tr").each(function () {
+                var td = $(this).children("td").eq(0);
+                var td2 = $(this).children("td").eq(1);
+                var l1_ = td.text();
+                var l2_ = td2.text();
+                //Same to top level
+                if (l1 == l1_) {
+                    td.remove();
+                    c = c + 1;
+                    if (l2 == l2_) {
+                        td2.remove();
+                        c2 = c2 + 1;
 
+                    } else {
+                        l2 = l2_;
+                        if (b2 != null) {
+                            b2.attr("rowspan", c2);
+                            c2 = 1;
+                        }
+                        b2 = td2;
+                    }
+
+                } else {//Diffrent to top level
+                    l1 = l1_;
+                    if (b != null) {
+                        b.attr("rowspan", c);
+                        c = 1;
+                    }
+                    b = td;
+                    l2 = l2_;
+                    if (b2 != null) {
+                        b2.attr("rowspan", c2);
+                        c2 = 1;
+                    }
+                    b2 = td2;
+
+                }
+            })
+            if (b != null) {
+                b.attr("rowspan", c);
+            }
+            if (b2 != null) {
+                b2.attr("rowspan", c2);
+            }
+
+        }
+    </script>
 
     <div id="app"></div>
 
@@ -118,7 +168,7 @@
                     '-2': '现场'
                 };
                 const bb = objs[industryType];
-                this.tableName =dmname+aa+bb+'检查表';
+                this.tableName = dmname + aa + bb + '检查表';
             }
 
             componentWillMount() {
@@ -138,7 +188,7 @@
                 const _self = this;
                 $.ajax({
                     type: "POST",
-                    url: `${host}/village/selectDep`,
+                    url: `${host}/village/selectDep2`,
                     data: {"depId": this.dmid, 'dpName': this.dmname, 'checkType': parseInt(this.industryType)},
                     async: false,
                     dataType: "json",
@@ -358,6 +408,7 @@
             }
 
             render = () => {
+                console.log(this.state.list)
                 const arr = ['日常检查', '定期检查', '季节检查', '其他检查', '综合检查'];
                 const checkType = arr[this.checkType - 1];
                 const obj = {
@@ -369,48 +420,30 @@
 
                 const xcjc =      //如果是现场基础检查 渲染这个
                     <div>
-                        <%--<div className="row cl">--%>
-                        <%--    <label className="form-label col-xs-4 col-sm-2"><span className="c-red">*</span>检查部位--%>
-                        <%--        :</label>--%>
-                        <%--    <div className="formControls col-xs-8 col-sm-9">--%>
-                        <%--        <input type="text"--%>
-                        <%--               style={{width: '350px'}} className="input-text"--%>
-                        <%--               maxLength="50" placeholder="检查部位"--%>
-                        <%--               value={this.dmname}--%>
-                        <%--               disabled/>--%>
-                        <%--    </div>--%>
-                        <%--</div>--%>
-                        {
-                            this.state.list.map((item, index) => {
-                                if (item.list.length > 0) {
-                                    return (
-                                        <div key={index}>
-                                            <div className="row cl">
-                                                <label className="form-label col-lg-7 col-xs-7 col-sm-7 my_left"
-                                                       style={{textAlign: 'left'}}>
-                                                    {this.state.current == index ?
-                                                        <i class="Hui-iconfont my_icon" onClick={() => {
-                                                            this.zhankai(index)
-                                                        }}></i> : <i class="Hui-iconfont my_icon" onClick={() => {
-                                                            this.zhankai(index)
-                                                        }}></i>}
-                                                    <span className="c-red">*</span>{item.name}
-                                                </label>
-                                            </div>
-                                            {this.state.current == index ?
-                                                <div className="row cl" style={{marginTop: '0px'}}>
-                                                    <div className="formControls col-lg-7 col-xs-7 col-sm-7 my_left2">
-                                                        {this.renderLevel4(item.list, index)}
-                                                    </div>
-                                                </div>
-                                                : null}
-                                        </div>
-
-                                    )
-                                }
-                            })
-                        }
-
+                        <table id="xxx" className="table table-border table-bordered table-bg table-hover table-sort">
+                            <thead>
+                            <tr className="text-c">
+                                <th style={{minWidth:'80px'}}>部位</th>
+                                <th style={{minWidth:'80px'}}>岗位</th>
+                                <th style={{minWidth:'150px'}}>风险点</th>
+                                <th style={{minWidth:'150px'}}>风险内容</th>
+                                <th style={{minWidth:'50px'}} className="div-pcz">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {this.state.list.map((item, index) => {
+                                return (
+                                    <tr>
+                                        <td className="text-c">1</td>
+                                        <td className="text-c">2</td>
+                                        <td className="text-c">3</td>
+                                        <td className="text-c">4</td>
+                                        <td className="text-c">勾选</td>
+                                    </tr>
+                                )
+                            })}
+                            </tbody>
+                        </table>
                         {this.state.myChecks.map((item, index) => {
                             return (
                                 <div>
@@ -474,27 +507,7 @@
                     <div>
                         <form className="form form-horizontal" id="form">
                             <div className="page-container">
-                                <%--<div className="row cl">--%>
-                                <%--    <label className="form-label col-xs-4 col-sm-2"><span--%>
-                                <%--        className="c-red">*</span>检查表名称：</label>--%>
-                                <%--    <div className="formControls col-xs-8 col-sm-9">--%>
-                                <%--        <input type="text" onChange={(e) => this.inputChange('tableName', e)}--%>
-                                <%--               style={{width: '350px'}} className="input-text"--%>
-                                <%--               maxLength="50" placeholder="请填写检查表名称(必填)"--%>
-                                <%--               value={this.state.tableName} autoFocus/>--%>
-                                <%--    </div>--%>
-                                <%--</div>--%>
-                                <%--<div className="row cl">--%>
-                                <%--    <label className="form-label col-xs-4 col-sm-2"><span--%>
-                                <%--        className="c-red">*</span>检查方式--%>
-                                <%--        :</label>--%>
-                                <%--    <div className="formControls col-xs-8 col-sm-9">--%>
-                                <%--        <input type="text"--%>
-                                <%--               style={{width: '350px'}} className="input-text"--%>
-                                <%--               maxLength="50" placeholder="检查方式"--%>
-                                <%--               value={checkType} disabled/>--%>
-                                <%--    </div>--%>
-                                <%--</div>--%>
+
                                 {this.checkType == 2 ?
                                     <div className="row cl dq">
                                         <label className="form-label col-xs-4 col-sm-2"><span
@@ -509,17 +522,6 @@
                                     </div> : null
                                 }
 
-                                <%--<div className="row cl">--%>
-                                <%--    <label className="form-label col-xs-4 col-sm-2"><span--%>
-                                <%--        className="c-red">*</span>检查类型--%>
-                                <%--        :</label>--%>
-                                <%--    <div className="formControls col-xs-8 col-sm-9">--%>
-                                <%--        <input type="text"--%>
-                                <%--               style={{width: '350px'}} className="input-text"--%>
-                                <%--               maxLength="50" placeholder="检查类型"--%>
-                                <%--               value={industryType} disabled/>--%>
-                                <%--    </div>--%>
-                                <%--</div>--%>
                                 {xcjc}
                             </div>
                         </form>

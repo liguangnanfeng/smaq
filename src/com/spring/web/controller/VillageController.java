@@ -2817,7 +2817,7 @@ public class VillageController extends BaseController {
         model.addAttribute("dmid", dmid);
         model.addAttribute("checkType", checkType);
         model.addAttribute("industryType", industryType);
-        return "company/checkModel/model-add4";
+        return "company/checkModel/model-add5";
     }
 
     /**

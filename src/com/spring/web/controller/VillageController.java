@@ -1162,22 +1162,23 @@ public class VillageController extends BaseController {
 
     /**
      * TODO 隐患排查记录 2019/6/5 10:26修改(企业端查询)
+     *
      * @param request 请求
      * @param title   标题
      * @param type    未知
      * @param status  状态 1 未检查  2 已检查
      * @param flag    1 自查  4 行政  3 部门抽查
-     * @return        该公司所有的检查的记录
+     * @return 该公司所有的检查的记录
      */
-    @RequestMapping(value="check-list-two")
-    public String checkListItem(HttpServletRequest request,String title, Integer type, Integer status, Integer flag, Model model){
+    @RequestMapping(value = "check-list-two")
+    public String checkListItem(HttpServletRequest request, String title, Integer type, Integer status, Integer flag, Model model) {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
-        m.put("userid",user.getId());    //公司id
-        m.put("title",title);
-        m.put("type",type);
-        m.put("status",status);
-        m.put("flag",flag);
+        m.put("userid", user.getId());    //公司id
+        m.put("title", title);
+        m.put("type", type);
+        m.put("status", status);
+        m.put("flag", flag);
         // 进行判断,将该公司所有的检查记录进行查询
         if (setUserId(user, m)) {
             clearVillageTown(m);
@@ -1368,7 +1369,9 @@ public class VillageController extends BaseController {
         User user = getLoginUser(request);
 
         CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(id);
-
+        if(null== checkItemByModelId){
+            return "village/danger/plan-next";
+        }
         TCheck tc = tCheckMapper.selectByPrimaryKey(checkItemByModelId.getCheckId());
 
         //log.error("tCheckMapper检查表信息:"+tc.toString());
@@ -1418,7 +1421,7 @@ public class VillageController extends BaseController {
                 a.put("level1", level1);
                 a.put("level2", level2);
                 a.put("level3", level3);
-                log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
+                log.error("level1/2/3 : " + level1 + "/" + level2 + "/" + level3);
             }
         }
         //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
@@ -1435,10 +1438,12 @@ public class VillageController extends BaseController {
 
         model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
         log.error("plan-next：" + 6);
-        if (type == 9)
+        if (type == 9) {
             return "village/danger/plan-next1";
-        else
+        } else {
             return "village/danger/plan-next";
+        }
+
     }
 
 //    /**
@@ -1900,35 +1905,37 @@ public class VillageController extends BaseController {
 
     /**
      * TODO 隐患治理记录, 整改不合格的 新建立的页面
-     * @param request  请求
-     * @param flag     方式
-     * @param status   状态
+     *
+     * @param request 请求
+     * @param flag    方式
+     * @param status  状态
      * @return
      */
-    @RequestMapping(value="hidden-danger-list")
-    public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status){
+    @RequestMapping(value = "hidden-danger-list")
+    public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status) {
         User user = getLoginUser(request);
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
-        model.addAttribute("userId",user.getId());
+        model.addAttribute("userId", user.getId());
         List<Map> list = tCheckItemMapper.selectListBystatus(user.getId());
         for (Map map : list) {
             Date realTime = (Date) map.get("realTime");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             String format = sdf.format(realTime);
-            map.put("realTimeStr",format);
+            map.put("realTimeStr", format);
         }
-        model.addAttribute("list",list);
+        model.addAttribute("list", list);
         return "company/danger/hidden-danger-list";
     }
 
     /**
      * 保存治理投入金额
+     *
      * @return
      */
-    @RequestMapping(value="save-money")
+    @RequestMapping(value = "save-money")
     public @ResponseBody
-    Result saveMoney(Integer itemId, Integer money){
+    Result saveMoney(Integer itemId, Integer money) {
         try {
             TCheckItem tCheckItem = new TCheckItem();
             BigDecimal big = new BigDecimal(money);
@@ -1949,16 +1956,15 @@ public class VillageController extends BaseController {
     }
 
     /**
-     *
      * @return
      */
-    @RequestMapping(value="process-see")
-    public String processSee(Model model ,String url,HttpServletRequest request) throws UnknownHostException {
+    @RequestMapping(value = "process-see")
+    public String processSee(Model model, String url, HttpServletRequest request) throws UnknownHostException {
         InetAddress address = InetAddress.getLocalHost();
         String url2 = InetAddress.getLocalHost().getHostAddress() + ":" + request.getLocalPort() + url;
-        String url3 = "http://localhost:8080"+ url;
+        String url3 = "http://localhost:8080" + url;
         //model.addAttribute("list","http://localhost:8080"+list.get(i).getDocUrl());
-        model.addAttribute("list",url3);
+        model.addAttribute("list", url3);
 
         return "company/process/process-see";
     }
@@ -2800,17 +2806,18 @@ public class VillageController extends BaseController {
 
     /**
      * TODO 跳转中转页面==> 跳转到自定义/标准保存模版
+     *
      * @return
      */
-    @RequestMapping(value="model-add4")
-    public String modelAdd4(HttpServletRequest request ,Model model,String dmname,Integer dmid, Integer checkType,
+    @RequestMapping(value = "model-add4")
+    public String modelAdd4(HttpServletRequest request, Model model, String dmname, Integer dmid, Integer checkType,
                             Integer industryType
-    ){
-        model.addAttribute("dmname",dmname);
-        model.addAttribute("dmid",dmid);
-        model.addAttribute("checkType",checkType);
-        model.addAttribute("industryType",industryType);
-        return"company/checkModel/model-add4";
+    ) {
+        model.addAttribute("dmname", dmname);
+        model.addAttribute("dmid", dmid);
+        model.addAttribute("checkType", checkType);
+        model.addAttribute("industryType", industryType);
+        return "company/checkModel/model-add4";
     }
 
     /**
@@ -2849,14 +2856,15 @@ public class VillageController extends BaseController {
 
     /**
      * TODO 跳转到添加基础检查的页面显示
+     *
      * @return
      */
     @RequestMapping("addCheckModel3")
-    public String addCheckModel3(Model model,Integer dmid ,String dmname ,Integer checkType,Integer industryType){
-        model.addAttribute("dmid",dmid);
-        model.addAttribute("dmname",dmname);
-        model.addAttribute("checkType",checkType);
-        model.addAttribute("industryType",industryType);
+    public String addCheckModel3(Model model, Integer dmid, String dmname, Integer checkType, Integer industryType) {
+        model.addAttribute("dmid", dmid);
+        model.addAttribute("dmname", dmname);
+        model.addAttribute("checkType", checkType);
+        model.addAttribute("industryType", industryType);
 
         return "company/checkModel/model-add3";
 
@@ -2865,8 +2873,8 @@ public class VillageController extends BaseController {
     /**
      * TODO 根据页面进行选择的基础/现场,查询基础/现场对应的部门
      *
-     * @param request 请求
-     * @param checkType    基础/现场
+     * @param request   请求
+     * @param checkType 基础/现场
      * @return 部门名称 id
      */
     @RequestMapping(value = "findItemAll", method = RequestMethod.POST)
@@ -2908,7 +2916,7 @@ public class VillageController extends BaseController {
 
         }
         LinkedList linkedList = new LinkedList();
-        if (null!=list&&list.size()>0){
+        if (null != list && list.size() > 0) {
             for (String level3 : list) {
                 LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
                 List<ACompanyManual> aCompanyManuals = aCompanyManualMapper.selectAllByLevel3(user.getId(), dpName, level3);
@@ -2983,12 +2991,12 @@ public class VillageController extends BaseController {
     AppResult saveCheckMenu2(HttpServletRequest request, @RequestBody CheckItem checkItem) {
         User user = getLoginUser(request);
         Integer checkType = checkItem.title; // 获取检查方式
-        String [] str ={"日常","定期","季节","其他","综合"};
-        if(checkType==5){
-            checkItem.setTemplate(user.getUserName()+"综合检查表");
-        }else{
+        String[] str = {"日常", "定期", "季节", "其他", "综合"};
+        if (checkType == 5) {
+            checkItem.setTemplate(user.getUserName() + "综合检查表");
+        } else {
             ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(checkItem.getCheckLevels().get(0).getId());
-            checkItem.setTemplate(companyManual.getLevel1()+str[checkType]+"检查表");
+            checkItem.setTemplate(companyManual.getLevel1() + str[checkType] + "检查表");
         }
 
 
@@ -2998,11 +3006,11 @@ public class VillageController extends BaseController {
     /**
      * TODO PC端标准检查模版
      *
-     * @param request 请求
-     * @param dmid    部门名称(level1)
-     * @param checkType    检查类型   -1 基础   -2 现场   其他高危
-     * @param dptitle 检查方式   1 日常   2 定期   3 临时
-     * @param times   定期检查的天数
+     * @param request   请求
+     * @param dmid      部门名称(level1)
+     * @param checkType 检查类型   -1 基础   -2 现场   其他高危
+     * @param dptitle   检查方式   1 日常   2 定期   3 临时
+     * @param times     定期检查的天数
      * @return message
      */
     @RequestMapping(value = "saveCheckMenu3")

@@ -58,7 +58,4 @@ public class CheckItem {
      */
     public List<CheckLevel> checkLevels;
 
-
-
-
 }

@@ -473,7 +473,6 @@
             if (status == 'success') {
                 if (result.status == 0) {
                     var url = '${ly}/village/plan-next?flag='+result.data.flag+'&id='+result.data.modelId;
-                    console.log(url);
                     window.location.href=url;
                 } else {
                     layer.msg('请先设置检查表');

@@ -8,6 +8,8 @@ import com.alibaba.fastjson.JSON;
 import com.spring.web.BaseController;
 import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.*;
+import com.spring.web.result.AppResult;
+import com.spring.web.result.AppResultImpl;
 import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
 import com.spring.web.service.cgf.CgfService;
@@ -1841,7 +1843,6 @@ public class CompanyController_cd extends BaseController {
         m1.put("name", xx[0]);
         m2.put("name", xx[1]);
 
-
         // 数据表示的是,选中的时间段内
         m1.put("data", d.clone());
         m2.put("data", d.clone());
@@ -2670,7 +2671,49 @@ public class CompanyController_cd extends BaseController {
     }
 
     /**
-     * 根据前端条件==> 查询对应的model模版
+     * TODO 用户点击检查设置实施=> 实施 =>点击执行的时候获取这个方法的检查模版的最新的一条记录,
+     *      没有就显示为null
+     * 每一次获取的就是最新的
+     * 没有就表示数据库没有这个部门的模版,让用户直接添加
+     */
+    @ResponseBody
+    @RequestMapping(value = "model-list-ss")
+    public AppResult modelListss(HttpServletRequest request, Model model, String dmname, Integer dmid, Integer checkType,
+                                 Integer industryType, Integer template, Integer flag) {
+        AppResult result = new AppResultImpl();
+        User user = getLoginUser(request);
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        map.put("userId", user.getId());    // 公司id,必要
+        map.put("dmname", dmname);          // 部门名称
+        map.put("dmid", dmid);              // 部门id
+        map.put("type", checkType);         // 检查方式
+        if (industryType == -1) {
+            map.put("industryType", 1);  // 基础类型
+        } else if (industryType == -2) {
+            map.put("industryType", 2);  // 现场类型
+        } else {
+            map.put("industryType", 3);  // 高危类型
+        }
+
+        map.put("flag", flag);
+        TModel tModel= tModelMapper.selectModelByMapAndLimit1(map);
+        if(null != tModel){
+            result.setStatus("1");
+            return result;
+        }
+
+        Map<String,Object> resultMap = new HashMap<>();
+        resultMap.put("modelId",tModel.getId());
+        resultMap.put("flag",flag);
+
+        result.setStatus("0");
+        result.setData(resultMap);
+        return  result;
+
+    }
+
+    /**
+     * TODO 用户点击检查设置实施=> 实施 => 查询对应的model模版
      *
      * @param request      前端请求
      * @param model        mvc数据存储

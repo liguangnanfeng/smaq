@@ -109,8 +109,13 @@
               <div class="modal-body">
                   <div class="row cl row1">
                       <label class="form-label col-xs-4 col-sm-2" style="width:120px;" id="label_">公司/车间/岗位/部位名称：</label>
-                      <div class="formControls col-xs-8 col-sm-9" style="text-align:left;width:320px;">
+                      <div class="formControls col-xs-5 col-sm-5" style="text-align:left;">
                           <input type="text" value="" name="name" id="name" class="input-text">
+
+                      </div>
+                      <div class="formControls col-xs-3 col-sm-3" style="margin-top:8px;display: none"  id="dangerID">
+                          <input type="radio" name="killOrder" value="1" checked >现场
+                          <input type="radio" name="killOrder" value="2" style="margin-left: 3px" >基础
                       </div>
                   </div>
                   <%--四个隐藏域 将域中的数据进行传递 --%>
@@ -130,10 +135,6 @@
 </body>
 
 <script type="text/javascript">
-
-
-
-
 
 $(function() {
   var userType = '${session_user.userType}';
@@ -159,13 +160,14 @@ $(function() {
         window.location.reload();
       })
     }
-    
+
     if(type == 2) {//部门
       $.post("/company/system/depart-save", {
         name : $("#name").val(),
         cid : $("#cid").val(),
         level : 1,
-        id : $("#id").val()
+        id : $("#id").val(),
+        dangerId : $("input[name='killOrder']:checked").val()
       }, function(result) {
         layer.close(i);
         $("#win-add").modal("hide");
@@ -240,6 +242,7 @@ $(function() {
        }
        $("#label_").text(titles[1]);
        $("#type").val(1);
+       $("#dangerID").css('display','none');
        $("#win-add").modal("show");
        $("#name").focus();
      } else {
@@ -277,6 +280,7 @@ $(function() {
        }
        $("#label_").text(titles[2]);
        $("#type").val(2);
+       $("#dangerID").css('display','block');
        $("#win-add").modal("show");
        $("#name").focus();
      } else {
@@ -315,6 +319,7 @@ $(function() {
        }
        $("#label_").text(titles[3]);
        $("#type").val(3);
+       $("#dangerID").css('display','none');
        $("#win-add").modal("show");
        $("#name").focus();
      } else {
@@ -352,6 +357,12 @@ $(function() {
   }else{
      titles = ["", "公司名称", "车间名称", "岗位/部位名称"];
   }
+   if (type==2){
+       $("#dangerID").css('display','block');
+   }else{
+       $("#dangerID").css('display','none');
+   }
+
   $("#label_").text(titles[type]);
   $("#type").val(type);
   $("#name").val('');

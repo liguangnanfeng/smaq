@@ -239,7 +239,7 @@
 
     <select id="selectLevel1ByUid" resultType="java.util.Map">
         select
-        t1.id, t1.name, t1.level,t1.cid,
+        t1.id, t1.name, t1.level,t1.cid, t1.dangerId,
         (select name from zzjg_company_tbl where id = t1.cid) companyName
         from zzjg_department_tbl t1
         where

@@ -198,10 +198,12 @@
                                     </td>
                                         <td class="text-c">
                                             <c:if test="${empty type}">
-                                                <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
-                                            </c:if>
-                                            <c:if test="${empty type}">
-                                                <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                                <c:if test="${be.dangerId == 1}">
+                                                    <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
+                                                </c:if>
+                                                <c:if test="${be.dangerId == 2}">
+                                                    <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                                </c:if>
                                             </c:if>
                                         </td>
                                     </tr>
@@ -218,10 +220,12 @@
                                     <td style="width:40%;"><p style="text-align:center;">未辨识风险因素</p></td>
                                     <td style="width:10%;">
                                         <c:if test="${empty type}">
-                                            <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
-                                        </c:if>
-                                        <c:if test="${empty type}">
-                                            <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                            <c:if test="${be.dangerId == 1}">
+                                                <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
+                                            </c:if>
+                                            <c:if test="${be.dangerId == 2}">
+                                                <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                            </c:if>
                                         </c:if>
                                     </td>
                                 </tr>

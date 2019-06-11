@@ -2914,7 +2914,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "model-list-main")
     public String modelListMain(HttpServletRequest request,
-                                Model model
+                                Model model,Integer flag
     ) throws ParseException {
         // 获取用户信息
         User user = getLoginUser(request);
@@ -2923,6 +2923,7 @@ public class CompanyController_cd extends BaseController {
         List<Map<Object, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
+        model.addAttribute("flag",flag);
 
         return "company/danger/model-list-main";
 

@@ -2972,6 +2972,7 @@ public class VillageController extends BaseController {
 
     /**
      * TODO PC 自定义检查模板
+     * 并进行设置标题的设置
      *
      * @param request   请求
      * @param checkItem 用户选择的检查项
@@ -2980,6 +2981,17 @@ public class VillageController extends BaseController {
     @RequestMapping(value = "saveCheckMenu2")
     public @ResponseBody
     AppResult saveCheckMenu2(HttpServletRequest request, @RequestBody CheckItem checkItem) {
+        User user = getLoginUser(request);
+        Integer checkType = checkItem.title; // 获取检查方式
+        String [] str ={"日常","定期","季节","其他","综合"};
+        if(checkType==5){
+            checkItem.setTemplate(user.getUserName()+"综合检查表");
+        }else{
+            ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(checkItem.getCheckLevels().get(0).getId());
+            checkItem.setTemplate(companyManual.getLevel1()+str[checkType]+"检查表");
+        }
+
+
         return savemodel(request, checkItem);
     }
 

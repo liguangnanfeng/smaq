@@ -1374,6 +1374,16 @@ public class CompanyController_cd extends BaseController {
         return "company/danger/danger-chart-px";
     }
 
+    /**
+     * 跳转页面(排查数据分析页面)
+     *
+     * @return
+     */
+    @RequestMapping("danger/danger-chart-zl")
+    public String dangerChartZl() {
+        return "company/danger/danger-chart-zl";
+    }
+
     static String PP = "yyyy-MM";
 
     /**
@@ -1773,6 +1783,7 @@ public class CompanyController_cd extends BaseController {
         mm.add(m3);
         return mm;
     }
+
 
     /**
      * TODO 治理数据分析<已复查合格/复查不合格的参数>(单位: 天)

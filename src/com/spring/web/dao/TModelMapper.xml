@@ -412,7 +412,6 @@
         left join smaq.t_model_part_tbl T2 on T1.id = T2.model_id
         <where>
             T1.del = 0 and T1.user_id = #{userId} and T1.flag = #{flag}
-
             <if test="dmname!=null and dmname!= ''">
                 and T1.part =#{dmname}
             </if>
@@ -425,6 +424,24 @@
         </where>
         group by T1.id
         order by T1.id desc
+    </select>
+
+    <select id="selectModelByMapAndLimit1" parameterType="java.util.Map" resultType="com.spring.web.model.TModel">
+        select * from smaq.t_model_tbl
+        <where>
+            and del=0
+            <if test="userId!=null">
+                and user_id = #{userId}
+            </if>
+            <if test="dmname!=null and dmname!='' ">
+                and part = #{dmname}
+            </if>
+            <if test="type!=null  ">
+                and type = #{type}
+            </if>
+        </where>
+        order by id,create_time desc
+        limit 0,1;
     </select>
 
 </mapper>

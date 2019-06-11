@@ -466,7 +466,7 @@
     }
 
     function ss(dmname, dmid, checkType, industryType, template, flag) {   //点击实施方法
-        $.post(getRootPath() + "/company/zhuChartData3", {
+        $.post(getRootPath() + "/company/model-list-ss", {
             dmname: dmname, dmid: dmid, checkType: checkType, industryType: industryType, template: template, flag: flag
         }, function (result, status) {
             console.log(result);

@@ -60,7 +60,7 @@ body .iconxw{transform: rotate(-90deg);float:right;margin-right:-5px;margin-top:
 <%--            <input type="text" class="Wdate input-text" id="eT" style="width:150px;" onfocus="WdatePicker({dateFmt:'yyyy-MM',minDate:'#F{$dp.$D(\'sT\',{M:+3})}', maxDate : '%y-%M'})"/>--%>
             <input type="text" class="Wdate input-text" id="sT" style="width:150px;" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'eT\',{M:-1})}',maxDate:'#F{$dp.$D(\'eT\',{d:-1}) || \'%y-%M-{%d-1}\'}'})"/>
             <font>-</font>
-            <input type="text" class="Wdate input-text" id="eT" style="width:150px;" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'sT\',{d:+1})}',maxDate :'#F{$dp.$D(\'sT\',{M:+1}) && \'%y-%M\'}'})"/>
+            <input type="text" class="Wdate input-text" id="eT" style="width:150px;" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'sT\',{d:+1})}',maxDate :getMaxDate()})"/>
             <button class="btn btn-success" type="button" onclick="reload()">
               <i class="Hui-iconfont">&#xe665;</i> 查询
             </button>

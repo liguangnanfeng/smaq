@@ -191,3 +191,52 @@ $(function () {
 function reload() {
   $(".btnyhxz").click();
 }
+
+function getMaxDate(){
+    var clock=currentTime();
+    var dt;
+    var times=0;
+    dt=$("#sT").val();
+    if(dt!=''){
+        times =Date.parse(dt.replace(/-/g,'/'))+30*24*60*60*1000;//时间间隔为30天
+        if(times-Date.parse(clock.replace(/-/g,'/'))<0){
+            var d1 = new Date(times);
+            var year = d1.getFullYear();
+            var month = d1.getMonth() + 1;    //月份以0开头
+            var day = d1.getDate();
+            var clock = year + "-";
+            if (month < 10) clock += "0";
+            clock += month + "-";
+            if (day < 10) clock += "0";
+            clock += day;
+        }
+    }
+    return clock;
+}
+
+//当前时间
+function currentTime() {
+    var now = new Date();
+
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var day = now.getDate();
+
+    var hh = now.getHours();
+    var mm = now.getMinutes();
+
+    var clock = year + "-";
+
+    if (month < 10)  clock += "0";
+    clock += month + "-";
+
+    if (day < 10) clock += "0";
+    clock += day + " ";
+
+    if (hh < 10)  clock += "0";
+    clock += hh + ":";
+
+    if (mm < 10) clock += '0';
+    clock += mm;
+    return (clock);
+}

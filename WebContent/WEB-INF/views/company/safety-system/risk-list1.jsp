@@ -198,7 +198,7 @@
                                     </td>
                                         <td class="text-c">
                                             <c:if test="${empty type}">
-                                                <c:if test="${be.dangerId == 1}">
+                                                <c:if test="${be.dangerId != 2}">
                                                     <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
                                                 </c:if>
                                                 <c:if test="${be.dangerId == 2}">
@@ -220,7 +220,7 @@
                                     <td style="width:40%;"><p style="text-align:center;">未辨识风险因素</p></td>
                                     <td style="width:10%;">
                                         <c:if test="${empty type}">
-                                            <c:if test="${be.dangerId == 1}">
+                                            <c:if test="${be.dangerId != 2}">
                                                 <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
                                             </c:if>
                                             <c:if test="${be.dangerId == 2}">

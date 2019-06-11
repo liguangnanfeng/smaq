@@ -556,7 +556,7 @@ public class CompanyController_cd extends BaseController {
         safetyFacilitiesMapper.deleteByPrimaryKey(id);
         return result;
     }
-
+    
     /**
      * 主要原辅材料页面
      */

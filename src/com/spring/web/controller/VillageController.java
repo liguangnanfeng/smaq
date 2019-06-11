@@ -2929,6 +2929,38 @@ public class VillageController extends BaseController {
     }
 
     /**
+     * TODO (基础/现场) 根据公司和部门获取对应岗位
+     *
+     * @param depId     部门id
+     * @param dpName    部门名称
+     * @param checkType 基础/现场
+     * @param request   请求
+     * @return 该部门下面所有的检查项
+     */
+    @RequestMapping(value = "selectDep2")
+    @ResponseBody
+    public List findStation2(Integer depId, String dpName, Integer checkType, HttpServletRequest request) {
+        User user = getLoginUser(request);
+        List<String> list = new ArrayList<String>();
+
+        if (-2 == checkType) {                                     //现场
+            list = aCompanyManualMapper.selectlevel3BydmName(user.getId(), dpName);
+        } else if (-1 == checkType) {                                //基础
+            list = aCompanyManualMapper.selectlevel3BydmNameAndLevel3(user.getId(), dpName, "基础");
+        } else {
+
+        }
+        LinkedList linkedList = new LinkedList();
+        if (null != list && list.size() > 0) {
+            for (String level3 : list) {
+                linkedList.addAll(aCompanyManualMapper.selectAllByLevel3(user.getId(), dpName, level3));
+            }
+        }
+        return linkedList;
+    }
+
+    
+    /**
      * TODO 根据公司和部门,岗位获取检查项
      * 根据部门和岗位,获取风险点和对应的风险因素和数据
      * 根据部门id 和岗位的名称获取level3和其他属性

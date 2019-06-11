@@ -180,7 +180,7 @@
 </nav>
 <div class="panel panel-default" style="width:99%;margin-left:10px;float:left;background:none;">
     <div class="div_tx">
-        <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">隐患数据分析
+        <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">排查数据分析
             <!-- 判断并提示至少选择3个月 -->
             <div class="search_rq pos-a">
                 <font>查询时间段：</font>
@@ -220,7 +220,6 @@
             sT: $("#sT").val(),
             eT: $("#eT").val()
         }, function (result) {
-            console.log(result);
             categories = result.map.categories;
             series = result.map.series;
             createChart(categories, series);

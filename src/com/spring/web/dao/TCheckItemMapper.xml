@@ -975,8 +975,8 @@
             and t2.status = 2
             and t2.del = 0
             and t2.user_id = #{uid}
-            <if test="t3.flag !=null">
-            t3.flag=#{flag}
+            <if test="flag !=null">
+            and t3.flag=#{flag}
             </if>
         </where>
         group by time;

@@ -180,7 +180,7 @@
 </nav>
 <div class="panel panel-default" style="width:99%;margin-left:10px;float:left;background:none;">
     <div class="div_tx">
-        <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">隐患数据分析
+        <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">治理数据分析
             <!-- 判断并提示至少选择3个月 -->
             <div class="search_rq pos-a">
                 <font>查询时间段：</font>
@@ -195,14 +195,14 @@
             </div>
         </div>
         <div class="div_zhe">
-            <%--          <div class="change_zhe">--%>
-            <%--            <div class="btn-group">--%>
-            <%--              <span class="btn btnyh btnyhxz radius yhlx">隐患类型</span>--%>
-            <%--              <span class="btn btnyh radius yhdj">隐患等级</span>--%>
-            <%--              <span class="btn btnyh radius yhzg">整改率</span>--%>
-            <%--              <span class="btn btnyh radius yhly">隐患来源</span>--%>
-            <%--            </div>--%>
-            <%--          </div>--%>
+                      <div class="change_zhe">
+                        <div class="btn-group">
+                          <span class="btn btnyh btnyhxz radius zdyh">重大隐患</span>
+                          <span class="btn btnyh radius ybyh">一般隐患</span>
+                          <span class="btn btnyh radius zdyyh">自定义隐患</span>
+                        </div>
+                          <input style="display: none" value="1" id="my_flag"/>
+                      </div>
             <div id="container3" style="width:100%;height:450px;display: inline-block;margin-top:25px;"></div>
         </div>
     </div>
@@ -210,17 +210,17 @@
 </body>
 
 <script>
-    $(function () {
-        int(1);
-    })
+
     var categories = [];//日期数组
     var series = {};  //数据数组
-    function int(status) {
-        $.post(getRootPath() + "/company/zhuChartData3", {
+
+
+    function int() {
+        $.post(getRootPath() + "/company/zhuChartData4", {
             sT: $("#sT").val(),
-            eT: $("#eT").val()
+            eT: $("#eT").val(),
+            flag:parseInt($("#my_flag").val()),
         }, function (result) {
-            console.log(result);
             categories = result.map.categories;
             series = result.map.series;
             createChart(categories, series);
@@ -231,7 +231,7 @@
         $('#container3').highcharts({
             credits: {enabled: false},
             chart: {type: 'column'},
-            title: {text: '排查数据分析'},
+            title: {text: '治理数据分析'},
             legend: {
                 itemHiddenStyle: {
                     color: '#f00'
@@ -270,6 +270,26 @@
         int();
     }
 
+    $(".zdyh").click(function(){
+        $(".btnyh").removeClass("btnyhxz");
+        $(this).addClass("btnyhxz");
+        $("#my_flag").val(1)
+        int();
+    });
+
+    $(".ybyh").click(function(){
+        $(".btnyh").removeClass("btnyhxz");
+        $(this).addClass("btnyhxz");
+        $("#my_flag").val(2);
+        int();
+    });
+
+    $(".zdyyh").click(function(){
+        $(".btnyh").removeClass("btnyhxz");
+        $(this).addClass("btnyhxz");
+        $("#my_flag").val(3);
+        int();
+    });
 
 
 

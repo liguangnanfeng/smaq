@@ -72,6 +72,20 @@
             margin-left: 14%;
         }
 
+        .my_td{
+            width:10%;
+        }
+        .my_td4{
+            width:25%;
+        }
+        .my_td2{
+            width:50%;
+        }
+        .my_td3{
+
+            width:5%;
+        }
+
     </style>
     <script>
         var dmname = "${dmname}";
@@ -84,51 +98,81 @@
         function eat() {
             var b = null, l1 = '', c = 1;
             var b2 = null, l2 = '', c2 = 1;
-            $("tbody tr").each(function () {
+            var b3 = null, l3 = '', c3 = 1;
+            $("tbody tr").each(function() {
                 var td = $(this).children("td").eq(0);
                 var td2 = $(this).children("td").eq(1);
+                var td3 = $(this).children("td").eq(2);
+                var td4 = $(this).children("td").eq(3);
                 var l1_ = td.text();
                 var l2_ = td2.text();
+                var l3_ = td3.text();
+                var l4_ = td4.text();
+
                 //Same to top level
-                if (l1 == l1_) {
+                if(l1 == l1_) {
                     td.remove();
                     c = c + 1;
-                    if (l2 == l2_) {
+                    if(l2 == l2_) {
                         td2.remove();
                         c2 = c2 + 1;
+                        if(l3 == l3_) {
+                            td3.remove();
+                            c3 = c3 + 1;
+                        } else {
+                            l3 = l3_;
+                            if(b3 != null) {
+                                b3.attr("rowspan", c3);
+                                c3 = 1;
+                            }
+                            b3 = td3;
 
+                        }
                     } else {
                         l2 = l2_;
-                        if (b2 != null) {
+                        if(b2 != null) {
                             b2.attr("rowspan", c2);
                             c2 = 1;
                         }
                         b2 = td2;
+                        l3 = l3_;
+                        if(b3 != null) {
+                            b3.attr("rowspan", c3);
+                            c3 = 1;
+                        }
+                        b3 = td3;
                     }
 
                 } else {//Diffrent to top level
                     l1 = l1_;
-                    if (b != null) {
+                    if(b != null) {
                         b.attr("rowspan", c);
                         c = 1;
                     }
                     b = td;
                     l2 = l2_;
-                    if (b2 != null) {
+                    if(b2 != null) {
                         b2.attr("rowspan", c2);
                         c2 = 1;
                     }
                     b2 = td2;
-
+                    l3 = l3_;
+                    if(b3 != null) {
+                        b3.attr("rowspan", c3);
+                        c3 = 1;
+                    }
+                    b3 = td3;
                 }
             })
-            if (b != null) {
+            if(b != null) {
                 b.attr("rowspan", c);
             }
-            if (b2 != null) {
+            if(b2 != null) {
                 b2.attr("rowspan", c2);
             }
-
+            if(b3 != null) {
+                b3.attr("rowspan", c3);
+            }
         }
     </script>
 
@@ -176,7 +220,7 @@
             }
 
             componentDidMount = () => {
-
+                eat();
             }
 
             componentDidUpdate = () => {
@@ -266,12 +310,12 @@
 
             }
 
-            checkBox = (index1, index2) => {    //复选框方法
+            checkBox = (index) => {    //复选框方法
                 let data = this.state.list;
-                if (data[index1].list[index2].checked == 1) {
-                    data[index1].list[index2].checked = 0;
+                if (data[index].checked == 1) {
+                    data[index].checked = 0;
                 } else {
-                    data[index1].list[index2].checked = 1;
+                    data[index].checked = 1;
                 }
                 this.setState({
                     list: data
@@ -279,25 +323,11 @@
             }
 
 
-            renderLevel4 = (arr, index1) => {
-                let html = [];
-                arr.map((item, index2) => {
-                    html.push(
-                        <div className="row" key={index2} style={index2 == 0 ? {marginTop: '10px'} : {}}>
-                            <input type="checkbox"
-                                   checked={this.state.list[index1].list[index2].checked == 1 ? true : false}
-                                   style={{marginTop: '0px', marginRight: '5px'}} onClick={() => {
-                                this.checkBox(index1, index2)
-                            }}/>
-                            <label>{item.measures}</label>
-                        </div>
-                    )
-                })
-                return html;
-            }
 
 
             save = () => {
+                console.log(this.state.list);
+                return
                 let state = this.state;
                 // if (!state.tableName) {    //验证检查表名字是否填写
                 //     alert('检查表名字必须填写');
@@ -408,7 +438,6 @@
             }
 
             render = () => {
-                console.log(this.state.list)
                 const arr = ['日常检查', '定期检查', '季节检查', '其他检查', '综合检查'];
                 const checkType = arr[this.checkType - 1];
                 const obj = {
@@ -423,22 +452,28 @@
                         <table id="xxx" className="table table-border table-bordered table-bg table-hover table-sort">
                             <thead>
                             <tr className="text-c">
-                                <th style={{minWidth:'80px'}}>部位</th>
-                                <th style={{minWidth:'80px'}}>岗位</th>
-                                <th style={{minWidth:'150px'}}>风险点</th>
-                                <th style={{minWidth:'150px'}}>风险内容</th>
-                                <th style={{minWidth:'50px'}} className="div-pcz">操作</th>
+                                <th className="my_td" >部位</th>
+                                <th className="my_td">岗位</th>
+                                <th className="my_td4">风险点</th>
+                                <th className="my_td2">风险内容</th>
+                                <th className="div-pcz my_td3">操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             {this.state.list.map((item, index) => {
                                 return (
                                     <tr>
-                                        <td className="text-c">1</td>
-                                        <td className="text-c">2</td>
-                                        <td className="text-c">3</td>
-                                        <td className="text-c">4</td>
-                                        <td className="text-c">勾选</td>
+                                        <td className="text-c">{item.level1}</td>
+                                        <td className="text-c">{item.level2}</td>
+                                        <td className="text-c">{item.level3}</td>
+                                        <td className="text-c">{item.measures}</td>
+                                        <td className="text-c">
+                                            <input type="checkbox"
+                                                   checked={this.state.list[index].checked == 1 ? true : false}
+                                                  onClick={() => {
+                                                this.checkBox(index)
+                                            }}/>
+                                        </td>
                                     </tr>
                                 )
                             })}
@@ -450,7 +485,7 @@
 
                                     <div className="row cl">
                                         <label
-                                            className="form-label col-xs-4 col-sm-2">自定义检查项目{index + 1}：</label>
+                                            className="form-label col-xs-2 col-sm-2 col-lg-2">自定义检查项目{index + 1}：</label>
                                         <div className="formControls col-xs-5 col-sm-7"
                                              style={{position: 'relative'}}>
                                             <input type="text"
@@ -476,7 +511,7 @@
                                     </div>
                                     <div className="row cl">
                                         <label
-                                            className="form-label col-xs-4 col-sm-2">自定义检查内容{index + 1}：</label>
+                                            className="form-label col-xs-2 col-sm-2 col-lg-2">自定义检查内容{index + 1}：</label>
                                         <div className="formControls col-xs-5 col-sm-7">
                                             <input type="text"
                                                    onChange={(e) => this.addInputChange('value', index, e)}
@@ -493,7 +528,7 @@
                         })}
 
                         <div className="row cl">
-                            <div className="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2 mt-30">
+                            <div className="col-xs-8 col-sm-9 col-xs-offset-2 col-sm-offset-2 mt-30">
                                 <button className="btn btn-primary radius" type="button"
                                         onClick={this.addCheck}>
                                     新增自定义检查项
@@ -509,8 +544,8 @@
                             <div className="page-container">
 
                                 {this.checkType == 2 ?
-                                    <div className="row cl dq">
-                                        <label className="form-label col-xs-4 col-sm-2"><span
+                                    <div className="row cl dq" style={{marginBottom:'20px'}}>
+                                        <label className="form-label col-xs-1 col-sm-1 col-lg-1"><span
                                             className="c-red">*</span>定期时间
                                             :</label>
                                         <div className="formControls col-xs-8 col-sm-9">

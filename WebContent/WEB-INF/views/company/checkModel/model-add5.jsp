@@ -72,18 +72,21 @@
             margin-left: 14%;
         }
 
-        .my_td{
-            width:10%;
+        .my_td {
+            width: 10%;
         }
-        .my_td4{
-            width:25%;
-        }
-        .my_td2{
-            width:50%;
-        }
-        .my_td3{
 
-            width:5%;
+        .my_td4 {
+            width: 25%;
+        }
+
+        .my_td2 {
+            width: 50%;
+        }
+
+        .my_td3 {
+
+            width: 5%;
         }
 
     </style>
@@ -92,6 +95,7 @@
         var dmid = "${dmid}";
         var checkType = "${checkType}";
         var industryType = "${industryType}";
+        var flag = "${flag}";
 
     </script>
     <script type="text/javascript">
@@ -99,7 +103,7 @@
             var b = null, l1 = '', c = 1;
             var b2 = null, l2 = '', c2 = 1;
             var b3 = null, l3 = '', c3 = 1;
-            $("tbody tr").each(function() {
+            $("tbody tr").each(function () {
                 var td = $(this).children("td").eq(0);
                 var td2 = $(this).children("td").eq(1);
                 var td3 = $(this).children("td").eq(2);
@@ -110,18 +114,18 @@
                 var l4_ = td4.text();
 
                 //Same to top level
-                if(l1 == l1_) {
+                if (l1 == l1_) {
                     td.remove();
                     c = c + 1;
-                    if(l2 == l2_) {
+                    if (l2 == l2_) {
                         td2.remove();
                         c2 = c2 + 1;
-                        if(l3 == l3_) {
+                        if (l3 == l3_) {
                             td3.remove();
                             c3 = c3 + 1;
                         } else {
                             l3 = l3_;
-                            if(b3 != null) {
+                            if (b3 != null) {
                                 b3.attr("rowspan", c3);
                                 c3 = 1;
                             }
@@ -130,13 +134,13 @@
                         }
                     } else {
                         l2 = l2_;
-                        if(b2 != null) {
+                        if (b2 != null) {
                             b2.attr("rowspan", c2);
                             c2 = 1;
                         }
                         b2 = td2;
                         l3 = l3_;
-                        if(b3 != null) {
+                        if (b3 != null) {
                             b3.attr("rowspan", c3);
                             c3 = 1;
                         }
@@ -145,32 +149,32 @@
 
                 } else {//Diffrent to top level
                     l1 = l1_;
-                    if(b != null) {
+                    if (b != null) {
                         b.attr("rowspan", c);
                         c = 1;
                     }
                     b = td;
                     l2 = l2_;
-                    if(b2 != null) {
+                    if (b2 != null) {
                         b2.attr("rowspan", c2);
                         c2 = 1;
                     }
                     b2 = td2;
                     l3 = l3_;
-                    if(b3 != null) {
+                    if (b3 != null) {
                         b3.attr("rowspan", c3);
                         c3 = 1;
                     }
                     b3 = td3;
                 }
             })
-            if(b != null) {
+            if (b != null) {
                 b.attr("rowspan", c);
             }
-            if(b2 != null) {
+            if (b2 != null) {
                 b2.attr("rowspan", c2);
             }
-            if(b3 != null) {
+            if (b3 != null) {
                 b3.attr("rowspan", c3);
             }
         }
@@ -205,6 +209,7 @@
                 this.dmid = dmid;
                 this.checkType = checkType;
                 this.industryType = industryType;
+                this.flag = flag;
                 const arrs = ['日常', '定期', '季节', '其他', '综合'];
                 const aa = arrs[checkType - 1];
                 const objs = {
@@ -323,8 +328,6 @@
             }
 
 
-
-
             save = () => {
                 console.log(this.state.list);
                 return
@@ -352,27 +355,26 @@
                     title: this.checkType,        //检查方式 1:日常  2:定期  3:季节 4:其他 5:综合
                     checkType: this.industryType, //檢查類型 -1基础 -2现场   其他高危
                     cycle: parseInt(state.days),   //检查周期天数
-                    checkLevels: []                 //检查项
+                    flag: this.flag,                //1:企业自查 2:行政检查 3:第三方
                 }
-                state.list.map((item) => {
-                    item.list.map((item2) => {
-                        if (item2.checked == 1) {
-                            let checkItem = {};
-                            checkItem.id = item2.id;
-                            checkItem.level1 = item2.level1;
-                            checkItem.level2 = item2.level2;
-                            checkItem.level3 = item2.level3;
-                            checkItem.level4 = item2.measures;
-                            checkItem.reference = item2.reference;
-                            checkItem.factors = item2.factors;
-                            checkItem.types = item2.types;
-                            checkItem.gkcs = item2.gkcs;
-                            checkItem.gkzt = item2.gkzt;
-                            checkItem.checkType = this.industryType;
-                            industryId:null
-                            postData.checkLevels.push(checkItem);
-                        }
-                    })
+                state.list.map((item2) => {
+                    if (item2.checked == 1) {
+                        let checkItem = {};
+                        checkItem.id = item2.id;
+                        checkItem.level1 = item2.level1;
+                        checkItem.level2 = item2.level2;
+                        checkItem.level3 = item2.level3;
+                        checkItem.level4 = item2.measures;
+                        checkItem.reference = item2.reference;
+                        checkItem.factors = item2.factors;
+                        checkItem.types = item2.types;
+                        checkItem.gkcs = item2.gkcs;
+                        checkItem.gkzt = item2.gkzt;
+                        checkItem.checkType = this.industryType;
+                        industryId:null
+                        postData.checkLevels.push(checkItem);
+                    }
+
                 })
                 state.myChecks.map((item) => {
                     if (item.title != '' && item.value != '') {
@@ -406,12 +408,12 @@
                     dataType: "json",
                     success: function (result) {
                         if (result.status == 0) {
-                            alert('保存成功');
+                            layer.msg('保存成功');
                             window.parent.location.href = '${ly }/company/model-list-main';
                             var index = parent.layer.getFrameIndex(window.name);
                             parent.layer.close(index);
                         } else {
-                            alert('保存失败');
+                            layer.msg('保存失败');
                         }
                     },
                     complete: function (XMLHttpRequest, textStatus) {
@@ -452,7 +454,7 @@
                         <table id="xxx" className="table table-border table-bordered table-bg table-hover table-sort">
                             <thead>
                             <tr className="text-c">
-                                <th className="my_td" >部位</th>
+                                <th className="my_td">部位</th>
                                 <th className="my_td">岗位</th>
                                 <th className="my_td4">风险点</th>
                                 <th className="my_td2">风险内容</th>
@@ -470,9 +472,9 @@
                                         <td className="text-c">
                                             <input type="checkbox"
                                                    checked={this.state.list[index].checked == 1 ? true : false}
-                                                  onClick={() => {
-                                                this.checkBox(index)
-                                            }}/>
+                                                   onClick={() => {
+                                                       this.checkBox(index)
+                                                   }}/>
                                         </td>
                                     </tr>
                                 )
@@ -544,7 +546,7 @@
                             <div className="page-container">
 
                                 {this.checkType == 2 ?
-                                    <div className="row cl dq" style={{marginBottom:'20px'}}>
+                                    <div className="row cl dq" style={{marginBottom: '20px'}}>
                                         <label className="form-label col-xs-1 col-sm-1 col-lg-1"><span
                                             className="c-red">*</span>定期时间
                                             :</label>

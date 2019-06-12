@@ -34,7 +34,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.ParseException;
@@ -2929,25 +2928,37 @@ public class CompanyController_cd extends BaseController {
 
 
         for (int i = 0; i < jiChuItem.size(); i++) {
-            int[] array ={0,0,0,0,0};
+            Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+            map.put(5, 0);
+            map.put(1, 0);
+            map.put(2, 0);
+            map.put(3, 0);
+            map.put(4, 0);
             String level1 = (String) jiChuItem.get(i).get("level1");
             List<Integer> types1 = tModelMapper.selecttype(level1, user.getId(), 1, flag);
             System.out.println(types1 + "咋回事");
+            System.out.println(map + "咋回事");
             for (Integer integer : types1) {
-                array[integer-1]=1;
+                map.put(integer, 1);
             }
-            jiChuItem.get(i).put("array", array);
+            jiChuItem.get(i).put("array", map);
         }
 
         for (Map<String, Object> objectObjectMap : XianChangItem) {
-            int[] array ={0,0,0,0,0};
+            Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+            map.put(5, 0);
+            map.put(1, 0);
+            map.put(2, 0);
+            map.put(3, 0);
+            map.put(4, 0);
             String level1 = (String) objectObjectMap.get("level1");
             List<Integer> types2 = tModelMapper.selecttype(level1, user.getId(), 2, flag);
             System.out.println(types2 + "咋回事");
+            System.out.println(map + "咋回事");
             for (Integer integer : types2) {
-                array[integer-1]=1;
+                map.put(integer, 1);
             }
-            objectObjectMap.put("array", array);
+            objectObjectMap.put("array", map);
         }
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);

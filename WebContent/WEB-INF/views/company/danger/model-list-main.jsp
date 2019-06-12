@@ -100,6 +100,11 @@
             padding-bottom: 80px;
             border: 1px solid #ccc;
         }
+
+        .used{
+            background-color: #0a7f6d!important;
+            color: #fff!important;
+        }
     </style>
 
 </head>
@@ -154,6 +159,7 @@
 <%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-2&template=6&flag=1')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
+                                   class="used"
                                    onClick="ss('${be.level1 }','${be.dmid }',5,-2,6,'${flag}')"
                                    href="javascript:;">实施</a>
                             </td>
@@ -166,6 +172,7 @@
 <%--                                   href="javascript:;">实施</a>--%>
                                 <a style="text-decoration:none"
                                    onClick="ss('${be.level1 }','${be.dmid }',1,-2,2,'${flag}')"
+                                   class="used"
                                    href="javascript:;">实施</a>
                             </td>
                             <td>
@@ -437,7 +444,7 @@
 
 </div>
 <script type="text/javascript">
-
+    console.log('${xianChangItem}')
     HUItab = function (tabBar, tabCon, class_name, tabEvent, i) {
         var $tab_menu = $(tabBar);
         // 初始化操作

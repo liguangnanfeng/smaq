@@ -125,7 +125,8 @@
                 <th width="5%">隐患图片</th>
                 <th width="5%">隐患等级</th>
                 <th width="5%">治理方案</th>
-                <th width="5%">治理结果及日期</th>
+                <%--<th width="5%">治理结果及日期</th>--%>
+                <th width="5%">治理日期</th>
                 <th width="5%">治理责任人</th>
                 <th width="5%">治理投入</th>
                 <th width="5%">上报</th>
@@ -226,10 +227,12 @@
                     </td>
 
                     <td>
-                        <c:choose>
+                        <fmt:formatDate value="${list.recheck_time == null? '' : list.recheck_time}" pattern="yyyy-MM-dd"/>
+
+                        <%--<c:choose>
                             <c:when test="${list.status eq 2}">未合格</c:when>
                             <c:when test="${list.status eq 3}">复查通过</c:when>
-                        </c:choose>
+                        </c:choose>--%>
                     </td>
                     <td>${list.fjgkfzr}</td>
                     <c:if test="${list.money==null}">

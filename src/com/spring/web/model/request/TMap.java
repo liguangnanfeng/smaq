@@ -13,4 +13,27 @@ public class TMap {
     public Integer userId;
     public String files;
 
+    public TMap() {
+    }
+
+    public TMap(Integer userId, String files) {
+        this.userId = userId;
+        this.files = files;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getFiles() {
+        return files;
+    }
+
+    public void setFiles(String files) {
+        this.files = files;
+    }
 }

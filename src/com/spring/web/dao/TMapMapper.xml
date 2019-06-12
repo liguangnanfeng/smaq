@@ -13,13 +13,15 @@
     </select>
 
     <!--删除图片-->
-    <select id="dropByUserId" parameterType="Integer">
+    <delete id="dropByUserId" parameterType="Integer">
         delete from t_map where  userId= #{userId};
-    </select>
+    </delete>
 
     <!--updateMap修改图片-->
     <update id="updateMap" parameterType="com.spring.web.model.request.TMap">
         update t_map set files=#{files} where userId=#{userId};
     </update>
+
+
 </mapper>
 

@@ -2890,7 +2890,6 @@ public class VillageController extends BaseController {
             // 高危检查
             list = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
         }
-        System.out.println(list);
         return list;
     }
 
@@ -2923,6 +2922,7 @@ public class VillageController extends BaseController {
                 List<ACompanyManual> aCompanyManuals = aCompanyManualMapper.selectAllByLevel3(user.getId(), dpName, level3);
                 map.put("name", level3);
                 map.put("list", aCompanyManuals);
+
                 linkedList.add(map);
             }
         }
@@ -2932,7 +2932,7 @@ public class VillageController extends BaseController {
 
     /**
      * TODO (基础/现场) 根据公司和部门获取对应岗位
-     *
+     *  出现的问题就是,现在使用部门检查/行政检查 出现的问题两张表里面没有对应的部门的字段
      * @param depId     部门id
      * @param dpName    部门名称
      * @param checkType 基础/现场
@@ -3033,15 +3033,19 @@ public class VillageController extends BaseController {
     public @ResponseBody
     AppResult saveCheckMenu2(HttpServletRequest request, @RequestBody CheckItem checkItem) {
         User user = getLoginUser(request);
+        ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(checkItem.getCheckLevels().get(0).getId());
         Integer checkType = checkItem.title; // 获取检查方式
         String[] str = {"日常", "定期", "季节", "其他", "综合"};
-        if (checkType == 5) {
-            checkItem.setTemplate(user.getUserName() + "综合检查表");
-        } else {
-            ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(checkItem.getCheckLevels().get(0).getId());
-            checkItem.setTemplate(companyManual.getLevel1() + str[checkType-1] + "检查表");
+        if(checkItem.getFlag()==1){  //表示企业自查
+            if (checkType == 5) {
+                checkItem.setTemplate(user.getUserName() + "综合检查表");
+            } else {
+                checkItem.setTemplate(companyManual.getLevel1() + str[checkType-1] + "检查表");
+            }
+        }else{
+            // 行政检查/部门抽查
+            checkItem.setTemplate(companyManual.getLevel1() +  "安全检查表");
         }
-
         return savemodel(request, checkItem);
     }
 

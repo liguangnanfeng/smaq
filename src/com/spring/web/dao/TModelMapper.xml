@@ -449,5 +449,15 @@
         order by create_time desc
         limit 0,1;
     </select>
+    <!--根据条件查询是否有相应的检查表-->
+    <select id="selecttype" resultType="INTEGER" >
+        select
+        type
+        from smaq.t_model_tbl
+        where user_id=#{userId} and del=0 and part=#{dmName} and flag=#{flag} and industry_type=#{industryType}
+        and type in (1,2,3,4,5)
+        group by type;
+    </select>
+
 
 </mapper>

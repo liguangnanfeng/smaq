@@ -2863,6 +2863,7 @@ public class CompanyController_cd extends BaseController {
         m.put("title", title);
         m.put("companyName", companyName);
         m.put("status", status);
+        //m.put("userId",user.getId());
         if (setUserId(user, m)) {
             clearVillageTown(m);
             List<Map<String, Object>> list = tCheckMapper.selectList(m);
@@ -2874,12 +2875,29 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("title", title);
         model.addAttribute("status", status);
         Date d = new Date();
+
         String x = DateFormatUtils.format(d, "yyyy-MM-dd");
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
         model.addAttribute("t", d.getTime());
-
+        int [] array = {0,0,0,0,0};
         List<Map<Object, Object>> jiChuItem = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");
+        for (Map<Object, Object> objectObjectMap : jiChuItem) {
+            String level1 = (String) objectObjectMap.get("level1");
+            List<Integer> types = tModelMapper.selecttype(level1,user.getId(),1,flag);
+            for (Integer integer : types) {
+                array[integer-1]=1;
+            }
+            objectObjectMap.put("array",array.clone());
+        }
         List<Map<Object, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
+        for (Map<Object, Object> objectObjectMap : XianChangItem) {
+            String level1 = (String) objectObjectMap.get("level1");
+            List<Integer> types = tModelMapper.selecttype(level1,user.getId(),2,flag);
+            for (Integer integer : types) {
+                array[integer-1]=1;
+            }
+            objectObjectMap.put("array",array.clone());
+        }
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
 

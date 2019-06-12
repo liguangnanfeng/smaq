@@ -97,4 +97,15 @@ public interface TModelMapper {
      * @return
      */
     TModel selectModelByMapAndLimit1(Map<String, Object> map);
+
+    /**
+     *      * 基础/现场查询数据
+     * @param dmName  部门名称
+     * @param userId      公司id
+     * @param industryType       基础还是现场
+     * @param flag    自查   部门  行政
+     * @return
+     */
+
+    List<Integer> selecttype(@Param("dmName") String dmName, @Param("userId")Integer userId, @Param("industryType")int industryType,@Param("flag")Integer flag);
 }

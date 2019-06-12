@@ -1173,14 +1173,18 @@
          group by level3;
     </select>
 
-    <!--根据部门的Uid和level1和level3获取详细信息 -->
+    <!--根据部门的Uid和level1和level3获取详细信息
+     怎样提高查询性能
+     -->
     <select id="selectAllByLevel3" resultType="com.spring.web.model.ACompanyManual">
-        SELECT * FROM a_company_manual_tbl
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM a_company_manual_tbl
         where uid=#{uid}
         and level1 = #{level1}
         and del=0
         and level3 = #{level3}
-        order by id, level2,level3 asc ;
+        order by level2 asc ;
     </select>
 
 </mapper>

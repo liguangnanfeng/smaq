@@ -102,7 +102,7 @@
         }
 
         .used {
-            background-color: #0a7f6d !important;
+            background-color: #980c10 !important;
             color: #fff !important;
         }
     </style>
@@ -156,17 +156,25 @@
                             <td>${be.level1 }</td>
                             <c:forEach items="${be.array}" varStatus="index2" var="item">
                                 <td>
-                                    <a>${item}</a>
-                                    <a>${index2.index}</a>
+                                    <c:set value="${fn:split(item,'=' )}" var="status"></c:set>
                                     <a style="text-decoration:none"
-                                       onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&flag=${flag}')"
+                                       onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-2&flag=${flag}')"
                                        href="javascript:;">设置</a>
                                         <%--                                <a style="text-decoration:none"--%>
                                         <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"--%>
-                                        <%--                                   href="javascript:;">实施</a>--%>
+                                        <%--
+                                                                        href="javascript:;">实施</a>--%>
+                                    <c:if test="${status[1]==1}">
                                     <a style="text-decoration:none"
-                                       onClick="ss('${be.level1 }','${be.dmid }',5,-1,6,'${flag}')"
+                                       onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
                                        href="javascript:;">实施</a>
+                                    </c:if>
+                                    <c:if test="${status[1]==0}">
+                                        <a style="text-decoration:none"
+                                           class="used"
+                                           onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
+                                           href="javascript:;">实施</a>
+                                    </c:if>
                                 </td>
                             </c:forEach>
 <%--                            <td>--%>
@@ -256,17 +264,25 @@
                             <td>${be.level1 }</td>
                             <c:forEach items="${be.array}" varStatus="index2" var="item">
                                 <td>
-                                    <a>${item}</a>
-                                    <a>${index2.index}</a>
+                                    <c:set value="${fn:split(item,'=' )}" var="status"></c:set>
                                     <a style="text-decoration:none"
-                                       onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&flag=${flag}')"
+                                       onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-1&flag=${flag}')"
                                        href="javascript:;">设置</a>
                                         <%--                                <a style="text-decoration:none"--%>
                                         <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"--%>
-                                        <%--                                   href="javascript:;">实施</a>--%>
-                                    <a style="text-decoration:none"
-                                       onClick="ss('${be.level1 }','${be.dmid }',5,-1,6,'${flag}')"
-                                       href="javascript:;">实施</a>
+                                        <%--
+                                                                        href="javascript:;">实施</a>--%>
+                                    <c:if test="${status[1]==1}">
+                                        <a style="text-decoration:none"
+                                           onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-1,${status[0]+1},'${flag}')"
+                                           href="javascript:;">实施</a>
+                                    </c:if>
+                                    <c:if test="${status[1]==0}">
+                                        <a style="text-decoration:none"
+                                           class="used"
+                                           onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-1,${status[0]+1},'${flag}')"
+                                           href="javascript:;">实施</a>
+                                    </c:if>
                                 </td>
                             </c:forEach>
 <%--                            <td>--%>

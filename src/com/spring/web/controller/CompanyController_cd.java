@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.ParseException;
@@ -1792,11 +1793,11 @@ public class CompanyController_cd extends BaseController {
      * 治理数据分析
      * 复查合格和复查不合格的参数统一进行查询
      *
-     * @param sT  起始时间
-     * @param eT  结束时间
-     * @param request  请求
+     * @param sT      起始时间
+     * @param eT      结束时间
+     * @param request 请求
      * @param status
-     * @param flag     1 重大  2 一般  3 自定义
+     * @param flag    1 重大  2 一般  3 自定义
      * @return
      * @throws Exception
      */
@@ -2672,7 +2673,7 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * TODO 用户点击检查设置实施=> 实施 =>点击执行的时候获取这个方法的检查模版的最新的一条记录,
-     *      没有就显示为null
+     * 没有就显示为null
      * 每一次获取的就是最新的
      * 没有就表示数据库没有这个部门的模版,让用户直接添加
      */
@@ -2696,19 +2697,19 @@ public class CompanyController_cd extends BaseController {
         }
 
         map.put("flag", flag);
-        TModel tModel= tModelMapper.selectModelByMapAndLimit1(map);
-        if(null == tModel){
+        TModel tModel = tModelMapper.selectModelByMapAndLimit1(map);
+        if (null == tModel) {
             result.setStatus("1");
             return result;
         }
 
-        Map<String,Object> resultMap = new HashMap<>();
-        resultMap.put("modelId",tModel.getId());
-        resultMap.put("flag",flag);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("modelId", tModel.getId());
+        resultMap.put("flag", flag);
 
         result.setStatus("0");
         result.setData(resultMap);
-        return  result;
+        return result;
 
     }
 
@@ -2918,7 +2919,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "model-list-main")
     public String modelListMain(HttpServletRequest request,
-                                Model model,Integer flag
+                                Model model, Integer flag
     ) throws ParseException {
         // 获取用户信息
         User user = getLoginUser(request);
@@ -2928,41 +2929,29 @@ public class CompanyController_cd extends BaseController {
 
 
         for (int i = 0; i < jiChuItem.size(); i++) {
-            Map<Integer,Integer> map = new LinkedHashMap<Integer,Integer>();
-            map.put(1,0);
-            map.put(2,0);
-            map.put(3,0);
-            map.put(4,0);
-            map.put(5,0);
+            int[] array ={0,0,0,0,0};
             String level1 = (String) jiChuItem.get(i).get("level1");
-            List<Integer> types1 = tModelMapper.selecttype(level1,user.getId(),1,flag);
-            System.out.println(types1+"咋回事");
-            System.out.println(map+"咋回事");
+            List<Integer> types1 = tModelMapper.selecttype(level1, user.getId(), 1, flag);
+            System.out.println(types1 + "咋回事");
             for (Integer integer : types1) {
-                map.put(integer,1);
+                array[integer-1]=1;
             }
-            jiChuItem.get(i).put("array",map);
+            jiChuItem.get(i).put("array", array);
         }
 
         for (Map<String, Object> objectObjectMap : XianChangItem) {
-            Map<Integer,Integer> map = new LinkedHashMap<Integer,Integer>();
-            map.put(1,0);
-            map.put(2,0);
-            map.put(3,0);
-            map.put(4,0);
-            map.put(5,0);
+            int[] array ={0,0,0,0,0};
             String level1 = (String) objectObjectMap.get("level1");
-            List<Integer> types2 = tModelMapper.selecttype(level1,user.getId(),2,flag);
-            System.out.println(types2+"咋回事");
-            System.out.println(map+"咋回事");
+            List<Integer> types2 = tModelMapper.selecttype(level1, user.getId(), 2, flag);
+            System.out.println(types2 + "咋回事");
             for (Integer integer : types2) {
-                map.put(integer,1);
+                array[integer-1]=1;
             }
-            objectObjectMap.put("array",map);
+            objectObjectMap.put("array", array);
         }
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
-        model.addAttribute("flag",flag);
+        model.addAttribute("flag", flag);
 
         return "company/danger/model-list-main";
 

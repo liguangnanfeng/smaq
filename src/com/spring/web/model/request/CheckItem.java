@@ -30,6 +30,8 @@ public class CheckItem {
      */
     public Integer title;
 
+    public Integer flag;
+
     public Integer checkType;
 
     /**

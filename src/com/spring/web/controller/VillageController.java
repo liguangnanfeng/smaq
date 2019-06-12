@@ -3024,7 +3024,7 @@ public class VillageController extends BaseController {
     /**
      * TODO PC 自定义检查模板
      * 并进行设置标题的设置
-     *
+     * flag 1.企业自查  2.行政检查  3 第三方检查
      * @param request   请求
      * @param checkItem 用户选择的检查项
      * @return
@@ -3137,7 +3137,7 @@ public class VillageController extends BaseController {
             TModel model = new TModel();
             model.setTitle(checkItem.getTemplate());   // 计划检查名
             model.setUserId(user.getId());    // 企业id
-            model.setFlag(1);        //自查
+            model.setFlag(checkItem.getFlag());        //检查方式 1. 企业自查  2 行政检查  3 第三方
             model.setType(checkItem.getTitle()); //  检查类型  日常, 定期, 临时
             if (-2 == checkItem.getCheckType() || -1 == checkItem.getCheckType()) { //只有现场才会存储部门
                 model.setPart(checkItem.getCheckLevels().get(0).getLevel1()); // 被检查的部门
@@ -3195,7 +3195,7 @@ public class VillageController extends BaseController {
             // 保存检查记录总表
             TCheck tCheck = new TCheck();
 
-            tCheck.setFlag(1);                                                      // 企业自查
+            tCheck.setFlag(checkItem.getFlag());                                                      // 1. 企业自查  2 行政检查  3 第三方
             tCheck.setTitle(checkItem.getTemplate());                               // 被检查的标题
             if (-2 == checkItem.getCheckType() || -1 == checkItem.getCheckType()) { //只有现场才会存储部门
                 tCheck.setDepart(checkItem.getCheckLevels().get(0).getLevel1());        // 被检查的部门

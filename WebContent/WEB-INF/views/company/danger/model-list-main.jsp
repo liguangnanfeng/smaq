@@ -157,6 +157,7 @@
                             <c:forEach items="${be.array}" varStatus="index2" var="item">
                                 <td>
                                     <a>${item}</a>
+                                    <a>${index2.index}</a>
                                     <a style="text-decoration:none"
                                        onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&flag=${flag}')"
                                        href="javascript:;">设置</a>

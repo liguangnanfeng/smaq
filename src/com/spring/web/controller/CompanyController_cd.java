@@ -2840,7 +2840,7 @@ public class CompanyController_cd extends BaseController {
 //    }
 
     /**
-     * TODO 临时检查表
+     * TODO 临时检查表(已废弃)
      * 在model表查询获取数据
      */
     @RequestMapping(value = "model-list-bm")
@@ -2879,25 +2879,11 @@ public class CompanyController_cd extends BaseController {
         String x = DateFormatUtils.format(d, "yyyy-MM-dd");
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
         model.addAttribute("t", d.getTime());
-        int [] array = {0,0,0,0,0};
+
         List<Map<Object, Object>> jiChuItem = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");
-        for (Map<Object, Object> objectObjectMap : jiChuItem) {
-            String level1 = (String) objectObjectMap.get("level1");
-            List<Integer> types = tModelMapper.selecttype(level1,user.getId(),1,flag);
-            for (Integer integer : types) {
-                array[integer-1]=1;
-            }
-            objectObjectMap.put("array",array.clone());
-        }
+
         List<Map<Object, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
-        for (Map<Object, Object> objectObjectMap : XianChangItem) {
-            String level1 = (String) objectObjectMap.get("level1");
-            List<Integer> types = tModelMapper.selecttype(level1,user.getId(),2,flag);
-            for (Integer integer : types) {
-                array[integer-1]=1;
-            }
-            objectObjectMap.put("array",array.clone());
-        }
+
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
 
@@ -2938,7 +2924,24 @@ public class CompanyController_cd extends BaseController {
         User user = getLoginUser(request);
         // 根据用户获取用户信息
         List<Map<Object, Object>> jiChuItem = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");
+        int [] array = {0,0,0,0,0};
+        for (Map<Object, Object> objectObjectMap : jiChuItem) {
+            String level1 = (String) objectObjectMap.get("level1");
+            List<Integer> types = tModelMapper.selecttype(level1,user.getId(),1,flag);
+            for (Integer integer : types) {
+                array[integer-1]=1;
+            }
+            objectObjectMap.put("array",array.clone());
+        }
         List<Map<Object, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
+        for (Map<Object, Object> objectObjectMap : XianChangItem) {
+            String level1 = (String) objectObjectMap.get("level1");
+            List<Integer> types = tModelMapper.selecttype(level1,user.getId(),2,flag);
+            for (Integer integer : types) {
+                array[integer-1]=1;
+            }
+            objectObjectMap.put("array",array.clone());
+        }
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
         model.addAttribute("flag",flag);

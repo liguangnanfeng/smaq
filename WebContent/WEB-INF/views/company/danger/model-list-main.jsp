@@ -91,7 +91,7 @@
         }
 
         #tab-index-cartegory .tabBar span.selected {
-            background: #0099CC !important;
+            background: #5a98de !important;
         }
 
         .tabCon {

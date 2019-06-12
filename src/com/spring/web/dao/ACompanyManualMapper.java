@@ -151,7 +151,7 @@ public interface ACompanyManualMapper {
      * @param name 基础/现场
      * @return
      */
-    List<Map<Object, Object>> findJiChuItem(@Param("uid")Integer id, @Param("name")String name);
+    List<Map<String, Object>> findJiChuItem(@Param("uid")Integer id, @Param("name")String name);
 
     /**
      * 根据基础/现场/高危获取数据

@@ -3039,7 +3039,7 @@ public class VillageController extends BaseController {
             checkItem.setTemplate(user.getUserName() + "综合检查表");
         } else {
             ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(checkItem.getCheckLevels().get(0).getId());
-            checkItem.setTemplate(companyManual.getLevel1() + str[checkType] + "检查表");
+            checkItem.setTemplate(companyManual.getLevel1() + str[checkType-1] + "检查表");
         }
 
         return savemodel(request, checkItem);

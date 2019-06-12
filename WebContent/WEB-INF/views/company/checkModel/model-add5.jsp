@@ -89,6 +89,25 @@
             width: 5%;
         }
 
+        .flex {
+            display: -webkit-box; /* Chrome 4+, Safari 3.1, iOS Safari 3.2+ */
+            display: -moz-box; /* Firefox 17- */
+            display: -webkit-flex; /* Chrome 21+, Safari 6.1+, iOS Safari 7+, Opera 15/16 */
+            display: -moz-flex; /* Firefox 18+ */
+            display: -ms-flexbox; /* IE 10 */
+            display: flex; /* Chrome 29+, Firefox 22+, IE 11+, Opera 12.1/17/18, Android 4.4+ */
+
+            -moz-box-orient: horizontal; /*Firefox*/
+            -webkit-box-orient: horizontal; /*Safari,Opera,Chrome*/
+            box-orient: horizontal;
+
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+
     </style>
     <script>
         var dmname = "${dmname}";
@@ -203,6 +222,7 @@
                     list: [],        //  风险项数组
                     myChecks: [],     //自定义检查项数组
                     current: null,    //当前打开的检查项index
+                    isCheckAll: false   //表示是否全选
                 }
                 this.host = "https://sec.dicarl.com";
                 this.dmname = dmname;
@@ -242,7 +262,6 @@
                     async: false,
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
                         if (result.length == 0) {
                             alert('没有可选择的检查项,请自定义检查')
                         }
@@ -329,8 +348,6 @@
 
 
             save = () => {
-                console.log(this.state.list);
-                return
                 let state = this.state;
                 // if (!state.tableName) {    //验证检查表名字是否填写
                 //     alert('检查表名字必须填写');
@@ -345,17 +362,13 @@
                     alert('周期天数必须大于1');
                     return
                 }
-                if (state.list.length == 0 && state.myChecks.length == 0) {    //验证是否有检查项
-                    alert('没有选择检查项');
-                    return
-                }
-
                 let postData = {
                     template: this.tableName,     //表名字
                     title: this.checkType,        //检查方式 1:日常  2:定期  3:季节 4:其他 5:综合
                     checkType: this.industryType, //檢查類型 -1基础 -2现场   其他高危
                     cycle: parseInt(state.days),   //检查周期天数
-                    flag: this.flag,                //1:企业自查 2:行政检查 3:第三方
+                    flag: parseInt(this.flag),                //1:企业自查 2:行政检查 3:第三方
+                    checkLevels: []
                 }
                 state.list.map((item2) => {
                     if (item2.checked == 1) {
@@ -398,7 +411,7 @@
                     alert('没有选择检查项');
                     return
                 }
-
+                const my_flag = this.flag
                 $.ajax({
                     type: "POST",
                     url: getRootPath() + '/village/saveCheckMenu2',
@@ -408,12 +421,12 @@
                     dataType: "json",
                     success: function (result) {
                         if (result.status == 0) {
-                            layer.msg('保存成功');
-                            window.parent.location.href = '${ly }/company/model-list-main';
+                            alert('保存成功');
+                            window.parent.location.href = '${ly }/company/model-list-main?flag='+parseInt(my_flag);
                             var index = parent.layer.getFrameIndex(window.name);
                             parent.layer.close(index);
                         } else {
-                            layer.msg('保存失败');
+                            alert('保存失败');
                         }
                     },
                     complete: function (XMLHttpRequest, textStatus) {
@@ -439,6 +452,32 @@
 
             }
 
+
+            checkAll = () => {
+                const all = this.state.isCheckAll;
+                let isCheckAll = false;
+                let list = this.state.list;
+                let newList = [];
+                if (all) {
+                    newList = list.map((item, index) => {
+                        item.checked = 0;
+                        return item
+                    })
+                    isCheckAll = false;
+                } else {
+                    newList = list.map((item, index) => {
+                        item.checked = 1;
+                        return item
+                    })
+                    isCheckAll = true;
+                }
+                this.setState({
+                    list:newList,
+                    isCheckAll: isCheckAll,
+
+                })
+            }
+
             render = () => {
                 const arr = ['日常检查', '定期检查', '季节检查', '其他检查', '综合检查'];
                 const checkType = arr[this.checkType - 1];
@@ -451,6 +490,11 @@
 
                 const xcjc =      //如果是现场基础检查 渲染这个
                     <div>
+                        <div className="flex" style={{float: 'right', padding: '10px'}}>
+                            <input type="checkbox" style={{marginTop: '0px', marginRight: '5px'}}
+                                   onClick={this.checkAll}  checked={this.state.isCheckAll? true : false}/>
+                            <span>全选</span>
+                        </div>
                         <table id="xxx" className="table table-border table-bordered table-bg table-hover table-sort">
                             <thead>
                             <tr className="text-c">

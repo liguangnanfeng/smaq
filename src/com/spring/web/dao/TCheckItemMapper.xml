@@ -912,6 +912,7 @@
         select T2.type,
                T2.depart,
                T1.levels,
+               T1.recheck_time,
                T2.real_time as realTime ,
                T1.content,
                T1.files,

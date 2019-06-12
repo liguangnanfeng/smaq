@@ -87,7 +87,7 @@ body .dis-ib{margin-right:15px;}
             <th width="10%">检查方式</th>
             <%--<th width="10%">${flag == 1 ? '实际检查' : '录入'}时间</th>--%>
             <th width="10%">检查日期</th>
-            <th width="10%">检查人员</th>
+            <th width="10%">${flag == 1 ? '检查人员' : '检查部门'}</th>
             <th width="10%">隐患数量</th>
            <%-- <th width="15%">${flag == 1 ? '受检部门' : '检查单位'}</th>--%>
             <th width="10%">操作</th>
@@ -103,7 +103,7 @@ body .dis-ib{margin-right:15px;}
             <td><fmt:formatDate value="${be.realTime }" pattern="yyyy-MM-dd"/></td>
             <td>
               <%--${be.status == 1 ? '未检查' : '已检查'}--%>
-                 ${be.cheker}
+              ${flag == 1? be.cheker : be.depart}
             </td>
             <td>${be.c }</td>
             <%--<td>${flag == 1 ? be.depart : be.checkCompany}</td>--%>

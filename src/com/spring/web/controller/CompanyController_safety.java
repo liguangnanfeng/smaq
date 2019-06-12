@@ -5,20 +5,27 @@
 package com.spring.web.controller;
 
 import com.spring.web.BaseController;
+import com.spring.web.dao.ImportPhotoMapper;
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.*;
+import com.spring.web.model.request.ImportPhoto;
 import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
 import com.spring.web.service.cgf.CgfService;
 import com.spring.web.service.trouble.TroubleService;
+import com.spring.web.util.OutPrintUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -39,6 +46,8 @@ public class CompanyController_safety extends BaseController {
     private TroubleService troubleService;
     @Autowired
     private CgfService cgfService;
+    @Autowired
+    private ImportPhotoMapper importPhotoMapper;
 
     public CompanyController_safety() {
     }
@@ -933,6 +942,53 @@ public class CompanyController_safety extends BaseController {
         }
         return "company/safety-system/risk-information-list2";
     }
+
+
+
+
+    /*
+     *  车间/岗位页面跳转
+     */
+    @RequestMapping(value = "control-photo")
+    public String controlPhoto(Model model, HttpServletRequest request) throws Exception {
+        User user = getLoginUser(request);
+        List<ImportPhoto> list = importPhotoMapper.selectPhoto(user.getId());
+
+        model.addAttribute("list",list);
+        return "company/safety-system/control-photo";
+    }
+
+    /*
+    *  车间/岗位 文件上传
+    */
+    @RequestMapping(value = "save-photo", method = RequestMethod.POST)
+    public void companyLeadin(@RequestParam MultipartFile file,HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Result result = exportService.photoImport(file, getLoginUser(request).getId(), request);
+        OutPrintUtil.OutPrint(response, result);
+    }
+
+
+    /*
+    *  车间/岗位 文件删除
+    */
+    @RequestMapping(value = "delete-photo")
+    public Result deletePhoto(Model model, HttpServletRequest request,Integer id) throws Exception {
+        User user = getLoginUser(request);
+        Result result = new ResultImpl();
+
+        Boolean aBoolean = importPhotoMapper.deletePhoto(id);
+
+        if (aBoolean == true ){
+            result.setMess("删除成功。");
+            return result;
+        }else {
+            result.setMess("删除异常！！！");
+            return result;
+        }
+
+
+    }
+
 
 
     /**

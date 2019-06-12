@@ -6,6 +6,7 @@ package com.spring.web.service.export;
 
 import com.spring.web.dao.*;
 import com.spring.web.model.*;
+import com.spring.web.model.request.ImportPhoto;
 import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
 import com.spring.web.util.ConstantsUtil;
@@ -82,6 +83,8 @@ public class ExportServiceImpl implements ExportService {
     private TCheckItemMapper tCheckItemMapper;
     @Autowired
     private TCheckPartMapper tCheckPartMapper;
+    @Autowired
+    private ImportPhotoMapper importPhotoMapper;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public Result companyImport(@RequestParam MultipartFile file, Integer villageId, HttpServletRequest request)
@@ -686,5 +689,60 @@ public class ExportServiceImpl implements ExportService {
         return result;
     }
 
-    
+
+    /*
+    * 岗位部门
+    * */
+    @Override
+    public Result photoImport(MultipartFile file, Integer userId, HttpServletRequest request) throws Exception {
+
+        Result result = new ResultImpl();
+        if (null != file) {
+            String fileName = file.getOriginalFilename();
+           // 检查扩展名
+            String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+            if (!"jpeg".equals(fileExt)) {
+                result.setStatus("1");
+                result.setMap("message", "上传文件扩展名是不允许的扩展名。只允许jpeg格式。");
+                return result;
+            }
+        } else {
+            result.setStatus("1");
+            result.setMap("message", "请选择文件。");
+            return result;
+        }
+        try {
+            // 文件保存目录路径
+            String savePath = request.getServletContext().getRealPath("/") + "upload/txt/";
+
+            ImportPhoto importPhoto = new ImportPhoto();
+            importPhoto.setUrl(savePath);
+            importPhoto.setUser_id(userId);
+
+            List<ImportPhoto> list =  importPhotoMapper.selectOne(userId,savePath);
+
+            if (list.size() == 0){
+                importPhotoMapper.savePhoto(importPhoto);
+            }else {
+                for (int i = 0; i < list.size(); i++) {
+                    importPhotoMapper.updatePhoto(list.get(i).getId(),savePath);
+                }
+            }
+            /*// 文件保存目录URL
+            String saveUrl = request.getContextPath() + "/upload/txt/";
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+            String oldname = file.getOriginalFilename();
+            String fileExt = oldname.substring(oldname.lastIndexOf(".") + 1).toLowerCase();
+            String newFileName = df.format(new Date()) + "_" + new Random().nextInt(1000) + "." + fileExt;
+            Date date = new Date();
+            file.transferTo(new File(savePath + newFileName));
+            Ping p = new Ping(null,userId, file.getOriginalFilename(),saveUrl + newFileName, date);
+            pingMapper.insertSelective(p);*/
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result.setStatus("1");
+            result.setMap("message", "文件上传异常，请重试");
+        }
+        return result;
+    }
 }

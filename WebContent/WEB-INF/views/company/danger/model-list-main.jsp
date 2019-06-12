@@ -101,9 +101,9 @@
             border: 1px solid #ccc;
         }
 
-        .used{
-            background-color: #0a7f6d!important;
-            color: #fff!important;
+        .used {
+            background-color: #0a7f6d !important;
+            color: #fff !important;
         }
     </style>
 
@@ -121,9 +121,12 @@
 </nav>
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
-        <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/company/model-list-main?flag=1">企业自查</a>
-        <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/company/model-list-main?flag=2">行政检查</a>
-        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/company/model-list-main?flag=3">部门抽查</a>
+        <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}"
+           href="${ly }/company/model-list-main?flag=1">企业自查</a>
+        <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
+           href="${ly }/company/model-list-main?flag=2">行政检查</a>
+        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
+           href="${ly }/company/model-list-main?flag=3">部门抽查</a>
         <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
     </div>
     <div id="tab-index-cartegory">
@@ -151,63 +154,77 @@
                         <tr class="text-c">
                             <td>${index.index + 1}</td>
                             <td>${be.level1 }</td>
-                            <td>
-                                <a style="text-decoration:none"
-                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-2&flag=${flag}')"
-                                   href="javascript:;">设置</a>
+                            <c:forEach items="${be.array}" varStatus="index2" var="item">
+                                <td>
+                                    <a>${item}</a>
+                                    <a style="text-decoration:none"
+                                       onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&flag=${flag}')"
+                                       href="javascript:;">设置</a>
+                                        <%--                                <a style="text-decoration:none"--%>
+                                        <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"--%>
+                                        <%--                                   href="javascript:;">实施</a>--%>
+                                    <a style="text-decoration:none"
+                                       onClick="ss('${be.level1 }','${be.dmid }',5,-1,6,'${flag}')"
+                                       href="javascript:;">实施</a>
+                                </td>
+                            </c:forEach>
+<%--                            <td>--%>
 <%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-2&template=6&flag=1')"--%>
-<%--                                   href="javascript:;">实施</a>--%>
-                                <a style="text-decoration:none"
-                                   class="used"
-                                   onClick="ss('${be.level1 }','${be.dmid }',5,-2,6,'${flag}')"
-                                   href="javascript:;">实施</a>
-                            </td>
-                            <td>
-                                <a style="text-decoration:none"
-                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-2&flag=${flag}')"
-                                   href="javascript:;">设置</a>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-2&flag=${flag}')"--%>
+<%--                                   href="javascript:;">设置</a>--%>
+<%--                                    &lt;%&ndash;                                <a style="text-decoration:none"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-2&template=6&flag=1')"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   href="javascript:;">实施</a>&ndash;%&gt;--%>
 <%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-2&template=2&flag=1')"--%>
+<%--                                   class="used"--%>
+<%--                                   onClick="ss('${be.level1 }','${be.dmid }',5,-2,6,'${flag}')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
-                                <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',1,-2,2,'${flag}')"
-                                   class="used"
-                                   href="javascript:;">实施</a>
-                            </td>
-                            <td>
-                                <a style="text-decoration:none"
-                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-2&flag=${flag}')"
-                                   href="javascript:;">设置</a>
+<%--                            </td>--%>
+<%--                            <td>--%>
 <%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-2&template=3&flag=1')"--%>
-<%--                                   href="javascript:;">实施</a>--%>
-                                <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',2,-2,3,'${flag}')"
-                                   href="javascript:;">实施</a>
-                            </td>
-                            <td>
-                                <a style="text-decoration:none"
-                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-2&flag=${flag}')"
-                                   href="javascript:;">设置</a>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-2&flag=${flag}')"--%>
+<%--                                   href="javascript:;">设置</a>--%>
+<%--                                    &lt;%&ndash;                                <a style="text-decoration:none"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-2&template=2&flag=1')"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   href="javascript:;">实施</a>&ndash;%&gt;--%>
 <%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-2&template=4&flag=1')"--%>
+<%--                                   onClick="ss('${be.level1 }','${be.dmid }',1,-2,2,'${flag}')"--%>
+<%--                                   class="used"--%>
 <%--                                   href="javascript:;">实施</a>--%>
-                                <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',3,-2,4,'${flag}')"
-                                   href="javascript:;">实施</a>
-                            </td>
-                            <td>
-                                <a style="text-decoration:none"
-                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-2&flag=${flag}')"
-                                   href="javascript:;">设置</a>
+<%--                            </td>--%>
+<%--                            <td>--%>
 <%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-2&template=5&flag=1')"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-2&flag=${flag}')"--%>
+<%--                                   href="javascript:;">设置</a>--%>
+<%--                                    &lt;%&ndash;                                <a style="text-decoration:none"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-2&template=3&flag=1')"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   href="javascript:;">实施</a>&ndash;%&gt;--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="ss('${be.level1 }','${be.dmid }',2,-2,3,'${flag}')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
-                                <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',4,-2,5,'${flag}')"
-                                   href="javascript:;">实施</a>
-                            </td>
+<%--                            </td>--%>
+<%--                            <td>--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-2&flag=${flag}')"--%>
+<%--                                   href="javascript:;">设置</a>--%>
+<%--                                    &lt;%&ndash;                                <a style="text-decoration:none"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-2&template=4&flag=1')"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   href="javascript:;">实施</a>&ndash;%&gt;--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="ss('${be.level1 }','${be.dmid }',3,-2,4,'${flag}')"--%>
+<%--                                   href="javascript:;">实施</a>--%>
+<%--                            </td>--%>
+<%--                            <td>--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-2&flag=${flag}')"--%>
+<%--                                   href="javascript:;">设置</a>--%>
+<%--                                    &lt;%&ndash;                                <a style="text-decoration:none"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-2&template=5&flag=1')"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   href="javascript:;">实施</a>&ndash;%&gt;--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="ss('${be.level1 }','${be.dmid }',4,-2,5,'${flag}')"--%>
+<%--                                   href="javascript:;">实施</a>--%>
+<%--                            </td>--%>
 
                         </tr>
                     </c:forEach>
@@ -236,61 +253,76 @@
                         <tr class="text-c">
                             <td>${index.index + 1}</td>
                             <td>${be.level1 }</td>
-                            <td>
-                                <a style="text-decoration:none"
-                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&flag=${flag}')"
-                                   href="javascript:;">设置</a>
+                            <c:forEach items="${be.array}" varStatus="index2" var="item">
+                                <td>
+                                    <a>${item}</a>
+                                    <a>${index2.index}</a>
+                                    <a style="text-decoration:none"
+                                       onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&flag=${flag}')"
+                                       href="javascript:;">设置</a>
+                                        <%--                                <a style="text-decoration:none"--%>
+                                        <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"--%>
+                                        <%--                                   href="javascript:;">实施</a>--%>
+                                    <a style="text-decoration:none"
+                                       onClick="ss('${be.level1 }','${be.dmid }',5,-1,6,'${flag}')"
+                                       href="javascript:;">实施</a>
+                                </td>
+                            </c:forEach>
+<%--                            <td>--%>
 <%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"--%>
-<%--                                   href="javascript:;">实施</a>--%>
-                                <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',5,-1,6,'${flag}')"
-                                   href="javascript:;">实施</a>
-                            </td>
-                            <td>
-                                <a style="text-decoration:none"
-                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-1&flag=${flag}')"
-                                   href="javascript:;">设置</a>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&flag=${flag}')"--%>
+<%--                                   href="javascript:;">设置</a>--%>
+<%--                                    &lt;%&ndash;                                <a style="text-decoration:none"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   href="javascript:;">实施</a>&ndash;%&gt;--%>
 <%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-1&template=2&flag=1')"--%>
+<%--                                   onClick="ss('${be.level1 }','${be.dmid }',5,-1,6,'${flag}')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
-                                <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',1,-1,2,'${flag}')"
-                                   href="javascript:;">实施</a>
-                            </td>
-                            <td>
-                                <a style="text-decoration:none"
-                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-1&flag=${flag}')"
-                                   href="javascript:;">设置</a>
+<%--                            </td>--%>
+<%--                            <td>--%>
 <%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-1&template=3&flag=1')"--%>
-<%--                                   href="javascript:;">实施</a>--%>
-                                <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',2,-1,3,'${flag}')"
-                                   href="javascript:;">实施</a>
-                            </td>
-                            <td>
-                                <a style="text-decoration:none"
-                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-1&flag=${flag}')"
-                                   href="javascript:;">设置</a>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-1&flag=${flag}')"--%>
+<%--                                   href="javascript:;">设置</a>--%>
+<%--                                    &lt;%&ndash;                                <a style="text-decoration:none"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=1&industryType=-1&template=2&flag=1')"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   href="javascript:;">实施</a>&ndash;%&gt;--%>
 <%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-1&template=4&flag=1')"--%>
+<%--                                   onClick="ss('${be.level1 }','${be.dmid }',1,-1,2,'${flag}')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
-                                <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',3,-1,4,'${flag}')"
-                                   href="javascript:;">实施</a>
-                            </td>
-                            <td>
-                                <a style="text-decoration:none"
-                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-1&flag=${flag}')"
-                                   href="javascript:;">设置</a>
+<%--                            </td>--%>
+<%--                            <td>--%>
 <%--                                <a style="text-decoration:none"--%>
-<%--                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-1&template=5&flag=1')"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-1&flag=${flag}')"--%>
+<%--                                   href="javascript:;">设置</a>--%>
+<%--                                    &lt;%&ndash;                                <a style="text-decoration:none"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=2&industryType=-1&template=3&flag=1')"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   href="javascript:;">实施</a>&ndash;%&gt;--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="ss('${be.level1 }','${be.dmid }',2,-1,3,'${flag}')"--%>
 <%--                                   href="javascript:;">实施</a>--%>
-                                <a style="text-decoration:none"
-                                   onClick="ss('${be.level1 }','${be.dmid }',4,-1,5,'${flag}')"
-                                   href="javascript:;">实施</a>
-                            </td>
+<%--                            </td>--%>
+<%--                            <td>--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-1&flag=${flag}')"--%>
+<%--                                   href="javascript:;">设置</a>--%>
+<%--                                    &lt;%&ndash;                                <a style="text-decoration:none"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=3&industryType=-1&template=4&flag=1')"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   href="javascript:;">实施</a>&ndash;%&gt;--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="ss('${be.level1 }','${be.dmid }',3,-1,4,'${flag}')"--%>
+<%--                                   href="javascript:;">实施</a>--%>
+<%--                            </td>--%>
+<%--                            <td>--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-1&flag=${flag}')"--%>
+<%--                                   href="javascript:;">设置</a>--%>
+<%--                                    &lt;%&ndash;                                <a style="text-decoration:none"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   onClick="tz( '${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=4&industryType=-1&template=5&flag=1')"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                                   href="javascript:;">实施</a>&ndash;%&gt;--%>
+<%--                                <a style="text-decoration:none"--%>
+<%--                                   onClick="ss('${be.level1 }','${be.dmid }',4,-1,5,'${flag}')"--%>
+<%--                                   href="javascript:;">实施</a>--%>
+<%--                            </td>--%>
                         </tr>
                     </c:forEach>
                     <!-- 循环结束 -->
@@ -485,8 +517,8 @@
             console.log(result);
             if (status == 'success') {
                 if (result.status == 0) {
-                    var url = '${ly}/village/plan-next?flag='+result.data.flag+'&id='+result.data.modelId;
-                    window.location.href=url;
+                    var url = '${ly}/village/plan-next?flag=' + result.data.flag + '&id=' + result.data.modelId;
+                    window.location.href = url;
                 } else {
                     layer.msg('请先设置检查表');
                 }

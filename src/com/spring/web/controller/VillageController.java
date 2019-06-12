@@ -2811,12 +2811,13 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value = "model-add4")
     public String modelAdd4(HttpServletRequest request, Model model, String dmname, Integer dmid, Integer checkType,
-                            Integer industryType
+                            Integer industryType,Integer flag
     ) {
         model.addAttribute("dmname", dmname);
         model.addAttribute("dmid", dmid);
         model.addAttribute("checkType", checkType);
         model.addAttribute("industryType", industryType);
+        model.addAttribute("flag", flag);
         return "company/checkModel/model-add5";
     }
 
@@ -2969,7 +2970,6 @@ public class VillageController extends BaseController {
         });
         return linkedList;
     }
-
 
     /**
      * TODO 根据公司和部门,岗位获取检查项

@@ -19,27 +19,46 @@
                 .input-file{position:absolute; right:0; top:0; cursor: pointer; z-index:1; font-size:30em; *font-size:30px;opacity:0;filter: alpha(opacity=0)}
                 .btn-upload .input-text{ width:auto}
                 .form-group .upload-btn{ margin-left:-1px}
+            .photo{
+                display: inline-block;
+                width: 33%;
+                text-align: center;
+                padding: 10px;
+                height: 200px;
+                box-shadow: 0 0 5px #f1f1f1;
+                margin-top: 10px;
+            }
+            .photo img{
+                max-width: 100%;
+                max-height: 100%;
+            }
+            .photo span{
+                font-size: 24px;
+                color: red;
+                font-weight: 600;
+                cursor: pointer;
+                float: right;
+            }
         </style>
 </head>
+<body>
 <div>
-
-    <c:forEach items="${list }" var="be">
-        <input>${be.url}
-    </c:forEach>
     <div class="row cl mt-15">
         <label class="form-label col-xs-4 col-sm-2" style="width:20%;text-align:right;">资料上传：</label>
-        <div class="formControls col-xs-8 col-sm-9" style="width:70%;">
+        <div class="formControls col-xs-8 col-sm-9" style="width:300px;">
               <span class="btn-upload form-group">
                 <input class="input-text upload-url" type="text" name="uploadfile-1" id="uploadfile-1" readonly><a href="javascript:void();" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
                 <input type="file" multiple name="file" id="file"  class="input-file">
               </span>
         </div>
-    </div>
-    <div >
-        <button class="btn btn-primary" onclick="upload()">确定</button>
-        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <button class="btn btn-primary" onclick="upload()">确定上传</button>
     </div>
 </div>
+<%--    --%>
+<c:forEach items="${list }" var="be">
+    <%--${be.url}--%>
+    <div class="photo"><img src="${be.url}"><span onclick="del(${be.id})">X</span></div>
+</c:forEach>
 
 <script type="text/javascript">
     $(function() {
@@ -55,10 +74,10 @@
 
     /*删除*/
     function del(id){
-        $.post(getRootPath()+"/company/tables/tab-del",{
-            id:id,
-        },function(reuslt){
-            location.reload()
+        $.post(getRootPath()+"/company/safety-system/delete-photo",{
+            id:id
+        },function(result){
+            window.location.reload()
         })
     }
 

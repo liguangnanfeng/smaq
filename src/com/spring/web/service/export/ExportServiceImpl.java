@@ -714,21 +714,7 @@ public class ExportServiceImpl implements ExportService {
         try {
             // 文件保存目录路径
             String savePath = request.getServletContext().getRealPath("/") + "upload/txt/";
-
-            ImportPhoto importPhoto = new ImportPhoto();
-            importPhoto.setUrl(savePath);
-            importPhoto.setUser_id(userId);
-
-            List<ImportPhoto> list =  importPhotoMapper.selectOne(userId,savePath);
-
-            if (list.size() == 0){
-                importPhotoMapper.savePhoto(importPhoto);
-            }else {
-                for (int i = 0; i < list.size(); i++) {
-                    importPhotoMapper.updatePhoto(list.get(i).getId(),savePath);
-                }
-            }
-            /*// 文件保存目录URL
+            // 文件保存目录URL
             String saveUrl = request.getContextPath() + "/upload/txt/";
             SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
             String oldname = file.getOriginalFilename();
@@ -736,8 +722,13 @@ public class ExportServiceImpl implements ExportService {
             String newFileName = df.format(new Date()) + "_" + new Random().nextInt(1000) + "." + fileExt;
             Date date = new Date();
             file.transferTo(new File(savePath + newFileName));
-            Ping p = new Ping(null,userId, file.getOriginalFilename(),saveUrl + newFileName, date);
-            pingMapper.insertSelective(p);*/
+            ImportPhoto importPhoto = new ImportPhoto();
+            String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+"/upload/txt/"+newFileName;
+
+            importPhoto.setUrl(url);
+            importPhoto.setUser_id(userId);
+            importPhotoMapper.savePhoto(importPhoto);
+
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setStatus("1");

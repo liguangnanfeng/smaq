@@ -3040,7 +3040,7 @@ public class VillageController extends BaseController {
                 checkItem.setTemplate(user.getUserName() + "综合检查表");
             } else {
 
-                checkItem.setTemplate(companyManual.getLevel1() + str[checkType] + "检查表");
+                checkItem.setTemplate(companyManual.getLevel1() + str[checkType-1] + "检查表");
             }
         }else{
             // 行政检查/部门抽查

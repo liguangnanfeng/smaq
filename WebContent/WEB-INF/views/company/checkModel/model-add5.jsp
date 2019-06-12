@@ -72,19 +72,41 @@
             margin-left: 14%;
         }
 
-        .my_td{
-            width:10%;
+        .my_td {
+            width: 10%;
         }
-        .my_td4{
-            width:25%;
-        }
-        .my_td2{
-            width:50%;
-        }
-        .my_td3{
 
-            width:5%;
+        .my_td4 {
+            width: 25%;
         }
+
+        .my_td2 {
+            width: 50%;
+        }
+
+        .my_td3 {
+
+            width: 5%;
+        }
+
+        .flex {
+            display: -webkit-box; /* Chrome 4+, Safari 3.1, iOS Safari 3.2+ */
+            display: -moz-box; /* Firefox 17- */
+            display: -webkit-flex; /* Chrome 21+, Safari 6.1+, iOS Safari 7+, Opera 15/16 */
+            display: -moz-flex; /* Firefox 18+ */
+            display: -ms-flexbox; /* IE 10 */
+            display: flex; /* Chrome 29+, Firefox 22+, IE 11+, Opera 12.1/17/18, Android 4.4+ */
+
+            -moz-box-orient: horizontal; /*Firefox*/
+            -webkit-box-orient: horizontal; /*Safari,Opera,Chrome*/
+            box-orient: horizontal;
+
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
 
     </style>
     <script>
@@ -92,6 +114,7 @@
         var dmid = "${dmid}";
         var checkType = "${checkType}";
         var industryType = "${industryType}";
+        var flag = "${flag}";
 
     </script>
     <script type="text/javascript">
@@ -99,7 +122,7 @@
             var b = null, l1 = '', c = 1;
             var b2 = null, l2 = '', c2 = 1;
             var b3 = null, l3 = '', c3 = 1;
-            $("tbody tr").each(function() {
+            $("tbody tr").each(function () {
                 var td = $(this).children("td").eq(0);
                 var td2 = $(this).children("td").eq(1);
                 var td3 = $(this).children("td").eq(2);
@@ -110,18 +133,18 @@
                 var l4_ = td4.text();
 
                 //Same to top level
-                if(l1 == l1_) {
+                if (l1 == l1_) {
                     td.remove();
                     c = c + 1;
-                    if(l2 == l2_) {
+                    if (l2 == l2_) {
                         td2.remove();
                         c2 = c2 + 1;
-                        if(l3 == l3_) {
+                        if (l3 == l3_) {
                             td3.remove();
                             c3 = c3 + 1;
                         } else {
                             l3 = l3_;
-                            if(b3 != null) {
+                            if (b3 != null) {
                                 b3.attr("rowspan", c3);
                                 c3 = 1;
                             }
@@ -130,13 +153,13 @@
                         }
                     } else {
                         l2 = l2_;
-                        if(b2 != null) {
+                        if (b2 != null) {
                             b2.attr("rowspan", c2);
                             c2 = 1;
                         }
                         b2 = td2;
                         l3 = l3_;
-                        if(b3 != null) {
+                        if (b3 != null) {
                             b3.attr("rowspan", c3);
                             c3 = 1;
                         }
@@ -145,32 +168,32 @@
 
                 } else {//Diffrent to top level
                     l1 = l1_;
-                    if(b != null) {
+                    if (b != null) {
                         b.attr("rowspan", c);
                         c = 1;
                     }
                     b = td;
                     l2 = l2_;
-                    if(b2 != null) {
+                    if (b2 != null) {
                         b2.attr("rowspan", c2);
                         c2 = 1;
                     }
                     b2 = td2;
                     l3 = l3_;
-                    if(b3 != null) {
+                    if (b3 != null) {
                         b3.attr("rowspan", c3);
                         c3 = 1;
                     }
                     b3 = td3;
                 }
             })
-            if(b != null) {
+            if (b != null) {
                 b.attr("rowspan", c);
             }
-            if(b2 != null) {
+            if (b2 != null) {
                 b2.attr("rowspan", c2);
             }
-            if(b3 != null) {
+            if (b3 != null) {
                 b3.attr("rowspan", c3);
             }
         }
@@ -199,12 +222,14 @@
                     list: [],        //  风险项数组
                     myChecks: [],     //自定义检查项数组
                     current: null,    //当前打开的检查项index
+                    isCheckAll: false   //表示是否全选
                 }
                 this.host = "https://sec.dicarl.com";
                 this.dmname = dmname;
                 this.dmid = dmid;
                 this.checkType = checkType;
                 this.industryType = industryType;
+                this.flag = flag;
                 const arrs = ['日常', '定期', '季节', '其他', '综合'];
                 const aa = arrs[checkType - 1];
                 const objs = {
@@ -237,7 +262,6 @@
                     async: false,
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
                         if (result.length == 0) {
                             alert('没有可选择的检查项,请自定义检查')
                         }
@@ -323,11 +347,7 @@
             }
 
 
-
-
             save = () => {
-                console.log(this.state.list);
-                return
                 let state = this.state;
                 // if (!state.tableName) {    //验证检查表名字是否填写
                 //     alert('检查表名字必须填写');
@@ -342,37 +362,32 @@
                     alert('周期天数必须大于1');
                     return
                 }
-                if (state.list.length == 0 && state.myChecks.length == 0) {    //验证是否有检查项
-                    alert('没有选择检查项');
-                    return
-                }
-
                 let postData = {
                     template: this.tableName,     //表名字
                     title: this.checkType,        //检查方式 1:日常  2:定期  3:季节 4:其他 5:综合
                     checkType: this.industryType, //檢查類型 -1基础 -2现场   其他高危
                     cycle: parseInt(state.days),   //检查周期天数
-                    checkLevels: []                 //检查项
+                    flag: parseInt(this.flag),                //1:企业自查 2:行政检查 3:第三方
+                    checkLevels: []
                 }
-                state.list.map((item) => {
-                    item.list.map((item2) => {
-                        if (item2.checked == 1) {
-                            let checkItem = {};
-                            checkItem.id = item2.id;
-                            checkItem.level1 = item2.level1;
-                            checkItem.level2 = item2.level2;
-                            checkItem.level3 = item2.level3;
-                            checkItem.level4 = item2.measures;
-                            checkItem.reference = item2.reference;
-                            checkItem.factors = item2.factors;
-                            checkItem.types = item2.types;
-                            checkItem.gkcs = item2.gkcs;
-                            checkItem.gkzt = item2.gkzt;
-                            checkItem.checkType = this.industryType;
-                            industryId:null
-                            postData.checkLevels.push(checkItem);
-                        }
-                    })
+                state.list.map((item2) => {
+                    if (item2.checked == 1) {
+                        let checkItem = {};
+                        checkItem.id = item2.id;
+                        checkItem.level1 = item2.level1;
+                        checkItem.level2 = item2.level2;
+                        checkItem.level3 = item2.level3;
+                        checkItem.level4 = item2.measures;
+                        checkItem.reference = item2.reference;
+                        checkItem.factors = item2.factors;
+                        checkItem.types = item2.types;
+                        checkItem.gkcs = item2.gkcs;
+                        checkItem.gkzt = item2.gkzt;
+                        checkItem.checkType = this.industryType;
+                        industryId:null
+                        postData.checkLevels.push(checkItem);
+                    }
+
                 })
                 state.myChecks.map((item) => {
                     if (item.title != '' && item.value != '') {
@@ -396,7 +411,7 @@
                     alert('没有选择检查项');
                     return
                 }
-
+                const my_flag = this.flag
                 $.ajax({
                     type: "POST",
                     url: getRootPath() + '/village/saveCheckMenu2',
@@ -407,7 +422,7 @@
                     success: function (result) {
                         if (result.status == 0) {
                             alert('保存成功');
-                            window.parent.location.href = '${ly }/company/model-list-main';
+                            window.parent.location.href = '${ly }/company/model-list-main?flag='+parseInt(my_flag);
                             var index = parent.layer.getFrameIndex(window.name);
                             parent.layer.close(index);
                         } else {
@@ -437,6 +452,32 @@
 
             }
 
+
+            checkAll = () => {
+                const all = this.state.isCheckAll;
+                let isCheckAll = false;
+                let list = this.state.list;
+                let newList = [];
+                if (all) {
+                    newList = list.map((item, index) => {
+                        item.checked = 0;
+                        return item
+                    })
+                    isCheckAll = false;
+                } else {
+                    newList = list.map((item, index) => {
+                        item.checked = 1;
+                        return item
+                    })
+                    isCheckAll = true;
+                }
+                this.setState({
+                    list:newList,
+                    isCheckAll: isCheckAll,
+
+                })
+            }
+
             render = () => {
                 const arr = ['日常检查', '定期检查', '季节检查', '其他检查', '综合检查'];
                 const checkType = arr[this.checkType - 1];
@@ -449,10 +490,15 @@
 
                 const xcjc =      //如果是现场基础检查 渲染这个
                     <div>
+                        <div className="flex" style={{float: 'right', padding: '10px'}}>
+                            <input type="checkbox" style={{marginTop: '0px', marginRight: '5px'}}
+                                   onClick={this.checkAll}  checked={this.state.isCheckAll? true : false}/>
+                            <span>全选</span>
+                        </div>
                         <table id="xxx" className="table table-border table-bordered table-bg table-hover table-sort">
                             <thead>
                             <tr className="text-c">
-                                <th className="my_td" >部位</th>
+                                <th className="my_td">部位</th>
                                 <th className="my_td">岗位</th>
                                 <th className="my_td4">风险点</th>
                                 <th className="my_td2">风险内容</th>
@@ -470,9 +516,9 @@
                                         <td className="text-c">
                                             <input type="checkbox"
                                                    checked={this.state.list[index].checked == 1 ? true : false}
-                                                  onClick={() => {
-                                                this.checkBox(index)
-                                            }}/>
+                                                   onClick={() => {
+                                                       this.checkBox(index)
+                                                   }}/>
                                         </td>
                                     </tr>
                                 )
@@ -544,7 +590,7 @@
                             <div className="page-container">
 
                                 {this.checkType == 2 ?
-                                    <div className="row cl dq" style={{marginBottom:'20px'}}>
+                                    <div className="row cl dq" style={{marginBottom: '20px'}}>
                                         <label className="form-label col-xs-1 col-sm-1 col-lg-1"><span
                                             className="c-red">*</span>定期时间
                                             :</label>

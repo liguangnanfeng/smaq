@@ -947,19 +947,18 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-     *  车间/岗位页面跳转
+     *  车间/岗位页面跳转！！！
      */
     @RequestMapping(value = "control-photo")
     public String controlPhoto(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         List<ImportPhoto> list = importPhotoMapper.selectPhoto(user.getId());
-
         model.addAttribute("list",list);
         return "company/safety-system/control-photo";
     }
 
     /*
-    *  车间/岗位 文件上传
+    *  车间/岗位 文件上传！！！
     */
     @RequestMapping(value = "save-photo", method = RequestMethod.POST)
     public void companyLeadin(@RequestParam MultipartFile file,HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -969,15 +968,14 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-    *  车间/岗位 文件删除
+    *  车间/岗位 文件删除！！！
     */
     @RequestMapping(value = "delete-photo")
+    @ResponseBody
     public Result deletePhoto(Model model, HttpServletRequest request,Integer id) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
-
         Boolean aBoolean = importPhotoMapper.deletePhoto(id);
-
         if (aBoolean == true ){
             result.setMess("删除成功。");
             return result;
@@ -985,8 +983,6 @@ public class CompanyController_safety extends BaseController {
             result.setMess("删除异常！！！");
             return result;
         }
-
-
     }
 
 

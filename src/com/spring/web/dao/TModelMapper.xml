@@ -455,7 +455,6 @@
         type
         from smaq.t_model_tbl
         where user_id=#{userId} and del=0 and part=#{dmName} and flag=#{flag} and industry_type=#{industryType}
-        and type in (1,2,3,4,5)
         group by type;
     </select>
 

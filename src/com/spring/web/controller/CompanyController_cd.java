@@ -2880,9 +2880,9 @@ public class CompanyController_cd extends BaseController {
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
         model.addAttribute("t", d.getTime());
 
-        List<Map<Object, Object>> jiChuItem = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");
+        List<Map<String, Object>> jiChuItem = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");
 
-        List<Map<Object, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
+        List<Map<String, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
 
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
@@ -2923,24 +2923,42 @@ public class CompanyController_cd extends BaseController {
         // 获取用户信息
         User user = getLoginUser(request);
         // 根据用户获取用户信息
-        List<Map<Object, Object>> jiChuItem = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");
-        int [] array = {0,0,0,0,0};
-        for (Map<Object, Object> objectObjectMap : jiChuItem) {
-            String level1 = (String) objectObjectMap.get("level1");
-            List<Integer> types = tModelMapper.selecttype(level1,user.getId(),1,flag);
-            for (Integer integer : types) {
-                array[integer-1]=1;
+        List<Map<String, Object>> jiChuItem = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");
+        List<Map<String, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
+
+
+        for (int i = 0; i < jiChuItem.size(); i++) {
+            Map<Integer,Integer> map = new LinkedHashMap<Integer,Integer>();
+            map.put(1,0);
+            map.put(2,0);
+            map.put(3,0);
+            map.put(4,0);
+            map.put(5,0);
+            String level1 = (String) jiChuItem.get(i).get("level1");
+            List<Integer> types1 = tModelMapper.selecttype(level1,user.getId(),1,flag);
+            System.out.println(types1+"咋回事");
+            System.out.println(map+"咋回事");
+            for (Integer integer : types1) {
+                map.put(integer,1);
             }
-            objectObjectMap.put("array",array.clone());
+            jiChuItem.get(i).put("array",map);
         }
-        List<Map<Object, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
-        for (Map<Object, Object> objectObjectMap : XianChangItem) {
+
+        for (Map<String, Object> objectObjectMap : XianChangItem) {
+            Map<Integer,Integer> map = new LinkedHashMap<Integer,Integer>();
+            map.put(1,0);
+            map.put(2,0);
+            map.put(3,0);
+            map.put(4,0);
+            map.put(5,0);
             String level1 = (String) objectObjectMap.get("level1");
-            List<Integer> types = tModelMapper.selecttype(level1,user.getId(),2,flag);
-            for (Integer integer : types) {
-                array[integer-1]=1;
+            List<Integer> types2 = tModelMapper.selecttype(level1,user.getId(),2,flag);
+            System.out.println(types2+"咋回事");
+            System.out.println(map+"咋回事");
+            for (Integer integer : types2) {
+                map.put(integer,1);
             }
-            objectObjectMap.put("array",array.clone());
+            objectObjectMap.put("array",map);
         }
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);

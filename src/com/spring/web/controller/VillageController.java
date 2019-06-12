@@ -2882,7 +2882,7 @@ public class VillageController extends BaseController {
     public @ResponseBody
     List findItemAll(HttpServletRequest request, Integer checkType, Model model) {
         User user = getLoginUser(request);
-        List<Map<Object, Object>> list = new ArrayList<>();
+        List<Map<String, Object>> list = new ArrayList<>();
         if (checkType == -1) {
             // 基础检查 保存基础检查的数据
             list = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");

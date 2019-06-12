@@ -55,4 +55,7 @@ public interface ExportService extends Serializable {
     * @return 
     */
     public Result pImport(MultipartFile file, Integer userId, HttpServletRequest request)throws Exception;
+
+    public Result photoImport(MultipartFile file, Integer userId, HttpServletRequest request)throws Exception;
+
 }

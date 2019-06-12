@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.web.dao.ImportPhotoMapper">
+
+    <resultMap id="BaseResultMap" type="com.spring.web.model.request.ImportPhoto">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="url" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, url, user_id
+    </sql>
+
+    <!-- 添加数据信息 -->
+    <insert id="savePhoto" parameterType="com.spring.web.model.request.TMap" >
+         insert into import_photo (url,user_id) values(#{url},#{user_id});
+    </insert>
+
+
+    <!-- 删除数据信息 -->
+    <delete id="deletePhoto" parameterType="Integer" >
+        delete from import_photo where id= #{id};
+    </delete>
+
+    <!-- 查询数据信息 -->
+    <select id="selectPhoto" parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from import_photo where user_id= #{userId};
+    </select>
+
+
+    <!-- 查询数据信息 -->
+    <select id="selectOne"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from import_photo where user_id = #{userId} and url = #{url};
+    </select>
+
+
+    <!-- 修改 数据 -->
+    <update id="updatePhoto" parameterType="com.spring.web.model.request.ImportPhoto" >
+        update import_photo
+        <set>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

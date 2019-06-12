@@ -2922,6 +2922,7 @@ public class VillageController extends BaseController {
                 List<ACompanyManual> aCompanyManuals = aCompanyManualMapper.selectAllByLevel3(user.getId(), dpName, level3);
                 map.put("name", level3);
                 map.put("list", aCompanyManuals);
+
                 linkedList.add(map);
             }
         }
@@ -3039,7 +3040,6 @@ public class VillageController extends BaseController {
             if (checkType == 5) {
                 checkItem.setTemplate(user.getUserName() + "综合检查表");
             } else {
-
                 checkItem.setTemplate(companyManual.getLevel1() + str[checkType-1] + "检查表");
             }
         }else{

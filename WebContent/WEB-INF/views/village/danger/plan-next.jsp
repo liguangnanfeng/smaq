@@ -257,6 +257,31 @@ function uploadimg(obj){
   
 </body>
 <script type="text/javascript">
+    $(function(){
+        var b = null, l1 = '', c = 1;
+        $("tbody tr").each(function() {
+            var td = $(this).children("td").eq(1);
+            var l1_ = td.text();
+            //Same to top level
+            if(l1 == l1_) {
+                td.remove();
+                c = c + 1;
+            } else {//Diffrent to top level
+                l1 = l1_;
+                if(b != null) {
+                    b.attr("rowspan", c);
+                    c = 1;
+                }
+                b = td;
+            }
+        })
+        if(b != null) {
+            b.attr("rowspan", c);
+        }
+
+    })
+</script>
+<script type="text/javascript">
 var checkId = ${check.id};
 var flag = ${check.flag};
 function upload() {

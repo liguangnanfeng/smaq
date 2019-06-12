@@ -493,7 +493,6 @@
 
 </div>
 <script type="text/javascript">
-    console.log('${xianChangItem}')
     HUItab = function (tabBar, tabCon, class_name, tabEvent, i) {
         var $tab_menu = $(tabBar);
         // 初始化操作

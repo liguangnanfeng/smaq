@@ -1184,6 +1184,13 @@ public class VillageController extends BaseController {
             clearVillageTown(m);
             List<Map<String, Object>> list = tCheckMapper.selectListByMap(m);
             model.addAttribute("list", list);
+
+            Integer sum = 0;
+
+            for (int i = 0; i < list.size(); i++) {
+                sum += Integer.parseInt(String.valueOf((Long)list.get(i).get("c"))) ;
+            }
+            model.addAttribute("sum", sum);
         }
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
@@ -1224,6 +1231,12 @@ public class VillageController extends BaseController {
             clearVillageTown(m);
             List<Map<String, Object>> list = tCheckMapper.selectList(m);
             model.addAttribute("list", list);
+
+            Integer sum = 0;
+            for (int i = 0; i < list.size(); i++) {
+                sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
+            }
+            model.addAttribute("sum",sum);
         }
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);

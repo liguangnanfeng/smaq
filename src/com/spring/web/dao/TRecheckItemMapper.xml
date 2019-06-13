@@ -169,7 +169,7 @@
     left join
       t_recheck_tbl T3 on T0.recheck_id = T3.id
       left join
-      t_check_item_tbl T1 on T1. check_id = t3.check_id
+      t_check_item_tbl T1 on T1. check_id = T3.check_id
      left join
       t_level_tbl T2 on T1.level_id = T2.id
     where

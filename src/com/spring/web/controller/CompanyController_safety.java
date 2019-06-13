@@ -414,7 +414,7 @@ public class CompanyController_safety extends BaseController {
             model.addAttribute("company", company);
             Map<String, Object> m = new HashMap();
             m.put("type", type);
-            m.put("flag", "1,3,4,5");
+            m.put("flag", "1,2,3,4,5");
             m.put("uid", user.getId());
             List<Map<Object, Object>> zzjg = null;
             List acL;

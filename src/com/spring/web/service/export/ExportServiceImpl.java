@@ -701,9 +701,9 @@ public class ExportServiceImpl implements ExportService {
             String fileName = file.getOriginalFilename();
            // 检查扩展名
             String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
-            if (!"jpeg".equals(fileExt)) {
+            if (!"jpeg".equals(fileExt) && !"jpg".equals(fileExt) && !"png".equals(fileExt)) {
                 result.setStatus("1");
-                result.setMap("message", "上传文件扩展名是不允许的扩展名。只允许jpeg格式。");
+                result.setMap("message", "上传文件扩展名是不允许的扩展名。只允许jpeg，jpeg，png格式。");
                 return result;
             }
         } else {

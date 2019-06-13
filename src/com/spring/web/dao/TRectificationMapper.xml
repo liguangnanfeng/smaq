@@ -203,7 +203,21 @@
     from t_rectification_tbl
     where check_id = #{checkId} 
   </select>
-  
+
+
+  <select id="selectAlls" parameterType="java.lang.Integer" resultType="com.spring.web.model.TRectification">
+    select
+    *
+    from t_rectification_tbl
+    where check_id = #{checkId}
+  </select>
+
+
+
+
+
+
+
   <select id="selectRectificationList" resultType="java.util.Map">
     select
       T1.id, T3.name companyName, T2.flag,

@@ -629,7 +629,7 @@
 			</if>
 			<if test="doubleDanger != null and doubleDanger != ''">
 				<!-- and T1.dlevel in ("红色","橙色") -->
-				and (T1.industry = '化工企业（危险化学品生产、经营、使用）、加油站' or T1.danger = 1)
+				and (T1.industry = '化工企业（危化生产、使用）' or T1.danger = 1)
 			</if>
 			<if test="industry2 != null and industry2 != ''">
 				and T1.industry2 like CONCAT(#{industry2}, '%')
@@ -1099,7 +1099,7 @@
 				<!-- and (T4.cis_danger = 1 or T1.dlevel in ("A","B") or T1.industry 
 					= '化工企业（危险化学品）生产、经营、使用、加油站') -->
 				<!-- and T1.dlevel in ("红色","橙色") -->
-				and (T1.industry = '化工企业（危险化学品生产、经营、使用）、加油站' or T1.danger = 1)
+				and (T1.industry = '化工企业（危化生产、使用）' or T1.danger = 1)
 			</if>
 		</where>
 		group by T1.user_id
@@ -1230,7 +1230,7 @@
 				and T1.is_key = #{isKey}
 			</if>
 			<if test="doubleDanger != null and doubleDanger != ''">
-				and (T1.industry = '化工企业（危险化学品生产、经营、使用）、加油站' or T1.danger = 1)
+				and (T1.industry = '化工企业（危化生产、使用）' or T1.danger = 1)
 			</if>
 
 			<if test="isFreeze != null and isFreeze != ''">
@@ -1324,7 +1324,7 @@
 				and T1.is_key = #{isKey}
 			</if>
 			<if test="doubleDanger != null and doubleDanger != ''">
-				and (T1.industry = '化工企业（危险化学品生产、经营、使用）、加油站' or T1.danger = 1)
+				and (T1.industry = '化工企业（危化生产、使用）' or T1.danger = 1)
 			</if>
 
 			<if test="isFreeze != null and isFreeze != ''">
@@ -1422,7 +1422,7 @@
 				and T1.is_key = #{isKey}
 			</if>
 			<if test="doubleDanger != null and doubleDanger != ''">
-				and (T1.industry = '化工企业（危险化学品生产、经营、使用）、加油站' or T1.danger = 1)
+				and (T1.industry = '化工企业（危化生产、使用）' or T1.danger = 1)
 			</if>
 
 			<if test="isFreeze != null and isFreeze != ''">
@@ -1520,7 +1520,7 @@
 				and T1.is_key = #{isKey}
 			</if>
 			<if test="doubleDanger != null and doubleDanger != ''">
-				and (T1.industry = '化工企业（危险化学品生产、经营、使用）、加油站' or T1.danger = 1)
+				and (T1.industry = '化工企业（危化生产、使用）' or T1.danger = 1)
 			</if>
 
 			<if test="isFreeze != null and isFreeze != ''">
@@ -1616,7 +1616,7 @@
 				and T1.is_key = #{isKey}
 			</if>
 			<if test="doubleDanger != null and doubleDanger != ''">
-				and (T1.industry = '化工企业（危险化学品生产、经营、使用）、加油站' or T1.danger = 1)
+				and (T1.industry = '化工企业（危化生产、使用）' or T1.danger = 1)
 			</if>
 
 			<if test="isFreeze != null and isFreeze != ''">
@@ -1767,7 +1767,7 @@
 				and T1.is_key = #{isKey}
 			</if>
 			<if test="doubleDanger != null and doubleDanger != ''">
-				and (T1.industry = '化工企业（危险化学品生产、经营、使用）、加油站' or T1.danger = 1)
+				and (T1.industry = '化工企业（危化生产、使用）' or T1.danger = 1)
 			</if>
 
 			<if test="isFreeze != null and isFreeze != ''">

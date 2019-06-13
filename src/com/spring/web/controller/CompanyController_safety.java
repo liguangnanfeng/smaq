@@ -675,7 +675,7 @@ public class CompanyController_safety extends BaseController {
             model.addAttribute("company", company);
             Map<String, Object> m = new HashMap();
             m.put("uid", user.getId());
-            /*if ("化工企业（危险化学品生产、经营、使用）、加油站".equals(company.getIndustry())) {
+            /*if ("化工企业（危化生产、使用）".equals(company.getIndustry())) {
                 m.put("flag", "1,3,4");
             } else {
                 m.put("flag", "1,3,4,5");
@@ -1455,7 +1455,7 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("company", company);
         if (StringUtils.isBlank(industry)) {
             industry = company.getIndustry();
-            if (industry.equals("化工企业（危险化学品生产、经营、使用）、加油站")) {
+            if (industry.equals("化工企业（危化生产、使用）")) {
                 if (company.getName().contains("油")) {
                     industry = "加油站";
                 }

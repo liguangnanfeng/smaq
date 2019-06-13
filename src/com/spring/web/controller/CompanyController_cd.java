@@ -2932,7 +2932,7 @@ public class CompanyController_cd extends BaseController {
          */
         //log.error("监管行业："+ company.getIndustry());
         if (null != company.getHazard()) {
-            if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {//显示效果需要
+            if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危化生产、使用）")) {//显示效果需要
                 //log.error("监管行业："+company.getIndustry());
                 //log.error("是否构成重大危险源、1是："+company.getHazard());
                 model.addAttribute("rjcbxs", 1);
@@ -2941,7 +2941,7 @@ public class CompanyController_cd extends BaseController {
         }
         /*if (type == 2) {
 
-            if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {//取数据
+            if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危化生产、使用）")) {//取数据
                 //log.error("查询出日检查表和定期检查表检查周期不为1表单！");
                 List<Map<String, Object>> lista = tModelMapper.selectByMap2(m);//定期检查表——检查周期不为1
                 Integer type9 = 9;
@@ -3054,7 +3054,7 @@ public class CompanyController_cd extends BaseController {
          */
         //log.error("监管行业："+ company.getIndustry());
         if (null != company.getHazard()) {
-            if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {//显示效果需要
+            if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危化生产、使用）")) {//显示效果需要
                 //log.error("监管行业："+company.getIndustry());
                 //log.error("是否构成重大危险源、1是："+company.getHazard());
                 model.addAttribute("rjcbxs", 1);
@@ -3145,7 +3145,7 @@ public class CompanyController_cd extends BaseController {
         User user = getLoginUser(request);
         //企业类型为 化工 或 构成重大危险源 则企业自查处 日检查表显示 wz 190108
         Company company = companyMapper.selectByPrimaryKey(user.getId());
-        if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {
+        if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危化生产、使用）")) {
             //log.error("监管行业："+company.getIndustry());
             //log.error("是否构成重大危险源、1是："+company.getHazard());
             model.addAttribute("rjcbxs", 1);
@@ -3271,7 +3271,7 @@ public class CompanyController_cd extends BaseController {
 
         //企业类型为 化工 或 构成重大危险源 则企业自查处 日检查表显示 wz 190108
         Company company = companyMapper.selectByPrimaryKey(user.getId());
-        if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危险化学品生产、经营、使用）、加油站")) {
+        if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危化生产、使用）")) {
             //log.error("监管行业："+company.getIndustry());
             //log.error("是否构成重大危险源、1是："+company.getHazard());
             model.addAttribute("rjcbxs", 1);

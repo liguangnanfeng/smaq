@@ -186,7 +186,7 @@ public interface TCheckItemMapper {
      * @param userId 公司id
      * @return
      */
-    List<Map> selectListBystatus(Integer userId);
+    List<Map> selectListBystatus(@Param("userId") Integer userId,@Param("flag") Integer flag);
 
     /**
      * 根据合格不合格区生成图表

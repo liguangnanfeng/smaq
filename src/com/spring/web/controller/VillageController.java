@@ -1930,7 +1930,7 @@ public class VillageController extends BaseController {
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
         model.addAttribute("userId", user.getId());
-        List<Map> list = tCheckItemMapper.selectListBystatus(user.getId());
+        List<Map> list = tCheckItemMapper.selectListBystatus(user.getId(),flag);
         for (Map map : list) {
             Date realTime = (Date) map.get("realTime");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");

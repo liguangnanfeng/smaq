@@ -1494,14 +1494,17 @@ public class CompanyController_cd extends BaseController {
         for (int l = 0; l < d.length; l++) {
             d[l] = 0;
         }
-        String[] xx = new String[]{"一般", "重大"};
+        String[] xx = new String[]{"较大", "重大","一般和较小"};
         List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
         Map<String, Object> m1 = new HashMap<String, Object>();
         Map<String, Object> m2 = new HashMap<String, Object>();
+        Map<String, Object> m3 = new HashMap<String, Object>();
         m1.put("name", xx[0]);
         m2.put("name", xx[1]);
+        m3.put("name", xx[2]);
         m1.put("data", d.clone());
         m2.put("data", d.clone());
+        m3.put("data", d.clone());
         for (DynamicParameter<String, Object> dy : ll) {
             String time = dy.getString("time");
             Integer t = dy.getInteger("d");// 1 一般 0 重大
@@ -1522,6 +1525,7 @@ public class CompanyController_cd extends BaseController {
         }
         mm.add(m1);
         mm.add(m2);
+        mm.add(m3);
         result.setMap("categories", monthL);
         result.setMap("series", mm);// List<Data{String name; Integer[] data}> Data
         return result;
@@ -1628,7 +1632,7 @@ public class CompanyController_cd extends BaseController {
         for (int l = 0; l < d.length; l++) {
             d[l] = 0;
         }
-        String[] xx = new String[]{"企业自查", "委托检查", "行政执法", "行政检查"};
+        String[] xx = new String[]{"企业自查", "行政检查", "部门抽查", "行政检查"};
         List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
         Map<String, Object> m1 = new HashMap<String, Object>();
         Map<String, Object> m2 = new HashMap<String, Object>();
@@ -1671,7 +1675,6 @@ public class CompanyController_cd extends BaseController {
         mm.add(m1);
         mm.add(m2);
         mm.add(m3);
-        mm.add(m4);
         result.setMap("categories", monthL);//时间段内所有的月
         result.setMap("series", mm);// List<Data{String name; Integer[] data}> Data
         return result;

@@ -933,8 +933,13 @@
         where T2.user_id = #{userId}
           and T2.status = 2
           and T1.status > 1
-          and T2.del= 0;
+          and T2.del= 0
+          and T2.flag=#{flag}
+          order by T2.real_time desc;
     </select>
+
+
+
     <!--排查数据分析,合格/不合格/已复查
     -->
     <select id="selectFailedByMap" resultType="com.spring.web.ibatis.DynamicParameter" parameterType="java.util.Map">

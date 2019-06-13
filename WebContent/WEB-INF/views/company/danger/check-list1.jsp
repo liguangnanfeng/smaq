@@ -35,7 +35,7 @@ body .dis-ib{margin-right:15px;}
    <c:if test="${flag != 2}">
    <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
         <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/tradeclique/check-list?flag=1&status=1">企业自查</a>
-        <a class="btn default ${flag == 4 ? 'btn-primary' : 'radius'}" href="${ly }/tradeclique/check-list?flag=4">行政检查</a>
+        <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/tradeclique/check-list?flag=4">行政检查</a>
         <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/tradeclique/check-list?flag=3">部门抽查</a>
         <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
     </div>

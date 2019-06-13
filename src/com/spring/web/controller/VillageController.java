@@ -1481,81 +1481,83 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value = "check-rectification")
     public String checkRectification(Integer id, Model model, Integer flag) throws Exception {
-        //log.error("checkId："+id);
-        TCheck tc = tCheckMapper.selectByPrimaryKey(id);
-        Integer type = tc.getType();
-        //log.error("检查表type："+type);
-
-        // TODO 这里只保存一条数据,并返回到前端
-        List<TRectification> list = tRectificationMapper.selectAlls(id);
-
+            //log.error("checkId："+id);
+            TCheck tc = tCheckMapper.selectByPrimaryKey(id);
+            Integer type = tc.getType();
+            //log.error("检查表type："+type);
         TRectification rectification = new TRectification();
-        rectification.setId(list.get(0).getId());
-        rectification.setCheckId(list.get(0).getCheckId());
-        rectification.setItem1(list.get(0).getItem1());
-        rectification.setItem2(list.get(0).getItem2());
-        rectification.setItem3(list.get(0).getItem3());
-        rectification.setDeadline(list.get(0).getDeadline());
-        rectification.setPlanTime(list.get(0).getPlanTime());
-        rectification.setUserId(list.get(0).getUserId());
-        rectification.setCreateUser(list.get(0).getCreateUser());
-        rectification.setCreateTime(list.get(0).getCreateTime());
-        rectification.setDel(list.get(0).getDel());
+            // TODO 这里只保存一条数据,并返回到前端
+            List<TRectification> list = tRectificationMapper.selectAlls(id);
+            if(null != list && list.size()>0){
 
-        DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
-        model.addAttribute("check", check);
-        //model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(id, null));
+                rectification.setId(list.get(0).getId());
+                rectification.setCheckId(list.get(0).getCheckId());
+                rectification.setItem1(list.get(0).getItem1());
+                rectification.setItem2(list.get(0).getItem2());
+                rectification.setItem3(list.get(0).getItem3());
+                rectification.setDeadline(list.get(0).getDeadline());
+                rectification.setPlanTime(list.get(0).getPlanTime());
+                rectification.setUserId(list.get(0).getUserId());
+                rectification.setCreateUser(list.get(0).getCreateUser());
+                rectification.setCreateTime(list.get(0).getCreateTime());
+                rectification.setDel(list.get(0).getDel());
 
-        List<Map<String, Object>> iteml = tCheckItemMapper.selectDangerByCheckId(id, null);
-        //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
-        if (type != null && type == 9) {
-            for (Map<String, Object> a : iteml) {
-                //log.error("checkNext:"+1);
-                Integer[] ids = new Integer[1];
-                ids[0] = (Integer) a.get("levelId");
-                //log.error("ids:"+ids[0]);
-                //log.error("a:"+a.toString());
-                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
-                String dangertype = "";
-                String factors = "";
-                String measures = "";
-                String level1 = "";
-                String level2 = "";
-                String level3 = "";
-                for (ACompanyManual aa : rets) {
-                    //log.error("checkNext:"+2);
-                    dangertype = aa.getType();
-                    factors = aa.getFactors();
-                    measures = aa.getMeasures();
-                    level1 = aa.getLevel1();
-                    level2 = aa.getLevel2();
-                    level3 = aa.getLevel3();
-                    //log.error("type:"+dangertype);
-                    break;
-                }
-                a.put("dangerType", dangertype);
-                a.put("factors", factors);
-                a.put("measures", measures);
-                a.put("level1", level1);
-                a.put("level2", level2);
-                a.put("level3", level3);
-                //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
             }
-        }
-        //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
-        model.addAttribute("itemL", iteml);
 
-        model.addAttribute("rectification", rectification);
-        model.addAttribute("company", companyMapper.selectByPrimaryKey(check.getInteger("userId")));
-        model.addAttribute("flag", flag);
-        model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
-        model.addAttribute("listM", tCheckMapper.selectCompany(id));
-        log.error("check-rectification：" + 6);
-        if (type == 9) {
-            return "village/danger/opinion-detailrjcb";
-        } else {
-            return "village/danger/opinion-detail";
-        }
+            DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
+            model.addAttribute("check", check);
+            //model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(id, null));
+
+            List<Map<String, Object>> iteml = tCheckItemMapper.selectDangerByCheckId(id, null);
+            //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
+            if (type != null && type == 9) {
+                for (Map<String, Object> a : iteml) {
+                    //log.error("checkNext:"+1);
+                    Integer[] ids = new Integer[1];
+                    ids[0] = (Integer) a.get("levelId");
+                    //log.error("ids:"+ids[0]);
+                    //log.error("a:"+a.toString());
+                    List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
+                    String dangertype = "";
+                    String factors = "";
+                    String measures = "";
+                    String level1 = "";
+                    String level2 = "";
+                    String level3 = "";
+                    for (ACompanyManual aa : rets) {
+                        //log.error("checkNext:"+2);
+                        dangertype = aa.getType();
+                        factors = aa.getFactors();
+                        measures = aa.getMeasures();
+                        level1 = aa.getLevel1();
+                        level2 = aa.getLevel2();
+                        level3 = aa.getLevel3();
+                        //log.error("type:"+dangertype);
+                        break;
+                    }
+                    a.put("dangerType", dangertype);
+                    a.put("factors", factors);
+                    a.put("measures", measures);
+                    a.put("level1", level1);
+                    a.put("level2", level2);
+                    a.put("level3", level3);
+                    //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
+                }
+            }
+            //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
+            model.addAttribute("itemL", iteml);
+
+            model.addAttribute("rectification", rectification);
+            model.addAttribute("company", companyMapper.selectByPrimaryKey(check.getInteger("userId")));
+            model.addAttribute("flag", flag);
+            model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
+            model.addAttribute("listM", tCheckMapper.selectCompany(id));
+            log.error("check-rectification：" + 6);
+            if (type == 9) {
+                return "village/danger/opinion-detailrjcb";
+            } else {
+                return "village/danger/opinion-detail";
+            }
     }
 
     /**

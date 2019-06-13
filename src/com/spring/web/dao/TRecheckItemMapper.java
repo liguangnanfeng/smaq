@@ -57,4 +57,11 @@ public interface TRecheckItemMapper {
     int insertBath(Map<String, Object> m);
     
     List<Map<String, Object>> selectByCheckId(@Param("checkId") Integer checkId);
+
+    /**
+     * 根据checkItemId查询数据
+     * @param id
+     * @return
+     */
+    TRecheckItem selectByCheckItemId(Integer id);
 }

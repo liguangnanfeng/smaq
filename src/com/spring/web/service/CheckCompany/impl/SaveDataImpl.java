@@ -79,12 +79,12 @@ public class SaveDataImpl implements SaveMessageService {
     @Override
     public String saveCheckMessage(SaveDataMessageItem saveDataMessageItem, ZzjgPersonnel zzjg) {
         try {
-            Integer checkId= null;
+            Integer checkId = null;
             for (SaveDataMessage saveDataMessage : saveDataMessageItem.getList()) {
 
                 // id查询CheckItem
                 TCheckItem item = tCheckItemMapper.selectAllById(saveDataMessage.getId());
-                checkId=item.getCheckId();
+                checkId = item.getCheckId();
                 if (item == null) {
                     // 表示没有数据 直接返回
                     return null;
@@ -137,7 +137,7 @@ public class SaveDataImpl implements SaveMessageService {
 
             }
             // 和check_tbl对应,每一次检查只对应一条数据
-            saveTRectification(checkId,zzjg,saveDataMessageItem);
+            saveTRectification(checkId, zzjg, saveDataMessageItem);
 
             // 内容发送短信内容
             Sms(saveDataMessageItem.getList());
@@ -295,14 +295,22 @@ public class SaveDataImpl implements SaveMessageService {
                 // 修改 t_check_item_tbl 数据为合格不合格;
                 TCheckItem checkItem = tCheckItemMapper.selectAllById(saveDataMessage.getId());
 
-                // TODO 添加t_recheck_item_tbl表数据
-                TRecheckItem tRecheckItem = new TRecheckItem();
+                // TODO 添加t_recheck_item_tbl表数据 先判断数据库里面有没有,有就是修改,没有就是保存
+
+                TRecheckItem tRecheckItem = tRecheckItemMapper.selectByCheckItemId(saveDataMessage.getId());
+                Integer status =0;
+                if (null == tRecheckItem) {
+                    status=1;
+                    tRecheckItem = new TRecheckItem();
+                }
 
                 if ("1".equals(saveDataMessage.getValue())) {
                     checkItem.setStatus(3); // 复查成功
                     tRecheckItem.setStatus(2); //表示复查成功
                     //tRectificationConfirm.setStatus(1);
                     checkItem.setRecheckFile("复查合格");
+                    // 表示的是复查合格的项
+
                 } else if ("2".equals(saveDataMessage.getValue())) {
 
                     checkItem.setStatus(2); //复查不合格
@@ -317,11 +325,17 @@ public class SaveDataImpl implements SaveMessageService {
 
                 }
 
-                tRecheckItem.setCheckItemId(checkItem.getCheckId()); // 检查项目表id
-                tRecheckItem.setRecheckId(id);                  // 复查主表id
-                tRecheckItem.setDeadline(new Date());           // 创建时间
+                if(status==1){
+                    // 表示的是插入
+                    tRecheckItem.setCheckItemId(checkItem.getCheckId()); // 检查项目表id
+                    tRecheckItem.setRecheckId(id);                  // 复查主表id
+                    tRecheckItem.setDeadline(new Date());           // 创建时间
+                    tRecheckItemMapper.insertSelective(tRecheckItem);
+                }{
+                    tRecheckItemMapper.updateByPrimaryKeySelective(tRecheckItem);
+                }
+
                 tCheckItemMapper.updateByPrimaryKey(checkItem);
-                tRecheckItemMapper.insertSelective(tRecheckItem);
 
 
             }
@@ -352,18 +366,18 @@ public class SaveDataImpl implements SaveMessageService {
         TModel tModel = modelMapper.selectByPrimaryKey(modelId);
         // 每一次都是查询最开始的那一条检查记录然后进行复制保存
         // 这时候按照时间的进行检查，找到最早的那一个存储的模板，然后进行修改保存
-        TCheck tCheck =  null;
-        if(null != tModel){
+        TCheck tCheck = null;
+        if (null != tModel) {
             tModel.setUseTime(new Date()); // 模版的使用时间
             modelMapper.updateByPrimaryKey(tModel);
-            tCheck= tCheckMapper.selectOldByModelId(tModel.getId());
-        }else{
+            tCheck = tCheckMapper.selectOldByModelId(tModel.getId());
+        } else {
             // 就表示是checkId,
-            tCheck= tCheckMapper.selectByPrimaryKey(modelId);
-            tModel= modelMapper.selectByPrimaryKey(tCheck.getModelId());
-            tCheck= tCheckMapper.selectOldByModelId(tModel.getId()); // 重复之前的套路
+            tCheck = tCheckMapper.selectByPrimaryKey(modelId);
+            tModel = modelMapper.selectByPrimaryKey(tCheck.getModelId());
+            tCheck = tCheckMapper.selectOldByModelId(tModel.getId()); // 重复之前的套路
         }
-        if(null==tCheck ){
+        if (null == tCheck) {
             return null;
         }
         Integer checkId = insertCheck(tCheck.getId());  //表示是新的数据,然后将新的数据进行传递
@@ -432,7 +446,7 @@ public class SaveDataImpl implements SaveMessageService {
      * TODO 将不合格信息记录插入到 TRectification_tbl表中,一次检查就对应一条记录
      * 为了pc显示整改详情内容进行显示每一次只查询一次数据
      */
-    private void saveTRectification(Integer checkId,ZzjgPersonnel zzjg,SaveDataMessageItem saveDataMessageItem){
+    private void saveTRectification(Integer checkId, ZzjgPersonnel zzjg, SaveDataMessageItem saveDataMessageItem) {
         // 保存检查结果整改意见表 保存的就是一次检查记录里面的数据
         TRectification tRectification = new TRectification();
         tRectification.setCheckId(checkId); // 检查表id
@@ -444,17 +458,17 @@ public class SaveDataImpl implements SaveMessageService {
 
         List<SaveDataMessage> list = saveDataMessageItem.getList();
         for (int i = 0; i < list.size(); i++) {
-            if("2".equals(list.get(i))){
+            if ("2".equals(list.get(i))) {
                 // 表示检查不合格
-                if(i<list.size()-1){
-                    str+=list.get(i).getId()+",";
+                if (i < list.size() - 1) {
+                    str += list.get(i).getId() + ",";
                 }
-                str+=list.get(i).getId();
+                str += list.get(i).getId();
             }
 
         }
         // 小程序一般要么就是立即整改要么就是限期整改
-        if(null==saveDataMessageItem.getType()){
+        if (null == saveDataMessageItem.getType()) {
             //立即整改
             tRectification.setItem1(str); // 立即整改项
 
@@ -465,7 +479,7 @@ public class SaveDataImpl implements SaveMessageService {
             tRectification.setDeadline(date); // 限期时间
             tRectification.setPlanTime(date); // 计划复查时间
 
-        }else{
+        } else {
             //限期整改
             int i = Integer.parseInt(saveDataMessageItem.getType()) * 24 * 60 * 60; // 限期时间
             long time = new Date().getTime();

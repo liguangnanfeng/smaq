@@ -176,5 +176,7 @@
       T3.check_id =#{checkId}
     group by T1.id;
   </select>
-  
+  <select id="selectByCheckItemId" resultType="com.spring.web.model.TRecheckItem">
+    select * from  t_recheck_item_tbl where  check_item_id=#{id};
+  </select>
 </mapper>

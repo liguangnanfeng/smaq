@@ -197,9 +197,9 @@
         <div class="div_zhe">
                       <div class="change_zhe">
                         <div class="btn-group">
-                          <span class="btn btnyh btnyhxz radius zdyh">重大隐患</span>
-                          <span class="btn btnyh radius ybyh">一般隐患</span>
-                          <span class="btn btnyh radius zdyyh">自定义隐患</span>
+                          <span class="btn btnyh btnyhxz radius zdyh">较大隐患</span>
+                          <span class="btn btnyh radius ybyh">重大隐患</span>
+                          <span class="btn btnyh radius zdyyh">一般和较小隐患</span>
                         </div>
                           <input style="display: none" value="1" id="my_flag"/>
                       </div>
@@ -230,7 +230,7 @@
     function createChart(categories, series) {
         $('#container3').highcharts({
             credits: {enabled: false},
-            chart: {type: 'column'},
+            chart: {type: 'line'},
             title: {text: '治理数据分析'},
             legend: {
                 itemHiddenStyle: {

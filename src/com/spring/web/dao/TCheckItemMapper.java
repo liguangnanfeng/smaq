@@ -200,6 +200,27 @@ public interface TCheckItemMapper {
      * @return
      */
     List<DynamicParameter<String, Object>> selectRecheckFileByMap(Map<String, Object> m);
+
+    /**
+     * 排查数据分析之隐患类型
+     * @param m
+     * @return
+     */
+    List<DynamicParameter<String, Object>> selectHiddenDangerTypeByMap(Map<String, Object> m);
+
+    /**
+     * 排查数据分析之隐患来源
+     * @param m
+     * @return
+     */
+    List<DynamicParameter<String, Object>> selectHiddenSourceTypeByMap(Map<String, Object> m);
+
+    /**
+     * 排查数据分析之隐患等级
+     * @param m
+     * @return
+     */
+    List<DynamicParameter<String, Object>> selectHiddenLevelTypeByMap(Map<String, Object> m);
 }
 
 

@@ -375,29 +375,34 @@ public class AppController_zhangcl extends BaseController{
     
     
     /**
-     * APP 视频连接接口
+     * TODO APP 视频连接接口
+     *
      */
     @RequestMapping("A008")
     public @ResponseBody AppResult videoInfo(HttpServletRequest request,String access_token){
         AppResult result = new AppResultImpl();
         Map<String, Object> map = new HashMap<String, Object>();
-        
-        AppToken at = appTokenMapper.selectByPrimaryKey(access_token);
-        Integer userId = at.getUserId();
+
+      //  AppToken at = appTokenMapper.selectByPrimaryKey(access_token);
+       // Integer userId = at.getUserId();
         //Integer userId = 529;
         
-        User user = userMapper.selectByPrimaryKey(userId);
+       // User user = userMapper.selectByPrimaryKey(userId);
+        User user =new User();
+
+        user.setId(26);
+        user.setUserType(5);
         map.put("videoinfo",videoInfoMapper.selectByPrimaryKey(1));
         Map<String, Object> m = new HashMap<String, Object>();
         if (user.getUserType() == 5) {//企业
-        	m.clear();
-        	m.put("userId",userId);
+        	m.clear();               // 清空集合
+        	m.put("userId",user.getId());
 //        	map.put("companyName", user.getUserName());//添加企业名称字段  wz add 190116
 //          map.put("list", monitorMapper.selectByMap(m));
-        	JSONArray array = new JSONArray();//将返回值字段调成一致
+        	JSONArray array = new JSONArray();   //将返回值字段调成一致
         	JSONObject obj = new JSONObject();
         	List<Map<String, Object>> list1 = monitorMapper.selectByMap(m);
-        	String companyName = companyMapper.selectByPrimaryKey(userId).getName();
+        	String companyName = companyMapper.selectByPrimaryKey(user.getId()).getName();
         	for(int i =0 ;i < list1.size();i++){
         		obj = new JSONObject();
         		obj.put("companyName",companyName);

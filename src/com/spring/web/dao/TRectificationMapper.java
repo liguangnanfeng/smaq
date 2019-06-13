@@ -1,9 +1,10 @@
 package com.spring.web.dao;
 
+import com.spring.web.model.TRectification;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-import org.apache.ibatis.annotations.Param;
-import com.spring.web.model.TRectification;
 
 public interface TRectificationMapper {
     /**
@@ -59,5 +60,6 @@ public interface TRectificationMapper {
     List<Map<String, Object>> selectRectificationList(Map<String, Object> m);
     
     int updateByCheckId(TRectification record);
-    
+
+    List<TRectification> selectAlls(@Param("checkId")Integer checkId);
 }

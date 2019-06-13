@@ -188,9 +188,15 @@ public class VillageSettingController extends BaseController{
     	
     	return "company/system/video-monitor";
     }
-    
+
     /**
-     * 摄像头add,zhangcl 2018.12.26
+     * TODO  摄像头add,张草六 2018.12.26
+     * @param request
+     * @param userId
+     * @param name
+     * @param model
+     * @return
+     * @throws Exception
      */
     @RequestMapping(value = "monitor-add")
     public String monitorList(HttpServletRequest request,Integer userId, String name, Model model) throws Exception {

@@ -1678,7 +1678,7 @@ public class CompanyController_cd extends BaseController {
     }
 
     static final String TIME_STR = "yyyy-MM-dd";
-
+    public Integer count = 0 ;
     /**
      * * TODO 排查数据分析图表数据(单位: 天)
      * * 一次性把检查合格/不合格/复查合格的数据全部查询出来然后生成图表
@@ -1726,7 +1726,7 @@ public class CompanyController_cd extends BaseController {
         List<Map<String, Object>> maps = chartDataCheck(monthL, m);
         result.setMap("categories", monthL);//时间段内所有的天
         result.setMap("series", maps);// List<Data{String name; Integer[] data}> Data
-
+        result.setMap("count",this.count);
         return result;
     }
 
@@ -1755,6 +1755,7 @@ public class CompanyController_cd extends BaseController {
         m1.put("data", d.clone());
         m2.put("data", d.clone());
         m3.put("data", d.clone());
+        this.count=0;
         // 这次循环的就是每一天合格的信息
         for (DynamicParameter<String, Object> dy : ll) {
             String time = (String) dy.get("time"); // 每一天的时间
@@ -1762,7 +1763,7 @@ public class CompanyController_cd extends BaseController {
             Integer a = dy.getBigDecimalToInteger("a");
             Integer b = dy.getBigDecimalToInteger("b");
             Integer c = dy.getBigDecimalToInteger("c");
-
+            this.count += a+b+c;
             for (int i = 0; i < monthL.size(); i++) {
                 if (time.equals(monthL.get(i))) {
                     // 合格
@@ -1780,6 +1781,7 @@ public class CompanyController_cd extends BaseController {
         mm.add(m1);
         mm.add(m2);
         mm.add(m3);
+
         return mm;
     }
 
@@ -1791,7 +1793,7 @@ public class CompanyController_cd extends BaseController {
      * @param sT      起始时间
      * @param eT      结束时间
      * @param request 请求
-     * @param status
+     * @param status  状态 复查合格/不合格(保留字段)
      * @param flag    1 重大  2 一般  3 自定义
      * @return
      * @throws Exception
@@ -1875,6 +1877,295 @@ public class CompanyController_cd extends BaseController {
 
         return result;
     }
+
+    /**
+     * 排查数据分析之隐患类型
+     * @param sT 起始时间
+     * @param eT 截止时间
+     * @param request 请求
+     * @param status  不重要
+     * @param flag    不重要
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "zhuChartData5")
+    public @ResponseBody
+    Result zhuChartData5(String sT, String eT, HttpServletRequest request, Integer status, Integer flag) throws Exception {
+        User user = getLoginUser(request);
+        Result result = new ResultImpl();
+        if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
+            Date d = new Date();
+            eT = DateFormatUtils.format(d, TIME_STR);// 当前时间
+            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+        }
+        if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
+            Date d = new Date();
+            eT = DateFormatUtils.format(d, TIME_STR);
+        }
+        if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
+            Date d = DateConvertUtil.formateDate(eT, TIME_STR);
+            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+        }
+
+        List<String> monthL = monthC(sT, eT);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("startTime1", sT);
+        m.put("endTime1", eT);
+        m.put("del", 0);
+        m.put("status", 2);
+        m.put("uid", user.getId());
+        // 根据合格不合格查询出数据.然后进行封装
+        List<DynamicParameter<String, Object>> ll = tCheckItemMapper.selectHiddenDangerTypeByMap(m);
+
+
+        // 进行循环使用一个月的天数
+        Integer[] d = new Integer[monthL.size()];
+        for (int l = 0; l < d.length; l++) {
+            d[l] = 0;
+        }
+
+        String[] xx = new String[]{"基础", "现场","高危"};
+        List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
+        Map<String, Object> m1 = new HashMap<String, Object>();
+        Map<String, Object> m2 = new HashMap<String, Object>();
+        Map<String, Object> m3 = new HashMap<String, Object>();
+
+        m1.put("name", xx[0]);
+        m2.put("name", xx[1]);
+        m3.put("name", xx[2]);
+
+        // 数据表示的是,选中的时间段内
+        m1.put("data", d.clone());
+        m2.put("data", d.clone());
+        m3.put("data", d.clone());
+        // 这次循环的就是每一天合格的信息
+        Integer counts =0;
+        for (DynamicParameter<String, Object> dy : ll) {
+            String time = (String) dy.get("useTime"); // 每一天的时间
+            Integer a = dy.getBigDecimalToInteger("a");
+            Integer b = dy.getBigDecimalToInteger("b");
+            Integer c = dy.getBigDecimalToInteger("c");
+            Integer count = dy.getLongToInteger("count");
+            counts +=count;
+            for (int i = 0; i < monthL.size(); i++) {
+                if (time.equals(monthL.get(i))) {
+                    // 基础
+                    Integer[] a2 = (Integer[]) m1.get("data");
+                    a2[i] = a;
+                    // 现场
+                    Integer[] b2 = (Integer[]) m2.get("data");
+                    b2[i] = b;
+                    // 高危
+                    Integer[] c2 = (Integer[]) m3.get("data");
+                    c2[i] = c;
+                }
+            }
+        }
+        mm.add(m1);
+        mm.add(m2);
+        mm.add(m3);
+        log.error(m1);
+        log.error(m2);
+
+        result.setMap("categories", monthL);//时间段内所有的天
+        result.setMap("count", counts);//时间段内所有的天
+        result.setMap("series", mm);// List<Data{String name; Integer[] data}> Data
+
+        return result;
+    }
+
+    /**
+     * 排查数据分析之隐患来源
+     * @param sT 起始时间
+     * @param eT 截止时间
+     * @param request 请求
+     * @param status  不重要
+     * @param flag    不重要
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "zhuChartData6")
+    public @ResponseBody
+    Result zhuChartData6(String sT, String eT, HttpServletRequest request, Integer status, Integer flag) throws Exception {
+        User user = getLoginUser(request);
+        Result result = new ResultImpl();
+        if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
+            Date d = new Date();
+            eT = DateFormatUtils.format(d, TIME_STR);// 当前时间
+            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+        }
+        if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
+            Date d = new Date();
+            eT = DateFormatUtils.format(d, TIME_STR);
+        }
+        if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
+            Date d = DateConvertUtil.formateDate(eT, TIME_STR);
+            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+        }
+
+        List<String> monthL = monthC(sT, eT);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("startTime1", sT);
+        m.put("endTime1", eT);
+        m.put("del", 0);
+        m.put("status", 2);
+        m.put("uid", user.getId());
+        // 根据合格不合格查询出数据.然后进行封装
+        List<DynamicParameter<String, Object>> ll = tCheckItemMapper.selectHiddenSourceTypeByMap(m);
+
+
+        // 进行循环使用一个月的天数
+        Integer[] d = new Integer[monthL.size()];
+        for (int l = 0; l < d.length; l++) {
+            d[l] = 0;
+        }
+
+        String[] xx = new String[]{"企业自查", "行政检查","部门抽查"};
+        List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
+        Map<String, Object> m1 = new HashMap<String, Object>();
+        Map<String, Object> m2 = new HashMap<String, Object>();
+        Map<String, Object> m3 = new HashMap<String, Object>();
+
+        m1.put("name", xx[0]);
+        m2.put("name", xx[1]);
+        m3.put("name", xx[2]);
+
+        // 数据表示的是,选中的时间段内
+        m1.put("data", d.clone());
+        m2.put("data", d.clone());
+        m3.put("data", d.clone());
+        // 这次循环的就是每一天合格的信息
+        Integer counts =0;
+        for (DynamicParameter<String, Object> dy : ll) {
+            String time = (String) dy.get("useTime"); // 每一天的时间
+            Integer a = dy.getBigDecimalToInteger("a");
+            Integer b = dy.getBigDecimalToInteger("b");
+            Integer c = dy.getBigDecimalToInteger("c");
+            Integer count = dy.getLongToInteger("count");
+            counts +=count;
+            for (int i = 0; i < monthL.size(); i++) {
+                if (time.equals(monthL.get(i))) {
+                    // 基础
+                    Integer[] a2 = (Integer[]) m1.get("data");
+                    a2[i] = a;
+                    // 现场
+                    Integer[] b2 = (Integer[]) m2.get("data");
+                    b2[i] = b;
+                    // 高危
+                    Integer[] c2 = (Integer[]) m3.get("data");
+                    c2[i] = c;
+                }
+            }
+        }
+        mm.add(m1);
+        mm.add(m2);
+        mm.add(m3);
+        log.error(m1);
+        log.error(m2);
+
+        result.setMap("categories", monthL);//时间段内所有的天
+        result.setMap("count", counts);//时间段内所有的天
+        result.setMap("series", mm);// List<Data{String name; Integer[] data}> Data
+
+        return result;
+    }
+
+    /**
+     * 排查数据分析之隐患等级
+     * @param sT 起始时间
+     * @param eT 截止时间
+     * @param request 请求
+     * @param status  不重要
+     * @param flag    不重要
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "zhuChartData7")
+    public @ResponseBody
+    Result zhuChartData7(String sT, String eT, HttpServletRequest request, Integer status, Integer flag) throws Exception {
+        User user = getLoginUser(request);
+        Result result = new ResultImpl();
+        if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
+            Date d = new Date();
+            eT = DateFormatUtils.format(d, TIME_STR);// 当前时间
+            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+        }
+        if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
+            Date d = new Date();
+            eT = DateFormatUtils.format(d, TIME_STR);
+        }
+        if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
+            Date d = DateConvertUtil.formateDate(eT, TIME_STR);
+            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+        }
+
+        List<String> monthL = monthC(sT, eT);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("startTime1", sT);
+        m.put("endTime1", eT);
+        m.put("del", 0);
+        m.put("status", 2);
+        m.put("uid", user.getId());
+        //m.put("uid", 37097);
+        // 根据合格不合格查询出数据.然后进行封装
+        List<DynamicParameter<String, Object>> ll = tCheckItemMapper.selectHiddenLevelTypeByMap(m);
+
+
+        // 进行循环使用一个月的天数
+        Integer[] d = new Integer[monthL.size()];
+        for (int l = 0; l < d.length; l++) {
+            d[l] = 0;
+        }
+
+        String[] xx = new String[]{"较大", "重大","一般和较小"};
+        List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
+        Map<String, Object> m1 = new HashMap<String, Object>();
+        Map<String, Object> m2 = new HashMap<String, Object>();
+        Map<String, Object> m3 = new HashMap<String, Object>();
+
+        m1.put("name", xx[0]);
+        m2.put("name", xx[1]);
+        m3.put("name", xx[2]);
+
+        // 数据表示的是,选中的时间段内
+        m1.put("data", d.clone());
+        m2.put("data", d.clone());
+        m3.put("data", d.clone());
+        Integer count =0;
+        // 这次循环的就是每一天合格的信息
+        for (DynamicParameter<String, Object> dy : ll) {
+            String time = (String) dy.get("useTime"); // 每一天的时间
+            Integer a = dy.getBigDecimalToInteger("a");
+            Integer b = dy.getBigDecimalToInteger("b");
+            Integer c = dy.getBigDecimalToInteger("c");
+            count +=a+b+c;
+            for (int i = 0; i < monthL.size(); i++) {
+                if (time.equals(monthL.get(i))) {
+                    // 基础
+                    Integer[] a2 = (Integer[]) m1.get("data");
+                    a2[i] = a;
+                    // 现场
+                    Integer[] b2 = (Integer[]) m2.get("data");
+                    b2[i] = b;
+                    // 高危
+                    Integer[] c2 = (Integer[]) m3.get("data");
+                    c2[i] = c;
+                }
+            }
+        }
+        mm.add(m1);
+        mm.add(m2);
+        mm.add(m3);
+        log.error(m1);
+        log.error(m2);
+
+        result.setMap("categories", monthL);//时间段内所有的天
+        result.setMap("series", mm);// List<Data{String name; Integer[] data}> Data
+        result.setMap("count",count);
+        return result;
+    }
+
+
 
     /**
      * 治理数据分析
@@ -2744,7 +3035,6 @@ public class CompanyController_cd extends BaseController {
         }
 
         map.put("flag", flag);
-
 
         List<Map<String, Object>> list = tModelMapper.selectByMap4(map);
         model.addAttribute("list", list);
@@ -3733,7 +4023,7 @@ public class CompanyController_cd extends BaseController {
     }
 
     /**
-     * 摄像头 删除
+     * TODO 摄像头 添加
      */
     @RequestMapping(value = "monitor-save")
     public @ResponseBody

@@ -195,14 +195,14 @@
             </div>
         </div>
         <div class="div_zhe">
-            <%--          <div class="change_zhe">--%>
-            <%--            <div class="btn-group">--%>
-            <%--              <span class="btn btnyh btnyhxz radius yhlx">隐患类型</span>--%>
-            <%--              <span class="btn btnyh radius yhdj">隐患等级</span>--%>
-            <%--              <span class="btn btnyh radius yhzg">整改率</span>--%>
-            <%--              <span class="btn btnyh radius yhly">隐患来源</span>--%>
-            <%--            </div>--%>
-            <%--          </div>--%>
+            <div class="change_zhe">
+                <div class="btn-group">
+                    <span class="btn btnyh btnyhxz radius zhtj2">综合统计</span>
+                    <span class="btn btnyh radius yhlx2">隐患类型</span>
+                    <span class="btn btnyh radius yhly2">隐患来源</span>
+                    <span class="btn btnyh radius yhdj2">隐患等级</span>
+                </div>
+            </div>
             <div id="container3" style="width:100%;height:450px;display: inline-block;margin-top:25px;"></div>
         </div>
     </div>
@@ -210,18 +210,37 @@
 </body>
 
 <script>
-    $(function () {
-        int(1);
-    })
+
     var categories = [];//日期数组
     var series = {};  //数据数组
-    function int(status) {
-        $.post(getRootPath() + "/company/zhuChartData3", {
+    var flag = 0      //查看类型0:综合数据 1:隐患类型 2:隐患来源 3:隐患等级
+    function int(f) {
+        var url ='';
+        if(f==0){
+            url= "/company/zhuChartData3";
+        }else if(f==1){
+            url= "/company/zhuChartData5";
+        }else if(f==2){
+            url= "/company/zhuChartData6";
+        }else{
+            url= "/company/zhuChartData7";
+        }
+        $.post(getRootPath() + url, {
             sT: $("#sT").val(),
             eT: $("#eT").val()
         }, function (result) {
             categories = result.map.categories;
             series = result.map.series;
+            var extra = {};
+            extra.name =
+            extra.name = '条目汇总 '+result.map.count+' 条';
+            var li = new Array();
+            for(var i =0;i<categories.length;i++) {
+                li.push(0);
+            }
+            extra.data = li;
+            extra.visible = false;
+            series.push(extra);
             createChart(categories, series);
         })
     }
@@ -266,10 +285,41 @@
             layer.msg('请选择结束日期');
             return
         }
-        int();
+        int(flag);
     }
 
+    $(".zhtj2").click(function(){
+        $(".btnyh").removeClass("btnyhxz");
+        $(this).addClass("btnyhxz");
+        flag = 0;
+        int(flag);
+    });
 
+
+    $(".yhlx2").click(function(){
+        $(".btnyh").removeClass("btnyhxz");
+        $(this).addClass("btnyhxz");
+        flag = 1;
+        int(flag);
+    });
+
+
+
+    $(".yhly2").click(function(){
+        $(".btnyh").removeClass("btnyhxz");
+        $(this).addClass("btnyhxz");
+        $("#my_flag").val(2);
+        flag = 2;
+        int(flag);
+    });
+
+    $(".yhdj2").click(function(){
+        $(".btnyh").removeClass("btnyhxz");
+        $(this).addClass("btnyhxz");
+        $("#my_flag").val(3);
+        flag = 3;
+        int(flag);
+    });
 
 
 </script>

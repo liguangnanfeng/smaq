@@ -95,4 +95,13 @@ public class DynamicParameter<K, V> extends HashMap implements DynamicDBValues {
             return null;
         }
     }
+
+    @Override
+    public Integer getLongToInteger(String s) {
+        if (super.get(s) != null) {
+            return Integer.valueOf((super.get(s).toString()));
+        } else {
+            return null;
+        }
+    }
 }

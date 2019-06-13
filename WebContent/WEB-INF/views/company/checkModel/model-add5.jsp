@@ -498,8 +498,8 @@
                         <table id="xxx" className="table table-border table-bordered table-bg table-hover table-sort">
                             <thead>
                             <tr className="text-c">
-                                <th className="my_td">部位</th>
-                                <th className="my_td">岗位</th>
+                                <th className="my_td">车间</th>
+                                <th className="my_td">环节</th>
                                 <th className="my_td4">风险点</th>
                                 <th className="my_td2">风险内容</th>
                                 <th className="div-pcz my_td3">操作</th>

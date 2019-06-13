@@ -55,6 +55,7 @@ public interface DynamicDBValues extends Serializable {
     public abstract BigDecimal getBigDecimal(String s);
 
     public abstract Integer getBigDecimalToInteger(String s);
+    public abstract Integer getLongToInteger(String s);
 
     public abstract Object remove(Object o);
 

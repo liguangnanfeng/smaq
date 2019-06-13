@@ -302,6 +302,7 @@ public class SaveDataImpl implements SaveMessageService {
                     checkItem.setStatus(3); // 复查成功
                     tRecheckItem.setStatus(2); //表示复查成功
                     //tRectificationConfirm.setStatus(1);
+                    checkItem.setRecheckFile("复查合格");
                 } else if ("2".equals(saveDataMessage.getValue())) {
 
                     checkItem.setStatus(2); //复查不合格

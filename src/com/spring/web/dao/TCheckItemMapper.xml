@@ -936,7 +936,6 @@
           and T2.del= 0;
     </select>
     <!--排查数据分析,合格/不合格/已复查
-
     -->
     <select id="selectFailedByMap" resultType="com.spring.web.ibatis.DynamicParameter" parameterType="java.util.Map">
         select DATE_FORMAT(t2.real_time, '%Y-%m-%e') time,
@@ -961,13 +960,15 @@
         </where>
         group by time;
     </select>
-    <!--治理数据分析<已复查合格/复查不合格的参数>(单位: 天)-->
+    <!--治理数据分析<已复查合格/复查不合格的参数>(单位: 天)
+
+    -->
     <select id="selectRecheckFileByMap" resultType="com.spring.web.ibatis.DynamicParameter"
             parameterType="java.util.Map">
 
-        select DATE_FORMAT(t2.real_time, '%Y-%m-%e') time
-        , sum(case t1.status when 3 then 1 else 0 end ) a
-        , sum(case when t1.recheck_file is not null and t1.status=2 then 1 else 0 end ) b
+        select DATE_FORMAT(t2.real_time, '%Y-%m-%e') time,
+        sum(case t1.status when 3 then 1 else 0 end ) a,
+        sum(case t1.status when 2 then 1 else 0 end ) b
         from smaq.t_check_item_tbl t1
         left join smaq.t_check_tbl t2 on t1.check_id = t2.id
         left join smaq.a_company_manual_tbl t3 on t1.level_id=t3.id
@@ -978,11 +979,10 @@
             and t2.del = 0
             and t2.user_id = #{uid}
             <if test="flag !=null">
-            and t3.flag=#{flag}
+                and t3.flag=#{flag}
             </if>
+            and t1.recheck_file != ''
         </where>
         group by time;
     </select>
-
-
 </mapper>

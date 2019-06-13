@@ -1769,11 +1769,9 @@ public class CompanyController_cd extends BaseController {
                     // 合格
                     Integer[] a2 = (Integer[]) m1.get("data");
                     a2[i] = a;
-
                     // 不合格
                     Integer[] b2 = (Integer[]) m2.get("data");
                     b2[i] = b;
-
                     // 已复查合格
                     Integer[] c2 = (Integer[]) m3.get("data");
                     c2[i] = c;
@@ -1785,7 +1783,6 @@ public class CompanyController_cd extends BaseController {
         mm.add(m3);
         return mm;
     }
-
 
     /**
      * TODO 治理数据分析<已复查合格/复查不合格的参数>(单位: 天)
@@ -1824,7 +1821,12 @@ public class CompanyController_cd extends BaseController {
         m.put("startTime1", sT);
         m.put("endTime1", eT);
         m.put("flag", flag);
-        m.put("status", status);
+        if(null==status){
+            m.put("status", 1);
+        }else{
+            m.put("status", status);
+        }
+
         m.put("uid", user.getId());
         // 根据合格不合格查询出数据.然后进行封装
         List<DynamicParameter<String, Object>> ll = tCheckItemMapper.selectRecheckFileByMap(m);
@@ -1851,12 +1853,12 @@ public class CompanyController_cd extends BaseController {
             String time = (String) dy.get("time"); // 每一天的时间
             Integer a = dy.getBigDecimalToInteger("a");
             Integer b = dy.getBigDecimalToInteger("b");
+            log.error(a+"咋回事呀"+b);
             for (int i = 0; i < monthL.size(); i++) {
                 if (time.equals(monthL.get(i))) {
                     // 复查合格
                     Integer[] a2 = (Integer[]) m1.get("data");
                     a2[i] = a;
-
                     // 复查不合格
                     Integer[] b2 = (Integer[]) m2.get("data");
                     b2[i] = b;
@@ -1866,6 +1868,8 @@ public class CompanyController_cd extends BaseController {
         }
         mm.add(m1);
         mm.add(m2);
+        log.error(m1);
+        log.error(m2);
 
         result.setMap("categories", monthL);//时间段内所有的天
         result.setMap("series", mm);// List<Data{String name; Integer[] data}> Data
@@ -2887,7 +2891,6 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
 
-
         if (user.getUserType() == 5) {//企业用户
             return "company/danger/model-list-cx";
         }
@@ -2925,7 +2928,6 @@ public class CompanyController_cd extends BaseController {
         // 根据用户获取用户信息
         List<Map<String, Object>> jiChuItem = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");
         List<Map<String, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
-
 
         for (int i = 0; i < jiChuItem.size(); i++) {
             Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();

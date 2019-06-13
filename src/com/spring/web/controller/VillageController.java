@@ -3139,10 +3139,11 @@ public class VillageController extends BaseController {
                 return result;
             }
             TModel model = new TModel();
-            model.setTitle(checkItem.getTemplate());   // 计划检查名
+            model.setTitle(checkItem.getTemplate()); // 计划检查名
             model.setUserId(user.getId());    // 企业id
-            model.setFlag(checkItem.getFlag());        //检查方式 1. 企业自查  2 行政检查  3 第三方
-            model.setType(checkItem.getTitle()); //  检查类型  日常, 定期, 临时
+            model.setFlag(checkItem.getFlag());     //检查方式 1. 企业自查  2 行政检查  3 部门检查
+            System.out.println(checkItem.getFlag());
+            model.setType(checkItem.getTitle());//  检查类型  日常, 定期, 临时
             if (-2 == checkItem.getCheckType() || -1 == checkItem.getCheckType()) { //只有现场才会存储部门
                 model.setPart(checkItem.getCheckLevels().get(0).getLevel1()); // 被检查的部门
             }

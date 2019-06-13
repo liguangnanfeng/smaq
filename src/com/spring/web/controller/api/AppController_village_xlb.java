@@ -181,7 +181,7 @@ public class AppController_village_xlb extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> m = new HashMap<String, Object>();
         Integer _userId = null;
-        if(type==5){
+        if(null != type && type==5){
              ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
              _userId = zzjgPersonnel.getUid();
         }else{
@@ -211,7 +211,7 @@ public class AppController_village_xlb extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> m = new HashMap<String, Object>();
         Integer _userId = null;
-        if(type==5){
+        if(null != type &&type==5){
             ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
             _userId = zzjgPersonnel.getUid();
         }else{
@@ -280,23 +280,27 @@ public class AppController_village_xlb extends BaseController {
      *
      */
     @RequestMapping(value = "A007", method = RequestMethod.POST)
-    public @ResponseBody AppResult sequipmentList(HttpServletRequest request, Integer userId,Integer type) {
+    public @ResponseBody AppResult sequipmentList(HttpServletRequest request, String flag,Integer start,Integer count, Integer userId,Integer type) {
         AppResult result = new AppResultImpl();
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> m = new HashMap<String, Object>();
         Integer _userId = null;
-        if(type==5){
+
+        if(null != type && type==5){
             ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
             _userId = zzjgPersonnel.getUid();
         }else{
             Officials officials = (Officials) appTokenData.getAppUser(request);
             _userId = officials.getUid();
         }
+
         if (null == _userId) {
             result.setStatus("2");
             result.setMessage("登录超时");
             return result;
         }
+        m.put("start",start);
+        m.put("count",count);
         m.put("userId", userId);
         setUserId(_userId, m);
         map.put("sequipment", sequipmentMapper.selectSequipmentList(m));
@@ -359,7 +363,7 @@ public class AppController_village_xlb extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> m = new HashMap<String, Object>();
         Integer _userId = null;
-        if(type==5){
+        if(null != type && type==5){
             ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
             _userId = zzjgPersonnel.getUid();
         }else{
@@ -387,7 +391,7 @@ public class AppController_village_xlb extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> m = new HashMap<String, Object>();
         Integer _userId = null;
-        if(type==5){
+        if(null != type && type==5){
             ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
             _userId = zzjgPersonnel.getUid();
         }else{
@@ -476,7 +480,7 @@ public class AppController_village_xlb extends BaseController {
         AppResult result = new AppResultImpl();
         Map<String, Object> m = new HashMap<String, Object>();
         Integer _userId = null;
-        if(type==5){
+        if(null != type && type==5){
             ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
             _userId = zzjgPersonnel.getUid();
         }else{
@@ -508,7 +512,7 @@ public class AppController_village_xlb extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> m = new HashMap<String, Object>();
         Integer _userId = null;
-        if(type==5){
+        if(null != type && type==5){
             ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
             _userId = zzjgPersonnel.getUid();
         }else{

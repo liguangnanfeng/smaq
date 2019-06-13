@@ -3,10 +3,8 @@ package com.spring.web.controller.api;
 import com.spring.web.dao.AppTokenMapper;
 import com.spring.web.listener.MySessionContext;
 import com.spring.web.model.AppToken;
-import com.spring.web.model.ZzjgPersonnel;
 import com.spring.web.util.DateConvertUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -57,8 +55,10 @@ public class AppTokenData {
         //到域中获取数据
         MySessionContext sess = MySessionContext.getInstance();
         HttpSession session = sess.getSession(sessionId);
-        Object attribute = session.getAttribute(access_token);// 获取session域中的信息
-
+        Object attribute = null;
+        if (null != access_token){
+            attribute = session.getAttribute(access_token);// 获取session域中的信息
+        }
         return attribute;
     }
 

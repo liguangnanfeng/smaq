@@ -1402,7 +1402,7 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-    *  确定基础风险操作
+    *  确定基础风险操作!!!
     * */
     @RequestMapping(value = "risk-list-loads")//确认风险操作
     public String riskListLoads(Model model, HttpServletRequest request, String industry,
@@ -1962,11 +1962,12 @@ public class CompanyController_safety extends BaseController {
         ACompanyManual aCompanyManual ;
         for (TLevel a : tLevelList) {
             aCompanyManual = new ACompanyManual();
+            aCompanyManual.setReference(a.getReference());
             aCompanyManual.setUid(user.getId());
             aCompanyManual.setLevel1(level1);
             aCompanyManual.setLevel2(a.getName());
             aCompanyManual.setLevel3(a.getLevel1() + "/" + a.getLevel2() + "/" + a.getLevel3());
-            aCompanyManual.setFactors(a.getLevel3());
+            aCompanyManual.setFactors(a.getFactors());
             aCompanyManual.setGkzt(level1);
             aCompanyManual.setCtime(new Date());
             aCompanyManual.setDel(0);

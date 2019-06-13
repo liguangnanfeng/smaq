@@ -8,21 +8,42 @@ public class TLevel implements Serializable {
 
     private Integer id;
 
+    private String industry;
+
     private String level1;
 
     private String level2;
 
     private String level3;
 
-    private String level4;
+    private String factors;
+
+    private Integer industry_id;
 
     private String type;
 
     private String measures;
 
-    private Integer industryId;
+    private String reference;
 
     private String name;
+
+    public TLevel() {
+    }
+
+    public TLevel(Integer id, String industry, String level1, String level2, String level3, String factors, Integer industry_id, String type, String measures, String reference, String name) {
+        this.id = id;
+        this.industry = industry;
+        this.level1 = level1;
+        this.level2 = level2;
+        this.level3 = level3;
+        this.factors = factors;
+        this.industry_id = industry_id;
+        this.type = type;
+        this.measures = measures;
+        this.reference = reference;
+        this.name = name;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -34,6 +55,14 @@ public class TLevel implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
     }
 
     public String getLevel1() {
@@ -60,12 +89,20 @@ public class TLevel implements Serializable {
         this.level3 = level3;
     }
 
-    public String getLevel4() {
-        return level4;
+    public String getFactors() {
+        return factors;
     }
 
-    public void setLevel4(String level4) {
-        this.level4 = level4;
+    public void setFactors(String factors) {
+        this.factors = factors;
+    }
+
+    public Integer getIndustry_id() {
+        return industry_id;
+    }
+
+    public void setIndustry_id(Integer industry_id) {
+        this.industry_id = industry_id;
     }
 
     public String getType() {
@@ -84,12 +121,12 @@ public class TLevel implements Serializable {
         this.measures = measures;
     }
 
-    public Integer getIndustryId() {
-        return industryId;
+    public String getReference() {
+        return reference;
     }
 
-    public void setIndustryId(Integer industryId) {
-        this.industryId = industryId;
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     public String getName() {
@@ -97,21 +134,6 @@ public class TLevel implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
-    }
-
-    public TLevel() {
-    }
-
-    public TLevel(Integer id, String level1, String level2, String level3, String level4, String type, String measures, Integer industryId, String name) {
-        this.id = id;
-        this.level1 = level1;
-        this.level2 = level2;
-        this.level3 = level3;
-        this.level4 = level4;
-        this.type = type;
-        this.measures = measures;
-        this.industryId = industryId;
         this.name = name;
     }
 }

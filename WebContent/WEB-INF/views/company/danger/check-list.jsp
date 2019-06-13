@@ -99,7 +99,15 @@ body .dis-ib{margin-right:15px;}
             <tr class="text-c">
             <td>${index.index + 1 }</td>
             <td><c:if test="${be.status == 1 and (!empty be.expectTime and be.expectTime.time < t)}"><font color="red">【过期】</font></c:if>${be.title }</td>
-            <td>${empty be.expectTime ? '日常' : '定期'}</td>
+            <td>
+                <c:choose>
+                    <c:when test="${be.type == 1 }">日常</c:when>
+                    <c:when test="${be.type == 2 }">定期</c:when>
+                    <c:when test="${be.type == 3 }">季节</c:when>
+                    <c:when test="${be.type == 4 }">其它</c:when>
+                    <c:when test="${be.type == 5 }">综合</c:when>
+                </c:choose>
+            </td>
             <td><fmt:formatDate value="${be.realTime }" pattern="yyyy-MM-dd"/></td>
             <td>
               <%--${be.status == 1 ? '未检查' : '已检查'}--%>

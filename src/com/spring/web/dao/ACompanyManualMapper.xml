@@ -1111,8 +1111,8 @@
         where uid=#{uid}
         and level1 = #{level1}
         and level2=#{level2}
-        and level3=#{level3};
-        and del=0
+        and level3=#{level3}
+        and del=0;
     </select>
 
     <!--查询行业id
@@ -1128,7 +1128,6 @@
         where uid=#{uid}  and  level3 LIKE CONCAT('%', #{name},'%')
         and del=0
         group By level1;
-
     </select>
 
     <!--根据总公司的id和部门名称查询level2-->

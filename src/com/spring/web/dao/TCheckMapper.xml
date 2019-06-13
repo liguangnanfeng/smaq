@@ -498,7 +498,7 @@
     <!-- 根据 ID 查询对应的数据信息!!! -->
     <select id="selectLevels" resultType="java.util.Map">
         select
-        distinct T1.flag, T1.type, T1.industry_type, T6.factors, T6.measures, T2.status,T2.files, T3.levels, T6.level2, T4.part, T6.level
+        distinct T1.flag, T1.type, T1.industry_type, T6.factors, T6.measures, T2.status,T2.files,T2.levels sys, T3.levels, T6.level2, T4.part, T6.level
         from
         t_check_tbl T1,
         t_check_item_tbl T2,
@@ -509,6 +509,8 @@
         T1.id = T2.check_id
         and T1.id = T3.check_id
         and T1.model_id = T4.id
+
+
         and T6.id = T2.level_id
         and T6.del = 0
         and T1.del = 0

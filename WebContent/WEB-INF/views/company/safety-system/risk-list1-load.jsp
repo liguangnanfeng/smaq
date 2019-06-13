@@ -147,7 +147,7 @@
                           <c:if test="${be4.level1 eq be.key and be4.level2 eq be2 and be4.level3 eq be3.level3}">
                             <p class="p-three">
                               <!-- 判断三级相同，复选框显示 -->
-                              <input type="checkbox" data-l="4" name="check" value="${be4.id }" class="bxt">${be4.measures }
+                              <input type="checkbox" data-l="4" name="check" value="${be4.id }" class="bxt">${be4.factors }
                             </p>
                           </c:if>
                         </c:forEach>

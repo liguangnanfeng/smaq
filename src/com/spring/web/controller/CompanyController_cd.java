@@ -34,7 +34,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -3288,7 +3287,6 @@ public class CompanyController_cd extends BaseController {
             List<Map<String, Object>> list = tCheckMapper.selectList(m);
             model.addAttribute("list", list);
         }
-
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
         model.addAttribute("companyName", companyName);

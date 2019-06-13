@@ -177,63 +177,50 @@ function showpicture(src){
         <%--TODO 这里进行合并的话,会没有检查合格的图片--%>
         <c:forEach items="${itemL }" var="ch">
           <tr class="text-c" >
-            <c:if test="${ch.industry_type == 1}">
-              <td class="text-c" >基础</td>
-            </c:if>
-            <c:if test="${ch.industry_type == 2}">
-              <td class="text-c" >现场</td>
-            </c:if>
-            <c:if test="${ch.industry_type == 3}">
-              <td class="text-c" >高危</td>
-            </c:if>
 
-            <td class="text-c" >${ch.part}</td>
+            <td>
+              <c:choose>
+                <c:when test="${ch.industry_type == 1}">基础</c:when>
+                <c:when test="${ch.industry_type == 2}">现场</c:when>
+                <c:when test="${ch.industry_type == 3}">高危</c:when>
+              </c:choose>
+            </td>
+            <td class="text-c" >${ch.part == "" ? "暂无数据" : ch.part}</td>
 
-            <c:set value="${fn:split(ch.levels,'/')}" var="ls"></c:set>
+            <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
             <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
 
+            <td class="text-c" >${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
 
-            <td class="text-c" >${ch.level2}</td>
+            <td>
+              <c:choose>
+                <c:when test="${ch.flag == 1}">企业自查</c:when>
+                <c:when test="${ch.flag == 2}">行政执法</c:when>
+                <c:when test="${ch.flag == 3}">第三方排查</c:when>
+              </c:choose>
+            </td>
 
-            <c:if test="${ch.flag == 1}">
-              <td class="text-c" >企业自查</td>
-            </c:if>
-            <c:if test="${ch.flag == 2}">
-              <td class="text-c" >行政执法</td>
-            </c:if>
-            <c:if test="${ch.flag == 3}">
-              <td class="text-c" >第三方排查</td>
-            </c:if>
+            <td>
+              <c:choose>
+                <c:when test="${ch.type == 1}">日常</c:when>
+                <c:when test="${ch.type == 2}">定期</c:when>
+                <c:when test="${ch.type == 3}">季节</c:when>
+                <c:when test="${ch.type == 4}">其他</c:when>
+                <c:when test="${ch.type == 5}">综合</c:when>
+              </c:choose>
+            </td>
 
-            <c:if test="${ch.type == 1}">
-              <td class="text-c" >日常</td>
-            </c:if>
-            <c:if test="${ch.type == 2}">
-              <td class="text-c" >定期</td>
-            </c:if>
-            <c:if test="${ch.type == 3}">
-              <td class="text-c" >季节</td>
-            </c:if>
-            <c:if test="${ch.type == 4}">
-              <td class="text-c" >其他</td>
-            </c:if>
-            <c:if test="${ch.type == 5}">
-              <td class="text-c" >综合</td>
-            </c:if>
+            <td class="text-c" >${ch.factors == "" ? "暂无数据" : ch.factors }</td>
 
-            <td class="text-c" >${ch.factors}</td>
+            <td>
+              <c:choose>
+                <c:when test="${ch.status == 1}">合格</c:when>
+                <c:when test="${ch.status == 2}">不合格</c:when>
+                <c:when test="${ch.status == 3}">已复查</c:when>
+              </c:choose>
+            </td>
 
-            <c:if test="${ch.status == 1}">
-              <td class="text-c" >合格</td>
-            </c:if>
-            <c:if test="${ch.status == 2}">
-              <td class="text-c" >不合格</td>
-            </c:if>
-            <c:if test="${ch.status == 3}">
-              <td class="text-c" >已复查</td>
-            </c:if>
-
-            <td class="text-c" >${ch.measures}</td>
+            <td class="text-c" >${ch.measures == "" ? "暂无数据" : ch.measures}</td>
 
             <td>
               <c:choose>

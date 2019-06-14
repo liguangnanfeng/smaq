@@ -81,7 +81,7 @@ public interface TModelMapper {
      * @param uid
      * @return
      */
-    List<Map<Integer, String>> selectModelByUid(@Param("uid") Integer uid,@Param("dpName") String dpName);
+    List<Map<Integer, String>> selectModelByUid(@Param("uid") Integer uid,@Param("dpName") String dpName,@Param("flag") Integer flag);
 
     /**
      * TODO 政府端 公司id查询所有的模版信息

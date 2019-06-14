@@ -41,7 +41,7 @@ public interface ICheckManual {
      * @param dpName 部门名称
      * @return
      */
-    List<Map<Integer, String>> findModelByUid(Integer uid,String dpName );
+    List<Map<Integer, String>> findModelByUid(Integer uid,String dpName ,Integer flag);
 
     /**
      * 政府端查询所有的模版

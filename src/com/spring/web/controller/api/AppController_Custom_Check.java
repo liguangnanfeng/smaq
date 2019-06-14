@@ -390,7 +390,7 @@ public class AppController_Custom_Check extends BaseController {
      */
     @RequestMapping(value = "A205", method = RequestMethod.POST)
     public @ResponseBody
-    AppResult checkDepartmentById(String sessionId, String access_token, String dpName) {
+    AppResult checkDepartmentById(String sessionId, String access_token, String dpName,Integer flag  ) {
         AppResult result = new AppResultImpl();
 
         try {
@@ -400,7 +400,7 @@ public class AppController_Custom_Check extends BaseController {
             ZzjgPersonnel zzjg = (ZzjgPersonnel) sess.getAttribute(access_token);
 
             // 根据公司id获取模版信息
-            List<Map<Integer, String>> list = checkManual.findModelByUid(zzjg.getUid(), dpName);
+            List<Map<Integer, String>> list = checkManual.findModelByUid(zzjg.getUid(), dpName,1);
 
             result.setStatus("0");
             result.setData(list);

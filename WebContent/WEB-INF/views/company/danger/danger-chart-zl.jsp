@@ -197,8 +197,8 @@
         <div class="div_zhe">
                       <div class="change_zhe">
                         <div class="btn-group">
+                            <span class="btn btnyh radius ybyh">重大隐患</span>
                           <span class="btn btnyh btnyhxz radius zdyh">较大隐患</span>
-                          <span class="btn btnyh radius ybyh">重大隐患</span>
                           <span class="btn btnyh radius zdyyh">一般和较小隐患</span>
                         </div>
                           <input style="display: none" value="1" id="my_flag"/>

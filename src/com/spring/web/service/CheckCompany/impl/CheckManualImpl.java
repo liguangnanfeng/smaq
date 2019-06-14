@@ -402,8 +402,8 @@ public class CheckManualImpl implements ICheckManual {
      * @return
      */
     @Override
-    public List<Map<Integer, String>> findModelByUid(Integer uid, String dpName) {
-        List<Map<Integer, String>> list = modelMapper.selectModelByUid(uid, dpName);
+    public List<Map<Integer, String>> findModelByUid(Integer uid, String dpName,Integer flag) {
+        List<Map<Integer, String>> list = modelMapper.selectModelByUid(uid, dpName,flag);
         return list;
     }
 

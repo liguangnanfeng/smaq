@@ -148,10 +148,25 @@ function init_all_box() {
           <td class="text-c">${be.content }</td>
           </c:if>
           <td class="text-l">${be.memo }</td>
-          <td class="text-c">不合格</td>
-          <td class="text-c">
+
+            <c:if test="${ empty be.status}">
+                <td>没有数据</td>
+            </c:if>
+
+            <c:if test="${ not empty be.status}">
+                <td>
+                    <c:choose>
+                        <c:when test="${be.status == 1}">合格</c:when>
+                        <c:when test="${be.status == 2}">不合格</c:when>
+                        <c:when test="${be.status == 3}">已复查</c:when>
+                    </c:choose>
+                </td>
+            </c:if>
+
+            <td class="text-c">
             <c:if test="${!empty be.files or !empty be.memo}">
-            <a href="javascript:void(0)" onclick="showpicture('${be.files}', this)">隐患图片</a>
+                <img src="${be.files}" align="隐患图片" width="100" height="100" >
+            <%--<a href="javascript:void(0)" onclick="showpicture('${be.files}', this)">隐患图片</a>--%>
             <%-- <img alt="" src="${be.files }" style="max-height:100px;cursor:pointer;" onClick="showpicture('${be.files}')"/> --%>
             </c:if>
             <div data-lid="${be.levelId }" data-name="item-memo" style="display: none;">${be.memo }</div>

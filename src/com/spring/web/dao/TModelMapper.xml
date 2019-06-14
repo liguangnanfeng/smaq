@@ -391,14 +391,31 @@
         根据id进行排序
         然后在根据显示的问题就是
         每一种数据就显示一条,没有的就不显示
+        select id, title from t_model_tbl where  user_id =#{uid} and del=0 and flag=1 and part=#{dpName} order by id ;
      -->
     <select id="selectModelByUid" resultType="Map">
-    select id, title from t_model_tbl where  user_id =#{uid} and del=0 and flag=1 and part=#{dpName} order by id ;
+    SELECT s1.id,s1.title FROM(
+    SELECT id, title,TYPE
+    FROM t_model_tbl
+    WHERE user_id=#{uid}
+    AND del=0
+    AND flag = 1
+    AND part=#{dpName}
+    ORDER BY id DESC) s1
+    GROUP BY s1.type, s1.title;
+
   </select>
     <!--政府端查询模版信息
+    select id, title from t_model_tbl where  user_id =#{uid} and del=0 order by id ;
       -->
     <select id="selectCountryModelByUid" resultType="Map">
-     select id, title from t_model_tbl where  user_id =#{uid} and del=0 order by id ;
+    SELECT s1.id,s1.title FROM(
+    SELECT id, title,TYPE
+    FROM t_model_tbl
+    WHERE user_id=#{uid}
+    AND del=0
+    ORDER BY id DESC) s1
+    GROUP BY s1.type, s1.title;
   </select>
     <!--
     根据检查条件获取对应的结果数据

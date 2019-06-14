@@ -169,11 +169,11 @@
     left join
       t_recheck_tbl T3 on T0.recheck_id = T3.id
       left join
-      t_check_item_tbl T1 on T1. check_id = T3.check_id
+      t_check_item_tbl T1 on T1. check_id = T3.check_id AND T0.check_item_id=T1.id
      left join
       t_level_tbl T2 on T1.level_id = T2.id
     where
-      T3.check_id =#{checkId}
+      T3.check_id =#{checkId} AND T0.status>1 AND T1.memo!=''
     group by T1.id;
   </select>
   <select id="selectByCheckItemId" resultType="com.spring.web.model.TRecheckItem">

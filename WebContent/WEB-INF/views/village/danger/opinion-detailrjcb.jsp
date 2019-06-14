@@ -259,7 +259,7 @@ function init_all_box() {
         </tr>
       </tbody>
     </table>
-    
+
     <c:if test="${empty rectification}">
     <div class="row cl">
       <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
@@ -269,7 +269,7 @@ function init_all_box() {
       </div>
     </div>
     </c:if>
-    
+
   </div>
 </div>
   <!-- 弹窗图片 -->

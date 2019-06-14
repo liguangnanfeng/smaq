@@ -338,6 +338,10 @@ var resOAIndex = null;
 var ResOAChannels = new P_Utils.Hash();
 var	ResGPS = new P_Utils.Hash();
 
+$(function(){
+	console.log(_cf.connParams)
+})
+
 // 初始化插件对象，必须初始化成功后才可以调用所有接口
 function load(){	
 		//初始化插件

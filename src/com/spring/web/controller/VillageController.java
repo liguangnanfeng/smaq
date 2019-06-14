@@ -2833,7 +2833,8 @@ public class VillageController extends BaseController {
      * @return
      */
     @RequestMapping(value = "getCheckModelBasic")
-    public String getCheckModelBasic() {
+    public String getCheckModelBasic(Integer flag,Model model ) {
+        model.addAttribute("flag",flag);
         return "company/checkModel/model-add";
     }
 

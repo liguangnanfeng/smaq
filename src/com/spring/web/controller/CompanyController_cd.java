@@ -2893,8 +2893,9 @@ public class CompanyController_cd extends BaseController {
 //    }
 
     /**
-     * 检查设置与实施-企业自查1
-     * TODO
+     *
+     * TODO 检查设置与实施
+     *      行政检查/部门抽查
      * <p>
      * <p>
      * 综合检查表(Template 1)
@@ -3151,11 +3152,12 @@ public class CompanyController_cd extends BaseController {
         User user = getLoginUser(request);
         //企业类型为 化工 或 构成重大危险源 则企业自查处 日检查表显示 wz 190108
         Company company = companyMapper.selectByPrimaryKey(user.getId());
+       
        /* if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危化生产、使用）")) {
             //log.error("监管行业："+company.getIndustry());
             //log.error("是否构成重大危险源、1是："+company.getHazard());
             model.addAttribute("rjcbxs", 1);
-        }
+        }*/
 */
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("flag", flag);
@@ -3186,7 +3188,9 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
 
-        if (user.getUserType() == 5) {//企业用户
+      
+        if (user.getUserType() == 5) {
+            //企业用户
             return "company/danger/model-list-cx";
         }
         return "village/danger/check-list";

@@ -3622,12 +3622,12 @@ public class CompanyController_cd extends BaseController {
 
         //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
         model.addAttribute("itemL", iteml);
+        // 根据检查记录的id获取详细的信息
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
-        log.error("检查表 详情check-detail" + type);
+        log.error("整改详情进行显示的条件" + tCheckMapper.selectCompany(id));
 
         log.error("检查详情：" + jcxq);//首页——定期检查——检查详情显示为未检查
         return "company/danger/plan-detail";
-
 
         /*if (jcxq == null) {
             if (type == 9) {

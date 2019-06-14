@@ -133,13 +133,13 @@ function showpicture(src){
       <!-- 判断是否有治理意见表 -->
       <c:if test="${listM.c > 0 && listM.status == 2 }">
         <!-- 已检查过且有隐患的需要治理意见表 -->
-        <c:choose>
-          <c:when test="${listM.t > 0}">
+        <%--<c:choose>
+          <c:when test="${listM.t > 0}">--%>
             <!-- 已设置整改意见 -->
             <button onClick="location.href = '/village/check-rectification?flag=${flag }&id=${listM.id }'"
               class="btn btn-success radius" type="button" style="padding: 0 70px;margin-right: 20px">整改详情</button>
-          </c:when>
-        </c:choose>
+        <%--  </c:when>
+        </c:choose>--%>
 
         <!-- 已经有复查 -->
         <c:if test="${listM.c3 > 0}">

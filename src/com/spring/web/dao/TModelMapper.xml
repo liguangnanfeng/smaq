@@ -389,6 +389,8 @@
         根据公司
         未删除的
         根据id进行排序
+        然后在根据显示的问题就是
+        每一种数据就显示一条,没有的就不显示
      -->
     <select id="selectModelByUid" resultType="Map">
     select id, title from t_model_tbl where  user_id =#{uid} and del=0 and flag=1 and part=#{dpName} order by id ;

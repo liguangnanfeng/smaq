@@ -146,6 +146,15 @@
     <%--            </div>--%>
     <%--        </c:if>--%>
     <%--    </div>--%>
+    <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
+        <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}"
+           href="${ly }/company/model-list-main?flag=1">企业自查</a>
+        <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
+           href="${ly }/company/model-list-cx?flag=2&type=1&template=2">行政检查</a>
+        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
+           href="${ly }/company/model-list-cx?flag=3&type=1&template=2">部门抽查</a>
+        <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
+    </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <%--            <c:if test="${flag == 1 && type != 3 && type!=9}">--%>
         <c:if test="${template != 1}">
@@ -352,16 +361,18 @@
                 <tr class="text-c">
                     <th width="5%">序号</th>
                     <th>检查表名称</th>
-                    <th>受检${flag == 1 ? '部门' : '单位'}</th>
+<%--                    <th>受检${flag == 1 ? '部门' : '单位'}</th>--%>
+                    <th>受检部门</th>--%>
                     <th>检查类型</th>
-                    <c:if test="${flag == 1&&template==1}">
+<%--                    <c:if test="${flag == 1&&template==1}">--%>
                         <th>检查方式</th>
-                    </c:if>
-                    <th>检查部位</th>
-                    <th>最近${flag == 1 ? '检查' : '录入'}时间</th>
-                    <c:if test="${type == 2 || type == 9}">
-                        <th>自动化设置</th>
-                    </c:if>
+<%--                    </c:if>--%>
+<%--                    <th>检查部位</th>--%>
+<%--                    <th>最近${flag == 1 ? '检查' : '录入'}时间</th>--%>
+                    <th>最近检查时间</th>
+<%--                    <c:if test="${type == 2 || type == 9}">--%>
+<%--                        <th>自动化设置</th>--%>
+<%--                    </c:if>--%>
                     <th width="10%">操作</th>
                 </tr>
                 </thead>
@@ -379,7 +390,7 @@
                                 <c:when test="${be.industryType == 3}">高危作业</c:when>
                             </c:choose>
                         </td>
-                        <c:if test="${flag == 1&&template==1}">
+<%--                        <c:if test="${flag == 1&&template==1}">--%>
                             <td>
                                 <c:if test="${be.type==1}">
                                     日常
@@ -398,9 +409,9 @@
                                 </c:if>
 
                             </td>
-                        </c:if>
+<%--                        </c:if>--%>
                             <%--检查部位--%>
-                        <td>${be.partName }</td>
+<%--                        <td>${be.partName }</td>--%>
                             <%--最近的检查时间--%>
                         <td>
                                 <%--${be.c2 }/${be.c }--%>
@@ -411,15 +422,15 @@
                                 未检查状态
                             </c:if>
                         </td>
-                        <c:if test="${type == 2 || type==9}">
-                            <td>
-                                <span>开启/关闭状态：${be.open == 1 ? '开启':'关闭'}</span><br>
-                                <span>检查周期：${be.cycle }天</span><br>
-                                <span>下次${flag == 1 ? '检查' : '录入'}时间：<fmt:formatDate
-                                        value="${be.nextTime }"/></span><br>
-                                    <%-- <span>下次报表检查时间：<fmt:formatDate value="${be.nextCheckTime }"/></span> --%>
-                            </td>
-                        </c:if>
+<%--                        <c:if test="${type == 2 || type==9}">--%>
+<%--                            <td>--%>
+<%--                                <span>开启/关闭状态：${be.open == 1 ? '开启':'关闭'}</span><br>--%>
+<%--                                <span>检查周期：${be.cycle }天</span><br>--%>
+<%--                                <span>下次${flag == 1 ? '检查' : '录入'}时间：<fmt:formatDate--%>
+<%--                                        value="${be.nextTime }"/></span><br>--%>
+<%--                                    &lt;%&ndash; <span>下次报表检查时间：<fmt:formatDate value="${be.nextCheckTime }"/></span> &ndash;%&gt;--%>
+<%--                            </td>--%>
+<%--                        </c:if>--%>
                         <td>
                                 <%--     <a style="text-decoration:none" onClick="check_add(${be.id})"
                                         href="javascript:;">实施检查</a><br/>--%>
@@ -443,7 +454,7 @@
                 </tbody>
             </table>
         </div>
-    </c:if>
+<%--    </c:if>--%>
 
     <%--<c:if test="${type == 3}">
         <div class="mt-20">
@@ -543,7 +554,7 @@
 
 </div>
 <script type="text/javascript">
-
+    console.log('${list}');
     /*企业端实施检查*/
     function check_add(modelId) {
         var i = layer.load();

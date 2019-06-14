@@ -368,7 +368,10 @@ function article_save_submit() {
         x = "部门抽查";
       }
       if(flag == 1) {//自查
+          // 保存数据
         if($(":radio[value='2']:checked").length > 0) {
+            //表示不合格的数量大于0,就跳转到下一个页面
+            console.log('/village/check-rectification?flag=' + flag + '&id=' + checkId);
           top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);
         } else {
           top.show_tab(x, '/village/check-list?flag=' + flag)

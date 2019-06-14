@@ -214,7 +214,11 @@ function showpicture(src){
             </td>
 
             <td class="text-c" >${ch.factors == "" ? "暂无数据" : ch.factors }</td>
+            <c:if test="${ empty ch.status}">
+              <td>没有数据</td>
+            </c:if>
 
+            <c:if test="${ not empty ch.status}">
             <td>
               <c:choose>
                 <c:when test="${ch.status == 1}">合格</c:when>
@@ -222,6 +226,7 @@ function showpicture(src){
                 <c:when test="${ch.status == 3}">已复查</c:when>
               </c:choose>
             </td>
+            </c:if>
 
             <td class="text-c" >${ch.measures == "" ? "暂无数据" : ch.measures}</td>
 

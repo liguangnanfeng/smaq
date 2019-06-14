@@ -1494,7 +1494,7 @@ public class CompanyController_cd extends BaseController {
         for (int l = 0; l < d.length; l++) {
             d[l] = 0;
         }
-        String[] xx = new String[]{"较大", "重大","一般和较小"};
+        String[] xx = new String[]{"较大", "重大", "一般和较小"};
         List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
         Map<String, Object> m1 = new HashMap<String, Object>();
         Map<String, Object> m2 = new HashMap<String, Object>();
@@ -1681,7 +1681,8 @@ public class CompanyController_cd extends BaseController {
     }
 
     static final String TIME_STR = "yyyy-MM-dd";
-    public Integer count = 0 ;
+    public Integer count = 0;
+
     /**
      * * TODO 排查数据分析图表数据(单位: 天)
      * * 一次性把检查合格/不合格/复查合格的数据全部查询出来然后生成图表
@@ -1729,7 +1730,7 @@ public class CompanyController_cd extends BaseController {
         List<Map<String, Object>> maps = chartDataCheck(monthL, m);
         result.setMap("categories", monthL);//时间段内所有的天
         result.setMap("series", maps);// List<Data{String name; Integer[] data}> Data
-        result.setMap("count",this.count);
+        result.setMap("count", this.count);
         return result;
     }
 
@@ -1758,7 +1759,7 @@ public class CompanyController_cd extends BaseController {
         m1.put("data", d.clone());
         m2.put("data", d.clone());
         m3.put("data", d.clone());
-        this.count=0;
+        this.count = 0;
         // 这次循环的就是每一天合格的信息
         for (DynamicParameter<String, Object> dy : ll) {
             String time = (String) dy.get("time"); // 每一天的时间
@@ -1766,7 +1767,7 @@ public class CompanyController_cd extends BaseController {
             Integer a = dy.getBigDecimalToInteger("a");
             Integer b = dy.getBigDecimalToInteger("b");
             Integer c = dy.getBigDecimalToInteger("c");
-            this.count += a+b+c;
+            this.count += a + b + c;
             for (int i = 0; i < monthL.size(); i++) {
                 if (time.equals(monthL.get(i))) {
                     // 合格
@@ -1825,9 +1826,9 @@ public class CompanyController_cd extends BaseController {
         m.put("startTime1", sT);
         m.put("endTime1", eT);
         m.put("flag", flag);
-        if(null==status){
+        if (null == status) {
             m.put("status", 1);
-        }else{
+        } else {
             m.put("status", status);
         }
 
@@ -1857,7 +1858,7 @@ public class CompanyController_cd extends BaseController {
             String time = (String) dy.get("time"); // 每一天的时间
             Integer a = dy.getBigDecimalToInteger("a");
             Integer b = dy.getBigDecimalToInteger("b");
-            log.error(a+"咋回事呀"+b);
+            log.error(a + "咋回事呀" + b);
             for (int i = 0; i < monthL.size(); i++) {
                 if (time.equals(monthL.get(i))) {
                     // 复查合格
@@ -1883,8 +1884,9 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * 排查数据分析之隐患类型
-     * @param sT 起始时间
-     * @param eT 截止时间
+     *
+     * @param sT      起始时间
+     * @param eT      截止时间
      * @param request 请求
      * @param status  不重要
      * @param flag    不重要
@@ -1927,7 +1929,7 @@ public class CompanyController_cd extends BaseController {
             d[l] = 0;
         }
 
-        String[] xx = new String[]{"基础", "现场","高危"};
+        String[] xx = new String[]{"基础", "现场", "高危"};
         List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
         Map<String, Object> m1 = new HashMap<String, Object>();
         Map<String, Object> m2 = new HashMap<String, Object>();
@@ -1942,14 +1944,14 @@ public class CompanyController_cd extends BaseController {
         m2.put("data", d.clone());
         m3.put("data", d.clone());
         // 这次循环的就是每一天合格的信息
-        Integer counts =0;
+        Integer counts = 0;
         for (DynamicParameter<String, Object> dy : ll) {
             String time = (String) dy.get("useTime"); // 每一天的时间
             Integer a = dy.getBigDecimalToInteger("a");
             Integer b = dy.getBigDecimalToInteger("b");
             Integer c = dy.getBigDecimalToInteger("c");
             Integer count = dy.getLongToInteger("count");
-            counts +=count;
+            counts += count;
             for (int i = 0; i < monthL.size(); i++) {
                 if (time.equals(monthL.get(i))) {
                     // 基础
@@ -1979,8 +1981,9 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * 排查数据分析之隐患来源
-     * @param sT 起始时间
-     * @param eT 截止时间
+     *
+     * @param sT      起始时间
+     * @param eT      截止时间
      * @param request 请求
      * @param status  不重要
      * @param flag    不重要
@@ -2023,7 +2026,7 @@ public class CompanyController_cd extends BaseController {
             d[l] = 0;
         }
 
-        String[] xx = new String[]{"企业自查", "行政检查","部门抽查"};
+        String[] xx = new String[]{"企业自查", "行政检查", "部门抽查"};
         List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
         Map<String, Object> m1 = new HashMap<String, Object>();
         Map<String, Object> m2 = new HashMap<String, Object>();
@@ -2038,14 +2041,14 @@ public class CompanyController_cd extends BaseController {
         m2.put("data", d.clone());
         m3.put("data", d.clone());
         // 这次循环的就是每一天合格的信息
-        Integer counts =0;
+        Integer counts = 0;
         for (DynamicParameter<String, Object> dy : ll) {
             String time = (String) dy.get("useTime"); // 每一天的时间
             Integer a = dy.getBigDecimalToInteger("a");
             Integer b = dy.getBigDecimalToInteger("b");
             Integer c = dy.getBigDecimalToInteger("c");
             Integer count = dy.getLongToInteger("count");
-            counts +=count;
+            counts += count;
             for (int i = 0; i < monthL.size(); i++) {
                 if (time.equals(monthL.get(i))) {
                     // 基础
@@ -2075,8 +2078,9 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * 排查数据分析之隐患等级
-     * @param sT 起始时间
-     * @param eT 截止时间
+     *
+     * @param sT      起始时间
+     * @param eT      截止时间
      * @param request 请求
      * @param status  不重要
      * @param flag    不重要
@@ -2120,7 +2124,7 @@ public class CompanyController_cd extends BaseController {
             d[l] = 0;
         }
 
-        String[] xx = new String[]{"较大", "重大","一般和较小"};
+        String[] xx = new String[]{"较大", "重大", "一般和较小"};
         List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
         Map<String, Object> m1 = new HashMap<String, Object>();
         Map<String, Object> m2 = new HashMap<String, Object>();
@@ -2134,14 +2138,14 @@ public class CompanyController_cd extends BaseController {
         m1.put("data", d.clone());
         m2.put("data", d.clone());
         m3.put("data", d.clone());
-        Integer count =0;
+        Integer count = 0;
         // 这次循环的就是每一天合格的信息
         for (DynamicParameter<String, Object> dy : ll) {
             String time = (String) dy.get("useTime"); // 每一天的时间
             Integer a = dy.getBigDecimalToInteger("a");
             Integer b = dy.getBigDecimalToInteger("b");
             Integer c = dy.getBigDecimalToInteger("c");
-            count +=a+b+c;
+            count += a + b + c;
             for (int i = 0; i < monthL.size(); i++) {
                 if (time.equals(monthL.get(i))) {
                     // 基础
@@ -2164,10 +2168,9 @@ public class CompanyController_cd extends BaseController {
 
         result.setMap("categories", monthL);//时间段内所有的天
         result.setMap("series", mm);// List<Data{String name; Integer[] data}> Data
-        result.setMap("count",count);
+        result.setMap("count", count);
         return result;
     }
-
 
 
     /**
@@ -3208,6 +3211,7 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * TODO 隐患排查治理板块 => 检查设置实施中首页表显示车间
+     * <p>
      * 是根据conpanyManual这张表中的数据车间数据进行查询
      * 跳转到新一轮的页面进行修改
      */
@@ -3567,8 +3571,6 @@ public class CompanyController_cd extends BaseController {
      * 检查表 详情
      * TODO 隐患排查记录/检查详情查看检查记录
      * 没有兼容小程序
-     *
-     *
      */
     @RequestMapping(value = "check-detail")
     public String checkDetail(Integer id, Model model, Integer jcxq) throws Exception {
@@ -3908,16 +3910,39 @@ public class CompanyController_cd extends BaseController {
     /**
      * TODO 隐患列表 复查详情
      * 表示的就是整改合格之后的复查记录
-     *
+     * 表示在这里将数据进行保存到 tRecheckItemMapper
      */
     @RequestMapping(value = "recheck-detail")
     public String recheckDetail(Integer checkId, Model model) throws Exception {
         Integer id = checkId;
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
+        List<Map> maps = tCheckItemMapper.selectAllByCheckId(checkId);
+        List<TRecheck> tRechecks = tRecheckMapper.selectByCheckId(checkId);
+        Integer id2 = tRechecks.get(0).getId();
+        for (int i = 0; i < maps.size(); i++) {
+            TRecheckItem id1 = tRecheckItemMapper.selectByCheckItemId((Integer) maps.get(i).get("id"));
+            if (null != id1) {
+                id1.setStatus((Integer) maps.get(i).get("status"));
+                id1.setFile((String) maps.get(i).get("files"));
+                id1.setMemo((String) maps.get(i).get("memo"));
+                id1.setDeadline((Date) maps.get(i).get("deadline"));
+                tRecheckItemMapper.updateByPrimaryKeySelective(id1);
+            } else {
+                id1 = new TRecheckItem();
+                id1.setCheckItemId((Integer) maps.get(i).get("id"));
+                id1.setStatus((Integer) maps.get(i).get("status"));
+                id1.setFile((String) maps.get(i).get("recheckFile"));
+                id1.setRecheckId(id2);
+                id1.setMemo((String) maps.get(i).get("memo"));
+                id1.setDeadline((Date) maps.get(i).get("deadline"));
+                tRecheckItemMapper.insertSelective(id1);
+            }
+        }
         model.addAttribute("check", check);
         model.addAttribute("company", companyMapper.selectByPrimaryKey(Integer.parseInt(String.valueOf(check.get("userId")))));
-        model.addAttribute("recheckList", tRecheckMapper.selectByCheckId(checkId));
-        model.addAttribute("itemList", tRecheckItemMapper.selectByCheckId(checkId));
+        model.addAttribute("recheckList", tRechecks);
+        List<Map<String, Object>> maps1 = tRecheckItemMapper.selectByCheckId(checkId);
+        model.addAttribute("itemList",maps1);
         return "company/danger/check-fudetail";
     }
 

@@ -1477,7 +1477,9 @@ public class VillageController extends BaseController {
 //    }
 
     /**
-     * 检查表隐患 整改  update wz 190111
+     * TODO 检查表隐患 整改详情,
+     * 保存检查记录的时候，会走这个一下，但是没有进行保存所有没有发送
+     * 但是在查询记录的时候，点击一个整改详情的时候，会
      */
     @RequestMapping(value = "check-rectification")
     public String checkRectification(Integer id, Model model, Integer flag) throws Exception {
@@ -1485,11 +1487,11 @@ public class VillageController extends BaseController {
             TCheck tc = tCheckMapper.selectByPrimaryKey(id);
             Integer type = tc.getType();
             //log.error("检查表type："+type);
-        TRectification rectification = new TRectification();
+
             // TODO 这里只保存一条数据,并返回到前端
             List<TRectification> list = tRectificationMapper.selectAlls(id);
             if(null != list && list.size()>0){
-
+                TRectification rectification = new TRectification();
                 rectification.setId(list.get(0).getId());
                 rectification.setCheckId(list.get(0).getCheckId());
                 rectification.setItem1(list.get(0).getItem1());
@@ -1501,7 +1503,7 @@ public class VillageController extends BaseController {
                 rectification.setCreateUser(list.get(0).getCreateUser());
                 rectification.setCreateTime(list.get(0).getCreateTime());
                 rectification.setDel(list.get(0).getDel());
-
+                model.addAttribute("rectification", rectification);
             }
 
             DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
@@ -1509,7 +1511,8 @@ public class VillageController extends BaseController {
             //model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(id, null));
 
             List<Map<String, Object>> iteml = tCheckItemMapper.selectDangerByCheckId(id, null);
-            //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
+
+            // 这个是没有用的
             if (type != null && type == 9) {
                 for (Map<String, Object> a : iteml) {
                     //log.error("checkNext:"+1);
@@ -1547,17 +1550,19 @@ public class VillageController extends BaseController {
             //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
             model.addAttribute("itemL", iteml);
 
-            model.addAttribute("rectification", rectification);
+
             model.addAttribute("company", companyMapper.selectByPrimaryKey(check.getInteger("userId")));
             model.addAttribute("flag", flag);
             model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
             model.addAttribute("listM", tCheckMapper.selectCompany(id));
             log.error("check-rectification：" + 6);
+
             if (type == 9) {
                 return "village/danger/opinion-detailrjcb";
             } else {
                 return "village/danger/opinion-detail";
             }
+
     }
 
     /**

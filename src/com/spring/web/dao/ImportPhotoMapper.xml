@@ -7,15 +7,16 @@
             <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="url" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-        id, url, user_id
+        id, url, user_id, name
     </sql>
 
     <!-- 添加数据信息 -->
     <insert id="savePhoto" parameterType="com.spring.web.model.request.TMap" >
-         insert into import_photo (url,user_id) values(#{url},#{user_id});
+         insert into import_photo (url,user_id,name) values(#{url},#{user_id},#{name});
     </insert>
 
 

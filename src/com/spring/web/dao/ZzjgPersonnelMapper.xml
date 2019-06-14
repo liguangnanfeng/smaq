@@ -287,6 +287,29 @@
         order by T1.id desc
     </select>
 
+
+    <select id="selectHashMap" resultType="java.util.Map">
+        select
+        T1.id, T1.name, T1.mobile, T1.did, T1.dpid, T1.position,T1.status,T1.password,
+        (select name from zzjg_company_tbl where id = T1.cid) companyName,
+        T3.name dname, T4.name dpname, T3.level
+        from
+        zzjg_personnel_tbl T1
+        left join
+        zzjg_department_tbl T3 on T1.did = T3.id
+        left join
+        zzjg_department_tbl T4 on T1.dpid = T4.id
+        where
+        T1.del = 0
+        and T1.uid = #{uid}
+        and T1.dpid = #{dpid}
+        order by
+        T1.id desc
+    </select>
+
+
+
+
     <select id="selectByMapLimit" resultType="com.spring.web.ibatis.LlHashMap">
         select
         T1.id, T1.name, T1.mobile, T1.did, T1.dpid, T1.position,

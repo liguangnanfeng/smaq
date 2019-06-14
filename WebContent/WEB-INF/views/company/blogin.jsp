@@ -13,50 +13,145 @@
         <meta name="keywords" content="风险分级管控 隐患排查治理智能化平台">
         <meta name="description" content="风险分级管控 隐患排查治理智能化平台">
         <style type="text/css">
-        body .footer{background:none;border-top:0px;}
-        body .header{background:none;border:0;text-align:center;top:30%;margin-top:-170px;color:#fff;font-size:35px;}
-        .input-text::-webkit-input-placeholder { color:#333;}
-        .input-text:-moz-placeholder {color:#333;}
-        .input-text::-moz-placeholder {color:#333;}
-        .input-text:-ms-input-placeholder {color:#333;}
-        .btn_zhuc{float:right;margin:10px;color:#2472D4;font-size:15px;}
-        .div_row .input-text{
-        background:#fff;
+        body {
+        margin: 0;
+        padding: 0;
         }
-        .font_w{
-        color:#111;
-        font-weight: bolder;
-        font-size: 15px;}
-        .one-f{
-        padding-left: 10%;
-        text-align:left;
-        width:65%;
+
+        .input-text::-webkit-input-placeholder {
+        color: #333;
         }
-        .img_dewm{
+
+        .input-text:-moz-placeholder {
+        color: #333;
+        }
+
+        .input-text::-moz-placeholder {
+        color: #333;
+        }
+
+        .input-text:-ms-input-placeholder {
+        color: #333;
+        }
+
+        /* css样式 */
+        .container22 {
+        width: 70%;
+        margin: 0 auto;
+        }
+
+        .title {
+        text-align: center;
+        }
+
+        .title_img {
+        width: 130px;
         position: absolute;
-        top: 12px;
-        bottom:0;
+        right: 85%;
         }
-        .div_lomain{
-        margin-left:0;
-        margin-top:0;
+
+        .name {
+        font-size: 40px;
+        color: red;
         }
-        .name{color: red;font-size: 30px;letter-spacing: 0.1em;}
-        @media screen and (min-width:1621px){
-        .max_wi{
-        position: absolute;top: 33%;right:48%
+
+        .footer22 {
+        padding-top: 30px;
+        }
+
+        .footer22 > div {
+        display: inline-block;
+        }
+
+        .footer22 > div:last-child {
+        float: right;
+        }
+        .footer22 a{
+        color: #000;
+        text-decoration: none;
+        }
+        .footer22 > div:first-child p:first-child {
+        padding-top: 0;
+        margin: 0;
+        padding-bottom: 10px;
+        }
+
+        .footer22 > div:first-child p:first-child a {
+        text-decoration: none;
+        color: #111;
+        font-weight: 600;
+        padding: 0 13px;
+        font-size: 17px;
+        }
+
+        .footer22 > div:first-child p:first-child a:first-child {
+        padding-left: 0;
+        }
+
+        .footer22 span {
+        margin-left: 30px;
+        }
+
+        .center {
+        position: relative;
+        }
+
+        .center > img {
+        width: 100%;
+        }
+
+        .center .container22 {
+        position: absolute;
+        top: 0;
+        left: 15%;
+        width: 80%;
+        padding-top: 5%;
+        }
+
+        .row_right22 {
+        width: 28%;
+        height: 55px;
+        margin-top: 15px;
+        }
+
+        .row_right22 input {
+        background: #fff;
+        font-size: 16px;
+        padding: 8px;
+        height: 50px !important;
+        border: 0;
+        box-shadow: inset 8px 10px 12px #959497;
+        width: 100%;
+        }
+        input[type="checkbox"]{
+        height: 15px;
+        box-shadow:none;
+        width: 15px;
+        vertical-align: middle;
+        }
+        .center_container22{
+        height: auto;
+        }
+        @media screen and (min-width: 1345px) {
+        .center .container22 {
+        padding-top:5% !important;
         }
         }
-        @media screen and (min-width:1320px) and (max-width: 1620px) {
-        .max_wi {
-        position: absolute;top: 34%;right:44.5%
+        @media screen and (max-width: 1344px) {
+        .center .container22 {
+        padding-top:3% !important;
         }
         }
-        @media screen and (max-width: 1320px) {
-        .max_wi {
-        position: absolute;top: 34%;right:0;left:0;
-        }
-        }
+            .yuan{
+            width:25px;height:25px;display:inline-block;border-radius:50%;
+            float: right;
+            margin-left: 10px;
+            }
+            .right_yuan{
+            position: absolute;
+            top: 110px;
+            right: 9%;
+            }
         </style>
         <script type="text/javascript">
         var url = '${url}', un = '${un}';
@@ -74,14 +169,6 @@
         if (null != pwd && '' != pwd) {
         $("#password").val(pwd);
         }
-        <%--        if(un != '') {--%>
-        <%--        $("#userName").val(un);--%>
-        <%--        } else {--%>
-        <%--        var name = getCookie('user-name');--%>
-        <%--        if (null != name && '' != name) {--%>
-        <%--        $("#userName").val(name);--%>
-        <%--        }--%>
-        <%--        }--%>
 
         $(document).keydown(function(event){
         if(event.keyCode==13){
@@ -141,100 +228,61 @@
         </script>
         </head>
         <body>
-        <img alt="" src="${ly }/images/home/logo.png" class="img_dlogo" style="width:140px;max-width:
-        48%;margin-top:0;position: absolute;left:4%;top:4%;margin-left:0;"/>
-        <table style="float:left;width:100%;height:100%">
-        <tr>
-        <td valign="middle">
-        <div style="float:left;width:100%;margin-top: 10px;">
-        <div style="max-width:1366px;min-width:1000px;margin:auto;">
-        <div class="div_login">
-        <div style="display: inline-block;width: 100%;text-align: center;">
-        <p class='name'></p>
-        <p style="color: #1A69DF;font-size: 45px;">风险分级管控 隐患排查治理智能化平台</p>
-        </div>
-        <%--        <img alt="" src="${ly }/images/llogo.jpg" class="img_dlogo" style="max-width: 48%;margin-left: 13%;"/>--%>
-        <%--<img alt="" src="${ly }/images/dit.png" class="img_dldt" style="top: 73px;max-width: 47%;"/>--%>
+        <div class="container22 title">
+        <img src="${ly }/images/home/logo.png" class="title_img">
+        <div>
+        <p class="name"></p>
+        <p style="color: #1A69DF;font-size: 45px;margin-bottom: 50px;">风险分级管控 隐患排查治理智能化平台</p>
+            <span class="right_yuan">
+            <span class="yuan" style="background:#00A1E9"></span>
+            <span class="yuan" style="background:#FFFF00"></span>
+            <span class="yuan" style="background:#FF9600"></span>
+            <span class="yuan" style="background:#FF0000"></span>
+            </span>
         </div>
         </div>
-        </div>
-        <div style="float:left;width:100%;margin-top:20px;">
-        <img src="${ly }/images/home/qy_loginBg.png" style="width: 100%;position: relative;z-index: 0;">
-        <div class="max_wi">
-        <div class="div_login">
-        <div class="div_lomain">
+        <div class="center_container22">
+        <div class="center">
+        <img src="${ly }/images/home/qy_loginBg.png" alt="">
+        <div class="container22">
         <form class="form form-horizontal" method="post">
-        <div class="toplogin">
-        </div>
-        <div class="div_row">
-        <div class="row_left">&nbsp;</div>
-        <div class="row_right">
+        <div class="row_right22">
         <input id="userName" type="text" placeholder="请输入账户" class="input-text size-L" required>
         </div>
-        </div>
-        <div class="div_row">
-        <div class="row_left">&nbsp;</div>
-        <div class="row_right">
+        <div class="row_right22">
         <input id="password" type="password" placeholder="请输入密码" class="input-text size-L" required>
         </div>
-        </div>
-        <div class="div_row">
-        <div class="row_left">&nbsp;</div>
-        <div class="row_right">
+        <div class="row_right22">
         <input id="login_btn" type="button" class="btn btn-success size-L"
-        style="width:100%;background:#00FF00;color:#111;border:0px;height:50px;font-size:20px"
+        style="width:100%;background:#00FF00;color:#111;border:0px;height:50px;font-size:24px;box-shadow: none;"
         value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
         </div>
-        </div>
-        <div class="div_row">
-        <div class="row_left">&nbsp;</div>
-        <div class="row_right">
+        <div class="row_right22" style="margin-top:3px;">
         <label style="color: white;float:right;" class="forgetpwd"><input id="remember" type="checkbox"
-        value=""/><b>&nbsp;记住账号</b> </label>
-        </div>
+        value=""/><b>&nbsp;记住账号</b>
+        </label>
         </div>
         </form>
         </div>
         </div>
         </div>
+        <div class="container22 footer22">
+        <div>
+        <p>
+        <a href="${ly }/html/fore.html?id=1" target="_blank">关于我们</a><font>|</font>
+        <a href="${ly }/html/fore.html?id=2" target="_blank">网站声明</a><font>|</font>
+        <a href="${ly }/html/fore.html?id=3" target="_blank">联系我们</a><font>|</font>
+        <a href="http://new.cnzz.com/v1/login.php?siteid=1273938480" target="_blank">站长统计</a>
+        </p>
+        <p><a href="">主办方：江苏安泰信息技术发展有限公司<span>联系电话：0510-83556999</span></a></p>
+        <p><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32020602000446"
+        target="_blank">苏公网安备：32020602000446号</a><span>增值电信业务经营许可证：苏B1-20150079</span></p>
+        <p><a href="http://www.miitbeian.gov.cn/" target="_blank">苏ICP备17056652号-1</a></p>
         </div>
-        <div style="float:left;width:100%;">
-        <div style="max-width:1366px;min-width:1000px;margin:auto;">
-        <div class="div_login">
-        <div class="div_lomain2">
-        <div class="one-f" style="margin-top:12px;padding-left:11%;">
-        <a href="${ly }/html/fore.html?id=1" target="_blank" class="font_w">关于我们</a>
-        <font>|</font>
-        <a href="${ly }/html/fore.html?id=2" target="_blank" class="font_w">网站声明</a>
-        <font>|</font>
-        <a href="${ly }/html/fore.html?id=3" target="_blank" class="font_w">联系我们</a>
-        <font>|</font>
-        <%-- <a href="${ly }/html/tui.html" target="_blank">平台推广</a>
-        <font>|</font> --%>
-        <a href="http://new.cnzz.com/v1/login.php?siteid=1273938480" target="_blank" class="font_w">站长统计</a>
-        </div>
-        <div class="one-f">
-        <font>主办方：江苏安泰信息技术发展有限公司</font>
-        <font>联系电话：0510-83556999</font>
-        </div>
-        <div class="one-f">
-        <font><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32020602000446"
-        target="_blank">苏公网安备：32020602000446号</a></font>
-        <font>增值电信业务经营许可证：苏B1-20150079</font>
-        </div>
-        <%--<div class="one-f">--%>
-        <%--<font>技术支撑方：无锡同翔科技有限公司</font><font>法律顾问：江苏欣林律师事务所</font>--%>
-        <%--</div>--%>
-        <div class="one-f">
-        <font size="2"><a href="http://www.miitbeian.gov.cn/" target="_blank">苏ICP备17056652号-1</a></font>
-        </div>
-        <img alt="" src="${ly }/images/xcx.jpg" class="img_dewm" style="width:121px;right:200px">
-        <img alt="" src="${ly }/images/ewm.png" class="img_dewm">
+        <div>
+        <img alt="" src="${ly }/images/xcx.jpg" style="width:110px;margin-right: 70px;">
+        <img alt="" src="${ly }/images/ewm.png" style="width:110px;">
         </div>
         </div>
-        </div>
-        </div>
-        </td></tr></table>
-        <%--<script src="https://s19.cnzz.com/z_stat.php?id=1273938480&web_id=1273938480" language="JavaScript"></script>--%>
         </body>
         </html>

@@ -100,7 +100,7 @@
 <div class="page-container">
   <div class="modal-body">
     <!-- 判断化工企业显示 -->
-    <%-- <c:if test="${company.industry eq '化工企业（危险化学品生产、经营、使用）、加油站'}">
+    <%-- <c:if test="${company.industry eq '化工企业（危化生产、使用）'}">
       <div class="radio-lx <c:if test="${industry eq '化工企业（危险化学品生产、经营、使用）'}"> radio-lxxz</c:if>" onclick="location.href='/company/safety-system/risk-list-load?industry=化工企业（危险化学品生产、经营、使用）'" style="margin-left:5%">化工企业</div>
       <div class="radio-lx <c:if test="${industry eq '加油站'}"> radio-lxxz</c:if>" onclick="location.href='/company/safety-system/risk-list-load?industry=加油站'">加油站</div>
     </c:if> --%>

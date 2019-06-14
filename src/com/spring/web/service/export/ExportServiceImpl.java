@@ -691,7 +691,7 @@ public class ExportServiceImpl implements ExportService {
 
 
     /*
-    * 岗位部门
+    * 岗位部说图片上传
     * */
     @Override
     public Result photoImport(MultipartFile file, Integer userId, HttpServletRequest request) throws Exception {
@@ -727,6 +727,7 @@ public class ExportServiceImpl implements ExportService {
 
             importPhoto.setUrl(url);
             importPhoto.setUser_id(userId);
+            importPhoto.setName(oldname);
             importPhotoMapper.savePhoto(importPhoto);
 
         } catch (Exception ex) {

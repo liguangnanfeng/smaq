@@ -2,6 +2,7 @@ package com.spring.web.dao;
 
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.ZzjgPersonnel;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -97,4 +98,7 @@ public interface ZzjgPersonnelMapper {
     List<String> selectByDpid(Integer dpid);
 
     void save(ZzjgPersonnel zzjgPersonnel);
+
+
+    List<Map<String,Object>> selectHashMap(@Param("uid") Integer uid, @Param("dpid")Integer dpid);
 }

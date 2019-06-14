@@ -280,7 +280,7 @@ $(function() {
        }
        $("#label_").text(titles[2]);
        $("#type").val(2);
-       $("#dangerID").css('display','block');
+        $("#dangerID").css('display','block');
        $("#win-add").modal("show");
        $("#name").focus();
      } else {
@@ -319,7 +319,7 @@ $(function() {
        }
        $("#label_").text(titles[3]);
        $("#type").val(3);
-       $("#dangerID").css('display','none');
+         $("#dangerID").css('display','none');
        $("#win-add").modal("show");
        $("#name").focus();
      } else {
@@ -362,6 +362,7 @@ $(function() {
    }else{
        $("#dangerID").css('display','none');
    }
+
 
   $("#label_").text(titles[type]);
   $("#type").val(type);

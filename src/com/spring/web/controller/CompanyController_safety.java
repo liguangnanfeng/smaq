@@ -1660,10 +1660,20 @@ public class CompanyController_safety extends BaseController {
 
 
 
+    /*
+     * 根据车间查询对应的责任人信息
+     */
+    @RequestMapping(value = "control-list-person")
+    public @ResponseBody List<Map<String, Object>> controlListsPerson(Model model, HttpServletRequest request, String name,Integer pid) throws Exception {
+        Result result = new ResultImpl();
+        User user = getLoginUser(request);
+        List<Map<String, Object>> llHashMaps = zzjgPersonnelMapper.selectHashMap(user.getId(),pid);//组织架构部门班组
+        return  llHashMaps;
+    }
 
 
     /**
-     * 查询相应管控主体下的部门信息
+     * 查询相应管控主体下的部门信息！！！
      */
     @RequestMapping(value = "control-list-one")
     public @ResponseBody

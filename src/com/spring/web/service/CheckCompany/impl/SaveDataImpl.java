@@ -162,7 +162,7 @@ public class SaveDataImpl implements SaveMessageService {
             if ("2".equals(saveDataMessage.getValue())) {
                 Integer id = saveDataMessage.getId();
                 ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(id);
-                personnelList = zzjgPersonnelMapper.selectByDpid(companyManual.getDmid());
+                //personnelList = zzjgPersonnelMapper.selectByDpid(companyManual.getDmid());
             }
         }
         if (null != personnelList && personnelList.size() > 0) {
@@ -336,8 +336,6 @@ public class SaveDataImpl implements SaveMessageService {
                 }
 
                 tCheckItemMapper.updateByPrimaryKey(checkItem);
-
-
             }
             saveTRectificationConfirm(saveDataMessageItem); // 修改数据
             return "成功";

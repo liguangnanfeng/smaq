@@ -92,10 +92,9 @@ public interface ZzjgPersonnelMapper {
 
     /**
      * 根据部门查询该部门所有被检查人员的id
-     * @param dpid 部门id
      * @return
      */
-    List<String> selectByDpid(Integer dpid);
+    //List<String> selectByDpid(Integer dpid);
 
     void save(ZzjgPersonnel zzjgPersonnel);
 

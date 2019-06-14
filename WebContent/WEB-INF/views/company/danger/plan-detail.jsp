@@ -176,6 +176,9 @@ function showpicture(src){
         <tbody>
         <%--TODO 这里进行合并的话,会没有检查合格的图片--%>
         <c:forEach items="${itemL }" var="ch">
+          <script>
+            console.log(${itemL})
+          </script>
           <tr class="text-c" >
 
             <td>

@@ -2833,7 +2833,8 @@ public class VillageController extends BaseController {
      * @return
      */
     @RequestMapping(value = "getCheckModelBasic")
-    public String getCheckModelBasic() {
+    public String getCheckModelBasic(Integer flag,Model model ) {
+        model.addAttribute("flag",flag);
         return "company/checkModel/model-add";
     }
 
@@ -3094,7 +3095,7 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value = "saveCheckMenu3")
     public @ResponseBody
-    AppResult saveCheckMenu3(HttpServletRequest request, String dmid, Integer checkType, Integer dptitle, Integer times) {
+    AppResult saveCheckMenu3(HttpServletRequest request, String dmid, Integer checkType, Integer dptitle, Integer times,Integer flag) {
         // 首先根据公司id查询部门的和其他的
         try {
             User user = getLoginUser(request);
@@ -3145,7 +3146,7 @@ public class VillageController extends BaseController {
             } else {
                 checkItem.setTemplate(dmid + "高危标准检查表");
             }
-
+            checkItem.setFlag(flag);
             checkItem.setCheckType(checkType);      // 检查类型
             checkItem.setTitle(dptitle);       // 检查方式
             checkItem.setUid(user.getId());

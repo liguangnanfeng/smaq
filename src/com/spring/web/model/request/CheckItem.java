@@ -30,6 +30,7 @@ public class CheckItem {
      */
     public Integer title;
 
+    // 检查方式 1. 企业自查  2 行政检查   3 部门抽查
     public Integer flag;
 
     public Integer checkType;

@@ -175,5 +175,7 @@ public interface ACompanyManualMapper {
     List<Map<String, Object>> selectByAcs(Map<String, Object> m);
 
     List<Map<String, Object>> selectNum(Map<String, Object> m);
+
+    List<Map<String, Object>> selectBase(Map<String, Object> m);
 }
 

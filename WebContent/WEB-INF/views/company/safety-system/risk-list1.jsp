@@ -125,6 +125,17 @@
             <c:if test="${type eq 5}">
                 <h3 class="text-c">${company.name}高危作业辨识表</h3>
             </c:if>
+
+            <c:if test="${empty type}">
+
+                <button class="btn btn-primary radius" onClick="selectNow()">现场风险</button>
+
+                <button class="btn btn-primary radius" onClick="selectBase()">基础风险</button>
+
+            </c:if>
+
+
+
             <div class="mt-20">
                 <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan"  >
                     <thead>
@@ -198,11 +209,11 @@
                                     </td>
                                         <td class="text-c">
                                             <c:if test="${empty type}">
-                                                <c:if test="${be.dangerId != 2}">
+                                                <c:if test="${number == null || number == 1}">
                                                     <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
                                                 </c:if>
-                                                <c:if test="${be.dangerId == 2}">
-                                                    <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                                <c:if test="${number == 2}">
+                                                    <button class="btn btn-primary radius" onClick="addgjs('${be.id}')">基础风险辨识</button>
                                                 </c:if>
                                             </c:if>
                                         </td>
@@ -220,12 +231,14 @@
                                     <td style="width:40%;"><p style="text-align:center;">未辨识风险因素</p></td>
                                     <td style="width:10%;">
                                         <c:if test="${empty type}">
-                                            <c:if test="${be.dangerId != 2}">
+
+                                            <c:if test="${number == null || number == 1}">
                                                 <button class="btn btn-primary radius" onClick="addgj('${be.id}')">现场风险辨识</button>
                                             </c:if>
-                                            <c:if test="${be.dangerId == 2}">
-                                                <button class="btn btn-primary radius" style="margin-top:10px;" onClick="addgjs('${be.id}')">基础风险辨识</button>
+                                            <c:if test="${number == 2}">
+                                                <button class="btn btn-primary radius" onClick="addgjs('${be.id}')">基础风险辨识</button>
                                             </c:if>
+
                                         </c:if>
                                     </td>
                                 </tr>
@@ -363,5 +376,15 @@
             })
         })
     }
+
+    function selectNow() {
+        window.location.href='${ly}/company/safety-system/risk-list?number=1'
+    }
+
+    function selectBase() {
+        window.location.href='${ly}/company/safety-system/risk-list?number=2'
+    }
+
+
 </script>
 </html>

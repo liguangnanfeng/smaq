@@ -404,7 +404,8 @@ public class CompanyController_safety extends BaseController {
      * @throws Exception
      **/
     @RequestMapping({"risk-list"})
-    public String riskList(Model model, HttpServletRequest request, Integer type) throws Exception {
+    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number) throws Exception {
+
         User user = this.getLoginUser(request);
         Company company = this.companyMapper.selectByPrimaryKey(user.getId());
         if (StringUtils.isEmpty(company.getIndustry())) {
@@ -417,45 +418,33 @@ public class CompanyController_safety extends BaseController {
             m.put("flag", "1,2,3,4,5");
             m.put("uid", user.getId());
             List<Map<Object, Object>> zzjg = null;
-            List acL;
+            List acL = null;
             if (type == null) {
+
                 zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
-                acL = this.aCompanyManualMapper.selectByAll(m);
+
+                if (null == number || number != 2){
+                    acL = this.aCompanyManualMapper.selectByAll(m);
+                }else if (number == 2){
+                    acL = this.aCompanyManualMapper.selectBase(m);
+                }
+
+                model.addAttribute("number",number);
                 model.addAttribute("zzjgDep", zzjg);
                 model.addAttribute("acL", acL);
                 return "company/safety-system/risk-list1";
             } else {
                 zzjg = this.zzjgDepartmentMapper.selectLevel1ByUids(user.getId());
                 acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);
-               /* Iterator it = acL.iterator();
-                while(it.hasNext()) {
-                    Map<String, Object> ac = (Map)it.next();
-                    if (ac.get("level1") != null && ac.get("level2") != null){
-                        String level1 = ac.get("level1").toString();
-                        String level2 = ac.get("level2").toString();
-                        boolean has = false;
-                        Iterator var15 = zzjg.iterator();
-                        while(var15.hasNext()) {
-                            Map<Object, Object> zz = (Map)var15.next();
-                            if (zz.get("parName") != null ){
-                                String p = zz.get("parName").toString();
-                                String name = zz.get("name").toString();
-                                if (p.equals(level1) && name.equals(level2)) {
-                                    has = true;
-                                    break;
-                                }
-                            }
-                        } if (!has) {
-                            it.remove();
-                        }
-                    }
-                }*/
+
                 model.addAttribute("dL", acL);
                 model.addAttribute("type", type);
                 return "company/safety-system/risk-list1";
             }
         }
     }
+
+
 
     /*
      * TODO 风险点辨识表

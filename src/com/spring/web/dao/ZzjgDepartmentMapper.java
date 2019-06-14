@@ -105,7 +105,6 @@ public interface ZzjgDepartmentMapper {
      */
     List<String> selectNameByUid(Integer id);
 
-
     List<ZzjgDepartment> selectOnes(@Param("pid") Integer pid);
 
     ZzjgDepartment selectNameAll(@Param("id") Integer id);
@@ -116,9 +115,8 @@ public interface ZzjgDepartmentMapper {
 
     void add(ZzjgDepartment zzjgDepartment);
 
-
     void updateAll(@Param("utime") Date date, @Param("id") Integer id);
 
-
     List<Map<Object, Object>> selectLevel1ByUids(@Param("uid") Integer uid);
+
 }

@@ -427,17 +427,14 @@ public class CompanyController_safety extends BaseController {
             } else {
                 zzjg = this.zzjgDepartmentMapper.selectLevel1ByUids(user.getId());
                 acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);
-                Iterator it = acL.iterator();
-
+               /* Iterator it = acL.iterator();
                 while(it.hasNext()) {
                     Map<String, Object> ac = (Map)it.next();
-
                     if (ac.get("level1") != null && ac.get("level2") != null){
                         String level1 = ac.get("level1").toString();
                         String level2 = ac.get("level2").toString();
                         boolean has = false;
                         Iterator var15 = zzjg.iterator();
-
                         while(var15.hasNext()) {
                             Map<Object, Object> zz = (Map)var15.next();
                             if (zz.get("parName") != null ){
@@ -452,7 +449,7 @@ public class CompanyController_safety extends BaseController {
                             it.remove();
                         }
                     }
-                }
+                }*/
                 model.addAttribute("dL", acL);
                 model.addAttribute("type", type);
                 return "company/safety-system/risk-list1";

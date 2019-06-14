@@ -63,8 +63,7 @@ $(function() {
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <span class="l">
         <button class="btn btn-primary radius" onclick="showadd('')"><i class="Hui-iconfont">&#xe600;</i> 添加人员</button>
-        <button class="btn btn-success radius ml-10" type="button" onclick="importPerson()">批量导入人员</button>
-        <a class="btn btn-success radius ml-10" href="${ly}/company/download?filename=人员表.xlsx&fileurl=${ly}/upload/person.xlsx">人员模板下载</a>
+		
       </span>
       <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
     </div>
@@ -75,7 +74,7 @@ $(function() {
             <th>序号</th>
             <th>姓名</th>
             <th>联系手机</th>
-            <th>所属部位/车间</th>
+            <th>所属车间/部位</th>
             <th>职务</th>
             <th>权限</th>
             <th>操作</th>
@@ -88,7 +87,7 @@ $(function() {
             <td>${index.index + 1}</td>
             <td>${be.name }</td>
             <td>${be.mobile }</td>
-            <td>${be.dpname }${be.dname }</td>
+            <td>${be.dpname } / ${be.dname }</td>
             <td>${be.position }</td>
             <td>
               <%-- test里面是布尔值
@@ -116,7 +115,6 @@ $(function() {
     </div>
   </div>
 </body>
-
 <div id="importPersonBox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content radius">
@@ -145,8 +143,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-
-    function importPerson() {
+function importPerson() {
         $("#importPersonBox").modal("show");
     }
 
@@ -179,7 +176,6 @@ $(function() {
             }
         })
     }
-
 var dep1= ${dep1};
 var dep2= ${dep2};
 var userType = '${session_user.userType}';

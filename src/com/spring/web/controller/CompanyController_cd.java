@@ -3566,6 +3566,9 @@ public class CompanyController_cd extends BaseController {
     /**
      * 检查表 详情
      * TODO 隐患排查记录/检查详情查看检查记录
+     * 没有兼容小程序
+     *
+     *
      */
     @RequestMapping(value = "check-detail")
     public String checkDetail(Integer id, Model model, Integer jcxq) throws Exception {
@@ -3580,7 +3583,7 @@ public class CompanyController_cd extends BaseController {
         /*List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(id);*/
 
         List<Map<String, Object>> iteml = tCheckMapper.selectLevels(id);
-
+        System.out.println(iteml);
         //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
         if (type != null && type == 9) {
             for (Map<String, Object> a : iteml) {
@@ -3616,13 +3619,17 @@ public class CompanyController_cd extends BaseController {
                 //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
             }
         }
+
         //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
         model.addAttribute("itemL", iteml);
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
         log.error("检查表 详情check-detail" + type);
 
         log.error("检查详情：" + jcxq);//首页——定期检查——检查详情显示为未检查
-        if (jcxq == null) {
+        return "company/danger/plan-detail";
+
+
+        /*if (jcxq == null) {
             if (type == 9) {
                 return "company/danger/plan-detailrjcb";
             } else {
@@ -3635,7 +3642,7 @@ public class CompanyController_cd extends BaseController {
             } else {
                 return "company/danger/plan-detailjcxq";
             }
-        }
+        }*/
 
     }
 

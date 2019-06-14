@@ -480,7 +480,6 @@ public class CheckManualImpl implements ICheckManual {
             tCheckItem.setMemo(checkLevel.getFactors());//不合格描述
             tCheckItem.setLevelId(checkLevel.getId());  // conpanyManul_tbl的id
             tCheckItem.setContent(checkLevel.getLevel4()); //检查标准详情
-            tCheckItem.setLevelId(checkItem.getTitle());   //检查分类
 
             if (null == checkLevel.getLevel3()) {
                 tCheckItem.setLevels(checkLevel.getLevel1());   // 检查等级

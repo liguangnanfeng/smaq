@@ -3196,7 +3196,9 @@ public class VillageController extends BaseController {
                 model.setNextTime(t);     // 下次生成的时间
                 model.setNextCheckTime(t); // 定期检查的时间
                 model.setOpen(1);          // 定期生成
+            }else{
             }
+
             tModelMapper.insertSelective(model);
             // 存储part表数据
 

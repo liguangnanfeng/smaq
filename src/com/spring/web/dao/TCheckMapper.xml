@@ -453,7 +453,6 @@
     </select>
 
 
-
     <!-- 政府端查询检查记录！！！ -->
     <select id="selectAll" resultType="java.util.Map">
         select
@@ -469,7 +468,6 @@
         where
         T1.del = 0 and T1.status = 2 and T2.user_id in (${userIds})
     </select>
-
 
 
     <update id="updateDel" parameterType="com.spring.web.model.TCheck">
@@ -493,34 +491,24 @@
     </select>
 
 
-
-
-    <!-- 根据 ID 查询对应的数据信息!!! -->
+    <!-- 根据 ID 查询对应的数据信息!!!
+            T6.del = 0
+    -->
     <select id="selectLevels" resultType="java.util.Map">
-        select
-        distinct T1.flag, T1.type, T1.industry_type, T6.factors, T6.measures, T2.status,T2.files,T2.levels sys, T3.levels, T6.level2, T4.part, T6.level
-        from
-        t_check_tbl T1,
-        t_check_item_tbl T2,
-        t_check_part_tbl T3,
-        t_model_tbl T4,
-        a_company_manual_tbl T6
-        where
-        T1.id = T2.check_id
-        and T1.id = T3.check_id
-        and T1.model_id = T4.id
+      SELECT
+      distinct T1.flag, T1.type, T1.industry_type, T6.factors, T6.measures, T2.status,T2.files,T6.level3 sys, T3.levels,   T6.level2, T4.part, T6.level
+        FROM
+        t_check_item_tbl T2
+         LEFT JOIN t_check_tbl T1    ON T1.id=T2.check_id
+                       LEFT JOIN  t_check_part_tbl T3  ON T3.check_id=T1.id
+                       LEFT JOIN  t_model_tbl T4 ON T4.id= T1.model_id
+                       LEFT JOIN  a_company_manual_tbl T6 ON T6.id = T2.level_id
+        WHERE
 
-
-        and T6.id = T2.level_id
-        and T6.del = 0
-        and T1.del = 0
-        and T4.del = 0
-        and T1.id = #{id}
+        T1.del = 0
+        AND T4.del = 0
+        and T1.id = #{id};
     </select>
-
-
-
-
 
     <select id="selectCompany" resultType="com.spring.web.ibatis.DynamicParameter">
         select

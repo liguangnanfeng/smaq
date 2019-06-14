@@ -144,7 +144,7 @@ function print_() {
           </c:if>
       </c:forEach>
       
-      <%-- <span class="l">化工企业（危险化学品生产、经营、使用）、加油站<strong>${hg}</strong> 条；</span>
+      <%-- <span class="l">化工企业（危化生产、使用）<strong>${hg}</strong> 条；</span>
       <span class="l">工贸企业<strong>${yb}</strong> 条；</span> --%>
     <!-- </div> -->
     <div class="mt-20" >
@@ -222,7 +222,7 @@ function print_() {
                   <span class="l">已整改<strong>${yyy }</strong> 条</span> 
                   <span class="l">未整改<strong>${xxx - yyy}</strong> 条</span>
                   <span class="l">重大隐患<strong>${d}</strong> 条</span>
-                  <%-- <span class="l">化工企业（危险化学品生产、经营、使用）、加油站<strong>${hg}</strong> 条</span>
+                  <%-- <span class="l">化工企业（危化生产、使用）<strong>${hg}</strong> 条</span>
                   <span class="l">工贸企业<strong>${yb}</strong> 条</span> --%>
                 </div>
               </div>

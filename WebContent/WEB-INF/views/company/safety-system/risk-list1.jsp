@@ -304,6 +304,8 @@
 <script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset.js"></script>
 <script type="text/javascript">
     //alert("${point}");
+
+	
     var id = '';
     function edit(id, obj) {
         var p = $(obj).parent();

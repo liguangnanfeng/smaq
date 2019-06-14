@@ -68,7 +68,7 @@
       </div>
     </div>
     
-    <c:if test="${company.industry eq '化工企业（危险化学品生产、经营、使用）、加油站'}">
+    <c:if test="${company.industry eq '化工企业（危化生产、使用）'}">
     <div class="div-set">
       <div class="top-set">
         <font>高危工艺</font>

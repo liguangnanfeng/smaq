@@ -8,13 +8,16 @@ public class ImportPhoto {
 
     private Integer user_id;
 
+    private String name;
+
     public ImportPhoto() {
     }
 
-    public ImportPhoto(Integer id, String url, Integer user_id) {
+    public ImportPhoto(Integer id, String url, Integer user_id, String name) {
         this.id = id;
         this.url = url;
         this.user_id = user_id;
+        this.name = name;
     }
 
     public Integer getId() {
@@ -39,5 +42,13 @@ public class ImportPhoto {
 
     public void setUser_id(Integer user_id) {
         this.user_id = user_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

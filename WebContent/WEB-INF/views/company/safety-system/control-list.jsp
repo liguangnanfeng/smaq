@@ -99,35 +99,61 @@
     }
 
     function chosem2(){
-        $("#win-add3").modal("show");
-    }
-
-    function chosem3() {
-
-        $("#win-add4").modal("show");
         var name = $("#gkzt").val();
         var id = $("#gkztIds").val();
-
-        $.ajax({ //post也可
-            type: "POST",
-            url: getRootPath() + "/company/safety-system/control-list-one",
-            data: {name: name, pid:id},
-            dataType: 'json',
-            success: function (result) {
-                var dataObj = result,
-                    con = "";
-                $.each(dataObj, function (index, item) {
-                    con += "<tr class=\"text-c\">";
-                    con += "<td style=\"width:30px;\" align=\"center\" valign=\"middle\"><input  type=\"radio\" name=\"radio-1\" value='" + item.name + "'></td>";
-                    con += "<td align=\"center\" valign=\"middle\">"+item.name+"</td>";
-                    con += "</tr>";
-                });
-                $("#test").html(con);
-            }
-        });
+        if (id == 0){
+            alert("请先选择管控主体。")
+        }else{
+            $("#win-add3").modal("show");
+            $.ajax({ //post也可
+                type: "POST",
+                url: getRootPath() + "/company/safety-system/control-list-person",
+                data: {name: name, pid:id},
+                dataType: 'json',
+                success: function (result) {
+                    var dataObj = result,
+                        con = "";
+                    $.each(dataObj, function (index, item) {
+                        con += "<tr class=\"text-c\">";
+                        con += "<td><input type=\"radio\" name=\"radio-2\" value='" + item.name + "'></td>";
+                        con += "<td>"+item.name+"</td>";
+                        con += "<td>"+item.companyName+"</td>";
+                        con += "<td>"+item.dpname+"</td>";
+                        con += "<td>"+item.dname+"</td>";
+                        con += "<td>"+item.position+"</td>";
+                        con += "<td type = \"hidden\"><input id = \"dianhuas\"  value='" + item.mobile + "'></td>";
+                        con += "</tr>";
+                    });
+                    $("#person").html(con);
+                }
+            });
+        }
     }
 
 
+    function chosem3() {
+      $("#win-add4").modal("show");
+      var name = $("#gkzt").val();
+      var id = $("#gkztIds").val();
+
+      $.ajax({ //post也可
+          type: "POST",
+          url: getRootPath() + "/company/safety-system/control-list-one",
+          data: {name: name, pid:id},
+          dataType: 'json',
+          success: function (result) {
+              var dataObj = result,
+                  con = "";
+              $.each(dataObj, function (index, item) {
+                  con += "<tr class=\"text-c\">";
+                  con += "<td style=\"width:30px;\" align=\"center\" valign=\"middle\"><input  type=\"radio\" name=\"radio-1\" value='" + item.name + "'></td>";
+                  con += "<td align=\"center\" valign=\"middle\">"+item.name+"</td>";
+                  con += "</tr>";
+              });
+              $("#test").html(con);
+          }
+      });
+    }
 
       function per_chooses() {
 
@@ -234,25 +260,11 @@
 
                 <td class="text-c">${ls[0] != null ? ls[0] : "暂无数据" }</td>
 
-                <c:if test="${empty be.gkzt}">
-                    <td class="text-c">暂无数据</td>
-                </c:if>
-
-                <c:if test="${not empty be.gkzt}">
-                  <td class="text-c">${be.gkzt}</td>
-                </c:if>
+                <td class="text-c">${be.gkzt == null ? "暂无数据" : be.gkzt}</td>
 
                 <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
 
-
-                <c:if test="${empty be.level2}">
-                    <td class="text-c">暂无数据</td>
-                </c:if>
-
-                <c:if test="${not empty be.level2}">
-                  <td class="text-c">${be.level2}</td>
-                </c:if>
-
+                <td class="text-c">${be.level2 == null ? "暂无数据" : be.level2}</td>
 
                 <td class="text-c">
                   <c:choose>
@@ -304,8 +316,9 @@
           <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
             <input type="text" id="gkzt" value="" style="width: 357px" class="input-text required" readonly="readonly">
 
-            <input id = "gkztIds"  type="hidden" >
+            <input id = "gkztIds" >
 
+            <input id = "gkztIdAll" >
             <c:if test="${not empty departL}">
               <button class="btn btn-primary radius" type="button" onclick="chosem()">
                 <i class="Hui-iconfont">&#xe611;</i>选择管控主体
@@ -336,6 +349,8 @@
             <textarea id="gkcs" class="textarea txtarea_sq" style="width: 557px;" ></textarea>
           </div>
         </div>
+
+
         <div class="row cl mt-15">
           <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">责任人：</label>
           <div class="formControls col-xs-8 col-sm-9" style="width: 80%;" readonly="readonly">
@@ -375,10 +390,10 @@
           </thead>
           <c:forEach items="${departL }" var="be">
             <tr class="text-c">
-              <td><input type="radio" name="radio-1" value="${be.name }" onclick="dep_choose2s(${be.id})"></td>
+              <th><input type="radio" name="radio-1" value="${be.name }" onclick="dep_choose2s(${be.id})"></th>
               <input type="hidden" value="${be.id }">
-              <td>${be.companyName }</td>
-              <td>${be.name }</td>
+              <th>${be.companyName }</th>
+              <th>${be.name }</th>
                 <%-- <td>${be.level == 1 ? be.name : be.parName}</td>
                 <td>${be.level == 1 ? '' : be.name}</td> --%>
             </tr>
@@ -414,8 +429,8 @@
         <h3 class="modal-title">选择责任人</h3>
         <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
       </div>
-      <div class="modal-body">
-        <table class="table table-border table-bordered table-bg table-hover table-sort" style="float:none;">
+      <div    class="modal-body">
+        <table   class="table table-border table-bordered table-bg table-hover table-sort" style="float:none;" >
           <thead>
           <tr class="text-c">
             <th style="width:50px;">&nbsp;</th>
@@ -426,7 +441,10 @@
             <th>职务</th>
           </tr>
           </thead>
-          <c:forEach items="${perL }" var="be">
+          <tbody id = "person">
+
+          </tbody>
+        <%--  <c:forEach items="${perL }" var="be">
             <tr class="text-c">
               <th><input type="radio" name="radio-2" value="${be.name }"></th>
               <th>${be.name }</th>
@@ -437,7 +455,7 @@
 
               <input id = "dianhuas" type="hidden" value = "${be.mobile }">
             </tr>
-          </c:forEach>
+          </c:forEach>--%>
         </table>
       </div>
       <div class="modal-footer">

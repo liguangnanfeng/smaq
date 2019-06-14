@@ -76,7 +76,7 @@ body .dis-ib{margin-right:15px;}
                onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加线下检查记录</a>
         </c:if>  -->
       </span>
-      <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span> 
+      <span class="r">检查总数：<strong>${fn:length(list) }</strong> 条；隐患数量：<strong>${sum}</strong> 条</span>
     </div>
     <div class="mt-20">
       <table class="table table-border table-bordered table-bg table-hover table-sort">

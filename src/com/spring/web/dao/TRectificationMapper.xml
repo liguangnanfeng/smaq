@@ -210,13 +210,9 @@
     *
     from t_rectification_tbl
     where check_id = #{checkId}
+    order by id
+    limit 0,1;
   </select>
-
-
-
-
-
-
 
   <select id="selectRectificationList" resultType="java.util.Map">
     select

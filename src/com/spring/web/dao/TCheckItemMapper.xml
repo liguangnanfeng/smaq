@@ -379,7 +379,9 @@
         order by T1.id desc
     </select>
 
-    <!--复查,查询不合格项并返回-->
+    <!--复查,查询不合格项并返回
+
+    -->
     <select id="selectDangerByCheckId" resultType="java.util.Map">
         select
         T1.id, T1.content, T1.reference, T1.status, T1.memo, T1.files, T1.level_id levelId, T1.part_id partId,

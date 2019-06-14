@@ -221,6 +221,8 @@ public interface TCheckItemMapper {
      * @return
      */
     List<DynamicParameter<String, Object>> selectHiddenLevelTypeByMap(Map<String, Object> m);
+
+
 }
 
 

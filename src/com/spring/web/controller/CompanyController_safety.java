@@ -459,6 +459,7 @@ public class CompanyController_safety extends BaseController {
      * 重大风险评估数据添加！！！
      * */
     @RequestMapping({"danger-coordinate"})
+    @ResponseBody
     public Result coordinate(Model model, HttpServletRequest request, Integer danger1, Integer danger2, Integer danger3, Integer danger4, Integer danger5,
                              Integer danger6, Integer danger7, Integer danger8, Integer danger9, Integer danger10,
                              Integer danger11, Integer danger12, Integer danger13, Integer counts) throws Exception {
@@ -542,8 +543,10 @@ public class CompanyController_safety extends BaseController {
         boolean b = dangerCoordinateMapper.insert(dangerCoordinate);
 
         if (b) {
+            result.setStatus("0");
             result.setMess("评估完成。");
         } else {
+            result.setStatus("1");
             result.setMess("评估异常，请重新评估。");
         }
 
@@ -1982,7 +1985,7 @@ public class CompanyController_safety extends BaseController {
         be.setLevel1(be.getGkzt());
         be.setLevel2(be.getLevel2());
         be.setFjgkfzr(be.getFjgkfzr() + "-" + dianhuas);
-        be.setType("重大");
+        be.setType(be.getType());
         if (null == be.getId()) {
             be.setDel(0);
             be.setCtime(new Date());

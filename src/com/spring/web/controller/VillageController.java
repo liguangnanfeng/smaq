@@ -1566,7 +1566,14 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * 整改指令书
+     * TODO 整改指令书
+     * 获取到了整改指令书
+     * 都不传递就是 现场检查记录
+     * 1 责令限期整改意见书
+     * 2 整改意见复查书
+     * 8 现场检查记录
+     *
+     *
      */
     @RequestMapping(value = "check-document")
     public String checkDocument(Integer checkId, Integer flag, Model model, TRectification tr) throws Exception {

@@ -241,6 +241,7 @@ public class SaveDataImpl implements SaveMessageService {
      * @return
      */
     @Override
+    @SuppressWarnings("all")
     public String saveReviewData(SaveDataMessageItem saveDataMessageItem, ZzjgPersonnel zzjg) {
         try {
 
@@ -308,7 +309,7 @@ public class SaveDataImpl implements SaveMessageService {
                     checkItem.setStatus(3); // 复查成功
                     tRecheckItem.setStatus(2); //表示复查成功
                     //tRectificationConfirm.setStatus(1);
-                    checkItem.setRecheckFile("复查合格");
+                    checkItem.setRecheckFile(checkItem.getFiles());
                     // 表示的是复查合格的项
 
                 } else if ("2".equals(saveDataMessage.getValue())) {

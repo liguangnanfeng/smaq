@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.web.dao.DangerCoordinateMapper">
+
+
+    <resultMap id="BaseResultMap" type="com.spring.web.model.DangerCoordinate">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="danger1" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="danger2" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="danger3" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="danger4" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="danger5" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="danger6" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="danger7" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="danger8" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="danger9" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="danger10" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="danger11" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="danger12" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="danger13" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="counts" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, danger1, danger2, danger3, danger4, danger5, danger6, danger7, danger8, danger9,
+        danger10, danger11, danger12, danger13, counts
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+        select
+        <include refid="Base_Column_List"/>
+        from danger_coordinate
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+
+        delete from danger_coordinate
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <!-- 数据添加 -->
+    <insert id="insert" parameterType="com.spring.web.model.DangerCoordinate">
+        insert into danger_coordinate (user_id, danger1,
+        danger2, danger3, danger4,
+        danger5, danger6, danger7,
+        danger8, danger9, danger10,
+        danger11, danger12, danger13,
+        counts)
+        values ( #{user_id,jdbcType=INTEGER}, #{danger1,jdbcType=INTEGER},
+        #{danger1,jdbcType=INTEGER},#{danger2,jdbcType=INTEGER},#{danger3,jdbcType=INTEGER},
+        #{danger4,jdbcType=INTEGER},#{danger5,jdbcType=INTEGER},#{danger6,jdbcType=INTEGER},
+        #{danger7,jdbcType=INTEGER},#{danger8,jdbcType=INTEGER},#{danger9,jdbcType=INTEGER},
+        #{danger10,jdbcType=INTEGER},#{danger11,jdbcType=INTEGER},#{danger12,jdbcType=INTEGER},
+        #{danger13,jdbcType=INTEGER},#{counts,jdbcType=INTEGER}
+       )
+    </insert>
+
+
+</mapper>

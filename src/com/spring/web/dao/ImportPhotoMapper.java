@@ -17,5 +17,8 @@ public interface ImportPhotoMapper {
     List<ImportPhoto> selectOne(@Param("userId")Integer userId, @Param("url")String url);
 
     void updatePhoto(@Param("id")Integer id, @Param("url")String url);
+
+
+    boolean saveCoordinate(@Param("id")Integer id, @Param("coordinate")String coordinate);
 }
 

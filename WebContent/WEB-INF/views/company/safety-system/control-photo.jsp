@@ -127,7 +127,7 @@
     <form action="#" id="imgform${be.id}" class="photo">
         <input name="src" value="${be.url}" style="display:none;">
         <div style="height:100%;">
-            <img src="${be.url}">
+            <img src="${be.url1}">
             <span onclick="del(${be.id})">X</span>
             <button class="detailBtn" onclick="amend('${be.id}','${be.coordinate}')">编辑</button>
         </div>
@@ -185,90 +185,73 @@
         })
     }
 
-    function amend(id,s) {
+    function amend(v, s) {
+        console.log(v)
+        console.log(s)
+        // 图片
+        $('#imgform' + v).click(function (t) {
+            t.preventDefault();
+            window.c = imageLabel({
+                img: $("#imgform" + v + " [name=src]").val(),
+                // data: s,
+                editPop: !0,
+                close: function (t) {
+                    <%-- 关闭 --%>
+                    return t.length, !0
+                },
+                confirm: function (t) {
+                    <%-- 提交 --%>
+                    function dataArr(arr){
+                        if(arr&&arr.length>0){
+                            var newA = []
+                            for(var i=0;i<arr.length;i++){
+                                var str = ''
+                                str = "'ex':"+arr[i].ex+",'ey':"+arr[i].ey+",'name':"+arr[i].name+",'x':"+arr[i].x+",'y':"+arr[i].y
+                                newA.push(str)
+                            }
+                        }
+                        return newA
+                    }
+                    console.log(dataArr(t))
+                    console.log(dataArr(t).toString())
+                    console.log(JSON.stringify(dataArr(t)))
 
-        $.ajax({
-            type:"POST",
-            url: getRootPath() + '/company/safety-system/modify-photo',
-            contentType: ' application/x-www-form-urlencoded',
-            data: {
-                id: id
-            },
-            success: function (result) { //服务器成功响应处理函数
-                console.log(result);
-                if(result!==null){
-                    // dianji(id,)
+                    <%-- 截图 --%>
+                    layer.msg('标注比较耗时,请耐心等待 ! 不要做其他操作!', {
+                        time: 1000, //1s后自动关闭
+                    });
+                    setTimeout(function () {
+                        html2canvas(document.querySelector(".imageLabel-jisuan"), {
+                            useCORS: true, allowTaint: false, foreignObjectRendering: true, taintTest: true, scale: 1
+                        }).then(function (canvas) {
+                            var image = canvas.toDataURL("image/png", 0.1);
+                            console.log(image)
+                            console.log(v)
+                            $.ajax({
+                                type:"POST",
+                                url: getRootPath() + '/company/safety-system/control-addCoordinate',
+                                contentType: ' application/x-www-form-urlencoded',
+                                data: {
+                                    id: v,
+                                    images: image,
+                                    coordinate: JSON.stringify(dataArr(t))
+                                },
+                                success: function (result) { //服务器成功响应处理函数
+                                    console.log('成功');
+                                    console.log(result);
+                                    return t.length, !0
+                                },
+                                error: function (data, status, e) {//服务器响应失败处理函数
+                                    alert("文件上传失败");
+                                }
+                            })
+                        });
+                    }, 1000);
+
+
                 }
-            },
-            error: function (data, status, e) {//服务器响应失败处理函数
-                alert("文件上传失败");
-            }
+            })
         })
-        <%--function dianji(v,s) {--%>
-        <%--    $('#imgform' + v).click(function (t) {--%>
-        <%--        t.preventDefault();--%>
-        <%--        window.c = imageLabel({--%>
-        <%--            img: $("#imgform" + v + " [name=src]").val(),--%>
-        <%--            // data: s,--%>
-        <%--            editPop: !0,--%>
-        <%--            close: function (t) {--%>
-        <%--                &lt;%&ndash; 关闭 &ndash;%&gt;--%>
-        <%--                return t.length, !0--%>
-        <%--            },--%>
-        <%--            confirm: function (t) {--%>
-        <%--                &lt;%&ndash; 提交 &ndash;%&gt;--%>
-        <%--                function dataArr(arr){--%>
-        <%--                    if(arr&&arr.length>0){--%>
-        <%--                        var newA = []--%>
-        <%--                        for(var i=0;i<arr.length;i++){--%>
-        <%--                            var str = ''--%>
-        <%--                            str = "'ex':"+arr[i].ex+",'ey':"+arr[i].ey+",'name':"+arr[i].name+",'x':"+arr[i].x+",'y':"+arr[i].y--%>
-        <%--                            newA.push(str)--%>
-        <%--                        }--%>
-        <%--                    }--%>
-        <%--                    return newA--%>
-        <%--                }--%>
-        <%--                console.log(dataArr(t))--%>
-        <%--                console.log(dataArr(t).toString())--%>
-        <%--                console.log(JSON.stringify(dataArr(t)))--%>
-
-        <%--                &lt;%&ndash; 截图 &ndash;%&gt;--%>
-        <%--                layer.msg('标注比较耗时,请耐心等待 ! 不要做其他操作!', {--%>
-        <%--                    time: 1000, //1s后自动关闭--%>
-        <%--                });--%>
-        <%--                setTimeout(function () {--%>
-        <%--                    html2canvas(document.querySelector(".imageLabel-jisuan"), {--%>
-        <%--                        useCORS: true, allowTaint: false, foreignObjectRendering: true, taintTest: true, scale: 1--%>
-        <%--                    }).then(function (canvas) {--%>
-        <%--                        var image = canvas.toDataURL("image/png", 0.1);--%>
-        <%--                        console.log(image)--%>
-        <%--                        console.log(v)--%>
-        <%--                        $.ajax({--%>
-        <%--                            type:"POST",--%>
-        <%--                            url: getRootPath() + '/company/safety-system/control-addCoordinate',--%>
-        <%--                            contentType: ' application/x-www-form-urlencoded',--%>
-        <%--                            data: {--%>
-        <%--                                id: v,--%>
-        <%--                                images: image,--%>
-        <%--                                coordinate: JSON.stringify(dataArr(t))--%>
-        <%--                            },--%>
-        <%--                            success: function (result) { //服务器成功响应处理函数--%>
-        <%--                                console.log('成功');--%>
-        <%--                                console.log(result);--%>
-        <%--                                return t.length, !0--%>
-        <%--                            },--%>
-        <%--                            error: function (data, status, e) {//服务器响应失败处理函数--%>
-        <%--                                alert("文件上传失败");--%>
-        <%--                            }--%>
-        <%--                        })--%>
-        <%--                    });--%>
-        <%--                }, 1000);--%>
-
-
-        <%--            }--%>
-        <%--        })--%>
-        <%--    })--%>
-        <%--}--%>
     }
 </script>
 </body>

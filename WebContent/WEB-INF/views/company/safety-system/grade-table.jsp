@@ -645,9 +645,10 @@
             data: postData,
             dataType: 'json',
             success: function (result) {
-               console.log(result);
+                layer.msg(result.mess);
             }
         });
+
     }
 </script>
 <script type="text/javascript">

@@ -89,6 +89,7 @@
           <a class="btn btn-primary radius" onClick="show_dialog('评估','/company/safety-system/assess5-2-choose')" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 评估</a>
 --%>
           <a class="btn btn-danger radius" href="javascript:void(0)" onClick="del_bath()"><i class="Hui-iconfont" style="font-size:15px;">&#xe609;</i> 删除</a>
+          <a class="btn btn-danger radius" href="javascript:void(0)" onClick="show_dialog('企业评分','${ly }/company/safety-system/grade-table')">企业评分</a>
         </span>
   </div>
   <div class="mt-20">

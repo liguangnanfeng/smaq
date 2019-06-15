@@ -4,6 +4,8 @@
  */
 package com.spring.web.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.spring.web.BaseController;
 import com.spring.web.dao.DangerCoordinateMapper;
 import com.spring.web.dao.ImportPhotoMapper;
@@ -1068,10 +1070,28 @@ public class CompanyController_safety extends BaseController {
 
         User user = getLoginUser(request);
         List<ImportPhoto> importPhotos = importPhotoMapper.selectPhoto(user.getId());
+        if(null== importPhotos || importPhotos.size()==0){
+            model.addAttribute("list", importPhotos);
 
+            return "company/safety-system/control-photo";
+        }
+
+        // 不是就表示有数据
+        for (ImportPhoto importPhoto : importPhotos) {
+            String coordinate = importPhoto.getCoordinate();
+            if (null!=coordinate&&coordinate!=""){
+                Map<String,String> map = new LinkedHashMap<String,String>();
+                String[] array = coordinate.split(",");
+                for (String s1 : array) {
+                    String[] split = s1.split(":");
+                    map.put(split[0],split[1]);
+                }
+                importPhoto.setObject(map);
+            }
+        }
         model.addAttribute("list", importPhotos);
-
         return "company/safety-system/control-photo";
+
     }
 
     @RequestMapping(value = "modify-photo")
@@ -1103,11 +1123,18 @@ public class CompanyController_safety extends BaseController {
     @ResponseBody
     public Result selectCoordinate(HttpServletRequest request, Map<String, Object> map, Integer id, String images, String coordinate) throws Exception {
 
-        User user = getLoginUser(request);
+        // 数据解析
+        StringBuffer stringBuilder = new StringBuffer(coordinate);
+        stringBuilder.replace(0,1,"");
+        stringBuilder.replace(stringBuilder.length()-2,stringBuilder.length(),"");
 
-        // Integer id = (Integer) map.get("id");
-        //String coordinate = (java.lang.String) map.get("coordinate");
-        //String images = (java.lang.String) map.get("images");
+
+        String str = stringBuilder.toString();
+        String[] split = str.split("\"");
+        String stringstr = split[1];
+        String s = stringstr.replaceAll("\'", "");
+
+        User user = getLoginUser(request);
 
         Result result = new ResultImpl();
 
@@ -1155,11 +1182,11 @@ public class CompanyController_safety extends BaseController {
             ops.close();
 
             importPhoto.setUrl(filePath);
-            importPhoto.setCoordinate(coordinate);
+            importPhoto.setCoordinate(s );
             importPhotoMapper.updateByInportPhoto(importPhoto);
 
             result.setMess("编辑成功。");
-            
+
         } catch (IOException e) {
             e.printStackTrace();
             result.setMess("编辑异常，请重新操作。");

@@ -1,11 +1,20 @@
 package com.junit.cn.smaq.test;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.spring.web.dao.ImportPhotoMapper;
+import com.spring.web.model.request.ImportPhoto;
 import com.spring.web.util.SmsUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: 桃红梨白
@@ -38,6 +47,28 @@ public class SmsTest {
     public void Test03(){
         smsUtil.sendSMS("17516470884","111222");
 
+    }
+@Autowired
+private ImportPhotoMapper importPhotoMapper;
+
+
+    @Test
+    public void Test04(){
+        List<ImportPhoto> importPhotos = importPhotoMapper.selectPhoto(37097);
+        // 不是就表示有数据
+        for (ImportPhoto importPhoto : importPhotos) {
+            String coordinate = importPhoto.getCoordinate();
+            String s = coordinate.replaceAll("\'", "");
+            Map<String,String> map = new LinkedHashMap<String,String>();
+            String[] array = s.split(",");
+            for (String s1 : array) {
+                String[] split = s1.split(":");
+                map.put(split[0],split[1]);
+            }
+
+            System.out.println(map);
+
+        }
     }
 
 }

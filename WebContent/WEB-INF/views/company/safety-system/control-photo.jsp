@@ -56,12 +56,13 @@
 
         .photo {
             display: inline-block;
-            width: 33%;
+            width: 31%;
             text-align: center;
             padding: 10px;
             height: 200px;
             box-shadow: 0 0 5px #f1f1f1;
             margin-top: 10px;
+            float: left;
         }
 
         .photo img {
@@ -127,7 +128,6 @@
     <form action="#" id="imgform${be.id}" class="photo">
         <input name="src" value="${be.url1}" style="display:none;">
         <div style="height:100%;">
-            <p>${be.coordinate}</p>
             <img src="${be.url}">
             <span onclick="del(${be.id})">X</span>
             <button class="detailBtn" onclick="amend('${be.id}','${be.coordinate}')">编辑</button>
@@ -188,34 +188,64 @@
 
     function amend(v, s) {
         console.log(v)
-        console.log(s)
+        // console.log(typeof s)
+        // console.log(s)
+        var b = s.split(',')
+        console.log(b);
+        // var c = 'ex:0.48759305210918114/0.7878411910669976,ey:0.47642679900744417/0.6799007444168734,name:3123/777,x:0.36600496277915634/0.6960297766749379,y:0.3027295285359802/0.2803970223325062'
+        // shuju(c.split(','))
+        function shuju(arr) {
+            if (arr && arr.length > 0) {
+                var narr = [],narr1=[]
+                for (var i = 0; i < arr.length; i++) {
+                    var a = arr[i].split(':')
+                    var x = a[1].split('/')
+                    narr1.push(a)
+                    narr.push(x)
+                }
+            }
+            var newArr = []
+            for(var d = 0;d<narr.length;d++){
+                if(d<=narr[0].length-1){
+                    var obj = {
+                        'ex': narr[0][d],
+                        'ey': narr[1][d],
+                        'name': narr[2][d],
+                        'x': narr[3][d],
+                        'y': narr[4][d]
+                    }
+                    newArr.push(obj)
+                }
+            }
+            console.log(newArr);
+            return newArr
+        }
+
         // 图片
         $('#imgform' + v).click(function (t) {
             t.preventDefault();
             window.c = imageLabel({
                 img: $("#imgform" + v + " [name=src]").val(),
-                // data: s,
+                data: shuju(b),
                 editPop: !0,
                 close: function (t) {
-                    <%-- 关闭 --%>
                     return t.length, !0
                 },
                 confirm: function (t) {
                     <%-- 提交 --%>
-                    function dataArr(arr){
-                        if(arr&&arr.length>0){
+                    console.log(t);
+
+                    function dataArr(arr) {
+                        if (arr && arr.length > 0) {
                             var newA = []
-                            for(var i=0;i<arr.length;i++){
+                            for (var i = 0; i < arr.length; i++) {
                                 var str = ''
-                                str = "'ex':"+arr[i].ex+",'ey':"+arr[i].ey+",'name':"+arr[i].name+",'x':"+arr[i].x+",'y':"+arr[i].y
+                                str = "'ex':" + arr[i].ex + ",'ey':" + arr[i].ey + ",'name':" + arr[i].name + ",'x':" + arr[i].x + ",'y':" + arr[i].y
                                 newA.push(str)
                             }
                         }
                         return newA
                     }
-                    // console.log(dataArr(t))
-                    // console.log(dataArr(t).toString())
-                    // console.log(JSON.stringify(dataArr(t)))
 
                     <%-- 截图 --%>
                     layer.msg('标注比较耗时,请耐心等待 ! 不要做其他操作!', {
@@ -226,10 +256,8 @@
                             useCORS: true, allowTaint: false, foreignObjectRendering: true, taintTest: true, scale: 1
                         }).then(function (canvas) {
                             var image = canvas.toDataURL("image/png", 0.1);
-                            console.log(image)
-                            console.log(v)
                             $.ajax({
-                                type:"POST",
+                                type: "POST",
                                 url: getRootPath() + '/company/safety-system/control-addCoordinate',
                                 contentType: ' application/x-www-form-urlencoded',
                                 data: {

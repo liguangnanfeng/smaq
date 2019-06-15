@@ -1201,7 +1201,7 @@ public class CompanyController_safety extends BaseController {
             ops.close();
 
             importPhoto.setUrl(filePath);
-            importPhoto.setCoordinate(s );
+            importPhoto.setCoordinate(s);
             importPhotoMapper.updateByInportPhoto(importPhoto);
 
             result.setMess("编辑成功。");

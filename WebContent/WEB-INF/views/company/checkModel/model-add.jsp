@@ -422,10 +422,10 @@
 
             save = () => {
                 let state = this.state;
-                if (!state.tableName) {    //验证检查表名字是否填写
-                    alert('检查表名字必须填写');
-                    return
-                }
+                // if (!state.tableName) {    //验证检查表名字是否填写
+                //     alert('检查表名字必须填写');
+                //     return
+                // }
 
                 if (state.checkType == 0 || state.checkType == null) {    //验证检查类型是否选择
                     alert('请选择检查类型');
@@ -784,16 +784,16 @@
                     <div>
                         <form className="form form-horizontal" id="form">
                             <div className="page-container">
-                                <div className="row cl">
-                                    <label className="form-label col-xs-4 col-sm-2"><span
-                                        className="c-red">*</span>检查表名称：</label>
-                                    <div className="formControls col-xs-8 col-sm-9">
-                                        <input type="text" onChange={(e) => this.inputChange('tableName', e)}
-                                               style={{width: '350px'}} className="input-text"
-                                               maxLength="50" placeholder="请填写检查表名称(必填)"
-                                               value={this.state.tableName}/>
-                                    </div>
-                                </div>
+                                <%--<div className="row cl">--%>
+                                <%--    <label className="form-label col-xs-4 col-sm-2"><span--%>
+                                <%--        className="c-red">*</span>检查表名称：</label>--%>
+                                <%--    <div className="formControls col-xs-8 col-sm-9">--%>
+                                <%--        <input type="text" onChange={(e) => this.inputChange('tableName', e)}--%>
+                                <%--               style={{width: '350px'}} className="input-text"--%>
+                                <%--               maxLength="50" placeholder="请填写检查表名称(必填)"--%>
+                                <%--               value={this.state.tableName}/>--%>
+                                <%--    </div>--%>
+                                <%--</div>--%>
                                 <div className="row cl">
                                     <label className="form-label col-xs-4 col-sm-2"><span
                                         className="c-red">*</span>请选择检查方式

@@ -179,6 +179,7 @@
         var type = $("#type option:selected").val(); // 检查类型
         var dptitle = $("#dptitle option:selected").val(); // 检查方式
         var times   = $("#times").val();                   // 检查天数
+        var flag = '${flag}';
          if (type == null || type == 0) {
             alert("请选择检查类型");
             return;
@@ -195,13 +196,13 @@
             $.ajax({
                 type: "POST",
                 url: getRootPath() + '/village/saveCheckMenu3',
-                data: {dmid: dmid,checkType:type,dptitle:dptitle,times:times},
+                data: {dmid: dmid,checkType:type,dptitle:dptitle,times:times,flag:flag},
                 success: function (result) {
                     if (result.status == 0) {
                         alert('保存成功');
                         var arr=[2,3,4,5,6];
                         var tem = arr[dptitle-1];
-                        window.parent.location.href = '${ly}/company/model-list-cx?flag=1&type='+dptitle+'&template='+tem;
+                        window.parent.location.href = '${ly}/company/model-list-cx?flag='+flag+'&type=1&template=2';
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     } else {

@@ -2914,7 +2914,6 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("template", template);
         Map<String, Object> m = new HashMap<String, Object>();
         //log.error("type数据类型："+type.getClass());
-        m.put("type", type);
         m.put("title", title);
         m.put("flag", flag);
         m.put("industryType", industryType);

@@ -165,8 +165,10 @@ function init_all_box() {
 
             <td class="text-c">
             <c:if test="${!empty be.files or !empty be.memo}">
+
+            <a href="javascript:void(0)" onclick="showpicture('${be.files}', this)">
                 <img src="${be.files}" align="隐患图片" width="100" height="100" >
-            <%--<a href="javascript:void(0)" onclick="showpicture('${be.files}', this)">隐患图片</a>--%>
+            </a>
             <%-- <img alt="" src="${be.files }" style="max-height:100px;cursor:pointer;" onClick="showpicture('${be.files}')"/> --%>
             </c:if>
             <div data-lid="${be.levelId }" data-name="item-memo" style="display: none;">${be.memo }</div>

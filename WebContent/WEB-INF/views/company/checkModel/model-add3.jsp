@@ -96,7 +96,6 @@
         var days = $('#my_days').val();
         var checkType = $('#checkType').val();
         var industryType = $('#industryType').val();
-        var flag = '${flag}';
         if(checkType==2&&!days){
             alert('请填写定期时间')
             return
@@ -106,11 +105,11 @@
         $.ajax({
             type: "POST",
             url: getRootPath() + '/village/saveCheckMenu3',
-            data: {dmid: dmid,checkType:industryType,dptitle:checkType,times:days,flag:flag},
+            data: {dmid: dmid,checkType:industryType,dptitle:checkType,times:days},
             success: function (result) {
                 if (result.status == 0) {
                     alert('保存成功');
-                    window.parent.location.href = '${ly}/company/model-list-cx?flag='+flag+'&type=1&template=2';
+                    window.parent.location.href = '${ly }/company/model-list-main';
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
 

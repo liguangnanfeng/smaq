@@ -554,7 +554,6 @@
 
 </div>
 <script type="text/javascript">
-    console.log('${list}');
     /*企业端实施检查*/
     function check_add(modelId) {
         var i = layer.load();

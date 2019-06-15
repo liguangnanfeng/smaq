@@ -14,6 +14,16 @@ public class ImportPhoto {
 
     private String coordinate;
 
+    private Object object;
+
+    public Object getObject() {
+        return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -71,8 +81,7 @@ public class ImportPhoto {
                 ", user_id=" + user_id +
                 ", name='" + name + '\'' +
                 ", coordinate='" + coordinate + '\'' +
+                ", object=" + object +
                 '}';
     }
-
-
 }

@@ -460,20 +460,76 @@ public class CompanyController_safety extends BaseController {
         DangerCoordinate dangerCoordinate = new DangerCoordinate();
 
         dangerCoordinate.setUser_id(user.getId());
-        dangerCoordinate.setDanger1(danger1);
-        dangerCoordinate.setDanger2(danger2);
-        dangerCoordinate.setDanger3(danger3);
-        dangerCoordinate.setDanger4(danger4);
-        dangerCoordinate.setDanger5(danger5);
-        dangerCoordinate.setDanger6(danger6);
-        dangerCoordinate.setDanger7(danger7);
-        dangerCoordinate.setDanger8(danger8);
-        dangerCoordinate.setDanger9(danger9);
-        dangerCoordinate.setDanger10(danger10);
-        dangerCoordinate.setDanger11(danger11);
-        dangerCoordinate.setDanger12(danger12);
-        dangerCoordinate.setDanger13(danger13);
-        dangerCoordinate.setCounts(counts);
+        if (null == danger1){
+            dangerCoordinate.setDanger1(0);
+        }else {
+            dangerCoordinate.setDanger1(danger1);
+        }
+        if (null == danger2){
+            dangerCoordinate.setDanger2(0);
+        }else {
+            dangerCoordinate.setDanger2(danger2);
+        }
+        if (null == danger3){
+            dangerCoordinate.setDanger3(0);
+        }else {
+            dangerCoordinate.setDanger3(danger3);
+        }
+        if (null == danger4){
+            dangerCoordinate.setDanger4(0);
+        }else {
+            dangerCoordinate.setDanger4(danger4);
+        }
+        if (null == danger5){
+            dangerCoordinate.setDanger5(0);
+        }else {
+            dangerCoordinate.setDanger5(danger5);
+        }
+        if (null == danger6){
+            dangerCoordinate.setDanger6(0);
+        }else {
+            dangerCoordinate.setDanger6(danger6);
+        }
+        if (null == danger7){
+            dangerCoordinate.setDanger7(0);
+        }else {
+            dangerCoordinate.setDanger7(danger7);
+        }
+        if (null == danger8){
+            dangerCoordinate.setDanger8(0);
+        }else {
+            dangerCoordinate.setDanger8(danger8);
+        }
+        if (null == danger9){
+            dangerCoordinate.setDanger9(0);
+        }else {
+            dangerCoordinate.setDanger9(danger9);
+        }
+        if (null == danger10){
+            dangerCoordinate.setDanger10(0);
+        }else {
+            dangerCoordinate.setDanger10(danger10);
+        }
+        if (null == danger11){
+            dangerCoordinate.setDanger11(0);
+        }else {
+            dangerCoordinate.setDanger11(danger11);
+        }
+        if (null == danger12){
+            dangerCoordinate.setDanger12(0);
+        }else {
+            dangerCoordinate.setDanger12(danger12);
+        }
+        if (null == danger13){
+            dangerCoordinate.setDanger13(0);
+        }else {
+            dangerCoordinate.setDanger13(danger13);
+        }
+        if (null == counts){
+            dangerCoordinate.setCounts(0);
+        }else {
+            dangerCoordinate.setCounts(counts);
+        }
 
         boolean  b = dangerCoordinateMapper.insert(dangerCoordinate);
 

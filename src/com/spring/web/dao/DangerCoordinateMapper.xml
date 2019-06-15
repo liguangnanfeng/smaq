@@ -48,7 +48,7 @@
         danger8, danger9, danger10,
         danger11, danger12, danger13,
         counts)
-        values ( #{user_id,jdbcType=INTEGER}, #{danger1,jdbcType=INTEGER},
+        values ( #{user_id,jdbcType=INTEGER},
         #{danger1,jdbcType=INTEGER},#{danger2,jdbcType=INTEGER},#{danger3,jdbcType=INTEGER},
         #{danger4,jdbcType=INTEGER},#{danger5,jdbcType=INTEGER},#{danger6,jdbcType=INTEGER},
         #{danger7,jdbcType=INTEGER},#{danger8,jdbcType=INTEGER},#{danger9,jdbcType=INTEGER},

@@ -116,13 +116,23 @@
             font-weight: bold;
         }
 
-        .my_red {
-            color: red;
+        .my_red{
+            display:inline-block!important;
+            background-color:red;
+        }
+        .my_o{
+            display:inline-block!important;
+            background-color:orange;
+        }
+        .my_y{
+            display:inline-block!important;
+            background-color:yellow ;
+        }
+        .my_b{
+            display:inline-block!important;
+            background-color:blue;
         }
 
-        .my_green {
-            color: #00B83F;
-        }
     </style>
     <script src="/js/jquery.jqprint-0.3.js"></script>
 </head>
@@ -462,7 +472,7 @@
 
                     <tbody>
                     <tr>
-                        <td colspan="2">存在下列情况之一的企业直接判定为红色（最高风险等级）</td>
+                        <td colspan="2" style="font-size:20px;font-weight: bold;text-align: center">存在下列情况之一的企业直接判定为红色（最高风险等级）</td>
                     </tr>
                     <tr>
                         <td>新开发的危险化学品生产工艺未经小试、中试和工业化试验直接进行工业化生产的；</td>
@@ -500,6 +510,21 @@
 
             </div>
         </div>
+        <div class="row" style="margin-top: 20px">
+            <div class="col-xs-1 col-sm-1" style="font-size: 20px;font-weight: bold" id="fenshu">
+               总分：100
+            </div>
+            <div class="col-xs-2 col-sm-2"   >
+                <span style="display:inline-block;line-height: 32px;font-size: 16px">当前风险评级</span> <div style="width:50px;height: 20px;margin-left: 10px;border-radius: 5px;position: relative;top:5px"  class='my_b' id="sekuai"></div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-offset-3 col-xs-offset-3" >
+                <button class="btn btn-primary radius" onClick="saveCoordinate()" style="float: right">确定</button>
+            </div>
+        </div>
+
+
+
+
         <!-- 弹窗输入 -->
         <div id="modal-plan2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
@@ -516,7 +541,7 @@
                                     :</label>
                                 <div class="formControls col-xs-5 col-sm-5">
                                     <input class="input-text" type="text" name="" id="trInput"
-                                           oninput="if(value.length==1){value=value.replace(/[^(\-?)\d+]/ig,'')}else{value=value.substring(0,1)+value.substring(1,value.length).replace(/[^\d+]/ig,'');}"
+                                           oninput="value=value.replace(/[^\d]/g,'')"
                                            style="width:150px">
                                 </div>
                                 <div class="col-xs-3 col-sm-3">
@@ -551,7 +576,7 @@
         danger11: 0,
         danger12: 0,
         danger13: 0,
-        count: 100
+        counts: 100
     }
     var current = '';  //当前要复制的postData的key
     var currentDom = ''  // 当前要操作的dom
@@ -563,26 +588,66 @@
         $("#modal-plan2").modal("show");
     }
 
+
     function queren() {
         var val = parseInt($('#trInput').val());  //为了保险还是先转化成数字
         if (Math.abs(val) > max) {   // 如果输入的数字大于限制  则提示
             layer.msg('输入的值不能超过最大分值');
             return
         } else {
-            currentDom.removeClass("my_green")
-            currentDom.removeClass("my_red")
-            if (val >= 0) {
-                currentDom.addClass("my_green")
-            } else {
-                currentDom.addClass("my_red")
-            }
             postData[current] = val;
-            if(val>0){
-                val = '+'+val;
-            }
             currentDom.text(val);
+            var count =  100;
+            for(i = 0; i < 13; i++){
+                if(i==10||i==11){
+                    count = count + parseInt(postData['danger'+(i+1)]);
+                }else{
+                    count = count - parseInt(postData['danger'+(i+1)]);
+                }
+            }
+            postData.counts = count;
+            var  test = '总分：'+count;
+            $('#fenshu').text(test);
+            $('#sekuai').removeClass('my_red my_o my_y my_b');
+            if(count<60){
+            $('#sekuai').addClass('my_red');
+            }
+            if(count>=60&&count<75){
+                $('#sekuai').addClass('my_o');
+            }
+            if(count>=75&&count<90){
+                $('#sekuai').addClass('my_y');
+            }
+            if(count>=90){
+                $('#sekuai').addClass('my_b');
+            }
+
             $("#modal-plan2").modal("hide");
         }
+        $('#trInput').val("")
+    }
+    /*
+    * 确定按钮！！！
+    * */
+    function saveCoordinate(){
+//        var count = 100;
+//        for(i = 0; i < 13; i++){
+//            if(i==10||i==11){
+//                count = count + parseInt(postData['danger'+(i+1)]);
+//            }else{
+//                count = count - parseInt(postData['danger'+(i+1)]);
+//            }
+//        }
+//        postData.counts = count;
+        $.ajax({ //post也可
+            type: "POST",
+            url: getRootPath() + "/company/safety-system/danger-coordinate",
+            data: postData,
+            dataType: 'json',
+            success: function (result) {
+                layer.msg(result.mess);
+            }
+        });
 
     }
 </script>

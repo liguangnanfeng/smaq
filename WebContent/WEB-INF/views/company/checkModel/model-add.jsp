@@ -70,6 +70,8 @@
 
     </style>
     <script>
+       var flag= '${flag}';
+
 
     </script>
 
@@ -99,6 +101,7 @@
                     current: null,    //当前打开的检查项index
                 }
                 this.host = "https://sec.dicarl.com";
+                this.flag = flag;
             }
 
             componentWillMount() {
@@ -419,10 +422,10 @@
 
             save = () => {
                 let state = this.state;
-                if (!state.tableName) {    //验证检查表名字是否填写
-                    alert('检查表名字必须填写');
-                    return
-                }
+                // if (!state.tableName) {    //验证检查表名字是否填写
+                //     alert('检查表名字必须填写');
+                //     return
+                // }
 
                 if (state.checkType == 0 || state.checkType == null) {    //验证检查类型是否选择
                     alert('请选择检查类型');
@@ -446,6 +449,7 @@
                     title: state.checkType,        //检查方式 1:日常  2:定期  3:临时
                     checkType: state.checkedLeixin, //檢查類型 -1基础 -2现场   其他高危
                     cycle: parseInt(state.days),   //检查周期天数
+                    flag:this.flag,                //1:企业自查2:行政检查3:部门抽查
                     checkLevels: []                 //检查项
                 }
                 let isXc = state.checkedLeixin == -2||state.checkedLeixin == -1 ? true : false;  //是否为现场和基础检查
@@ -523,7 +527,7 @@
                     alert('没有选择检查项');
                     return
                 }
-
+                const my_flag = this.flag
                 $.ajax({
                     type: "POST",
                     url: getRootPath() + '/village/saveCheckMenu2',
@@ -534,9 +538,7 @@
                     success: function (result) {
                         if (result.status == 0) {
                             alert('保存成功');
-                            var arr=[2,3,4,5,6];
-                            var tem = arr[state.checkType-1];
-                            window.parent.location.href='${ly}/company/model-list-cx?flag=1&type='+state.checkType+'&template='+tem;
+                            window.parent.location.href='${ly}/company/model-list-cx?flag='+my_flag+'&type=1&template=2';
                             var index = parent.layer.getFrameIndex(window.name);
                             parent.layer.close(index);
 
@@ -782,16 +784,16 @@
                     <div>
                         <form className="form form-horizontal" id="form">
                             <div className="page-container">
-                                <div className="row cl">
-                                    <label className="form-label col-xs-4 col-sm-2"><span
-                                        className="c-red">*</span>检查表名称：</label>
-                                    <div className="formControls col-xs-8 col-sm-9">
-                                        <input type="text" onChange={(e) => this.inputChange('tableName', e)}
-                                               style={{width: '350px'}} className="input-text"
-                                               maxLength="50" placeholder="请填写检查表名称(必填)"
-                                               value={this.state.tableName}/>
-                                    </div>
-                                </div>
+                                <%--<div className="row cl">--%>
+                                <%--    <label className="form-label col-xs-4 col-sm-2"><span--%>
+                                <%--        className="c-red">*</span>检查表名称：</label>--%>
+                                <%--    <div className="formControls col-xs-8 col-sm-9">--%>
+                                <%--        <input type="text" onChange={(e) => this.inputChange('tableName', e)}--%>
+                                <%--               style={{width: '350px'}} className="input-text"--%>
+                                <%--               maxLength="50" placeholder="请填写检查表名称(必填)"--%>
+                                <%--               value={this.state.tableName}/>--%>
+                                <%--    </div>--%>
+                                <%--</div>--%>
                                 <div className="row cl">
                                     <label className="form-label col-xs-4 col-sm-2"><span
                                         className="c-red">*</span>请选择检查方式

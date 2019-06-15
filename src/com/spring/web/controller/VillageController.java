@@ -2798,7 +2798,7 @@ public class VillageController extends BaseController {
      * 直接获取部门信息(该公司所有的部门,一级目录)和高危风险(暂时没有,做出一个判断)
      */
     @RequestMapping(value = "addCheckModel")
-    public String addCheckModel(Model model, HttpServletRequest request) {
+    public String addCheckModel(Model model, HttpServletRequest request,Integer flag) {
         User user = getLoginUser(request);
 
         /**
@@ -2820,7 +2820,7 @@ public class VillageController extends BaseController {
         if (list.size() == 0) {
             list = null;
         }
-
+        model.addAttribute("flag",flag);
         model.addAttribute("danger", list);
         model.addAttribute("map", names);
         return "company/checkModel/model-add2";
@@ -3236,7 +3236,7 @@ public class VillageController extends BaseController {
             // 保存检查记录总表
             TCheck tCheck = new TCheck();
 
-            tCheck.setFlag(checkItem.getFlag());                                                      // 1. 企业自查  2 行政检查  3 第三方
+            tCheck.setFlag(checkItem.getFlag());                                      // 1. 企业自查  2 行政检查  3 第三方
             tCheck.setTitle(checkItem.getTemplate());                               // 被检查的标题
             if (-2 == checkItem.getCheckType() || -1 == checkItem.getCheckType()) { //只有现场才会存储部门
                 tCheck.setDepart(checkItem.getCheckLevels().get(0).getLevel1());        // 被检查的部门

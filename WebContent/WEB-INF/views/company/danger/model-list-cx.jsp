@@ -165,22 +165,22 @@
 <%--          <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel')" onclick="Hui_admin_tab(this)" href="javascript:;">--%>
 <%--              <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加检查模版--%>
 <%--          </a>--%>
-            <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/getCheckModelBasic')"
+            <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/getCheckModelBasic?flag=${flag}')"
                onclick="Hui_admin_tab(this)" href="javascript:;">
               <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加检查模版
           </a>
-               <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel')"
+               <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel?flag=${flag}')"
                   onclick="Hui_admin_tab(this)" href="javascript:;">
               <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加标准检查模版
           </a>
         </span>
         </c:if>
-        <c:if test="${flag == 3 }">
-        <span class="l">
-          <%-- <a class="btn btn-primary radius" data-title="添加" data-href="${ly }/company/model-add?type=${type }&flag=1" onclick="Hui_admin_tab(this)" href="javascript:;"> <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 选择添加-部门抽查</a>--%>
-          <input type="button" class="btn btn-primary radius" onClick="open_jian('.list_oth',3)" value="选择添加-部门抽查"/>
-        </span>
-        </c:if>
+<%--        <c:if test="${flag == 3 }">--%>
+<%--        <span class="l">--%>
+<%--          &lt;%&ndash; <a class="btn btn-primary radius" data-title="添加" data-href="${ly }/company/model-add?type=${type }&flag=1" onclick="Hui_admin_tab(this)" href="javascript:;"> <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 选择添加-部门抽查</a>&ndash;%&gt;--%>
+<%--          <input type="button" class="btn btn-primary radius" onClick="open_jian('.list_oth',3)" value="选择添加-部门抽查"/>--%>
+<%--        </span>--%>
+<%--        </c:if>--%>
         <c:if test="${flag == 4 }">
         <span class="l">
           <%-- <a class="btn btn-primary radius" data-title="添加" data-href="${ly }/company/model-add?type=${type }&flag=1" onclick="Hui_admin_tab(this)" href="javascript:;"> <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 选择添加-行政检查</a>--%>
@@ -354,7 +354,7 @@
     <%--    </c:if>--%>
 
 
-    <c:if test="${type == 1 || type == 2 || type == 3|| type == 4|| type == 5}">
+<%--    <c:if test="${type == 1 || type == 2 || type == 3|| type == 4|| type == 5}">--%>
         <div class="mt-20">
             <table class="table table-border table-bordered table-bg table-hover table-sort">
                 <thead>
@@ -362,7 +362,7 @@
                     <th width="5%">序号</th>
                     <th>检查表名称</th>
 <%--                    <th>受检${flag == 1 ? '部门' : '单位'}</th>--%>
-                    <th>受检部门</th>--%>
+                    <th>受检部门</th>
                     <th>检查类型</th>
 <%--                    <c:if test="${flag == 1&&template==1}">--%>
                         <th>检查方式</th>
@@ -554,7 +554,6 @@
 
 </div>
 <script type="text/javascript">
-    console.log('${list}');
     /*企业端实施检查*/
     function check_add(modelId) {
         var i = layer.load();

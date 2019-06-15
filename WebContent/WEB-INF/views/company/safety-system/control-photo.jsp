@@ -202,17 +202,17 @@
                 },
                 confirm: function (t) {
                     <%-- 提交 --%>
-                    // function dataArr(arr){
-                    //     if(arr&&arr.length>0){
-                    //         var newA = []
-                    //         for(var i=0;i<arr.length;i++){
-                    //             var str = ''
-                    //             str = "'ex':"+arr[i].ex+",'ey':"+arr[i].ey+",'name':"+arr[i].name+",'x':"+arr[i].x+",'y':"+arr[i].y
-                    //             newA.push(str)
-                    //         }
-                    //     }
-                    //     return newA
-                    // }
+                    function dataArr(arr){
+                        if(arr&&arr.length>0){
+                            var newA = []
+                            for(var i=0;i<arr.length;i++){
+                                var str = ''
+                                str = "'ex':"+arr[i].ex+",'ey':"+arr[i].ey+",'name':"+arr[i].name+",'x':"+arr[i].x+",'y':"+arr[i].y
+                                newA.push(str)
+                            }
+                        }
+                        return newA
+                    }
                     // console.log(dataArr(t))
                     // console.log(dataArr(t).toString())
                     // console.log(JSON.stringify(dataArr(t)))
@@ -235,12 +235,11 @@
                                 data: {
                                     id: v,
                                     images: image,
-                                    coordinate: t
+                                    coordinate: JSON.stringify(dataArr(t))
                                 },
                                 success: function (result) { //服务器成功响应处理函数
                                     console.log('成功');
-                                    console.log(result);
-                                    return t.length, !0
+                                    window.location.reload()
                                 },
                                 error: function (data, status, e) {//服务器响应失败处理函数
                                     alert("文件上传失败");

@@ -10,14 +10,17 @@ public class ImportPhoto {
 
     private String name;
 
+    private String coordinate;
+
     public ImportPhoto() {
     }
 
-    public ImportPhoto(Integer id, String url, Integer user_id, String name) {
+    public ImportPhoto(Integer id, String url, Integer user_id, String name, String coordinate) {
         this.id = id;
         this.url = url;
         this.user_id = user_id;
         this.name = name;
+        this.coordinate = coordinate;
     }
 
     public Integer getId() {
@@ -50,5 +53,13 @@ public class ImportPhoto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(String coordinate) {
+        this.coordinate = coordinate;
     }
 }

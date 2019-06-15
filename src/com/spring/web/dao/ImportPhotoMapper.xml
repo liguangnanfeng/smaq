@@ -8,6 +8,7 @@
             <arg column="url" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="coordinate" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
@@ -18,6 +19,13 @@
     <insert id="savePhoto" parameterType="com.spring.web.model.request.TMap" >
          insert into import_photo (url,user_id,name) values(#{url},#{user_id},#{name});
     </insert>
+
+
+    <!-- 添加数据信息 -->
+    <insert id="saveCoordinate" parameterType="com.spring.web.model.request.TMap" >
+        insert into import_photo (coordinate) values(#{coordinate}) where id = #{id};
+    </insert>
+
 
 
     <!-- 删除数据信息 -->

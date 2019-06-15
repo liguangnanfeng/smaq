@@ -135,13 +135,15 @@ function showpicture(src){
       <!-- 判断是否有治理意见表 -->
       <c:if test="${listM.c > 0 && listM.status == 2 }">
         <!-- 已检查过且有隐患的需要治理意见表 -->
-        <%--<c:choose>
-          <c:when test="${listM.t > 0}">--%>
+        
+      <!--   <c:choose>
+          <c:when test="${listM.t > 0}"> -->
             <!-- 已设置整改意见 -->
             <button onClick="location.href = '/village/check-rectification?flag=${flag }&id=${listM.id }'"
               class="btn btn-success radius" type="button" style="padding: 0 70px;margin-right: 20px">整改详情</button>
-        <%--  </c:when>
-        </c:choose>--%>
+       
+      <!--     </c:when>
+        </c:choose> -->
         <c:if test="${listM.c3 > 0}">
           <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }'"
             class="btn btn-success radius" type="button" style="padding: 0 70px;">复查详情</button>
@@ -183,9 +185,6 @@ function showpicture(src){
         <tbody>
         <%--TODO 这里进行合并的话,会没有检查合格的图片--%>
         <c:forEach items="${itemL }" var="ch">
-          <script>
-            console.log(${itemL})
-          </script>
           <tr class="text-c" >
 
             <td>
@@ -221,7 +220,8 @@ function showpicture(src){
             </td>
 
             <td class="text-c" >${ch.factors == "" ? "暂无数据" : ch.factors }</td>
-            <c:if test="${ empty ch.status}">
+
+           <c:if test="${ empty ch.status}">
               <td>没有数据</td>
             </c:if>
 
@@ -406,4 +406,118 @@ function showpicture(src){
   </div>
 
   </body>
+
+<script type="text/javascript">
+    $(function(){
+        var b = null, l1 = '', c = 1;
+        var b2 = null, l2 = '', c2 = 1;
+        var b3 = null, l3 = '', c3 = 1;
+        var b4 = null, l4 = '', c4 = 1;
+        $("tbody tr").each(function() {
+            var td = $(this).children("td").eq(0);
+            var td2 = $(this).children("td").eq(1);
+            var td3 = $(this).children("td").eq(2);
+            var td4 = $(this).children("td").eq(3);
+            var l1_ = td.text();
+            var l2_ = td2.text();
+            var l3_ = td3.text();
+            var l4_ = td4.text();
+
+            //Same to top level
+            if(l1 == l1_) {
+                td.remove();
+                c = c + 1;
+                if(l2 == l2_) {
+                    td2.remove();
+                    c2 = c2 + 1;
+                    if(l3 == l3_) {
+                        td3.remove();
+                        c3 = c3 + 1;
+                        if(l4 == l4_) {
+                            td4.remove();
+                            c4 = c4 + 1;
+                        }else {
+                            l4 = l4_;
+                            if(b4 != null) {
+                                b4.attr("rowspan", c4);
+                                c4 = 1;
+                            }
+                            b4 = td4;
+                        }
+                    } else {
+                        l3 = l3_;
+                        if(b3 != null) {
+                            b3.attr("rowspan", c3);
+                            c3 = 1;
+                        }
+                        b3 = td3;
+                        l4 = l4_;
+                        if(b4 != null) {
+                            b4.attr("rowspan", c4);
+                            c4 = 1;
+                        }
+                        b4 = td4;
+                    }
+                } else {
+                    l2 = l2_;
+                    if(b2 != null) {
+                        b2.attr("rowspan", c2);
+                        c2 = 1;
+                    }
+                    b2 = td2;
+                    l3 = l3_;
+                    if(b3 != null) {
+                        b3.attr("rowspan", c3);
+                        c3 = 1;
+                    }
+                    b3 = td3;
+                    l4 = l4_;
+                    if(b4 != null) {
+                        b4.attr("rowspan", c4);
+                        c4 = 1;
+                    }
+                    b4 = td4;
+                }
+
+            } else {//Diffrent to top level
+                l1 = l1_;
+                if(b != null) {
+                    b.attr("rowspan", c);
+                    c = 1;
+                }
+                b = td;
+                l2 = l2_;
+                if(b2 != null) {
+                    b2.attr("rowspan", c2);
+                    c2 = 1;
+                }
+                b2 = td2;
+                l3 = l3_;
+                if(b3 != null) {
+                    b3.attr("rowspan", c3);
+                    c3 = 1;
+                }
+                b3 = td3;
+                l4 = l4_;
+                if(b4 != null) {
+                    b4.attr("rowspan", c4);
+                    c4 = 1;
+                }
+                b4 = td4;
+            }
+        })
+        if(b != null) {
+            b.attr("rowspan", c);
+        }
+        if(b2 != null) {
+            b2.attr("rowspan", c2);
+        }
+        if(b3 != null) {
+            b3.attr("rowspan", c3);
+        }
+        if(b4 != null) {
+            b4.attr("rowspan", c4);
+        }
+    })
+</script>
 </html>

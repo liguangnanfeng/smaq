@@ -1070,13 +1070,7 @@ public class CompanyController_safety extends BaseController {
         List<ImportPhoto> importPhotos = importPhotoMapper.selectPhoto(user.getId());
 
         model.addAttribute("list", importPhotos);
-        for (ImportPhoto importPhoto : importPhotos) {
-            //importPhoto.getCoordinate().split("\\""\\");
-            StringBuilder stringBuilder = new StringBuilder(importPhoto.getCoordinate());
 
-            System.out.println(stringBuilder.toString());
-        }
-        System.out.println(importPhotos.get(0).getCoordinate());
         return "company/safety-system/control-photo";
     }
 
@@ -1107,7 +1101,7 @@ public class CompanyController_safety extends BaseController {
      */
     @RequestMapping(value = "control-addCoordinate", method = RequestMethod.POST)
     @ResponseBody
-    public Result selectCoordinate(HttpServletRequest request, Map<String, Object> map, Integer id, String images, List<Map<String,Object>> coordinate) throws Exception {
+    public Result selectCoordinate(HttpServletRequest request, Map<String, Object> map, Integer id, String images, String coordinate) throws Exception {
 
         User user = getLoginUser(request);
 
@@ -1161,12 +1155,11 @@ public class CompanyController_safety extends BaseController {
             ops.close();
 
             importPhoto.setUrl(filePath);
-           // importPhoto.setCoordinate(coordinate);
+            importPhoto.setCoordinate(coordinate);
             importPhotoMapper.updateByInportPhoto(importPhoto);
 
             result.setMess("编辑成功。");
-
-
+            
         } catch (IOException e) {
             e.printStackTrace();
             result.setMess("编辑异常，请重新操作。");

@@ -127,6 +127,7 @@
     <form action="#" id="imgform${be.id}" class="photo">
         <input name="src" value="${be.url1}" style="display:none;">
         <div style="height:100%;">
+            <p>${be.coordinate}</p>
             <img src="${be.url}">
             <span onclick="del(${be.id})">X</span>
             <button class="detailBtn" onclick="amend('${be.id}','${be.coordinate}')">编辑</button>
@@ -201,20 +202,20 @@
                 },
                 confirm: function (t) {
                     <%-- 提交 --%>
-                    function dataArr(arr){
-                        if(arr&&arr.length>0){
-                            var newA = []
-                            for(var i=0;i<arr.length;i++){
-                                var str = ''
-                                str = "'ex':"+arr[i].ex+",'ey':"+arr[i].ey+",'name':"+arr[i].name+",'x':"+arr[i].x+",'y':"+arr[i].y
-                                newA.push(str)
-                            }
-                        }
-                        return newA
-                    }
-                    console.log(dataArr(t))
-                    console.log(dataArr(t).toString())
-                    console.log(JSON.stringify(dataArr(t)))
+                    // function dataArr(arr){
+                    //     if(arr&&arr.length>0){
+                    //         var newA = []
+                    //         for(var i=0;i<arr.length;i++){
+                    //             var str = ''
+                    //             str = "'ex':"+arr[i].ex+",'ey':"+arr[i].ey+",'name':"+arr[i].name+",'x':"+arr[i].x+",'y':"+arr[i].y
+                    //             newA.push(str)
+                    //         }
+                    //     }
+                    //     return newA
+                    // }
+                    // console.log(dataArr(t))
+                    // console.log(dataArr(t).toString())
+                    // console.log(JSON.stringify(dataArr(t)))
 
                     <%-- 截图 --%>
                     layer.msg('标注比较耗时,请耐心等待 ! 不要做其他操作!', {
@@ -234,7 +235,7 @@
                                 data: {
                                     id: v,
                                     images: image,
-                                    coordinate: JSON.stringify(dataArr(t))
+                                    coordinate: t
                                 },
                                 success: function (result) { //服务器成功响应处理函数
                                     console.log('成功');

@@ -56,12 +56,13 @@
 
         .photo {
             display: inline-block;
-            width: 33%;
+            width: 31%;
             text-align: center;
             padding: 10px;
             height: 200px;
             box-shadow: 0 0 5px #f1f1f1;
             margin-top: 10px;
+            float: left;
         }
 
         .photo img {
@@ -127,7 +128,6 @@
     <form action="#" id="imgform${be.id}" class="photo">
         <input name="src" value="${be.url1}" style="display:none;">
         <div style="height:100%;">
-            <p>${be.coordinate}</p>
             <img src="${be.url}">
             <span onclick="del(${be.id})">X</span>
             <button class="detailBtn" onclick="amend('${be.id}','${be.coordinate}')">编辑</button>
@@ -202,6 +202,8 @@
                 },
                 confirm: function (t) {
                     <%-- 提交 --%>
+                    console.log(t);
+
                     function dataArr(arr){
                         if(arr&&arr.length>0){
                             var newA = []

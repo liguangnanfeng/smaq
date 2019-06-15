@@ -1077,13 +1077,13 @@ public class CompanyController_safety extends BaseController {
     @ResponseBody
     public Result modifyPhoto(HttpServletRequest request, Integer id) {
 
-
         ImportPhoto importPhoto = importPhotoMapper.selectAllById(id);
         // 判断图片是否为空
         if (null == importPhoto) {
 
             return null;
         }
+
         Result result = new ResultImpl();
         result.setObject(importPhoto);
 

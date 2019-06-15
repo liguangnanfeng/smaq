@@ -6,22 +6,13 @@ public class ImportPhoto {
 
     private String url;
 
+    private String url1;
+
     private Integer user_id;
 
     private String name;
 
     private String coordinate;
-
-    public ImportPhoto() {
-    }
-
-    public ImportPhoto(Integer id, String url, Integer user_id, String name, String coordinate) {
-        this.id = id;
-        this.url = url;
-        this.user_id = user_id;
-        this.name = name;
-        this.coordinate = coordinate;
-    }
 
     public Integer getId() {
         return id;
@@ -37,6 +28,14 @@ public class ImportPhoto {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getUrl1() {
+        return url1;
+    }
+
+    public void setUrl1(String url1) {
+        this.url1 = url1;
     }
 
     public Integer getUser_id() {
@@ -62,4 +61,18 @@ public class ImportPhoto {
     public void setCoordinate(String coordinate) {
         this.coordinate = coordinate;
     }
+
+    @Override
+    public String toString() {
+        return "ImportPhoto{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", url1='" + url1 + '\'' +
+                ", user_id=" + user_id +
+                ", name='" + name + '\'' +
+                ", coordinate='" + coordinate + '\'' +
+                '}';
+    }
+
+
 }

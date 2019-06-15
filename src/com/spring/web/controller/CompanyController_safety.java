@@ -552,7 +552,6 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-
     /*
      * TODO 风险点辨识表
      * */

@@ -20,5 +20,11 @@ public interface ImportPhotoMapper {
 
 
     boolean saveCoordinate(@Param("id")Integer id, @Param("coordinate")String coordinate);
+
+    // 根据id查询数据
+    ImportPhoto selectAllById(Integer id);
+
+    // 根据更新数据
+    void updateByInportPhoto(ImportPhoto importPhoto);
 }
 

@@ -726,6 +726,7 @@ public class ExportServiceImpl implements ExportService {
             String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+"/upload/txt/"+newFileName;
 
             importPhoto.setUrl(url);
+            importPhoto.setUrl1(url);
             importPhoto.setUser_id(userId);
             importPhoto.setName(oldname);
             importPhotoMapper.savePhoto(importPhoto);

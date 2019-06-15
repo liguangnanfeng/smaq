@@ -3158,7 +3158,7 @@ public class CompanyController_cd extends BaseController {
             //log.error("是否构成重大危险源、1是："+company.getHazard());
             model.addAttribute("rjcbxs", 1);
         }*/
-*/
+
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("flag", flag);
         m.put("title", title);

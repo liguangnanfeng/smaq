@@ -1080,13 +1080,19 @@ public class CompanyController_safety extends BaseController {
         for (ImportPhoto importPhoto : importPhotos) {
             String coordinate = importPhoto.getCoordinate();
             if (null!=coordinate&&coordinate!=""){
-                Map<String,String> map = new LinkedHashMap<String,String>();
-                String[] array = coordinate.split(",");
+               List<Map> list = new ArrayList<>();
+                // 第一步根据 /进行切割
+                String[] array = coordinate.split("/");
                 for (String s1 : array) {
-                    String[] split = s1.split(":");
-                    map.put(split[0],split[1]);
+                    Map<String,String> map = new LinkedHashMap<String,String>();
+                    String[] split1 = s1.split(",");
+                    for (String s : split1) {
+                        String[] split = s.split(":");
+                        map.put(split[0],split[1]);
+                    }
+                    list.add(map);
                 }
-                importPhoto.setObject(map);
+                importPhoto.setObject(list);
             }
         }
         model.addAttribute("list", importPhotos);
@@ -1131,8 +1137,21 @@ public class CompanyController_safety extends BaseController {
 
         String str = stringBuilder.toString();
         String[] split = str.split("\"");
-        String stringstr = split[1];
-        String s = stringstr.replaceAll("\'", "");
+        String strAll = "";
+        for (int i = 0; i < split.length; i++) {
+            if(!",".equals(split[i])){
+                // 表示是数组
+                if(i==split.length-1){
+                    strAll+=split[i];
+                }else{
+                    strAll+=split[i]+"/";
+                }
+            }
+        }
+
+        StringBuffer stringBuilder1 = new StringBuffer(strAll);
+        stringBuilder1.replace(0,1,"");
+        String s = stringBuilder1.toString().replaceAll("\'", "");
 
         User user = getLoginUser(request);
 

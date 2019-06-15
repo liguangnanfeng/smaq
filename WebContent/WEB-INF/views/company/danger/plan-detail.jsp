@@ -92,12 +92,14 @@ body .select {
   <script src="${ly }/js/jquery.jqprint-0.3.js"></script>
 <script type="text/javascript">
 function showpicture(src){
+  console.log("flag"+${flag});
   $(".div_imgp img").attr("src", src);
   $("#modal-plan").modal("show")}
 
   function pr_() {
   $("#div_container").jqprint();
   }
+
 </script>
 </head>
 <body>
@@ -133,19 +135,26 @@ function showpicture(src){
       <!-- 判断是否有治理意见表 -->
       <c:if test="${listM.c > 0 && listM.status == 2 }">
         <!-- 已检查过且有隐患的需要治理意见表 -->
+        
       <!--   <c:choose>
           <c:when test="${listM.t > 0}"> -->
             <!-- 已设置整改意见 -->
             <button onClick="location.href = '/village/check-rectification?flag=${flag }&id=${listM.id }'"
               class="btn btn-success radius" type="button" style="padding: 0 70px;margin-right: 20px">整改详情</button>
+       
       <!--     </c:when>
         </c:choose> -->
-
-        <!-- 已经有复查 -->
         <c:if test="${listM.c3 > 0}">
           <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }'"
             class="btn btn-success radius" type="button" style="padding: 0 70px;">复查详情</button>
         </c:if>
+
+        <%--显示为检查文书--%>
+       <c:if test="${flag==2 || flag== 3 }" >
+         <button onClick="location.href = '/village/check-document?checkId=${check.id }'"
+                 class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书</button>
+       </c:if>
+
       </c:if>
     </div>
   </div>

@@ -3626,6 +3626,7 @@ public class CompanyController_cd extends BaseController {
         }
 
         //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
+        model.addAttribute("flag",tc.getFlag());
         model.addAttribute("itemL", iteml);
         // 根据检查记录的id获取详细的信息
         model.addAttribute("listM", tCheckMapper.selectCompany(id));

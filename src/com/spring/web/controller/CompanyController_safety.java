@@ -5,10 +5,10 @@
 package com.spring.web.controller;
 
 import com.spring.web.BaseController;
+import com.spring.web.dao.DangerCoordinateMapper;
 import com.spring.web.dao.ImportPhotoMapper;
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.*;
-import com.spring.web.model.request.ImportPhoto;
 import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
 import com.spring.web.service.cgf.CgfService;
@@ -48,6 +48,8 @@ public class CompanyController_safety extends BaseController {
     private CgfService cgfService;
     @Autowired
     private ImportPhotoMapper importPhotoMapper;
+    @Autowired
+    private DangerCoordinateMapper dangerCoordinateMapper;
 
     public CompanyController_safety() {
     }
@@ -444,6 +446,46 @@ public class CompanyController_safety extends BaseController {
         }
     }
 
+
+    /*
+    * 重大风险评估数据添加！！！
+    * */
+    @RequestMapping({"danger-coordinate"})
+    public Result coordinate(Model model, HttpServletRequest request, Integer danger1, Integer danger2,Integer danger3,Integer danger4,Integer danger5,
+                             Integer danger6,Integer danger7,Integer danger8,Integer danger9,Integer danger10,
+                             Integer danger11,Integer danger12,Integer danger13,Integer counts) throws Exception {
+
+        User user = this.getLoginUser(request);
+        Result result = new ResultImpl();
+        DangerCoordinate dangerCoordinate = new DangerCoordinate();
+
+        dangerCoordinate.setUser_id(user.getId());
+        dangerCoordinate.setDanger1(danger1);
+        dangerCoordinate.setDanger2(danger2);
+        dangerCoordinate.setDanger3(danger3);
+        dangerCoordinate.setDanger4(danger4);
+        dangerCoordinate.setDanger5(danger5);
+        dangerCoordinate.setDanger6(danger6);
+        dangerCoordinate.setDanger7(danger7);
+        dangerCoordinate.setDanger8(danger8);
+        dangerCoordinate.setDanger9(danger9);
+        dangerCoordinate.setDanger10(danger10);
+        dangerCoordinate.setDanger11(danger11);
+        dangerCoordinate.setDanger12(danger12);
+        dangerCoordinate.setDanger13(danger13);
+        dangerCoordinate.setCounts(counts);
+
+        boolean  b = dangerCoordinateMapper.insert(dangerCoordinate);
+
+        if (b){
+            result.setMess("评估完成。");
+        }else {
+            result.setMess("评估异常，请重新评估。");
+        }
+
+        return result;
+
+    }
 
 
     /*
@@ -933,15 +975,23 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-     *  车间/岗位页面跳转！！！
+     *  图片坐标位置 ！！！
      */
-    @RequestMapping(value = "control-photo")
-    public String controlPhoto(Model model, HttpServletRequest request) throws Exception {
+    @RequestMapping(value = "control-addCoordinate")
+    @ResponseBody
+    public Result selectCoordinate(Model model, HttpServletRequest request,Integer id ,String coordinate) throws Exception {
         User user = getLoginUser(request);
-        List<ImportPhoto> list = importPhotoMapper.selectPhoto(user.getId());
-        model.addAttribute("list",list);
-        return "company/safety-system/control-photo";
+        Result result = new ResultImpl();
+
+        Boolean b = importPhotoMapper.saveCoordinate(id,coordinate);
+        if (b == true){
+            result.setMess("编辑成功。");
+        }else {
+            result.setMess("编辑异常，请重新操作。");
+        }
+        return result;
     }
+
 
     /*
     *  车间/岗位 文件上传！！！

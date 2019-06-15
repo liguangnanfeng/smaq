@@ -444,7 +444,14 @@ public class CompanyController_safety extends BaseController {
         }
     }
 
+    /*
+    * TODO风险打分表
+    * */
+    @RequestMapping({"grade-table"})
+    public String grade(Model model, HttpServletRequest request) throws Exception {
 
+        return "company/safety-system/grade-table";
+    }
 
     /*
      * TODO 风险点辨识表

@@ -125,9 +125,9 @@
 
 <c:forEach items="${list }" var="be">
     <form action="#" id="imgform${be.id}" class="photo">
-        <input name="src" value="${be.url}" style="display:none;">
+        <input name="src" value="${be.url1}" style="display:none;">
         <div style="height:100%;">
-            <img src="${be.url1}">
+            <img src="${be.url}">
             <span onclick="del(${be.id})">X</span>
             <button class="detailBtn" onclick="amend('${be.id}','${be.coordinate}')">编辑</button>
         </div>

@@ -18,7 +18,7 @@
 
     <!-- 添加数据信息 -->
     <insert id="savePhoto" parameterType="com.spring.web.model.request.TMap" >
-         insert into import_photo (url,user_id,name) values(#{url},#{user_id},#{name});
+         insert into import_photo (url,user_id,name,url1) values(#{url},#{user_id},#{name},#{url1});
     </insert>
 
 
@@ -59,6 +59,7 @@
         <set>
             <if test="url != null">
                 url = #{url,jdbcType=VARCHAR},
+                url1 = #{url1,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}

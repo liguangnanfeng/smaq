@@ -4,20 +4,16 @@
  */
 package com.spring.web.controller.api;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.spring.web.BaseController;
+import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.*;
+import com.spring.web.result.AppResult;
+import com.spring.web.result.AppResultImpl;
+import com.spring.web.service.cgf.CgfService;
+import com.spring.web.tobject.cgf.CompanyListReqDTO;
+import com.spring.web.util.EncryptUtil;
+import com.spring.web.util.RandomUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -26,15 +22,10 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.web.BaseController;
-import com.spring.web.ibatis.DynamicParameter;
-import com.spring.web.result.AppResult;
-import com.spring.web.result.AppResultImpl;
-import com.spring.web.service.cgf.CgfService;
-import com.spring.web.tobject.cgf.CompanyListReqDTO;
-import com.spring.web.util.DateConvertUtil;
-import com.spring.web.util.EncryptUtil;
-import com.spring.web.util.RandomUtil;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Title: AppController
@@ -1174,7 +1165,7 @@ public class AppController_xlb extends BaseController {
     public @ResponseBody AppResult yuan(HttpServletRequest request,Integer type) {
         AppResult result = new AppResultImpl();
         Integer userId =null;
-        if(type==5){
+        if(null != type && type==5){
             ZzjgPersonnel zzjgPersonnel = (ZzjgPersonnel) appTokenData.getAppUser(request);
             userId = zzjgPersonnel.getUid();
         }else{

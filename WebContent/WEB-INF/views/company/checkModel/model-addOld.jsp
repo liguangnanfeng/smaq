@@ -443,9 +443,37 @@
         //        查找第二个选择的选择项
 
         function findSelect2(obj,index){
-          console.log(index);
           var current = $(obj);
-          var dom = $('.selectOne'+i);
+          var dom = $('.selectTwo'+index);
+          var val = current.val();
+          console.log(val);
+            $.ajax({
+                type: "POST",
+                url: getRootPath() + '/village/select-all-level3',
+                data: {checkType:checkType, Level2:val},
+                async: false,
+                // contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    // console.log("高危数据调用成功");
+                    // console.log('l am here', data);
+                    // data.map(function (item, index) {
+                    //     var opt = document.createElement("option");
+                    //     opt.value = item.industry_id;
+                    //     opt.innerText = item.level1;
+                    //     select1.appendChild(opt);
+                    //
+                    // })
+
+
+                },
+                error: function (res) {
+
+                    console.log("level3请求出错");
+                    console.log(res);
+                }
+            });
 
         }
         //        查找第三个选择的选择项
@@ -941,7 +969,7 @@
                             style="padding: 0 70px;">
                         <i class="Hui-iconfont">&#xe632;</i>新增检查项
                     </button>
-                    <button onClick="addItem(2)" class="btn btn-primary radius" type="button"
+                    <button onClick="addItem(4)" class="btn btn-primary radius" type="button"
                             style="padding: 0 70px;">
                         <i class="Hui-iconfont">&#xe632;</i>新增自定义检查项
                     </button>

@@ -189,36 +189,46 @@
     function amend(v, s) {
         console.log(v)
         // console.log(typeof s)
-        // console.log(s)
-        var b = s.split(',')
+        console.log(s)
+        var b = s.split('/')
         console.log(b);
+        shuju(b)
         // var c = 'ex:0.48759305210918114/0.7878411910669976,ey:0.47642679900744417/0.6799007444168734,name:3123/777,x:0.36600496277915634/0.6960297766749379,y:0.3027295285359802/0.2803970223325062'
         // shuju(c.split(','))
+        // ["ex:0.4478908188585608,ey:0.3598014888337469,name:22222,x:0.23200992555831265,y:0.18858560794044665", "ex:0.8052109181141439,ey:0.6625310173697271,name:3333,x:0.6588089330024814,y:0.3523573200992556"]
         function shuju(arr) {
             if (arr && arr.length > 0) {
                 var narr = [],narr1=[]
                 for (var i = 0; i < arr.length; i++) {
-                    var a = arr[i].split(':')
-                    var x = a[1].split('/')
-                    narr1.push(a)
-                    narr.push(x)
-                }
-            }
-            var newArr = []
-            for(var d = 0;d<narr.length;d++){
-                if(d<=narr[0].length-1){
-                    var obj = {
-                        'ex': narr[0][d],
-                        'ey': narr[1][d],
-                        'name': narr[2][d],
-                        'x': narr[3][d],
-                        'y': narr[4][d]
+                    // var a = arr[i].split(':')
+                    // var x = a[1].split('/')
+                    // narr1.push(a)
+                    // narr.push(x)
+                    var newArr = []
+                    newArr.push(arr[i].split(','))
+                    console.log(arr[i].split(','));
+                    for(var x= 0;x<newArr.length;x++){
+                        var arr1 = newArr[x].split(':')
+                        console.log(arr1);
                     }
-                    newArr.push(obj)
                 }
             }
             console.log(newArr);
-            return newArr
+            // var newArr = []
+            // for(var d = 0;d<narr.length;d++){
+            //     if(d<=narr[0].length-1){
+            //         var obj = {
+            //             'ex': narr[0][d],
+            //             'ey': narr[1][d],
+            //             'name': narr[2][d],
+            //             'x': narr[3][d],
+            //             'y': narr[4][d]
+            //         }
+            //         newArr.push(obj)
+            //     }
+            // }
+            // console.log(newArr);
+            // return newArr
         }
 
         // 图片
@@ -226,7 +236,7 @@
             t.preventDefault();
             window.c = imageLabel({
                 img: $("#imgform" + v + " [name=src]").val(),
-                data: shuju(b),
+                // data: shuju(b),
                 editPop: !0,
                 close: function (t) {
                     return t.length, !0

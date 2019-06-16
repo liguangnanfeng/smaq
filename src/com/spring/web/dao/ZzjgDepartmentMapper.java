@@ -119,4 +119,7 @@ public interface ZzjgDepartmentMapper {
 
     List<Map<Object, Object>> selectLevel1ByUids(@Param("uid") Integer uid);
 
+    // 根据被检查的部门,选择检查的人员名称
+
+
 }

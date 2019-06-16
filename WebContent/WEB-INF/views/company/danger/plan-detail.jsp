@@ -377,7 +377,7 @@ function showpicture(src){
               <div style="float: left; width: 100%; min-height: 150px;">
                 <div class="div_pleft  mt-10 mb-10">受检负责人签字：</div>
                 <div class="div_pright  mt-10 mb-10">
-                  <input type="text" style="width: 150px" value="${check.dapartContact }" class="input-text" maxlength="50" disabled="disabled" />
+                  <input type="text" style="width: 150px" value="${name }" class="input-text" maxlength="50" disabled="disabled" />
                 </div>
               </div>
             </td>

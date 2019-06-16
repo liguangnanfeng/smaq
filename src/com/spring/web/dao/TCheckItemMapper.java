@@ -222,7 +222,12 @@ public interface TCheckItemMapper {
      */
     List<DynamicParameter<String, Object>> selectHiddenLevelTypeByMap(Map<String, Object> m);
 
-
+    /**
+     * 根据checkId查询levelId
+     * @param id
+     * @return
+     */
+    List<Integer> selectLevelIdByCheckId(Integer id);
 }
 
 

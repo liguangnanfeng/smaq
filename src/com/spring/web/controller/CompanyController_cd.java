@@ -3576,13 +3576,42 @@ public class CompanyController_cd extends BaseController {
      * 没有兼容小程序
      */
     @RequestMapping(value = "check-detail")
-    public String checkDetail(Integer id, Model model, Integer jcxq) throws Exception {
+    public String checkDetail(Integer id, Model model, Integer jcxq,HttpServletRequest request) throws Exception {
+        User loginUser = getLoginUser(request);
         // 根据id查询的是检查表信息
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
         Integer type = tc.getType();
         //log.error("检查表type："+type);
         List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(id);
-        model.addAttribute("check", tc);
+
+        String name =tc.getDapartContact();
+
+        //设置名称
+        if(null==tc.getDapartContact()||tc.getDapartContact().matches("[0-9]{1,}")||"".equals(name)){
+            // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
+            List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId(id);
+            if(null!=integers&&integers.size()>0){
+                // 这里进行名称的获取,进行全部循环,获取数据的方式,在数据库中进行查询
+                List<String> list = new ArrayList<String>();
+                for (Integer integer : integers) {
+                        String fjgkfzr = aCompanyManualMapper.selectByPrimaryKey(integer).getFjgkfzr();
+                        if(null!=fjgkfzr){
+                            list.add(fjgkfzr);
+                        }
+                }
+                if(list.size()==0){
+                    name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                    tc.setCheckCompany(name);
+                }else{
+                    name = list.get(0);
+                    tc.setCheckCompany(name);
+                }
+            }else{
+                name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                tc.setCheckCompany(name);
+            }
+
+        }
         model.addAttribute("partL", partL);
         //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
         /*List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(id);*/
@@ -3626,8 +3655,13 @@ public class CompanyController_cd extends BaseController {
         }
 
         //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
+        model.addAttribute("check", tc);
         model.addAttribute("flag",tc.getFlag());
         model.addAttribute("itemL", iteml);
+        if(null==name||"".equals(name)){
+            name = companyMapper.selectByPrimaryKey(loginUser.getId()).getSafety();
+        }
+        model.addAttribute("name",name);
         // 根据检查记录的id获取详细的信息
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
         log.error("整改详情进行显示的条件" + tCheckMapper.selectCompany(id));
@@ -3662,7 +3696,6 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
         return "company/danger/danger-detail";
     }
-
 
     /**
      * 检查表隐患汇总

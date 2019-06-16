@@ -37,7 +37,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.math.BigDecimal;
-import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
@@ -1994,17 +1993,14 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * @return
+     * @return ！！！
      */
     @RequestMapping(value = "process-see")
     public String processSee(Model model, String url, HttpServletRequest request) throws UnknownHostException {
-        InetAddress address = InetAddress.getLocalHost();
-        String url2 = InetAddress.getLocalHost().getHostAddress() + ":" + request.getLocalPort() + url;
-        String url3 = "http://localhost:8080" + url;
-        //model.addAttribute("list","http://localhost:8080"+list.get(i).getDocUrl());
+        String url3 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+url;
         model.addAttribute("list", url3);
-
         return "company/process/process-see";
+
     }
 
     /**

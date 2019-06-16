@@ -3028,18 +3028,20 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value = "select-all-level1")
     @ResponseBody
-    public Result selectAllLevel1(Integer checkType, HttpServletRequest request) {
+    public List<Map<String, Object>> selectAllLevel1(Integer checkType, HttpServletRequest request) {
         User user = getLoginUser(request);
-        Result result = new ResultImpl();
-        checkType = -1;
+        List<Map<String, Object>> list = null;
         // 根据 checkType 查询对应的 level1 信息
         if (-2 == checkType) {
-            List<ADangerManual> list = aDangerManualMapper.selectLevel1("现场管理");
-        }else if (-1 == checkType ){
-            List<TLevel> list = tLevelMapper.selectLevel1("基础管理");
-        }
-        return result;
+            list    = aDangerManualMapper.selectLevel1("现场管理");
 
+            return list;
+
+        }else if (-1 == checkType ){
+             list = tLevelMapper.selectLevel1("基础管理");
+        }
+        return list;
+    }
 
 
        /* User user = getLoginUser(request);
@@ -3070,7 +3072,6 @@ public class VillageController extends BaseController {
             }
         }
         return linkedList;*/
-    }
 
 
 

@@ -60,8 +60,13 @@
                 return null;
             } else if ('-1' == cType.val()) { // 基础检查 与高危类似
                 $('#addContainer').html('');
-                $(".addCh1").hide();
-                $(".addCh3").css("display", 'block');
+                $(".addCh3").hide();
+                $(".addCh1").css("display", 'block');
+
+
+
+
+
 
             }
             //现场检查 选择部门岗位
@@ -389,70 +394,80 @@
             }
         }
 
+
+
+
     </script>
+     <%--type==1挪出来的第四个检查项    --%>
+    <%--<div class="col-xs-4 cl level4">--%>
+        <%--<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>检查内容</label>--%>
+        <%--<div class="formControls col-xs-8 col-sm-9">--%>
+        <%--<span class="checkedList` + i + ` select-box inline">--%>
+        <%--<select name="content1Id" class="content1Id" >--%>
+        <%--<option value="0">选择检查内容</option>--%>
+        <%--</select>--%>
+        <%--</span>--%>
+        <%--</div>--%>
+    <%--</div>--%>
 
     <script>
-        window.onload = function () {
+        //        查找第二个选择的选择项
 
+        function findSelect2(obj,index){
+          console.log(index);
+          var current = $(obj);
+          var dom = $('.selectOne'+i);
 
         }
+        //        查找第三个选择的选择项
+        function findSelect3(obj,index){
+            var current = $(obj);
+            var dom = $('.selectOne'+i);
+        }
 
-    </script>
 
-
-    <script>
         var i = 0;
 
         function addItem(type) {
             i++;
-            if (1 == type) {
+            if (1 == type) {      //2019/6/15  by qy
 
-                var add1 = `<div class="addItem` + i + ` row" >
-        <div class="col-xs-3 cl level1">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>请选择部门</label>
+        var add1 = `<div class="addItem` + i + ` row" style="height: 50px" >
+        <div class="col-xs-4 cl level1">
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>选择一级分类</label>
         <div class="department formControls col-xs-8 col-sm-9">
-        <span class="department` + i + ` select-box inline">
-        <select name="departmentId" class="departmentId" onChange="findPerson(this)">
-        <option value="0">请选择车间</option>
-        <c:forEach items="${map}" var="entry">
-            <option value="${entry.value}">${entry.key}</option>
-        </c:forEach>
+
+        <select name="departmentId" style="width:300px;height: 31px" class="selectOne`+i+` departmentId "   onChange="findSelect2(this,i)">
+        <option value="0" >请选择一级分类</option>
+        <option value="1" >请选择一级分类</option>
+        <option value="2" >请选择一级分类</option>
         </select>
-        </span>
+
         </div>
         </div>
 
-        <div class="col-xs-3 cl level2">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>选择岗位</label>
+        <div class="col-xs-4 cl level2">
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>选择二级分类</label>
         <div class="post formControls col-xs-8 col-sm-9">
-        <span class="post` + i + ` select-box inline">
 
-        <select name="department2Id" class="department2Id" onchange="findCheck(this)">
-        <option value="0">请选择岗位</option>
+
+        <select name="department2Id" style="width:300px;height: 31px" class="selectTwo`+i+` department2Id" onchange="findSelect3(this,i)">
+        <option value="0">请选择二级分类</option>
         </select>
-        </span>
+
         </div>
         </div>
-        <div class="col-xs-3 cl level3">
+        <div class="col-xs-4 cl level3">
         <label class="form-label col-xs-4 col-sm-4"><span class="c-red">*</span>检查项目</label>
         <div class="formControls col-xs-8 col-sm-8">
-        <span class="checkedList` + i + ` select-box inline">
-        <select name="project1Id" class="project1Id" onchange="findCheck1(this)">
+
+        <select name="project1Id"  style="width:300px;height: 31px" class="selectThree`+i+` project1Id" onchange="findCheck1(this,i)">
         <option value="0">选择检查项目</option>
         </select>
-        </span>
+
         </div>
         </div>
-        <div class="col-xs-3 cl level4">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>检查内容</label>
-        <div class="formControls col-xs-8 col-sm-9">
-        <span class="checkedList` + i + ` select-box inline">
-        <select name="content1Id" class="content1Id" >
-        <option value="0">选择检查内容</option>
-        </select>
-        </span>
-        </div>
-        </div>
+
         </div>`;
                 $('#addContainer').append(add1);
 
@@ -460,11 +475,11 @@
 
                 var add1 = `<div class="cusAddItem` + i + ` row" >
         <div class="col-xs-3 cl level1">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>请选择部门</label>
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>请选择一级分类</label>
         <div class="department formControls col-xs-8 col-sm-9">
         <span class="department` + i + ` select-box inline">
         <select name="departmentId" class="departmentId" onChange="findPerson(this)">
-        <option value="0">请选择车间</option>
+        <option value="0">请选择一级分类</option>
         <c:forEach items="${map}" var="entry">
             <option value="${entry.value}">${entry.key}</option>
         </c:forEach>
@@ -473,12 +488,12 @@
         </div>
         </div>
         <div class="col-xs-3 cl level2">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>请选择岗位</label>
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>请选择二级分类</label>
         <div class="post formControls col-xs-8 col-sm-9">
         <span class="post` + i + ` select-box inline">
 
         <select name="department2Id" class="department2Id" onchange="findCheck(this)">
-        <option value="0">请选择岗位</option>
+        <option value="0">请选择二级分类</option>
         </select>
         </span>
         </div>
@@ -528,23 +543,23 @@
 
         </div>`;
                 $('#addContainer').append(add3);
-                console.log("====================" + getRootPath());
+                console.log("====================",getRootPath());
 
                 //在这里渲染数据!!!
                 var csval = $("#checkNature option:selected").val();
-                console.log("csval:" + csval);
+                console.log("csval:",csval);
                 //第一个下拉框
                 var select1 = document.querySelector('.selectitem' + i);
                 //第二个下拉框
                 var select2 = document.querySelector(".zdyselectitem" + i);
-                select1.options.length = 1;
-                select2.options.length = 1;
+//                select1.options.length = 1;
+//                select2.options.length = 1;
                 //1.基础
                 if (csval == -1) {
                     $.ajax({
                         type: "POST",
-                        url: getRootPath() + '/api/custom/check/A2132',
-                        data: '',
+                        url: getRootPath() + '/village/select-all-level1',
+                        data: {checkType:csval},
                         async: false,
                         contentType: "application/json",
                         dataType: "json",
@@ -562,30 +577,30 @@
                             }
 
 
-                            $('.selectitem' + i).on("change", function () {
-                                console.log("data", data);
-                                var valbase = select1.value;
-                                console.log('valbase', valbase);
-                                var data2 = data[valbase];
-                                //data2为第一个下拉框选中的数组长度
-                                console.log('data2', data2);
-                                //在这里需要做一次清
-                                console.log("我要开始清空了");
-                                var w = 0;
-                                // for (var n=1;n<=data2.length;n++){
-                                // w++;
-                                // console.log("第"+w+"次删除");
-                                // console.log( $(".zdyselectitem1").children().eq(n+1).remove());
-                                // $(".zdyselectitem1").children().eq(n+1).remove()
-                                // }
-                                select2.options.length = 1;
-                                for (var m = 0; m < data2.length; m++) {
-                                    var opt2 = document.createElement("option");
-                                    console.log(opt2);
-                                    opt2.innerText = data2[m].level2;
-                                    select2.appendChild(opt2);
-                                }
-                            });
+//                            $('.selectitem' + i).on("change", function () {
+//                                console.log("data", data);
+//                                var valbase = select1.value;
+//                                console.log('valbase', valbase);
+//                                var data2 = data[valbase];
+//                                //data2为第一个下拉框选中的数组长度
+//                                console.log('data2', data2);
+//                                //在这里需要做一次清
+//                                console.log("我要开始清空了");
+//                                var w = 0;
+//                                // for (var n=1;n<=data2.length;n++){
+//                                // w++;
+//                                // console.log("第"+w+"次删除");
+//                                // console.log( $(".zdyselectitem1").children().eq(n+1).remove());
+//                                // $(".zdyselectitem1").children().eq(n+1).remove()
+//                                // }
+//                                select2.options.length = 1;
+//                                for (var m = 0; m < data2.length; m++) {
+//                                    var opt2 = document.createElement("option");
+//                                    console.log(opt2);
+//                                    opt2.innerText = data2[m].level2;
+//                                    select2.appendChild(opt2);
+//                                }
+//                            });
 
 
                         },
@@ -721,26 +736,26 @@
         </div>
 
         <%--        检查方式--%>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查方式 :</label>
-            <div class="formControls col-xs-8 col-sm-9">
-        <span class="select-box inline">
+        <%--<div class="row cl">--%>
+            <%--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查方式 :</label>--%>
+            <%--<div class="formControls col-xs-8 col-sm-9">--%>
+        <%--<span class="select-box inline">--%>
 
-        <select name="checkType" class="select" id="checkType" onchange="time(this)">
-        <option value="1">日常</option>
-        <option value="2">定期</option>
-        <option value="3">临时</option>
-        </select>
-        </span>
+        <%--<select name="checkType" class="select" id="checkType" onchange="time(this)">--%>
+        <%--<option value="1">日常</option>--%>
+        <%--<option value="2">定期</option>--%>
+        <%--<option value="3">临时</option>--%>
+        <%--</select>--%>
+        <%--</span>--%>
 
-            </div>
-        </div>
-        <div class="row cl dq" style="display:none">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请填写定期时间 :</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="number" min="0" max="7" name="user_date" id='dataTime'/>
-            </div>
-        </div>
+            <%--</div>--%>
+        <%--</div>--%>
+        <%--<div class="row cl dq" style="display:none">--%>
+            <%--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请填写定期时间 :</label>--%>
+            <%--<div class="formControls col-xs-8 col-sm-9">--%>
+                <%--<input type="number" min="0" max="7" name="user_date" id='dataTime'/>--%>
+            <%--</div>--%>
+        <%--</div>--%>
         <%--        检查性质--%>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查性质 :</label>
@@ -751,11 +766,11 @@
         <option value="0">请选择检查类别</option>
         <option value="-1">基础</option>
         <option value="-2">现场</option>
-        <c:if test="${danger!=null}">
-            <c:forEach items="${danger}" var="entry">
-                <option value="${entry.id}">${entry.name}</option>
-            </c:forEach>
-        </c:if>
+        <%--<c:if test="${danger!=null}">--%>
+            <%--<c:forEach items="${danger}" var="entry">--%>
+                <%--<option value="${entry.id}">${entry.name}</option>--%>
+            <%--</c:forEach>--%>
+        <%--</c:if>--%>
         <%--                       <script>--%>
         <%--                           window.onload=function () {--%>
         <%--                               var checknature=document.querySelector('#checkNature');--%>
@@ -889,7 +904,7 @@
 
             <div class="addCh3 row cl" style="display: none">
                 <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2 mt-20">
-                    <button onClick="addItem(3)" class="btn btn-primary radius" type="button"
+                    <button onClick="addItem(1)" class="btn btn-primary radius" type="button"
                             style="padding: 0 70px;">
                         <i class="Hui-iconfont">&#xe632;</i>新增检查项
                     </button>

@@ -40,6 +40,35 @@
     from a_danger_manual_tbl
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+
+  <select id="selectAll" resultType="String">
+    select
+    *
+    from a_danger_manual_tbl
+  </select>
+
+
+  <select id="selectLevels1" resultType="String">
+    select distinct level2 from a_danger_manual_tbl where level1 = #{level1}
+  </select>
+
+  <select id="selectAllDep3" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from a_danger_manual_tbl
+  </select>
+
+
+
+  <!-- 根据 level1 查询对应的 level2 -->
+  <select id="selectLevel1" resultType="com.spring.web.model.ADangerManual">
+    select distinct level2 from a_danger_manual_tbl where level1 = #{level1}
+  </select>
+
+
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--
       WARNING - @mbggenerated

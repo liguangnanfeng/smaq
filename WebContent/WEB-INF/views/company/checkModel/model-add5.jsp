@@ -499,9 +499,9 @@
                             <thead>
                             <tr className="text-c">
                                 <th className="my_td">车间</th>
-                                <th className="my_td">环节</th>
-                                <th className="my_td4">风险点</th>
-                                <th className="my_td2">风险内容</th>
+                                <th className="my_td">部位/环节</th>
+                                <th className="my_td4">检查项目</th>
+                                <th className="my_td2">检查内容</th>
                                 <th className="div-pcz my_td3">操作</th>
                             </tr>
                             </thead>

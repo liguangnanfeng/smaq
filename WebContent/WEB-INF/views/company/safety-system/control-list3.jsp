@@ -181,16 +181,16 @@
             <th style="min-width:100px">岗位/部位</th>
             <th style="min-width:100px">风险等级</th>
             <th style="min-width:100px">地图标示</th>
-            <th style="min-width:150px">风险类型</th>
+           <%-- <th style="min-width:150px">风险类型</th>
             <th style="min-width:200px">风险因素</th>
-            <th style="min-width:200px">防范措施</th>
+            <th style="min-width:200px">防范措施</th>--%>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${list }" var="be" varStatus="index">
             <tr id="line_${index.index + 1}">
                 <td class="text-c">${index.index + 1}</td>
-                <td><c:if test="${not empty be.level1}">${be.level1 } > ${be.level2 }</c:if></td>
+                <td><c:if test="${not empty be.level1}">${be.level1 } <%--> ${be.level2 }--%></c:if></td>
                 <td class="text-c">
                     <c:choose>
                         <c:when test="${be.level eq '红色'}"><font class="col-a">${be.level}</font></c:when>
@@ -205,11 +205,11 @@
                         <c:when test="${empty be.lnglat}"><font style="color:red">否</font></c:when>
                     </c:choose>
                 </td>
-                <td>${be.type }</td>
-                <td>${be.factors }</td>
+                <td style="display:none">${be.type }</td>
+                <td style="display:none"> ${be.factors }</td>
                 <td style="display:none">${be.lnglat }</td>
                 <td style="display:none">${be.id }</td>
-                <td>${empty be.gkcs ? be.measures :be.gkcs }</td>
+                <td style="display:none">${empty be.gkcs ? be.measures :be.gkcs }</td>
             </tr>
         </c:forEach>
         </tbody>
@@ -251,14 +251,17 @@
         var jwzb = document.getElementById("line_" + xuhao).children[6].textContent;
         var gkcs = document.getElementById("line_" + xuhao).children[8].textContent;
 
+
         infowin.setContent(
             "<b>序号: </b>" + xuhao + "<br>"
             + "<b>岗位/部位：</b>" + gwbw + "<br>"
-            + "<b>风险类型：</b>" + fxlx + "<br>"
-            + "<b>风险因素：</b>" + fxys + "<br>"
-            + "<b>管控措施：</b>" + gkcs + "<br>"
+            // + "<b>风险类型：</b>" + fxlx + "<br>"
+            // + "<b>风险因素：</b>" + fxys + "<br>"
+            // + "<b>管控措施：</b>" + gkcs + "<br>"
             + "<div class=my_delete onclick=deleteBj(" + xuhao + ")>删除标记</div>"
         );
+
+
         infowin.open(map, new AMap.LngLat(jwzb.split(',')[0], jwzb.split(',')[1]));
     }
 

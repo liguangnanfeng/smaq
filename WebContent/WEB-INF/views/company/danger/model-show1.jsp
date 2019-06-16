@@ -51,7 +51,7 @@ function uploadpicture(obj){
       <thead>
         <tr class="text-c">
           <th width="3%">序号</th>
-          <th width="15%">岗位/部位</th>
+          <%--<th width="15%">岗位/部位</th>--%>
           <th width="30%">风险类型</th>
           <th width="40%">检查内容</th>
           <th width="12%">操作</th>
@@ -68,7 +68,7 @@ function uploadpicture(obj){
         </c:forEach>
         <tr>
           <td class="text-c" rowspan="${x }">${pi.index + 1}</td>
-          <td class="text-c" rowspan="${x }">${part.name }</td>
+          <%--<td class="text-c" rowspan="${x }">${part.name }</td>--%>
           <c:set var="y" value="0"/>
           <c:forEach items="${itemL }" var="ch">
           <c:if test="${lanlin:constains(part.levels, ch.levelId, ',')}">

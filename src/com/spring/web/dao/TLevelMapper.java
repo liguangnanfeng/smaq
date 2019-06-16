@@ -104,4 +104,8 @@ public interface TLevelMapper {
     List<TLevel> selectAll();
 
     List<TLevel> selectAllIds( @Param("ids")Integer[] ids);
+
+    List<String> selectAllDep3();
+
+    List<TLevel> selectLevel1(@Param("level1")String level1);
 }

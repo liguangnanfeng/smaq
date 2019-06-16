@@ -2842,7 +2842,9 @@ public class VillageController extends BaseController {
     @RequestMapping(value = "getCheckModelBasic")
     public String getCheckModelBasic(Integer flag,Model model ) {
         model.addAttribute("flag",flag);
-        return "company/checkModel/model-add";
+       /* return "company/checkModel/model-add";*/
+
+        return "company/checkModel/model-addOld";
     }
 
     /**
@@ -2970,6 +2972,112 @@ public class VillageController extends BaseController {
 
         return linkedList;
     }
+
+
+
+
+
+    /**
+     * TODO (基础/现场) 根据公司和部门获取对应岗位
+     *
+     * @param depId     部门id
+     * @param dpName    部门名称
+     * @param checkType 基础/现场
+     * @param request   请求
+     * @return 该部门下面所有的检查项
+     */
+    @RequestMapping(value = "selectDep3")
+    @ResponseBody
+    public List selectDep3(Integer depId, String dpName, Integer checkType, HttpServletRequest request) {
+        User user = getLoginUser(request);
+        List<String> list = new ArrayList<String>();
+
+        if (-2 == checkType) {                                     //现场
+            /*list = aCompanyManualMapper.selectlevel3BydmName(user.getId(), dpName);*/
+            list = aDangerManualMapper.selectAll();
+        } else if (-1 == checkType) {                                //基础
+           /* list = aCompanyManualMapper.selectlevel3BydmNameAndLevel3(user.getId(), dpName, "基础");*/
+            list = tLevelMapper.selectAllDep3();
+        } else {
+
+        }
+        ArrayList linkedList= new ArrayList();
+        if (null != list && list.size() > 0) {
+            for (String level3 : list) {
+                LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
+                /*List<ACompanyManual> aCompanyManuals = aCompanyManualMapper.selectAllByLevel3(user.getId(), dpName, level3);*/
+                if (-2 == checkType) {                                     //现场
+                    List<ADangerManual>  aDangerManuals  = aDangerManualMapper.selectAllDep3();
+                    map.put("name", level3);
+                    map.put("list", aDangerManuals);
+                } else if (-1 == checkType) {                                //基础
+                    List<TLevel> levels = tLevelMapper.selectAll();
+                    map.put("name", level3);
+                    map.put("list", levels);
+                }
+                linkedList.add(map);
+            }
+        }
+        return linkedList;
+    }
+
+
+
+    /*
+     * 根据 checkType 查询所有的 level 的信息
+     */
+    @RequestMapping(value = "select-all-level1")
+    @ResponseBody
+    public Result selectAllLevel1(Integer checkType, HttpServletRequest request) {
+        User user = getLoginUser(request);
+        Result result = new ResultImpl();
+        checkType = -1;
+        // 根据 checkType 查询对应的 level1 信息
+        if (-2 == checkType) {
+            List<ADangerManual> list = aDangerManualMapper.selectLevel1("现场管理");
+        }else if (-1 == checkType ){
+            List<TLevel> list = tLevelMapper.selectLevel1("基础管理");
+        }
+        return result;
+
+
+
+       /* User user = getLoginUser(request);
+        List<String> list = new ArrayList<String>();
+        checkType = -1;
+        if (-2 == checkType) {                                     //现场
+            *//*list = aCompanyManualMapper.selectlevel3BydmName(user.getId(), dpName);*//*
+            list = aDangerManualMapper.selectLevels1();
+        } else if (-1 == checkType) {                                //基础
+           *//* list = aCompanyManualMapper.selectlevel3BydmNameAndLevel3(user.getId(), dpName, "基础");*//*
+            list = tLevelMapper.selectLevels1();
+        }
+        ArrayList linkedList= new ArrayList();
+        if (null != list && list.size() > 0) {
+            for (String level3 : list) {
+                LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
+                *//*List<ACompanyManual> aCompanyManuals = aCompanyManualMapper.selectAllByLevel3(user.getId(), dpName, level3);*//*
+                if (-2 == checkType) {                                     //现场
+                    List<ADangerManual> aDangerManuals = aDangerManualMapper.selectLevel1("现场管理");
+                    map.put("name", level3);
+                    map.put("list", aDangerManuals);
+                } else if (-1 == checkType) {                                //基础
+                    List<TLevel> levels = tLevelMapper.selectLevel1("基础管理");
+                    map.put("name", level3);
+                    map.put("list", levels);
+                }
+                linkedList.add(map);
+            }
+        }
+        return linkedList;*/
+    }
+
+
+
+
+
+
+
 
     /**
      * TODO (基础/现场) 根据公司和部门获取对应岗位

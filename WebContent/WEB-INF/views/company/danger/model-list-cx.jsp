@@ -169,10 +169,10 @@
                onclick="Hui_admin_tab(this)" href="javascript:;">
               <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加检查模版
           </a>
-            <%--   <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel?flag=${flag}')"
+               <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel?flag=${flag}')"
                   onclick="Hui_admin_tab(this)" href="javascript:;">
               <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加标准检查模版
-          </a>--%>
+          </a>
         </span>
         </c:if>
 <%--        <c:if test="${flag == 3 }">--%>
@@ -362,10 +362,10 @@
                     <th width="5%">序号</th>
                     <th>检查表名称</th>
 <%--                    <th>受检${flag == 1 ? '部门' : '单位'}</th>--%>
-                    <th>受检部门</th>
+                    <%--<th>受检部门</th>--%>
                     <th>检查类型</th>
 <%--                    <c:if test="${flag == 1&&template==1}">--%>
-                        <th>检查方式</th>
+                    <%--<th>检查方式</th>--%>
 <%--                    </c:if>--%>
 <%--                    <th>检查部位</th>--%>
 <%--                    <th>最近${flag == 1 ? '检查' : '录入'}时间</th>--%>
@@ -382,7 +382,7 @@
                     <tr class="text-c">
                         <td>${index.index + 1}</td>
                         <td>${be.title }</td>
-                        <td>${be.part }</td>
+                        <%--<td>${be.part }</td>--%>
                         <td>
                             <c:choose>
                                 <c:when test="${be.industryType == 1}">基础管理</c:when>
@@ -391,7 +391,7 @@
                             </c:choose>
                         </td>
 <%--                        <c:if test="${flag == 1&&template==1}">--%>
-                            <td>
+                          <%--  <td>
                                 <c:if test="${be.type==1}">
                                     日常
                                 </c:if>
@@ -408,7 +408,7 @@
                                     综合
                                 </c:if>
 
-                            </td>
+                            </td>--%>
 <%--                        </c:if>--%>
                             <%--检查部位--%>
 <%--                        <td>${be.partName }</td>--%>

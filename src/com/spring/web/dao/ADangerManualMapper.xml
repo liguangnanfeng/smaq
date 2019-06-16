@@ -67,6 +67,17 @@
   </select>
 
 
+  <!-- 根据 level1,level2 查询对应的 level3 -->
+  <select id="selectLevel3" resultType="com.spring.web.model.ADangerManual">
+    select distinct level3 from a_danger_manual_tbl where level1 = #{level1} and level2 = #{level2}
+  </select>
+
+
+  <!-- 根据 level1,level2,level3 查询对应的 measures -->
+  <select id="selectMeasures" resultType="com.spring.web.model.ADangerManual">
+    select id, measures from a_danger_manual_tbl where level1 = #{level1} and level2 = #{level2} and level3 = #{level3}
+  </select>
+
 
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

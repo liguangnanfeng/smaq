@@ -64,7 +64,7 @@ function uploadimg(obj){
       <thead>
         <tr class="text-c">
           <th width="3%">序号</th>
-          <th width="15%">检查部位</th>
+          <%--<th width="15%">检查部位</th>--%>
           <th width="30%">检查项目</th>
           <th width="40%">检查内容</th>
           <th width="12%">检查结果</th>
@@ -80,9 +80,9 @@ function uploadimg(obj){
         </c:forEach>
         <tr>
           <td class="text-c" rowspan="${x }">${pi.index + 1}</td>
-          <td class="text-c" rowspan="${x }" data-partid="${part.id }" data-partimg="${part.partImg }">${part.name }
+         <%-- <td class="text-c" rowspan="${x }" data-partid="${part.id }" data-partimg="${part.partImg }">${part.name }
             <br><input class="btn btn-primary size-M radius mt-10" type="button" onclick="uploadimg(this)" value="上传图片"/>
-          </td>
+          </td>--%>
           <c:set var="y" value="0"/>
           <c:forEach items="${itemL }" var="ch">
           <c:if test="${ch.partId == part.id}">
@@ -368,10 +368,7 @@ function article_save_submit() {
         x = "部门抽查";
       }
       if(flag == 1) {//自查
-          // 保存数据
         if($(":radio[value='2']:checked").length > 0) {
-            //表示不合格的数量大于0,就跳转到下一个页面
-            console.log('/village/check-rectification?flag=' + flag + '&id=' + checkId);
           top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);
         } else {
           top.show_tab(x, '/village/check-list?flag=' + flag)

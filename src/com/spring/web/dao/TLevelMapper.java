@@ -107,5 +107,11 @@ public interface TLevelMapper {
 
     List<String> selectAllDep3();
 
-    List<TLevel> selectLevel1(@Param("level1")String level1);
+
+    List<Map<String,Object>> selectLevel1(String level1);
+
+    List<Map<String,Object>> selectLevel3(@Param("level1")String level1, @Param("level2")String level2);
+
+
+    List<Map<String,Object>> selectMeasures(@Param("level1")String level1, @Param("level2")String level2, @Param("level3")String level3);
 }

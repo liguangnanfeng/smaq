@@ -121,7 +121,7 @@
                         con += "<td>"+item.dpname+"</td>";
                         con += "<td>"+item.dname+"</td>";
                         con += "<td>"+item.position+"</td>";
-                        con += "<td type = \"hidden\"><input id = \"dianhuas\"  value='" + item.mobile + "'></td>";
+                        con += "<input id = \"dianhuas\" type = \"hidden\"  value='" + item.mobile + "'>";
                         con += "</tr>";
                     });
                     $("#person").html(con);
@@ -316,9 +316,9 @@
           <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
             <input type="text" id="gkzt" value="" style="width: 357px" class="input-text required" readonly="readonly">
 
-            <input id = "gkztIds" >
+            <input type="hidden" id = "gkztIds" >
 
-            <input id = "gkztIdAll" >
+            <input type="hidden" id = "gkztIdAll" >
             <c:if test="${not empty departL}">
               <button class="btn btn-primary radius" type="button" onclick="chosem()">
                 <i class="Hui-iconfont">&#xe611;</i>选择管控主体

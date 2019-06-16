@@ -1077,7 +1077,7 @@ public class CompanyController_safety extends BaseController {
         }
 
         // 不是就表示有数据
-        for (ImportPhoto importPhoto : importPhotos) {
+       /* for (ImportPhoto importPhoto : importPhotos) {
             String coordinate = importPhoto.getCoordinate();
             if (null!=coordinate&&coordinate!=""){
                List<Map> list = new ArrayList<>();
@@ -1094,7 +1094,7 @@ public class CompanyController_safety extends BaseController {
                 }
                 importPhoto.setObject(list);
             }
-        }
+        }*/
         model.addAttribute("list", importPhotos);
         return "company/safety-system/control-photo";
 
@@ -1129,29 +1129,36 @@ public class CompanyController_safety extends BaseController {
     @ResponseBody
     public Result selectCoordinate(HttpServletRequest request, Map<String, Object> map, Integer id, String images, String coordinate) throws Exception {
 
+        String s ;
+
         // 数据解析
-        StringBuffer stringBuilder = new StringBuffer(coordinate);
-        stringBuilder.replace(0,1,"");
-        stringBuilder.replace(stringBuilder.length()-2,stringBuilder.length(),"");
+        if(null!=coordinate){
+            StringBuffer stringBuilder = new StringBuffer(coordinate);
+            stringBuilder.replace(0,1,"");
+            stringBuilder.replace(stringBuilder.length()-2,stringBuilder.length(),"");
 
 
-        String str = stringBuilder.toString();
-        String[] split = str.split("\"");
-        String strAll = "";
-        for (int i = 0; i < split.length; i++) {
-            if(!",".equals(split[i])){
-                // 表示是数组
-                if(i==split.length-1){
-                    strAll+=split[i];
-                }else{
-                    strAll+=split[i]+"/";
+            String str = stringBuilder.toString();
+            String[] split = str.split("\"");
+            String strAll = "";
+            for (int i = 0; i < split.length; i++) {
+                if(!",".equals(split[i])){
+                    // 表示是数组
+                    if(i==split.length-1){
+                        strAll+=split[i];
+                    }else{
+                        strAll+=split[i]+"/";
+                    }
                 }
             }
+
+            StringBuffer stringBuilder1 = new StringBuffer(strAll);
+            stringBuilder1.replace(0,1,"");
+             s = stringBuilder1.toString().replaceAll("\'", "");
+        }else{
+            s="";
         }
 
-        StringBuffer stringBuilder1 = new StringBuffer(strAll);
-        stringBuilder1.replace(0,1,"");
-        String s = stringBuilder1.toString().replaceAll("\'", "");
 
         User user = getLoginUser(request);
 

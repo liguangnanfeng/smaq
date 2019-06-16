@@ -181,16 +181,16 @@
             <th style="min-width:100px">岗位/部位</th>
             <th style="min-width:100px">风险等级</th>
             <th style="min-width:100px">地图标示</th>
-            <th style="min-width:150px">风险类型</th>
+           <%-- <th style="min-width:150px">风险类型</th>
             <th style="min-width:200px">风险因素</th>
-            <th style="min-width:200px">防范措施</th>
+            <th style="min-width:200px">防范措施</th>--%>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${list }" var="be" varStatus="index">
             <tr id="line_${index.index + 1}">
                 <td class="text-c">${index.index + 1}</td>
-                <td><c:if test="${not empty be.level1}">${be.level1 } > ${be.level2 }</c:if></td>
+                <td><c:if test="${not empty be.level1}">${be.level1 } <%--> ${be.level2 }--%></c:if></td>
                 <td class="text-c">
                     <c:choose>
                         <c:when test="${be.level eq '红色'}"><font class="col-a">${be.level}</font></c:when>
@@ -205,11 +205,11 @@
                         <c:when test="${empty be.lnglat}"><font style="color:red">否</font></c:when>
                     </c:choose>
                 </td>
-                <td>${be.type }</td>
-                <td>${be.factors }</td>
+                <%--<td>${be.type }</td>
+                <td>${be.factors }</td>--%>
                 <td style="display:none">${be.lnglat }</td>
                 <td style="display:none">${be.id }</td>
-                <td>${empty be.gkcs ? be.measures :be.gkcs }</td>
+                <%--<td>${empty be.gkcs ? be.measures :be.gkcs }</td>--%>
             </tr>
         </c:forEach>
         </tbody>

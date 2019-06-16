@@ -50,28 +50,33 @@
             background: #D9EDF7;
             color: #31708F
         }
+
+        .addItem1 .cl {
+            margin-top: -18px;
+        }
     </style>
     <script>
-        var checkType = null ;   //-1基础 -2现场
-        var level2s =[];   //level数据数组
+        var checkType = null;   //-1基础 -2现场
+        var level2s = [];   //level数据数组
         function nature(obj) {
 
             var cType = $(obj);
             checkType = parseInt(cType.val());
-            if(checkType==0){
+            if (checkType == 0) {
                 $('#addContainer').html('');
                 $(".addCh3").hide();
                 $(".addCh1").hide();
+                i=0;
                 return
             }
             $.ajax({
                 type: "POST",
                 url: getRootPath() + '/village/select-all-level1',
-                data: {checkType:checkType},
+                data: {checkType: checkType},
                 async: false,
                 dataType: "json",
                 success: function (result) {
-                    level2s = result ;
+                    level2s = result;
                 },
                 complete: function (XMLHttpRequest, textStatus) {
                     // layer.close(index);
@@ -84,6 +89,7 @@
             $('#addContainer').html('');
             $(".addCh3").hide();
             $(".addCh1").css("display", 'block');
+            i=0;
             //未选择
             // if ('0' == cType.val()) {
             //     return null;
@@ -424,44 +430,48 @@
         }
 
 
-
-
     </script>
-     <%--type==1挪出来的第四个检查项    --%>
+    <%--type==1挪出来的第四个检查项    --%>
     <%--<div class="col-xs-4 cl level4">--%>
-        <%--<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>检查内容</label>--%>
-        <%--<div class="formControls col-xs-8 col-sm-9">--%>
-        <%--<span class="checkedList` + i + ` select-box inline">--%>
-        <%--<select name="content1Id" class="content1Id" >--%>
-        <%--<option value="0">选择检查内容</option>--%>
-        <%--</select>--%>
-        <%--</span>--%>
-        <%--</div>--%>
+    <%--<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>检查内容</label>--%>
+    <%--<div class="formControls col-xs-8 col-sm-9">--%>
+    <%--<span class="checkedList` + i + ` select-box inline">--%>
+    <%--<select name="content1Id" class="content1Id" >--%>
+    <%--<option value="0">选择检查内容</option>--%>
+    <%--</select>--%>
+    <%--</span>--%>
+    <%--</div>--%>
     <%--</div>--%>
 
     <script>
         //        查找第二个选择的选择项
 
-        function findSelect2(obj,index){
-          var current = $(obj);
-          var dom = document.querySelector('.selectTwo'+index);
-          var val = current.val();
-          console.log(val);
+        function findSelect2(obj) {     //2019/6/15  by qy
+            var current = $(obj);
+            var index = current.data("index");
+            var dom = $('.selectTwo' + index);
+            var dom2 = $('.selectThree' + index);
+            var val = current.val();
+            dom.empty();
+            dom.append('<option value="0">选择检查项目</option>');
+            dom2.empty();
+            dom2.append('<option value="0">选择检查内容</option>');
+            if(val==0){
+                return
+            }
             $.ajax({
                 type: "POST",
                 url: getRootPath() + '/village/select-all-level3',
-                data: {checkType:checkType,  level2:val},
+                data: {checkType: checkType, level2: val},
                 async: false,
                 // contentType: "application/json",
                 dataType: "json",
                 success: function (data) {
-                    console.log(data)
                     data.map(function (item, index) {
                         var opt = document.createElement("option");
                         opt.value = item.level3;
                         opt.innerText = item.level3;
-                        dom.appendChild(opt);
-
+                        dom.append(opt);
                     })
 
 
@@ -474,25 +484,31 @@
             });
 
         }
+
         //        查找第三个选择的选择项
-        function findSelect3(obj,index){
+        function findSelect3(obj) {
             var current = $(obj);
-            var dom = document.querySelector('.selectThree'+index);
+            var index = current.data("index");
+            var dom = $('.selectThree' + index);
             var val = current.val();
-            var select1_val =$('.selectOne'+index).val();//第一个选择框的值
+            var select1_val = $('.selectOne' + index).val();//第一个选择框的值
+            dom.empty();
+            dom.append('<option value="0">选择检查内容</option>');
+            if(val==0){
+                return
+            }
             $.ajax({
                 type: "POST",
                 url: getRootPath() + '/village/select-all-measures',
-                data: {checkType:checkType,level2:select1_val,level3:val},
+                data: {checkType: checkType, level2: select1_val, level3: val},
                 async: false,
                 dataType: "json",
                 success: function (data) {
-                    console.log(data)
                     data.map(function (item, index) {
                         var opt = document.createElement("option");
-                        opt.value = item.measures;
+                        opt.value = item.id;
                         opt.innerText = item.measures;
-                        dom.appendChild(opt);
+                        dom.append(opt);
 
                     })
 
@@ -506,20 +522,84 @@
             });
 
         }
+
+        function save(){
+            var tableName = $("#title").val();
+            var checkType = $("#checkNature").val();
+            if(!tableName){
+                alert('请填写检查表名称')
+                return
+            }
+            if(checkType==0){
+                alert('请选择检查方式')
+                return
+            }
+            var checkItemList = [];  //可选择的检查项id数组
+            var cusCheckItemList = [];//自定义检查项
+            for (var j = 1; j <= i; j++) {
+                var itemId = $('.selectThree' + j).val();   //选择的检查项的id
+                var l3 = $('#project' + j).val()   //level3数据
+                var l4 =    $('#content' + j).val()  //level4数据
+                if(itemId&&itemId!=0){
+                    checkItemList.push(parseInt(itemId));
+                }
+                if(l3&&l4){
+                    var obj = {level3:l3,level4:l4};
+                    cusCheckItemList.push(obj)
+                }
+            }
+            if(checkItemList.length==0&&cusCheckItemList.length==0){
+                alert('未设置检查项');
+                 return
+            }
+
+            var params = {
+                "flag":'${flag}',
+                "tableName": tableName,//检查表名称
+                "checkType": checkType,//检查方式
+                "selectItems": checkItemList,//检查项 数组 单个对象 bm 部门 gw 项目 dx 检查项目
+                "inputItems": cusCheckItemList,//自定义检查项 数组 单个对象 bm 部门 gw 项目 project 自定义检查项目 content自定义检查内容
+            }
+            $.ajax({
+                type: "POST",
+                url: getRootPath() + '/village/save-administrative',
+                data: JSON.stringify(params),
+                async: false,
+                contentType: "application/json",
+                dataType: "json",
+                success: function (result) {
+                    if (result.status == 0) {
+                        alert('保存成功');
+                    } else {
+                        alert('保存失败');
+                    }
+
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    // layer.close(index);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("添加失败")
+                }
+            });
+        }
+
+
+
 
 
         var i = 0;
 
-        function addItem(type) {
+        function addItem(type) {           //2019/6/15  by qy
             i++;
-            if (1 == type) {      //2019/6/15  by qy
+            if (1 == type) {
 
-        var add1 = `<div class="addItem` + i + ` row" style="height: 50px" >
-        <div class="col-xs-4 cl level1">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>选择一级分类</label>
-        <div class="department formControls col-xs-8 col-sm-9">
+                var add1 = `<div class="addItem` + i + ` row" style="height: 31px" >
+        <div class="col-xs-3 cl level1">
+        <label class="form-label col-xs-5 col-sm-5"><span class="c-red">*</span>选择一级分类</label>
+        <div class="department formControls col-xs-7 col-sm-7">
 
-        <select name="departmentId" style="width:300px;height: 31px" class="selectOne`+i+` departmentId " data-index=`+i+`  onChange="findSelect2(this,i)">
+        <select name="departmentId" style="width:300px;height: 31px" class="selectOne` + i + ` departmentId " data-index=` + i + `  onChange="findSelect2(this,i)">
         <option value="0" >请选择一级分类</option>
 
         </select>
@@ -527,22 +607,22 @@
         </div>
         </div>
 
-        <div class="col-xs-4 cl level2">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>选择检查项目</label>
-        <div class="post formControls col-xs-8 col-sm-9">
+        <div class="col-xs-3 cl level2">
+        <label class="form-label col-xs-5 col-sm-5"><span class="c-red">*</span>选择检查项目</label>
+        <div class="post formControls col-xs-7 col-sm-7">
 
 
-        <select name="department2Id" style="width:300px;height: 31px" class="selectTwo`+i+` department2Id" data-index=`+i+` onchange="findSelect3(this,i)">
+        <select name="department2Id" style="width:300px;height: 31px" class="selectTwo` + i + ` department2Id" data-index=` + i + `  onchange="findSelect3(this)">
         <option value="0">选择检查项目</option>
         </select>
 
         </div>
         </div>
-        <div class="col-xs-4 cl level3">
-        <label class="form-label col-xs-4 col-sm-4"><span class="c-red">*</span>选择检查内容</label>
-        <div class="formControls col-xs-8 col-sm-8">
+        <div class="col-xs-3 cl level3">
+        <label class="form-label col-xs-5 col-sm-5"><span class="c-red">*</span>选择检查内容</label>
+        <div class="formControls col-xs-7 col-sm-7">
 
-        <select name="project1Id"  style="width:300px;height: 31px" class="selectThree`+i+` project1Id" data-index=`+i+`onchange="findCheck1(this,i)">
+        <select name="project1Id"  style="width:300px;height: 31px" class="selectThree` + i + ` project1Id" data-index=` + i + `">
         <option value="0">选择检查内容</option>
         </select>
 
@@ -553,22 +633,15 @@
 
                 $('#addContainer').append(add1);
 
-                var s1 = document.querySelector('.selectOne'+i)  //第一个select
+                var s1 = document.querySelector('.selectOne' + i)  //第一个select
 
                 //这里是动态添加option到select里面
-                    level2s.map(function (item,index){
+                level2s.map(function (item, index) {
                     var opt = document.createElement("option");
                     opt.value = item.level2;
                     opt.innerText = item.level2;
                     s1.appendChild(opt);
-                    })
-
-
-
-
-
-
-
+                })
 
 
             } else if (2 == type) {
@@ -643,11 +716,11 @@
 
         </div>`;
                 $('#addContainer').append(add3);
-                console.log("====================",getRootPath());
+                console.log("====================", getRootPath());
 
                 //在这里渲染数据!!!
                 var csval = $("#checkNature option:selected").val();
-                console.log("csval:",csval);
+                console.log("csval:", csval);
                 //第一个下拉框
                 var select1 = document.querySelector('.selectitem' + i);
                 //第二个下拉框
@@ -659,7 +732,7 @@
                     $.ajax({
                         type: "POST",
                         url: getRootPath() + '/village/select-all-level1',
-                        data: {checkType:csval},
+                        data: {checkType: csval},
                         async: false,
                         contentType: "application/json",
                         dataType: "json",
@@ -791,17 +864,17 @@
 
 
             } else if (4 == type) {
-                var add1 = `<div class="row">
-        <div class="col-xs-6 cl level1">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>检查项目 :</label>
-        <div class="formControls col-xs-8 col-sm-9">
-        <input type="text" id="project` + i + `" class="input-text">
+                var add1 = `<div class="row" style="height: 31px">
+        <div class="col-xs-3 cl level1">
+        <label class="form-label col-xs-5 col-sm-5"><span class="c-red">*</span>检查项目 :</label>
+        <div class="formControls col-xs-7 col-sm-7">
+        <input type="text" id="project` + i + `" class="input-text" style="width:300px;">
         </div>
         </div>
-        <div class="col-xs-6 cl level1">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>检查内容 :</label>
-        <div class="formControls col-xs-8 col-sm-9">
-        <input type="text" id="content` + i + `"class="input-text">
+        <div class="col-xs-3 cl level1">
+        <label class="form-label col-xs-5 col-sm-5"><span class="c-red">*</span>检查内容 :</label>
+        <div class="formControls col-xs-7 col-sm-7">
+        <input type="text" id="content` + i + `"class="input-text" style="width:300px;">
         </div>
         </div>
         </div>`;
@@ -815,13 +888,13 @@
 
 </head>
 <body>
-<nav class="breadcrumb">
-    <span>添加检查表</span>
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
-       href="javascript:location.replace(location.href);" title="刷新">
-        <i class="Hui-iconfont">&#xe68f;</i>
-    </a>
-</nav>
+<%--<nav class="breadcrumb">--%>
+<%--    <span>添加检查表</span>--%>
+<%--    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"--%>
+<%--       href="javascript:location.replace(location.href);" title="刷新">--%>
+<%--        <i class="Hui-iconfont">&#xe68f;</i>--%>
+<%--    </a>--%>
+<%--</nav>--%>
 <div class="page-container">
     <form class="form form-horizontal" id="form">
         <%-- <div class="row cl">
@@ -837,8 +910,8 @@
 
         <%--        检查方式--%>
         <%--<div class="row cl">--%>
-            <%--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查方式 :</label>--%>
-            <%--<div class="formControls col-xs-8 col-sm-9">--%>
+        <%--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查方式 :</label>--%>
+        <%--<div class="formControls col-xs-8 col-sm-9">--%>
         <%--<span class="select-box inline">--%>
 
         <%--<select name="checkType" class="select" id="checkType" onchange="time(this)">--%>
@@ -848,13 +921,13 @@
         <%--</select>--%>
         <%--</span>--%>
 
-            <%--</div>--%>
+        <%--</div>--%>
         <%--</div>--%>
         <%--<div class="row cl dq" style="display:none">--%>
-            <%--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请填写定期时间 :</label>--%>
-            <%--<div class="formControls col-xs-8 col-sm-9">--%>
-                <%--<input type="number" min="0" max="7" name="user_date" id='dataTime'/>--%>
-            <%--</div>--%>
+        <%--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请填写定期时间 :</label>--%>
+        <%--<div class="formControls col-xs-8 col-sm-9">--%>
+        <%--<input type="number" min="0" max="7" name="user_date" id='dataTime'/>--%>
+        <%--</div>--%>
         <%--</div>--%>
         <%--        检查性质--%>
         <div class="row cl">
@@ -1018,7 +1091,7 @@
 
             <div class="row cl">
                 <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2 mt-20">
-                    <button onClick="saveCheckMenu()" class="btn btn-primary radius" type="button"
+                    <button onClick="save()" class="btn btn-primary radius" type="button"
                             style="padding: 0 70px;">
                         <i class="Hui-iconfont">&#xe632;</i>保存检查表
                     </button>

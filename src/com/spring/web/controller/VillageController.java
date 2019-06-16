@@ -3062,7 +3062,7 @@ public class VillageController extends BaseController {
     /*
     * 根据 checkType , level2 , level3  查询所有的 Measures 的信息
     */
-    @RequestMapping(value = "select-all-level3")
+    @RequestMapping(value = "select-all-measures")
     @ResponseBody
     public List<Map<String, Object>> selectAllMeasures(Integer checkType,String level2,String level3, HttpServletRequest request) {
         User user = getLoginUser(request);

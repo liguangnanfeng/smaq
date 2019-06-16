@@ -444,27 +444,25 @@
 
         function findSelect2(obj,index){
           var current = $(obj);
-          var dom = $('.selectTwo'+index);
+          var dom = document.querySelector('.selectTwo'+index);
           var val = current.val();
           console.log(val);
             $.ajax({
                 type: "POST",
                 url: getRootPath() + '/village/select-all-level3',
-                data: {checkType:checkType, Level2:val},
+                data: {checkType:checkType,  level2:val},
                 async: false,
                 // contentType: "application/json",
                 dataType: "json",
                 success: function (data) {
                     console.log(data)
-                    // console.log("高危数据调用成功");
-                    // console.log('l am here', data);
-                    // data.map(function (item, index) {
-                    //     var opt = document.createElement("option");
-                    //     opt.value = item.industry_id;
-                    //     opt.innerText = item.level1;
-                    //     select1.appendChild(opt);
-                    //
-                    // })
+                    data.map(function (item, index) {
+                        var opt = document.createElement("option");
+                        opt.value = item.level3;
+                        opt.innerText = item.level3;
+                        dom.appendChild(opt);
+
+                    })
 
 
                 },
@@ -479,7 +477,34 @@
         //        查找第三个选择的选择项
         function findSelect3(obj,index){
             var current = $(obj);
-            var dom = $('.selectOne'+i);
+            var dom = document.querySelector('.selectThree'+index);
+            var val = current.val();
+            var select1_val =$('.selectOne'+index).val();//第一个选择框的值
+            $.ajax({
+                type: "POST",
+                url: getRootPath() + '/village/select-all-measures',
+                data: {checkType:checkType,level2:select1_val,level3:val},
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    data.map(function (item, index) {
+                        var opt = document.createElement("option");
+                        opt.value = item.measures;
+                        opt.innerText = item.measures;
+                        dom.appendChild(opt);
+
+                    })
+
+
+                },
+                error: function (res) {
+
+                    console.log("level3请求出错");
+                    console.log(res);
+                }
+            });
+
         }
 
 

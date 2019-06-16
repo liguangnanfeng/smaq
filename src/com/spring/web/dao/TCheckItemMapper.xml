@@ -1048,5 +1048,9 @@
         and t2.user_id=#{uid}) s1
         group by s1.time;
     </select>
+    <!--根据checkId查询levelId-->
+    <select id="selectLevelIdByCheckId" parameterType="Integer"  resultType="Integer" >
+    SELECT level_id FROM t_check_item_tbl WHERE check_id = #{id} AND level_id IS NOT NULL;
+    </select>
 
 </mapper>

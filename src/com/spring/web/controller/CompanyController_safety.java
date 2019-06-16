@@ -4,11 +4,15 @@
  */
 package com.spring.web.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.spring.web.BaseController;
 import com.spring.web.dao.DangerCoordinateMapper;
 import com.spring.web.dao.ImportPhotoMapper;
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.*;
+import com.spring.web.model.request.ImportPhoto;
+import com.spring.web.model.request.TMap;
 import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
 import com.spring.web.service.cgf.CgfService;
@@ -18,14 +22,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.*;
 
 /**
@@ -1040,28 +1046,176 @@ public class CompanyController_safety extends BaseController {
         return "company/safety-system/risk-information-list2";
     }
 
-
-    /*
-     *  图片坐标位置 ！！！
+    /**
+     * 根据公司id查询所有的 车间/岗位风险分布图
      */
-    @RequestMapping(value = "control-addCoordinate")
+   /* @RequestMapping(value = "control-photo")
     @ResponseBody
-    public Result selectCoordinate(Model model, HttpServletRequest request, Integer id, String coordinate) throws Exception {
+    public Result selectPhoto(HttpServletRequest request,Model model ){
+        Result result = new ResultImpl();
         User user = getLoginUser(request);
+        List<ImportPhoto> importPhotos = importPhotoMapper.selectPhoto(user.getId());
+        if(null == importPhotos || importPhotos.size()==0 ){
+            return result;
+        }
+
+        result.setMess("查询成功");
+        result.setStatus("0");
+        result.setObject(importPhotos);
+
+        return result;
+    }*/
+    @RequestMapping(value = "control-photo")
+    public String selectPhoto(HttpServletRequest request, Model model) {
+
+        User user = getLoginUser(request);
+        List<ImportPhoto> importPhotos = importPhotoMapper.selectPhoto(user.getId());
+        if(null== importPhotos || importPhotos.size()==0){
+            model.addAttribute("list", importPhotos);
+
+            return "company/safety-system/control-photo";
+        }
+
+        // 不是就表示有数据
+        for (ImportPhoto importPhoto : importPhotos) {
+            String coordinate = importPhoto.getCoordinate();
+            if (null!=coordinate&&coordinate!=""){
+               List<Map> list = new ArrayList<>();
+                // 第一步根据 /进行切割
+                String[] array = coordinate.split("/");
+                for (String s1 : array) {
+                    Map<String,String> map = new LinkedHashMap<String,String>();
+                    String[] split1 = s1.split(",");
+                    for (String s : split1) {
+                        String[] split = s.split(":");
+                        map.put(split[0],split[1]);
+                    }
+                    list.add(map);
+                }
+                importPhoto.setObject(list);
+            }
+        }
+        model.addAttribute("list", importPhotos);
+        return "company/safety-system/control-photo";
+
+    }
+
+    @RequestMapping(value = "modify-photo")
+    @ResponseBody
+    public Result modifyPhoto(HttpServletRequest request, Integer id) {
+
+        ImportPhoto importPhoto = importPhotoMapper.selectAllById(id);
+        // 判断图片是否为空
+        if (null == importPhoto) {
+
+            return null;
+        }
+
+        Result result = new ResultImpl();
+        result.setObject(importPhoto);
+
+        return result;
+    }
+
+    /**
+     * TODO 保存图片坐标位置 ！！！
+     * 通过id找到对应的记录,然后进行更新操作
+     *
+     * @param request
+     * @return
+     * @throws Exception images
+     */
+    @RequestMapping(value = "control-addCoordinate", method = RequestMethod.POST)
+    @ResponseBody
+    public Result selectCoordinate(HttpServletRequest request, Map<String, Object> map, Integer id, String images, String coordinate) throws Exception {
+
+        // 数据解析
+        StringBuffer stringBuilder = new StringBuffer(coordinate);
+        stringBuilder.replace(0,1,"");
+        stringBuilder.replace(stringBuilder.length()-2,stringBuilder.length(),"");
+
+
+        String str = stringBuilder.toString();
+        String[] split = str.split("\"");
+        String strAll = "";
+        for (int i = 0; i < split.length; i++) {
+            if(!",".equals(split[i])){
+                // 表示是数组
+                if(i==split.length-1){
+                    strAll+=split[i];
+                }else{
+                    strAll+=split[i]+"/";
+                }
+            }
+        }
+
+        StringBuffer stringBuilder1 = new StringBuffer(strAll);
+        stringBuilder1.replace(0,1,"");
+        String s = stringBuilder1.toString().replaceAll("\'", "");
+
+        User user = getLoginUser(request);
+
         Result result = new ResultImpl();
 
-        Boolean b = importPhotoMapper.saveCoordinate(id, coordinate);
-        if (b == true) {
+        try {
+            ImportPhoto importPhoto = importPhotoMapper.selectAllById(id);
+            // 判断图片是否为空
+            if (null == images || null == importPhoto) {
+                return null;
+            }
+
+            // 设置base64数据解析
+            BASE64Decoder decoder = new BASE64Decoder();
+            images = images.replaceAll(" ", "+");
+            byte[] bytes = decoder.decodeBuffer(images.substring(images.indexOf(",") + 1));
+            images = images.replace("base64", "");
+            for (int i = 0; i < bytes.length; i++) {
+                if (bytes[i] < 0) {
+                    //调整异常数据
+                    bytes[i] += 256;
+                }
+            }
+            // 获取绝对路径
+            String realPath = request.getSession().getServletContext().getRealPath("/");
+            // 获取保存的相对路径
+            String path = "/images/upload/";
+            // 生成图片的名称
+            String photoName = UUID.randomUUID().toString().replaceAll("-", "");
+
+            // 判断是否存在
+            File file = new File(realPath + path);
+            if (!file.exists() && !file.isDirectory()) {
+                System.out.println("不存在");
+                file.mkdir();
+            }
+
+            // 生成jpeg图片
+            String imgFilePath = realPath + path + photoName + ".jpg";
+
+            // 数据库图片路径
+            String filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + photoName + ".jpg";
+
+            OutputStream ops = new FileOutputStream(imgFilePath);
+            ops.write(bytes);
+            ops.flush();
+            ops.close();
+
+            importPhoto.setUrl(filePath);
+            importPhoto.setCoordinate(s);
+            importPhotoMapper.updateByInportPhoto(importPhoto);
+
             result.setMess("编辑成功。");
-        } else {
+
+        } catch (IOException e) {
+            e.printStackTrace();
             result.setMess("编辑异常，请重新操作。");
+
         }
         return result;
     }
 
-
     /*
-     *  车间/岗位 文件上传！！！
+     *  TODO 车间/岗位 文件上传！！！
      */
     @RequestMapping(value = "save-photo", method = RequestMethod.POST)
     public void companyLeadin(@RequestParam MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -1071,7 +1225,7 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-     *  车间/岗位 文件删除！！！
+     *  TODO 车间/岗位 文件删除！！！
      */
     @RequestMapping(value = "delete-photo")
     @ResponseBody

@@ -9,15 +9,16 @@
             <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="coordinate" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="url1" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-        id, url, user_id, name
+        id, url, user_id, name,coordinate,url1
     </sql>
 
     <!-- 添加数据信息 -->
     <insert id="savePhoto" parameterType="com.spring.web.model.request.TMap" >
-         insert into import_photo (url,user_id,name) values(#{url},#{user_id},#{name});
+         insert into import_photo (url,user_id,name,url1) values(#{url},#{user_id},#{name},#{url1});
     </insert>
 
 
@@ -26,20 +27,23 @@
         insert into import_photo (coordinate) values(#{coordinate}) where id = #{id};
     </insert>
 
-
-
     <!-- 删除数据信息 -->
     <delete id="deletePhoto" parameterType="Integer" >
         delete from import_photo where id= #{id};
     </delete>
 
     <!-- 查询数据信息 -->
-    <select id="selectPhoto" parameterType="Integer" resultMap="BaseResultMap">
+    <select id="selectPhoto" parameterType="Integer" resultType="com.spring.web.model.request.ImportPhoto">
         select
         <include refid="Base_Column_List"/>
         from import_photo where user_id= #{userId};
     </select>
 
+    <select id="selectAllById" parameterType="Integer" resultType="com.spring.web.model.request.ImportPhoto">
+        select
+        <include refid="Base_Column_List"/>
+        from import_photo where id= #{id};
+    </select>
 
     <!-- 查询数据信息 -->
     <select id="selectOne"  resultMap="BaseResultMap">
@@ -55,8 +59,23 @@
         <set>
             <if test="url != null">
                 url = #{url,jdbcType=VARCHAR},
+                url1 = #{url1,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+    <update id="updateByInportPhoto" parameterType="com.spring.web.model.request.ImportPhoto">
+        update import_photo
+        <set>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="coordinate != null">
+                coordinate = #{coordinate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
 </mapper>

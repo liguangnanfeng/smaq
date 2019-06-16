@@ -3024,7 +3024,7 @@ public class VillageController extends BaseController {
 
 
     /*
-     * 根据 checkType 查询所有的 level 的信息
+     * 根据 checkType 查询所有的 level2 的信息
      */
     @RequestMapping(value = "select-all-level1")
     @ResponseBody
@@ -3034,9 +3034,6 @@ public class VillageController extends BaseController {
         // 根据 checkType 查询对应的 level1 信息
         if (-2 == checkType) {
             list    = aDangerManualMapper.selectLevel1("现场管理");
-
-            return list;
-
         }else if (-1 == checkType ){
              list = tLevelMapper.selectLevel1("基础管理");
         }
@@ -3044,40 +3041,40 @@ public class VillageController extends BaseController {
     }
 
 
-       /* User user = getLoginUser(request);
-        List<String> list = new ArrayList<String>();
-        checkType = -1;
-        if (-2 == checkType) {                                     //现场
-            *//*list = aCompanyManualMapper.selectlevel3BydmName(user.getId(), dpName);*//*
-            list = aDangerManualMapper.selectLevels1();
-        } else if (-1 == checkType) {                                //基础
-           *//* list = aCompanyManualMapper.selectlevel3BydmNameAndLevel3(user.getId(), dpName, "基础");*//*
-            list = tLevelMapper.selectLevels1();
+    /*
+     * 根据 checkType 和 level2  查询所有的 level3 的信息
+     */
+    @RequestMapping(value = "select-all-level3")
+    @ResponseBody
+    public List<Map<String, Object>> selectAllLevel3(Integer checkType,String level2, HttpServletRequest request) {
+        User user = getLoginUser(request);
+        List<Map<String, Object>> list = null;
+        // 根据 checkType 查询对应的 level1 信息
+        if (-2 == checkType) {
+            list    = aDangerManualMapper.selectLevel3("现场管理",level2);
+        }else if (-1 == checkType ){
+            list = tLevelMapper.selectLevel3("基础管理",level2);
         }
-        ArrayList linkedList= new ArrayList();
-        if (null != list && list.size() > 0) {
-            for (String level3 : list) {
-                LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
-                *//*List<ACompanyManual> aCompanyManuals = aCompanyManualMapper.selectAllByLevel3(user.getId(), dpName, level3);*//*
-                if (-2 == checkType) {                                     //现场
-                    List<ADangerManual> aDangerManuals = aDangerManualMapper.selectLevel1("现场管理");
-                    map.put("name", level3);
-                    map.put("list", aDangerManuals);
-                } else if (-1 == checkType) {                                //基础
-                    List<TLevel> levels = tLevelMapper.selectLevel1("基础管理");
-                    map.put("name", level3);
-                    map.put("list", levels);
-                }
-                linkedList.add(map);
-            }
+        return list;
+    }
+
+
+    /*
+    * 根据 checkType , level2 , level3  查询所有的 Measures 的信息
+    */
+    @RequestMapping(value = "select-all-measures")
+    @ResponseBody
+    public List<Map<String, Object>> selectAllMeasures(Integer checkType,String level2,String level3, HttpServletRequest request) {
+        User user = getLoginUser(request);
+        List<Map<String, Object>> list = null;
+        // 根据 checkType 查询对应的 level1 信息
+        if (-2 == checkType) {
+            list    = aDangerManualMapper.selectMeasures("现场管理",level2,level3);
+        }else if (-1 == checkType ){
+            list = tLevelMapper.selectMeasures("基础管理",level2,level3);
         }
-        return linkedList;*/
-
-
-
-
-
-
+        return list;
+    }
 
 
     /**

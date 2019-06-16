@@ -52,40 +52,62 @@
         }
     </style>
     <script>
-
+        var checkType = null ;   //-1基础 -2现场
+        var level2s =[];   //level数据数组
         function nature(obj) {
             var cType = $(obj);
+            checkType = cType.val();
+            $.ajax({
+                type: "POST",
+                url: getRootPath() + '/village/select-all-level1',
+                data: {checkType:checkType},
+                async: false,
+                dataType: "json",
+                success: function (result) {
+                   console.log(result)
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    // layer.close(index);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("查询失败");
+                }
+            })
+
+            $('#addContainer').html('');
+            $(".addCh3").hide();
+            $(".addCh1").css("display", 'block');
             //未选择
-            if ('0' == cType.val()) {
-                return null;
-            } else if ('-1' == cType.val()) { // 基础检查 与高危类似
-                $('#addContainer').html('');
-                $(".addCh3").hide();
-                $(".addCh1").css("display", 'block');
-
-
-
-
-
-
-            }
-            //现场检查 选择部门岗位
-            else if ('-2' == cType.val()) {
-
-                $('#addContainer').empty();
-                $(".addCh3").hide();
-                $(".addCh1").css("display", 'block');
-                // 两套html页面，这一套不变
-
-
-            }
-            // 高危检查
-            else {
-                $('#addContainer').empty();
-                $(".addCh1").hide();
-                $(".addCh3").css("display", 'block');
-
-            }
+            // if ('0' == cType.val()) {
+            //     return null;
+            // } else if ('-1' == cType.val()) { // 基础检查 与高危类似
+            //     $('#addContainer').html('');
+            //     $(".addCh3").hide();
+            //     $(".addCh1").css("display", 'block');
+            //
+            //
+            //
+            //
+            //
+            //
+            // }
+            // //现场检查 选择部门岗位
+            // else if ('-2' == cType.val()) {
+            //
+            //     $('#addContainer').empty();
+            //     $(".addCh3").hide();
+            //     $(".addCh1").css("display", 'block');
+            //     // 两套html页面，这一套不变
+            //
+            //
+            // }
+            // // 高危检查
+            // else {
+            //     $('#addContainer').empty();
+            //     $(".addCh1").hide();
+            //     $(".addCh3").css("display", 'block');
+            //
+            // }
         }
 
 

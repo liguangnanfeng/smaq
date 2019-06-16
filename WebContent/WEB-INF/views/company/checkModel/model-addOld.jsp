@@ -55,8 +55,15 @@
         var checkType = null ;   //-1基础 -2现场
         var level2s =[];   //level数据数组
         function nature(obj) {
+
             var cType = $(obj);
-            checkType = cType.val();
+            checkType = parseInt(cType.val());
+            if(checkType==0){
+                $('#addContainer').html('');
+                $(".addCh3").hide();
+                $(".addCh1").hide();
+                return
+            }
             $.ajax({
                 type: "POST",
                 url: getRootPath() + '/village/select-all-level1',
@@ -64,7 +71,7 @@
                 async: false,
                 dataType: "json",
                 success: function (result) {
-                   console.log(result)
+                    level2s = result ;
                 },
                 complete: function (XMLHttpRequest, textStatus) {
                     // layer.close(index);
@@ -436,9 +443,37 @@
         //        查找第二个选择的选择项
 
         function findSelect2(obj,index){
-          console.log(index);
           var current = $(obj);
-          var dom = $('.selectOne'+i);
+          var dom = $('.selectTwo'+index);
+          var val = current.val();
+          console.log(val);
+            $.ajax({
+                type: "POST",
+                url: getRootPath() + '/village/select-all-level3',
+                data: {checkType:checkType, Level2:val},
+                async: false,
+                // contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    // console.log("高危数据调用成功");
+                    // console.log('l am here', data);
+                    // data.map(function (item, index) {
+                    //     var opt = document.createElement("option");
+                    //     opt.value = item.industry_id;
+                    //     opt.innerText = item.level1;
+                    //     select1.appendChild(opt);
+                    //
+                    // })
+
+
+                },
+                error: function (res) {
+
+                    console.log("level3请求出错");
+                    console.log(res);
+                }
+            });
 
         }
         //        查找第三个选择的选择项
@@ -459,39 +494,57 @@
         <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>选择一级分类</label>
         <div class="department formControls col-xs-8 col-sm-9">
 
-        <select name="departmentId" style="width:300px;height: 31px" class="selectOne`+i+` departmentId "   onChange="findSelect2(this,i)">
+        <select name="departmentId" style="width:300px;height: 31px" class="selectOne`+i+` departmentId " data-index=`+i+`  onChange="findSelect2(this,i)">
         <option value="0" >请选择一级分类</option>
-        <option value="1" >请选择一级分类</option>
-        <option value="2" >请选择一级分类</option>
+
         </select>
 
         </div>
         </div>
 
         <div class="col-xs-4 cl level2">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>选择二级分类</label>
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>选择检查项目</label>
         <div class="post formControls col-xs-8 col-sm-9">
 
 
-        <select name="department2Id" style="width:300px;height: 31px" class="selectTwo`+i+` department2Id" onchange="findSelect3(this,i)">
-        <option value="0">请选择二级分类</option>
+        <select name="department2Id" style="width:300px;height: 31px" class="selectTwo`+i+` department2Id" data-index=`+i+` onchange="findSelect3(this,i)">
+        <option value="0">选择检查项目</option>
         </select>
 
         </div>
         </div>
         <div class="col-xs-4 cl level3">
-        <label class="form-label col-xs-4 col-sm-4"><span class="c-red">*</span>检查项目</label>
+        <label class="form-label col-xs-4 col-sm-4"><span class="c-red">*</span>选择检查内容</label>
         <div class="formControls col-xs-8 col-sm-8">
 
-        <select name="project1Id"  style="width:300px;height: 31px" class="selectThree`+i+` project1Id" onchange="findCheck1(this,i)">
-        <option value="0">选择检查项目</option>
+        <select name="project1Id"  style="width:300px;height: 31px" class="selectThree`+i+` project1Id" data-index=`+i+`onchange="findCheck1(this,i)">
+        <option value="0">选择检查内容</option>
         </select>
 
         </div>
         </div>
 
         </div>`;
+
                 $('#addContainer').append(add1);
+
+                var s1 = document.querySelector('.selectOne'+i)  //第一个select
+
+                //这里是动态添加option到select里面
+                    level2s.map(function (item,index){
+                    var opt = document.createElement("option");
+                    opt.value = item.level2;
+                    opt.innerText = item.level2;
+                    s1.appendChild(opt);
+                    })
+
+
+
+
+
+
+
+
 
             } else if (2 == type) {
 
@@ -916,7 +969,7 @@
                             style="padding: 0 70px;">
                         <i class="Hui-iconfont">&#xe632;</i>新增检查项
                     </button>
-                    <button onClick="addItem(2)" class="btn btn-primary radius" type="button"
+                    <button onClick="addItem(4)" class="btn btn-primary radius" type="button"
                             style="padding: 0 70px;">
                         <i class="Hui-iconfont">&#xe632;</i>新增自定义检查项
                     </button>

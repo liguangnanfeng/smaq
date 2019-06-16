@@ -3576,7 +3576,8 @@ public class CompanyController_cd extends BaseController {
      * 没有兼容小程序
      */
     @RequestMapping(value = "check-detail")
-    public String checkDetail(Integer id, Model model, Integer jcxq) throws Exception {
+    public String checkDetail(Integer id, Model model, Integer jcxq,HttpServletRequest request) throws Exception {
+        User loginUser = getLoginUser(request);
         // 根据id查询的是检查表信息
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
         Integer type = tc.getType();
@@ -3599,14 +3600,14 @@ public class CompanyController_cd extends BaseController {
                         }
                 }
                 if(list.size()==0){
-                    name = companyMapper.selectByPrimaryKey(tc.getUserId()).getCharge();
+                    name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
                     tc.setCheckCompany(name);
                 }else{
                     name = list.get(0);
                     tc.setCheckCompany(name);
                 }
             }else{
-                name = companyMapper.selectByPrimaryKey(tc.getUserId()).getCharge();
+                name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
                 tc.setCheckCompany(name);
             }
 
@@ -3657,6 +3658,9 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("check", tc);
         model.addAttribute("flag",tc.getFlag());
         model.addAttribute("itemL", iteml);
+        if(null==name||"".equals(name)){
+            name = companyMapper.selectByPrimaryKey(loginUser.getId()).getSafety();
+        }
         model.addAttribute("name",name);
         // 根据检查记录的id获取详细的信息
         model.addAttribute("listM", tCheckMapper.selectCompany(id));

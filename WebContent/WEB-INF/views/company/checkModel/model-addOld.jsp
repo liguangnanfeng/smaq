@@ -554,10 +554,10 @@
             }
 
             var params = {
-                "flag":'${flag}',
+                "flag":parseInt('${flag}'),
                 "tableName": tableName,//检查表名称
-                "checkType": checkType,//检查方式
-                "selectItems": checkItemList,//检查项 数组 单个对象 bm 部门 gw 项目 dx 检查项目
+                "checkType": parseInt(checkType),//检查方式
+                "selectItems": checkItemList.join(","),//检查项 数组 单个对象 bm 部门 gw 项目 dx 检查项目
                 "inputItems": cusCheckItemList,//自定义检查项 数组 单个对象 bm 部门 gw 项目 project 自定义检查项目 content自定义检查内容
             }
             $.ajax({
@@ -570,6 +570,11 @@
                 success: function (result) {
                     if (result.status == 0) {
                         alert('保存成功');
+                        window.parent.location.href = '${ly }/company/model-list-cx?flag=${flag}&type=1&template=2';
+
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+
                     } else {
                         alert('保存失败');
                     }
@@ -901,7 +906,7 @@
           <img alt="" src="${ly }/images/danger.jpg" style="margin-left:10%;height:120px;"/>
         </div> --%>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">检查表名称：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>检查表名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <input type="text" id="title" style="width:350px" class="input-text"
                        maxlength="50" placeholder="根据检查需要填写或空缺"/>

@@ -165,14 +165,14 @@
 <%--          <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel')" onclick="Hui_admin_tab(this)" href="javascript:;">--%>
 <%--              <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加检查模版--%>
 <%--          </a>--%>
-            <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/getCheckModelBasic?flag=${flag}')"
+            <a class="btn btn-primary radius" onclick="show_dialog('添加检查表','${ly }/village/getCheckModelBasic?flag=${flag}')"
                onclick="Hui_admin_tab(this)" href="javascript:;">
               <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加检查模版
           </a>
-               <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel?flag=${flag}')"
-                  onclick="Hui_admin_tab(this)" href="javascript:;">
-              <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加标准检查模版
-          </a>
+<%--               <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel?flag=${flag}')"--%>
+<%--                  onclick="Hui_admin_tab(this)" href="javascript:;">--%>
+<%--              <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加标准检查模版--%>
+<%--          </a>--%>
         </span>
         </c:if>
 <%--        <c:if test="${flag == 3 }">--%>

@@ -210,6 +210,7 @@
                         </c:choose>
                     </td>
                     <td>
+
                         <c:if test="${list.file_address==null}">
                             <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="yulan(this)"
                                href="javascript:;">预览文件</a>
@@ -217,8 +218,8 @@
                                href="javascript:;">下载文件</a>
                         </c:if>
                         <c:if test="${list.file_address!=null}">
-                            <%--<a style="text-decoration:none;margin-bottom:5px;display: inline-block"
-                               data-src="${list.file_address}" onclick="yulan(this)" href="javascript:;">预览文件</a>--%>
+                            <a style="text-decoration:none;margin-bottom:5px;display: inline-block"
+                               data-src="${list.file_address}" onclick="yulan(this)" href="javascript:;">预览文件</a>
                             <a style="text-decoration:none;margin-bottom:5px;display: inline-block"
                                data-src="${list.file_address}" onclick="xiazai(this)" href="javascript:;">下载文件</a>
                         </c:if>
@@ -305,7 +306,7 @@
     <form enctype="multipart/form-data" id="fm1" method='post'>
         <input type="text" name="itemId" value='' style="display: none" id="fm1_imput"/>
         <input type="file" name="file"
-               accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+               accept=".pdf"
                id="upload" style="display: none">
     </form>
 
@@ -327,13 +328,13 @@
         var form = document.querySelector("#fm1");
         var formdata = new FormData(form);
         $.ajax({
-            url: getRootPath() + "/api/map/B004",    //请求的url地址 
+            url: getRootPath() + "/api/map/B005",    //请求的url地址 
             data: formdata,    //参数值
             type: "POST",   //请求方式
             processData: false,
             contentType: false,
             success: function (res) {
-//请求成功时处理
+            //请求成功时处理
                 if (res.status == 0) {
                     current.prevAll().css('display', 'inline-block');//把隐藏的按钮显示出来
                     current.prevAll().attr("data-src", getRootPath() + res);//为隐藏的按钮设置属性为返回的路径
@@ -345,7 +346,7 @@
                 }
             },
             error: function (res) {
-//请求出错处理
+                //请求出错处理
                 console.log(res, '请求失败');
                 layer.msg('上传失败');
             }

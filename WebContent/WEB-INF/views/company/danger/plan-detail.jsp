@@ -92,14 +92,12 @@ body .select {
   <script src="${ly }/js/jquery.jqprint-0.3.js"></script>
 <script type="text/javascript">
 function showpicture(src){
-  console.log("flag"+${flag});
   $(".div_imgp img").attr("src", src);
   $("#modal-plan").modal("show")}
 
   function pr_() {
   $("#div_container").jqprint();
   }
-
 </script>
 </head>
 <body>
@@ -135,26 +133,24 @@ function showpicture(src){
       <!-- 判断是否有治理意见表 -->
       <c:if test="${listM.c > 0 && listM.status == 2 }">
         <!-- 已检查过且有隐患的需要治理意见表 -->
-        
       <!--   <c:choose>
           <c:when test="${listM.t > 0}"> -->
             <!-- 已设置整改意见 -->
             <button onClick="location.href = '/village/check-rectification?flag=${flag }&id=${listM.id }'"
               class="btn btn-success radius" type="button" style="padding: 0 70px;margin-right: 20px">整改详情</button>
-       
       <!--     </c:when>
         </c:choose> -->
+
+        <!-- 已经有复查 -->
         <c:if test="${listM.c3 > 0}">
           <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }'"
             class="btn btn-success radius" type="button" style="padding: 0 70px;">复查详情</button>
         </c:if>
-
-        <%--显示为检查文书--%>
+ <%--显示为检查文书--%>
        <c:if test="${flag==2 || flag== 3 }" >
          <button onClick="location.href = '/village/check-document?checkId=${check.id }'"
                  class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书</button>
        </c:if>
-
       </c:if>
     </div>
   </div>
@@ -178,7 +174,10 @@ function showpicture(src){
             <th width="10%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>
             <th width="5%">检查结果</th>
             <th width="15%">隐患内容</th>
-            <th width="7%">隐患等级</th>
+            <c:if test="${flag != 2}" >
+              <th width="7%">隐患等级</th>
+            </c:if>
+
             <th width="12%">查看</th>
           </tr>
         </thead>
@@ -237,14 +236,17 @@ function showpicture(src){
 
             <td class="text-c" >${ch.measures == "" ? "暂无数据" : ch.measures}</td>
 
-            <td>
-              <c:choose>
-                <c:when test="${ch.level eq '红色'}"><font class="col-a">${ch.level}</font></c:when>
-                <c:when test="${ch.level eq '橙色'}"><font class="col-b">${ch.level}</font></c:when>
-                <c:when test="${ch.level eq '黄色'}"><font class="col-c">${ch.level}</font></c:when>
-                <c:when test="${ch.level eq '蓝色'}"><font class="col-d">${ch.level}</font></c:when>
-              </c:choose>
-            </td>
+            <c:if test="${flag != 2}" >
+              <td>
+                <c:choose>
+                  <c:when test="${ch.level eq '红色'}"><font class="col-a">${ch.level}</font></c:when>
+                  <c:when test="${ch.level eq '橙色'}"><font class="col-b">${ch.level}</font></c:when>
+                  <c:when test="${ch.level eq '黄色'}"><font class="col-c">${ch.level}</font></c:when>
+                  <c:when test="${ch.level eq '蓝色'}"><font class="col-d">${ch.level}</font></c:when>
+                </c:choose>
+              </td>
+            </c:if>
+
 
             <td class="text-c" >
                 <button class="btn radius btn-danger size-S ml-20" onClick="showpicture('${ch.files}')">
@@ -377,7 +379,7 @@ function showpicture(src){
               <div style="float: left; width: 100%; min-height: 150px;">
                 <div class="div_pleft  mt-10 mb-10">受检负责人签字：</div>
                 <div class="div_pright  mt-10 mb-10">
-                  <input type="text" style="width: 150px" value="${name }" class="input-text" maxlength="50" disabled="disabled" />
+                  <input type="text" style="width: 150px" value="${name}" class="input-text" maxlength="50" disabled="disabled" />
                 </div>
               </div>
             </td>

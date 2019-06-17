@@ -4,15 +4,12 @@
  */
 package com.spring.web.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.spring.web.BaseController;
 import com.spring.web.dao.DangerCoordinateMapper;
 import com.spring.web.dao.ImportPhotoMapper;
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.*;
 import com.spring.web.model.request.ImportPhoto;
-import com.spring.web.model.request.TMap;
 import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
 import com.spring.web.service.cgf.CgfService;
@@ -22,7 +19,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
 
@@ -454,99 +454,93 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-    @RequestMapping({"grade-table"})
-    public String grade(Model model, HttpServletRequest request) throws Exception {
-
-
-        return "company/safety-system/grade-table";
-    }
-
     /*
      * 重大风险评估数据添加！！！
      * */
     @RequestMapping({"danger-coordinate"})
     @ResponseBody
-    public Result coordinate(Model model, HttpServletRequest request, Integer danger1, Integer danger2, Integer danger3, Integer danger4, Integer danger5,
-                             Integer danger6, Integer danger7, Integer danger8, Integer danger9, Integer danger10,
-                             Integer danger11, Integer danger12, Integer danger13, Integer counts) throws Exception {
+    public Result coordinate(Model model, HttpServletRequest request,Integer id, Double danger1, Double danger2, Double danger3, Double danger4, Double danger5,
+                             Double danger6, Double danger7, Double danger8, Double danger9, Double danger10,
+                             Double danger11, Double danger12, Double danger13, Double counts) throws Exception {
 
         User user = this.getLoginUser(request);
         Result result = new ResultImpl();
         DangerCoordinate dangerCoordinate = new DangerCoordinate();
 
         dangerCoordinate.setUser_id(user.getId());
+
         if (null == danger1) {
-            dangerCoordinate.setDanger1(0);
+            dangerCoordinate.setDanger1(0.00);
         } else {
             dangerCoordinate.setDanger1(danger1);
         }
         if (null == danger2) {
-            dangerCoordinate.setDanger2(0);
+            dangerCoordinate.setDanger2(0.00);
         } else {
             dangerCoordinate.setDanger2(danger2);
         }
         if (null == danger3) {
-            dangerCoordinate.setDanger3(0);
+            dangerCoordinate.setDanger3(0.00);
         } else {
             dangerCoordinate.setDanger3(danger3);
         }
         if (null == danger4) {
-            dangerCoordinate.setDanger4(0);
+            dangerCoordinate.setDanger4(0.00);
         } else {
             dangerCoordinate.setDanger4(danger4);
         }
         if (null == danger5) {
-            dangerCoordinate.setDanger5(0);
+            dangerCoordinate.setDanger5(0.00);
         } else {
             dangerCoordinate.setDanger5(danger5);
         }
         if (null == danger6) {
-            dangerCoordinate.setDanger6(0);
+            dangerCoordinate.setDanger6(0.00);
         } else {
             dangerCoordinate.setDanger6(danger6);
         }
         if (null == danger7) {
-            dangerCoordinate.setDanger7(0);
+            dangerCoordinate.setDanger7(0.00);
         } else {
             dangerCoordinate.setDanger7(danger7);
         }
         if (null == danger8) {
-            dangerCoordinate.setDanger8(0);
+            dangerCoordinate.setDanger8(0.00);
         } else {
             dangerCoordinate.setDanger8(danger8);
         }
         if (null == danger9) {
-            dangerCoordinate.setDanger9(0);
+            dangerCoordinate.setDanger9(0.00);
         } else {
             dangerCoordinate.setDanger9(danger9);
         }
         if (null == danger10) {
-            dangerCoordinate.setDanger10(0);
+            dangerCoordinate.setDanger10(0.00);
         } else {
             dangerCoordinate.setDanger10(danger10);
         }
         if (null == danger11) {
-            dangerCoordinate.setDanger11(0);
+            dangerCoordinate.setDanger11(0.00);
         } else {
             dangerCoordinate.setDanger11(danger11);
         }
         if (null == danger12) {
-            dangerCoordinate.setDanger12(0);
+            dangerCoordinate.setDanger12(0.00);
         } else {
             dangerCoordinate.setDanger12(danger12);
         }
         if (null == danger13) {
-            dangerCoordinate.setDanger13(0);
+            dangerCoordinate.setDanger13(0.00);
         } else {
             dangerCoordinate.setDanger13(danger13);
         }
         if (null == counts) {
-            dangerCoordinate.setCounts(0);
+            dangerCoordinate.setCounts(0.00);
         } else {
             dangerCoordinate.setCounts(counts);
         }
 
-        boolean b = dangerCoordinateMapper.insert(dangerCoordinate);
+        boolean b = dangerCoordinateMapper.updateByPrimaryKey(dangerCoordinate);
 
         if (b) {
             result.setStatus("0");
@@ -555,9 +549,46 @@ public class CompanyController_safety extends BaseController {
             result.setStatus("1");
             result.setMess("评估异常，请重新评估。");
         }
-
         return result;
 
+    }
+
+    /*
+    * 评分页面！！！
+    * */
+    @RequestMapping({"grade-table"})
+    public String grade(Model model, HttpServletRequest request) throws Exception {
+        User user = this.getLoginUser(request);
+        // 根据 user_id 查询数据库 是否有数据
+        DangerCoordinate dangerCoordinate = dangerCoordinateMapper.selectOne(user.getId());
+        if (dangerCoordinate == null){
+            DangerCoordinate dangerCoordinate1 = new DangerCoordinate();
+            dangerCoordinate1.setDanger1(0.00);
+            dangerCoordinate1.setDanger2(0.00);
+            dangerCoordinate1.setDanger3(0.00);
+            dangerCoordinate1.setDanger4(0.00);
+            dangerCoordinate1.setDanger5(0.00);
+            dangerCoordinate1.setDanger6(0.00);
+            dangerCoordinate1.setDanger7(0.00);
+            dangerCoordinate1.setDanger8(0.00);
+            dangerCoordinate1.setDanger9(0.00);
+            dangerCoordinate1.setDanger10(0.00);
+            dangerCoordinate1.setDanger11(0.00);
+            dangerCoordinate1.setDanger12(0.00);
+            dangerCoordinate1.setDanger13(0.00);
+            dangerCoordinate1.setCounts(0.00);
+
+            dangerCoordinateMapper.insert(dangerCoordinate);
+
+            DangerCoordinate dangerCoordinate2 = dangerCoordinateMapper.selectOne(user.getId());
+
+            model.addAttribute("dangerCoordinate",dangerCoordinate2);
+
+        }else {
+            model.addAttribute("dangerCoordinate",dangerCoordinate);
+        }
+
+        return "company/safety-system/grade-table";
     }
 
 

@@ -135,7 +135,7 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO 查询企业对应的高危检查(一开始就进行获取)
+     * TODO 查询企业对应的高危检查(一开始就进行获取)(废弃)
      *
      * @param request request请求
      * @return result 高危检查条目
@@ -269,6 +269,7 @@ public class AppController_Custom_Check extends BaseController {
 
     /**
      * TODO 现场检查/查询level3
+     *      基础检查/查询level3
      *
      * @param checkLevel 现场检查条件
      * @return AppResult 小程序 现场检查项条目
@@ -462,7 +463,7 @@ public class AppController_Custom_Check extends BaseController {
     }
 
     /**
-     * TODO 根据登陆人的id查询所有部门时
+     * TODO 根据登陆人的id查询所有部门时(改掉)  company_manual_tbl中
      *
      * @param sessionId    sessionID
      * @param access_token 令牌

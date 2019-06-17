@@ -134,7 +134,7 @@
         }
 
     </style>
-    <script src="/js/jquery.jqprint-0.3.js"></script>
+<%--    <script src="/js/jquery.jqprint-0.3.js"></script>--%>
 </head>
 <body>
 <%--<nav class="breadcrumb">--%>
@@ -166,19 +166,12 @@
                         <td>1.固有危险性</td>
                         <td>重大危险源（10分）</td>
                         <td>存在一级危险化学品重大危险源的，扣10分;</td>
-                        <td rowspan="5" onclick="dafen('danger1',10,this)" class="my_text"></td>
+                        <td rowspan="4" onclick="dafen('danger1',10,this)" class="my_text"></td>
                     </tr>
                     <tr>
                         <td>1.固有危险性</td>
                         <td>重大危险源（10分）</td>
                         <td>存在二级危险化学品重大危险源的，扣8分;</td>
-
-                    </tr>
-
-                    <tr>
-                        <td>1.固有危险性</td>
-                        <td>重大危险源（10分）</td>
-                        <td>存在三级危险化学品重大危险源的，扣6分;</td>
 
                     </tr>
 
@@ -236,20 +229,19 @@
                         <td>涉及甲类、乙类火灾危险性罐区、气柜与加热炉等与产生明火的设施、装置比邻布置的，扣5分。</td>
 
                     </tr>
-
                     <tr>
                         <td>2.周边环境</td>
-                        <td>周边环境（10分）</td>
-                        <td>涉及甲类、乙类火灾危险性罐区、气柜与加热炉等与产生明火的设施、装置比邻布置的，扣5分。</td>
+                        <td>周边环境(10分）</td>
+                        <td>企业在化工园区（化工集中区）外的，扣3分；</td>
                         <td rowspan="2" onclick="dafen('danger5',10,this)" class="my_text"></td>
                     </tr>
 
                     <tr>
                         <td>2.周边环境</td>
-                        <td>周边环境（10分）</td>
-                        <td>涉及甲类、乙类火灾危险性罐区、气柜与加热炉等与产生明火的设施、装置比邻布置的，扣5分。</td>
-                    </tr>
+                        <td>周边环境(10分）</td>
+                        <td>企业外部安全防护距离不符合《危险化学品生产、储存装置个人可接受风险标准和社会可接受风险标准（试行）》的，扣10分。</td>
 
+                    </tr>
 
                     <tr>
                         <td>3.设计与评估</td>
@@ -510,7 +502,7 @@
 
             </div>
         </div>
-        <div class="row" style="margin-top: 20px">
+        <div class="row" style="margin-top: 20px;margin-bottom:50px">
             <div class="col-xs-1 col-sm-1" style="font-size: 20px;font-weight: bold" id="fenshu">
                总分：100
             </div>
@@ -541,7 +533,7 @@
                                     :</label>
                                 <div class="formControls col-xs-5 col-sm-5">
                                     <input class="input-text" type="text" name="" id="trInput"
-                                           oninput="value=value.replace(/[^\d]/g,'')"
+                                           oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
                                            style="width:150px">
                                 </div>
                                 <div class="col-xs-3 col-sm-3">

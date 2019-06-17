@@ -70,4 +70,7 @@ public interface TCheckMapper {
 
     List<Map<String, Object>> selectLevels(@Param("id") Integer id);
 
+    List<Map<String,Object>> selectAllLevel(@Param("id")Integer id);
+
+    List<Map<String,Object>> selectAllDanger(@Param("id")Integer id);
 }

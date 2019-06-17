@@ -7,20 +7,20 @@
         <constructor>
             <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="danger1" javaType="java.lang.Integer" jdbcType="DOUBLE"/>
-            <arg column="danger2" javaType="java.lang.Integer" jdbcType="DOUBLE"/>
-            <arg column="danger3" javaType="java.lang.Integer" jdbcType="DOUBLE"/>
-            <arg column="danger4" javaType="java.lang.Integer" jdbcType="DOUBLE"/>
-            <arg column="danger5" javaType="java.lang.Integer" jdbcType="DOUBLE"/>
-            <arg column="danger6" javaType="java.lang.Integer" jdbcType="DOUBLE"/>
-            <arg column="danger7" javaType="java.lang.Integer" jdbcType="DOUBLE"/>
-            <arg column="danger8" javaType="java.lang.Integer" jdbcType="DOUBLE"/>
-            <arg column="danger9" javaType="java.lang.Integer" jdbcType="DOUBLE"/>
-            <arg column="danger10" javaType="java.lang.Integer" jdbcType="DOUBLE"/>
-            <arg column="danger11" javaType="java.lang.Integer" jdbcType="DOUBLE"/>
-            <arg column="danger12" javaType="java.lang.Integer" jdbcType="DOUBLE"/>
-            <arg column="danger13" javaType="java.lang.Integer" jdbcType="DOUBLE"/>
-            <arg column="counts" javaType="java.lang.Integer" jdbcType="DOUBLE"/>
+            <arg column="danger1" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger2" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger3" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger4" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger5" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger6" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger7" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger8" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger9" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger10" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger11" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger12" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger13" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="counts" javaType="java.lang.Double" jdbcType="DOUBLE"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">

@@ -554,6 +554,12 @@
 </div>
 </body>
 <script>
+
+    <%--$(function(){--%>
+    <%--    console.log('${dangerCoordinate}');--%>
+    <%--})--%>
+
+
     var postData = {
         danger1: 0,
         danger2: 0,

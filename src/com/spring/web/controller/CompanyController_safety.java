@@ -2138,20 +2138,15 @@ public class CompanyController_safety extends BaseController {
         return "company/safety-system/plan-add0";
     }
 
+
     /**
-     * 评估结果
+     * TODO 评估结果
+     * @param model
+     * @param request
+     * @param flag
+     * @return
+     * @throws Exception
      */
-//    @RequestMapping(value = "control-list2")
-//    public String controlList2(Model model, HttpServletRequest request, String flag) throws Exception {
-//        User user = getLoginUser(request);
-//        Map<String, Object> m = new HashMap<String, Object>();
-//        m.put("uid", user.getId());
-//        m.put("order", 1);
-//        model.addAttribute("list", aCompanyManualMapper.selectByMap(m));
-//        model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
-//        model.addAttribute("flag", flag);
-//        return "company/safety-system/control-list2";
-//    }
     @RequestMapping(value = "control-list2")//zhangcl 2018.10.13
     public String controlList2(Model model, HttpServletRequest request, String flag) throws Exception {
         User user = getLoginUser(request);
@@ -2164,7 +2159,9 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("user", userMapper.selectByPrimaryKey(company.getUserId()));
         model.addAttribute("v", userMapper.selectByPrimaryKey(company.getVillageId()));
         List<Map<String, Object>> list = aCompanyManualMapper.selectByMap(m);
+        List<Map<String, Object>> list2 = aCompanyManualMapper.selectByMapTwo(m);
         model.addAttribute("list", list);
+        model.addAttribute("list2", list2);
 
         Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
         for (Map<String, Object> m1 : list) {

@@ -430,12 +430,19 @@ public class CompanyController_safety extends BaseController {
             List acL = null;
             if (type == null) {
 
-                zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
-
-                if (null == number || number != 2) {
+                if (null == number || number == 1) { // 现场
+                   Integer dangerIds[] = {1,3};
                     acL = this.aCompanyManualMapper.selectByAll(m);
-                } else if (number == 2) {
+                    zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
+
+                } else if (number == 2) { // 基础
+                    Integer dangerIds[] = {2,3};
                     acL = this.aCompanyManualMapper.selectBase(m);
+                    zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
+
+                }else if (number == 3){ // 设置
+
+                    zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
                 }
 
                 model.addAttribute("number", number);
@@ -2241,6 +2248,8 @@ public class CompanyController_safety extends BaseController {
                 zzjgDepartment.setPid(depId);
                 zzjgDepartment.setLevel(2);
                 zzjgDepartment.setUid(user.getId());
+                zzjgDepartment.setDangerId(1);
+                zzjgDepartment.setFlag(2);
                 zzjgDepartmentMapper.add(zzjgDepartment);
             }
         }
@@ -2256,6 +2265,8 @@ public class CompanyController_safety extends BaseController {
     Result aCompanyManualSave1s(HttpServletRequest request, Integer[] ids, Integer depId) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
+        // 根据公司 ID 查询对应的 CID 信息
+        List<ZzjgCompany> zzjgCompanyList = zzjgCompanyMapper.selectAll(user.getId());
         ZzjgDepartment dep = zzjgDepartmentMapper.selectByPrimaryKey(depId);
         String level1 = dep.getName();
         List<TLevel> tLevelList = tLevelMapper.selectAllIds(ids);
@@ -2278,6 +2289,29 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setMeasures(a.getMeasures());
             aCompanyManual.setRiskId(a.getId());
             aCompanyManualMapper.insertAdd(aCompanyManual);
+
+            // 给 zzjg_department_tbl 添加数据信息
+            List<ZzjgDepartment> zzjgDepartmentList = zzjgDepartmentMapper.selectCount(depId, a.getName());
+            if (zzjgDepartmentList.size() != 0) {
+                for (int i = 0; i < zzjgDepartmentList.size(); i++) {
+                    zzjgDepartmentMapper.updateAll(new Date(), zzjgDepartmentList.get(i).getId());
+                }
+            } else {
+                ZzjgDepartment zzjgDepartment = new ZzjgDepartment();
+                zzjgDepartment.setCtime(new Date());
+                zzjgDepartment.setUtime(new Date());
+                zzjgDepartment.setDel(0);
+                zzjgDepartment.setName(a.getName());
+                for (int i = 0; i < zzjgCompanyList.size(); i++) {
+                    zzjgDepartment.setCid(zzjgCompanyList.get(i).getId());
+                }
+                zzjgDepartment.setPid(depId);
+                zzjgDepartment.setLevel(2);
+                zzjgDepartment.setUid(user.getId());
+                zzjgDepartment.setDangerId(2);
+                zzjgDepartment.setFlag(2);
+                zzjgDepartmentMapper.add(zzjgDepartment);
+            }
         }
         return result;
     }

@@ -132,6 +132,8 @@
 
                 <button class="btn btn-primary radius" onClick="selectBase()">基础风险</button>
 
+                <button class="btn btn-primary radius" onClick=" BaseSet()">风险设置</button>
+
             </c:if>
 
 
@@ -383,6 +385,10 @@
 
     function selectBase() {
         window.location.href='${ly}/company/safety-system/risk-list?number=2'
+    }
+
+    function BaseSet() {
+        window.location.href='${ly}/company/safety-system/risk-list?number=3'
     }
 
 

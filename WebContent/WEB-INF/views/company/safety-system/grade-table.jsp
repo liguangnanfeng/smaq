@@ -555,9 +555,9 @@
 </body>
 <script>
 
-    <%--$(function(){--%>
-    <%--    console.log('${dangerCoordinate}');--%>
-    <%--})--%>
+    $(function(){
+        console.log('${list}');
+    })
 
 
     var postData = {

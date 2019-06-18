@@ -38,7 +38,7 @@
 
     <select id="selectOne" resultType="com.spring.web.model.DangerCoordinate">
         select
-        <include refid="Base_Column_List"/>
+        *
         from danger_coordinate
         where user_id = #{user_id,jdbcType=DOUBLE}
     </select>

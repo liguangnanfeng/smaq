@@ -111,10 +111,6 @@
         }
     </style>
     <script type="text/javascript">
-        console.log('number', '${number}');
-        console.log('acL', '${acL}');
-        console.log('zzjgDep', '${zzjgDep}');
-
 
         /* 弹窗工具添加 */
         function addgj(depid) {
@@ -568,8 +564,12 @@
         postData.id =parseInt(id);
         postData.xc =xcVal?1:0;
         postData.jc =jcVal?1:0;
-        $.post(getRootPath() + "company/safety-system/risk-set",postData , function (result) {
-             console.log(result);
+        $.post( "${ly}/company/safety-system/risk-set",postData , function (result) {
+             if(result.status==0){
+                 layer.msg('设置成功');
+             }else{
+                 layer.msg('设置失败');
+             }
 
         })
 

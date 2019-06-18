@@ -554,12 +554,6 @@
 </div>
 </body>
 <script>
-
-    $(function(){
-        console.log('${list}');
-    })
-
-
     var postData = {
         danger1: 0,
         danger2: 0,
@@ -575,7 +569,30 @@
         danger12: 0,
         danger13: 0,
         counts: 100
-    }
+    };
+    var arr=['danger1','danger2','danger3','danger4','danger5','danger6','danger7','danger8','danger9','danger10','danger11',
+        'danger12','danger13','counts'
+    ]
+    $(function(){
+        $.get( "${ly}/company/safety-system/grade-tables-data", function (result) {
+           console.log(result);
+           if(result.status==0){   //请求成功
+               var data =  result.object;
+               arr.map(function (item){
+                   postData[item] =data[item]==null||data[item]==0?0:data[item]
+               })
+
+
+
+
+           }else{
+               layer.msg('初始化失败')
+           }
+        })
+    })
+
+
+
     var current = '';  //当前要复制的postData的key
     var currentDom = ''  // 当前要操作的dom
     var max = 0    //当前能输入的最大值

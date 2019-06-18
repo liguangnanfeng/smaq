@@ -19,10 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
 
@@ -599,10 +596,11 @@ public class CompanyController_safety extends BaseController {
     @RequestMapping({"grade-table"})
     public String grade(Model model, HttpServletRequest request) throws Exception {
         User user = this.getLoginUser(request);
-        // 根据 user_id 查询数据库 是否有数据
+       /* // 根据 user_id 查询数据库 是否有数据
         List<DangerCoordinate> list11 = dangerCoordinateMapper.selectOne(user.getId());
         if (list11.size() == 0){
             DangerCoordinate dangerCoordinate1 = new DangerCoordinate();
+            dangerCoordinate1.setUser_id(user.getId());
             dangerCoordinate1.setDanger1(0.00);
             dangerCoordinate1.setDanger2(0.00);
             dangerCoordinate1.setDanger3(0.00);
@@ -620,18 +618,72 @@ public class CompanyController_safety extends BaseController {
 
             dangerCoordinateMapper.insert(dangerCoordinate1);
 
-           /* DangerCoordinate dangerCoordinate2 = dangerCoordinateMapper.selectOne(user.getId());*/
+          *//* *//**//* DangerCoordinate dangerCoordinate2 = dangerCoordinateMapper.selectOne(user.getId());*//**//*
             List<DangerCoordinate> list = new ArrayList<>();
-            list.add(dangerCoordinate1);
+            list.add(dangerCoordinate1);*//*
+
+
+           List<DangerCoordinate> list = dangerCoordinateMapper.selectOne(user.getId());
 
             model.addAttribute("list",list);
 
         }else {
             model.addAttribute("list11",list11);
-        }
+
+            System.out.println("111111");
+        }*/
 
         return "company/safety-system/grade-table";
     }
+
+
+
+    /*
+     * 评分页面！！！
+     * */
+    @RequestMapping({"grade-tables-data"})
+    @ResponseBody
+    public Result grades(Model model, HttpServletRequest request){
+        User user = this.getLoginUser(request);
+        Result result = new ResultImpl();
+        try {
+            // 根据 user_id 查询数据库 是否有数据
+            List<DangerCoordinate> list = dangerCoordinateMapper.selectOne(user.getId());
+            if (list.size() == 0){
+                DangerCoordinate dangerCoordinate1 = new DangerCoordinate();
+                dangerCoordinate1.setUser_id(user.getId());
+                dangerCoordinate1.setDanger1(0.00);
+                dangerCoordinate1.setDanger2(0.00);
+                dangerCoordinate1.setDanger3(0.00);
+                dangerCoordinate1.setDanger4(0.00);
+                dangerCoordinate1.setDanger5(0.00);
+                dangerCoordinate1.setDanger6(0.00);
+                dangerCoordinate1.setDanger7(0.00);
+                dangerCoordinate1.setDanger8(0.00);
+                dangerCoordinate1.setDanger9(0.00);
+                dangerCoordinate1.setDanger10(0.00);
+                dangerCoordinate1.setDanger11(0.00);
+                dangerCoordinate1.setDanger12(0.00);
+                dangerCoordinate1.setDanger13(0.00);
+                dangerCoordinate1.setCounts(100.00);
+
+                dangerCoordinateMapper.insert(dangerCoordinate1);
+
+                list = dangerCoordinateMapper.selectOne(user.getId());
+
+            }
+            result.setObject(list.get(0));
+            result.setMess("查询成功");
+            result.setStatus("0");
+            return  result;
+        }catch (Exception e) {
+            log.error("出错了");
+            result.setStatus("1");
+            result.setMess("查询失败");
+            return result;
+        }
+    }
+
 
 
     /*

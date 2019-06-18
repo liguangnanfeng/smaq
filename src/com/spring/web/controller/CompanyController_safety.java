@@ -441,7 +441,6 @@ public class CompanyController_safety extends BaseController {
                     zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
 
                 }else if (number == 3){ // 设置
-
                     zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
                 }
 
@@ -459,6 +458,40 @@ public class CompanyController_safety extends BaseController {
             }
         }
     }
+
+
+    /*
+    * 风险辨识 ：设置按钮！！！
+    * */
+    @RequestMapping({"risk-set"})
+    @ResponseBody
+    public Result riskSet(Model model, Integer xc, Integer jc,Integer id){
+        Result result = new ResultImpl();
+        // 根据 ID 修改对应的数据信息在 zzjg_department_tbl 表中
+        Integer  dangerId = null;
+        if (null != xc && null != jc){
+            if (xc == 1 && jc == 1){ // 现场/基础 都有
+                dangerId = 3;
+            }else if (xc == 1 && jc == 0){// 现场 ：有   基础 ：没有
+                dangerId = 1;
+            }else if (xc == 0 && jc == 1){// 现场 ：没有   基础 ：有
+                dangerId = 2;
+            }else if (xc == 0 && jc == 0){// 现场/基础 都没有
+                dangerId = 4;
+            }
+            boolean b = zzjgDepartmentMapper.updateDangerId(id,dangerId);
+            if (b){
+                result.setStatus("0");
+            }else {
+                result.setStatus("1");
+            }
+        }else {
+            result.setStatus("1");
+        }
+        return result;
+    }
+
+
 
 
     /*
@@ -567,8 +600,8 @@ public class CompanyController_safety extends BaseController {
     public String grade(Model model, HttpServletRequest request) throws Exception {
         User user = this.getLoginUser(request);
         // 根据 user_id 查询数据库 是否有数据
-        DangerCoordinate dangerCoordinate = dangerCoordinateMapper.selectOne(user.getId());
-        if (dangerCoordinate == null){
+        List<DangerCoordinate> list11 = dangerCoordinateMapper.selectOne(user.getId());
+        if (list11.size() == 0){
             DangerCoordinate dangerCoordinate1 = new DangerCoordinate();
             dangerCoordinate1.setDanger1(0.00);
             dangerCoordinate1.setDanger2(0.00);
@@ -585,7 +618,7 @@ public class CompanyController_safety extends BaseController {
             dangerCoordinate1.setDanger13(0.00);
             dangerCoordinate1.setCounts(0.00);
 
-            dangerCoordinateMapper.insert(dangerCoordinate);
+            dangerCoordinateMapper.insert(dangerCoordinate1);
 
            /* DangerCoordinate dangerCoordinate2 = dangerCoordinateMapper.selectOne(user.getId());*/
             List<DangerCoordinate> list = new ArrayList<>();
@@ -594,7 +627,7 @@ public class CompanyController_safety extends BaseController {
             model.addAttribute("list",list);
 
         }else {
-            model.addAttribute("dangerCoordinate",dangerCoordinate);
+            model.addAttribute("list11",list11);
         }
 
         return "company/safety-system/grade-table";
@@ -1933,6 +1966,19 @@ public class CompanyController_safety extends BaseController {
 
         List<Map<String, Object>> list = aCompanyManualMapper.selectByAcs(m);
         model.addAttribute("list", list);
+
+        for(Map<String, Object> name : list){
+
+           if (Integer.parseInt((String)name.get("flag").toString()) == 1){ // 较大
+               model.addAttribute("fjgkfzr","老李头");
+           }else if(Integer.parseInt((String)name.get("flag").toString()) == 2){ // 重大
+               Company company = companyMapper.selectByPrimaryKey(user.getId());
+               model.addAttribute("fjgkfzr",company.getLegal());
+            }
+        }
+
+
+
         Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
 
         for (Map<String, Object> m1 : list) {

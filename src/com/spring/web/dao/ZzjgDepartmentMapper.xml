@@ -377,12 +377,19 @@
         #{uid,jdbcType=INTEGER}, #{dangerId,jdbcType=INTEGER} , #{flag,jdbcType=INTEGER})
     </insert>
 
-    <!-- 修改数据信息 -->
+    <!-- 修改数据时间信息 -->
     <update id="updateAll" parameterType="com.spring.web.model.ZzjgDepartment">
         update zzjg_department_tbl
         set utime = #{utime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+
+    <!-- 根据 ID 修改  -->
+    <update id="updateDangerId" parameterType="com.spring.web.model.ZzjgDepartment">
+        update zzjg_department_tbl
+        set dangerId = #{dangerId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
 </mapper>

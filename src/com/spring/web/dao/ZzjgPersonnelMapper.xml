@@ -307,6 +307,11 @@
         T1.id desc
     </select>
 
+    <!-- 根据 aCompanyManual 中 dmid  查询 对应的 公司负责人的名称 !!! -->
+    <select id="selectName" resultType="com.spring.web.model.ZzjgPersonnel">
+        select T1.name from zzjg_personnel_tbl T1 where dpid = #{dpid} and uid = #{uid} and position = "车间主任"
+    </select>
+
 
 
 

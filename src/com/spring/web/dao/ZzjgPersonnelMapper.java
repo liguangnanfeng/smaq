@@ -100,4 +100,6 @@ public interface ZzjgPersonnelMapper {
 
 
     List<Map<String,Object>> selectHashMap(@Param("uid") Integer uid, @Param("dpid")Integer dpid);
+
+    ZzjgPersonnel selectName(@Param("dpid")Integer dmid, @Param("uid")Integer uid);
 }

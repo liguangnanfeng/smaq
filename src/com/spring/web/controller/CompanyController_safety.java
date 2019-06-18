@@ -2020,14 +2020,20 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("list", list);
 
         for(Map<String, Object> name : list){
-
-           if (Integer.parseInt((String)name.get("flag").toString()) == 1){ // 较大
-               model.addAttribute("fjgkfzr","老李头");
-           }else if(Integer.parseInt((String)name.get("flag").toString()) == 2){ // 重大
-               Company company = companyMapper.selectByPrimaryKey(user.getId());
-               model.addAttribute("fjgkfzr",company.getLegal());
+            if (Integer.parseInt((String)name.get("flag").toString()) == 1){ // 较大
+                // 根据 aCompanyManual 中 dmid  查询 对应的 公司负责人的名称
+                ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectName((Integer) name.get("dmid"),user.getId());
+                if (null != zzjgPersonnel){
+                    model.addAttribute("fjgkfzr",zzjgPersonnel.getName());
+                }else {
+                    continue;
+                }
+            }else if(Integer.parseInt((String)name.get("flag").toString()) == 2){ // 重大
+                Company company = companyMapper.selectByPrimaryKey(user.getId());
+                model.addAttribute("fjgkfzr",company.getLegal());
             }
         }
+
 
 
 

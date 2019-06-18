@@ -587,9 +587,11 @@ public class CompanyController_safety extends BaseController {
 
             dangerCoordinateMapper.insert(dangerCoordinate);
 
-            DangerCoordinate dangerCoordinate2 = dangerCoordinateMapper.selectOne(user.getId());
+           /* DangerCoordinate dangerCoordinate2 = dangerCoordinateMapper.selectOne(user.getId());*/
+            List<DangerCoordinate> list = new ArrayList<>();
+            list.add(dangerCoordinate1);
 
-            model.addAttribute("dangerCoordinate",dangerCoordinate2);
+            model.addAttribute("list",list);
 
         }else {
             model.addAttribute("dangerCoordinate",dangerCoordinate);

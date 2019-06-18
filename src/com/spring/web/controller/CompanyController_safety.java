@@ -567,8 +567,8 @@ public class CompanyController_safety extends BaseController {
     public String grade(Model model, HttpServletRequest request) throws Exception {
         User user = this.getLoginUser(request);
         // 根据 user_id 查询数据库 是否有数据
-        DangerCoordinate dangerCoordinate = dangerCoordinateMapper.selectOne(user.getId());
-        if (dangerCoordinate == null){
+        List<DangerCoordinate> list11 = dangerCoordinateMapper.selectOne(user.getId());
+        if (list11.size() == 0){
             DangerCoordinate dangerCoordinate1 = new DangerCoordinate();
             dangerCoordinate1.setDanger1(0.00);
             dangerCoordinate1.setDanger2(0.00);
@@ -585,7 +585,7 @@ public class CompanyController_safety extends BaseController {
             dangerCoordinate1.setDanger13(0.00);
             dangerCoordinate1.setCounts(0.00);
 
-            dangerCoordinateMapper.insert(dangerCoordinate);
+            dangerCoordinateMapper.insert(dangerCoordinate1);
 
            /* DangerCoordinate dangerCoordinate2 = dangerCoordinateMapper.selectOne(user.getId());*/
             List<DangerCoordinate> list = new ArrayList<>();
@@ -594,7 +594,7 @@ public class CompanyController_safety extends BaseController {
             model.addAttribute("list",list);
 
         }else {
-            model.addAttribute("dangerCoordinate",dangerCoordinate);
+            model.addAttribute("list11",list11);
         }
 
         return "company/safety-system/grade-table";

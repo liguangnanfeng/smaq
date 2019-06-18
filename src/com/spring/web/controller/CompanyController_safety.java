@@ -441,7 +441,6 @@ public class CompanyController_safety extends BaseController {
                     zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
 
                 }else if (number == 3){ // 设置
-
                     zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
                 }
 
@@ -459,6 +458,40 @@ public class CompanyController_safety extends BaseController {
             }
         }
     }
+
+
+    /*
+    * 风险辨识 ：设置按钮！！！
+    * */
+    @RequestMapping({"risk-set"})
+    @ResponseBody
+    public Result riskSet(Model model, Integer xc, Integer jc,Integer id){
+        Result result = new ResultImpl();
+        // 根据 ID 修改对应的数据信息在 zzjg_department_tbl 表中
+        Integer  dangerId = null;
+        if (null != xc && null != jc){
+            if (xc == 1 && jc == 1){ // 现场/基础 都有
+                dangerId = 3;
+            }else if (xc == 1 && jc == 0){// 现场 ：有   基础 ：没有
+                dangerId = 1;
+            }else if (xc == 0 && jc == 1){// 现场 ：没有   基础 ：有
+                dangerId = 2;
+            }else if (xc == 0 && jc == 0){// 现场/基础 都没有
+                dangerId = 4;
+            }
+            boolean b = zzjgDepartmentMapper.updateDangerId(id,dangerId);
+            if (b){
+                result.setStatus("0");
+            }else {
+                result.setStatus("1");
+            }
+        }else {
+            result.setStatus("1");
+        }
+        return result;
+    }
+
+
 
 
     /*

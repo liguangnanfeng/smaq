@@ -276,13 +276,13 @@
                 </td>
                 <td class="text-c">${be.type }</td>
                 <td class="text-c">${be.factors }</td>
-                <td class="text-c">${be.gkzt }</td>
-                <td class="text-c">${be.fjgkfzr }</td>
+                <td class="text-c">${be.gkzt != null ? be.gkzt : "暂无数据" }</td>
+                <td class="text-c">${fjgkfzr}</td>
                 <td><p>${empty be.gkcs ? be.measures : be.gkcs}</p></td>
                 <td class="text-c div-pcz">
                   <input type="hidden" name="gkcs" value="${empty be.gkcs ? be.measures : be.gkcs }"/>
                   <input type="hidden" name="gkzt" value="${be.gkzt }"/>
-                  <input type="hidden" name="fjgkfzr" value="${be.fjgkfzr }"/>
+                  <input type="hidden" name="fjgkfzr" value="${fjgkfzr }"/>
                   <input type="hidden" name="buwei" value="${be.level2}"/>
                 <c:if test="${empty be.gkzt}">
                     <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑">编辑管控信息</a>

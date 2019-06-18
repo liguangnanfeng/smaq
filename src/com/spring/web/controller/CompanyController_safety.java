@@ -1933,6 +1933,21 @@ public class CompanyController_safety extends BaseController {
 
         List<Map<String, Object>> list = aCompanyManualMapper.selectByAcs(m);
         model.addAttribute("list", list);
+
+        for(Map<String, Object> name : list){
+
+            System.out.println(name.get("flag"));
+
+           if (Integer.parseInt((String)name.get("flag").toString()) == 1){ // 较大
+               model.addAttribute("fjgkfzr","老李头");
+           }else if(Integer.parseInt((String)name.get("flag").toString()) == 2){ // 重大
+               Company company = companyMapper.selectByPrimaryKey(user.getId());
+               model.addAttribute("fjgkfzr",company.getLegal());
+            }
+        }
+
+
+
         Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
 
         for (Map<String, Object> m1 : list) {

@@ -1936,8 +1936,6 @@ public class CompanyController_safety extends BaseController {
 
         for(Map<String, Object> name : list){
 
-            System.out.println(name.get("flag"));
-
            if (Integer.parseInt((String)name.get("flag").toString()) == 1){ // 较大
                model.addAttribute("fjgkfzr","老李头");
            }else if(Integer.parseInt((String)name.get("flag").toString()) == 2){ // 重大

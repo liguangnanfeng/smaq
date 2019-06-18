@@ -431,12 +431,12 @@ public class CompanyController_safety extends BaseController {
             if (type == null) {
 
                 if (null == number || number == 1) { // 现场
-                   Integer dangerIds[] = {1,3};
+                    String dangerIds = "1,3";
                     acL = this.aCompanyManualMapper.selectByAll(m);
                     zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
 
                 } else if (number == 2) { // 基础
-                    Integer dangerIds[] = {2,3};
+                    String dangerIds = "2,3";
                     acL = this.aCompanyManualMapper.selectBase(m);
                     zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
 

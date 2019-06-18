@@ -121,7 +121,7 @@ public interface ZzjgDepartmentMapper {
 
     List<ZzjgDepartment> selectByCompanyIds(ZzjgDepartment zzjgDepartment);
 
-    List<Map<Object, Object>> selectLevel1All(@Param("uid")Integer id, @Param("dangerIds")Integer[] dangerIds);
+    List<Map<Object, Object>> selectLevel1All(@Param("uid")Integer id, @Param("dangerIds")String dangerIds);
 
     List<Map<Object,Object>> selectLevel1ByUid(@Param("uid")Integer uid);
 

@@ -3576,7 +3576,7 @@ public class CompanyController_cd extends BaseController {
      * 没有兼容小程序
      */
     @RequestMapping(value = "check-detail")
-    public String checkDetail(Integer id, Model model, Integer jcxq,HttpServletRequest request) throws Exception {
+    public String checkDetail(Integer id, Model model, Integer jcxq,HttpServletRequest request,Integer flag) throws Exception {
         User loginUser = getLoginUser(request);
         // 根据id查询的是检查表信息
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
@@ -3615,9 +3615,20 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("partL", partL);
         //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
         /*List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(id);*/
+        List<Map<String, Object>> iteml = null;
+        if (flag != 2){
+            iteml  = tCheckMapper.selectLevels(id);
+        }else {
+            // 根据 ID 查询对应的数据 是 基础 还是 现场
+            TCheck tCheck = tCheckMapper.selectByPrimaryKey(id);
+            if (tCheck.getFlag() == 1){ // 基础
+                iteml  = tCheckMapper.selectAllLevel(id);
+            }else if (tCheck.getFlag() == 2){ // 现场
+                iteml  = tCheckMapper.selectAllDanger(id);
+            }
+        }
 
-        List<Map<String, Object>> iteml = tCheckMapper.selectLevels(id);
-        System.out.println(iteml);
+
         //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
         if (type != null && type == 9) {
             for (Map<String, Object> a : iteml) {

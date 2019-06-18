@@ -4,15 +4,12 @@
  */
 package com.spring.web.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.spring.web.BaseController;
 import com.spring.web.dao.DangerCoordinateMapper;
 import com.spring.web.dao.ImportPhotoMapper;
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.*;
 import com.spring.web.model.request.ImportPhoto;
-import com.spring.web.model.request.TMap;
 import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
 import com.spring.web.service.cgf.CgfService;
@@ -22,7 +19,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
 
@@ -430,12 +430,18 @@ public class CompanyController_safety extends BaseController {
             List acL = null;
             if (type == null) {
 
-                zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
-
-                if (null == number || number != 2) {
+                if (null == number || number == 1) { // 现场
+                    String dangerIds = "1,3";
                     acL = this.aCompanyManualMapper.selectByAll(m);
-                } else if (number == 2) {
+                    zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
+
+                } else if (number == 2) { // 基础
+                    String dangerIds = "2,3";
                     acL = this.aCompanyManualMapper.selectBase(m);
+                    zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
+
+                }else if (number == 3){ // 设置
+                    zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
                 }
 
                 model.addAttribute("number", number);
@@ -454,99 +460,127 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-    @RequestMapping({"grade-table"})
-    public String grade(Model model, HttpServletRequest request) throws Exception {
-
-
-        return "company/safety-system/grade-table";
+    /*
+    * 风险辨识 ：设置按钮！！！
+    * */
+    @RequestMapping({"risk-set"})
+    @ResponseBody
+    public Result riskSet(Model model, Integer xc, Integer jc,Integer id){
+        Result result = new ResultImpl();
+        // 根据 ID 修改对应的数据信息在 zzjg_department_tbl 表中
+        Integer  dangerId = null;
+        if (null != xc && null != jc){
+            if (xc == 1 && jc == 1){ // 现场/基础 都有
+                dangerId = 3;
+            }else if (xc == 1 && jc == 0){// 现场 ：有   基础 ：没有
+                dangerId = 1;
+            }else if (xc == 0 && jc == 1){// 现场 ：没有   基础 ：有
+                dangerId = 2;
+            }else if (xc == 0 && jc == 0){// 现场/基础 都没有
+                dangerId = 4;
+            }
+            boolean b = zzjgDepartmentMapper.updateDangerId(id,dangerId);
+            if (b){
+                result.setStatus("0");
+            }else {
+                result.setStatus("1");
+            }
+        }else {
+            result.setStatus("1");
+        }
+        return result;
     }
+
+
+
 
     /*
      * 重大风险评估数据添加！！！
      * */
     @RequestMapping({"danger-coordinate"})
     @ResponseBody
-    public Result coordinate(Model model, HttpServletRequest request, Integer danger1, Integer danger2, Integer danger3, Integer danger4, Integer danger5,
-                             Integer danger6, Integer danger7, Integer danger8, Integer danger9, Integer danger10,
-                             Integer danger11, Integer danger12, Integer danger13, Integer counts) throws Exception {
+    public Result coordinate(Model model, HttpServletRequest request,Integer id, Double danger1, Double danger2, Double danger3, Double danger4, Double danger5,
+                             Double danger6, Double danger7, Double danger8, Double danger9, Double danger10,
+                             Double danger11, Double danger12, Double danger13, Double counts) throws Exception {
 
         User user = this.getLoginUser(request);
         Result result = new ResultImpl();
         DangerCoordinate dangerCoordinate = new DangerCoordinate();
 
         dangerCoordinate.setUser_id(user.getId());
+
         if (null == danger1) {
-            dangerCoordinate.setDanger1(0);
+            dangerCoordinate.setDanger1(0.00);
         } else {
             dangerCoordinate.setDanger1(danger1);
         }
         if (null == danger2) {
-            dangerCoordinate.setDanger2(0);
+            dangerCoordinate.setDanger2(0.00);
         } else {
             dangerCoordinate.setDanger2(danger2);
         }
         if (null == danger3) {
-            dangerCoordinate.setDanger3(0);
+            dangerCoordinate.setDanger3(0.00);
         } else {
             dangerCoordinate.setDanger3(danger3);
         }
         if (null == danger4) {
-            dangerCoordinate.setDanger4(0);
+            dangerCoordinate.setDanger4(0.00);
         } else {
             dangerCoordinate.setDanger4(danger4);
         }
         if (null == danger5) {
-            dangerCoordinate.setDanger5(0);
+            dangerCoordinate.setDanger5(0.00);
         } else {
             dangerCoordinate.setDanger5(danger5);
         }
         if (null == danger6) {
-            dangerCoordinate.setDanger6(0);
+            dangerCoordinate.setDanger6(0.00);
         } else {
             dangerCoordinate.setDanger6(danger6);
         }
         if (null == danger7) {
-            dangerCoordinate.setDanger7(0);
+            dangerCoordinate.setDanger7(0.00);
         } else {
             dangerCoordinate.setDanger7(danger7);
         }
         if (null == danger8) {
-            dangerCoordinate.setDanger8(0);
+            dangerCoordinate.setDanger8(0.00);
         } else {
             dangerCoordinate.setDanger8(danger8);
         }
         if (null == danger9) {
-            dangerCoordinate.setDanger9(0);
+            dangerCoordinate.setDanger9(0.00);
         } else {
             dangerCoordinate.setDanger9(danger9);
         }
         if (null == danger10) {
-            dangerCoordinate.setDanger10(0);
+            dangerCoordinate.setDanger10(0.00);
         } else {
             dangerCoordinate.setDanger10(danger10);
         }
         if (null == danger11) {
-            dangerCoordinate.setDanger11(0);
+            dangerCoordinate.setDanger11(0.00);
         } else {
             dangerCoordinate.setDanger11(danger11);
         }
         if (null == danger12) {
-            dangerCoordinate.setDanger12(0);
+            dangerCoordinate.setDanger12(0.00);
         } else {
             dangerCoordinate.setDanger12(danger12);
         }
         if (null == danger13) {
-            dangerCoordinate.setDanger13(0);
+            dangerCoordinate.setDanger13(0.00);
         } else {
             dangerCoordinate.setDanger13(danger13);
         }
         if (null == counts) {
-            dangerCoordinate.setCounts(0);
+            dangerCoordinate.setCounts(0.00);
         } else {
             dangerCoordinate.setCounts(counts);
         }
 
-        boolean b = dangerCoordinateMapper.insert(dangerCoordinate);
+        boolean b = dangerCoordinateMapper.updateByPrimaryKey(dangerCoordinate);
 
         if (b) {
             result.setStatus("0");
@@ -555,9 +589,48 @@ public class CompanyController_safety extends BaseController {
             result.setStatus("1");
             result.setMess("评估异常，请重新评估。");
         }
-
         return result;
 
+    }
+
+    /*
+    * 评分页面！！！
+    * */
+    @RequestMapping({"grade-table"})
+    public String grade(Model model, HttpServletRequest request) throws Exception {
+        User user = this.getLoginUser(request);
+        // 根据 user_id 查询数据库 是否有数据
+        List<DangerCoordinate> list11 = dangerCoordinateMapper.selectOne(user.getId());
+        if (list11.size() == 0){
+            DangerCoordinate dangerCoordinate1 = new DangerCoordinate();
+            dangerCoordinate1.setDanger1(0.00);
+            dangerCoordinate1.setDanger2(0.00);
+            dangerCoordinate1.setDanger3(0.00);
+            dangerCoordinate1.setDanger4(0.00);
+            dangerCoordinate1.setDanger5(0.00);
+            dangerCoordinate1.setDanger6(0.00);
+            dangerCoordinate1.setDanger7(0.00);
+            dangerCoordinate1.setDanger8(0.00);
+            dangerCoordinate1.setDanger9(0.00);
+            dangerCoordinate1.setDanger10(0.00);
+            dangerCoordinate1.setDanger11(0.00);
+            dangerCoordinate1.setDanger12(0.00);
+            dangerCoordinate1.setDanger13(0.00);
+            dangerCoordinate1.setCounts(0.00);
+
+            dangerCoordinateMapper.insert(dangerCoordinate1);
+
+           /* DangerCoordinate dangerCoordinate2 = dangerCoordinateMapper.selectOne(user.getId());*/
+            List<DangerCoordinate> list = new ArrayList<>();
+            list.add(dangerCoordinate1);
+
+            model.addAttribute("list",list);
+
+        }else {
+            model.addAttribute("list11",list11);
+        }
+
+        return "company/safety-system/grade-table";
     }
 
 
@@ -1893,6 +1966,19 @@ public class CompanyController_safety extends BaseController {
 
         List<Map<String, Object>> list = aCompanyManualMapper.selectByAcs(m);
         model.addAttribute("list", list);
+
+        for(Map<String, Object> name : list){
+
+           if (Integer.parseInt((String)name.get("flag").toString()) == 1){ // 较大
+               model.addAttribute("fjgkfzr","老李头");
+           }else if(Integer.parseInt((String)name.get("flag").toString()) == 2){ // 重大
+               Company company = companyMapper.selectByPrimaryKey(user.getId());
+               model.addAttribute("fjgkfzr",company.getLegal());
+            }
+        }
+
+
+
         Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
 
         for (Map<String, Object> m1 : list) {
@@ -2207,6 +2293,8 @@ public class CompanyController_safety extends BaseController {
                 zzjgDepartment.setPid(depId);
                 zzjgDepartment.setLevel(2);
                 zzjgDepartment.setUid(user.getId());
+                zzjgDepartment.setDangerId(1);
+                zzjgDepartment.setFlag(2);
                 zzjgDepartmentMapper.add(zzjgDepartment);
             }
         }
@@ -2222,6 +2310,8 @@ public class CompanyController_safety extends BaseController {
     Result aCompanyManualSave1s(HttpServletRequest request, Integer[] ids, Integer depId) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
+        // 根据公司 ID 查询对应的 CID 信息
+        List<ZzjgCompany> zzjgCompanyList = zzjgCompanyMapper.selectAll(user.getId());
         ZzjgDepartment dep = zzjgDepartmentMapper.selectByPrimaryKey(depId);
         String level1 = dep.getName();
         List<TLevel> tLevelList = tLevelMapper.selectAllIds(ids);
@@ -2244,6 +2334,29 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setMeasures(a.getMeasures());
             aCompanyManual.setRiskId(a.getId());
             aCompanyManualMapper.insertAdd(aCompanyManual);
+
+            // 给 zzjg_department_tbl 添加数据信息
+            List<ZzjgDepartment> zzjgDepartmentList = zzjgDepartmentMapper.selectCount(depId, a.getName());
+            if (zzjgDepartmentList.size() != 0) {
+                for (int i = 0; i < zzjgDepartmentList.size(); i++) {
+                    zzjgDepartmentMapper.updateAll(new Date(), zzjgDepartmentList.get(i).getId());
+                }
+            } else {
+                ZzjgDepartment zzjgDepartment = new ZzjgDepartment();
+                zzjgDepartment.setCtime(new Date());
+                zzjgDepartment.setUtime(new Date());
+                zzjgDepartment.setDel(0);
+                zzjgDepartment.setName(a.getName());
+                for (int i = 0; i < zzjgCompanyList.size(); i++) {
+                    zzjgDepartment.setCid(zzjgCompanyList.get(i).getId());
+                }
+                zzjgDepartment.setPid(depId);
+                zzjgDepartment.setLevel(2);
+                zzjgDepartment.setUid(user.getId());
+                zzjgDepartment.setDangerId(2);
+                zzjgDepartment.setFlag(2);
+                zzjgDepartmentMapper.add(zzjgDepartment);
+            }
         }
         return result;
     }

@@ -69,7 +69,7 @@ public interface ZzjgDepartmentMapper {
      */
     List<Map<Object, Object>> selectByUid(@Param("uid") Integer uid);
 
-    List<Map<Object, Object>> selectLevel1ByUid(@Param("uid") Integer uid);
+
 
     List<Map<Object, Object>> selectLevel2ByUid(@Param("uid") Integer uid);
 
@@ -119,7 +119,15 @@ public interface ZzjgDepartmentMapper {
 
     List<Map<Object, Object>> selectLevel1ByUids(@Param("uid") Integer uid);
 
-    // 根据被检查的部门,选择检查的人员名称
+    List<ZzjgDepartment> selectByCompanyIds(ZzjgDepartment zzjgDepartment);
 
+    List<Map<Object, Object>> selectLevel1All(@Param("uid")Integer id, @Param("dangerIds")String dangerIds);
+
+    List<Map<Object,Object>> selectLevel1ByUid(@Param("uid")Integer uid);
+
+    boolean updateDangerId(@Param("id")Integer id, @Param("dangerId")Integer dangerId);
+
+
+    // 根据被检查的部门,选择检查的人员名称
 
 }

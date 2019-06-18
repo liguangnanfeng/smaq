@@ -90,7 +90,7 @@ public class CompanyController_system extends BaseController {
      */
     @RequestMapping(value = "department-list-banzu")
     public String departmentListBanzu(Model model,ZzjgDepartment zzjgDepartment) throws Exception {
-        model.addAttribute("listbz", zzjgDepartmentMapper.selectByCompanyId(zzjgDepartment));
+        model.addAttribute("listbz", zzjgDepartmentMapper.selectByCompanyIds(zzjgDepartment));
         return "company/system/department-listLoad2";
     }
     
@@ -121,6 +121,7 @@ public class CompanyController_system extends BaseController {
         if(null == dto.getId()) {
             dto.setCtime(d);
             dto.setDel(0);
+            dto.setFlag(1);
             zzjgDepartmentMapper.insertSelective(dto);
             
             result.setMap("obj", dto);

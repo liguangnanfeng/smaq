@@ -261,17 +261,17 @@ $(function() {
               <a class="label label-primary radius" style="text-decoration:none" onClick='show_dialog("企业详细信息", "${ly }/village/company/company-show?userId=${co.userId }")' href="javascript:;" title="查看企业详细资料">查看详情</a>
               <a class="label label-primary radius" style="text-decoration:none" onClick='show_dialog("企业详细信息", "${ly }/village/company-edit?userId=${co.userId }")' href="javascript:;" title="企业资料编辑">编辑</a>
               
-              <!-- 村 -->
+              <!-- 村管辖企业  -->
               <c:if test="${session_user.userType == 4}">
-                <c:if test="${co.isKey == '0'}">
-                <a style="text-decoration:none" onClick="user_isKey(${co.userId },${co.isKey })" href="javascript:;">设为重点企业</a>
+                <c:if test="${co.isKey == 0}">
+                <a style="text-decoration:none" onClick="user_isKey(${co.userId },1)" href="javascript:;">设为重点企业</a>
                 </c:if>
-                <c:if test="${co.isKey == '1'}">
-                <a style="text-decoration:none" onClick="user_isKey(${co.userId },${co.isKey })" href="javascript:;">取消重点企业</a>
+                <c:if test="${co.isKey == 1}">
+                <a style="text-decoration:none" onClick="user_isKey(${co.userId },0)" href="javascript:;">取消重点企业</a>
                 </c:if>
               </c:if>
               
-              <!-- 镇 -->
+              <!-- 镇管辖企业 -->
               <c:if test="${session_user.userType == 3}">
                 <c:if test="${co.key1 != 1}">
                 <a style="text-decoration:none" onClick="user_isKey1(${co.userId }, 1)" href="javascript:;">设为重点企业</a>
@@ -281,7 +281,7 @@ $(function() {
                 </c:if>
               </c:if>
               
-              <!-- 区 -->
+              <!-- 区管辖企业 -->
               <c:if test="${session_user.userType == 6}">
                 <c:if test="${co.key2 != 1}">
                 <a style="text-decoration:none" onClick="user_isKey2(${co.userId }, 1)" href="javascript:;">设为重点企业</a>
@@ -353,9 +353,9 @@ function user_unfreeze(userId){
   });
 }
 
-//修改重点企业
+//修改村重点企业
 function user_isKey(userId,isKey){
-  isKey = isKey=="1"?"0":"1";
+  /*isKey = isKey=="1"?"0":"1";*/
   var text = isKey=="1"?"确认设置该企业为重点企业吗":"确认取消该重点企业吗";
   layer.confirm(text,function(){
     var index = layer.load();
@@ -370,8 +370,8 @@ function user_isKey(userId,isKey){
   });
 }
 
-//修改重点企业
-function user_isKey(userId, key1){
+//修改镇重点企业
+function user_isKey1(userId, key1){
   var text = key1=="1"?"确认设置该企业为重点企业吗":"确认取消该重点企业吗";
   layer.confirm(text,function(){
     var index = layer.load();
@@ -386,8 +386,7 @@ function user_isKey(userId, key1){
   });
 }
 
-
-//修改重点企业
+//修改区重点企业
 function user_isKey2(userId, key2){
 var text = key2=="1"?"确认设置该企业为重点企业吗":"确认取消该重点企业吗";
 layer.confirm(text,function(){

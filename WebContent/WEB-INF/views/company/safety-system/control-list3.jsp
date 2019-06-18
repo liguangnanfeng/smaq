@@ -187,7 +187,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${list }" var="be" varStatus="index">
+        <c:forEach items="${list2}" var="be" varStatus="index">
             <tr id="line_${index.index + 1}">
                 <td class="text-c">${index.index + 1}</td>
                 <td><c:if test="${not empty be.level1}">${be.level1 } <%--> ${be.level2 }--%></c:if></td>

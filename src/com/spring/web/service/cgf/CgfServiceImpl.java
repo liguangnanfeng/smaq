@@ -820,7 +820,8 @@ public class CgfServiceImpl implements CgfService {
 //     }
 
     /**
-     * @param dto 企业查询分页
+     * @param dto TODO 企业查询分页 功能进行显示
+     *            就是显示出是否为重点企业
      * @param model
      */
     public void selectCompanyWithPage(CompanyListReqDTO dto, User user, Model model) {

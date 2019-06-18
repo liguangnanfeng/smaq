@@ -113,7 +113,7 @@ function pr_() {
         <tbody>
           <c:forEach items="${treeMap }" var="be1" varStatus="index">
           <c:forEach items="${be1.value }" var="be2">
-          <c:forEach items="${list }" var="be">
+          <c:forEach items="${list}" var="be">
           <c:if test="${(be.level1 eq be1.key && be.level2 eq be2) || (empty be1.key && empty be.level1)}">
           <tr>
             <c:set value="${fn:split(be.level3,'/')}" var="ls"></c:set>

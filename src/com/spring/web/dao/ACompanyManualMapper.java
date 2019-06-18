@@ -22,6 +22,7 @@ public interface ACompanyManualMapper {
     int updateByPrimaryKey(ACompanyManual record);
 
     List<Map<String, Object>> selectByMap(Map<String, Object> m);
+    List<Map<String, Object>> selectByMapTwo(Map<String, Object> m);
 
     List<Map<String, Object>> selectByMapGroupByLevel1Level2(Map<String, Object> m);
 

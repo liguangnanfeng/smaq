@@ -104,7 +104,7 @@ function pr_() {
               <th style="width:6%">车间/场所</th>
               <th style="width:10%">系统</th>
               <th style="min-width:100px">环节/部位</th>
-              <th style="min-width:100px">风险点</th>
+              <%--<th style="min-width:100px">风险点</th>--%>
               <th style="min-width:100px">风险等级</th>
               <th style="min-width:150px">风险类型</th>
               <th style="min-width:200px">风险因素</th>
@@ -126,7 +126,7 @@ function pr_() {
             <td class="text-c">${be.level2 != null ? be.level2 : "暂无数据" }</td>
 
 
-            <td class="text-c">
+           <%-- <td class="text-c">
             	<c:set value="${fn:split(be.level3,'/')}" var="ls"></c:set>
               		<c:set value="0" var="y"/>
               		<c:forEach items="${ls}" var="l">
@@ -136,7 +136,7 @@ function pr_() {
                   		</c:if>
             	</c:forEach>
             	<p>${point}</p>
-            </td>
+            </td>--%>
             <td class="text-c">
                <c:choose>
                 <c:when test="${be.level eq '红色'}"><font class="col-a">${be.level}</font></c:when>

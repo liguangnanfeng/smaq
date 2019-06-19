@@ -1954,6 +1954,7 @@ public class CompanyController_safety extends BaseController {
             return "company/safety-system/type";
         }
         List<ACompanyManual> aCompanyManualList = aCompanyManualMapper.findALLsss("2", user.getId());
+        model.addAttribute("industry",company.getIndustry());
         model.addAttribute("company", company);
         model.addAttribute("list", aCompanyManualList);
         return "company/safety-system/assess5-2";

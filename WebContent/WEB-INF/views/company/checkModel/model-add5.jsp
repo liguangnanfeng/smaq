@@ -498,10 +498,12 @@
                         <table id="xxx" className="table table-border table-bordered table-bg table-hover table-sort">
                             <thead>
                             <tr className="text-c">
-                                <th className="my_td">车间</th>
-                                <th className="my_td">部位/环节</th>
+                                <th className="my_td">辨识类型</th>
+                                <th className="my_td">车间/场所</th>
+                                <th className="my_td">系统</th>
+                                <th className="my_td">环节/部位</th>
+                                <th className="my_td">风险类型</th>
                                 <th className="my_td4">检查项目</th>
-                                <th className="my_td2">检查内容</th>
                                 <th className="div-pcz my_td3">操作</th>
                             </tr>
                             </thead>
@@ -509,10 +511,18 @@
                             {this.state.list.map((item, index) => {
                                 return (
                                     <tr>
+                                        <c:set value="${fn:split(item.level3,'/')}" var="ls"></c:set>
+
+                                        <td class="text-c"></td>
+
+                                        <td className="text-c">11111</td>
+
+
                                         <td className="text-c">{item.level1}</td>
                                         <td className="text-c">{item.level2}</td>
                                         <td className="text-c">{item.level3}</td>
                                         <td className="text-c">{item.measures}</td>
+
                                         <td className="text-c">
                                             <input type="checkbox"
                                                    checked={this.state.list[index].checked == 1 ? true : false}

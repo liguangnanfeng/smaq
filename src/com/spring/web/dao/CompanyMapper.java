@@ -199,6 +199,10 @@ public interface CompanyMapper {
      */
     List<Map<String, Object>> selectByVillageId(Integer id);
 
+
+    List<Company> selectByPrimaryKeys(Integer userId);
+
+
     /*
     * 根据村级ID查询对应的企业信息
     * */

@@ -1985,27 +1985,22 @@ public class CompanyController_safety extends BaseController {
 
         List<Map<String, Object>> list = aCompanyManualMapper.selectByAcs(m);
         model.addAttribute("list", list);
-
+        List<ZzjgPersonnel> zzjgPersonnelList = null;
+        List<Company> companyList = null;
         for(Map<String, Object> name : list){
+            String names = null;
             if (null == (String)name.get("flag").toString() || Integer.parseInt((String)name.get("flag").toString()) != 2){ // 较大
-                model.addAttribute("gkzt",name.get("gkzt"));
+                names = (String)name.get("gkzt");
+                model.addAttribute("gkzs",name.get("gkzt"));
                 // 根据 aCompanyManual 中 dmid  查询 对应的 公司负责人的名称
-                ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectName((Integer) name.get("dmid"),user.getId());
-                if (null != zzjgPersonnel){
-                    model.addAttribute("fjgkfzr",zzjgPersonnel.getName());
-                }else {
-                    continue;
-                }
+                zzjgPersonnelList = zzjgPersonnelMapper.selectName((Integer) name.get("dmid"),user.getId());
             }else if(Integer.parseInt((String)name.get("flag").toString()) == 2){ // 重大
-                Company company = companyMapper.selectByPrimaryKey(user.getId());
-                model.addAttribute("fjgkfzr",company.getCharge());
-
-                model.addAttribute("gkzt","公司");
+                companyList = companyMapper.selectByPrimaryKeys(user.getId());
             }
         }
-
-
-
+        
+        model.addAttribute("zzjgPersonnelList", zzjgPersonnelList);
+        model.addAttribute("companyList", companyList);
 
         Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
 

@@ -3019,7 +3019,7 @@ public class VillageController extends BaseController {
      *
      */
     @RequestMapping(value = "select-all-level1")
-    
+    public String selectAllLevel1(Integer checkType, String industry, HttpServletRequest request, Model model, String tableName,Integer flag) {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         if (StringUtils.isNotBlank(industry)) {

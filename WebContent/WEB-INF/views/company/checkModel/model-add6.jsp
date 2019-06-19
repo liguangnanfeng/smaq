@@ -250,9 +250,6 @@
                     <div class="list_odan">
                         <!-- 循环二级 -->
                         <c:forEach items="${be.value }" var="be2">
-                            <script>
-                                console.log('${be2}');
-                            </script>
                             <div class="two_danger">
                                 <div class="two_dtitle">
                                     <i class="Hui-iconfont">&#xe604;</i>
@@ -316,7 +313,12 @@
     function save_1() {
         var tableName = $("#title").val();
         var checkType = $("#checkNature").val();
-
+        if(!tableName){
+            layer.alert('请填写检查表名称')
+        }
+        if(checkType==0||checkType==''||checkType==null){
+            layer.alert('请选择检查类别')
+        }
         var l = $(":checkbox:checked[data-l='4']");
         if (l.length == 0) {
             layer.alert("请至少选择一个风险。");
@@ -335,18 +337,35 @@
             "checkType": parseInt(checkType),//检查方式
             "selectItems": ids,      //检查项
         }
-        $.post(getRootPath() + '/village/save-administrative',JSON.stringify(params), function (result) {
-            if (result.status == 0) {
-                layer.close(i);
-                layer.alert('保存成功');
-                window.parent.location.href = '${ly }/company/model-list-cx?flag=${flag}&type=1&template=2';
-                var index = parent.layer.getFrameIndex(window.name);
-                parent.layer.close(index);
-            } else {
-                layer.alert('保存失败');
-            }
+        $.ajax({
+            type: "POST",
+            url: getRootPath() + '/village/save-administrative',
+            data: JSON.stringify(params),
+            async: false,
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
+                if (result.status == 0) {
+                    layer.close(i);
+                    layer.alert('保存成功');
+                    window.parent.location.href = '${ly }/company/model-list-cx?flag=${flag}&type=1&template=2';
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
+                } else {
+                    layer.alert('保存失败');
+                    layer.close(i);
+                }
 
-        })
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                layer.close(i);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.alert("添加失败")
+                layer.close(i);
+            }
+        });
+
     }
 </script>
 </html>

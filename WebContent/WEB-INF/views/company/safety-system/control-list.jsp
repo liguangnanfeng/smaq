@@ -284,18 +284,27 @@
                 <td class="text-c">${be.type }</td>
                 <td class="text-c">${be.factors }</td>
                 <%--<td class="text-c">${gkzt != null ? gkzt : "暂无数据" }</td>--%>
-                <c:if test="${be.level eq '红色'}">
+                <c:if test="${be.flag == 2}">
                   <td class="text-c">公司</td>
-                  <c:forEach items="${companyList}" var="be3" >
-                    <td class="text-c">${be3.charge != null ? be3.charge : "暂无数据" }</td>
-                  </c:forEach>
+
+                  <td class="text-c">
+                    <c:forEach items="${companyList}" var="be3" >
+                      ${be3.charge != null ? be3.charge : "暂无数据" }
+                    </c:forEach>
+                  </td>
+
                 </c:if>
+
 
                 <c:if test="${be.flag != 2}">
                   <td class="text-c">${be.gkzt != null ? be.gkzt : "暂无数据"}</td>
 
                   <td class="text-c">${be.fjgkfzr != null ? be.fjgkfzr : "暂无数据"}</td>
                 </c:if>
+
+
+
+
 
                 <td><p>${empty be.gkcs ? be.measures : be.gkcs}</p></td>
                 <td class="text-c div-pcz">
@@ -315,11 +324,11 @@
 
                 <c:if test="${empty be.gkzt}">
                   <c:if test="${be.flag == 2}">
-                    <a style="text-decoration:none;opacity: 0.2" onClick="return false;" href="javascript:return false;" title="编辑">编辑管控信息</a>
+                    <a style="text-decoration:none;opacity: 0.2" onClick="return false;" href="javascript:return false;" title="默认">默认</a>
                   </c:if>
 
                   <c:if test="${be.flag != 2}">
-                    <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑">编辑管控信息</a>
+                    <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑管控信息">编辑管控信息</a>
                   </c:if>
 
                 </c:if>
@@ -327,7 +336,7 @@
                 <c:if test="${not empty be.gkzt}">
 
                   <c:if test="${be.flag == 2}">
-                    <a style="text-decoration:none;opacity: 0.2" onClick="return false;" href="javascript:return false;" title="编辑">编辑</a>
+                    <a style="text-decoration:none;opacity: 0.2" onClick="return false;" href="javascript:return false;" title="默认">默认</a>
                   </c:if>
 
                   <c:if test="${be.flag != 2}">

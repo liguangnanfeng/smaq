@@ -3379,49 +3379,55 @@ public class VillageController extends BaseController {
             if (-2 == checkType) {
                 // 表示现场
                 for (String id : split) {
-                    ADangerManual aDangerManual = aDangerManualMapper.selectByPrimaryKey(Integer.parseInt(id));
-                    TCheckPart tCheckPart = new TCheckPart();
-                    tCheckPart.setCheckId(tCheckId);
-                    if (null != aDangerManual.getName()) {
-                        tCheckPart.setName(aDangerManual.getName());  //岗位/部位信息
+                    if(null!=id&&!"".equals(id)){
+                        ADangerManual aDangerManual = aDangerManualMapper.selectByPrimaryKey(Integer.parseInt(id));
+                        TCheckPart tCheckPart = new TCheckPart();
+                        tCheckPart.setCheckId(tCheckId);
+                        if (null != aDangerManual.getName()) {
+                            tCheckPart.setName(aDangerManual.getName());  //岗位/部位信息
+                        }
+                        tCheckPartMapper.insertSelective(tCheckPart);
+                        TCheckItem tCheckItem = new TCheckItem();
+                        tCheckItem.setLevelId(aDangerManual.getId());     // companyManualTbl的id
+                        tCheckItem.setContent(aDangerManual.getMeasures()); //检查内容
+                        tCheckItem.setLevels(aDangerManual.getLevel3());   // 场所/环节/部门 三级
+                        tCheckItem.setReference(aDangerManual.getReference()); // 依据
+                        tCheckItem.setMemo(aDangerManual.getFactors());   // 较大危险因素
+                        tCheckItem.setPartId(tCheckPart.getId());
+                        tCheckItem.setCheckId(tCheckId);
+                        tCheckItemMapper.insertSelective(tCheckItem);
                     }
-                    tCheckPartMapper.insertSelective(tCheckPart);
-                    TCheckItem tCheckItem = new TCheckItem();
-                    tCheckItem.setLevelId(aDangerManual.getId());     // companyManualTbl的id
-                    tCheckItem.setContent(aDangerManual.getMeasures()); //检查内容
-                    tCheckItem.setLevels(aDangerManual.getLevel3());   // 场所/环节/部门 三级
-                    tCheckItem.setReference(aDangerManual.getReference()); // 依据
-                    tCheckItem.setMemo(aDangerManual.getFactors());   // 较大危险因素
-                    tCheckItem.setPartId(tCheckPart.getId());
-                    tCheckItem.setCheckId(tCheckId);
-                    tCheckItemMapper.insertSelective(tCheckItem);
+
                 }
 
             } else {
                 // 表示是基础
                 for (String id : split) {
-                    TLevel tLevel = tLevelMapper.selectByPrimaryKey(Integer.parseInt(id));
-                    TCheckPart tCheckPart = new TCheckPart();
-                    tCheckPart.setCheckId(tCheckId);
+                    if(null!=id&&!"".equals(id)){
+                        TLevel tLevel = tLevelMapper.selectByPrimaryKey(Integer.parseInt(id));
+                        TCheckPart tCheckPart = new TCheckPart();
+                        tCheckPart.setCheckId(tCheckId);
 
-                    tCheckPart.setName(tLevel.getName());  //岗位/部位信息
+                        tCheckPart.setName(tLevel.getName());  //岗位/部位信息
 
-                    tCheckPartMapper.insertSelective(tCheckPart);
-                    TCheckItem tCheckItem = new TCheckItem();
-                    tCheckItem.setLevelId(tLevel.getId());     // companyManualTbl的id
-                    tCheckItem.setContent(tLevel.getMeasures()); //检查内容
-                    tCheckItem.setLevels(tLevel.getLevel3());   // 场所/环节/部门 三级
-                    tCheckItem.setReference(tLevel.getReference()); // 依据
-                    tCheckItem.setMemo(tLevel.getFactors());   // 较大危险因素
-                    tCheckItem.setPartId(tCheckPart.getId());
-                    tCheckItem.setCheckId(tCheckId);
-                    tCheckItemMapper.insertSelective(tCheckItem);
+                        tCheckPartMapper.insertSelective(tCheckPart);
+                        TCheckItem tCheckItem = new TCheckItem();
+                        tCheckItem.setLevelId(tLevel.getId());     // companyManualTbl的id
+                        tCheckItem.setContent(tLevel.getMeasures()); //检查内容
+                        tCheckItem.setLevels(tLevel.getLevel3());   // 场所/环节/部门 三级
+                        tCheckItem.setReference(tLevel.getReference()); // 依据
+                        tCheckItem.setMemo(tLevel.getFactors());   // 较大危险因素
+                        tCheckItem.setPartId(tCheckPart.getId());
+                        tCheckItem.setCheckId(tCheckId);
+                        tCheckItemMapper.insertSelective(tCheckItem);
+                    }
+
                 }
 
             }
 
 
-            if (null != inputItems || inputItems.size() > 0) {
+           /* if (null != inputItems || inputItems.size() > 0) {
                 // 保存自定义内容
                 for (Map<String, String> mapStr : inputItems) {
 
@@ -3441,7 +3447,7 @@ public class VillageController extends BaseController {
 
 
                 }
-            }
+            }*/
             result.setStatus("0");
             result.setMess("保存成功");
             return result;

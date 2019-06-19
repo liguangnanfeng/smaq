@@ -175,9 +175,9 @@
             var cType = $(obj);
             checkType = parseInt(cType.val());
             if (checkType == 0) {
-
+              window.location.href="${ly}/village/select-all-level1"
             }else{
-                
+
             }
 
 

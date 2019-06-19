@@ -3031,6 +3031,8 @@ public class VillageController extends BaseController {
         model.addAttribute("company", company);
         model.addAttribute("checkType", checkType);
         model.addAttribute("industry", industry);
+        model.addAttribute("flag", flag);
+        model.addAttribute("tableName",tableName);
 
         // 根据 checkType 查询对应的 level1 信息
         if (-2 == checkType) {

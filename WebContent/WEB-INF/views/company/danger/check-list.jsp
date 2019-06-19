@@ -80,38 +80,53 @@ body .dis-ib{margin-right:15px;}
     </div>
     <div class="mt-20">
       <table class="table table-border table-bordered table-bg table-hover table-sort">
-        <thead>
+          <thead>
           <tr class="text-c">
-            <th width="5%">序号</th>
-            <th width="20%">检查表名称</th>
-            <th width="10%">检查方式</th>
-            <%--<th width="10%">${flag == 1 ? '实际检查' : '录入'}时间</th>--%>
-            <th width="10%">检查日期</th>
-            <th width="10%">${flag == 1 ? '检查人员' : '检查部门'}</th>
-            <th width="10%">隐患数量</th>
-           <%-- <th width="15%">${flag == 1 ? '受检部门' : '检查单位'}</th>--%>
-            <th width="10%">操作</th>
+              <th width="5%">序号</th>
+              <th width="20%">检查表名称</th>
+              <th width="10%">${flag == 1 ? '检查方式' : '检查日期'}</th>
+              <th width="10%">${flag == 1 ? '检查日期' : '检查部门'}</th>
+              <%--<th width="10%">${flag == 1 ? '实际检查' : '录入'}时间</th>--%>
+              <th width="10%">检查人员</th>
+              <th width="10%">隐患数量</th>
+              <%-- <th width="15%">${flag == 1 ? '受检部门' : '检查单位'}</th>--%>
+              <th width="10%">操作</th>
           </tr>
-        </thead>
+          </thead>
         <tbody>
           <!-- 循环-->
           <c:forEach items="${list }" varStatus="index" var="be">
             <tr class="text-c">
             <td>${index.index + 1 }</td>
             <td><c:if test="${be.status == 1 and (!empty be.expectTime and be.expectTime.time < t)}"><font color="red">【过期】</font></c:if>${be.title }</td>
-            <td>
-                <c:choose>
-                    <c:when test="${be.type == 1 }">日常</c:when>
-                    <c:when test="${be.type == 2 }">定期</c:when>
-                    <c:when test="${be.type == 3 }">季节</c:when>
-                    <c:when test="${be.type == 4 }">其它</c:when>
-                    <c:when test="${be.type == 5 }">综合</c:when>
-                </c:choose>
-            </td>
-            <td><fmt:formatDate value="${be.realTime }" pattern="yyyy-MM-dd"/></td>
+                <c:if test="${flag == 1}">
+                    <td>
+                        <c:choose>
+                            <c:when test="${be.type == 1 }">日常</c:when>
+                            <c:when test="${be.type == 2 }">定期</c:when>
+                            <c:when test="${be.type == 3 }">季节</c:when>
+                            <c:when test="${be.type == 4 }">其它</c:when>
+                            <c:when test="${be.type == 5 }">综合</c:when>
+                        </c:choose>
+                    </td>
+                    <td>
+                        <fmt:formatDate value="${be.realTime }" pattern="yyyy-MM-dd"/>
+                    </td>
+                </c:if>
+
+
+                <c:if test="${flag != 1}">
+                    <td>
+                        <fmt:formatDate value="${be.realTime }" pattern="yyyy-MM-dd"/>
+                    </td>
+
+                    <td>
+                            ${be.depart}
+                    </td>
+                </c:if>
             <td>
               <%--${be.status == 1 ? '未检查' : '已检查'}--%>
-              ${flag == 1? be.cheker : be.depart}
+              ${be.cheker}
             </td>
             <td>${be.c }</td>
             <%--<td>${flag == 1 ? be.depart : be.checkCompany}</td>--%>

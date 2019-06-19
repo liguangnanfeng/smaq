@@ -161,7 +161,7 @@
 </nav>
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
-        <a class="btn default ${empty type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list">风险辨识</a>
+        <a class="btn default ${empty type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list">安全风险辨识</a>
         <a class="btn default ${1 eq type ? 'btn-primary' : 'radius'}"
            href="${ly }/company/safety-system/risk-list?type=1">职业病风险物理因素辨识</a>
         <a class="btn default ${2 eq  type ? 'btn-primary' : 'radius'}"

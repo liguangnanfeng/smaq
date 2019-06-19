@@ -2128,7 +2128,7 @@ public class CompanyController_safety extends BaseController {
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("uid", user.getId());
-//        m.put("order", 1);
+        m.put("order", 1);
 
         model.addAttribute("company", company);
         model.addAttribute("user", userMapper.selectByPrimaryKey(company.getUserId()));

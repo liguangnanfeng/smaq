@@ -175,8 +175,10 @@
             var cType = $(obj);
             checkType = parseInt(cType.val());
             if (checkType == 0) {
-              window.location.href="${ly}/village/select-all-level1"
+                window.location.href="${ly}/village/getCheckModelBasic?flag=${flag}"
             }else{
+                var tableName = $('#title').val();
+                window.location.href="${ly}/village/select-all-level1?flag=${flag}&tableName="+tableName+'&checkType='+checkType
 
             }
 
@@ -216,7 +218,7 @@
                             <option value="-2">现场</option>
                         </select>
                     </c:if>
-                    <c:if test="${checkType==-1}">
+                    <c:if test="${checkType==-2}">
                         <select name="checkNature" class="select" id="checkNature" onchange="nature(this)" style="width:350px;height: 31px">
                             <option value="0">请选择检查类别</option>
                             <option value="-1">基础</option>
@@ -234,7 +236,7 @@
             </div>
         </form>
 
-        <div class="list_danger l1">
+        <div class="list_danger l1" style="width:80%;margin-left:17%;margin-top: 30px">
             <!-- 循环一级 -->
             <c:forEach items="${list }" var="be">
                 <div class="one_danger one_dangerxz">
@@ -261,9 +263,6 @@
                                     <c:set var="l3" value=""/>
                                     <c:set var="l3_" value="1"/>
                                     <c:forEach items="${dL }" var="be3">
-                                        <script>
-                                            console.log('${be3}');
-                                        </script>
                                         <c:set var="key_">${be3.level1}_${be3.level2}_${be3.level3}</c:set>
                                         <c:if test="${be3.level1 eq be.key and be3.level2 eq be2 and !lanlin:constains(l3,key_,',')}">
                                             <c:set var="l3">${l3 },${key_ }</c:set>
@@ -312,6 +311,9 @@
     var depId = '${depId}';
 
     function save_1() {
+        var tableName = $("#title").val();
+        var checkType = $("#checkNature").val();
+
         var l = $(":checkbox:checked[data-l='4']");
         if (l.length == 0) {
             layer.alert("请至少选择一个风险。");
@@ -322,23 +324,25 @@
             ids.push($(this).val());
         })
         ids = ids.join(",");
+        ids += ',';
         var i = layer.load();
-        $.post("/company/safety-system/aCompanyManual-save1", {
-            ids: ids,
-            depId: depId
-        }, function (result) {
-            layer.close(i);
-            layer.alert("保存成功", {}, function (i) {
+        var params = {
+            "flag":parseInt('${flag}'),
+            "tableName": tableName,//检查表名称
+            "checkType": parseInt(checkType),//检查方式
+            "selectItems": ids,      //检查项
+        }
+        $.post("/village/save-administrative",JSON.stringify(params), function (result) {
+            if (result.status == 0) {
                 layer.close(i);
-                //parent.close_dialog(function() {
-                //parent.show_dialog('添加检查表','/company/model-add?type=3&flag=1&ids='+ids+'&depid='+depId);
-                //})
-                //alert("depId:"+depId);
-                //parent.window.location.href = '/company/model-adds?type=9&flag=1&ids='+ids+'&depId='+depId;//1:综合检查表；2：定期检查表；3：整改复查 ；9：检查表 zhangcl 2018.10.27
+                layer.alert('保存成功');
+                window.parent.location.href = '${ly }/company/model-list-cx?flag=${flag}&type=1&template=2';
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            } else {
+                layer.alert('保存失败');
+            }
 
-                parent.reload_();
-                //alert("11");
-            })
         })
     }
 </script>

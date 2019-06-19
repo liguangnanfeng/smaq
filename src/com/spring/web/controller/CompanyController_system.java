@@ -244,5 +244,28 @@ public class CompanyController_system extends BaseController {
         return result;
     }
 
+
+    /*
+　　* @author 小明 ！！！
+　　* @date 2019/6/19 11:47
+　　*/
+    @RequestMapping(value = "user-update")
+    public
+    @ResponseBody Result userUpdate(Integer id){
+        Result result = new ResultImpl();
+        boolean b = zzjgPersonnelMapper.updateIds(id);
+        if (b){
+            result.setStatus("0");
+            result.setMess("删除成功");
+        }else {
+            result.setStatus("1");
+            result.setMess("删除失败");
+        }
+        return result;
+    }
+
+
+
+
     /** 组织架构  结束 */
 }

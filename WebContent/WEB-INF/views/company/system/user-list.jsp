@@ -85,6 +85,7 @@ $(function() {
           <c:forEach items="${list }" var="be" varStatus="index">
           <tr class="text-c">
             <td>${index.index + 1}</td>
+            <td>${be.id }</td>
             <td>${be.name }</td>
             <td>${be.mobile }</td>
             <td>${be.dpname } / ${be.dname }</td>
@@ -241,6 +242,7 @@ function del_(id) {
       del : 1
     },function(result) {
       layer.close(index);
+      alert(result.mess);
       location.reload();
     })
   });

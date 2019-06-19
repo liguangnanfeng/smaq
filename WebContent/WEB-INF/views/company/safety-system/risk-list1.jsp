@@ -311,7 +311,7 @@
                                                 <c:if test="${empty type}">
                                                     <c:if test="${number == null || number == 1}">
                                                         <button class="btn btn-primary radius"
-                                                                onClick="addgj('${be.id}')">现场风险辨识
+                                                                onClick="addgj('${be.id}')">11111现场风险辨识
                                                         </button>
                                                     </c:if>
                                                     <c:if test="${number == 2}">
@@ -400,29 +400,33 @@
                             <tr>
                                 <td><p style="text-align:center;">${be.name }</p></td>
                                 <td style="text-align: center">
-                                      <c:if test="${be.dangerId==null||be.dangerId==4}">
-                                        <input type="checkbox"  name="xc"
+                                    <c:if test="${be.dangerId==null||be.dangerId==4}">
+                                        <input type="checkbox" name="xc"
                                                onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场
-                                        <input type="checkbox"  name="jc"
-                                               onchange="checkShowType(this,'${be.id}')"style="margin-left: 20px;margin-right: 3px" />基础
-                                      </c:if>
-                                        <c:if test="${be.dangerId==1}">
-                                            <input type="checkbox" checked name="xc"
-                                                   onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场
-                                            <input type="checkbox"  name="jc"
-                                                   onchange="checkShowType(this,'${be.id}')"style="margin-left: 20px;margin-right: 3px" />基础
-                                        </c:if>
+                                        <input type="checkbox" name="jc"
+                                               onchange="checkShowType(this,'${be.id}')"
+                                               style="margin-left: 20px;margin-right: 3px"/>基础
+                                    </c:if>
+                                    <c:if test="${be.dangerId==1}">
+                                        <input type="checkbox" checked name="xc"
+                                               onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场
+                                        <input type="checkbox" name="jc"
+                                               onchange="checkShowType(this,'${be.id}')"
+                                               style="margin-left: 20px;margin-right: 3px"/>基础
+                                    </c:if>
                                     <c:if test="${be.dangerId==2}">
-                                        <input type="checkbox"  name="xc"
+                                        <input type="checkbox" name="xc"
                                                onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场
                                         <input type="checkbox" checked name="jc"
-                                               onchange="checkShowType(this,'${be.id}')"style="margin-left: 20px;margin-right: 3px" />基础
+                                               onchange="checkShowType(this,'${be.id}')"
+                                               style="margin-left: 20px;margin-right: 3px"/>基础
                                     </c:if>
                                     <c:if test="${be.dangerId==3}">
-                                        <input type="checkbox"  checked name="xc"
+                                        <input type="checkbox" checked name="xc"
                                                onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场
-                                        <input type="checkbox"  checked name="jc"
-                                               onchange="checkShowType(this,'${be.id}')"style="margin-left: 20px;margin-right: 3px" />基础
+                                        <input type="checkbox" checked name="jc"
+                                               onchange="checkShowType(this,'${be.id}')"
+                                               style="margin-left: 20px;margin-right: 3px"/>基础
                                     </c:if>
 
                                 </td>
@@ -556,24 +560,22 @@
 
     function checkShowType(obj, id) {
         var parent = $(obj).parent();
-        var xc =parent.children('input[name="xc"]');  //现场checkbox
-        var jc =parent.children('input[name="jc"]');  //基础checkbox
+        var xc = parent.children('input[name="xc"]');  //现场checkbox
+        var jc = parent.children('input[name="jc"]');  //基础checkbox
         var xcVal = xc.is(':checked');   //现场checkbox是否选中
         var jcVal = jc.is(':checked');   //基础checkbox是否选中
-        var postData={};
-        postData.id =parseInt(id);
-        postData.xc =xcVal?1:0;
-        postData.jc =jcVal?1:0;
-        $.post( "${ly}/company/safety-system/risk-set",postData , function (result) {
-             if(result.status==0){
-                 layer.msg('设置成功');
-             }else{
-                 layer.msg('设置失败');
-             }
+        var postData = {};
+        postData.id = parseInt(id);
+        postData.xc = xcVal ? 1 : 0;
+        postData.jc = jcVal ? 1 : 0;
+        $.post("${ly}/company/safety-system/risk-set", postData, function (result) {
+            if (result.status == 0) {
+                layer.msg('设置成功');
+            } else {
+                layer.msg('设置失败');
+            }
 
         })
-
-
 
 
     }

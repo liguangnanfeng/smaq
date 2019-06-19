@@ -311,7 +311,7 @@
                                                 <c:if test="${empty type}">
                                                     <c:if test="${number == null || number == 1}">
                                                         <button class="btn btn-primary radius"
-                                                                onClick="addgj('${be.id}')">11111现场风险辨识
+                                                                onClick="addgj('${be.id}')">现场风险辨识1111111111
                                                         </button>
                                                     </c:if>
                                                     <c:if test="${number == 2}">

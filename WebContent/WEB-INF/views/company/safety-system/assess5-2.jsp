@@ -72,6 +72,15 @@
               }
           })
       })
+      //自评保存
+      function zpLevel_save_(id,e) {
+          $.post(getRootPath() + "/company/safety-system/zp-save", {
+              id : id,
+              level : $(e).attr("value")
+          },function(result) {
+              location.reload();
+          })
+      }
   </script>
 </head>
 <body>
@@ -102,7 +111,7 @@
         <th style="min-width:100px">风险等级</th>
         <th style="min-width:100px">风险因素</th>
         <%--<th style="min-width:100px">风险类型</th>--%>
-        <th style="min-width:50px">操作</th>
+        <th style="min-width:265px">评估</th>
       </tr>
       </thead>
       <tbody>
@@ -124,7 +133,13 @@
           <td class="text-c"><font class="col-a">红色</font></td>
           <td>${be.factors }</td>
           <%--<td>${be.type }</td>--%>
-          <td class="text-c"><a class="btn-cz" style="text-decoration:none;" onClick="del_(${be.id})" href="javascript:;" title="删除">删除</a></td>
+          <td class="text-c">
+            <input class="btn btn-danger-outline size-S radius ml-5" type="button" value="红色" onclick="zpLevel_save_(${be.id},this)"/>
+            <input class="btn btn-warning-outline size-S radius ml-5" type="button" value="橙色" onclick="zpLevel_save_(${be.id},this)"/>
+            <input class="btn btn-warning-outline size-S radius btn-huang ml-5" type="button" value="黄色" onclick="zpLevel_save_(${be.id},this)"/>
+            <input class="btn btn-secondary-outline size-S radius ml-5 mr-5" type="button" value="蓝色" onclick="zpLevel_save_(${be.id},this)"/>
+            <a class="btn-cz" style="text-decoration:none;" onClick="del_(${be.id})" href="javascript:;" title="删除">删除</a>
+          </td>
         </tr>
       </c:forEach>
       </tbody>

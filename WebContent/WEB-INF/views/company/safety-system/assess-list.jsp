@@ -159,7 +159,7 @@
         <th style="min-width:100px">风险等级</th>
         <!-- <th style="min-width:100px">作业条件风险程度评价(LEC)</th>
         <th style="min-width:100px">风险矩阵法评价(LS)</th> -->
-        <th style="min-width:265px">删除</th>
+        <th style="min-width:265px">评估</th>
       </tr>
       </thead>
       <tbody>

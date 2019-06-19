@@ -163,23 +163,23 @@
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
         <a class="btn default ${empty type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list">风险辨识</a>
         <a class="btn default ${1 eq type ? 'btn-primary' : 'radius'}"
-           href="${ly }/company/safety-system/risk-list?type=1">职业病风险物理因素辨识表</a>
+           href="${ly }/company/safety-system/risk-list?type=1">职业病风险物理因素辨识</a>
         <a class="btn default ${2 eq  type ? 'btn-primary' : 'radius'}"
-           href="${ly }/company/safety-system/risk-list?type=2">职业病风险化学因素辨识表</a>
+           href="${ly }/company/safety-system/risk-list?type=2">职业病风险化学因素辨识</a>
         <c:if test="${company.industry eq '化工企业（危化生产、使用）'}">
             <c:choose>
                 <c:when test="${fn:contains(company.name, '油') }">
                 </c:when>
                 <c:otherwise>
                     <a class="btn default ${3 eq  type ? 'btn-primary' : 'radius'}"
-                       href="${ly }/company/safety-system/risk-list?type=3">高危工艺辨识表</a>
+                       href="${ly }/company/safety-system/risk-list?type=3">高危工艺辨识</a>
                 </c:otherwise>
             </c:choose>
             <a class="btn default ${4 eq  type ? 'btn-primary' : 'radius'}"
-               href="${ly }/company/safety-system/risk-list?type=4">物料风险辨识表</a>
+               href="${ly }/company/safety-system/risk-list?type=4">物料风险辨识</a>
         </c:if>
         <a class="btn default ${5 eq  type ? 'btn-primary' : 'radius'}"
-           href="${ly }/company/safety-system/risk-list?type=5">高危作业辨识表</a>
+           href="${ly }/company/safety-system/risk-list?type=5">高危作业辨识</a>
     </div>
 
     <div class="text-c mt-20">

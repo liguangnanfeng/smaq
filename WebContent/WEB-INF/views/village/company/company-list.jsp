@@ -391,7 +391,7 @@ function user_isKey2(userId, key2){
 var text = key2=="1"?"确认设置该企业为重点企业吗":"确认取消该重点企业吗";
 layer.confirm(text,function(){
   var index = layer.load();
-  $.post(getRootPath() + "/town/user-key",{
+  $.post(getRootPath() + "/town/user-key2",{
     userId : userId,
     key2 : key2
   },function(result){

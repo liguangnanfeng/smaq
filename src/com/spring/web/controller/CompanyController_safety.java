@@ -1757,6 +1757,7 @@ public class CompanyController_safety extends BaseController {
 
     /*
      * 风险辨识 : 现场风险操作!!!
+     *
      * */
     @RequestMapping(value = "risk-list-load")//确认风险操作
     public String riskListLoad(Model model, HttpServletRequest request, String industry,
@@ -1788,7 +1789,6 @@ public class CompanyController_safety extends BaseController {
         log.error("risk-list-load depId:" + depId);
         return "company/safety-system/risk-list1-load";
     }
-
 
     /*
      *  确定基础风险操作!!!

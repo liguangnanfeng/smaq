@@ -107,6 +107,22 @@ public class TownController extends BaseController {
         }
         return result;
     }
+    /**
+     * TODO 是否重点企业   修改为区重点
+     */
+    @RequestMapping(value = "user-key2")
+    public @ResponseBody Result userisKey2(Integer userId, Integer key2) throws Exception {
+        Result result = new ResultImpl();
+        CompanyIskey key = companyIskeyMapper.selectByPrimaryKey(userId);
+        if(null == key) {
+            key = new CompanyIskey(userId, 0, key2, 0, 0);
+            companyIskeyMapper.insertSelective(key);
+        } else {
+            key.setKey2(key2);
+            companyIskeyMapper.updateByPrimaryKeySelective(key);
+        }
+        return result;
+    }
     
     /**
      * 企业分布页面

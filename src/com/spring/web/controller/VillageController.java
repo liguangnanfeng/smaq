@@ -3020,7 +3020,7 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value = "select-all-level1")
     @ResponseBody
-    public String selectAllLevel1(Integer checkType, String industry, HttpServletRequest request, Model model, String tableName,Integer flag) {
+    public String selectAllLevel1(Integer checkType, String industry, HttpServletRequest request, Model model, String tableName, Integer flag) {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         if (StringUtils.isNotBlank(industry)) {
@@ -3032,8 +3032,8 @@ public class VillageController extends BaseController {
         model.addAttribute("company", company);
         model.addAttribute("checkType", checkType);
         model.addAttribute("industry", industry);
-        model.addAttribute("tableName",tableName);
-        model.addAttribute("flag",flag);
+        model.addAttribute("tableName", tableName);
+        model.addAttribute("flag", flag);
         // 根据 checkType 查询对应的 level1 信息
         if (-2 == checkType) {
             List<ADangerManual> dL = aDangerManualMapper.selectByIndustry(industry);
@@ -3322,23 +3322,18 @@ public class VillageController extends BaseController {
             String tableName = (String) map.get("tableName"); //表名
             Integer flag = (Integer) map.get("flag"); //检查方式
             Integer checkType = (Integer) map.get("checkType"); //检查类型 -1 现场 -2 就是基础
-
             String a = (String) map.get("selectItems");
-
-            System.out.println(a);
-
-            String[] split = a.split(",");
-
-            /*Integer[] selectItems = (Integer[]) map.get("selectItems");*/
-
-
-            List<Map<String, String>> inputItems = (List<Map<String, String>>) map.get("inputItems");
 
             if (null == a || "".equals(a)) {
                 result.setStatus("1");
                 result.setMess("页面保存数据为空");
                 return result;
             }
+
+            String[] split = a.split(",");
+
+            List<Map<String, String>> inputItems = (List<Map<String, String>>) map.get("inputItems");
+
             User user = getLoginUser(request);
             // 保存model表数据
             TModel model = new TModel();

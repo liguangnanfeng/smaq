@@ -2034,7 +2034,7 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-     * 根据车间查询对应的责任人信息
+     * 根据车间查询对应的责任人信息！！！
      */
     @RequestMapping(value = "control-list-person")
     public @ResponseBody
@@ -2046,7 +2046,7 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-    /**
+    /*
      * 查询相应管控主体下的部门信息！！！
      */
     @RequestMapping(value = "control-list-one")
@@ -2270,7 +2270,7 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-     * 现场管理数据的添加
+     * 现场管理数据的添加 ！！！
      * */
     @RequestMapping(value = "aCompanyManual-save1")
     public @ResponseBody

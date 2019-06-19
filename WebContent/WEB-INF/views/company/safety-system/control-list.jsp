@@ -260,7 +260,7 @@
 
                 <td class="text-c">${ls[0] != null ? ls[0] : "暂无数据" }</td>
 
-                <td class="text-c">${be.gkzt == null ? "暂无数据" : be.gkzt}</td>
+                <td class="text-c">${gkzt == null ? "暂无数据" : gkzt}</td>
 
                 <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
 

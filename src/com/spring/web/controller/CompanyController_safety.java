@@ -503,78 +503,82 @@ public class CompanyController_safety extends BaseController {
         User user = this.getLoginUser(request);
         Result result = new ResultImpl();
         DangerCoordinate dangerCoordinate = new DangerCoordinate();
+        // 根据 user_id  查询 id 信息
+        List<DangerCoordinate> list = dangerCoordinateMapper.selectOne(user.getId());
+
+        dangerCoordinate.setId(list.get(0).getId());
 
         dangerCoordinate.setUser_id(user.getId());
 
         if (null == danger1) {
             dangerCoordinate.setDanger1(0.00);
         } else {
-            dangerCoordinate.setDanger1(danger1);
+            dangerCoordinate.setDanger1(danger1*1.00);
         }
         if (null == danger2) {
             dangerCoordinate.setDanger2(0.00);
         } else {
-            dangerCoordinate.setDanger2(danger2);
+            dangerCoordinate.setDanger2(danger2*1.00);
         }
         if (null == danger3) {
             dangerCoordinate.setDanger3(0.00);
         } else {
-            dangerCoordinate.setDanger3(danger3);
+            dangerCoordinate.setDanger3(danger3*1.00);
         }
         if (null == danger4) {
             dangerCoordinate.setDanger4(0.00);
         } else {
-            dangerCoordinate.setDanger4(danger4);
+            dangerCoordinate.setDanger4(danger4*1.00);
         }
         if (null == danger5) {
             dangerCoordinate.setDanger5(0.00);
         } else {
-            dangerCoordinate.setDanger5(danger5);
+            dangerCoordinate.setDanger5(danger5*1.00);
         }
         if (null == danger6) {
             dangerCoordinate.setDanger6(0.00);
         } else {
-            dangerCoordinate.setDanger6(danger6);
+            dangerCoordinate.setDanger6(danger6*1.00);
         }
         if (null == danger7) {
             dangerCoordinate.setDanger7(0.00);
         } else {
-            dangerCoordinate.setDanger7(danger7);
+            dangerCoordinate.setDanger7(danger7*1.00);
         }
         if (null == danger8) {
             dangerCoordinate.setDanger8(0.00);
         } else {
-            dangerCoordinate.setDanger8(danger8);
+            dangerCoordinate.setDanger8(danger8*1.00);
         }
         if (null == danger9) {
             dangerCoordinate.setDanger9(0.00);
         } else {
-            dangerCoordinate.setDanger9(danger9);
+            dangerCoordinate.setDanger9(danger9*1.00);
         }
         if (null == danger10) {
             dangerCoordinate.setDanger10(0.00);
         } else {
-            dangerCoordinate.setDanger10(danger10);
+            dangerCoordinate.setDanger10(danger10*1.00);
         }
         if (null == danger11) {
             dangerCoordinate.setDanger11(0.00);
         } else {
-            dangerCoordinate.setDanger11(danger11);
+            dangerCoordinate.setDanger11(danger11*1.00);
         }
         if (null == danger12) {
             dangerCoordinate.setDanger12(0.00);
         } else {
-            dangerCoordinate.setDanger12(danger12);
+            dangerCoordinate.setDanger12(danger12*1.00);
         }
         if (null == danger13) {
             dangerCoordinate.setDanger13(0.00);
         } else {
-            dangerCoordinate.setDanger13(danger13);
+            dangerCoordinate.setDanger13(danger13*1.00);
         }
         if (null == counts) {
             dangerCoordinate.setCounts(0.00);
         } else {
-            dangerCoordinate.setCounts(counts);
+            dangerCoordinate.setCounts(counts*1.00);
         }
 
         boolean b = dangerCoordinateMapper.updateByPrimaryKey(dangerCoordinate);
@@ -595,44 +599,6 @@ public class CompanyController_safety extends BaseController {
     * */
     @RequestMapping({"grade-table"})
     public String grade(Model model, HttpServletRequest request) throws Exception {
-        User user = this.getLoginUser(request);
-       /* // 根据 user_id 查询数据库 是否有数据
-        List<DangerCoordinate> list11 = dangerCoordinateMapper.selectOne(user.getId());
-        if (list11.size() == 0){
-            DangerCoordinate dangerCoordinate1 = new DangerCoordinate();
-            dangerCoordinate1.setUser_id(user.getId());
-            dangerCoordinate1.setDanger1(0.00);
-            dangerCoordinate1.setDanger2(0.00);
-            dangerCoordinate1.setDanger3(0.00);
-            dangerCoordinate1.setDanger4(0.00);
-            dangerCoordinate1.setDanger5(0.00);
-            dangerCoordinate1.setDanger6(0.00);
-            dangerCoordinate1.setDanger7(0.00);
-            dangerCoordinate1.setDanger8(0.00);
-            dangerCoordinate1.setDanger9(0.00);
-            dangerCoordinate1.setDanger10(0.00);
-            dangerCoordinate1.setDanger11(0.00);
-            dangerCoordinate1.setDanger12(0.00);
-            dangerCoordinate1.setDanger13(0.00);
-            dangerCoordinate1.setCounts(0.00);
-
-            dangerCoordinateMapper.insert(dangerCoordinate1);
-
-          *//* *//**//* DangerCoordinate dangerCoordinate2 = dangerCoordinateMapper.selectOne(user.getId());*//**//*
-            List<DangerCoordinate> list = new ArrayList<>();
-            list.add(dangerCoordinate1);*//*
-
-
-           List<DangerCoordinate> list = dangerCoordinateMapper.selectOne(user.getId());
-
-            model.addAttribute("list",list);
-
-        }else {
-            model.addAttribute("list11",list11);
-
-            System.out.println("111111");
-        }*/
-
         return "company/safety-system/grade-table";
     }
 
@@ -2007,7 +1973,7 @@ public class CompanyController_safety extends BaseController {
     }
 
     /*
-     * 分级管控页面展示
+     * 分级管控页面展示！！！
      * */
     @RequestMapping(value = "control-list")
     public String controlList(Model model, HttpServletRequest request, Integer type) throws Exception {
@@ -2020,7 +1986,8 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("list", list);
 
         for(Map<String, Object> name : list){
-            if (Integer.parseInt((String)name.get("flag").toString()) == 1){ // 较大
+            if (null == (String)name.get("flag").toString() || Integer.parseInt((String)name.get("flag").toString()) != 2){ // 较大
+                model.addAttribute("gkzt",name.get("gkzt"));
                 // 根据 aCompanyManual 中 dmid  查询 对应的 公司负责人的名称
                 ZzjgPersonnel zzjgPersonnel = zzjgPersonnelMapper.selectName((Integer) name.get("dmid"),user.getId());
                 if (null != zzjgPersonnel){
@@ -2030,7 +1997,9 @@ public class CompanyController_safety extends BaseController {
                 }
             }else if(Integer.parseInt((String)name.get("flag").toString()) == 2){ // 重大
                 Company company = companyMapper.selectByPrimaryKey(user.getId());
-                model.addAttribute("fjgkfzr",company.getLegal());
+                model.addAttribute("fjgkfzr",company.getCharge());
+
+                model.addAttribute("gkzt","公司");
             }
         }
 

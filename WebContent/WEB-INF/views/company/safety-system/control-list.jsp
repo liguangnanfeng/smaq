@@ -21,6 +21,8 @@
     .col-b,.col-a,.col-c,.col-d{margin:0;padding:0 15px;height:25px;line-height:25px;}
   </style>
   <script type="text/javascript">
+    var dmid = 0;
+
     function copy_(fjgkfzr,gkcs,gkzt,level2,level,factors,flag,uid) {
 
 
@@ -62,7 +64,6 @@
           $("#win-add4").modal("show");
           var name = $("#gkzt").val();
           var id = $("#gkztIds").val();
-
           $.ajax({ //post也可
               type: "POST",
               url: getRootPath() + "/company/safety-system/control-list-one",
@@ -84,13 +85,14 @@
 
 
     /* 弹窗管控信息添加 */
-    function edits(id, obj){
+    function edits(id,did,obj){
         window.id = id;
+        dmid = did;
         var p = $(obj).parent();
-        $("#gkzt").val(p.find("input[name='gkzt']").val());
-        $("#gkcs").val(p.find("input[name='gkcs']").val());
+//        $("#gkzt").val(p.find("input[name='gkzt']").val());
+//        $("#gkcs").val(p.find("input[name='gkcs']").val());
         $("#fjgkfzr").val(p.find("input[name='fjgkfzr']").val().split("-")[0]);
-        $("#buwei").val(p.find("input[name='buwei']").val());
+//        $("#buwei").val(p.find("input[name='buwei']").val());
         $("#win-add").modal("show");
     }
 
@@ -100,7 +102,9 @@
 
     function chosem2(){
         var name = $("#gkzt").val();
-        var id = $("#gkztIds").val();
+//        var id = $("#gkztIds").val();
+        var id =dmid;
+
         if (id == 0){
             alert("请先选择管控主体。")
         }else{
@@ -174,7 +178,7 @@
               "gkzt" : $("#gkzt").val(),
               "level2" : $("#buwei").val(),
               "id" : id,
-              "ids": $("#gkztIds").val(),
+              "ids": dmid,
               "dianhuas" : $("#dianhuas").val(),
           }
           if(obj.gkzt == '') {
@@ -336,7 +340,7 @@
                   </c:if>
 
                   <c:if test="${be.level ne '红色'}">
-                    <a style="text-decoration:none" onClick="edits(${be.id}, this)" href="javascript:;" title="编辑">编辑</a>
+                    <a style="text-decoration:none" onClick="edits(${be.id},${be.dmid}, this)" href="javascript:;" title="编辑">编辑</a>
                   </c:if>
                     <%-- <a style="text-decoration:none;" onClick="copy_('${be.fjgkfzr}','${be.gkcs}','${be.gkzt}','${be.level2}','${be.level}','${be.factors}','${be.flag}','${be.uid}' )" href="javascript:;" title="复制" >复制</a>--%>
                 </c:if>
@@ -361,44 +365,44 @@
         <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
       </div>
       <div class="modal-body">
-        <div class="row cl">
-          <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控主体：</label>
-          <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
-            <input type="text" id="gkzt" value="" style="width: 357px" class="input-text required" readonly="readonly">
+        <%--<div class="row cl">--%>
+          <%--<label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控主体：</label>--%>
+          <%--<div class="formControls col-xs-8 col-sm-9" style="width: 80%;">--%>
+            <%--<input type="text" id="gkzt" value="" style="width: 357px" class="input-text required" readonly="readonly">--%>
 
-            <input type="hidden" id = "gkztIds" >
+            <%--<input type="hidden" id = "gkztIds" >--%>
 
-            <input type="hidden" id = "gkztIdAll" >
-            <c:if test="${not empty departL}">
-              <button class="btn btn-primary radius" type="button" onclick="chosem()">
-                <i class="Hui-iconfont">&#xe611;</i>选择管控主体
-              </button>
-            </c:if>
-          </div>
-        </div>
-
-
-        <div class="row cl mt-15">
-          <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">部位：</label>
-          <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
-            <input type="text" id="buwei" value="" style="width: 357px" class="input-text required" readonly="readonly">
-            <c:if test="${not empty perL}">
-              <button class="btn btn-primary radius" id = "gangwei" type="button" onclick="chosem3()" >
-
-                <i class="Hui-iconfont" >&#xe611;</i>选择部位
-
-              </button>
-            </c:if>
-          </div>
-        </div>
+            <%--<input type="hidden" id = "gkztIdAll" >--%>
+            <%--<c:if test="${not empty departL}">--%>
+              <%--<button class="btn btn-primary radius" type="button" onclick="chosem()">--%>
+                <%--<i class="Hui-iconfont">&#xe611;</i>选择管控主体--%>
+              <%--</button>--%>
+            <%--</c:if>--%>
+          <%--</div>--%>
+        <%--</div>--%>
 
 
-        <div class="row cl mt-15">
-          <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控措施：</label>
-          <div class="formControls col-xs-8 col-sm-9" style="width: 80%;">
-            <textarea id="gkcs" class="textarea txtarea_sq" style="width: 557px;" ></textarea>
-          </div>
-        </div>
+        <%--<div class="row cl mt-15">--%>
+          <%--<label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">部位：</label>--%>
+          <%--<div class="formControls col-xs-8 col-sm-9" style="width: 80%;">--%>
+            <%--<input type="text" id="buwei" value="" style="width: 357px" class="input-text required" readonly="readonly">--%>
+            <%--<c:if test="${not empty perL}">--%>
+              <%--<button class="btn btn-primary radius" id = "gangwei" type="button" onclick="chosem3()" >--%>
+
+                <%--<i class="Hui-iconfont" >&#xe611;</i>选择部位--%>
+
+              <%--</button>--%>
+            <%--</c:if>--%>
+          <%--</div>--%>
+        <%--</div>--%>
+
+
+        <%--<div class="row cl mt-15">--%>
+          <%--<label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控措施：</label>--%>
+          <%--<div class="formControls col-xs-8 col-sm-9" style="width: 80%;">--%>
+            <%--<textarea id="gkcs" class="textarea txtarea_sq" style="width: 557px;" ></textarea>--%>
+          <%--</div>--%>
+        <%--</div>--%>
 
 
         <div class="row cl mt-15">

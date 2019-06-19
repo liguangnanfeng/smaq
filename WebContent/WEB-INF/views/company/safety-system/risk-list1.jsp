@@ -236,7 +236,7 @@
                             </c:if>
                             <c:if test="${!empty type}">
                                 <th style="padding:0;width:20%">车间/场所</th>
-                                <th style="width:10%">岗位/部位</th>
+                                <th style="width:10%">风险点</th>
                             </c:if>
                             <c:if test="${type eq 1}">
                                 <th>职业危害物理因素</th>
@@ -311,7 +311,7 @@
                                                 <c:if test="${empty type}">
                                                     <c:if test="${number == null || number == 1}">
                                                         <button class="btn btn-primary radius"
-                                                                onClick="addgj('${be.id}')">现场风险辨识1111111111
+                                                                onClick="addgj('${be.id}')">现场风险辨识
                                                         </button>
                                                     </c:if>
                                                     <c:if test="${number == 2}">

@@ -3020,7 +3020,7 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value = "select-all-level1")
     @ResponseBody
-    public String selectAllLevel1(Integer checkType, String industry, HttpServletRequest request, Model model, String tableName) {
+    public String selectAllLevel1(Integer checkType, String industry, HttpServletRequest request, Model model, String tableName,Integer flag) {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         if (StringUtils.isNotBlank(industry)) {
@@ -3033,6 +3033,7 @@ public class VillageController extends BaseController {
         model.addAttribute("checkType", checkType);
         model.addAttribute("industry", industry);
         model.addAttribute("tableName",tableName);
+        model.addAttribute("flag",flag);
         // 根据 checkType 查询对应的 level1 信息
         if (-2 == checkType) {
             List<ADangerManual> dL = aDangerManualMapper.selectByIndustry(industry);
@@ -3065,7 +3066,6 @@ public class VillageController extends BaseController {
             model.addAttribute("dL", dL);
         }
         return "company/checkModel/model-add6";
-
     }
 
     /*

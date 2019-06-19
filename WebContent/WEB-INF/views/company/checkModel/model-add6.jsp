@@ -250,6 +250,9 @@
                     <div class="list_odan">
                         <!-- 循环二级 -->
                         <c:forEach items="${be.value }" var="be2">
+                            <script>
+                                console.log('${be2}');
+                            </script>
                             <div class="two_danger">
                                 <div class="two_dtitle">
                                     <i class="Hui-iconfont">&#xe604;</i>
@@ -332,7 +335,7 @@
             "checkType": parseInt(checkType),//检查方式
             "selectItems": ids,      //检查项
         }
-        $.post("/village/save-administrative",JSON.stringify(params), function (result) {
+        $.post(getRootPath() + '/village/save-administrative',JSON.stringify(params), function (result) {
             if (result.status == 0) {
                 layer.close(i);
                 layer.alert('保存成功');

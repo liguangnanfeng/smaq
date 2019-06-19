@@ -166,7 +166,7 @@
                         <td>1.固有危险性</td>
                         <td>重大危险源（10分）</td>
                         <td>存在一级危险化学品重大危险源的，扣10分;</td>
-                        <td rowspan="4" onclick="dafen('danger1',10,this)" class="my_text"></td>
+                        <td rowspan="4" onclick="dafen('danger1',10,this)" class="my_text danger1"></td>
                     </tr>
                     <tr>
                         <td>1.固有危险性</td>
@@ -192,7 +192,7 @@
                         <td>1.固有危险性</td>
                         <td>物质危险性（5分）</td>
                         <td>生产、储存爆炸品的（实验室化学试剂除外），每一种扣2分；</td>
-                        <td rowspan="3" onclick="dafen('danger2',5,this)" class="my_text"></td>
+                        <td rowspan="3" onclick="dafen('danger2',5,this)" class="my_text danger2"></td>
                     </tr>
 
                     <tr>
@@ -213,14 +213,14 @@
                         <td>1.固有危险性</td>
                         <td>危险化工工艺种类（10分）</td>
                         <td>涉及18种危险化工工艺的，每一种扣2分。</td>
-                        <td onclick="dafen('danger3',10,this)" class="my_text"></td>
+                        <td onclick="dafen('danger3',10,this)" class="my_text danger3"></td>
                     </tr>
 
                     <tr>
                         <td>1.固有危险性</td>
                         <td>火灾爆炸危险性（5分）</td>
                         <td>涉及甲类/乙类火灾危险性类别厂房、库房或者罐区的，每涉及一处扣1/0.5分；</td>
-                        <td rowspan="2" onclick="dafen('danger4',5,this)" class="my_text"></td>
+                        <td rowspan="2" onclick="dafen('danger4',5,this)" class="my_text danger4"></td>
                     </tr>
 
                     <tr>
@@ -233,7 +233,7 @@
                         <td>2.周边环境</td>
                         <td>周边环境(10分）</td>
                         <td>企业在化工园区（化工集中区）外的，扣3分；</td>
-                        <td rowspan="2" onclick="dafen('danger5',10,this)" class="my_text"></td>
+                        <td rowspan="2" onclick="dafen('danger5',10,this)" class="my_text danger5"></td>
                     </tr>
 
                     <tr>
@@ -247,7 +247,7 @@
                         <td>3.设计与评估</td>
                         <td>设计与评估（10分）</td>
                         <td>国内首次使用的化工工艺未经过省级人民政府有关部门组织安全可靠性论证的，扣5分；</td>
-                        <td rowspan="3" onclick="dafen('danger6',10,this)" class="my_text"></td>
+                        <td rowspan="3" onclick="dafen('danger6',10,this)" class="my_text danger6"></td>
                     </tr>
 
                     <tr>
@@ -269,7 +269,7 @@
                         <td>4.设备</td>
                         <td>设备（5分）</td>
                         <td>使用淘汰落后安全技术工艺、设备目录列出的工艺及设备的，每一项扣2分；</td>
-                        <td rowspan="3" onclick="dafen('danger7',5,this)" class="my_text"></td>
+                        <td rowspan="3" onclick="dafen('danger7',5,this)" class="my_text danger7"></td>
                     </tr>
 
                     <tr>
@@ -290,7 +290,7 @@
                         <td>5.自控与安全设施</td>
                         <td>自控与安全设施（10分）</td>
                         <td>涉及重点监管危险化工工艺的装置未按要求实现自动化控制，系统未实现紧急停车功能，装备的自动化控制系统、紧急停车系统未投入使用的，扣10分；</td>
-                        <td rowspan="7" onclick="dafen('danger8',10,this)" class="my_text"></td>
+                        <td rowspan="7" onclick="dafen('danger8',10,this)" class="my_text danger8"></td>
                     </tr>
 
                     <tr>
@@ -342,7 +342,7 @@
                         <td>6.人员资质</td>
                         <td>人员资质（15分）</td>
                         <td>企业主要负责人和安全生产管理人员未依法经考核合格的，每一人次扣5分；</td>
-                        <td rowspan="5" onclick="dafen('danger9',15,this)" class="my_text"></td>
+                        <td rowspan="5" onclick="dafen('danger9',15,this)" class="my_text danger9"></td>
                     </tr>
 
                     <tr>
@@ -379,7 +379,7 @@
                         <td>7.安全管理制度</td>
                         <td>管理制度（10分）</td>
                         <td>未制定操作规程和工艺控制指标或者制定的操作规程和工艺控制指标不完善的，扣5分；</td>
-                        <td rowspan="3" onclick="dafen('danger10',10,this)" class="my_text"></td>
+                        <td rowspan="3" onclick="dafen('danger10',10,this)" class="my_text danger10"></td>
                     </tr>
 
 
@@ -401,14 +401,14 @@
                         <td>8.应急管理</td>
                         <td>应急配备</td>
                         <td>企业自设专职消防应急队伍的，加3分。</td>
-                        <td onclick="dafen('danger11',10,this)" class="my_text"></td>
+                        <td onclick="dafen('danger11',10,this)" class="my_text danger11"></td>
                     </tr>
 
                     <tr>
                         <td>9.安全管理绩效</td>
                         <td>安全生产标准化达标</td>
                         <td>安全生产标准化为一级的，加15分；</td>
-                        <td rowspan="3" onclick="dafen('danger12',15,this)" class="my_text"></td>
+                        <td rowspan="3" onclick="dafen('danger12',15,this)" class="my_text danger12"></td>
                     </tr>
 
                     <tr>
@@ -429,7 +429,7 @@
                         <td>9.安全管理绩效</td>
                         <td>安全事故情况（10分）</td>
                         <td>三年内发生过1起较大安全事故的，扣10分;</td>
-                        <td rowspan="4" onclick="dafen('danger13',10,this)" class="my_text"></td>
+                        <td rowspan="4" onclick="dafen('danger13',10,this)" class="my_text danger13"></td>
                     </tr>
 
                     <tr>
@@ -575,15 +575,33 @@
     ]
     $(function(){
         $.get( "${ly}/company/safety-system/grade-tables-data", function (result) {
-           console.log(result);
            if(result.status==0){   //请求成功
                var data =  result.object;
+               console.log(data);
                arr.map(function (item){
                    postData[item] =data[item]==null||data[item]==0?0:data[item]
+                   if(data[item]!=null&&data[item]!=0){
+                       $('.'+item).text(data[item]);
+                   }
+
                })
+               var count =data.counts
+               var test = '总分：'+count;
 
-
-
+               $('#fenshu').text(test);
+               $('#sekuai').removeClass('my_red my_o my_y my_b');
+               if(count<60){
+                   $('#sekuai').addClass('my_red');
+               }
+               if(count>=60&&count<75){
+                   $('#sekuai').addClass('my_o');
+               }
+               if(count>=75&&count<90){
+                   $('#sekuai').addClass('my_y');
+               }
+               if(count>=90){
+                   $('#sekuai').addClass('my_b');
+               }
 
            }else{
                layer.msg('初始化失败')
@@ -599,13 +617,14 @@
     function dafen(zd, xz, dom) {  //zd 要赋值的变量名    xz 表示输入最大的范围
         current = zd;
         currentDom = $(dom);
+        $('#trInput').val(currentDom.text());
         max = xz;
         $("#modal-plan2").modal("show");
     }
 
 
     function queren() {
-        var val = parseInt($('#trInput').val());  //为了保险还是先转化成数字
+        var val = parseFloat($('#trInput').val());  //为了保险还是先转化成数字
         if (Math.abs(val) > max) {   // 如果输入的数字大于限制  则提示
             layer.msg('输入的值不能超过最大分值');
             return
@@ -615,9 +634,9 @@
             var count =  100;
             for(i = 0; i < 13; i++){
                 if(i==10||i==11){
-                    count = count + parseInt(postData['danger'+(i+1)]);
+                    count = count + parseFloat(postData['danger'+(i+1)]);
                 }else{
-                    count = count - parseInt(postData['danger'+(i+1)]);
+                    count = count - parseFloat(postData['danger'+(i+1)]);
                 }
             }
             postData.counts = count;
@@ -654,6 +673,8 @@
 //            }
 //        }
 //        postData.counts = count;
+
+
         $.ajax({ //post也可
             type: "POST",
             url: getRootPath() + "/company/safety-system/danger-coordinate",

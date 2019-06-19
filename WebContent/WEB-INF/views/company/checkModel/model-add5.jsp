@@ -511,16 +511,20 @@
                             {this.state.list.map((item, index) => {
                                 return (
                                     <tr>
-                                        <c:set value="${fn:split(item.level3,'/')}" var="ls"></c:set>
+
 
                                         <td class="text-c"></td>
 
-                                        <td className="text-c">11111</td>
+                                         <td className="text-c">{item.level3}</td>
 
+                                         <td className="text-c">1111</td>
 
                                         <td className="text-c">{item.level1}</td>
+
                                         <td className="text-c">{item.level2}</td>
+
                                         <td className="text-c">{item.level3}</td>
+
                                         <td className="text-c">{item.measures}</td>
 
                                         <td className="text-c">

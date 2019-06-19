@@ -37,7 +37,7 @@
           $("#win-add4").modal("show");
       }
 
-    /*  //自评保存
+      //自评保存
       function zpLevel_save_(id,e) {
           $.post(getRootPath() + "/company/safety-system/zp-save", {
               id : id,
@@ -45,7 +45,7 @@
           },function(result) {
               location.reload();
           })
-      }*/
+      }
 
       //保存
       function save_() {
@@ -159,7 +159,7 @@
         <th style="min-width:100px">风险等级</th>
         <!-- <th style="min-width:100px">作业条件风险程度评价(LEC)</th>
         <th style="min-width:100px">风险矩阵法评价(LS)</th> -->
-        <th style="min-width:80px">删除</th>
+        <th style="min-width:265px">删除</th>
       </tr>
       </thead>
       <tbody>
@@ -234,14 +234,15 @@
                </c:choose>
             </td> --%>
           <td>
-           <%-- <input class="btn btn-danger-outline size-S radius ml-5" type="button" value="红色" onclick="zpLevel_save_(${be.id},this)"/>
+            <input class="btn btn-danger-outline size-S radius ml-5" type="button" value="红色" onclick="zpLevel_save_(${be.id},this)"/>
             <input class="btn btn-warning-outline size-S radius ml-5" type="button" value="橙色" onclick="zpLevel_save_(${be.id},this)"/>
             <input class="btn btn-warning-outline size-S radius btn-huang ml-5" type="button" value="黄色" onclick="zpLevel_save_(${be.id},this)"/>
-            <input class="btn btn-secondary-outline size-S radius ml-5 mr-5" type="button" value="蓝色" onclick="zpLevel_save_(${be.id},this)"/>--%>
-              <%-- <a style="text-decoration:none" onClick="show3(${be.id}, '${be.level}')" href="javascript:;" title="评估">评估</a> --%>
-              <%-- <a style="text-decoration:none" onClick="show_dialog('作业条件风险程度评价','/company/safety-system/assess2?id=${be.id}')" href="javascript:;" title="立即评测">LEC评测</a>
-              <a style="text-decoration:none" onClick="show_dialog('风险矩阵法评价','/company/safety-system/assess3?id=${be.id}')" href="javascript:;" title="立即评测">LS评测</a> --%>
+            <input class="btn btn-secondary-outline size-S radius ml-5 mr-5" type="button" value="蓝色" onclick="zpLevel_save_(${be.id},this)"/>
             <a class="btn size-S radius" style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;" title="删除">删除</a>
+               <%--<a style="text-decoration:none" onClick="show3(${be.id}, '${be.level}')" href="javascript:;" title="评估">评估</a>
+               <a style="text-decoration:none" onClick="show_dialog('作业条件风险程度评价','/company/safety-system/assess2?id=${be.id}')" href="javascript:;" title="立即评测">LEC评测</a>
+              <a style="text-decoration:none" onClick="show_dialog('风险矩阵法评价','/company/safety-system/assess3?id=${be.id}')" href="javascript:;" title="立即评测">LS评测</a>--%>
+
           </td>
         </tr>
       </c:forEach>

@@ -1997,7 +1997,7 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value = "process-see")
     public String processSee(Model model, String url, HttpServletRequest request) throws UnknownHostException {
-        String url3 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+url;
+        String url3 = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + url;
         model.addAttribute("list", url3);
         return "company/process/process-see";
 
@@ -2829,7 +2829,7 @@ public class VillageController extends BaseController {
 
 
     /**
-     * TODO model-add.jsp 页面跳转
+     * TODO model-add.jsp 页面跳转 由(model-addOld改写)
      *
      * @return
      */
@@ -2837,8 +2837,9 @@ public class VillageController extends BaseController {
     public String getCheckModelBasic(Integer flag, Model model) {
         model.addAttribute("flag", flag);
         /* return "company/checkModel/model-add";*/
-
-        return "company/checkModel/model-addOld";
+        model.addAttribute("list", null);
+        model.addAttribute("dL", null);
+        return "company/checkModel/model-add6";
     }
 
     /**
@@ -3014,25 +3015,61 @@ public class VillageController extends BaseController {
 
 
     /*
-     * 根据 checkType 查询所有的 level2 的信息
+     * TODO 根据 checkType 查询所有的 level2 的信息(废弃)
+     *
      */
     @RequestMapping(value = "select-all-level1")
     @ResponseBody
-    public List<Map<String, Object>> selectAllLevel1(Integer checkType, HttpServletRequest request) {
+    public String selectAllLevel1(Integer checkType, String industry, HttpServletRequest request, Model model, String tableName,Integer flag) {
         User user = getLoginUser(request);
-        List<Map<String, Object>> list = null;
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        if (StringUtils.isNotBlank(industry)) {
+            industry = utf8Str(industry);
+        }
+        if (StringUtils.isBlank(industry)) {
+            industry = company.getIndustry();
+        }
+        model.addAttribute("company", company);
+        model.addAttribute("checkType", checkType);
+        model.addAttribute("industry", industry);
+        model.addAttribute("tableName",tableName);
+        model.addAttribute("flag",flag);
         // 根据 checkType 查询对应的 level1 信息
         if (-2 == checkType) {
-            list = aDangerManualMapper.selectLevel1("现场管理");
+            List<ADangerManual> dL = aDangerManualMapper.selectByIndustry(industry);
+            Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
+            for (ADangerManual ad : dL) {
+                String l1 = ad.getLevel1();
+                String l2 = ad.getLevel2();
+                if (null == list.get(l1)) {
+                    list.put(l1, new LinkedHashSet<String>());
+                }
+                Set<String> s = list.get(l1);
+                s.add(l2);
+            }
+            model.addAttribute("list", list);
+            model.addAttribute("dL", dL);
+
         } else if (-1 == checkType) {
-            list = tLevelMapper.selectLevel1("基础管理");
+            List<TLevel> dL = tLevelMapper.selectAll();
+            Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
+            for (TLevel ad : dL) {
+                String l1 = ad.getLevel1();
+                String l2 = ad.getLevel2();
+                if (null == list.get(l1)) {
+                    list.put(l1, new LinkedHashSet<String>());
+                }
+                Set<String> s = list.get(l1);
+                s.add(l2);
+            }
+            model.addAttribute("list", list);
+            model.addAttribute("dL", dL);
         }
-        return list;
+        return "company/checkModel/model-add6";
     }
 
-
     /*
-     * 根据 checkType 和 level2  查询所有的 level3 的信息
+     * TODO 根据 checkType 和 level2  查询所有的 level3 的信息(废弃)
      */
     @RequestMapping(value = "select-all-level3")
     @ResponseBody
@@ -3050,7 +3087,7 @@ public class VillageController extends BaseController {
 
 
     /*
-     * 根据 checkType , level2 , level3  查询所有的 Measures 的信息
+     * TODO 根据 checkType , level2 , level3  查询所有的 Measures 的信息 (废弃)
      */
     @RequestMapping(value = "select-all-measures")
     @ResponseBody
@@ -3295,8 +3332,7 @@ public class VillageController extends BaseController {
             /*Integer[] selectItems = (Integer[]) map.get("selectItems");*/
 
 
-
-            List<Map<String,String>> inputItems = (List<Map<String, String>>) map.get("inputItems");
+            List<Map<String, String>> inputItems = (List<Map<String, String>>) map.get("inputItems");
 
             if (null == a || "".equals(a)) {
                 result.setStatus("1");
@@ -3341,13 +3377,13 @@ public class VillageController extends BaseController {
             tCheckMapper.insertSelective(tCheck);
             Integer tCheckId = tCheck.getId();
 
-            if (-2==checkType) {
+            if (-2 == checkType) {
                 // 表示现场
                 for (String id : split) {
                     ADangerManual aDangerManual = aDangerManualMapper.selectByPrimaryKey(Integer.parseInt(id));
                     TCheckPart tCheckPart = new TCheckPart();
                     tCheckPart.setCheckId(tCheckId);
-                    if(null!=aDangerManual.getName()){
+                    if (null != aDangerManual.getName()) {
                         tCheckPart.setName(aDangerManual.getName());  //岗位/部位信息
                     }
                     tCheckPartMapper.insertSelective(tCheckPart);
@@ -3362,7 +3398,7 @@ public class VillageController extends BaseController {
                     tCheckItemMapper.insertSelective(tCheckItem);
                 }
 
-            }else{
+            } else {
                 // 表示是基础
                 for (String id : split) {
                     TLevel tLevel = tLevelMapper.selectByPrimaryKey(Integer.parseInt(id));
@@ -3386,11 +3422,9 @@ public class VillageController extends BaseController {
             }
 
 
-
-
             if (null != inputItems || inputItems.size() > 0) {
                 // 保存自定义内容
-                for (Map<String,String> mapStr : inputItems) {
+                for (Map<String, String> mapStr : inputItems) {
 
                     TCheckPart tCheckPart = new TCheckPart();
                     tCheckPart.setCheckId(tCheckId);
@@ -3400,7 +3434,7 @@ public class VillageController extends BaseController {
                     //tCheckItem.setLevelId(aDangerManual.getId());     // companyManualTbl的id
                     tCheckItem.setContent(mapStr.get("level4")); //检查内容
                     tCheckItem.setLevels(mapStr.get("level3"));   // 场所/环节/部门 三级
-                   // tCheckItem.setReference(aDangerManual.getReference()); // 依据
+                    // tCheckItem.setReference(aDangerManual.getReference()); // 依据
                     //tCheckItem.setMemo();   // 较大危险因素
                     tCheckItem.setPartId(tCheckPart.getId());
                     tCheckItem.setCheckId(tCheckId);

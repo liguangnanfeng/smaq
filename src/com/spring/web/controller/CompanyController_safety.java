@@ -2034,7 +2034,7 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-     * 根据车间查询对应的责任人信息
+     * 根据车间查询对应的责任人信息！！！
      */
     @RequestMapping(value = "control-list-person")
     public @ResponseBody
@@ -2046,7 +2046,7 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-    /**
+    /*
      * 查询相应管控主体下的部门信息！！！
      */
     @RequestMapping(value = "control-list-one")
@@ -2128,7 +2128,7 @@ public class CompanyController_safety extends BaseController {
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("uid", user.getId());
-//        m.put("order", 1);
+        m.put("order", 1);
 
         model.addAttribute("company", company);
         model.addAttribute("user", userMapper.selectByPrimaryKey(company.getUserId()));
@@ -2270,7 +2270,7 @@ public class CompanyController_safety extends BaseController {
 
 
     /*
-     * 现场管理数据的添加
+     * 现场管理数据的添加 ！！！
      * */
     @RequestMapping(value = "aCompanyManual-save1")
     public @ResponseBody

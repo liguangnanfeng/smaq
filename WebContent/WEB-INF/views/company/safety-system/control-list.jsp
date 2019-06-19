@@ -284,7 +284,7 @@
                 <td class="text-c">${be.type }</td>
                 <td class="text-c">${be.factors }</td>
                 <%--<td class="text-c">${gkzt != null ? gkzt : "暂无数据" }</td>--%>
-                <c:if test="${be.flag == 2}">
+                <c:if test="${be.level eq '红色'}">
                   <td class="text-c">公司</td>
 
                   <td class="text-c">
@@ -296,38 +296,34 @@
                 </c:if>
 
 
-                <c:if test="${be.flag != 2}">
+                <c:if test="${be.level ne '红色'}">
                   <td class="text-c">${be.gkzt != null ? be.gkzt : "暂无数据"}</td>
 
                   <td class="text-c">${be.fjgkfzr != null ? be.fjgkfzr : "暂无数据"}</td>
                 </c:if>
 
-
-
-
-
                 <td><p>${empty be.gkcs ? be.measures : be.gkcs}</p></td>
                 <td class="text-c div-pcz">
                   <input type="hidden" name="gkcs" value="${empty be.gkcs ? be.measures : be.gkcs }"/>
                   <c:if test="${be.level eq '红色'}">
-                  <input type="hidden" name="gkzt" value="公司"/>
-                    <c:forEach items="${companyList}" var="be3" >
-                      <input type="hidden" name="fjgkfzr" value="${be3.charge}"/>
-                    </c:forEach>
-                </c:if>
+                      <input type="hidden" name="gkzt" value="公司"/>
+                      <c:forEach items="${companyList}" var="be3" >
+                        <input type="hidden" name="fjgkfzr" value="${be3.charge}"/>
+                      </c:forEach>
+                  </c:if>
 
-                <c:if test="${be.flag != 2}">
+                  <c:if test="${be.level ne '红色'}">
                   <input type="hidden" name="gkzt" value="${be.gkzt}"/>
                   <input type="hidden" name="fjgkfzr" value="${be.fjgkfzr }"/>
                 </c:if>
                   <input type="hidden" name="buwei" value="${be.level2}"/>
 
                 <c:if test="${empty be.gkzt}">
-                  <c:if test="${be.flag == 2}">
+                  <c:if test="${be.level eq '红色'}">
                     <a style="text-decoration:none;opacity: 0.2" onClick="return false;" href="javascript:return false;" title="默认">默认</a>
                   </c:if>
 
-                  <c:if test="${be.flag != 2}">
+                  <c:if test="${be.level ne '红色'}">
                     <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑管控信息">编辑管控信息</a>
                   </c:if>
 
@@ -335,11 +331,11 @@
 
                 <c:if test="${not empty be.gkzt}">
 
-                  <c:if test="${be.flag == 2}">
+                  <c:if test="${be.level eq '红色'}">
                     <a style="text-decoration:none;opacity: 0.2" onClick="return false;" href="javascript:return false;" title="默认">默认</a>
                   </c:if>
 
-                  <c:if test="${be.flag != 2}">
+                  <c:if test="${be.level ne '红色'}">
                     <a style="text-decoration:none" onClick="edits(${be.id}, this)" href="javascript:;" title="编辑">编辑</a>
                   </c:if>
                     <%-- <a style="text-decoration:none;" onClick="copy_('${be.fjgkfzr}','${be.gkcs}','${be.gkzt}','${be.level2}','${be.level}','${be.factors}','${be.flag}','${be.uid}' )" href="javascript:;" title="复制" >复制</a>--%>

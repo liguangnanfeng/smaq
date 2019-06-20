@@ -3664,11 +3664,11 @@ public class CompanyController_cd extends BaseController {
                 //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
             }
         }
-
         //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
         model.addAttribute("check", tc);
         model.addAttribute("flag",tc.getFlag());
         model.addAttribute("itemL", iteml);
+        model.addAttribute("user",loginUser);
         if(null==name||"".equals(name)){
             name = companyMapper.selectByPrimaryKey(loginUser.getId()).getSafety();
         }

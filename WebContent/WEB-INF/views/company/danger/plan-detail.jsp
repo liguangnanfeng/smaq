@@ -157,7 +157,13 @@ function showpicture(src){
   <div id="div_container">
     <h2 class="text-c mb-10">检查详情表</h2>
     <div class="f-l div_pdetail mt-10">
-      <font>检查部门：${check.depart }</font> <label>检查日期：<fmt:formatDate value="${check.realTime }" pattern="yyyy年MM月dd日" /> <c:if
+      <c:if test="${flag==2 || flag== 3 }" >
+        <font>检查公司：${user.userName }</font>
+      </c:if>
+      <c:if test="${flag==1}" >
+        <font>检查部门：${check.depart }</font>
+      </c:if>
+      <label>检查日期：<fmt:formatDate value="${check.realTime }" pattern="yyyy年MM月dd日" /> <c:if
           test="${empty check.realTime}">&nbsp;&nbsp;年&nbsp;月&nbsp;日</c:if>
       </label>
     </div>

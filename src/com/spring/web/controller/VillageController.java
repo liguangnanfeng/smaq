@@ -3411,7 +3411,7 @@ public class VillageController extends BaseController {
 
                         tCheckPartMapper.insertSelective(tCheckPart);
                         TCheckItem tCheckItem = new TCheckItem();
-                        tCheckItem.setLevelId(tLevel.getId());     // companyManualTbl的id
+                        tCheckItem.setLevelId(Integer.parseInt(id));     // companyManualTbl的id
                         tCheckItem.setContent(tLevel.getMeasures()); //检查内容
                         tCheckItem.setLevels(tLevel.getLevel3());   // 场所/环节/部门 三级
                         tCheckItem.setReference(tLevel.getReference()); // 依据

@@ -909,7 +909,9 @@
         ORDER BY a.id
     </select>
 
-    <!--隐患治理记录查询 -->
+    <!--隐患治理记录查询
+        复查/合格不合格的
+    -->
     <select id="selectListBystatus" resultType="java.util.Map" parameterType="INTEGER">
         select T2.type,
                T2.depart,
@@ -937,6 +939,7 @@
           and T1.status > 1
           and T2.del= 0
           and T2.flag=#{flag}
+          and T1.recheck_file is not null
           order by T2.real_time desc;
     </select>
 

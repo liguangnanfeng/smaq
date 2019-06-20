@@ -1365,6 +1365,21 @@ public class VillageController extends BaseController {
 //        return "village/danger/plan-next";
 //    }
 
+
+    /**
+     * loadMap
+     * TODO 显示小程序端检查记录的检查定位
+     */
+    @RequestMapping("loadMap")
+    public String loadMap(Model model, String latitude, String longitude,Integer checkId,HttpServletRequest request ){
+        User user = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        model.addAttribute("areaRange",company.getAreaRange());
+        model.addAttribute("latitude",latitude);
+        model.addAttribute("longitude",longitude);
+        return "company/danger/xcxMap";
+    }
+
     /**
      * TODO 生成检查表数据
      *

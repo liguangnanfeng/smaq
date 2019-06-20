@@ -23,8 +23,8 @@
             <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="del" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="check_company" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="longitude" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
-            <arg column="latitude" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="longitude" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="latitude" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
@@ -60,7 +60,7 @@
         #{industryType,jdbcType=INTEGER}, #{expectTime,jdbcType=TIMESTAMP}, #{realTime,jdbcType=TIMESTAMP},
         #{cheker,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, #{dapartContact,jdbcType=VARCHAR},
         #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{del,jdbcType=INTEGER},
-        #{checkCompany,jdbcType=VARCHAR},#{longitude,jdbcType=DECIMAL},#{latitude,jdbcType=DECIMAL})
+        #{checkCompany,jdbcType=VARCHAR},#{longitude,jdbcType=VARCHAR},#{latitude,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.spring.web.model.TCheck">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -191,10 +191,10 @@
                 #{checkCompany,jdbcType=VARCHAR},
             </if>
             <if test="longitude != null">
-                #{longitude,jdbcType=DECIMAL},
+                #{longitude,jdbcType=VARCHAR},
             </if>
             <if test="latitude != null">
-                #{latitude,jdbcType=DECIMAL}
+                #{latitude,jdbcType=VARCHAR}
             </if>
         </trim>
     </insert>
@@ -263,10 +263,10 @@
                 check_company = #{checkCompany,jdbcType=VARCHAR},
             </if>
             <if test="longitude != null">
-                longitude = #{longitude,jdbcType=DECIMAL},
+                longitude = #{longitude,jdbcType=VARCHAR},
             </if>
             <if test="latitude != null">
-                latitude = #{latitude,jdbcType=DECIMAL}
+                latitude = #{latitude,jdbcType=VARCHAR}
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -293,8 +293,8 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
         del = #{del,jdbcType=INTEGER},
         check_company = #{checkCompany,jdbcType=VARCHAR},
-        longitude = #{longitude,jdbcType=DECIMAL},
-        latitude = #{latitude,jdbcType=DECIMAL}
+        longitude = #{longitude,jdbcType=VARCHAR},
+        latitude = #{latitude,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
 

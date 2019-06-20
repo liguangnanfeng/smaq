@@ -48,10 +48,9 @@ public class TCheck implements Serializable {
 
     private String checkCompany;
 
-    private BigDecimal longitude;
+    private String longitude;
 
-    private BigDecimal latitude;
-
+    private String latitude;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -217,51 +216,21 @@ public class TCheck implements Serializable {
         this.checkCompany = checkCompany;
     }
 
-    public BigDecimal getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(BigDecimal longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
-    public BigDecimal getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(BigDecimal latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
-
-
-    public TCheck() {
-    }
-
-    public TCheck(Integer id, Integer flag, String title, String depart, String departImg, Integer userId, Integer createUser, Integer modelId, Integer type, Integer industryId, Integer industryType, Date expectTime, Date realTime, String cheker, String contact, String dapartContact, Integer status, Date createTime, Integer del, String checkCompany, BigDecimal longitude, BigDecimal latitude) {
-        this.id = id;
-        this.flag = flag;
-        this.title = title;
-        this.depart = depart;
-        this.departImg = departImg;
-        this.userId = userId;
-        this.createUser = createUser;
-        this.modelId = modelId;
-        this.type = type;
-        this.industryId = industryId;
-        this.industryType = industryType;
-        this.expectTime = expectTime;
-        this.realTime = realTime;
-        this.cheker = cheker;
-        this.contact = contact;
-        this.dapartContact = dapartContact;
-        this.status = status;
-        this.createTime = createTime;
-        this.del = del;
-        this.checkCompany = checkCompany;
-        this.longitude = longitude;
-        this.latitude = latitude;
-    }
-
 
     @Override
     public String toString() {
@@ -286,9 +255,37 @@ public class TCheck implements Serializable {
                 ", createTime=" + createTime +
                 ", del=" + del +
                 ", checkCompany='" + checkCompany + '\'' +
-                ", longitude=" + longitude +
-                ", latitude=" + latitude +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
                 '}';
+    }
+
+    public TCheck() {
+    }
+
+    public TCheck(Integer id, Integer flag, String title, String depart, String departImg, Integer userId, Integer createUser, Integer modelId, Integer type, Integer industryId, Integer industryType, Date expectTime, Date realTime, String cheker, String contact, String dapartContact, Integer status, Date createTime, Integer del, String checkCompany, String longitude, String latitude) {
+        this.id = id;
+        this.flag = flag;
+        this.title = title;
+        this.depart = depart;
+        this.departImg = departImg;
+        this.userId = userId;
+        this.createUser = createUser;
+        this.modelId = modelId;
+        this.type = type;
+        this.industryId = industryId;
+        this.industryType = industryType;
+        this.expectTime = expectTime;
+        this.realTime = realTime;
+        this.cheker = cheker;
+        this.contact = contact;
+        this.dapartContact = dapartContact;
+        this.status = status;
+        this.createTime = createTime;
+        this.del = del;
+        this.checkCompany = checkCompany;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 }
 

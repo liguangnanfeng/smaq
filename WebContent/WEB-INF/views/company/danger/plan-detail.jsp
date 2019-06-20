@@ -152,6 +152,10 @@ function showpicture(src){
                  class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书</button>
        </c:if>
       </c:if>
+      <c:if test="${latitude!=null&&longitude!=null}">
+        <button onClick="location.href = '/village/loadMap?latitude=${latitude}&longitude=${longitude}&checkId=${check.id }'"
+                class="btn btn-success radius" type="button" style="padding: 0 70px;">查看检查定位</button>
+      </c:if>
     </div>
   </div>
   <div id="div_container">

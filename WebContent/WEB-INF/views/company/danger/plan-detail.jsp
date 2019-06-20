@@ -152,6 +152,10 @@ function showpicture(src){
                  class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书</button>
        </c:if>
       </c:if>
+      <c:if test="true">
+        <button onClick="location.href = '/village/check-document?checkId=${check.id }'"
+                class="btn btn-success radius" type="button" style="padding: 0 70px;">查看检查定位</button>
+      </c:if>
     </div>
   </div>
   <div id="div_container">

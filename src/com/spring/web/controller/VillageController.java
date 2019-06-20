@@ -1368,7 +1368,7 @@ public class VillageController extends BaseController {
     /**
      * TODO 生成检查表数据
      *
-     * @param id      model表的id
+     * @param id    model表的id
      * @param type
      * @param model
      * @param request
@@ -3019,7 +3019,7 @@ public class VillageController extends BaseController {
      *
      */
     @RequestMapping(value = "select-all-level1")
-    public String selectAllLevel1(Integer checkType, String industry, HttpServletRequest request, Model model, String tableName,Integer flag) {
+    public String selectAllLevel1(Integer checkType, String industry, HttpServletRequest request, Model model, String tableName, Integer flag) {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         if (StringUtils.isNotBlank(industry)) {
@@ -3032,7 +3032,7 @@ public class VillageController extends BaseController {
         model.addAttribute("checkType", checkType);
         model.addAttribute("industry", industry);
         model.addAttribute("flag", flag);
-        model.addAttribute("tableName",tableName);
+        model.addAttribute("tableName", tableName);
 
         // 根据 checkType 查询对应的 level1 信息
         if (-2 == checkType) {
@@ -3324,7 +3324,7 @@ public class VillageController extends BaseController {
             Integer checkType = (Integer) map.get("checkType"); //检查类型 -1 现场 -2 就是基础
             String a = (String) map.get("selectItems");
 
-      
+
             if (null == a || "".equals(a)) {
                 result.setStatus("1");
                 result.setMess("页面保存数据为空");
@@ -3333,7 +3333,6 @@ public class VillageController extends BaseController {
 
             String[] split = a.split(",");
 
-     
 
             List<Map<String, String>> inputItems = (List<Map<String, String>>) map.get("inputItems");
 
@@ -3379,7 +3378,7 @@ public class VillageController extends BaseController {
             if (-2 == checkType) {
                 // 表示现场
                 for (String id : split) {
-                    if(null!=id&&!"".equals(id)){
+                    if (null != id && !"".equals(id)) {
                         ADangerManual aDangerManual = aDangerManualMapper.selectByPrimaryKey(Integer.parseInt(id));
                         TCheckPart tCheckPart = new TCheckPart();
                         tCheckPart.setCheckId(tCheckId);
@@ -3403,7 +3402,7 @@ public class VillageController extends BaseController {
             } else {
                 // 表示是基础
                 for (String id : split) {
-                    if(null!=id&&!"".equals(id)){
+                    if (null != id && !"".equals(id)) {
                         TLevel tLevel = tLevelMapper.selectByPrimaryKey(Integer.parseInt(id));
                         TCheckPart tCheckPart = new TCheckPart();
                         tCheckPart.setCheckId(tCheckId);

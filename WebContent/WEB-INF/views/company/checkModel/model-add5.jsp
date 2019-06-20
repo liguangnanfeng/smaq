@@ -498,33 +498,50 @@
                         <table id="xxx" className="table table-border table-bordered table-bg table-hover table-sort">
                             <thead>
                             <tr className="text-c">
-                                <th className="my_td">辨识类型</th>
-                                <th className="my_td">车间/场所</th>
-                                <th className="my_td">系统</th>
+                                <th className="my_td">检查部位</th>
+                                <th className="my_td">检查类型</th>
+                                <th className="my_td">检查方式</th>
                                 <th className="my_td">环节/部位</th>
-                                <th className="my_td">风险类型</th>
-                                <th className="my_td4">检查项目</th>
+                                <th className="my_td">检查项目</th>
+                                <th className="my_td4">风险因素</th>
                                 <th className="div-pcz my_td3">操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             {this.state.list.map((item, index) => {
+                                let levels=item.level3.split('/')
                                 return (
                                     <tr>
 
+                                        <td className="text-c">{dmname}</td>
+                                        <td className="text-c">
+                                            <c:if test="${industryType==-1}">
+                                           基础检查
+                                             </c:if>
+                                               <c:if test="${industryType==-2}">
+                                             现场检查
+                                             </c:if>
+                                             </td>
+                                        <td className="text-c">
+                                            <c:if test="${checkType==1}">
+                                           日常检查
+                                             </c:if>
+                                               <c:if test="${checkType==2}">
+                                             定期检查
+                                             </c:if>
+                                             <c:if test="${checkType==3}">
+                                            季节检查
+                                             </c:if>
+                                               <c:if test="${checkType==4}">
+                                               其他检查
+                                             </c:if>
+                                             <c:if test="${checkType==5}">
+                                            综合检查
+                                             </c:if>
+                                        </td>
 
-                                        <td class="text-c"></td>
-
-                                         <td className="text-c">{item.level3}</td>
-
-                                         <td className="text-c">1111</td>
-
-                                        <td className="text-c">{item.level1}</td>
-
-                                        <td className="text-c">{item.level2}</td>
-
+                                        <td className="text-c">{levels[2]?levels[2]:'暂无数据'}</td>
                                         <td className="text-c">{item.level3}</td>
-
                                         <td className="text-c">{item.measures}</td>
 
                                         <td className="text-c">

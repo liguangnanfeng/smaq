@@ -311,19 +311,19 @@ public class SaveDataImpl implements SaveMessageService {
                     //tRectificationConfirm.setStatus(1);
                     checkItem.setRecheckFile(checkItem.getFiles());
                     // 表示的是复查合格的项
-
+                    checkItem.setRecheckTime(new Date());
+                    checkItem.setPlanTime(new Date());
                 } else if ("2".equals(saveDataMessage.getValue())) {
 
                     checkItem.setStatus(2); //复查不合格
                     checkItem.setRecheckFile(saveDataMessage.getFile());//复查照片
                     checkItem.setPlanTime(new Date());                  // 实际的复查时间
                     checkItem.setMemo(saveDataMessage.getMemo());      // 复查描述
-
+                    checkItem.setRecheckTime(new Date());
                     tRecheckItem.setStatus(3); //表示复查不合格
                     tRecheckItem.setFile(saveDataMessage.getFile());    //图片
                     tRecheckItem.setDeadline(new Date());
                     tRecheckItem.setMemo(saveDataMessage.getMemo());  // 复查描述
-
                 }
 
                 if(status==1){

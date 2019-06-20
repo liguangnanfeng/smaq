@@ -127,7 +127,7 @@
                 <th width="5%">治理方案</th>
                 <%--<th width="5%">治理结果及日期</th>--%>
                 <th width="5%">治理日期</th>
-                <th width="5%">治理责任人</th>
+                <th width="5%">责任人</th>
                 <th width="5%">治理投入</th>
                 <th width="5%">上报</th>
             </tr>
@@ -203,10 +203,10 @@
                     </td>
                     <td>
                         <c:choose>
-                            <c:when test="${list.flag eq '红色'}"><font class="col-a">${list.flag}</font></c:when>
-                            <c:when test="${list.flag eq '橙色'}"><font class="col-b">${list.flag}</font></c:when>
-                            <c:when test="${list.flag eq '黄色'}"><font class="col-c">${list.flag}</font></c:when>
-                            <c:when test="${list.flag eq '蓝色'}"><font class="col-d">${list.flag}</font></c:when>
+                            <c:when test="${list.level eq '红色'}"><font class="col-a">${list.level}</font></c:when>
+                            <c:when test="${list.level eq '橙色'}"><font class="col-b">${list.level}</font></c:when>
+                            <c:when test="${list.level eq '黄色'}"><font class="col-c">${list.level}</font></c:when>
+                            <c:when test="${list.level eq '蓝色'}"><font class="col-d">${list.level}</font></c:when>
                         </c:choose>
                     </td>
                     <td>

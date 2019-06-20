@@ -56,8 +56,9 @@ function uploadimg(obj){
   </div> --%>
   <h2 class="text-c mt-10">${compny.name }${check.title }</h2>
   <div class="f-l div_pdetail mt-10">
-    <font>受检${check.flag == 1 ? '部门' : '单位'}：${check.depart }</font>
-    <label>检查日期：<fmt:formatDate value="${now }" pattern="yyyy年MM月dd日"/></label>
+    <%--<font>受检${check.flag == 1 ? '部门' : '单位'}：${check.depart }</font>
+    <label>检查日期：<fmt:formatDate value="${now }" pattern="yyyy年MM月dd日"/></label>--%>
+        <font>检查人员：${check.cheker}</font>
   </div>
   <div class="f-l mt-20" style="width:100%">
     <table class="f-l table table-border table-bordered table-bg table-hover table-sort">
@@ -65,8 +66,11 @@ function uploadimg(obj){
         <tr class="text-c">
           <th width="3%">序号</th>
           <%--<th width="15%">检查部位</th>--%>
-          <th width="30%">检查项目</th>
-          <th width="40%">检查内容</th>
+          <th width="10%">检查部位</th>
+          <th width="10%">检查类型</th>
+          <th width="10%">检查方式</th>
+          <th width="10%">检查项目</th>
+          <th width="30%">检查内容</th>
           <th width="12%">检查结果</th>
         </tr>
       </thead>
@@ -89,7 +93,21 @@ function uploadimg(obj){
           <c:if test="${y > 0}">
           <tr>
           </c:if>
-          <td class="text-l">${ch.levels }</td>
+          <c:set var="split" value="${fn:split(ch.levels,'/') }" />
+          <td class="text-l">${check.depart}</td>
+          <td class="text-l">
+              <c:if test="${check.industryType==1}">基础检查</c:if>
+              <c:if test="${check.industryType==2}">现场检查</c:if>
+              <c:if test="${check.industryType==3}">高危检查</c:if>
+          </td>
+          <td class="text-l">
+              <c:if test="${check.flag==1}">日常检查</c:if>
+              <c:if test="${check.flag==2}">定期检查</c:if>
+              <c:if test="${check.flag==3}">季节检查</c:if>
+              <c:if test="${check.flag==4}">其他检查</c:if>
+              <c:if test="${check.flag==5}">综合检查</c:if>
+          </td>
+          <td class="text-l">${ch.levels}</td>
           <td class="text-l">${ch.content }</td>
           <td class="text-c" data-base="${ch.status }">&nbsp;
             <div class="radio-box">
@@ -256,7 +274,7 @@ function uploadimg(obj){
   </c:if>
   
 </body>
-<script type="text/javascript">
+<%--<script type="text/javascript">
     $(function(){
         var b = null, l1 = '', c = 1;
         $("tbody tr").each(function() {
@@ -280,7 +298,7 @@ function uploadimg(obj){
         }
 
     })
-</script>
+</script>--%>
 <script type="text/javascript">
 var checkId = ${check.id};
 var flag = ${check.flag};

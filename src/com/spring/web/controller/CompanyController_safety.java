@@ -6,6 +6,7 @@ package com.spring.web.controller;
 
 import com.spring.web.BaseController;
 import com.spring.web.dao.DangerCoordinateMapper;
+import com.spring.web.dao.DistinguishTypeMapper;
 import com.spring.web.dao.ImportPhotoMapper;
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.*;
@@ -53,6 +54,8 @@ public class CompanyController_safety extends BaseController {
     private ImportPhotoMapper importPhotoMapper;
     @Autowired
     private DangerCoordinateMapper dangerCoordinateMapper;
+    @Autowired
+    private DistinguishTypeMapper distinguishTypeMapper;
 
     public CompanyController_safety() {
     }
@@ -446,8 +449,29 @@ public class CompanyController_safety extends BaseController {
                 model.addAttribute("acL", acL);
                 return "company/safety-system/risk-list1";
             } else {
-                zzjg = this.zzjgDepartmentMapper.selectLevel1ByUids(user.getId());
+                zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId());
+
                 acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);
+
+                List<DistinguishType> listDis = null;
+
+                for (int i = 0; i <zzjg.size(); i++) {
+                    Map<Object,Object> map = zzjg.get(i);
+
+                    System.out.println(Integer.parseInt(map.get("id").toString()));
+
+                    listDis = distinguishTypeMapper.selectPoint(Integer.parseInt(map.get("id").toString()),type,user.getId());
+
+                }
+
+
+
+
+                model.addAttribute("zzjg",zzjg);
+
+
+                model.addAttribute("listDis",listDis);
+
 
                 model.addAttribute("dL", acL);
                 model.addAttribute("type", type);
@@ -498,6 +522,20 @@ public class CompanyController_safety extends BaseController {
         return "company/safety-system/grade-table";
     }
 
+    
+    
+    /**
+     * create by  : 小明！！！
+     * description:
+     * create time: 16:21 2019/6/20
+     * 
+      * @Param: null
+     * @return 
+     */
+    @RequestMapping({"danger-table"})
+    public String dangerTable(Model model, HttpServletRequest request) throws Exception {
+        return "company/safety-system/danger-table";
+    }
 
     /*
      * 评分页面！！！

@@ -2763,19 +2763,20 @@ public class CompanyController_cd extends BaseController {
 
 
     /**
-     * TODO 查询检查表详情(已修改)
+     * TODO 查询检查表详情(已修改)(有两种情况)一种是基础检查  一种是现场检查, 是从不同的表中查询出字段的
+     *      只有行政检查和部门抽查才会走这个方法, 就是只有两种情况
+     *      判断是基础还是现场,
      *
      * @param id    modelId
      * @param model 前端model
      * @param flag  类型
      * @param type  数据
      * @return url地址
-     * 可以从ite表中获取的详情
      * @throws Exception
      */
-    @RequestMapping(value = "model-show/{id}")//modify by zhangcl 2018.10.28
+    @RequestMapping(value = "model-show/{id}")
     public String modelShow(@PathVariable Integer id, Model model, Integer flag, Integer type) throws Exception {
-        log.error("type:" + type);
+
         TModel tc = tModelMapper.selectByPrimaryKey(id);
         List<TModelPart> partL = tModelPartMapper.selectByModelId(id);
         model.addAttribute("model", tc);
@@ -2792,8 +2793,48 @@ public class CompanyController_cd extends BaseController {
             }
             levelIds = levelIds.append(s);
         }
-        //要对其进行判断,是否为现场/基础
-        if (type != null && tc.getIndustryType() <= 2) {
+
+        //判断是基础还是现场
+        if(type != null &&tc.getIndustryType()==1){          // 基础检查
+            //保存的就是这个
+            List<Map<String, Object>> iteml = new ArrayList<Map<String, Object>>();
+            String[] levelsArr = levelIds.toString().split(",");
+
+            for (int i = 0; i < levelsArr.length; i++) {
+                Map<String, Object> a = new HashMap<String, Object>();
+                if (!"null".equals(levelsArr[i]) && null != levelsArr[i] && !"".equals(levelsArr[i])) {
+                    int i1 = Integer.parseInt(levelsArr[i]);
+                    TLevel tLevel = tLevelMapper.selectByPrimaryKey(i1);
+                    if (null == tLevel) {
+                        break;
+                    }
+                    a.put("levelId", Integer.parseInt(levelsArr[i]));
+                    a.put("dangerType", tLevel.getType());
+                    a.put("factors", tLevel.getFactors());
+                    a.put("measures", tLevel.getMeasures());
+                    iteml.add(a);
+                }
+            }
+            // 为空 表示从别的表中进行查询
+            if (iteml.size() == 0) {
+                TCheck tCheck = tCheckMapper.selectByModelId(id);
+                List<Map<String, Object>> maps = tCheckItemMapper.selectByCheckId(tCheck.getId());
+                for (Map<String, Object> map : maps) {
+                    Map<String, Object> a = new HashMap<String, Object>();
+                    a.put("levelId", map.get("level_id"));
+                    a.put("dangerType", tCheck.getType());
+                    a.put("factors", map.get("content"));
+                    a.put("measures", map.get("reference"));
+                    if (null == a.get("measures") || "".equals(a.get("measures"))) {
+                        a.put("measures", map.get("content"));
+
+                    }
+                    log.info("a:" + a.toString());
+                    iteml.add(a);
+                }
+            }
+            model.addAttribute("itemL", iteml);
+        }else if(type != null && tc.getIndustryType() == 2){ //现场检查
             List<Map<String, Object>> iteml = new ArrayList<Map<String, Object>>();
             String[] levelsArr = levelIds.toString().split(",");
 
@@ -2809,7 +2850,6 @@ public class CompanyController_cd extends BaseController {
                     a.put("dangerType", companyManual.getType());
                     a.put("factors", companyManual.getFactors());
                     a.put("measures", companyManual.getMeasures());
-                    log.info("a:" + a.toString());
                     iteml.add(a);
                 }
             }
@@ -2834,14 +2874,14 @@ public class CompanyController_cd extends BaseController {
             }
 
             model.addAttribute("itemL", iteml);
-        } else {
+        }else{
+            // 高危检查
             model.addAttribute("itemL", tItemMapper.selectByLevelIdsModel(levelIds.toString()));
         }
-
         model.addAttribute("now", new Date());
         model.addAttribute("flag", flag);
+
         if (type != null && tc.getIndustryType() <= 2) {
-            log.error("company/danger/model-show1");
             return "company/danger/model-show1";
         } else {
             return "company/danger/model-show";

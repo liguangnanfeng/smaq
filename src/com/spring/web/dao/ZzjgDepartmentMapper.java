@@ -127,7 +127,7 @@ public interface ZzjgDepartmentMapper {
 
     boolean updateDangerId(@Param("id")Integer id, @Param("dangerId")Integer dangerId);
 
-
+    List<Map<Object, Object>> selectAllName(@Param("uid") Integer uid);
     // 根据被检查的部门,选择检查的人员名称
 
 }

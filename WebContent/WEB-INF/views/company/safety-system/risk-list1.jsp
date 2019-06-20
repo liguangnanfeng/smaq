@@ -236,11 +236,10 @@
                             </c:if>
                             <c:if test="${!empty type}">
                                 <th style="padding:0;width:20%">车间/场所</th>
-                                <th style="width:10%">风险点</th>
+                                <th style="width:10%">环节/部位</th>
                             </c:if>
                             <c:if test="${type eq 1}">
-                                <th>职业危害物理因素</th>
-                            </c:if>
+                                <th>职业危害物理因素</th>                            </c:if>
                             <c:if test="${type eq 2}">
                                 <th>职业危害化学因素</th>
                             </c:if>
@@ -356,11 +355,18 @@
 
                         </c:if>
                         <c:if test="${not empty type }">
-                            <c:forEach items="${dL }" var="be3">
+                            <c:forEach items="${listDis }" var="be4">
+                            <c:forEach items="${zzjg }" var="be3">
                                 <tr>
-                                    <td class="text-c" rowspan="1">${be3.level1 }</td>
-                                    <td class="text-c">${be3.level2 }</td>
-                                    <c:if test="${type eq 1}">
+                                    <td class="text-c" rowspan="1">${be3.parName != null ? be3.parName : "暂无数据" }</td>
+                                    <td class="text-c">${be3.name != null ? be3.name : "暂无数据" }</td>
+
+
+
+                                         <td class="text-c">${be4.danger_point != null ? be4.danger_point : "暂无数据" }</td>
+
+
+                                   <%-- <c:if test="${type eq 1}">
                                         <td>${fn:replace(be3.hxys, '!@#', ",") }</td>
                                     </c:if>
                                     <c:if test="${type eq 2}">
@@ -374,13 +380,15 @@
                                     </c:if>
                                     <c:if test="${type eq 5}">
                                         <td>${fn:replace(be3.gwzy, '!@#', ",") }</td>
-                                    </c:if>
+                                    </c:if>--%>
                                     <td class="text-c" style="width:90px">
                                         <a class="btn-cz" onclick="redit(${be3.id}, ${type })" href="javascript:;"
                                            title="选择">选择</a>
                                     </td>
                                 </tr>
                             </c:forEach>
+                            </c:forEach>
+
                         </c:if>
                         </tbody>
                     </table>

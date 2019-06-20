@@ -455,14 +455,8 @@ public class CompanyController_safety extends BaseController {
 
                 List<DistinguishType> listDis = null;
 
-                for (int i = 0; i <zzjg.size(); i++) {
-                    Map<Object,Object> map = zzjg.get(i);
 
-                    System.out.println(Integer.parseInt(map.get("id").toString()));
-
-                    listDis = distinguishTypeMapper.selectPoint(Integer.parseInt(map.get("id").toString()),type,user.getId());
-
-                }
+                listDis = distinguishTypeMapper.selectPoint(1774,type,user.getId());
 
 
 

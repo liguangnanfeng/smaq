@@ -3657,9 +3657,9 @@ public class CompanyController_cd extends BaseController {
         //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
         /*List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(id);*/
         List<Map<String, Object>> iteml = null;
-        if (flag != 2){
+        if (flag == 1){
             iteml  = tCheckMapper.selectLevels(id);
-        }else {
+        }else if(flag != 1) {
             // 根据 ID 查询对应的数据 是 基础 还是 现场
             TCheck tCheck = tCheckMapper.selectByPrimaryKey(id);
             if (tCheck.getIndustryType() == 1){ // 基础

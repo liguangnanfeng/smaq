@@ -22,11 +22,16 @@ public class DangerCoordinate {
     private Double counts;
     private Date ctime;
     private Date utime;
+    private Integer important1;
+    private Integer important2;
+    private Integer important3;
+    private Integer important4;
+
 
     public DangerCoordinate() {
     }
 
-    public DangerCoordinate(Integer id, Integer user_id, Double danger1, Double danger2, Double danger3, Double danger4, Double danger5, Double danger6, Double danger7, Double danger8, Double danger9, Double danger10, Double danger11, Double danger12, Double danger13, Double counts, Date ctime, Date utime) {
+    public DangerCoordinate(Integer id, Integer user_id, Double danger1, Double danger2, Double danger3, Double danger4, Double danger5, Double danger6, Double danger7, Double danger8, Double danger9, Double danger10, Double danger11, Double danger12, Double danger13, Double counts, Date ctime, Date utime, Integer important1, Integer important2, Integer important3, Integer important4) {
         this.id = id;
         this.user_id = user_id;
         this.danger1 = danger1;
@@ -45,6 +50,10 @@ public class DangerCoordinate {
         this.counts = counts;
         this.ctime = ctime;
         this.utime = utime;
+        this.important1 = important1;
+        this.important2 = important2;
+        this.important3 = important3;
+        this.important4 = important4;
     }
 
     public Integer getId() {
@@ -189,5 +198,37 @@ public class DangerCoordinate {
 
     public void setUtime(Date utime) {
         this.utime = utime;
+    }
+
+    public Integer getImportant1() {
+        return important1;
+    }
+
+    public void setImportant1(Integer important1) {
+        this.important1 = important1;
+    }
+
+    public Integer getImportant2() {
+        return important2;
+    }
+
+    public void setImportant2(Integer important2) {
+        this.important2 = important2;
+    }
+
+    public Integer getImportant3() {
+        return important3;
+    }
+
+    public void setImportant3(Integer important3) {
+        this.important3 = important3;
+    }
+
+    public Integer getImportant4() {
+        return important4;
+    }
+
+    public void setImportant4(Integer important4) {
+        this.important4 = important4;
     }
 }

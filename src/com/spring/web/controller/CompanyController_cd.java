@@ -2775,12 +2775,13 @@ public class CompanyController_cd extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "model-show/{id}")
-    public String modelShow(@PathVariable Integer id, Model model, Integer flag, Integer type) throws Exception {
-
+    public String modelShow(@PathVariable Integer id, Model model, Integer flag, Integer type,HttpServletRequest request) throws Exception {
+        User user = getLoginUser(request);
         TModel tc = tModelMapper.selectByPrimaryKey(id);
         List<TModelPart> partL = tModelPartMapper.selectByModelId(id);
         model.addAttribute("model", tc);
         model.addAttribute("partL", partL);
+        model.addAttribute("user", user);
         StringBuffer levelIds = new StringBuffer();
         // 第一次我要将里面的数据便利出来获取唯一的值
         Set<String> set = new LinkedHashSet<String>();

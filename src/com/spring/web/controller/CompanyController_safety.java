@@ -529,11 +529,17 @@ public class CompanyController_safety extends BaseController {
                 dangerCoordinate1.setCounts(100.00);
                 dangerCoordinate1.setCtime(new Date());
                 dangerCoordinate1.setUtime(new Date());
+                dangerCoordinate1.setImportant1(0);
+                dangerCoordinate1.setImportant2(0);
+                dangerCoordinate1.setImportant3(0);
+                dangerCoordinate1.setImportant4(0);
                 dangerCoordinateMapper.insert(dangerCoordinate1);
                 list = dangerCoordinateMapper.selectOne(user.getId());
+
             }
             result.setObject(list.get(0));
             result.setMess("查询成功");
+
             result.setStatus("0");
             return  result;
         }catch (Exception e) {
@@ -551,21 +557,28 @@ public class CompanyController_safety extends BaseController {
     /*
      * 重大风险评分表数据添加！！！
      * */
-    @RequestMapping({"danger-coordinate"})
+    @RequestMapping({"save-danger-coordinate"})
     @ResponseBody
-    public Result coordinate(Model model, HttpServletRequest request,Integer id, Double danger1, Double danger2, Double danger3, Double danger4, Double danger5,
-                             Double danger6, Double danger7, Double danger8, Double danger9, Double danger10,
-                             Double danger11, Double danger12, Double danger13, Double counts) throws Exception {
+    public Result coordinate(Model model, HttpServletRequest request,Integer id, Double danger1, Double danger2, Double danger3,
+                             Double danger4, Double danger5,Double danger6, Double danger7, Double danger8, Double danger9,
+                             Double danger10,Double danger11, Double danger12, Double danger13, Double counts,
+                             Integer important1,Integer important2,Integer important3,Integer important4) throws Exception {
 
         User user = this.getLoginUser(request);
         Result result = new ResultImpl();
         DangerCoordinate dangerCoordinate = new DangerCoordinate();
+        Company company = new Company();
+        company.setUserId(user.getId());
         // 根据 user_id  查询 id 信息
         List<DangerCoordinate> list = dangerCoordinateMapper.selectOne(user.getId());
 
         dangerCoordinate.setId(list.get(0).getId());
 
         dangerCoordinate.setUser_id(user.getId());
+        dangerCoordinate.setImportant1(important1);
+        dangerCoordinate.setImportant2(important2);
+        dangerCoordinate.setImportant3(important3);
+        dangerCoordinate.setImportant4(important4);
 
         if (null == danger1) {
             dangerCoordinate.setDanger1(0.00);
@@ -637,11 +650,31 @@ public class CompanyController_safety extends BaseController {
         } else {
             dangerCoordinate.setCounts(counts*1.00);
         }
+
+        if (important1 == 0 && important2 == 0 && important3 == 0 && important4 == 0){ // 0 未选中
+            if (counts <= 100 && counts >= 90){
+                company.setDlevel("蓝色");
+            }else if (counts < 90 && counts >= 75){
+                company.setDlevel("黄色");
+            }else if (counts < 75 && counts >= 60){
+                company.setDlevel("橙色");
+            }else if (counts < 60 && counts >= 0){
+                company.setDlevel("红色");
+            }
+        }else if (important1 == 1 || important2 == 1 || important3 == 1 || important4 == 1){// 选中
+            company.setDlevel("红色");
+        }
+
+
+
+
         dangerCoordinate.setUtime(new Date());
 
         boolean b = dangerCoordinateMapper.updateByPrimaryKey(dangerCoordinate);
 
-        if (b) {
+        int a = companyMapper.updateByPrimaryKeySelective(company);
+
+        if (b && a != 0 ) {
             result.setStatus("0");
             result.setMess("评估完成。");
         } else {

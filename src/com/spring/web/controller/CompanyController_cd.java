@@ -3715,6 +3715,8 @@ public class CompanyController_cd extends BaseController {
         }
         model.addAttribute("name",name);
         // 根据检查记录的id获取详细的信息
+        model.addAttribute("latitude",tc.getLatitude());
+        model.addAttribute("longitude",tc.getLongitude());
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
         log.error("整改详情进行显示的条件" + tCheckMapper.selectCompany(id));
 

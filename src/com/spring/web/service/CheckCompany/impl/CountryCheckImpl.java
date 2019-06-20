@@ -536,9 +536,9 @@ public class CountryCheckImpl implements CountryCheck {
             tCheck.setCheker(officials.getName());  // 检查人员的名称
             tCheck.setExpectTime(new Date()); //预计的检查时间
             tCheck.setRealTime(new Date()); //实际的检查时间
-            if(null!=saveDataMessageItem.getLongitude()&&"".equals(saveDataMessageItem.getLongitude())){
-                tCheck.setLongitude(saveDataMessageItem.getLongitude()); //经度
-                tCheck.setLatitude(saveDataMessageItem.getLatitude());  //维度
+            if(null!=saveDataMessageItem.getLongitude()){
+                tCheck.setLongitude(saveDataMessageItem.getLongitude()+""); //经度
+                tCheck.setLatitude(saveDataMessageItem.getLatitude()+"");  //维度
             }
             tCheckMapper.updateByPrimaryKey(tCheck); // 更新到数据库
 

@@ -1,5 +1,7 @@
 package com.spring.web.model;
 
+import java.util.Date;
+
 public class DangerCoordinate {
 
     private Integer id;
@@ -18,11 +20,13 @@ public class DangerCoordinate {
     private Double danger12;
     private Double danger13;
     private Double counts;
+    private Date ctime;
+    private Date utime;
 
     public DangerCoordinate() {
     }
 
-    public DangerCoordinate(Integer id, Integer user_id, Double danger1, Double danger2, Double danger3, Double danger4, Double danger5, Double danger6, Double danger7, Double danger8, Double danger9, Double danger10, Double danger11, Double danger12, Double danger13, Double counts) {
+    public DangerCoordinate(Integer id, Integer user_id, Double danger1, Double danger2, Double danger3, Double danger4, Double danger5, Double danger6, Double danger7, Double danger8, Double danger9, Double danger10, Double danger11, Double danger12, Double danger13, Double counts, Date ctime, Date utime) {
         this.id = id;
         this.user_id = user_id;
         this.danger1 = danger1;
@@ -39,6 +43,8 @@ public class DangerCoordinate {
         this.danger12 = danger12;
         this.danger13 = danger13;
         this.counts = counts;
+        this.ctime = ctime;
+        this.utime = utime;
     }
 
     public Integer getId() {
@@ -167,5 +173,21 @@ public class DangerCoordinate {
 
     public void setCounts(Double counts) {
         this.counts = counts;
+    }
+
+    public Date getCtime() {
+        return ctime;
+    }
+
+    public void setCtime(Date ctime) {
+        this.ctime = ctime;
+    }
+
+    public Date getUtime() {
+        return utime;
+    }
+
+    public void setUtime(Date utime) {
+        this.utime = utime;
     }
 }

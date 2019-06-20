@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.web.dao.DistinguishTypeMapper">
+
+
+    <resultMap id="BaseResultMap" type="com.spring.web.model.DistinguishType">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="dep_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="danger_point" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="flag" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="del" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="utime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+
+        id, user_id, dep_id, danger_point, flag, del, ctime, utime
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from distinguish_type
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+
+
+    <select id="selectPoint" resultType="com.spring.web.model.DistinguishType" >
+        select
+        <include refid="Base_Column_List"/>
+        from distinguish_type
+        where dep_id = #{dep_id,jdbcType=INTEGER} and flag = #{flag,jdbcType=INTEGER} and user_id = #{user_id,jdbcType=INTEGER}
+    </select>
+
+
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+
+        delete from distinguish_type
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+
+    <insert id="insert" parameterType="com.spring.web.model.DistinguishType">
+        insert into distinguish_type (user_id, dep_id,
+        danger_point, flag, del, ctime, utime)
+        values (#{user_id,jdbcType=INTEGER}, #{dep_id,jdbcType=INTEGER},
+        #{danger_point,jdbcType=VARCHAR},#{flag,jdbcType=INTEGER}, #{del,jdbcType=INTEGER},
+        #{ctime,jdbcType=TIMESTAMP},#{utime,jdbcType=TIMESTAMP} )
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.spring.web.model.DistinguishType">
+        update a_company_manual_tbl
+        <set>
+            <if test="user_id != null">
+                user_id = #{user_id,jdbcType=INTEGER},
+            </if>
+            <if test="dep_id != null">
+                dep_id = #{dep_id,jdbcType=INTEGER},
+            </if>
+            <if test="danger_point != null">
+                danger_point = #{danger_point,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                flag = #{flag,jdbcType=INTEGER},
+            </if>
+            <if test="del != null">
+                del = #{del,jdbcType=INTEGER},
+            </if>
+            <if test="ctime != null">
+                ctime = #{ctime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="utime != null">
+                utime = #{utime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.spring.web.model.DistinguishType">
+        update a_company_manual_tbl
+        set user_id = #{user_id,jdbcType=INTEGER},
+        dep_id = #{dep_id,jdbcType=INTEGER},
+        danger_point = #{danger_point,jdbcType=VARCHAR},
+        flag = #{flag,jdbcType=INTEGER},
+        del = #{del,jdbcType=INTEGER},
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+        utime = #{utime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+
+</mapper>

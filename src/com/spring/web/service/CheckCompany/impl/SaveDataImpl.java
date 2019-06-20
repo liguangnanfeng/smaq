@@ -129,6 +129,7 @@ public class SaveDataImpl implements SaveMessageService {
                 // 直接将check表数据进行更新 被检查的负责人也可以进行导入
                 TCheck tCheck = tCheckMapper.selectByPrimaryKey(item.getCheckId());
                 tCheck.setStatus(2); // 已检查
+                tCheck.setCheker(zzjg.getName());  // 检查人员的名称
                 tCheck.setExpectTime(new Date()); //预计的检查时间
                 tCheck.setRealTime(new Date()); //实际的检查时间
                 tCheck.setLongitude(saveDataMessageItem.getLongitude()); //经度

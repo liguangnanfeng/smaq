@@ -55,10 +55,10 @@ function uploadimg(obj){
       </button>
   </div> --%>
   <h2 class="text-c mt-10">${compny.name }${check.title }</h2>
-  <div class="f-l div_pdetail mt-10">
+  <div class="f-l div_pdetail mt-10" >
     <%--<font>受检${check.flag == 1 ? '部门' : '单位'}：${check.depart }</font>
     <label>检查日期：<fmt:formatDate value="${now }" pattern="yyyy年MM月dd日"/></label>--%>
-        <font>检查人员：${check.cheker}</font>
+        <font id="my_checker">检查人员：${check.cheker}</font>
   </div>
   <div class="f-l mt-20" style="width:100%">
     <table class="f-l table table-border table-bordered table-bg table-hover table-sort">
@@ -144,7 +144,7 @@ function uploadimg(obj){
             </c:if>
             <div class="div_pleft  mt-10 mb-10">检查人员签字：</div>
             <div class="div_pright  mt-10 mb-10">
-              <input type="text" style="width:150px" id="cheker" value="${check.cheker }" class="input-text" maxlength="50"/>
+              <input type="text" style="width:150px" id="cheker" value="${check.cheker }" class="input-text" maxlength="50"  oninput="checkerChange(this)"/>
               <c:if test="${!empty jcL && (check.flag == '2' || check.flag == '4')}">
               <button type="button" onclick='$("#jfry").modal("show");' class="btn btn-primary radius">从执法人员库中选择</button>
               <script type="text/javascript">
@@ -300,6 +300,12 @@ function uploadimg(obj){
     })
 </script>--%>
 <script type="text/javascript">
+
+    function checkerChange(obj){
+        var val = $(obj).val();
+        var text = '检查人员 : '+val ;
+        $('#my_checker').text(text);
+    }
 var checkId = ${check.id};
 var flag = ${check.flag};
 function upload() {

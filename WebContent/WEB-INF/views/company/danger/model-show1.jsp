@@ -43,7 +43,13 @@ function uploadpicture(obj){
 <body>
 <div class="page-container">
   <div class="div_pdetail">
-    <font>车间</font>
+
+    <c:if test="${flag==2||falg==3}">
+      <font>公司名称:${user.userName}</font>
+    </c:if>
+    <c:if test="${flag==1}">
+      <font>车间名称:${model.part}</font>
+    </c:if>
     <label>检查日期：<fmt:formatDate value="${model.createTime }" pattern="yyyy年MM月dd日"/></label>
   </div>
   <div class="f-l mt-20" style="width:100%">

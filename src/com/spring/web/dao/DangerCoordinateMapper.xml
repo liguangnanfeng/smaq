@@ -23,11 +23,15 @@
             <arg column="counts" javaType="java.lang.Double" jdbcType="DOUBLE"/>
             <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="utime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="important1" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="important2" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="important3" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="important4" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
         id, user_id, danger1, danger2, danger3, danger4, danger5, danger6, danger7, danger8, danger9,
-        danger10, danger11, danger12, danger13, counts, ctime, utime
+        danger10, danger11, danger12, danger13, counts, ctime, utime, important1, important2, important3, important4
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
 
@@ -59,13 +63,14 @@
         danger5, danger6, danger7,
         danger8, danger9, danger10,
         danger11, danger12, danger13,
-        counts, ctime, utime)
+        counts, ctime, utime, important1, important2, important3, important4)
         values ( #{user_id,jdbcType=INTEGER},
         #{danger1,jdbcType=DOUBLE},#{danger2,jdbcType=DOUBLE},#{danger3,jdbcType=DOUBLE},
         #{danger4,jdbcType=DOUBLE},#{danger5,jdbcType=DOUBLE},#{danger6,jdbcType=DOUBLE},
         #{danger7,jdbcType=DOUBLE},#{danger8,jdbcType=DOUBLE},#{danger9,jdbcType=DOUBLE},
         #{danger10,jdbcType=DOUBLE},#{danger11,jdbcType=DOUBLE},#{danger12,jdbcType=DOUBLE},
-        #{danger13,jdbcType=DOUBLE},#{counts,jdbcType=DOUBLE},#{ctime,jdbcType=TIMESTAMP},#{utime,jdbcType=TIMESTAMP}
+        #{danger13,jdbcType=DOUBLE},#{counts,jdbcType=DOUBLE},#{ctime,jdbcType=TIMESTAMP},#{utime,jdbcType=TIMESTAMP},
+        #{important1,jdbcType=INTEGER},#{important2,jdbcType=INTEGER},#{important3,jdbcType=INTEGER},#{important4,jdbcType=INTEGER}
        )
     </insert>
 
@@ -85,7 +90,11 @@
         danger12 = #{danger12,jdbcType=DOUBLE},
         danger13 = #{danger13,jdbcType=DOUBLE},
         counts = #{counts,jdbcType=DOUBLE},
-        utime = #{utime,jdbcType=TIMESTAMP}
+        utime = #{utime,jdbcType=TIMESTAMP},
+        important1 = #{important1,jdbcType=INTEGER},
+        important2 = #{important2,jdbcType=INTEGER},
+        important3 = #{important3,jdbcType=INTEGER},
+        important4 = #{important4,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

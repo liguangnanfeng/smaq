@@ -469,22 +469,22 @@
                     <tr>
                         <td>新开发的危险化学品生产工艺未经小试、中试和工业化试验直接进行工业化生产的；</td>
 
-                        <td width="10%"  ><input type="checkbox" value="1" ></td>
+                        <td width="10%"  style="text-align: center" ><input type="checkbox"  class="important1" onchange="dagou('important1',this)"></td>
                     </tr>
 
                     <tr>
                         <td>在役化工装置未经正规设计且未进行安全设计诊断的；</td>
-                        <td width="10%" ><input type="checkbox" value="2" ></td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"   class="important2" onchange="dagou('important2',this)"></td>
                     </tr>
                     <tr>
                         <td>危险化学品特种作业人员未持有效证件上岗或者未达到高中以上文化程度的;</td>
-                        <td width="10%" ><input type="checkbox" value="3" ></td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"   class="important3" onchange="dagou('important3',this)"></td>
                     </tr>
 
 
                     <tr>
                         <td>三年内发生过重大以上安全事故的，或者三年内发生2起较大安全事故，或者近一年内发生2起以上亡人一般安全事故的。</td>
-                        <td width="10%" ><input type="checkbox" value="4" ></td>
+                        <td width="10%"  style="text-align: center"><input type="checkbox"   class="important4" onchange="dagou('important4',this)"></td>
                     </tr>
 
 
@@ -569,40 +569,55 @@
         danger11: 0,
         danger12: 0,
         danger13: 0,
+        important1:0,
+        important2:0,
+        important3:0,
+        important4:0,
         counts: 100
     };
     var arr=['danger1','danger2','danger3','danger4','danger5','danger6','danger7','danger8','danger9','danger10','danger11',
         'danger12','danger13','counts'
     ]
+    var arr2=['important1','important2','important3','important4']
     $(function(){
         $.get( "${ly}/company/safety-system/grade-tables-data", function (result) {
            if(result.status==0){   //请求成功
                var data =  result.object;
-               console.log(data);
                arr.map(function (item){
                    postData[item] =data[item]==null||data[item]==0?0:data[item]
                    if(data[item]!=null&&data[item]!=0){
                        $('.'+item).text(data[item]);
                    }
-
+               })
+               arr2.map(function (item){
+                   postData[item] =data[item]==null||data[item]==0?0:data[item]
+                   if(data[item]!=null&&data[item]!=0){
+                       $('.'+item).attr("checked",'true');
+                   }
                })
                var count =data.counts
                var test = '总分：'+count;
-
                $('#fenshu').text(test);
-               $('#sekuai').removeClass('my_red my_o my_y my_b');
-               if(count<60){
+
+               if(data.important1==0&&data.important2==0&&data.important3==0&&data.important4==0){
+                   $('#sekuai').removeClass('my_red my_o my_y my_b');
+                   if(count<60){
+                       $('#sekuai').addClass('my_red');
+                   }
+                   if(count>=60&&count<75){
+                       $('#sekuai').addClass('my_o');
+                   }
+                   if(count>=75&&count<90){
+                       $('#sekuai').addClass('my_y');
+                   }
+                   if(count>=90){
+                       $('#sekuai').addClass('my_b');
+                   }
+               }else{
+                   $('#sekuai').removeClass('my_red my_o my_y my_b');
                    $('#sekuai').addClass('my_red');
                }
-               if(count>=60&&count<75){
-                   $('#sekuai').addClass('my_o');
-               }
-               if(count>=75&&count<90){
-                   $('#sekuai').addClass('my_y');
-               }
-               if(count>=90){
-                   $('#sekuai').addClass('my_b');
-               }
+
 
            }else{
                layer.msg('初始化失败')
@@ -621,6 +636,35 @@
         $('#trInput').val(currentDom.text());
         max = xz;
         $("#modal-plan2").modal("show");
+    }
+
+    function dagou(zd,obj){
+        var dom = $(obj);
+        var isCheck = dom.is(':checked');
+
+        if(isCheck){
+            $('#sekuai').removeClass('my_red my_o my_y my_b');
+            $('#sekuai').addClass('my_red');
+            postData[zd] = 1
+        }else{
+            postData[zd] = 0
+            if(postData.important1==0&&postData.important2==0&&postData.important3==0&&postData.important4==0){
+                var c = postData.counts ;
+                $('#sekuai').removeClass('my_red my_o my_y my_b');
+                if(c<60){
+                    $('#sekuai').addClass('my_red');
+                }
+                if(c>=60&&c<75){
+                    $('#sekuai').addClass('my_o');
+                }
+                if(c>=75&&c<90){
+                    $('#sekuai').addClass('my_y');
+                }
+                if(c>=90){
+                    $('#sekuai').addClass('my_b');
+                }
+            }
+        }
     }
 
 

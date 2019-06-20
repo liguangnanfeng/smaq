@@ -3621,9 +3621,9 @@ public class CompanyController_cd extends BaseController {
         }else {
             // 根据 ID 查询对应的数据 是 基础 还是 现场
             TCheck tCheck = tCheckMapper.selectByPrimaryKey(id);
-            if (tCheck.getFlag() == 1){ // 基础
+            if (tCheck.getIndustryType() == 1){ // 基础
                 iteml  = tCheckMapper.selectAllLevel(id);
-            }else if (tCheck.getFlag() == 2){ // 现场
+            }else if (tCheck.getIndustryType() == 2){ // 现场
                 iteml  = tCheckMapper.selectAllDanger(id);
             }
         }

@@ -177,17 +177,18 @@ function showpicture(src){
           <tr class="text-c">
             <th width="7%">检查类型</th>
             <th width="7%">车间/场所</th>
-            <th width="10%">系统</th>
+            <c:if test="${flag == 1}" >
+              <th width="10%">系统</th>
+            </c:if>
             <th width="10%">环节/部位</th>
             <th width="5%">检查方式</th>
             <th width="5%">检查形式</th>
             <th width="10%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>
             <th width="5%">检查结果</th>
             <th width="15%">隐患内容</th>
-            <c:if test="${flag != 2}" >
+            <c:if test="${flag == 1}" >
               <th width="7%">隐患等级</th>
             </c:if>
-
             <th width="12%">查看</th>
           </tr>
         </thead>
@@ -205,8 +206,10 @@ function showpicture(src){
             </td>
             <td class="text-c" >${ch.part == "" ? "暂无数据" : ch.part}</td>
 
-            <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
-            <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
+            <c:if test="${flag == 1}" >
+              <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
+              <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
+            </c:if>
 
             <td class="text-c" >${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
 

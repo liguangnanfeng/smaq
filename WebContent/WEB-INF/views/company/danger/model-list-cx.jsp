@@ -435,10 +435,10 @@
                                 <%--     <a style="text-decoration:none" onClick="check_add(${be.id})"
                                         href="javascript:;">实施检查</a><br/>--%>
                             <a style="text-decoration:none"
-                               onClick="show_dialog('实施检查_${be.id }', '${ly}/village/plan-next?flag=${flag }&id=${be.id }')"
+                               onClick="show_dialog('实施检查_${be.id }', '${ly}/village/plan-next?flag=${flag}&id=${be.id }')"
                                href="javascript:;">实施检查</a><br>
                             <a style="text-decoration:none"
-                               onclick="show_dialog('查看检查表_${be.id }', '${ly }/company/model-show/${be.id}?flag=${flag }&type=${be.type}')"
+                               onclick="show_dialog('查看检查表_${be.id }', '${ly }/company/model-show/${be.id}?flag=${flag}&type=${be.type}')"
                                onclick="Hui_admin_tab(this)" href="javascript:;">查看检查表</a><br/>
                                 <%-- <c:if test="${be.type != 9}">
                                  &lt;%&ndash;<a style="text-decoration:none" onClick="show_dialog('编辑检查表_${be.id }', '${ly}/company/model-edit?modelId=${be.id }')" href="javascript:;">编辑检查表</a><br/>&ndash;%&gt;

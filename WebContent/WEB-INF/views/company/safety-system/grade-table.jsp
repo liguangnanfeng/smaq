@@ -468,22 +468,23 @@
                     </tr>
                     <tr>
                         <td>新开发的危险化学品生产工艺未经小试、中试和工业化试验直接进行工业化生产的；</td>
-                        <td width="10%"></td>
+
+                        <td width="10%"  ><input type="checkbox" value="1" ></td>
                     </tr>
 
                     <tr>
                         <td>在役化工装置未经正规设计且未进行安全设计诊断的；</td>
-                        <td width="10%"></td>
+                        <td width="10%" ><input type="checkbox" value="2" ></td>
                     </tr>
                     <tr>
                         <td>危险化学品特种作业人员未持有效证件上岗或者未达到高中以上文化程度的;</td>
-                        <td width="10%"></td>
+                        <td width="10%" ><input type="checkbox" value="3" ></td>
                     </tr>
 
 
                     <tr>
                         <td>三年内发生过重大以上安全事故的，或者三年内发生2起较大安全事故，或者近一年内发生2起以上亡人一般安全事故的。</td>
-                        <td width="10%"></td>
+                        <td width="10%" ><input type="checkbox" value="4" ></td>
                     </tr>
 
 
@@ -677,7 +678,7 @@
 
         $.ajax({ //post也可
             type: "POST",
-            url: getRootPath() + "/company/safety-system/danger-coordinate",
+            url: getRootPath() + "/company/safety-system/save-danger-coordinate",
             data: postData,
             dataType: 'json',
             success: function (result) {

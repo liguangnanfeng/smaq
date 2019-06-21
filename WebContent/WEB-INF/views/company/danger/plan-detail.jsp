@@ -231,9 +231,18 @@ function showpicture(src){
               </c:choose>
             </td>
 
-            <td class="text-c" >${ch.factors == "" ? "暂无数据" : ch.factors }</td>
+            <c:if test="${ empty ch.factors}">
+              <td>暂无数据</td>
+            </c:if>
 
-           <c:if test="${ empty ch.status}">
+            <c:if test="${ not empty ch.factors}">
+              <td class="text-c" >
+                  ${ch.factors}
+              </td>
+            </c:if>
+
+
+            <c:if test="${ empty ch.status}">
               <td>没有数据</td>
             </c:if>
 

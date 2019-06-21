@@ -66,8 +66,7 @@ public interface CgfService extends Serializable {
     */
     public void rectificationSave(TRectification tr) throws Exception;
 
-    /** 
-    * @param tr 复查意见保存
+    /**
     * @throws Exception 
     */
     public void recheckSave(RecheckSaveReqDTO dto) throws Exception;

@@ -3938,7 +3938,6 @@ public class CompanyController_cd extends BaseController {
         //model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(checkId, 2));
         TCheck tc = tCheckMapper.selectByPrimaryKey(checkId);
         Integer type = tc.getType();
-        //log.error("检查表type："+type);
         List<Map<String, Object>> iteml = tCheckItemMapper.selectDangerByCheckId(checkId, 2);
         //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
         if (type != null && type == 9) {
@@ -4082,6 +4081,9 @@ public class CompanyController_cd extends BaseController {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         dto.getRecheck().setCreateUser(user.getId());
+        // 首先保存
+
+
         try {
             cgfService.recheckSave(dto);
         } catch (Exception e) {

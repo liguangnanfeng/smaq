@@ -146,12 +146,8 @@ function showpicture(src){
           <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }&flag=${flag}'"
             class="btn btn-success radius" type="button" style="padding: 0 70px;">复查详情</button>
         </c:if>
-
-        <c:if test="${listM.c3 > 0}">
-          <button onClick="location.href = '/company/recheck-add?checkId${listM.id}'"
-                  class="btn btn-success radius" type="button" style="padding: 0 70px;">实施复查</button>
-        </c:if>
-
+        <button onClick="location.href = '/company/recheck-add?checkId=${check.id}'"
+                class="btn btn-success radius" type="button" style="padding: 0 70px;">实施复查</button>
         <%--显示为检查文书--%>
        <c:if test="${flag==2 || flag== 3 }" >
          <button onClick="location.href = '/village/check-document?checkId=${check.id }'"

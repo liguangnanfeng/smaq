@@ -541,17 +541,15 @@
         }
 
         console.log(comFlag);
+        $.ajax({ //post也可
+            type: "POST",
+            url: getRootPath() + "/company/safety-system/save-commerce-table",
+            data: {comFlag:comFlag},
+            success: function (result) {
+               layer.msg(result.mess);
 
-
-        // $.ajax({ //post也可
-        //     type: "POST",
-        //     url: getRootPath() + "/company/safety-system/save-danger-coordinate",
-        //     data: postData,
-        //     dataType: 'json',
-        //     success: function (result) {
-        //         layer.msg(result.mess);
-        //     }
-        // });
+            }
+        });
 
     }
 </script>

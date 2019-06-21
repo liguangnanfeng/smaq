@@ -507,7 +507,7 @@ public class CompanyController_safety extends BaseController {
         Commerce commerce = commerceMapper.selectComFlag(user.getId());
 
         if (null == commerce){
-            model.addAttribute("comFlag","老，钱，你，个，屌，毛，！，！，！");
+            model.addAttribute("comFlag","");
         }else {
             model.addAttribute("comFlag",commerce.getCom_flag());
         }
@@ -521,10 +521,11 @@ public class CompanyController_safety extends BaseController {
      * create time: 10:13 2019/6/21
      */
     @RequestMapping({"save-commerce-table"})
+    @ResponseBody
     public Result commerce(Model model, HttpServletRequest request,String comFlag) throws Exception {
         User user = this.getLoginUser(request);
         Result result = new ResultImpl();
-        if (null != comFlag){
+        if (null != comFlag && "" != comFlag){
            // 根据公司 user_id  查询数据 将数据返回
            Commerce commerce = commerceMapper.selectComFlag(user.getId());
            Commerce commerce1 = null;
@@ -545,14 +546,14 @@ public class CompanyController_safety extends BaseController {
                a = commerceMapper.updateByPrimaryKey(commerce1);
            }
            if (a != 0){
-               result.setStatus("0");
-               result.setMess("数据异常请重新选择！！！");
-           }else {
                result.setStatus("1");
+               result.setMess("请选择风险项后再保存");
+           }else {
+               result.setStatus("0");
                result.setMess("保存成功。");
            }
         }else {
-           result.setStatus("0");
+           result.setStatus("1");
            result.setMess("数据异常请重新选择！！！");
         }
         return result;

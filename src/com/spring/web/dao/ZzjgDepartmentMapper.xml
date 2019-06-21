@@ -401,4 +401,8 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+    <select id="selectAllByUserId" resultType="String" parameterType="Integer"  >
+        select name from zzjg_department_tbl where uid=#{id} and level=2 group by name ;
+    </select>
+
 </mapper>

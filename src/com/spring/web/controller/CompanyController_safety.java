@@ -1445,8 +1445,9 @@ public class CompanyController_safety extends BaseController {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         //加上岗位集合
-       // zzjgDepartmentMapper.
+       List<String> list =   zzjgDepartmentMapper.selectAllByUserId(user.getId());
 
+       model.addAttribute("list2",list);
 
         if (StringUtils.isEmpty(company.getIndustry())) {
             model.addAttribute("url", request.getRequestURI() + "flag=" + flag);
@@ -1700,7 +1701,7 @@ public class CompanyController_safety extends BaseController {
      * 风险告知牌
      */
     @RequestMapping(value = "fxggp-load3")
-    public String fxggpLoad3(Model model, HttpServletRequest request, String name) throws Exception {
+    public String fxggpLoad3(Model model, HttpServletRequest request, String name,String name1) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("uid", user.getId());
@@ -1760,6 +1761,7 @@ public class CompanyController_safety extends BaseController {
             }
 
         }
+        model.addAttribute("name1",name1);
         model.addAttribute("be", be);
         return "company/safety-system/risk-information-list-load";
     }

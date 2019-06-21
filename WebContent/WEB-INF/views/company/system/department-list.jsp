@@ -38,11 +38,17 @@
             <td>
                 <button class="btn-depart" onclick="showadd(1)">
                     <i class="Hui-iconfont">&#xe600;</i>
-                    <c:if test="${session_user.userType != 3}">
-                        添加分(子)公司
+                    <c:if test="${empty list}">
+                        <c:if test="${session_user.userType != 3}">
+                            添加公司名称
+                        </c:if>
+                        <c:if test="${session_user.userType == 3}">
+                            添加单位
+                        </c:if>
                     </c:if>
-                    <c:if test="${session_user.userType == 3}">
-                        添加单位</c:if>
+                    <c:if test="${not empty list}">
+                           修改公司名称
+                    </c:if>
                 </button>
             </td>
           </tr>
@@ -357,13 +363,11 @@ $(function() {
   }else{
      titles = ["", "公司名称", "车间名称", "岗位/部位名称"];
   }
-   if (type==2){
+    if (type==2){
        $("#dangerID").css('display','block');
-   }else{
+    }else{
        $("#dangerID").css('display','none');
-   }
-
-
+    }
   $("#label_").text(titles[type]);
   $("#type").val(type);
   $("#name").val('');

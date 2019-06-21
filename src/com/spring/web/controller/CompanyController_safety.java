@@ -982,7 +982,9 @@ public class CompanyController_safety extends BaseController {
     }
 
     /**
-     * 设置风险因素-保存
+     * create by  : 小明！！！
+     * description: 设置风险保存
+     * create time: 15:22 2019/6/21
      */
     @RequestMapping(value = "set-risk-edit")
     public @ResponseBody
@@ -1110,6 +1112,7 @@ public class CompanyController_safety extends BaseController {
     @RequestMapping(value = "set-choose")
     public String setChoose(Model model, Integer id, Integer type, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
+        model.addAttribute("id",id);
         model.addAttribute("ac", aCompanyManualMapper.selectByPrimaryKey(id));
         model.addAttribute("aGzk", aGzkMapper.selectByPrimaryKey(id));
         model.addAttribute("type", type);

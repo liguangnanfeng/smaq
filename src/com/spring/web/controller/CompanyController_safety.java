@@ -443,30 +443,14 @@ public class CompanyController_safety extends BaseController {
                 }else if (number == 3){ // 设置
                     zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
                 }
-
                 model.addAttribute("number", number);
                 model.addAttribute("zzjgDep", zzjg);
                 model.addAttribute("acL", acL);
                 return "company/safety-system/risk-list1";
             } else {
-                zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId());
-
+                zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type);
                 acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);
-
-                List<DistinguishType> listDis = null;
-
-
-                listDis = distinguishTypeMapper.selectPoint(1774,type,user.getId());
-
-
-
-
                 model.addAttribute("zzjg",zzjg);
-
-
-                model.addAttribute("listDis",listDis);
-
-
                 model.addAttribute("dL", acL);
                 model.addAttribute("type", type);
                 return "company/safety-system/risk-list1";
@@ -975,7 +959,44 @@ public class CompanyController_safety extends BaseController {
                        String gzkhxys, String gzkwlys) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
-        ACompanyManual a = aCompanyManualMapper.selectByPrimaryKey(ac.getId());
+        // 根据 dep_id 去数据库查询数据
+        DistinguishType distinguishType1 = distinguishTypeMapper.selectNum(ac.getId(),ac.getType(),user.getId());
+        DistinguishType distinguishType;
+        if (null == distinguishType1){
+            distinguishType = new DistinguishType();
+            distinguishType.setCtime(new Date());
+            distinguishType.setUtime(new Date());
+            distinguishType.setDanger_point(ac.getHxys());
+            distinguishType.setDep_id(ac.getId());
+            distinguishType.setUser_id(user.getId());
+            distinguishType.setDel(0);
+            distinguishType.setFlag(Integer.parseInt(ac.getType()));
+
+            int num = distinguishTypeMapper.insert(distinguishType);
+
+            if (0 == num){
+                result.setMess("保存失败，请重新添加！！！");
+            }else {
+                result.setMess("保存成功。");
+            }
+        }else {
+            distinguishType = new DistinguishType();
+            distinguishType.setId(distinguishType1.getId());
+            distinguishType.setUtime(new Date());
+            distinguishType.setDanger_point(ac.getHxys());
+            boolean a = distinguishTypeMapper.updatePoint(distinguishType);
+
+            if (a){
+                result.setMess("保存失败，请重新添加！！！");
+            }else {
+                result.setMess("保存成功。");
+            }
+        }
+
+        return result;
+
+
+       /* ACompanyManual a = aCompanyManualMapper.selectByPrimaryKey(ac.getId());
 
         ac.setUid(a.getUid());
         ac.setLevel1(a.getLevel1());
@@ -1029,7 +1050,7 @@ public class CompanyController_safety extends BaseController {
                 }
             }
         }
-        return result;
+        return result;*/
     }
 
     /**

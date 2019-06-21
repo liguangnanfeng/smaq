@@ -70,7 +70,7 @@ function save() {
       ids.push($(this).attr("data-id"));
     }
   })
-  var obj = {id : id};
+  var obj = {id : id,type:type};
   if(type == '1') {
     obj.hxys = v.join("!@#");
     obj.gzkwlys = ids.join(",");

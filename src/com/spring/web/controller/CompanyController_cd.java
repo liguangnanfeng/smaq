@@ -3617,7 +3617,7 @@ public class CompanyController_cd extends BaseController {
      * 没有兼容小程序
      */
     @RequestMapping(value = "check-detail")
-    public String checkDetail(Integer id, Model model, Integer jcxq,HttpServletRequest request,Integer flag) throws Exception {
+    public String checkDetail(Integer id, Model model, Integer jcxq,HttpServletRequest request,Integer flag,Integer number) throws Exception {
         User loginUser = getLoginUser(request);
         // 根据id查询的是检查表信息
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
@@ -3712,6 +3712,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("flag",tc.getFlag());
         model.addAttribute("itemL", iteml);
         model.addAttribute("user",loginUser);
+        model.addAttribute("number",number);
         if(null==name||"".equals(name)){
             name = companyMapper.selectByPrimaryKey(loginUser.getId()).getSafety();
         }
@@ -4006,6 +4007,7 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * TODO 隐患列表 复查详情
+     * 现在复查有多余的记录
      * 表示的就是整改合格之后的复查记录
      * 表示在这里将数据进行保存到 tRecheckItemMapper
      */
@@ -4015,8 +4017,11 @@ public class CompanyController_cd extends BaseController {
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
         List<Map> maps = tCheckItemMapper.selectAllByCheckId(checkId);
         List<TRecheck> tRechecks = tRecheckMapper.selectByCheckId(checkId);
+        if(tRechecks.size()>1){
+            tRechecks.remove(0);
+        }
         Integer id2 = tRechecks.get(0).getId();
-        for (int i = 0; i < maps.size(); i++) {
+       /* for (int i = 0; i < maps.size(); i++) {
             TRecheckItem id1 = tRecheckItemMapper.selectByCheckItemId((Integer) maps.get(i).get("id"));
             if (null != id1) {
                 id1.setStatus((Integer) maps.get(i).get("status"));
@@ -4034,18 +4039,20 @@ public class CompanyController_cd extends BaseController {
                 id1.setDeadline((Date) maps.get(i).get("deadline"));
                 tRecheckItemMapper.insertSelective(id1);
             }
-        }
+        }*/
         model.addAttribute("flag",flag);
         model.addAttribute("check", check);
         model.addAttribute("company", companyMapper.selectByPrimaryKey(Integer.parseInt(String.valueOf(check.get("userId")))));
-        model.addAttribute("recheckList", tRechecks);
+
         List<Map<String, Object>> maps1 = tRecheckItemMapper.selectByCheckId(checkId);
+        model.addAttribute("recheckList", tRechecks);
+        //model.addAttribute("recheckList", maps1);
         model.addAttribute("itemList",maps1);
         return "company/danger/check-fudetail";
     }
 
     /**
-     * 隐患列表 复查详情
+     * TODO  隐患列表 复查详情
      */
     @RequestMapping(value = "print-recheck-detail")
     public String precheckDetail(Integer checkId, Model model) throws Exception {

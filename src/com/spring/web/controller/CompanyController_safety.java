@@ -507,7 +507,7 @@ public class CompanyController_safety extends BaseController {
         Commerce commerce = commerceMapper.selectComFlag(user.getId());
 
         if (null == commerce){
-            model.addAttribute("comFlag","");
+            model.addAttribute("comFlag","老，钱，你，个，屌，毛，！，！，！");
         }else {
             model.addAttribute("comFlag",commerce.getCom_flag());
         }

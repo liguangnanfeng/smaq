@@ -40,7 +40,7 @@
         }
     </style>
     <script type="text/javascript">
-        <%--console.log('${list}');--%>
+        console.log('${host}');
 
         function showpicture(memoImg) {
             //memoImg = "";
@@ -214,14 +214,14 @@
                         <c:if test="${list.file_address==null}">
                             <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="yulan(this)"
                                href="javascript:;">预览文件</a>
-                            <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="xiazai(this) "
-                               href="javascript:;">下载文件</a>
+                            <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="xiazai(this)"
+                               download="zhilifangan.pdf">下载文件</a>
                         </c:if>
                         <c:if test="${list.file_address!=null}">
                             <a style="text-decoration:none;margin-bottom:5px;display: inline-block"
-                               data-src="${list.file_address}" onclick="yulan(this)" href="javascript:;">预览文件</a>
+                               data-src="${host}${list.file_address}" onclick="yulan(this)" href="javascript:;">预览文件</a>
                             <a style="text-decoration:none;margin-bottom:5px;display: inline-block"
-                               data-src="${list.file_address}" onclick="xiazai(this)" href="javascript:;">下载文件</a>
+                               href="${host}${list.file_address}" download="zhilifangan.pdf">下载文件</a>
                         </c:if>
                         <a style="text-decoration:none" onclick="uploadfile(${list.checkItemId},this)"
                            href="javascript:void(0);">上传文件</a>
@@ -341,7 +341,8 @@
             //请求成功时处理
                 if (res.status == 0) {
                     current.prevAll().css('display', 'inline-block');//把隐藏的按钮显示出来
-                    current.prevAll().attr("data-src", getRootPath() + res);//为隐藏的按钮设置属性为返回的路径
+                    current.prevAll().attr("data-src", '${host}' + res.data);//为隐藏的按钮设置属性为返回的路径
+                    current.prev().attr("href", '${host}' + res.data);
                     var file = document.getElementById('upload');
                     file.value = ''; //把file 内容清空
                     layer.msg('上传成功');

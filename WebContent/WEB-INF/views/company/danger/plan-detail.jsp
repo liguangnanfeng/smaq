@@ -249,7 +249,7 @@ function showpicture(src){
 
             <td class="text-c" >${ch.measures == "" ? "暂无数据" : ch.measures}</td>
 
-            <c:if test="${flag != 2}" >
+            <c:if test="${flag == 1}" >
               <td>
                 <c:choose>
                   <c:when test="${ch.level eq '红色'}"><font class="col-a">${ch.level}</font></c:when>

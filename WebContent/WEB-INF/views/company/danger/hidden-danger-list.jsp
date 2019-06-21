@@ -398,12 +398,11 @@
 
     $(function () {
         $('.table-sort').dataTable({
-            "aaSorting": [[0, "asc"]],//默认第几个排序
+            "aaSorting": [[4, "desc"]],//默认第几个排序
             "bStateSave": false,//状态保存
             "aoColumnDefs": []
         });
     });
-
     function showpicture(src) {
         $(".div_imgp img").attr("src", src);
         $("#modal-plan").modal("show")

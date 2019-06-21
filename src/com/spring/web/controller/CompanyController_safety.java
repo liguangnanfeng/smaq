@@ -1406,12 +1406,16 @@ public class CompanyController_safety extends BaseController {
     }
 
     /**
-     * 风险告知牌
+     * TODO 岗位风险公告牌 风险告知牌
      */
     @RequestMapping(value = "risk-information-list")
     public String riskInformationList(Model model, HttpServletRequest request, Integer flag) throws Exception {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
+        //加上岗位集合
+       // zzjgDepartmentMapper.
+
+
         if (StringUtils.isEmpty(company.getIndustry())) {
             model.addAttribute("url", request.getRequestURI() + "flag=" + flag);
             return "company/safety-system/type";

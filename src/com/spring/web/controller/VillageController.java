@@ -3403,7 +3403,7 @@ public class VillageController extends BaseController {
                         tCheckPartMapper.insertSelective(tCheckPart);
                         TCheckItem tCheckItem = new TCheckItem();
                         tCheckItem.setLevelId(aDangerManual.getId());     // companyManualTbl的id
-                        tCheckItem.setContent(aDangerManual.getMeasures()); //检查内容
+                        tCheckItem.setContent(aDangerManual.getFactors()); //检查内容
                         tCheckItem.setLevels(aDangerManual.getLevel3());   // 场所/环节/部门 三级
                         tCheckItem.setReference(aDangerManual.getReference()); // 依据
                         tCheckItem.setMemo(aDangerManual.getFactors());   // 较大危险因素
@@ -3427,7 +3427,7 @@ public class VillageController extends BaseController {
                         tCheckPartMapper.insertSelective(tCheckPart);
                         TCheckItem tCheckItem = new TCheckItem();
                         tCheckItem.setLevelId(Integer.parseInt(id));     // companyManualTbl的id
-                        tCheckItem.setContent(tLevel.getMeasures()); //检查内容
+                        tCheckItem.setContent(tLevel.getFactors()); //检查内容
                         tCheckItem.setLevels(tLevel.getLevel3());   // 场所/环节/部门 三级
                         tCheckItem.setReference(tLevel.getReference()); // 依据
                         tCheckItem.setMemo(tLevel.getFactors());   // 较大危险因素
@@ -3592,7 +3592,7 @@ public class VillageController extends BaseController {
                         tCheckPartMapper.insertSelective(tCheckPart);
                         TCheckItem tCheckItem = new TCheckItem();
                         tCheckItem.setLevelId(checkLevels.getId());     // companyManualTbl的id
-                        tCheckItem.setContent(checkLevels.getLevel4()); //检查内容
+                        tCheckItem.setContent(checkLevels.getFactors()); //检查内容
                         tCheckItem.setLevels(checkLevels.getLevel3());
                         tCheckItem.setReference(checkLevels.getReference());
                         tCheckItem.setMemo(checkLevels.getFactors());

@@ -460,7 +460,7 @@ public class CountryCheckImpl implements CountryCheck {
             TCheckItem tCheckItem = new TCheckItem();
             tCheckItem.setMemo(checkLevel.getFactors());//不合格描述
             tCheckItem.setLevelId(checkLevel.getId());  // 保存的conpanymanualId
-            tCheckItem.setContent(checkLevel.getLevel4()); //检查标准详情
+            tCheckItem.setContent(checkLevel.getFactors()); //检查标准详情
             tCheckItem.setLevelId(checkItem.getTitle());   //检查分类
             if(null==checkLevel.getLevel3()){
                 tCheckItem.setLevels(checkLevel.getLevel1());   // 检查等级

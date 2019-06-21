@@ -4011,7 +4011,7 @@ public class CompanyController_cd extends BaseController {
      * 表示在这里将数据进行保存到 tRecheckItemMapper
      */
     @RequestMapping(value = "recheck-detail")
-    public String recheckDetail(Integer checkId, Model model) throws Exception {
+    public String recheckDetail(Integer checkId, Model model,Integer flag ) throws Exception {
         Integer id = checkId;
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
         List<Map> maps = tCheckItemMapper.selectAllByCheckId(checkId);
@@ -4036,6 +4036,7 @@ public class CompanyController_cd extends BaseController {
                 tRecheckItemMapper.insertSelective(id1);
             }
         }
+        model.addAttribute("flag",flag);
         model.addAttribute("check", check);
         model.addAttribute("company", companyMapper.selectByPrimaryKey(Integer.parseInt(String.valueOf(check.get("userId")))));
         model.addAttribute("recheckList", tRechecks);

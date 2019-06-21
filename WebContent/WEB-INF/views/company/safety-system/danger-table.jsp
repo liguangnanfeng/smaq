@@ -111,30 +111,33 @@
         }
 
         .my_text {
-            text-align: center!important;
+            text-align: center !important;
             font-size: 25px;
             font-weight: bold;
         }
 
-        .my_red{
-            display:inline-block!important;
-            background-color:red;
+        .my_red {
+            display: inline-block !important;
+            background-color: red;
         }
-        .my_o{
-            display:inline-block!important;
-            background-color:orange;
+
+        .my_o {
+            display: inline-block !important;
+            background-color: orange;
         }
-        .my_y{
-            display:inline-block!important;
-            background-color:yellow ;
+
+        .my_y {
+            display: inline-block !important;
+            background-color: yellow;
         }
-        .my_b{
-            display:inline-block!important;
-            background-color:blue;
+
+        .my_b {
+            display: inline-block !important;
+            background-color: blue;
         }
 
     </style>
-<%--    <script src="/js/jquery.jqprint-0.3.js"></script>--%>
+    <%--    <script src="/js/jquery.jqprint-0.3.js"></script>--%>
 </head>
 <body>
 <%--<nav class="breadcrumb">--%>
@@ -148,311 +151,328 @@
     <div class="page-container" id="div_container">
         <div class="div-print">
 
-            <h3 class="text-c">危险化学品生产储存企业安全风险评估诊断分级指南</h3>
-
-
+            <h3 class="text-c">工贸行业重大生产安全事故隐患判定标准</h3>
+            <h3 class="text-c">（2017版） </h3>
+            <h4>本判定标准适用于判定工贸行业的重大生产安全事故隐患（以下简称重大事故隐患），危险化学品、消防（火灾）、特种设备等有关行业领域对重大事故隐患判定标准另有规定的，适用其规定。
+                工贸行业重大事故隐患分为专项类重大事故隐患和行业类重大事故隐患，专项类重大事故隐患适用于所有相关的工贸行业，行业类重大事故隐患仅适用于对应的行业。</h4>
             <div class="mt-20">
                 <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan">
-                    <thead>
-                    <tr class="text-c">
-                        <th style="width:20%">类别</th>
-                        <th style="width:20%">项目（分值）</th>
-                        <th style="width:50%">评估内容</th>
-                        <th style="width:10%">扣分值</th>
+<%--                    <thead>--%>
+<%--                    <tr class="text-c">--%>
+<%--                        <th style="width:20%">类别</th>--%>
+<%--                        <th style="width:20%">项目（分值）</th>--%>
+<%--                        <th style="width:50%">评估内容</th>--%>
+<%--                        <th style="width:10%">扣分值</th>--%>
 
-                    </thead>
+<%--                    </thead>--%>
                     <tbody id="tableaaa">
+
+
+
                     <tr>
-                        <td>1.固有危险性</td>
-                        <td>重大危险源（10分）</td>
-                        <td>存在一级危险化学品重大危险源的，扣10分;</td>
-                        <td rowspan="4" onclick="dafen('danger1',10,this)" class="my_text danger1"></td>
+                        <td colspan="2" style="font-size: 20px;font-weight: bold">一、专项类重大事故隐患</td>
                     </tr>
                     <tr>
-                        <td>1.固有危险性</td>
-                        <td>重大危险源（10分）</td>
-                        <td>存在二级危险化学品重大危险源的，扣8分;</td>
-
+                        <td colspan="2" style="font-size: 15px;font-weight: bold">（一）存在粉尘爆炸危险的行业领域。</td>
                     </tr>
-
                     <tr>
-                        <td>1.固有危险性</td>
-                        <td>重大危险源（10分）</td>
-                        <td>存在三级危险化学品重大危险源的，扣6分;</td>
-
+                        <td>1.粉尘爆炸危险场所设置在非框架结构的多层建构筑物内，或与居民区、员工宿舍、会议室等人员密集场所安全距离不足。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item1" value="item1" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>2.可燃性粉尘与可燃气体等易加剧爆炸危险的介质共用一套除尘系统，不同防火分区的除尘系统互联互通。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox" class= "item2" value="item2" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>1.固有危险性</td>
-                        <td>重大危险源（10分）</td>
-                        <td>存在四级危险化学品重大危险源的，扣4分;</td>
+                        <td>3.干式除尘系统未规范采用泄爆、隔爆、惰化、抑爆等任一种控爆措施。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox" class= "item3" value="item3" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>1.固有危险性</td>
-                        <td>物质危险性（5分）</td>
-                        <td>生产、储存爆炸品的（实验室化学试剂除外），每一种扣2分；</td>
-                        <td rowspan="3" onclick="dafen('danger2',5,this)" class="my_text danger2"></td>
+                        <td>4.除尘系统采用正压吹送粉尘，且未采取可靠的防范点燃源的措施。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item4" value="item4" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>1.固有危险性</td>
-                        <td>物质危险性（5分）</td>
-                        <td>生产、储存（含管道输送）氯气、光气等吸入性剧毒化学品的（实验室化学试剂除外），每一种扣2分；</td>
-
+                        <td>5.除尘系统采用粉尘沉降室除尘，或者采用干式巷道式构筑物作为除尘风道。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item5" value="item5" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>1.固有危险性</td>
-                        <td>物质危险性（5分）</td>
-                        <td>生产、储存其他重点监管危险化学品的（实验室化学试剂除外），每一种扣0.1分。</td>
-
+                        <td>6.铝镁等金属粉尘及木质粉尘的干式除尘系统未规范设置锁气卸灰装置。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item6" value="item6" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>1.固有危险性</td>
-                        <td>危险化工工艺种类（10分）</td>
-                        <td>涉及18种危险化工工艺的，每一种扣2分。</td>
-                        <td onclick="dafen('danger3',10,this)" class="my_text danger3"></td>
+                        <td>7.粉尘爆炸危险场所的20区未使用防爆电气设备设施。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item7" value="item7" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>1.固有危险性</td>
-                        <td>火灾爆炸危险性（5分）</td>
-                        <td>涉及甲类/乙类火灾危险性类别厂房、库房或者罐区的，每涉及一处扣1/0.5分；</td>
-                        <td rowspan="2" onclick="dafen('danger4',5,this)" class="my_text danger4"></td>
+                        <td>8.在粉碎、研磨、造粒等易于产生机械点火源的工艺设备前，未按规范设置去除铁、石等异物的装置。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item8" value="item8" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>1.固有危险性</td>
-                        <td>火灾爆炸危险性（5分）</td>
-                        <td>涉及甲类、乙类火灾危险性罐区、气柜与加热炉等与产生明火的设施、装置比邻布置的，扣5分。</td>
-
+                        <td>9.木制品加工企业，与砂光机连接的风管未规范设置火花探测报警装置。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item9" value="item9" onchange="dagou(this)"></td>
                     </tr>
                     <tr>
-                        <td>2.周边环境</td>
-                        <td>周边环境(10分）</td>
-                        <td>企业在化工园区（化工集中区）外的，扣3分；</td>
-                        <td rowspan="2" onclick="dafen('danger5',10,this)" class="my_text danger5"></td>
+                        <td>10.未制定粉尘清扫制度，作业现场积尘未及时规范清理。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item10" value="item10" onchange="dagou(this)"></td>
                     </tr>
-
                     <tr>
-                        <td>2.周边环境</td>
-                        <td>周边环境(10分）</td>
-                        <td>企业外部安全防护距离不符合《危险化学品生产、储存装置个人可接受风险标准和社会可接受风险标准（试行）》的，扣10分。</td>
-
+                        <td colspan="2" style="font-size: 15px;font-weight: bold">（二）使用液氨制冷的行业领域。</td>
                     </tr>
-
                     <tr>
-                        <td>3.设计与评估</td>
-                        <td>设计与评估（10分）</td>
-                        <td>国内首次使用的化工工艺未经过省级人民政府有关部门组织安全可靠性论证的，扣5分；</td>
-                        <td rowspan="3" onclick="dafen('danger6',10,this)" class="my_text danger6"></td>
+                        <td>1.包装间、分割间、产品整理间等人员较多生产场所的空调系统采用氨直接蒸发制冷系统。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item11" value="item11" onchange="dagou(this)"></td>
                     </tr>
-
                     <tr>
-                        <td>3.设计与评估</td>
-                        <td>设计与评估（10分）</td>
-                        <td>精细化工企业未按规范性文件要求开展反应安全风险评估的，扣10分；</td>
-
+                        <td>2.快速冻结装置未设置在单独的作业间内，且作业间内作业人员数量超过9人。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item12" value="item12" onchange="dagou(this)"></td>
                     </tr>
-
                     <tr>
-                        <td>3.设计与评估</td>
-                        <td>设计与评估（10分）</td>
-                        <td>企业危险化学品生产储存装置均由甲级资质设计单位进行全面设计的，加2分。</td>
-
+                        <td colspan="2" style="font-size: 15px;font-weight: bold">（三）有限空间作业相关的行业领域。</td>
                     </tr>
-
-
                     <tr>
-                        <td>4.设备</td>
-                        <td>设备（5分）</td>
-                        <td>使用淘汰落后安全技术工艺、设备目录列出的工艺及设备的，每一项扣2分；</td>
-                        <td rowspan="3" onclick="dafen('danger7',5,this)" class="my_text danger7"></td>
+                        <td>1.未对有限空间作业场所进行辨识，并设置明显安全警示标志。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item13" value="item13" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>2.未落实作业审批制度，擅自进入有限空间作业。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item14" value="item14" onchange="dagou(this)"></td>
+                    </tr>
+<%--```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````--%>
+ <%--```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````--%>
+                    <tr>
+                        <td colspan="2" style="font-size: 20px;font-weight: bold">二、行业类重大事故隐患</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size: 15px;font-weight: bold">（一）冶金行业。</td>
+                    </tr>
+                    <tr>
+                        <td>1.会议室、活动室、休息室、更衣室等场所设置在铁水、钢水与液渣吊运影响的范围内。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item15" value="item15" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>2.吊运铁水、钢水与液渣起重机不符合冶金起重机的相关要求；炼钢厂在吊运重罐铁水、钢水或液渣时，未使用固定式龙门钩的铸造起重机，龙门钩横梁、耳轴销和吊钩、钢丝绳及其端头固定零件，未进行定期检查，发现问题未及时整改。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item16" value="item16" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>4.设备</td>
-                        <td>设备（5分）</td>
-                        <td>特种设备没有办理使用登记证书的，或者未按要求定期检验的，扣2分；</td>
-
+                        <td>3.盛装铁水、钢水与液渣的罐（包、盆）等容器耳轴未按国家标准规定要求定期进行探伤检测。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item17" value="item17" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>4.设备</td>
-                        <td>设备（5分）</td>
-                        <td>化工生产装置未按国家标准要求设置双电源或者双回路供电的，扣5分。</td>
-
+                        <td>4.冶炼、熔炼、精炼生产区域的安全坑内及熔体泄漏、喷溅影响范围内存在积水，放置有易燃易爆物品。金属铸造、连铸、浇铸流程未设置铁水罐、钢水罐、溢流槽、中间溢流罐等高温熔融金属紧急排放和应急储存设施。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item18" value="item18" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>5.自控与安全设施</td>
-                        <td>自控与安全设施（10分）</td>
-                        <td>涉及重点监管危险化工工艺的装置未按要求实现自动化控制，系统未实现紧急停车功能，装备的自动化控制系统、紧急停车系统未投入使用的，扣10分；</td>
-                        <td rowspan="7" onclick="dafen('danger8',10,this)" class="my_text danger8"></td>
+                        <td>5.炉、窑、槽、罐类设备本体及附属设施未定期检查，出现严重焊缝开裂、腐蚀、破损、衬砖损坏、壳体发红及明显弯曲变形等未报修或报废，仍继续使用。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item19" value="item19" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>6.氧枪等水冷元件未配置出水温度与进出水流量差检测、报警装置及温度监测，未与炉体倾动、氧气开闭等联锁。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item20" value="item20" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>5.自控与安全设施</td>
-                        <td>自控与安全设施（10分）</td>
-                        <td>涉及毒性气体、液化气体、剧毒液体的一级、二级重大危险源的危险化学品罐区未配备独立的安全仪表系统的，扣10分；</td>
-
-                    </tr>
-
-
-                    <tr>
-                        <td>5.自控与安全设施</td>
-                        <td>自控与安全设施（10分）</td>
-                        <td>构成一级、二级重大危险源的危险化学品罐区未实现紧急切断功能的，扣5分；</td>
-
+                        <td>7.煤气柜建设在居民稠密区，未远离大型建筑、仓库、通信和交通枢纽等重要设施；附属设备设施未按防火防爆要求配置防爆型设备；柜顶未设置防雷装置。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item21" value="item21" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>5.自控与安全设施</td>
-                        <td>自控与安全设施（10分）</td>
-                        <td>危险化学品重大危险源未设置压力、液位、温度远传监控和超限位报警装置的，每涉及一项扣1分；</td>
-
-                    </tr>
-
-
-                    <tr>
-                        <td>5.自控与安全设施</td>
-                        <td>自控与安全设施（10分）</td>
-                        <td>涉及可燃和有毒有害气体泄漏的场所未按国家标准设置检测声光报警设施的，每一处扣1分；</td>
-
+                        <td>8.煤气区域的值班室、操作室等人员较集中的地方，未设置固定式一氧化碳监测报警装置。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item22" value="item22" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>5.自控与安全设施</td>
-                        <td>自控与安全设施（10分）</td>
-                        <td>防爆区域未按国家标准安装使用防爆电气设备的，每一处扣1分；</td>
-
+                        <td>9.高炉、转炉、加热炉、煤气柜、除尘器等设施的煤气管道未设置可靠隔离装置和吹扫设施。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item23" value="item23" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>10.煤气分配主管上支管引接处，未设置可靠的切断装置；车间内各类燃气管线，在车间入口未设置总管切断阀。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item24" value="item24" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>11.金属冶炼企业主要负责人和安全生产管理人员未依法经考核合格。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item25" value="item25" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size: 15px;font-weight: bold"> （二）有色行业。</td>
+                    </tr>
+                    <tr>
+                        <td>1.吊运铜水等熔融有色金属及渣的起重机不符合冶金起重机的相关要求；横梁、耳轴销和吊钩、钢丝绳及其端头固定零件，未进行定期检查，发现问题未及时处理。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item26" value="item26" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>2.会议室、活动室、休息室、更衣室等场所设置在铜水等熔融有色金属及渣的吊运影响范围内。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item27" value="item27" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>5.自控与安全设施</td>
-                        <td>自控与安全设施（10分）</td>
-                        <td>甲类、乙类火灾危险性生产装置内设有办公室、操作室、固定操作岗位或休息室的，每涉及一处扣5分。</td>
-
-                    </tr>
-
-
-                    <tr>
-                        <td>6.人员资质</td>
-                        <td>人员资质（15分）</td>
-                        <td>企业主要负责人和安全生产管理人员未依法经考核合格的，每一人次扣5分；</td>
-                        <td rowspan="5" onclick="dafen('danger9',15,this)" class="my_text danger9"></td>
+                        <td>3.盛装铜水等熔融有色金属及渣的罐（包、盆）等容器耳轴未定期进行检测。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item28" value="item28" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>6.人员资质</td>
-                        <td>人员资质（15分）</td>
-                        <td>企业专职安全生产管理人员不具备国民教育化工化学类（或安全工程）中等职业教育以上学历或者化工化学类中级以上专业技术职称的，每一人次扣5分；</td>
-
+                        <td>4.铜水等高温熔融有色金属冶炼、精炼、铸造生产区域的安全坑内及熔体泄漏、喷溅影响范围内存在非生产性积水；熔体容易喷溅到的区域，放置有易燃易爆物品。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item29" value="item29" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>6.人员资质</td>
-                        <td>人员资质（15分）</td>
-                        <td>涉及“两重点一重大”装置的生产、设备及工艺专业管理人员不具有相应专业大专以上学历的，每一人次扣5分；</td>
-
+                        <td>5.铜水等熔融有色金属铸造、浇铸流程未设置紧急排放和应急储存设施。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item30" value="item30" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>6.高温工作的熔融有色金属冶炼炉窑、铸造机、加热炉及水冷元件未设置应急冷却水源等冷却应急处置措施。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item31" value="item31" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>6.人员资质</td>
-                        <td>人员资质（15分）</td>
-                        <td>企业未按有关要求配备注册安全工程师的，扣3分；</td>
-
-                    </tr>
-
-
-                    <tr>
-                        <td>6.人员资质</td>
-                        <td>人员资质（15分）</td>
-                        <td>企业主要负责人、分管安全生产工作负责人、安全管理部门主要负责人为化学化工类专业毕业的，每一人次加2分。</td>
-
-                    </tr>
-
-
-                    <tr>
-                        <td>7.安全管理制度</td>
-                        <td>管理制度（10分）</td>
-                        <td>未制定操作规程和工艺控制指标或者制定的操作规程和工艺控制指标不完善的，扣5分；</td>
-                        <td rowspan="3" onclick="dafen('danger10',10,this)" class="my_text danger10"></td>
-                    </tr>
-
-
-                    <tr>
-                        <td>7.安全管理制度</td>
-                        <td>管理制度（10分）</td>
-                        <td>动火、进入受限空间等特殊作业管理制度不符合国家标准或未有效执行的，扣10分；</td>
-
+                        <td>7.冶炼炉窑的水冷元件未配置温度、进出水流量差检测及报警装置；未设置防止冷却水大量进入炉内的安全设施（如：快速切断阀等）。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item32" value="item32" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>7.安全管理制度</td>
-                        <td>管理制度（10分）</td>
-                        <td>未建立与岗位相匹配的全员安全生产责任制的，每涉及一个岗位扣2分。</td>
-
+                        <td>8.炉、窑、槽、罐类设备本体及附属设施未定期检查，出现严重焊缝开裂、腐蚀、破损、衬砖损坏、壳体发红及明显弯曲变形等未报修或报废，仍继续使用。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item33" value="item33" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>8.应急管理</td>
-                        <td>应急配备</td>
-                        <td>企业自设专职消防应急队伍的，加3分。</td>
-                        <td onclick="dafen('danger11',10,this)" class="my_text danger11"></td>
+                        <td>9.使用煤气（天然气）的烧嘴等燃烧装置，未设置防突然熄火或点火失败的快速切断阀，以切断煤气（天然气）。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item34" value="item34" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>10.金属冶炼企业主要负责人和安全生产管理人员未依法经考核合格。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item35" value="item35" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size: 15px;font-weight: bold"> （三）建材行业。</td>
+                    </tr>
+                    <tr>
+                        <td>1.水泥工厂煤磨袋式收尘器（或煤粉仓）未设置温度和一氧化碳监测，或未设置气体灭火装置。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item36" value="item36" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>2.水泥工厂筒型储存库人工清库作业外包给不具备高空作业工程专业承包资质的承包方且作业前未进行风险分析。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item37" value="item37" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>9.安全管理绩效</td>
-                        <td>安全生产标准化达标</td>
-                        <td>安全生产标准化为一级的，加15分；</td>
-                        <td rowspan="3" onclick="dafen('danger12',15,this)" class="my_text danger12"></td>
+                        <td>3.燃气窑炉未设置燃气低压警报器和快速切断阀，或易燃易爆气体聚集区域未设置监测报警装置。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item38" value="item38" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>9.安全管理绩效</td>
-                        <td>安全生产标准化达标</td>
-                        <td>安全生产标准化为二级的，加5分；</td>
-
+                        <td>4.纤维制品三相电弧炉、电熔制品电炉，水冷构件泄漏。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item39" value="item39" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>9.安全管理绩效</td>
-                        <td>安全生产标准化达标</td>
-                        <td>安全生产标准化为三级的，加2分。</td>
-
+                        <td>5.进入筒型储库、磨机、破碎机、篦冷机、各种焙烧窑等有限空间作业时，未采取有效的防止电气设备意外启动、热气涌入等隔离防护措施。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item40" value="item40" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>6.玻璃窑炉、玻璃锡槽，水冷、风冷保护系统存在漏水、漏气，未设置监测报警装置。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item41" value="item41" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size: 15px;font-weight: bold">（四）机械行业。</td>
+                    </tr>
+                    <tr>
+                        <td>1.会议室、活动室、休息室、更衣室等场所设置在熔炼炉、熔融金属吊运和浇注影响范围内。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item42" value="item42" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>2.吊运熔融金属的起重机不符合冶金铸造起重机技术条件,或驱动装置中未设置两套制动器。吊运浇注包的龙门钩横梁、耳轴销和吊钩等零件，未进行定期探伤检查。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item43" value="item43" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>9.安全管理绩效</td>
-                        <td>安全事故情况（10分）</td>
-                        <td>三年内发生过1起较大安全事故的，扣10分;</td>
-                        <td rowspan="4" onclick="dafen('danger13',10,this)" class="my_text danger13"></td>
+                        <td>3.铸造熔炼炉炉底、炉坑及浇注坑等作业坑存在潮湿、积水状况，或存放易燃易爆物品。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item44" value="item44" onchange="dagou(this)"></td>
                     </tr>
 
                     <tr>
-                        <td>9.安全管理绩效</td>
-                        <td>安全事故情况（10分）</td>
-                        <td>三年内发生过1起安全事故造成1-2人死亡的，扣8分;</td>
-
+                        <td>4.铸造熔炼炉冷却水系统未配置温度、进出水流量检测报警装置，没有设置防止冷却水进入炉内的安全设施。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item45" value="item45" onchange="dagou(this)"></td>
                     </tr>
 
-
                     <tr>
-                        <td>9.安全管理绩效</td>
-                        <td>安全事故情况（10分）</td>
-                        <td>三年内发生过爆炸、着火、中毒等具有社会影响的安全事故，但未造成人员伤亡的，扣5分;</td>
-
+                        <td>5.天然气（煤气）加热炉燃烧器操作部位未设置可燃气体泄漏报警装置，或燃烧系统未设置防突然熄火或点火失败的安全装置。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item46" value="item46" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>6.使用易燃易爆稀释剂（如天拿水）清洗设备设施，未采取有效措施及时清除集聚在地沟、地坑等有限空间内的可燃气体。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item47" value="item47" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>7.涂装调漆间和喷漆室未规范设置可燃气体报警装置和防爆电气设备设施。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item48" value="item48" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size: 15px;font-weight: bold">（五）轻工行业。</td>
+                    </tr>
+                    <tr>
+                        <td>1.食品制造企业涉及烘制、油炸等设施设备，未采取防过热自动报警切断装置和隔热防护措施。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item49" value="item49" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>2.白酒储存、勾兑场所未规范设置乙醇浓度检测报警装置。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item50" value="item50" onchange="dagou(this)"></td>
                     </tr>
 
+                    <tr>
+                        <td>3.纸浆制造、造纸企业使用水蒸气或明火直接加热钢瓶汽化液氯。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item51" value="item51" onchange="dagou(this)"></td>
+                    </tr>
 
                     <tr>
-                        <td>9.安全管理绩效</td>
-                        <td>安全事故情况（10分）</td>
-                        <td>五年内未发生安全事故的，加5分。</td>
+                        <td>4.日用玻璃、陶瓷制造企业燃气窑炉未设燃气低压警报器和快速切断阀，或易燃易爆气体聚集区域未设置监测报警装置。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item52" value="item52" onchange="dagou(this)"></td>
+                    </tr>
 
+                    <tr>
+                        <td>5.日用玻璃制造企业炉、窑类设备本体及附属设施出现开裂、腐蚀、破损、衬砖损坏、壳体发红及明显弯曲变形。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item53" value="item53" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>6.喷涂车间、调漆间未规范设置通风装置和防爆电气设备设施。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item54" value="item54" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size: 15px;font-weight: bold">（六）纺织行业。</td>
+                    </tr>
+                    <tr>
+                        <td>1.纱、线、织物加工的烧毛、开幅、烘干等热定型工艺的汽化室、燃气贮罐、储油罐、热媒炉等未与生产加工、人员密集场所明确分开或单独设置。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item55" value="item55" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>2.保险粉、双氧水、亚氯酸钠、雕白粉（吊白块）等危险品与禁忌物料混合贮存的；保险粉露天堆放，或储存场所未采取防水、防潮等措施。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item56" value="item56" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size: 15px;font-weight: bold">（七）烟草行业。</td>
+                    </tr>
+                    <tr>
+                        <td>1.熏蒸杀虫作业前，未确认无关人员全部撤离仓库，且作业人员未配置防毒面具。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item57" value="item57" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>2.使用液态二氧化碳制造膨胀烟丝的生产线和场所，未设置二氧化碳浓度报警仪、燃气浓度报警仪、紧急联动排风装置。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item58" value="item58" onchange="dagou(this)"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size: 15px;font-weight: bold">（八）商贸行业。</td>
+                    </tr>
+                    <tr>
+                        <td>1.在房式仓、筒仓及简易仓囤进行粮食进出仓作业时，未按照作业标准步骤或未采取有效防护措施作业。</td>
+                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item59" value="item59" onchange="dagou(this)"></td>
                     </tr>
 
 
@@ -460,327 +480,78 @@
                 </table>
 
 
-                <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan">
 
-                    <tbody>
-                    <tr>
-                        <td colspan="2" style="font-size:20px;font-weight: bold;text-align: center">存在下列情况之一的企业直接判定为红色（最高风险等级）</td>
-                    </tr>
-                    <tr>
-                        <td>新开发的危险化学品生产工艺未经小试、中试和工业化试验直接进行工业化生产的；</td>
-
-                        <td width="10%"  style="text-align: center" ><input type="checkbox"  class="important1" onchange="dagou('important1',this)"></td>
-                    </tr>
-
-                    <tr>
-                        <td>在役化工装置未经正规设计且未进行安全设计诊断的；</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"   class="important2" onchange="dagou('important2',this)"></td>
-                    </tr>
-                    <tr>
-                        <td>危险化学品特种作业人员未持有效证件上岗或者未达到高中以上文化程度的;</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"   class="important3" onchange="dagou('important3',this)"></td>
-                    </tr>
-
-
-                    <tr>
-                        <td>三年内发生过重大以上安全事故的，或者三年内发生2起较大安全事故，或者近一年内发生2起以上亡人一般安全事故的。</td>
-                        <td width="10%"  style="text-align: center"><input type="checkbox"   class="important4" onchange="dagou('important4',this)"></td>
-                    </tr>
-
-
-                    <tr>
-                        <td colspan="2">备注：
-                            1.安全风险从高到低依次对应为红色、橙色、黄色、蓝色。总分在90分以上（含90分）的为蓝色；75分（含75分）至90分的为黄色；60分（含60分）至75分的为橙色；60分以下的为红色。
-                            2.每个项目分值扣完为止，最低为0分。
-                            3.储存企业指带储存的经营企业。
-                        </td>
-
-                    </tr>
-
-                    </tbody>
-
-                </table>
 
             </div>
         </div>
         <div class="row" style="margin-top: 20px;margin-bottom:50px">
-            <div class="col-xs-1 col-sm-1" style="font-size: 20px;font-weight: bold" id="fenshu">
-               总分：100
+            <div class="col-xs-3 col-sm-3">
+                <span style="display:inline-block;line-height: 32px;font-size: 16px">当前风险评级</span>
+                <div style="width:50px;height: 20px;margin-left: 10px;border-radius: 5px;position: relative;top:5px"
+                     class='my_b' id="sekuai"></div>
             </div>
-            <div class="col-xs-2 col-sm-2"   >
-                <span style="display:inline-block;line-height: 32px;font-size: 16px">当前风险评级</span> <div style="width:50px;height: 20px;margin-left: 10px;border-radius: 5px;position: relative;top:5px"  class='my_b' id="sekuai"></div>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-offset-3 col-xs-offset-3" >
-                <button class="btn btn-primary radius" onClick="saveCoordinate()" style="float: right">确定</button>
+            <div class="col-xs-6 col-sm-6 col-md-offset-3 col-xs-offset-3">
+                <button class="btn btn-primary radius"  onClick="saveCoordinate()" style="float: right">保存</button>
             </div>
         </div>
 
 
 
-
-        <!-- 弹窗输入 -->
-        <div id="modal-plan2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" style="margin-top: 150px">
-                <div class="modal-content radius">
-                    <div class="modal-header">
-                        <h3 class="modal-title">输入评分(只能输入数字)</h3>
-                        <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
-                    </div>
-                    <div class="modal-body" style="height: 200px; overflow-y: auto">
-                        <div class="form form-horizontal">
-                            <div class="row cl dq">
-                                <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入评分
-                                    :</label>
-                                <div class="formControls col-xs-5 col-sm-5">
-                                    <input class="input-text" type="text" name="" id="trInput"
-                                           oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
-                                           style="width:150px">
-                                </div>
-                                <div class="col-xs-3 col-sm-3">
-                                    <button class="btn radius btn-primary size-S" onclick="queren()">
-                                        确认
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
 
 
     </div>
 </div>
 </body>
 <script>
-    var postData = {
-        danger1: 0,
-        danger2: 0,
-        danger3: 0,
-        danger4: 0,
-        danger5: 0,
-        danger6: 0,
-        danger7: 0,
-        danger8: 0,
-        danger9: 0,
-        danger10: 0,
-        danger11: 0,
-        danger12: 0,
-        danger13: 0,
-        important1:0,
-        important2:0,
-        important3:0,
-        important4:0,
-        counts: 100
-    };
-    var arr=['danger1','danger2','danger3','danger4','danger5','danger6','danger7','danger8','danger9','danger10','danger11',
-        'danger12','danger13','counts'
-    ]
-    var arr2=['important1','important2','important3','important4']
-    $(function(){
-        $.get( "${ly}/company/safety-system/grade-tables-data", function (result) {
-           if(result.status==0){   //请求成功
-               var data =  result.object;
-               arr.map(function (item){
-                   postData[item] =data[item]==null||data[item]==0?0:data[item]
-                   if(data[item]!=null&&data[item]!=0){
-                       $('.'+item).text(data[item]);
-                   }
-               })
-               arr2.map(function (item){
-                   postData[item] =data[item]==null||data[item]==0?0:data[item]
-                   if(data[item]!=null&&data[item]!=0){
-                       $('.'+item).attr("checked",'true');
-                   }
-               })
-               var count =data.counts
-               var test = '总分：'+count;
-               $('#fenshu').text(test);
-
-               if(data.important1==0&&data.important2==0&&data.important3==0&&data.important4==0){
-                   $('#sekuai').removeClass('my_red my_o my_y my_b');
-                   if(count<60){
-                       $('#sekuai').addClass('my_red');
-                   }
-                   if(count>=60&&count<75){
-                       $('#sekuai').addClass('my_o');
-                   }
-                   if(count>=75&&count<90){
-                       $('#sekuai').addClass('my_y');
-                   }
-                   if(count>=90){
-                       $('#sekuai').addClass('my_b');
-                   }
-               }else{
-                   $('#sekuai').removeClass('my_red my_o my_y my_b');
-                   $('#sekuai').addClass('my_red');
-               }
-
-
-           }else{
-               layer.msg('初始化失败')
-           }
-        })
-    })
 
 
 
-    var current = '';  //当前要复制的postData的key
-    var currentDom = ''  // 当前要操作的dom
-    var max = 0    //当前能输入的最大值
-    function dafen(zd, xz, dom) {  //zd 要赋值的变量名    xz 表示输入最大的范围
-        current = zd;
-        currentDom = $(dom);
-        $('#trInput').val(currentDom.text());
-        max = xz;
-        $("#modal-plan2").modal("show");
-    }
-
-    function dagou(zd,obj){
+    function dagou(obj) {
         var dom = $(obj);
         var isCheck = dom.is(':checked');
-
-        if(isCheck){
+        if (isCheck) {
             $('#sekuai').removeClass('my_red my_o my_y my_b');
             $('#sekuai').addClass('my_red');
-            postData[zd] = 1
-        }else{
-            postData[zd] = 0
-            if(postData.important1==0&&postData.important2==0&&postData.important3==0&&postData.important4==0){
-                var c = postData.counts ;
-                $('#sekuai').removeClass('my_red my_o my_y my_b');
-                if(c<60){
-                    $('#sekuai').addClass('my_red');
-                }
-                if(c>=60&&c<75){
-                    $('#sekuai').addClass('my_o');
-                }
-                if(c>=75&&c<90){
-                    $('#sekuai').addClass('my_y');
-                }
-                if(c>=90){
-                    $('#sekuai').addClass('my_b');
-                }
-            }
-        }
-    }
-
-
-    function queren() {
-        var val = parseFloat($('#trInput').val());  //为了保险还是先转化成数字
-        if (Math.abs(val) > max) {   // 如果输入的数字大于限制  则提示
-            layer.msg('输入的值不能超过最大分值');
-            return
         } else {
-            postData[current] = val;
-            currentDom.text(val);
-            var count =  100;
-            for(i = 0; i < 13; i++){
-                if(i==10||i==11){
-                    count = count + parseFloat(postData['danger'+(i+1)]);
-                }else{
-                    count = count - parseFloat(postData['danger'+(i+1)]);
-                }
-            }
-            postData.counts = count;
-            var  test = '总分：'+count;
-            $('#fenshu').text(test);
-            $('#sekuai').removeClass('my_red my_o my_y my_b');
-            if(count<60){
-            $('#sekuai').addClass('my_red');
-            }
-            if(count>=60&&count<75){
-                $('#sekuai').addClass('my_o');
-            }
-            if(count>=75&&count<90){
-                $('#sekuai').addClass('my_y');
-            }
-            if(count>=90){
-                $('#sekuai').addClass('my_b');
-            }
+          var checks = $("input:checkbox:checked");
+          if(checks.length==0){
+              $('#sekuai').removeClass('my_red my_o my_y my_b');
+              $('#sekuai').addClass('my_b');
+          }
 
-            $("#modal-plan2").modal("hide");
         }
-        $('#trInput').val("")
     }
+
+
+
+
     /*
     * 确定按钮！！！
     * */
-    function saveCoordinate(){
-//        var count = 100;
-//        for(i = 0; i < 13; i++){
-//            if(i==10||i==11){
-//                count = count + parseInt(postData['danger'+(i+1)]);
-//            }else{
-//                count = count - parseInt(postData['danger'+(i+1)]);
-//            }
-//        }
-//        postData.counts = count;
+    function saveCoordinate() {
+        var checks = $("input:checkbox:checked");
+        var arr = [];
+        var comFlag='';
+        if(checks.length>0){
+            checks.each(function(){
+                arr.push($(this).val());
+            })
 
+            comFlag=arr.join(",")
+        }
 
+        console.log(comFlag);
         $.ajax({ //post也可
             type: "POST",
-            url: getRootPath() + "/company/safety-system/save-danger-coordinate",
-            data: postData,
-            dataType: 'json',
+            url: getRootPath() + "/company/safety-system/save-commerce-table",
+            data: {comFlag:comFlag},
             success: function (result) {
-                layer.msg(result.mess);
+               layer.msg(result.mess);
+
             }
         });
 
     }
 </script>
-<script type="text/javascript">
-    $(function () {
-        var b = null, l1 = '', c = 1;
-        var b2 = null, l2 = '', c2 = 1;
-        $("#tableaaa tr").each(function () {
-            var td = $(this).children("td").eq(0);
-            var td2 = $(this).children("td").eq(1);
-            var l1_ = td.text();
-            var l2_ = td2.text();
-            //Same to top level
-            if (l1 == l1_) {
-                td.remove();
-                c = c + 1;
-                if (l2 == l2_) {
-                    td2.remove();
-                    c2 = c2 + 1;
 
-                } else {
-                    l2 = l2_;
-                    if (b2 != null) {
-                        b2.attr("rowspan", c2);
-                        c2 = 1;
-                    }
-                    b2 = td2;
-                }
-
-            } else {//Diffrent to top level
-                l1 = l1_;
-                if (b != null) {
-                    b.attr("rowspan", c);
-                    c = 1;
-                }
-                b = td;
-                l2 = l2_;
-                if (b2 != null) {
-                    b2.attr("rowspan", c2);
-                    c2 = 1;
-                }
-                b2 = td2;
-
-            }
-        })
-        if (b != null) {
-            b.attr("rowspan", c);
-        }
-        if (b2 != null) {
-            b2.attr("rowspan", c2);
-        }
-    })
-
-</script>
 </html>

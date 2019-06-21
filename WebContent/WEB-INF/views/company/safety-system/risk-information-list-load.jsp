@@ -13,7 +13,13 @@
     <c:set value="${fn:split(n, '/') }" var="l"/>
     <c:set var="n" value="${l[fn:length(l) - 1] }"/>
     </c:if>
-    <h3 class="text-c" style="padding-top:0">${n }安全风险公告牌</h3>
+    <c:if test="${ empty name1}">
+      <h3 class="text-c" style="padding-top:0">${n }安全风险公告牌</h3>
+    </c:if>
+    <c:if test="${ not empty name1}">
+      <h3 class="text-c" style="padding-top:0">${name1}安全风险公告牌</h3>
+    </c:if>
+
     <div class="main-gao">
       <table class="tab-gao" >
         <tr>

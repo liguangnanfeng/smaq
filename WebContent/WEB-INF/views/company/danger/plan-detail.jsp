@@ -136,14 +136,14 @@ function showpicture(src){
       <!--   <c:choose>
           <c:when test="${listM.t > 0}"> -->
             <!-- 已设置整改意见 -->
-            <button onClick="location.href = '/village/check-rectification?flag=${flag }&id=${listM.id }'"
+            <button onClick="location.href = '/village/check-rectification?flag=${flag}&id=${listM.id}'"
               class="btn btn-success radius" type="button" style="padding: 0 70px;margin-right: 20px">整改详情</button>
       <!--     </c:when>
         </c:choose> -->
 
         <!-- 已经有复查 -->
         <c:if test="${listM.c3 > 0}">
-          <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }'"
+          <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }&flag=${flag}'"
             class="btn btn-success radius" type="button" style="padding: 0 70px;">复查详情</button>
         </c:if>
  <%--显示为检查文书--%>

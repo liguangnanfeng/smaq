@@ -1,6 +1,6 @@
-/**  
- * Copyright(c)2013 Wuxi Lanlin Co.,Ltd. 
- * All right reserved. 
+/**
+ * Copyright(c)2013 Wuxi Lanlin Co.,Ltd.
+ * All right reserved.
  */
 package com.spring.web.service.cgf;
 
@@ -28,11 +28,11 @@ import org.springframework.ui.Model;
 import java.util.*;
 
 /**
+ * @author CGF
+ * @version V1.0
  * @Title: CommonServiceImpl
  * @Description: TODO(用一句话描述该文件做什么)
- * @author CGF
  * @date 2017年2月17日 上午9:02:18
- * @version V1.0
  */
 @Service("cgfService")
 public class CgfServiceImpl implements CgfService {
@@ -97,11 +97,11 @@ public class CgfServiceImpl implements CgfService {
     private FcTemporaryDangerItemMapper fcTemporaryDangerItemMapper;
     @Autowired
     private MonitorMapper monitorMapper;
-    
+
     protected Gson gson = new GsonBuilder().create();
 
     /**
-     * @param dto 行政 委托检查表保存
+     * @param dto    行政 委托检查表保存
      * @param result
      * @throws Exception
      */
@@ -128,7 +128,7 @@ public class CgfServiceImpl implements CgfService {
     }
 
     /**
-     * @param dto 自查计划保存
+     * @param dto    自查计划保存
      * @param result
      * @throws Exception
      */
@@ -190,7 +190,7 @@ public class CgfServiceImpl implements CgfService {
     }
 
     /**
-     * @param check 检查表保存
+     * @param check  检查表保存
      * @param result
      * @throws Exception
      */
@@ -220,8 +220,9 @@ public class CgfServiceImpl implements CgfService {
         // t.setUseTime(check.getCreateTime());
         // tModelMapper.updateByPrimaryKeySelective(t);
     }
+
     /**
-     * @param check 检查表保存
+     * @param check  检查表保存
      * @param result
      * @throws Exception
      */
@@ -250,10 +251,10 @@ public class CgfServiceImpl implements CgfService {
             //log.error("checkSave1 levelsArr:"+cp.getLevels());//zhangcl 2018.10.28
             for (int i = 0; i < levelsArr.length; i++) {
                 Map<String, Object> item = new HashMap<String, Object>();
-                item.put("levelId",Integer.parseInt(levelsArr[i]));
-                item.put("content","");
-                item.put("levels","");
-                item.put("reference","");
+                item.put("levelId", Integer.parseInt(levelsArr[i]));
+                item.put("content", "");
+                item.put("levels", "");
+                item.put("reference", "");
                 itemL.add(item);
             }
             //log.error("checkSave1 itemL.size:"+itemL.size());//zhangcl 2018.10.28
@@ -268,7 +269,7 @@ public class CgfServiceImpl implements CgfService {
     }
 
     /**
-     * @param check 检查表自动化设置保存
+     * @param check  检查表自动化设置保存
      * @param result
      * @throws Exception
      */
@@ -328,9 +329,10 @@ public class CgfServiceImpl implements CgfService {
     // tCheckPartMapper.updateByPrimaryKeySelective(p);
     // }
     // }
+
     /**
      * (非 Javadoc) 检查检查保存
-     * 
+     *
      * @param t
      * @param result
      * @throws Exception
@@ -387,6 +389,7 @@ public class CgfServiceImpl implements CgfService {
     /**
      * TODO 保存复查意见
      * 但是要修改的是checkItem中的数据进行保存才行
+     *
      * @throws Exception
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
@@ -404,28 +407,28 @@ public class CgfServiceImpl implements CgfService {
         // 保存check_Item表中的数据
 
         List<TRecheckItem> list = dto.getList();
-        if(list.size()>0){
+        if (list.size() > 0) {
             for (TRecheckItem tRecheckItem : list) {
-               if(null!=tRecheckItem){
-                   TCheckItem tCheckItem = tCheckItemMapper.selectByPrimaryKey(tRecheckItem.getCheckItemId());
-                   tCheckItem.setStatus(tCheckItem.getStatus());
-                   if(null!=tRecheckItem.getFile()&&!"".equals(tRecheckItem.getFile())){
-                       tCheckItem.setFiles(tRecheckItem.getFile());
-                       tCheckItem.setRecheckFile(tRecheckItem.getFile());
-                   }else{
-                       tCheckItem.setRecheckFile(tCheckItem.getFiles());
-                   }
-                   if(null!=tRecheckItem.getMemo()&&!"".equals(tRecheckItem.getMemo())){
-                       tCheckItem.setMemo(tRecheckItem.getMemo());
-                       tCheckItem.setRecheckMemo(tRecheckItem.getMemo());
-                   }
-                   tCheckItem.setRecheckTime(tRecheckItem.getDeadline());
-                   tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
-               }
+                if (null != tRecheckItem) {
+                    TCheckItem tCheckItem = tCheckItemMapper.selectByPrimaryKey(tRecheckItem.getCheckItemId());
+                    tCheckItem.setStatus(tRecheckItem.getStatus());
+                    if (null != tRecheckItem.getFile() && !"".equals(tRecheckItem.getFile())) {
+                        tCheckItem.setFiles(tRecheckItem.getFile());
+                        tCheckItem.setRecheckFile(tRecheckItem.getFile());
+                    } else {
+                        tCheckItem.setRecheckFile(tCheckItem.getFiles());
+                    }
+                    if (null != tRecheckItem.getMemo() && !"".equals(tRecheckItem.getMemo())) {
+                        tCheckItem.setMemo(tRecheckItem.getMemo());
+                        tCheckItem.setRecheckMemo(tRecheckItem.getMemo());
+                    }
+                    tCheckItem.setRecheckTime(tRecheckItem.getDeadline());
+                    tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
+                }
             }
         }
 
-        for (TRecheckItem i : dto.getList()) {
+     /*   for (TRecheckItem i : dto.getList()) {
             m.clear();
             m.put("id", i.getCheckItemId());
             m.put("status", i.getStatus());
@@ -435,11 +438,10 @@ public class CgfServiceImpl implements CgfService {
                 m.put("planTime", r.getNextTime());
             }
             tCheckItemMapper.updRecheck(m);
-        }
+        }*/
     }
 
     /**
-     * @param tr 委托排查保存
      * @throws Exception
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
@@ -627,7 +629,7 @@ public class CgfServiceImpl implements CgfService {
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public void tradeSave(Integer userId, String userName, String tradeName, String userPsw, String companyArea,
-            Result result) throws Exception {
+                          Result result) throws Exception {
         Map<String, Object> m = new HashMap<String, Object>();
         if (null == userId) {// 新增
             Trade v = tradeMapper.selectByName(tradeName);
@@ -719,7 +721,7 @@ public class CgfServiceImpl implements CgfService {
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public Integer checkDocumentSave8(Integer checkId, Integer userId, String copy, Integer flag2, String itms,
-            Integer loginUserId, String checkCompany) throws Exception {
+                                      Integer loginUserId, String checkCompany) throws Exception {
         Date d = new Date();
         if (null == checkId) {// 直接添加现场记录的 自动补充检查表结构
             TCheck check = new TCheck();
@@ -803,10 +805,10 @@ public class CgfServiceImpl implements CgfService {
             tCheckMapper.deleteById(s);
         }
     }
-    
-    /** 
+
+    /**
      * @param dto 企业查询分页
-     * @param model 
+     * @param model
      */
 //     public void selectCompanyWithPage(CompanyListReqDTO dto, User user, Model model) {
 //         String industry2 = null;
@@ -829,8 +831,8 @@ public class CgfServiceImpl implements CgfService {
 //         }
 //         model.addAttribute("dto", dto);
 //     }
-     
-     
+
+
 //     String getUserIdsByPage(List<Integer> userIds, CompanyListReqDTO dto) {
 //         Integer from = dto.getIndex();
 //         Integer end = dto.getIndex() + dto.getRows();
@@ -845,8 +847,8 @@ public class CgfServiceImpl implements CgfService {
 //     }
 
     /**
-     * @param dto TODO 企业查询分页 功能进行显示
-     *            就是显示出是否为重点企业
+     * @param dto   TODO 企业查询分页 功能进行显示
+     *              就是显示出是否为重点企业
      * @param model
      */
     public void selectCompanyWithPage(CompanyListReqDTO dto, User user, Model model) {
@@ -859,9 +861,9 @@ public class CgfServiceImpl implements CgfService {
         }
         dto.setIndustry2(industry2);
         List<Integer> userIds = getCompanyUserIdsWithPage(dto, user);
-        
+
         //log.error("userIds："+userIds.toString());
-        
+
         String all_userIds = dto.getUserIds();
         if ("-1".equals(all_userIds)) {
             model.addAttribute("total", 0);
@@ -896,7 +898,7 @@ public class CgfServiceImpl implements CgfService {
         Integer end = null;
         if (StringUtils.isBlank(dto.getUserIds()) || "-1".equals(dto.getUserIds())) {
             List<Integer> list = getCompanyUserIds(dto, user);
-            end = Math.min(from + dto.getRows(), list.size()) ;
+            end = Math.min(from + dto.getRows(), list.size());
             if (list.size() == 0) {
                 dto.setUserIds("-1");
             } else {
@@ -940,152 +942,153 @@ public class CgfServiceImpl implements CgfService {
         }
         if (user.getUserType() == 10) {
             dto.setTradeId(user.getId());
-         }
-     }
-     
-     /**
-      * @param 固有风险研判表保存
-      * @throws Exception
-      */
-     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
-     public void naturaldangerSave(NaturaldangerSaveReqDTO dto) throws Exception {
-    	 log.error("cfg naturaldangerSave");
-    	 Date date = new Date();
-         
-         Integer id = 1;
-         FcNaturalDangerStudy lastrecord = fcNaturalDangerStudyMapper.selectLastRecord();
-         //log.error("lastrecord"+lastrecord.getId());
-         if(lastrecord!=null){
-        	 log.error("lastrecord==null");
-        	 id = lastrecord.getId()+1;
-         }
-         log.error("dangerstudyid:"+id);
-         
-         FcNaturalDangerStudy study = dto.getStudy();
-         study.setId(id);
-         study.setCtime(date);
-         
-         fcNaturalDangerStudyMapper.insertSelective(study);
-         
-         //log.error("checker:"+study.getChecker());
-         
-         Map<String, Object> m = new HashMap<String, Object>();
-         m.put("list", dto.getList());
-         m.put("dangerstudyid", id);
-         fcNaturalDangerItemMapper.insertBath(m);
-     }
-     
-     
-     /**
-      * @param 目标履职考核-保存
-      * @throws Exception
-      */
-     public void targetAssessmentSave(FcTargetAssessment fcTargetAssessment, User user) throws Exception {
-         
-         FcTargetAssessment fcTargetAssessment_ret  = fcTargetAssessmentMapper.selectByUidToday(user.getId());
-         
-         if(fcTargetAssessment_ret==null){
-         	fcTargetAssessment.setUid(user.getId());
-         	fcTargetAssessment.setKhsj(new Date());
-         	fcTargetAssessment.setDel(0);
-         	fcTargetAssessment.setCtime(new Date());
-         	fcTargetAssessmentMapper.insertSelective(fcTargetAssessment);
-         }
-         else{
-        	 fcTargetAssessment.setId(fcTargetAssessment_ret.getId()); 
-        	 fcTargetAssessmentMapper.updateByPrimaryKeySelective(fcTargetAssessment);
-         }
-     }
-     /**
-      * @param 临时风险研判表格填写数目-保存
-      * @throws Exception
-      */
-     public void fcTemporaryDangerCensusSave(FcTemporaryDangerCensus fcTemporaryDangerCensus, User user) throws Exception {
-         
-    	FcTemporaryDangerCensus tdc = fcTemporaryDangerCensusMapper.selectByUidToday(user.getId());
-         
-         if(tdc == null){
-        	fcTemporaryDangerCensus.setUid(user.getId());
-        	fcTemporaryDangerCensus.setDel(0);
-        	fcTemporaryDangerCensus.setCtime(new Date());
-         	fcTemporaryDangerCensusMapper.insertSelective(fcTemporaryDangerCensus);
-         }
-         else{
-        	 //log.error("ID："+tdc.getId());
-        	 fcTemporaryDangerCensus.setId(tdc.getId());
-        	 fcTemporaryDangerCensus.setCtime(new Date());
-        	 //fcTemporaryDangerCensusMapper.insert(fcTemporaryDangerCensus);//id为关键字，数据已存在就不可使用insert
-        	 //log.error("fcTemporaryDangerCensus："+fcTemporaryDangerCensus.toString());
-        	 fcTemporaryDangerCensusMapper.updateByPrimaryKeySelective(fcTemporaryDangerCensus);
-         }
-     }
-     /**
-      * @param 重大/较大风险研判表保存
-      * @throws Exception
-      */
-     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
-     public void greatdangerSave(GreatdangerSaveReqDTO dto) throws Exception {
-    	 log.error("cfg greatdangerSave");
-    	 Date date = new Date();
-    	 FcGreatDangerStudy study = dto.getStudy();
+        }
+    }
+
+    /**
+     * @param 固有风险研判表保存
+     * @throws Exception
+     */
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    public void naturaldangerSave(NaturaldangerSaveReqDTO dto) throws Exception {
+        log.error("cfg naturaldangerSave");
+        Date date = new Date();
+
+        Integer id = 1;
+        FcNaturalDangerStudy lastrecord = fcNaturalDangerStudyMapper.selectLastRecord();
+        //log.error("lastrecord"+lastrecord.getId());
+        if (lastrecord != null) {
+            log.error("lastrecord==null");
+            id = lastrecord.getId() + 1;
+        }
+        log.error("dangerstudyid:" + id);
+
+        FcNaturalDangerStudy study = dto.getStudy();
+        study.setId(id);
+        study.setCtime(date);
+
+        fcNaturalDangerStudyMapper.insertSelective(study);
+
+        //log.error("checker:"+study.getChecker());
+
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("list", dto.getList());
+        m.put("dangerstudyid", id);
+        fcNaturalDangerItemMapper.insertBath(m);
+    }
+
+
+    /**
+     * @param 目标履职考核-保存
+     * @throws Exception
+     */
+    public void targetAssessmentSave(FcTargetAssessment fcTargetAssessment, User user) throws Exception {
+
+        FcTargetAssessment fcTargetAssessment_ret = fcTargetAssessmentMapper.selectByUidToday(user.getId());
+
+        if (fcTargetAssessment_ret == null) {
+            fcTargetAssessment.setUid(user.getId());
+            fcTargetAssessment.setKhsj(new Date());
+            fcTargetAssessment.setDel(0);
+            fcTargetAssessment.setCtime(new Date());
+            fcTargetAssessmentMapper.insertSelective(fcTargetAssessment);
+        } else {
+            fcTargetAssessment.setId(fcTargetAssessment_ret.getId());
+            fcTargetAssessmentMapper.updateByPrimaryKeySelective(fcTargetAssessment);
+        }
+    }
+
+    /**
+     * @param 临时风险研判表格填写数目-保存
+     * @throws Exception
+     */
+    public void fcTemporaryDangerCensusSave(FcTemporaryDangerCensus fcTemporaryDangerCensus, User user) throws Exception {
+
+        FcTemporaryDangerCensus tdc = fcTemporaryDangerCensusMapper.selectByUidToday(user.getId());
+
+        if (tdc == null) {
+            fcTemporaryDangerCensus.setUid(user.getId());
+            fcTemporaryDangerCensus.setDel(0);
+            fcTemporaryDangerCensus.setCtime(new Date());
+            fcTemporaryDangerCensusMapper.insertSelective(fcTemporaryDangerCensus);
+        } else {
+            //log.error("ID："+tdc.getId());
+            fcTemporaryDangerCensus.setId(tdc.getId());
+            fcTemporaryDangerCensus.setCtime(new Date());
+            //fcTemporaryDangerCensusMapper.insert(fcTemporaryDangerCensus);//id为关键字，数据已存在就不可使用insert
+            //log.error("fcTemporaryDangerCensus："+fcTemporaryDangerCensus.toString());
+            fcTemporaryDangerCensusMapper.updateByPrimaryKeySelective(fcTemporaryDangerCensus);
+        }
+    }
+
+    /**
+     * @param 重大/较大风险研判表保存
+     * @throws Exception
+     */
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    public void greatdangerSave(GreatdangerSaveReqDTO dto) throws Exception {
+        log.error("cfg greatdangerSave");
+        Date date = new Date();
+        FcGreatDangerStudy study = dto.getStudy();
 //    	 log.error("uid:"+study.getUid());
 //    	 log.error("checker:"+study.getDangerstudyid());
 //    	 log.error("checker:"+study.getChecker());
-         study.setCtime(date);
-         fcGreatDangerStudyMapper.insertSelective(study);
-         
-         log.error("list:"+dto.getList());
-         Map<String, Object> m = new HashMap<String, Object>();
-         m.put("list", dto.getList());
-         fcNaturalDangerItemMapper.updateBatch(m);		
-         
-     }
-     /**
-      * @param 临时风险研判表保存
-      * @throws Exception
-      */
-     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
-     public void temporarydangerSave(TemporaryDangerSaveReqDTO dto) throws Exception {
-    	 log.error("cfg temporarydangerSave");
-    	 Date date = new Date();
-    	 
-         Integer id = 1;
-         FcTemporaryDangerStudy lastrecord = fcTemporaryDangerStudyMapper.selectLastRecord();
-         if(lastrecord!=null){
-        	 id = lastrecord.getId()+1;
-         }
-         log.error("Tdangerstudyid:"+id);
-         
-    	 FcTemporaryDangerStudy study = dto.getStudy();
-    	 study.setId(id);
-    	 study.setTresult(1);
-    	 //判断临时风险研判结果list中是否存在不合格0；存在则将tresult字段改为0
-    	 List<FcTemporaryDangerItem> listCheck = dto.getList();
-    	 log.error("list_size："+listCheck.size());
-    	 for (int i = 0; i < listCheck.size(); i++) {
-			if(listCheck.get(i).getCheckret() == 0){
-				study.setTresult(0);
-				break;
-			}
-    	 } 	 
-         study.setCtime(date);
-    	 //log.error("FcTemporaryDangerStudy:"+study.toString());
-         fcTemporaryDangerStudyMapper.insertSelective(study);
-         
-         log.error("list:"+dto.getList());
-         Map<String, Object> m = new HashMap<String, Object>();
-         m.put("list", dto.getList());
-         m.put("tdangerstudyid", id);
-         fcTemporaryDangerItemMapper.insertBath(m);		
-         
-     }
-     
-     /**
-      * @param 更新视频源
-      * @throws Exception
-      */
-     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
-     public void monitorUpdate(String puids, String ids, String names,Integer userId) throws Exception {
+        study.setCtime(date);
+        fcGreatDangerStudyMapper.insertSelective(study);
+
+        log.error("list:" + dto.getList());
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("list", dto.getList());
+        fcNaturalDangerItemMapper.updateBatch(m);
+
+    }
+
+    /**
+     * @param 临时风险研判表保存
+     * @throws Exception
+     */
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    public void temporarydangerSave(TemporaryDangerSaveReqDTO dto) throws Exception {
+        log.error("cfg temporarydangerSave");
+        Date date = new Date();
+
+        Integer id = 1;
+        FcTemporaryDangerStudy lastrecord = fcTemporaryDangerStudyMapper.selectLastRecord();
+        if (lastrecord != null) {
+            id = lastrecord.getId() + 1;
+        }
+        log.error("Tdangerstudyid:" + id);
+
+        FcTemporaryDangerStudy study = dto.getStudy();
+        study.setId(id);
+        study.setTresult(1);
+        //判断临时风险研判结果list中是否存在不合格0；存在则将tresult字段改为0
+        List<FcTemporaryDangerItem> listCheck = dto.getList();
+        log.error("list_size：" + listCheck.size());
+        for (int i = 0; i < listCheck.size(); i++) {
+            if (listCheck.get(i).getCheckret() == 0) {
+                study.setTresult(0);
+                break;
+            }
+        }
+        study.setCtime(date);
+        //log.error("FcTemporaryDangerStudy:"+study.toString());
+        fcTemporaryDangerStudyMapper.insertSelective(study);
+
+        log.error("list:" + dto.getList());
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("list", dto.getList());
+        m.put("tdangerstudyid", id);
+        fcTemporaryDangerItemMapper.insertBath(m);
+
+    }
+
+    /**
+     * @param 更新视频源
+     * @throws Exception
+     */
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    public void monitorUpdate(String puids, String ids, String names, Integer userId) throws Exception {
 //    	 Map<String, Object> m = new HashMap<String, Object>();
 //    	 //1、全部删除
 //         m.put("del", 1);
@@ -1124,71 +1127,70 @@ public class CgfServiceImpl implements CgfService {
 //    			 monitorMapper.insertSelective(monitor); 
 //    		 }
 //    	 }
-    	 Map<String, Object> m = new HashMap<String, Object>();
-    	 m.put("userId",userId);
-    	 List<Map<String, Object>> list = monitorMapper.selectByMap(m);
-    	 //List<Map<String, Object>> list1 = new ArrayList<Map<String, Object>>();
-    	 //log.error("list.size 1:"+list.size());
-    	 //删除所有摄像头
-    	 if(names.equals("")&&puids.equals("")&&ids.equals("")){
-    		 log.error("remove all video for userId:"+userId);
-    		 m.clear();
-             m.put("del", 1);
-             m.put("userId",userId);
-        	 monitorMapper.updateByUserId(m);
-        	 return;
-    	 }	
-    	 
-    	 //开始同步
-    	 //1、遍历前端视频源集合，后无insert,后有update
-    	 String[] puid = puids.split(",");
-    	 String[] id = ids.split(",");
-    	 String[] name = names.split(",");
-    	 if(!(puid.length==id.length&&puid.length==name.length)){
-    		 throw new Exception();
-    	 }
-    	 for(int i=0;i<name.length;i++){
-    		 boolean has = false;//后端有无此名字的摄像头标志
-    		 Iterator<Map<String, Object>> iter = list.iterator();
-    		 while (iter.hasNext()) {
-    			 Map<String, Object> a = iter.next();
-    			 if(name[i].equals(a.get("name"))){
-    				 has = true;
-    				 iter.remove();
-    			 }
-    		 }
-    		 //log.error("list.size 2:"+list.size());
-    		 if(has){
-    			 //更新视频源
-    			 log.error(name[i]+"is exist");
-    			 m.clear();
-        		 m.put("name", name[i]);
-        		 m.put("userId", userId);
-        		 m.put("puid",puid[i]);
-        		 m.put("channelId",id[i]);
-        		 monitorMapper.updateByUserIdAndName(m);//更新
-    		 }
-    		 else{
-    			 log.error(name[i]+"is not exist");
-    			 Monitor monitor = new Monitor();
-    			 monitor.setUserId(userId);
-    			 monitor.setName(name[i]);
-    			 monitor.setPuid(puid[i]);
-    			 monitor.setChannelId(Integer.parseInt(id[i]));
-    			 monitorMapper.insertSelective(monitor); 
-    		 }
-    	 }
-    	 
-    	 //log.error("list.size 3:"+list.size());
-    	 
-    	 //2、遍历后端仅有的视频源集合
-    	 for(Map<String, Object> a : list){
-    		 m.clear();
-    		 m.put("name", a.get("name"));
-    		 m.put("userId", a.get("userId"));
-    		 m.put("del",1);
-    		 log.error("del name:"+a.get("name")+",userId:"+a.get("userId"));
-    		 monitorMapper.updateByUserIdAndName(m);//删除
-		 }
-     }
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("userId", userId);
+        List<Map<String, Object>> list = monitorMapper.selectByMap(m);
+        //List<Map<String, Object>> list1 = new ArrayList<Map<String, Object>>();
+        //log.error("list.size 1:"+list.size());
+        //删除所有摄像头
+        if (names.equals("") && puids.equals("") && ids.equals("")) {
+            log.error("remove all video for userId:" + userId);
+            m.clear();
+            m.put("del", 1);
+            m.put("userId", userId);
+            monitorMapper.updateByUserId(m);
+            return;
+        }
+
+        //开始同步
+        //1、遍历前端视频源集合，后无insert,后有update
+        String[] puid = puids.split(",");
+        String[] id = ids.split(",");
+        String[] name = names.split(",");
+        if (!(puid.length == id.length && puid.length == name.length)) {
+            throw new Exception();
+        }
+        for (int i = 0; i < name.length; i++) {
+            boolean has = false;//后端有无此名字的摄像头标志
+            Iterator<Map<String, Object>> iter = list.iterator();
+            while (iter.hasNext()) {
+                Map<String, Object> a = iter.next();
+                if (name[i].equals(a.get("name"))) {
+                    has = true;
+                    iter.remove();
+                }
+            }
+            //log.error("list.size 2:"+list.size());
+            if (has) {
+                //更新视频源
+                log.error(name[i] + "is exist");
+                m.clear();
+                m.put("name", name[i]);
+                m.put("userId", userId);
+                m.put("puid", puid[i]);
+                m.put("channelId", id[i]);
+                monitorMapper.updateByUserIdAndName(m);//更新
+            } else {
+                log.error(name[i] + "is not exist");
+                Monitor monitor = new Monitor();
+                monitor.setUserId(userId);
+                monitor.setName(name[i]);
+                monitor.setPuid(puid[i]);
+                monitor.setChannelId(Integer.parseInt(id[i]));
+                monitorMapper.insertSelective(monitor);
+            }
+        }
+
+        //log.error("list.size 3:"+list.size());
+
+        //2、遍历后端仅有的视频源集合
+        for (Map<String, Object> a : list) {
+            m.clear();
+            m.put("name", a.get("name"));
+            m.put("userId", a.get("userId"));
+            m.put("del", 1);
+            log.error("del name:" + a.get("name") + ",userId:" + a.get("userId"));
+            monitorMapper.updateByUserIdAndName(m);//删除
+        }
+    }
 }

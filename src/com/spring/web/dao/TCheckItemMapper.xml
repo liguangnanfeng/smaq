@@ -943,8 +943,6 @@
           order by T2.real_time desc;
     </select>
 
-
-
     <!--排查数据分析,合格/不合格/已复查
     -->
     <select id="selectFailedByMap" resultType="com.spring.web.ibatis.DynamicParameter" parameterType="java.util.Map">

@@ -20,7 +20,7 @@ var hxys = '${ac.hxys}';
 var gy = '${ac.gy}';
 var wlbs = '${ac.wlbs}';
 var gwzy = '${ac.gwzy}';
-var id = '${ac.id}';
+var id = '${id}';
 $(function() {
   var material = $("#material").text();
   
@@ -40,11 +40,11 @@ $(function() {
   if(type == '5') {
     list = gwzy.split("!@#");
   }
-  $.each(list, function(i,item) {
+ /* $.each(list, function(i,item) {
     $(":checkbox[value='"+item+"']").prop("checked", true);
-  })
+  })*/
   
-})
+});
 
 function ser() {
   var v = $(":text").val();

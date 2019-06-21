@@ -505,12 +505,14 @@ public class CompanyController_safety extends BaseController {
         User user = this.getLoginUser(request);
         // 根据公司 user_id  查询数据 将数据返回
         Commerce commerce = commerceMapper.selectComFlag(user.getId());
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
 
         if (null == commerce){
             model.addAttribute("comFlag","");
         }else {
             model.addAttribute("comFlag",commerce.getCom_flag());
         }
+        model.addAttribute("industry",company.getIndustry());
         return "company/safety-system/danger-table";
     }
 
@@ -530,7 +532,8 @@ public class CompanyController_safety extends BaseController {
            Commerce commerce = commerceMapper.selectComFlag(user.getId());
            Commerce commerce1 = null;
            int a ;
-           if (null == commerce){
+           int b;
+            if (null == commerce){
                commerce1 = new Commerce();
                commerce1.setUser_id(user.getId());
                commerce1.setCom_flag(comFlag);
@@ -548,6 +551,9 @@ public class CompanyController_safety extends BaseController {
                result.setStatus("1");
                result.setMess("请选择风险项后再保存");
            }else {
+               Company company = new Company();
+               company.setDlevel("红色");
+               b = companyMapper.updateByPrimaryKeySelective(company);
                result.setStatus("0");
                result.setMess("保存成功。");
            }
@@ -976,7 +982,9 @@ public class CompanyController_safety extends BaseController {
     }
 
     /**
-     * 设置风险因素-保存
+     * create by  : 小明！！！
+     * description: 设置风险保存
+     * create time: 15:22 2019/6/21
      */
     @RequestMapping(value = "set-risk-edit")
     public @ResponseBody
@@ -992,7 +1000,17 @@ public class CompanyController_safety extends BaseController {
             distinguishType = new DistinguishType();
             distinguishType.setCtime(new Date());
             distinguishType.setUtime(new Date());
-            distinguishType.setDanger_point(ac.getHxys());
+            if (Integer.parseInt(ac.getType()) == 1){
+                distinguishType.setDanger_point(ac.getHxys());
+            }else if (Integer.parseInt(ac.getType()) == 2){
+                distinguishType.setDanger_point(ac.getMaterial());
+            }else if (Integer.parseInt(ac.getType()) == 3){
+                distinguishType.setDanger_point(ac.getGy());
+            }else if (Integer.parseInt(ac.getType()) == 4){
+                distinguishType.setDanger_point(ac.getWlbs());
+            }else if (Integer.parseInt(ac.getType()) == 5){
+                distinguishType.setDanger_point(ac.getGwzy());
+            }
             distinguishType.setDep_id(ac.getId());
             distinguishType.setUser_id(user.getId());
             distinguishType.setDel(0);
@@ -1009,7 +1027,17 @@ public class CompanyController_safety extends BaseController {
             distinguishType = new DistinguishType();
             distinguishType.setId(distinguishType1.getId());
             distinguishType.setUtime(new Date());
-            distinguishType.setDanger_point(ac.getHxys());
+            if (Integer.parseInt(ac.getType()) == 1){
+                distinguishType.setDanger_point(ac.getHxys());
+            }else if (Integer.parseInt(ac.getType()) == 2){
+                distinguishType.setDanger_point(ac.getMaterial());
+            }else if (Integer.parseInt(ac.getType()) == 3){
+                distinguishType.setDanger_point(ac.getGy());
+            }else if (Integer.parseInt(ac.getType()) == 4){
+                distinguishType.setDanger_point(ac.getWlbs());
+            }else if (Integer.parseInt(ac.getType()) == 5){
+                distinguishType.setDanger_point(ac.getGwzy());
+            }
             boolean a = distinguishTypeMapper.updatePoint(distinguishType);
 
             if (a){
@@ -1018,7 +1046,6 @@ public class CompanyController_safety extends BaseController {
                 result.setMess("保存成功。");
             }
         }
-
         return result;
 
 
@@ -1085,6 +1112,7 @@ public class CompanyController_safety extends BaseController {
     @RequestMapping(value = "set-choose")
     public String setChoose(Model model, Integer id, Integer type, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
+        model.addAttribute("id",id);
         model.addAttribute("ac", aCompanyManualMapper.selectByPrimaryKey(id));
         model.addAttribute("aGzk", aGzkMapper.selectByPrimaryKey(id));
         model.addAttribute("type", type);

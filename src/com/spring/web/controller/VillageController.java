@@ -1966,6 +1966,7 @@ public class VillageController extends BaseController {
     @RequestMapping(value = "hidden-danger-list")
     public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status) {
         User user = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
         model.addAttribute("userId", user.getId());
@@ -1974,8 +1975,17 @@ public class VillageController extends BaseController {
             Date realTime = (Date) map.get("realTime");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             String format = sdf.format(realTime);
+            String level = (String) map.get("level");
+            if(null!=level&&"红色".equals(level)){
+
+                map.put("fjgkfzr",company.getCharge()+company.getChargeContact());
+            }
             map.put("realTimeStr", format);
         }
+
+        String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+
+        model.addAttribute("host",host);
         model.addAttribute("list", list);
         return "company/danger/hidden-danger-list";
     }
@@ -2013,6 +2023,7 @@ public class VillageController extends BaseController {
     @RequestMapping(value = "process-see")
     public String processSee(Model model, String url, HttpServletRequest request) throws UnknownHostException {
         String url3 = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + url;
+        /*String url3 = request.getScheme() + "://" + request.getServerName() + url;*/
         model.addAttribute("list", url3);
         return "company/process/process-see";
 
@@ -3555,7 +3566,7 @@ public class VillageController extends BaseController {
             tCheck.setTitle(checkItem.getTemplate());                               // 被检查的标题
             if (-2 == checkItem.getCheckType() || -1 == checkItem.getCheckType()) { //只有现场才会存储部门
                 tCheck.setDepart(checkItem.getCheckLevels().get(0).getLevel1());        // 被检查的部门
-                //但是会出现现场检查什么都没有的情况
+                //但是会出现现场检查什么都没有的情况.
                 if (null != checkItem.getCheckLevels().get(0).getLevel3() && "".equals(checkItem.getCheckLevels().get(0).getLevel3())) {
                     tCheck.setDapartContact(companyManual.getDmid() + "");                 // 被检查部门的id
                 }

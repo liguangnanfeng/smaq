@@ -385,7 +385,8 @@ public class CgfServiceImpl implements CgfService {
     }
 
     /**
-     * @param tr 复查意见保存
+     * TODO 保存复查意见
+     * 但是要修改的是checkItem中的数据进行保存才行
      * @throws Exception
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
@@ -400,6 +401,30 @@ public class CgfServiceImpl implements CgfService {
         m.put("list", dto.getList());
         m.put("recheckId", r.getId());
         tRecheckItemMapper.insertBath(m);
+        // 保存check_Item表中的数据
+
+        List<TRecheckItem> list = dto.getList();
+        if(list.size()>0){
+            for (TRecheckItem tRecheckItem : list) {
+               if(null!=tRecheckItem){
+                   TCheckItem tCheckItem = tCheckItemMapper.selectByPrimaryKey(tRecheckItem.getCheckItemId());
+                   tCheckItem.setStatus(tCheckItem.getStatus());
+                   if(null!=tRecheckItem.getFile()&&!"".equals(tRecheckItem.getFile())){
+                       tCheckItem.setFiles(tRecheckItem.getFile());
+                       tCheckItem.setRecheckFile(tRecheckItem.getFile());
+                   }else{
+                       tCheckItem.setRecheckFile(tCheckItem.getFiles());
+                   }
+                   if(null!=tRecheckItem.getMemo()&&!"".equals(tRecheckItem.getMemo())){
+                       tCheckItem.setMemo(tRecheckItem.getMemo());
+                       tCheckItem.setRecheckMemo(tRecheckItem.getMemo());
+                   }
+                   tCheckItem.setRecheckTime(tRecheckItem.getDeadline());
+                   tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
+               }
+            }
+        }
+
         for (TRecheckItem i : dto.getList()) {
             m.clear();
             m.put("id", i.getCheckItemId());

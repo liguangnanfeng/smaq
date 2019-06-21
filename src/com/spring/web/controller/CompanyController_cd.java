@@ -3931,7 +3931,7 @@ public class CompanyController_cd extends BaseController {
 //    }
 
     /**
-     * 隐患列表 复查
+     * TODO  隐患列表 复查(实施复查)
      */
     @RequestMapping(value = "recheck-add")//修改 wz0114
     public String recheckAdd(Integer checkId, Model model) throws Exception {
@@ -3972,10 +3972,10 @@ public class CompanyController_cd extends BaseController {
                 a.put("level1", level1);
                 a.put("level2", level2);
                 a.put("level3", level3);
-                //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
+
             }
         }
-        //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
+
         model.addAttribute("itemL", iteml);
 
         Integer id = checkId;

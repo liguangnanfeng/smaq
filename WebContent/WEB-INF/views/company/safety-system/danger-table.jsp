@@ -503,7 +503,9 @@
 </div>
 </body>
 <script>
-
+   $(function(){
+       console.log('${comFalg}');
+   })
 
 
     function dagou(obj) {
@@ -539,8 +541,6 @@
 
             comFlag=arr.join(",")
         }
-
-        console.log(comFlag);
         $.ajax({ //post也可
             type: "POST",
             url: getRootPath() + "/company/safety-system/save-commerce-table",

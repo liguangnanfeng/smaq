@@ -532,7 +532,6 @@ public class CompanyController_safety extends BaseController {
            int a ;
            if (null == commerce){
                commerce1 = new Commerce();
-               commerce1.setId(commerce.getId());
                commerce1.setUser_id(user.getId());
                commerce1.setCom_flag(comFlag);
                commerce1.setCtime(new Date());
@@ -545,7 +544,7 @@ public class CompanyController_safety extends BaseController {
                commerce1.setUtime(new Date());
                a = commerceMapper.updateByPrimaryKey(commerce1);
            }
-           if (a != 0){
+           if (a == 0){
                result.setStatus("1");
                result.setMess("请选择风险项后再保存");
            }else {

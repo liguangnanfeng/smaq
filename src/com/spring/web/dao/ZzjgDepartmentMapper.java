@@ -129,7 +129,6 @@ public interface ZzjgDepartmentMapper {
 
   
     List<Map<Object, Object>> selectAllName(@Param("uid") Integer uid,@Param("flag") Integer flag);
- 
 
     /**
      * 根据公司id查询所有岗位

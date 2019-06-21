@@ -249,6 +249,10 @@
             </tbody>
         </table>
     </div>
+
+    <%--     隐藏的下载按钮--%>
+    <a href="" download="zhilifangan.pdf" style="display: none" id="xzan"></a>
+
     <!-- 弹窗图片 -->
 
 
@@ -361,7 +365,9 @@
 
     function xiazai(dom) {
         var src = $(dom).attr('data-src');
-        window.location.href = src;
+        src ='localhost:8080'+src
+        $('#xzan').attr('href',src);
+        $('#xzan').click();
 
     }
 

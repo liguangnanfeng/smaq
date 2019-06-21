@@ -61,10 +61,10 @@ function uploadimg(obj){
         <font id="my_checker">检查人员：${check.cheker}</font>
   </div>
   <div class="f-l mt-20" style="width:100%">
-    <table class="f-l table table-border table-bordered table-bg table-hover table-sort">
+    <table class="f-l table table-border table-bordered table-bg table-hover table-sort" id="table" style="display: none">
       <thead>
         <tr class="text-c">
-          <th width="3%">序号</th>
+<%--          <th width="3%">序号</th>--%>
           <%--<th width="15%">检查部位</th>--%>
           <th width="10%">检查部位</th>
           <th width="10%">检查类型</th>
@@ -83,7 +83,7 @@ function uploadimg(obj){
           </c:if>
         </c:forEach>
         <tr>
-          <td class="text-c" rowspan="${x }">${pi.index + 1}</td>
+<%--          <td class="text-c" rowspan="${x }">${pi.index + 1}</td>--%>
          <%-- <td class="text-c" rowspan="${x }" data-partid="${part.id }" data-partimg="${part.partImg }">${part.name }
             <br><input class="btn btn-primary size-M radius mt-10" type="button" onclick="uploadimg(this)" value="上传图片"/>
           </td>--%>
@@ -181,7 +181,7 @@ function uploadimg(obj){
       </tbody>
     </table>
   </div>
-  <div class="row cl">
+  <div class="row cl" id="baocun" style="display: none">
     <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
       <button onClick="article_save_submit()" class="btn btn-primary radius" type="button" style="padding: 0 70px;">
         <i class="Hui-iconfont">&#xe632;</i>保存
@@ -274,31 +274,89 @@ function uploadimg(obj){
   </c:if>
   
 </body>
-<%--<script type="text/javascript">
+<script type="text/javascript">
     $(function(){
         var b = null, l1 = '', c = 1;
-        $("tbody tr").each(function() {
-            var td = $(this).children("td").eq(1);
+        var b2 = null, l2 = '', c2 = 1;
+        var b3 = null, l3 = '', c3 = 1;
+        $("tbody tr").each(function () {
+            var td = $(this).children("td").eq(0);
+            var td2 = $(this).children("td").eq(1);
+            var td3 = $(this).children("td").eq(2);
             var l1_ = td.text();
+            var l2_ = td2.text();
+            var l3_ = td3.text();
             //Same to top level
-            if(l1 == l1_) {
+            if (l1 == l1_) {
                 td.remove();
                 c = c + 1;
+                if (l2 == l2_) {
+                    td2.remove();
+                    c2 = c2 + 1;
+                    if (l3 == l3_) {
+                        td3.remove();
+                        c3 = c3 + 1;
+                    } else {
+                        l3 = l3_;
+                        if (b3 != null) {
+                            b3.attr("rowspan", c3);
+                            c3 = 1;
+                        }
+                        b3 = td3;
+
+                    }
+                } else {
+                    l2 = l2_;
+                    if (b2 != null) {
+                        b2.attr("rowspan", c2);
+                        c2 = 1;
+                    }
+                    b2 = td2;
+                    l3 = l3_;
+                    if (b3 != null) {
+                        b3.attr("rowspan", c3);
+                        c3 = 1;
+                    }
+                    b3 = td3;
+                }
+
             } else {//Diffrent to top level
                 l1 = l1_;
-                if(b != null) {
+                if (b != null) {
                     b.attr("rowspan", c);
                     c = 1;
                 }
                 b = td;
+                l2 = l2_;
+                if (b2 != null) {
+                    b2.attr("rowspan", c2);
+                    c2 = 1;
+                }
+                b2 = td2;
+                l3 = l3_;
+                if (b3 != null) {
+                    b3.attr("rowspan", c3);
+                    c3 = 1;
+                }
+                b3 = td3;
             }
         })
-        if(b != null) {
+        if (b != null) {
             b.attr("rowspan", c);
         }
-
+        if (b2 != null) {
+            b2.attr("rowspan", c2);
+        }
+        if (b3 != null) {
+            b3.attr("rowspan", c3);
+        }
+       $('#table').css('display','block');
+       $('#baocun').css('display','block');
     })
-</script>--%>
+
+
+</script>
+
 <script type="text/javascript">
 
     function checkerChange(obj){

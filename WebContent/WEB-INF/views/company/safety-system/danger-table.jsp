@@ -249,231 +249,261 @@
                     <tr>
                         <td colspan="2" style="font-size: 20px;font-weight: bold">二、行业类重大事故隐患</td>
                     </tr>
-                    <tr>
-                        <td colspan="2" style="font-size: 15px;font-weight: bold">（一）冶金行业。</td>
-                    </tr>
-                    <tr>
-                        <td>1.会议室、活动室、休息室、更衣室等场所设置在铁水、钢水与液渣吊运影响的范围内。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item15" value="item15" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>2.吊运铁水、钢水与液渣起重机不符合冶金起重机的相关要求；炼钢厂在吊运重罐铁水、钢水或液渣时，未使用固定式龙门钩的铸造起重机，龙门钩横梁、耳轴销和吊钩、钢丝绳及其端头固定零件，未进行定期检查，发现问题未及时整改。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item16" value="item16" onchange="dagou(this)"></td>
-                    </tr>
 
-                    <tr>
-                        <td>3.盛装铁水、钢水与液渣的罐（包、盆）等容器耳轴未按国家标准规定要求定期进行探伤检测。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item17" value="item17" onchange="dagou(this)"></td>
-                    </tr>
+                    <c:if test="${industry eq '冶金行业'}">
 
-                    <tr>
-                        <td>4.冶炼、熔炼、精炼生产区域的安全坑内及熔体泄漏、喷溅影响范围内存在积水，放置有易燃易爆物品。金属铸造、连铸、浇铸流程未设置铁水罐、钢水罐、溢流槽、中间溢流罐等高温熔融金属紧急排放和应急储存设施。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item18" value="item18" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td colspan="2" style="font-size: 15px;font-weight: bold">冶金行业。</td>
+                        </tr>
+                        <tr>
+                            <td>1.会议室、活动室、休息室、更衣室等场所设置在铁水、钢水与液渣吊运影响的范围内。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item15" value="item15" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>2.吊运铁水、钢水与液渣起重机不符合冶金起重机的相关要求；炼钢厂在吊运重罐铁水、钢水或液渣时，未使用固定式龙门钩的铸造起重机，龙门钩横梁、耳轴销和吊钩、钢丝绳及其端头固定零件，未进行定期检查，发现问题未及时整改。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item16" value="item16" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>5.炉、窑、槽、罐类设备本体及附属设施未定期检查，出现严重焊缝开裂、腐蚀、破损、衬砖损坏、壳体发红及明显弯曲变形等未报修或报废，仍继续使用。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item19" value="item19" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>6.氧枪等水冷元件未配置出水温度与进出水流量差检测、报警装置及温度监测，未与炉体倾动、氧气开闭等联锁。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item20" value="item20" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>3.盛装铁水、钢水与液渣的罐（包、盆）等容器耳轴未按国家标准规定要求定期进行探伤检测。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item17" value="item17" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>7.煤气柜建设在居民稠密区，未远离大型建筑、仓库、通信和交通枢纽等重要设施；附属设备设施未按防火防爆要求配置防爆型设备；柜顶未设置防雷装置。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item21" value="item21" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>4.冶炼、熔炼、精炼生产区域的安全坑内及熔体泄漏、喷溅影响范围内存在积水，放置有易燃易爆物品。金属铸造、连铸、浇铸流程未设置铁水罐、钢水罐、溢流槽、中间溢流罐等高温熔融金属紧急排放和应急储存设施。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item18" value="item18" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>8.煤气区域的值班室、操作室等人员较集中的地方，未设置固定式一氧化碳监测报警装置。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item22" value="item22" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>5.炉、窑、槽、罐类设备本体及附属设施未定期检查，出现严重焊缝开裂、腐蚀、破损、衬砖损坏、壳体发红及明显弯曲变形等未报修或报废，仍继续使用。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item19" value="item19" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>6.氧枪等水冷元件未配置出水温度与进出水流量差检测、报警装置及温度监测，未与炉体倾动、氧气开闭等联锁。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item20" value="item20" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>9.高炉、转炉、加热炉、煤气柜、除尘器等设施的煤气管道未设置可靠隔离装置和吹扫设施。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item23" value="item23" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>10.煤气分配主管上支管引接处，未设置可靠的切断装置；车间内各类燃气管线，在车间入口未设置总管切断阀。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item24" value="item24" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>11.金属冶炼企业主要负责人和安全生产管理人员未依法经考核合格。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item25" value="item25" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="font-size: 15px;font-weight: bold"> （二）有色行业。</td>
-                    </tr>
-                    <tr>
-                        <td>1.吊运铜水等熔融有色金属及渣的起重机不符合冶金起重机的相关要求；横梁、耳轴销和吊钩、钢丝绳及其端头固定零件，未进行定期检查，发现问题未及时处理。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item26" value="item26" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>2.会议室、活动室、休息室、更衣室等场所设置在铜水等熔融有色金属及渣的吊运影响范围内。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item27" value="item27" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>7.煤气柜建设在居民稠密区，未远离大型建筑、仓库、通信和交通枢纽等重要设施；附属设备设施未按防火防爆要求配置防爆型设备；柜顶未设置防雷装置。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item21" value="item21" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>3.盛装铜水等熔融有色金属及渣的罐（包、盆）等容器耳轴未定期进行检测。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item28" value="item28" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>8.煤气区域的值班室、操作室等人员较集中的地方，未设置固定式一氧化碳监测报警装置。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item22" value="item22" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>4.铜水等高温熔融有色金属冶炼、精炼、铸造生产区域的安全坑内及熔体泄漏、喷溅影响范围内存在非生产性积水；熔体容易喷溅到的区域，放置有易燃易爆物品。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item29" value="item29" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>9.高炉、转炉、加热炉、煤气柜、除尘器等设施的煤气管道未设置可靠隔离装置和吹扫设施。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item23" value="item23" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>10.煤气分配主管上支管引接处，未设置可靠的切断装置；车间内各类燃气管线，在车间入口未设置总管切断阀。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item24" value="item24" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>11.金属冶炼企业主要负责人和安全生产管理人员未依法经考核合格。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item25" value="item25" onchange="dagou(this)"></td>
+                        </tr>
+                    </c:if>
 
-                    <tr>
-                        <td>5.铜水等熔融有色金属铸造、浇铸流程未设置紧急排放和应急储存设施。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item30" value="item30" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>6.高温工作的熔融有色金属冶炼炉窑、铸造机、加热炉及水冷元件未设置应急冷却水源等冷却应急处置措施。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item31" value="item31" onchange="dagou(this)"></td>
-                    </tr>
+                    <c:if test="${industry eq '有色行业'}">
+                        <tr>
+                            <td colspan="2" style="font-size: 15px;font-weight: bold">有色行业。</td>
+                        </tr>
+                        <tr>
+                            <td>1.吊运铜水等熔融有色金属及渣的起重机不符合冶金起重机的相关要求；横梁、耳轴销和吊钩、钢丝绳及其端头固定零件，未进行定期检查，发现问题未及时处理。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item26" value="item26" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>2.会议室、活动室、休息室、更衣室等场所设置在铜水等熔融有色金属及渣的吊运影响范围内。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item27" value="item27" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>7.冶炼炉窑的水冷元件未配置温度、进出水流量差检测及报警装置；未设置防止冷却水大量进入炉内的安全设施（如：快速切断阀等）。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item32" value="item32" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>3.盛装铜水等熔融有色金属及渣的罐（包、盆）等容器耳轴未定期进行检测。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item28" value="item28" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>8.炉、窑、槽、罐类设备本体及附属设施未定期检查，出现严重焊缝开裂、腐蚀、破损、衬砖损坏、壳体发红及明显弯曲变形等未报修或报废，仍继续使用。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item33" value="item33" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>4.铜水等高温熔融有色金属冶炼、精炼、铸造生产区域的安全坑内及熔体泄漏、喷溅影响范围内存在非生产性积水；熔体容易喷溅到的区域，放置有易燃易爆物品。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item29" value="item29" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>9.使用煤气（天然气）的烧嘴等燃烧装置，未设置防突然熄火或点火失败的快速切断阀，以切断煤气（天然气）。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item34" value="item34" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>10.金属冶炼企业主要负责人和安全生产管理人员未依法经考核合格。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item35" value="item35" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="font-size: 15px;font-weight: bold"> （三）建材行业。</td>
-                    </tr>
-                    <tr>
-                        <td>1.水泥工厂煤磨袋式收尘器（或煤粉仓）未设置温度和一氧化碳监测，或未设置气体灭火装置。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item36" value="item36" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>2.水泥工厂筒型储存库人工清库作业外包给不具备高空作业工程专业承包资质的承包方且作业前未进行风险分析。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item37" value="item37" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>5.铜水等熔融有色金属铸造、浇铸流程未设置紧急排放和应急储存设施。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item30" value="item30" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>6.高温工作的熔融有色金属冶炼炉窑、铸造机、加热炉及水冷元件未设置应急冷却水源等冷却应急处置措施。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item31" value="item31" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>3.燃气窑炉未设置燃气低压警报器和快速切断阀，或易燃易爆气体聚集区域未设置监测报警装置。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item38" value="item38" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>7.冶炼炉窑的水冷元件未配置温度、进出水流量差检测及报警装置；未设置防止冷却水大量进入炉内的安全设施（如：快速切断阀等）。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item32" value="item32" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>4.纤维制品三相电弧炉、电熔制品电炉，水冷构件泄漏。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item39" value="item39" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>8.炉、窑、槽、罐类设备本体及附属设施未定期检查，出现严重焊缝开裂、腐蚀、破损、衬砖损坏、壳体发红及明显弯曲变形等未报修或报废，仍继续使用。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item33" value="item33" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>5.进入筒型储库、磨机、破碎机、篦冷机、各种焙烧窑等有限空间作业时，未采取有效的防止电气设备意外启动、热气涌入等隔离防护措施。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item40" value="item40" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>6.玻璃窑炉、玻璃锡槽，水冷、风冷保护系统存在漏水、漏气，未设置监测报警装置。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item41" value="item41" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="font-size: 15px;font-weight: bold">（四）机械行业。</td>
-                    </tr>
-                    <tr>
-                        <td>1.会议室、活动室、休息室、更衣室等场所设置在熔炼炉、熔融金属吊运和浇注影响范围内。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item42" value="item42" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>2.吊运熔融金属的起重机不符合冶金铸造起重机技术条件,或驱动装置中未设置两套制动器。吊运浇注包的龙门钩横梁、耳轴销和吊钩等零件，未进行定期探伤检查。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item43" value="item43" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>9.使用煤气（天然气）的烧嘴等燃烧装置，未设置防突然熄火或点火失败的快速切断阀，以切断煤气（天然气）。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item34" value="item34" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>10.金属冶炼企业主要负责人和安全生产管理人员未依法经考核合格。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item35" value="item35" onchange="dagou(this)"></td>
+                        </tr>
+                    </c:if>
 
-                    <tr>
-                        <td>3.铸造熔炼炉炉底、炉坑及浇注坑等作业坑存在潮湿、积水状况，或存放易燃易爆物品。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item44" value="item44" onchange="dagou(this)"></td>
-                    </tr>
 
-                    <tr>
-                        <td>4.铸造熔炼炉冷却水系统未配置温度、进出水流量检测报警装置，没有设置防止冷却水进入炉内的安全设施。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item45" value="item45" onchange="dagou(this)"></td>
-                    </tr>
 
-                    <tr>
-                        <td>5.天然气（煤气）加热炉燃烧器操作部位未设置可燃气体泄漏报警装置，或燃烧系统未设置防突然熄火或点火失败的安全装置。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item46" value="item46" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>6.使用易燃易爆稀释剂（如天拿水）清洗设备设施，未采取有效措施及时清除集聚在地沟、地坑等有限空间内的可燃气体。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item47" value="item47" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>7.涂装调漆间和喷漆室未规范设置可燃气体报警装置和防爆电气设备设施。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item48" value="item48" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="font-size: 15px;font-weight: bold">（五）轻工行业。</td>
-                    </tr>
-                    <tr>
-                        <td>1.食品制造企业涉及烘制、油炸等设施设备，未采取防过热自动报警切断装置和隔热防护措施。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item49" value="item49" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>2.白酒储存、勾兑场所未规范设置乙醇浓度检测报警装置。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item50" value="item50" onchange="dagou(this)"></td>
-                    </tr>
+                    <c:if test="${industry eq '建材行业'}">
+                        <tr>
+                            <td colspan="2" style="font-size: 15px;font-weight: bold">建材行业。</td>
+                        </tr>
+                        <tr>
+                            <td>1.水泥工厂煤磨袋式收尘器（或煤粉仓）未设置温度和一氧化碳监测，或未设置气体灭火装置。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item36" value="item36" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>2.水泥工厂筒型储存库人工清库作业外包给不具备高空作业工程专业承包资质的承包方且作业前未进行风险分析。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item37" value="item37" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>3.纸浆制造、造纸企业使用水蒸气或明火直接加热钢瓶汽化液氯。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item51" value="item51" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>3.燃气窑炉未设置燃气低压警报器和快速切断阀，或易燃易爆气体聚集区域未设置监测报警装置。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item38" value="item38" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>4.日用玻璃、陶瓷制造企业燃气窑炉未设燃气低压警报器和快速切断阀，或易燃易爆气体聚集区域未设置监测报警装置。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item52" value="item52" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>4.纤维制品三相电弧炉、电熔制品电炉，水冷构件泄漏。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item39" value="item39" onchange="dagou(this)"></td>
+                        </tr>
 
-                    <tr>
-                        <td>5.日用玻璃制造企业炉、窑类设备本体及附属设施出现开裂、腐蚀、破损、衬砖损坏、壳体发红及明显弯曲变形。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item53" value="item53" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>6.喷涂车间、调漆间未规范设置通风装置和防爆电气设备设施。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item54" value="item54" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="font-size: 15px;font-weight: bold">（六）纺织行业。</td>
-                    </tr>
-                    <tr>
-                        <td>1.纱、线、织物加工的烧毛、开幅、烘干等热定型工艺的汽化室、燃气贮罐、储油罐、热媒炉等未与生产加工、人员密集场所明确分开或单独设置。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item55" value="item55" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>2.保险粉、双氧水、亚氯酸钠、雕白粉（吊白块）等危险品与禁忌物料混合贮存的；保险粉露天堆放，或储存场所未采取防水、防潮等措施。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item56" value="item56" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="font-size: 15px;font-weight: bold">（七）烟草行业。</td>
-                    </tr>
-                    <tr>
-                        <td>1.熏蒸杀虫作业前，未确认无关人员全部撤离仓库，且作业人员未配置防毒面具。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item57" value="item57" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td>2.使用液态二氧化碳制造膨胀烟丝的生产线和场所，未设置二氧化碳浓度报警仪、燃气浓度报警仪、紧急联动排风装置。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item58" value="item58" onchange="dagou(this)"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="font-size: 15px;font-weight: bold">（八）商贸行业。</td>
-                    </tr>
-                    <tr>
-                        <td>1.在房式仓、筒仓及简易仓囤进行粮食进出仓作业时，未按照作业标准步骤或未采取有效防护措施作业。</td>
-                        <td width="10%" style="text-align: center"><input type="checkbox"  class= "item59" value="item59" onchange="dagou(this)"></td>
-                    </tr>
+                        <tr>
+                            <td>5.进入筒型储库、磨机、破碎机、篦冷机、各种焙烧窑等有限空间作业时，未采取有效的防止电气设备意外启动、热气涌入等隔离防护措施。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item40" value="item40" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>6.玻璃窑炉、玻璃锡槽，水冷、风冷保护系统存在漏水、漏气，未设置监测报警装置。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item41" value="item41" onchange="dagou(this)"></td>
+                        </tr>
+                    </c:if>
+
+
+                    <c:if test="${industry eq '机械行业'}">
+                        <tr>
+                            <td colspan="2" style="font-size: 15px;font-weight: bold">机械行业。</td>
+                        </tr>
+                        <tr>
+                            <td>1.会议室、活动室、休息室、更衣室等场所设置在熔炼炉、熔融金属吊运和浇注影响范围内。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item42" value="item42" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>2.吊运熔融金属的起重机不符合冶金铸造起重机技术条件,或驱动装置中未设置两套制动器。吊运浇注包的龙门钩横梁、耳轴销和吊钩等零件，未进行定期探伤检查。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item43" value="item43" onchange="dagou(this)"></td>
+                        </tr>
+
+                        <tr>
+                            <td>3.铸造熔炼炉炉底、炉坑及浇注坑等作业坑存在潮湿、积水状况，或存放易燃易爆物品。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item44" value="item44" onchange="dagou(this)"></td>
+                        </tr>
+
+                        <tr>
+                            <td>4.铸造熔炼炉冷却水系统未配置温度、进出水流量检测报警装置，没有设置防止冷却水进入炉内的安全设施。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item45" value="item45" onchange="dagou(this)"></td>
+                        </tr>
+
+                        <tr>
+                            <td>5.天然气（煤气）加热炉燃烧器操作部位未设置可燃气体泄漏报警装置，或燃烧系统未设置防突然熄火或点火失败的安全装置。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item46" value="item46" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>6.使用易燃易爆稀释剂（如天拿水）清洗设备设施，未采取有效措施及时清除集聚在地沟、地坑等有限空间内的可燃气体。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item47" value="item47" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>7.涂装调漆间和喷漆室未规范设置可燃气体报警装置和防爆电气设备设施。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item48" value="item48" onchange="dagou(this)"></td>
+                        </tr>
+                    </c:if>
+
+                    <c:if test="${industry eq '轻工行业'}">
+                        <tr>
+                            <td colspan="2" style="font-size: 15px;font-weight: bold">轻工行业。</td>
+                        </tr>
+                        <tr>
+                            <td>1.食品制造企业涉及烘制、油炸等设施设备，未采取防过热自动报警切断装置和隔热防护措施。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item49" value="item49" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>2.白酒储存、勾兑场所未规范设置乙醇浓度检测报警装置。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item50" value="item50" onchange="dagou(this)"></td>
+                        </tr>
+
+                        <tr>
+                            <td>3.纸浆制造、造纸企业使用水蒸气或明火直接加热钢瓶汽化液氯。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item51" value="item51" onchange="dagou(this)"></td>
+                        </tr>
+
+                        <tr>
+                            <td>4.日用玻璃、陶瓷制造企业燃气窑炉未设燃气低压警报器和快速切断阀，或易燃易爆气体聚集区域未设置监测报警装置。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item52" value="item52" onchange="dagou(this)"></td>
+                        </tr>
+
+                        <tr>
+                            <td>5.日用玻璃制造企业炉、窑类设备本体及附属设施出现开裂、腐蚀、破损、衬砖损坏、壳体发红及明显弯曲变形。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item53" value="item53" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>6.喷涂车间、调漆间未规范设置通风装置和防爆电气设备设施。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item54" value="item54" onchange="dagou(this)"></td>
+                        </tr>
+                    </c:if>
+
+                    <c:if test="${industry eq '纺织行业'}">
+                        <tr>
+                            <td colspan="2" style="font-size: 15px;font-weight: bold">纺织行业。</td>
+                        </tr>
+                        <tr>
+                            <td>1.纱、线、织物加工的烧毛、开幅、烘干等热定型工艺的汽化室、燃气贮罐、储油罐、热媒炉等未与生产加工、人员密集场所明确分开或单独设置。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item55" value="item55" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>2.保险粉、双氧水、亚氯酸钠、雕白粉（吊白块）等危险品与禁忌物料混合贮存的；保险粉露天堆放，或储存场所未采取防水、防潮等措施。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item56" value="item56" onchange="dagou(this)"></td>
+                        </tr>
+
+                    </c:if>
+
+                    <c:if test="${industry eq '烟草行业'}">
+                        <tr>
+                            <td colspan="2" style="font-size: 15px;font-weight: bold">烟草行业。</td>
+                        </tr>
+                        <tr>
+                            <td>1.熏蒸杀虫作业前，未确认无关人员全部撤离仓库，且作业人员未配置防毒面具。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item57" value="item57" onchange="dagou(this)"></td>
+                        </tr>
+                        <tr>
+                            <td>2.使用液态二氧化碳制造膨胀烟丝的生产线和场所，未设置二氧化碳浓度报警仪、燃气浓度报警仪、紧急联动排风装置。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item58" value="item58" onchange="dagou(this)"></td>
+                        </tr>
+                    </c:if>
+
+                    <c:if test="${industry eq '烟草行业'}">
+                        <tr>
+                            <td colspan="2" style="font-size: 15px;font-weight: bold">商贸行业。</td>
+                        </tr>
+                        <tr>
+                            <td>1.在房式仓、筒仓及简易仓囤进行粮食进出仓作业时，未按照作业标准步骤或未采取有效防护措施作业。</td>
+                            <td width="10%" style="text-align: center"><input type="checkbox"  class= "item59" value="item59" onchange="dagou(this)"></td>
+                        </tr>
+                    </c:if>
+
 
 
                     </tbody>
@@ -504,7 +534,15 @@
 </body>
 <script>
    $(function(){
-       console.log('${comFalg}');
+       var data= '${comFlag}';
+       if(data){
+           data=data.split(',');
+           $('#sekuai').removeClass('my_red my_o my_y my_b');
+           $('#sekuai').addClass('my_red');
+           data.map(function(item){
+             $('.'+item).attr("checked",'true')
+           })
+       }
    })
 
 

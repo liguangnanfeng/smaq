@@ -3,11 +3,14 @@ package com.spring.web.dao;
 import com.spring.web.model.DistinguishType;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
 public interface DistinguishTypeMapper {
 
+    int updateByPrimaryKeySelective(DistinguishType distinguishType);
 
-    List<DistinguishType> selectPoint(@Param("dep_id") Integer dep_id, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+    int insert(DistinguishType distinguishType);
+
+    DistinguishType selectNum(@Param("dep_id")Integer dep_id, @Param("flag")String flag, @Param("user_id")Integer user_id);
+
+    boolean updatePoint(DistinguishType distinguishType);
 }
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.web.dao.Commerce">
+
+
+    <resultMap id="BaseResultMap" type="com.spring.web.model.Commerce">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="com_flag" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="utime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id, user_id, com_flag, ctime, utime
+    </sql>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from danger_commerce
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+
+    <!-- 根据 user_id 查询数据信息 -->
+    <select id="selectComFlag" parameterType="java.lang.Integer" resultType="com.spring.web.model.Commerce" >
+        select
+        <include refid="Base_Column_List"/>
+        from danger_commerce
+        where user_id = #{user_id,jdbcType=INTEGER}
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from danger_commerce
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+
+    <insert id="insert" parameterType="com.spring.web.model.Commerce">
+        insert into danger_commerce (user_id, com_flag, ctime, utime)
+        values (#{user_id,jdbcType=INTEGER}, #{com_flag,jdbcType=VARCHAR},
+        #{ctime,jdbcType=TIMESTAMP},#{utime,jdbcType=TIMESTAMP})
+    </insert>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.spring.web.model.Commerce">
+        update danger_commerce
+        set
+        com_flag = #{com_flag,jdbcType=VARCHAR},
+        utime = #{utime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

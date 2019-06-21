@@ -27,19 +27,16 @@
     </select>
 
 
-
-    <select id="selectPoint" resultType="com.spring.web.model.DistinguishType" >
-        select
-        <include refid="Base_Column_List"/>
-        from distinguish_type
-        where dep_id = #{dep_id,jdbcType=INTEGER} and flag = #{flag,jdbcType=INTEGER} and user_id = #{user_id,jdbcType=INTEGER}
+    <select id="selectNum" resultType="com.spring.web.model.DistinguishType" >
+        SELECT
+        *
+        FROM
+        distinguish_type
+        WHERE
+        dep_id = #{dep_id,jdbcType=INTEGER} and flag = #{flag,jdbcType=INTEGER} and user_id = #{user_id,jdbcType=INTEGER}
     </select>
 
-
-
-
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-
         delete from distinguish_type
         where id = #{id,jdbcType=INTEGER}
     </delete>
@@ -54,7 +51,7 @@
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.spring.web.model.DistinguishType">
-        update a_company_manual_tbl
+        update distinguish_type
         <set>
             <if test="user_id != null">
                 user_id = #{user_id,jdbcType=INTEGER},
@@ -82,7 +79,7 @@
     </update>
 
     <update id="updateByPrimaryKey" parameterType="com.spring.web.model.DistinguishType">
-        update a_company_manual_tbl
+        update distinguish_type
         set user_id = #{user_id,jdbcType=INTEGER},
         dep_id = #{dep_id,jdbcType=INTEGER},
         danger_point = #{danger_point,jdbcType=VARCHAR},
@@ -93,6 +90,14 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+
+    <update id="updatePoint" parameterType="com.spring.web.model.DistinguishType">
+        update distinguish_type
+        set
+        danger_point = #{danger_point,jdbcType=VARCHAR},
+        utime = #{utime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
 
 </mapper>

@@ -5,6 +5,7 @@
 package com.spring.web.controller;
 
 import com.spring.web.BaseController;
+import com.spring.web.dao.CommerceMapper;
 import com.spring.web.dao.DangerCoordinateMapper;
 import com.spring.web.dao.DistinguishTypeMapper;
 import com.spring.web.dao.ImportPhotoMapper;
@@ -56,6 +57,8 @@ public class CompanyController_safety extends BaseController {
     private DangerCoordinateMapper dangerCoordinateMapper;
     @Autowired
     private DistinguishTypeMapper distinguishTypeMapper;
+    @Autowired
+    private CommerceMapper commerceMapper;
 
     public CompanyController_safety() {
     }
@@ -443,30 +446,14 @@ public class CompanyController_safety extends BaseController {
                 }else if (number == 3){ // 设置
                     zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
                 }
-
                 model.addAttribute("number", number);
                 model.addAttribute("zzjgDep", zzjg);
                 model.addAttribute("acL", acL);
                 return "company/safety-system/risk-list1";
             } else {
-                zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId());
-
+                zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type);
                 acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);
-
-                List<DistinguishType> listDis = null;
-
-
-                listDis = distinguishTypeMapper.selectPoint(1774,type,user.getId());
-
-
-
-
                 model.addAttribute("zzjg",zzjg);
-
-
-                model.addAttribute("listDis",listDis);
-
-
                 model.addAttribute("dL", acL);
                 model.addAttribute("type", type);
                 return "company/safety-system/risk-list1";
@@ -508,31 +495,85 @@ public class CompanyController_safety extends BaseController {
 
 
 
+    /**
+     * create by  : 小明！！！
+     * description: 工贸评分页面
+     * create time: 16:21 2019/6/20
+     */
+    @RequestMapping({"danger-table"})
+    public String dangerTable(Model model, HttpServletRequest request) throws Exception {
+        User user = this.getLoginUser(request);
+        // 根据公司 user_id  查询数据 将数据返回
+        Commerce commerce = commerceMapper.selectComFlag(user.getId());
+
+        if (null == commerce){
+            model.addAttribute("comFlag","老，钱，你，个，屌，毛，！，！，！");
+        }else {
+            model.addAttribute("comFlag",commerce.getCom_flag());
+        }
+        return "company/safety-system/danger-table";
+    }
+
+
+    /**
+     * create by  : 小明！！！
+     * description: 工贸行业数据保存
+     * create time: 10:13 2019/6/21
+     */
+    @RequestMapping({"save-commerce-table"})
+    public Result commerce(Model model, HttpServletRequest request,String comFlag) throws Exception {
+        User user = this.getLoginUser(request);
+        Result result = new ResultImpl();
+        if (null != comFlag){
+           // 根据公司 user_id  查询数据 将数据返回
+           Commerce commerce = commerceMapper.selectComFlag(user.getId());
+           Commerce commerce1 = null;
+           int a ;
+           if (null == commerce){
+               commerce1 = new Commerce();
+               commerce1.setId(commerce.getId());
+               commerce1.setUser_id(user.getId());
+               commerce1.setCom_flag(comFlag);
+               commerce1.setCtime(new Date());
+               commerce1.setUtime(new Date());
+               a = commerceMapper.insert(commerce1);
+           }else {
+               commerce1 = new Commerce();
+               commerce1.setId(commerce.getId());
+               commerce1.setCom_flag(comFlag);
+               commerce1.setUtime(new Date());
+               a = commerceMapper.updateByPrimaryKey(commerce1);
+           }
+           if (a != 0){
+               result.setStatus("0");
+               result.setMess("数据异常请重新选择！！！");
+           }else {
+               result.setStatus("1");
+               result.setMess("保存成功。");
+           }
+        }else {
+           result.setStatus("0");
+           result.setMess("数据异常请重新选择！！！");
+        }
+        return result;
+    }
+
+
+
+
+
+
     /*
-    * 评分页面！！！
-    * */
+   * 化工评分页面！！！
+   * */
     @RequestMapping({"grade-table"})
     public String grade(Model model, HttpServletRequest request) throws Exception {
         return "company/safety-system/grade-table";
     }
 
-    
-    
-    /**
-     * create by  : 小明！！！
-     * description:
-     * create time: 16:21 2019/6/20
-     * 
-      * @Param: null
-     * @return 
-     */
-    @RequestMapping({"danger-table"})
-    public String dangerTable(Model model, HttpServletRequest request) throws Exception {
-        return "company/safety-system/danger-table";
-    }
 
     /*
-     * 评分页面！！！
+     * 化工评分页面！！！
      * */
     @RequestMapping({"grade-tables-data"})
     @ResponseBody
@@ -567,11 +608,9 @@ public class CompanyController_safety extends BaseController {
                 dangerCoordinate1.setImportant4(0);
                 dangerCoordinateMapper.insert(dangerCoordinate1);
                 list = dangerCoordinateMapper.selectOne(user.getId());
-
             }
             result.setObject(list.get(0));
             result.setMess("查询成功");
-
             result.setStatus("0");
             return  result;
         }catch (Exception e) {
@@ -583,11 +622,8 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-
-
-
     /*
-     * 重大风险评分表数据添加！！！
+     * 化工评分，重大风险评分表数据添加！！！
      * */
     @RequestMapping({"save-danger-coordinate"})
     @ResponseBody
@@ -595,7 +631,6 @@ public class CompanyController_safety extends BaseController {
                              Double danger4, Double danger5,Double danger6, Double danger7, Double danger8, Double danger9,
                              Double danger10,Double danger11, Double danger12, Double danger13, Double counts,
                              Integer important1,Integer important2,Integer important3,Integer important4) throws Exception {
-
         User user = this.getLoginUser(request);
         Result result = new ResultImpl();
         DangerCoordinate dangerCoordinate = new DangerCoordinate();
@@ -603,15 +638,12 @@ public class CompanyController_safety extends BaseController {
         company.setUserId(user.getId());
         // 根据 user_id  查询 id 信息
         List<DangerCoordinate> list = dangerCoordinateMapper.selectOne(user.getId());
-
         dangerCoordinate.setId(list.get(0).getId());
-
         dangerCoordinate.setUser_id(user.getId());
         dangerCoordinate.setImportant1(important1);
         dangerCoordinate.setImportant2(important2);
         dangerCoordinate.setImportant3(important3);
         dangerCoordinate.setImportant4(important4);
-
         if (null == danger1) {
             dangerCoordinate.setDanger1(0.00);
         } else {
@@ -682,7 +714,6 @@ public class CompanyController_safety extends BaseController {
         } else {
             dangerCoordinate.setCounts(counts*1.00);
         }
-
         if (important1 == 0 && important2 == 0 && important3 == 0 && important4 == 0){ // 0 未选中
             if (counts <= 100 && counts >= 90){
                 company.setDlevel("蓝色");
@@ -696,16 +727,9 @@ public class CompanyController_safety extends BaseController {
         }else if (important1 == 1 || important2 == 1 || important3 == 1 || important4 == 1){// 选中
             company.setDlevel("红色");
         }
-
-
-
-
         dangerCoordinate.setUtime(new Date());
-
         boolean b = dangerCoordinateMapper.updateByPrimaryKey(dangerCoordinate);
-
         int a = companyMapper.updateByPrimaryKeySelective(company);
-
         if (b && a != 0 ) {
             result.setStatus("0");
             result.setMess("评估完成。");
@@ -714,7 +738,6 @@ public class CompanyController_safety extends BaseController {
             result.setMess("评估异常，请重新评估。");
         }
         return result;
-
     }
 
 
@@ -751,7 +774,6 @@ public class CompanyController_safety extends BaseController {
         User user = this.getLoginUser(request);
         // 根据 ID 查询公司所对应的行业信息
         Company company = this.companyMapper.selectByPrimaryKey(user.getId());
-
         // 根据企业ID 查询当前企业中所有的高危风险的数据 ID
         List<ACompanyManual> aCompanyManualList = aCompanyManualMapper.selectIdss(company.getUserId());
         // 根据 ids 修改删除标记为 1（已经删除）
@@ -761,11 +783,8 @@ public class CompanyController_safety extends BaseController {
         ACompanyManual aCompanyManual1;
         // 根据 行业 查询该行业中所有的较大风险信息
         List<ADangerManual> aDangerManualList = aDangerManualMapper.selectFactors("1", company.getIndustry());
-
-
         if (aDangerManualList.size() != 0) {
             for (int i = 0; i < aDangerManualList.size(); i++) {
-
                 aCompanyManual1 = new ACompanyManual();
                 aCompanyManual1.setUid(user.getId());
                 aCompanyManual1.setLevel3(aDangerManualList.get(i).getLevel1() + "/" + aDangerManualList.get(i).getLevel2() + "/" + aDangerManualList.get(i).getLevel3());
@@ -777,7 +796,6 @@ public class CompanyController_safety extends BaseController {
                 aCompanyManual1.setLevel("橙色");
                 aCompanyManual1.setDel(0);
                 aCompanyManual1.setCtime(new Date());
-
                 // 添加数据到表中
                 aCompanyManualMapper.save(aCompanyManual1);
             }
@@ -805,7 +823,6 @@ public class CompanyController_safety extends BaseController {
         for (int i = 0; i < aCompanyManualList.size(); i++) {
             aCompanyManualMapper.updateAll(aCompanyManualList.get(i).getId());
         }
-
         return result;
     }
 
@@ -828,15 +845,11 @@ public class CompanyController_safety extends BaseController {
         for (int i = 0; i < aCompanyManualList.size(); i++) {
             aCompanyManualMapper.updateAll(aCompanyManualList.get(i).getId());
         }
-
         ACompanyManual aCompanyManual1;
-
         // 根据 行业 查询该行业中所有的较大风险信息
         List<ADangerManual> aDangerManualList = aDangerManualMapper.selectFactors("3", company.getIndustry());
-
         if (aDangerManualList.size() != 0) {
             for (int i = 0; i < aDangerManualList.size(); i++) {
-
                 aCompanyManual1 = new ACompanyManual();
                 aCompanyManual1.setUid(user.getId());
                 aCompanyManual1.setLevel3(aDangerManualList.get(i).getLevel() + "/" + aDangerManualList.get(i).getLevel2() + "/" + aDangerManualList.get(i).getLevel3());
@@ -847,10 +860,8 @@ public class CompanyController_safety extends BaseController {
                 aCompanyManual1.setFlag("3");
                 aCompanyManual1.setDel(0);
                 aCompanyManual1.setCtime(new Date());
-
                 // 添加数据到表中
                 aCompanyManualMapper.save(aCompanyManual1);
-
             }
             return result;
         } else {
@@ -876,7 +887,6 @@ public class CompanyController_safety extends BaseController {
         for (int i = 0; i < aCompanyManualList.size(); i++) {
             aCompanyManualMapper.updateAll(aCompanyManualList.get(i).getId());
         }
-
         return result;
     }
 
@@ -975,7 +985,44 @@ public class CompanyController_safety extends BaseController {
                        String gzkhxys, String gzkwlys) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
-        ACompanyManual a = aCompanyManualMapper.selectByPrimaryKey(ac.getId());
+        // 根据 dep_id 去数据库查询数据
+        DistinguishType distinguishType1 = distinguishTypeMapper.selectNum(ac.getId(),ac.getType(),user.getId());
+        DistinguishType distinguishType;
+        if (null == distinguishType1){
+            distinguishType = new DistinguishType();
+            distinguishType.setCtime(new Date());
+            distinguishType.setUtime(new Date());
+            distinguishType.setDanger_point(ac.getHxys());
+            distinguishType.setDep_id(ac.getId());
+            distinguishType.setUser_id(user.getId());
+            distinguishType.setDel(0);
+            distinguishType.setFlag(Integer.parseInt(ac.getType()));
+
+            int num = distinguishTypeMapper.insert(distinguishType);
+
+            if (0 == num){
+                result.setMess("保存失败，请重新添加！！！");
+            }else {
+                result.setMess("保存成功。");
+            }
+        }else {
+            distinguishType = new DistinguishType();
+            distinguishType.setId(distinguishType1.getId());
+            distinguishType.setUtime(new Date());
+            distinguishType.setDanger_point(ac.getHxys());
+            boolean a = distinguishTypeMapper.updatePoint(distinguishType);
+
+            if (a){
+                result.setMess("保存失败，请重新添加！！！");
+            }else {
+                result.setMess("保存成功。");
+            }
+        }
+
+        return result;
+
+
+       /* ACompanyManual a = aCompanyManualMapper.selectByPrimaryKey(ac.getId());
 
         ac.setUid(a.getUid());
         ac.setLevel1(a.getLevel1());
@@ -1029,7 +1076,7 @@ public class CompanyController_safety extends BaseController {
                 }
             }
         }
-        return result;
+        return result;*/
     }
 
     /**

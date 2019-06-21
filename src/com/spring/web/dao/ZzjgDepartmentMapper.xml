@@ -253,14 +253,22 @@
 
 
     <select id="selectAllName" resultType="java.util.Map">
-        select
-        t1.id, t1.name, t1.level,
-        (select name from zzjg_department_tbl where id = t1.pid) parName
-        from zzjg_department_tbl t1
-        where
+        SELECT
+            t1.id,
+            t1.name,
+            t1.level,
+            t1.flag,
+            ( SELECT name FROM zzjg_department_tbl WHERE id = t1.pid ) parName,
+            t2.danger_point
+        FROM
+        zzjg_department_tbl t1
+        LEFT JOIN
+        distinguish_type t2 on t1.id = t2.dep_id AND  t2.flag = #{flag,jdbcType=INTEGER}
+        WHERE
         t1.del = 0
-        and t1.uid = #{uid,jdbcType=INTEGER} and t1.flag = 1
-        order by parName asc
+        AND t1.uid = #{uid,jdbcType=INTEGER} AND t1.flag = 1
+        ORDER BY parName ASC
+
     </select>
 
 

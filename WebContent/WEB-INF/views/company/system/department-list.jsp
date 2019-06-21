@@ -99,7 +99,7 @@
                 <c:if test="${index.count==1}">
                     <tr class="text-c dantd customdantd" data-id="${be.id }" data-name="${be.name }">
                         <td>${be.name }
-<%--                            <i class="Hui-iconfont" name="edit" style="right:38px">&#xe6df;</i><!-- 修改 -->--%>
+                            <i class="Hui-iconfont" name="edit" style="right:38px">&#xe6df;</i><!-- 修改 -->
                             <!--<i class="Hui-iconfont" name="del">&#xe609;</i>--><!-- 删除 -->
                         </td>
                     </tr>
@@ -132,7 +132,7 @@
                 <td>
                     <button class="btn-depart" onclick="showadd(3)">
                         <i class="Hui-iconfont">&#xe600;</i> <c:if
-                            test="${session_user.userType != 3}">添加环节/部位</c:if><c:if
+                            test="${session_user.userType != 3}">添加岗位</c:if><c:if
                             test="${session_user.userType == 3}">添加科室</c:if>
                     </button>
                 </td>
@@ -342,7 +342,6 @@
             var titles;
             if ($(this).attr("name") == 'edit') {//编辑
                 $("#name").val(tr.attr("data-name"));
-                $("#name").removeAttr("disabled");
                 $("#id").val(tr.attr("data-id"));
                 $("#cid").val(tr.attr("data-cid"));
                 if (userType == '3') {
@@ -381,7 +380,6 @@
             var titles;
             if ($(this).attr("name") == 'edit') {//编辑
                 $("#name").val(tr.attr("data-name"));
-                $("#name").removeAttr("disabled");
                 $("#id").val(tr.attr("data-id"));
                 $("#cid").val(tr.attr("data-cid"));
                 $("#pid").val(tr.attr("data-pid"));
@@ -441,7 +439,6 @@
         $("#type").val(type);
         if(type==1){
             $("#name").val('${session_user.userName}');
-            $("#name").attr("disabled","disabled");;
         }else{
             $("#name").val('');
         }

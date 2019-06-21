@@ -1982,9 +1982,7 @@ public class VillageController extends BaseController {
             }
             map.put("realTimeStr", format);
         }
-
         String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-
         model.addAttribute("host",host);
         model.addAttribute("list", list);
         return "company/danger/hidden-danger-list";

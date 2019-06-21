@@ -26,18 +26,35 @@ body .dis-ib{margin-right:15px;}
 body .dis-ib{margin-right:15px;}
 </style>
 <script type="text/javascript">
+
 function load_() {
+   var name = $("#name").val();
+   var name1 = $("#name1").val();
+   if(null==name&&name==""){
+     alert("请选择风险名称");
+     return;
+   }
+  if(null==name1&&name1==""){
+    alert("请选择岗位名称");
+    return;
+  }
+
   $(".mt-20").html("加载中").load("/company/safety-system/fxggp-load3 .div-set", {
-    name : $("#name").val()
-  })
+    name : name,
+    name1:name1
+  });
   
+  $("#name1").change(function() {
+    load_();
+  });
   $("#name").change(function() {
     load_();
-  })
+  });
 }
+
 $(function() {
   load_();
-})
+});
 function pr_() {
   $("#div_container").jqprint();
 }
@@ -62,6 +79,13 @@ function pr_() {
           <option value="${be }">${l[fn:length(l) - 1] }</option>
           </c:forEach>
         </select>
+        <span>岗位名称：</span>
+        <select id="name1" class="sel_area">
+          <c:forEach items="${list2 }" var="be">
+            <option value="${be }">${be }</option>
+          </c:forEach>
+        </select>
+
       </div> 
     </div>
     <div class="mt-20">
@@ -184,6 +208,7 @@ function pr_() {
 </body>
 <script type="text/javascript">
 function del(id) {
+  alert("你好");
   $.post("/company/safety-system/risk-information-save", {
     id : id,
     del : 1

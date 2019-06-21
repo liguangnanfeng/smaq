@@ -3630,16 +3630,18 @@ public class CompanyController_cd extends BaseController {
         //设置名称
         if(null==tc.getDapartContact()||tc.getDapartContact().matches("[0-9]{1,}")||"".equals(name)){
             // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
-            List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId(id);
-            if(null!=integers&&integers.size()>0){
-                // 这里进行名称的获取,进行全部循环,获取数据的方式,在数据库中进行查询
-                List<String> list = new ArrayList<String>();
-                for (Integer integer : integers) {
-                        String fjgkfzr = aCompanyManualMapper.selectByPrimaryKey(integer).getFjgkfzr();
-                        if(null!=fjgkfzr){
-                            list.add(fjgkfzr);
+                List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId(id);
+                if(null!=integers&&integers.size()>0){
+                    // 这里进行名称的获取,进行全部循环,获取数据的方式,在数据库中进行查询
+                    List<String> list = new ArrayList<String>();
+                    for (Integer integer : integers) {
+                        if(null!=integer){
+                            ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(integer);
+                            if(null!=aCompanyManual&&null!=aCompanyManual.getFjgkfzr()){
+                                list.add(aCompanyManual.getFjgkfzr());
+                            }
                         }
-                }
+                    }
                 if(list.size()==0){
                     name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
                     tc.setCheckCompany(name);
@@ -3715,8 +3717,13 @@ public class CompanyController_cd extends BaseController {
         }
         model.addAttribute("name",name);
         // 根据检查记录的id获取详细的信息
-        model.addAttribute("latitude",tc.getLatitude());
-        model.addAttribute("longitude",tc.getLongitude());
+        if(null!=tc.getLatitude()&&null!=tc.getLongitude()){
+            model.addAttribute("latitude",tc.getLatitude());
+            model.addAttribute("longitude",tc.getLongitude());
+        }else{
+            model.addAttribute("latitude",null);
+            model.addAttribute("longitude",null);
+        }
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
         log.error("整改详情进行显示的条件" + tCheckMapper.selectCompany(id));
 
@@ -4004,7 +4011,7 @@ public class CompanyController_cd extends BaseController {
      * 表示在这里将数据进行保存到 tRecheckItemMapper
      */
     @RequestMapping(value = "recheck-detail")
-    public String recheckDetail(Integer checkId, Model model) throws Exception {
+    public String recheckDetail(Integer checkId, Model model,Integer flag ) throws Exception {
         Integer id = checkId;
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
         List<Map> maps = tCheckItemMapper.selectAllByCheckId(checkId);
@@ -4029,6 +4036,7 @@ public class CompanyController_cd extends BaseController {
                 tRecheckItemMapper.insertSelective(id1);
             }
         }
+        model.addAttribute("flag",flag);
         model.addAttribute("check", check);
         model.addAttribute("company", companyMapper.selectByPrimaryKey(Integer.parseInt(String.valueOf(check.get("userId")))));
         model.addAttribute("recheckList", tRechecks);

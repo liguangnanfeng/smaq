@@ -102,7 +102,7 @@
           <c:if test="${industry eq '化工企业（危化生产、使用）'}">
             <a class="btn btn-danger radius" href="javascript:void(0)" onClick="show_dialog('企业评分','${ly }/company/safety-system/grade-table')">企业评分</a>
           </c:if>
-  
+            <a class="btn btn-danger radius" href="javascript:void(0)" onClick="show_dialog('工贸企业','${ly }/company/safety-system/danger-table')">工贸评定</a>
 
         </span>
   </div>

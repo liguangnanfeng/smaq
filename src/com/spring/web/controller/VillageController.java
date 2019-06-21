@@ -1982,6 +1982,10 @@ public class VillageController extends BaseController {
             }
             map.put("realTimeStr", format);
         }
+
+        String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+
+        model.addAttribute("host",host);
         model.addAttribute("list", list);
         return "company/danger/hidden-danger-list";
     }
@@ -2019,6 +2023,7 @@ public class VillageController extends BaseController {
     @RequestMapping(value = "process-see")
     public String processSee(Model model, String url, HttpServletRequest request) throws UnknownHostException {
         String url3 = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + url;
+        /*String url3 = request.getScheme() + "://" + request.getServerName() + url;*/
         model.addAttribute("list", url3);
         return "company/process/process-see";
 

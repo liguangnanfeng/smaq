@@ -23,6 +23,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -271,23 +274,18 @@ public class AppController_Map extends BaseController {
                     String realPath = request.getSession().getServletContext().getRealPath("/");
                     String realPath2 = realPath.replaceAll("\\\\", "/");
 
-                    String replace = UUID.randomUUID().toString().replace("-", "");
-
-                    // 自定义的文件名称
-                    String trueFileName = /*String.valueOf(System.currentTimeMillis()) +*/ replace + fileName;
+                    SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+                    String oldname = file.getOriginalFilename();
+                    String fileExt = oldname.substring(oldname.lastIndexOf(".") + 1).toLowerCase();
+                    String newFileName = df.format(new Date()) + "_" + new Random().nextInt(1000) + "." + fileExt;
                     // 设置存放图片文件的路径
-                    path = realPath2 + "images/upload/" + trueFileName;
-
-                    System.out.println(path);
-
+                    path = realPath2 + "images/upload/" + newFileName;
                     // 判断是否存在
                     File file1 = new File(realPath2 + "images/upload/");
                     if (!file1.exists() && !file1.isDirectory()) {
                         file1.mkdir();
                     }
-
-                    realPath1 += trueFileName;
-
+                    realPath1 += newFileName;
                     file.transferTo(new File(path));
                     TCheckItem tCheckItem = new TCheckItem();
                     tCheckItem.setId(itemId);

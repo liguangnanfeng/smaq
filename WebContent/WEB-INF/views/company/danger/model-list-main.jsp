@@ -530,7 +530,6 @@
         $.post(getRootPath() + "/company/model-list-ss", {
             dmname: dmname, dmid: dmid, checkType: checkType, industryType: industryType, template: template, flag: flag
         }, function (result, status) {
-            console.log(result);
             if (status == 'success') {
                 if (result.status == 0) {
                     var url = '${ly}/village/plan-next?flag=' + result.data.flag + '&id=' + result.data.modelId;

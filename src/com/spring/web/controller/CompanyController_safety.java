@@ -452,9 +452,9 @@ public class CompanyController_safety extends BaseController {
                 return "company/safety-system/risk-list1";
             } else {
                 zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type);
-                acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);
+                /*acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);*/
                 model.addAttribute("zzjg",zzjg);
-                model.addAttribute("dL", acL);
+                /*model.addAttribute("dL", acL);*/
                 model.addAttribute("type", type);
                 return "company/safety-system/risk-list1";
             }

@@ -207,7 +207,7 @@ public class AppController_zhangcl extends BaseController{
     public @ResponseBody AppResult recheckSave(@RequestBody RecheckSaveReqDTO dto, HttpServletRequest request) {
     	log.error("A005");
     	AppResult result = new AppResultImpl();
-        
+
 //    	Integer _userId = getAppUserId(request);
 //    	if (null == _userId) {
 //    		result.setStatus("2");
@@ -222,7 +222,7 @@ public class AppController_zhangcl extends BaseController{
 
 
         try {
-			cgfService.recheckSave(dto);
+			cgfService.recheckSave(dto,new Date());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

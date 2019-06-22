@@ -306,7 +306,7 @@ function article_save_submit() {
   recheck.dapartContact = $("#dapartContact").val();
   
   obj.recheck = recheck;
-  
+  obj.nextTime= $("#nextTime").val();
   var list = new Array();
   $("td[data-n='xxx']").each(function() {
     var itemid = $(this).attr("data-i");

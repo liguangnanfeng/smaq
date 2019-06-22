@@ -29,6 +29,7 @@ public class RecheckSaveReqDTO implements DTO {
     private TRecheck recheck;
     
     private List<TRecheckItem> list;
+    private String nextTime;
 
     /** 
     * @return list 
@@ -59,5 +60,16 @@ public class RecheckSaveReqDTO implements DTO {
     public void setRecheck(TRecheck recheck) {
         this.recheck = recheck;
     }
-    
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getNextTime() {
+        return nextTime;
+    }
+
+    public void setNextTime(String nextTime) {
+        this.nextTime = nextTime;
+    }
 }

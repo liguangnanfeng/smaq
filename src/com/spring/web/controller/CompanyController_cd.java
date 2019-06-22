@@ -4013,7 +4013,7 @@ public class CompanyController_cd extends BaseController {
      * 这里也是需要改掉
      */
     @RequestMapping(value = "recheck-detail")
-    public String recheckDetail(Integer checkId, Model model,Integer flag ) throws Exception {
+    public String recheckDetail(Integer checkId, Model model,Integer flag,Integer number) throws Exception {
         Integer id = checkId;
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
         List<Map> maps = tCheckItemMapper.selectAllByCheckId(checkId);
@@ -4036,6 +4036,7 @@ public class CompanyController_cd extends BaseController {
                 tRecheckItemMapper.insertSelective(id1);
             }
         }
+        model.addAttribute("number",number);
         model.addAttribute("flag",flag);
         model.addAttribute("check", check);
         model.addAttribute("company", companyMapper.selectByPrimaryKey(Integer.parseInt(String.valueOf(check.get("userId")))));

@@ -69,8 +69,8 @@
            href="${ly }/village/hidden-danger-list?flag=2">行政检查</a>
         <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
            href="${ly }/village/hidden-danger-list?flag=3">部门抽查</a>
-      <%--  <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
-           href="${ly }/village/hidden-danger-list?flag=2">执法检查</a>--%>
+        <%--  <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
+             href="${ly }/village/hidden-danger-list?flag=2">执法检查</a>--%>
     </div>
     <%--<div class="text-c">--%>
     <%--<form action="${ly }/village/danger-index-list?flag=${flag}" method="post">--%>
@@ -117,13 +117,20 @@
             <thead>
             <tr class="text-c">
                 <th width="5%">检查类型</th>
+                <c:if test="${flag==1}">
                 <th width="5%">车间/场所</th>
+                </c:if>
+                <c:if test="${flag!=1}">
+                    <th width="5%">公司</th>
+                </c:if>
                 <th width="5%">系统</th>
                 <th width="5%">环节/部位</th>
                 <th width="5%">发生日期</th>
                 <th width="15%">隐患内容</th>
                 <th width="5%">隐患图片</th>
-                <th width="5%">隐患等级</th>
+                <c:if test="${flag==1}">
+                    <th width="5%">隐患等级</th>
+                </c:if>
                 <th width="5%">治理方案</th>
                 <%--<th width="5%">治理结果及日期</th>--%>
                 <th width="5%">治理日期</th>
@@ -155,10 +162,16 @@
                             <td>综合</td>
                         </c:when>
                     </c:choose>
+                    <c:if test="${flag==1}">
+                        <td>${list.depart }</td>
+                    </c:if>
+                    <c:if test="${flag!=1}">
+                        <td>${companyName}</td>
+                    </c:if>
+
                     <c:if test="${list.levels!=null}">
                         <c:set var="item" value="${fn:split(list.levels,'/') }"/>
                     </c:if>
-                    <td>${list.depart }</td>
                     <c:if test="${empty item[1]}">
                         <td>暂无数据</td>
                     </c:if>
@@ -171,26 +184,26 @@
                     <c:if test="${not empty list.level2}">
                         <td>${list.level2 }</td>
                     </c:if>
-                    <%--<c:if test="${list.levels!=null}">
-                        <c:if test="${not empty item[0]}">
-                            <td>${item[1]}</td>
-                            &lt;%&ndash;<c:if test="${not empty item[1]&&not empty item[2]}">
-                                <td>${item[1]}/${item[2]}</td>
-                            </c:if>
-                            <c:if test="${not empty item[1]&& empty item[2]}">
+                        <%--<c:if test="${list.levels!=null}">
+                            <c:if test="${not empty item[0]}">
                                 <td>${item[1]}</td>
+                                &lt;%&ndash;<c:if test="${not empty item[1]&&not empty item[2]}">
+                                    <td>${item[1]}/${item[2]}</td>
+                                </c:if>
+                                <c:if test="${not empty item[1]&& empty item[2]}">
+                                    <td>${item[1]}</td>
+                                </c:if>
+                                <c:if test="${ empty item[1]&& empty item[2]}">
+                                    <td>暂无数据</td>
+                                </c:if>&ndash;%&gt;
                             </c:if>
-                            <c:if test="${ empty item[1]&& empty item[2]}">
+
+                            <c:if test="${empty item[0]}">
                                 <td>暂无数据</td>
-                            </c:if>&ndash;%&gt;
-                        </c:if>
+                                <td>暂无数据</td>
+                            </c:if>
 
-                        <c:if test="${empty item[0]}">
-                            <td>暂无数据</td>
-                            <td>暂无数据</td>
-                        </c:if>
-
-                    </c:if>--%>
+                        </c:if>--%>
                         <%--                    <td>${item[0]}</td>--%>
                         <%--                    <td>${item[1]+item[2] }</td>--%>
                     <td>${list.realTimeStr}</td>
@@ -202,14 +215,18 @@
                         </button>
                     </c:if>
                     </td>
-                    <td>
-                        <c:choose>
-                            <c:when test="${list.level eq '红色'}"><font class="col-a">${list.level}</font></c:when>
-                            <c:when test="${list.level eq '橙色'}"><font class="col-b">${list.level}</font></c:when>
-                            <c:when test="${list.level eq '黄色'}"><font class="col-c">${list.level}</font></c:when>
-                            <c:when test="${list.level eq '蓝色'}"><font class="col-d">${list.level}</font></c:when>
-                        </c:choose>
-                    </td>
+                    <c:if test="${flag==1}">
+                        <td>
+                            <c:choose>
+                                <c:when test="${list.level eq '红色'}"><font class="col-a">${list.level}</font></c:when>
+                                <c:when test="${list.level eq '橙色'}"><font class="col-b">${list.level}</font></c:when>
+                                <c:when test="${list.level eq '黄色'}"><font class="col-c">${list.level}</font></c:when>
+                                <c:when test="${list.level eq '蓝色'}"><font class="col-d">${list.level}</font></c:when>
+                            </c:choose>
+                        </td>
+                    </c:if>
+
+
                     <td>
 
                         <c:if test="${list.file_address==null}">
@@ -229,12 +246,13 @@
                     </td>
 
                     <td>
-                        <fmt:formatDate value="${list.recheck_time == null? '' : list.recheck_time}" pattern="yyyy-MM-dd"/>
+                        <fmt:formatDate value="${list.recheck_time == null? '' : list.recheck_time}"
+                                        pattern="yyyy-MM-dd"/>
 
-                        <%--<c:choose>
-                            <c:when test="${list.status eq 2}">未合格</c:when>
-                            <c:when test="${list.status eq 3}">复查通过</c:when>
-                        </c:choose>--%>
+                            <%--<c:choose>
+                                <c:when test="${list.status eq 2}">未合格</c:when>
+                                <c:when test="${list.status eq 3}">复查通过</c:when>
+                            </c:choose>--%>
                     </td>
                     <td>
                         <c:choose>
@@ -345,7 +363,7 @@
             processData: false,
             contentType: false,
             success: function (res) {
-            //请求成功时处理
+                //请求成功时处理
                 if (res.status == 0) {
                     current.prevAll().css('display', 'inline-block');//把隐藏的按钮显示出来
                     current.prevAll().attr("data-src", '${host}' + res.data);//为隐藏的按钮设置属性为返回的路径
@@ -373,8 +391,8 @@
 
     function xiazai(dom) {
         var src = $(dom).attr('data-src');
-        src ='localhost:8080'+src
-        $('#xzan').attr('href',src);
+        src = 'localhost:8080' + src
+        $('#xzan').attr('href', src);
         $('#xzan').click();
 
     }
@@ -417,6 +435,7 @@
             "aoColumnDefs": []
         });
     });
+
     function showpicture(src) {
         $(".div_imgp img").attr("src", src);
         $("#modal-plan").modal("show")

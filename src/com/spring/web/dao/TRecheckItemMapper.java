@@ -65,5 +65,4 @@ public interface TRecheckItemMapper {
      */
     TRecheckItem selectByCheckItemId(Integer id);
 
-    List<Map<String, Object>> selectByCheckIdtwo(Integer checkId);
 }

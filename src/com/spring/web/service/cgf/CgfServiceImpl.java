@@ -401,7 +401,7 @@ public class CgfServiceImpl implements CgfService {
         // 第一步先根据checkId查询 tRecheck
         List<TRecheck> tRechecks = tRecheckMapper.selectByCheckId(checkId);
         TRecheck recheck =null;
-        if(null==tRechecks.get(0)){
+        if(tRechecks.size()==0){
             //没有就进行保存
             recheck= dto.getRecheck();
             recheck.setUserId(c.getUserId());
@@ -409,6 +409,7 @@ public class CgfServiceImpl implements CgfService {
             tRecheckMapper.insertSelective(recheck);
         }else{
             //表示有数据
+            recheck = tRechecks.get(0);
             recheck.setCreateTime(date);
             tRecheckMapper.updateByPrimaryKeySelective(recheck);
         }
@@ -457,7 +458,9 @@ public class CgfServiceImpl implements CgfService {
                         tCheckItem.setMemo(tRecheckItem.getMemo());
                         tCheckItem.setRecheckMemo(tRecheckItem.getMemo());
                     }
-                    tCheckItem.setRecheckTime(tRecheckItem.getDeadline());
+                    tCheckItem.setDeadline(tRecheckItem.getDeadline());
+                    tCheckItem.setPlanTime(new Date());
+                    tCheckItem.setRecheckTime(new Date());
                     tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
                 }
             }

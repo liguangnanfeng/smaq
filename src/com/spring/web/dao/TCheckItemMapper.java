@@ -181,12 +181,27 @@ public interface TCheckItemMapper {
     List<TCheckItem> selectAllLevelId(@Param("checkId")Integer checkId);
 
     /**
-     * 隐患治理记录查询
+     * 隐患治理记录查询之企业自查
      * 该公司全部的未删除的, 已检查的,和部门 不合格和已复查的
      * @param userId 公司id
      * @return
      */
     List<Map> selectListBystatus(@Param("userId") Integer userId,@Param("flag") Integer flag);
+
+    /**
+     * 隐患治理记录之行政检查
+     * @param userId
+     * @param flag
+     * @return
+     */
+    List<Map> selectXZListBystatus(@Param("userId") Integer userId,@Param("flag") Integer flag);
+    /**
+     * 隐患治理记录之部门抽查
+     * @param userId
+     * @param flag
+     * @return
+     */
+    List<Map> selectBMCCListBystatus(@Param("userId") Integer userId,@Param("flag") Integer flag);
 
     /**
      * 根据合格不合格区生成图表
@@ -228,6 +243,8 @@ public interface TCheckItemMapper {
      * @return
      */
     List<Integer> selectLevelIdByCheckId(Integer id);
+
+
 }
 
 

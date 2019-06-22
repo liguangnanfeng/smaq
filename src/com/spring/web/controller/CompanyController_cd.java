@@ -4017,11 +4017,9 @@ public class CompanyController_cd extends BaseController {
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
         List<Map> maps = tCheckItemMapper.selectAllByCheckId(checkId);
         List<TRecheck> tRechecks = tRecheckMapper.selectByCheckId(checkId);
-        if(tRechecks.size()>1){
-            tRechecks.remove(0);
-        }
+
         Integer id2 = tRechecks.get(0).getId();
-       /* for (int i = 0; i < maps.size(); i++) {
+        for (int i = 0; i < maps.size(); i++) {
             TRecheckItem id1 = tRecheckItemMapper.selectByCheckItemId((Integer) maps.get(i).get("id"));
             if (null != id1) {
                 id1.setStatus((Integer) maps.get(i).get("status"));
@@ -4039,7 +4037,7 @@ public class CompanyController_cd extends BaseController {
                 id1.setDeadline((Date) maps.get(i).get("deadline"));
                 tRecheckItemMapper.insertSelective(id1);
             }
-        }*/
+        }
         model.addAttribute("flag",flag);
         model.addAttribute("check", check);
         model.addAttribute("company", companyMapper.selectByPrimaryKey(Integer.parseInt(String.valueOf(check.get("userId")))));

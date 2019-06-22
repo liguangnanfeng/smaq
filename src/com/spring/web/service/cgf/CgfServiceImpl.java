@@ -389,24 +389,59 @@ public class CgfServiceImpl implements CgfService {
     /**
      * TODO 保存复查意见
      * 但是要修改的是checkItem中的数据进行保存才行
+     * 应该是先查询,判断有没有数据,没有数据保存,有数据直接修改
      *
      * @throws Exception
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public void recheckSave(RecheckSaveReqDTO dto) throws Exception {
         Date date = new Date();
-        TRecheck r = dto.getRecheck();
-        TCheck c = tCheckMapper.selectByPrimaryKey(r.getCheckId());
-        r.setUserId(c.getUserId());
-        r.setCreateTime(date);
-        tRecheckMapper.insertSelective(r);
-        Map<String, Object> m = new HashMap<String, Object>();
-        m.put("list", dto.getList());
-        m.put("recheckId", r.getId());
-        tRecheckItemMapper.insertBath(m);
-        // 保存check_Item表中的数据
+        Integer checkId = dto.getRecheck().getCheckId();
+        TCheck c = tCheckMapper.selectByPrimaryKey(checkId);
+        // 第一步先根据checkId查询 tRecheck
+        List<TRecheck> tRechecks = tRecheckMapper.selectByCheckId(checkId);
+        TRecheck recheck =null;
+        if(null==tRechecks.get(0)){
+            //没有就进行保存
+            recheck= dto.getRecheck();
+            recheck.setUserId(c.getUserId());
+            recheck.setCreateTime(date);
+            tRecheckMapper.insertSelective(recheck);
+        }else{
+            //表示有数据
+            recheck.setCreateTime(date);
+            tRecheckMapper.updateByPrimaryKeySelective(recheck);
+        }
 
         List<TRecheckItem> list = dto.getList();
+        if (list.size() > 0) {
+            for (TRecheckItem tRecheckItem : list) {
+                if (null != tRecheckItem) {
+                    // 设置条件,判断tRecheckItemMapper数据库有没有数据
+                    TRecheckItem tRecheckItem1 = tRecheckItemMapper.selectByCheckItemId(tRecheckItem.getCheckItemId());
+                    if(null==tRecheckItem1){
+                        tRecheckItem.setRecheckId(recheck.getId());
+                        // 表示数据库没有数据
+                        tRecheckItemMapper.insertSelective(tRecheckItem);
+                    }else{
+                        // 表示数据库有数据 就进行更新
+                        tRecheckItem1.setDeadline(tRecheckItem.getDeadline());
+                        tRecheckItem1.setStatus(tRecheckItem.getStatus());
+                        tRecheckItem1.setRecheckId(recheck.getId());
+                        if(null!=tRecheckItem.getFile()){
+                            tRecheckItem1.setFile(tRecheckItem.getFile());
+                        }
+                        if(null!=tRecheckItem.getMemo()){
+                            tRecheckItem1.setMemo(tRecheckItem.getMemo());
+                        }
+                        tRecheckItemMapper.updateByPrimaryKeySelective(tRecheckItem1);
+
+                    }
+                }
+            }
+        }
+        // 保存check_Item表中的数据
+
         if (list.size() > 0) {
             for (TRecheckItem tRecheckItem : list) {
                 if (null != tRecheckItem) {
@@ -428,17 +463,6 @@ public class CgfServiceImpl implements CgfService {
             }
         }
 
-     /*   for (TRecheckItem i : dto.getList()) {
-            m.clear();
-            m.put("id", i.getCheckItemId());
-            m.put("status", i.getStatus());
-            m.put("recheckTime", date);
-            if (2 == i.getStatus().intValue()) {
-                m.put("deadline", r.getNextTime());
-                m.put("planTime", r.getNextTime());
-            }
-            tCheckItemMapper.updRecheck(m);
-        }*/
     }
 
     /**

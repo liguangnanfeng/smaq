@@ -202,4 +202,9 @@
   <select id="selectByCheckItemId" resultType="com.spring.web.model.TRecheckItem">
     select * from  t_recheck_item_tbl where  check_item_id=#{id} order By id  limit 0,1 ;
   </select>
+
+  <!--理论上一条check_item数据对应的rechek item数据-->
+  <select id="selectByCheckIdtwo" resultType="com.spring.web.model.TRecheckItem">
+    select * from  t_recheck_item_tbl where  check_item_id=#{id} order By id limit 0,1;
+  </select>
 </mapper>

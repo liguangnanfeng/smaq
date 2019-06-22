@@ -4010,6 +4010,7 @@ public class CompanyController_cd extends BaseController {
      * 现在复查有多余的记录
      * 表示的就是整改合格之后的复查记录
      * 表示在这里将数据进行保存到 tRecheckItemMapper
+     * 这里也是需要改掉
      */
     @RequestMapping(value = "recheck-detail")
     public String recheckDetail(Integer checkId, Model model,Integer flag ) throws Exception {
@@ -4020,13 +4021,10 @@ public class CompanyController_cd extends BaseController {
 
         Integer id2 = tRechecks.get(0).getId();
         for (int i = 0; i < maps.size(); i++) {
+            // 这边就不需要记性保存了 因为如果有数据直接查询然后在进行保存
             TRecheckItem id1 = tRecheckItemMapper.selectByCheckItemId((Integer) maps.get(i).get("id"));
             if (null != id1) {
-                id1.setStatus((Integer) maps.get(i).get("status"));
-                id1.setFile((String) maps.get(i).get("files"));
-                id1.setMemo((String) maps.get(i).get("memo"));
-                id1.setDeadline((Date) maps.get(i).get("deadline"));
-                tRecheckItemMapper.updateByPrimaryKeySelective(id1);
+                // 表示是新添加的数据不需要进行保存
             } else {
                 id1 = new TRecheckItem();
                 id1.setCheckItemId((Integer) maps.get(i).get("id"));

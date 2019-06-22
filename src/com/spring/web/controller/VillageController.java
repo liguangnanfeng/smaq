@@ -3298,7 +3298,7 @@ public class VillageController extends BaseController {
                 checkLevel.setLevel1(companyManual.getLevel1());
                 checkLevel.setLevel2(companyManual.getLevel2());
                 checkLevel.setLevel3(companyManual.getLevel3());
-                checkLevel.setLevel4(companyManual.getMeasures());
+                checkLevel.setLevel4(companyManual.getFactors());
                 checkLevel.setFactors(companyManual.getFactors());
                 checkLevel.setGkcs(companyManual.getGkcs());
                 checkLevel.setGkzt(companyManual.getGkzt());
@@ -3331,7 +3331,6 @@ public class VillageController extends BaseController {
         }
     }
 
-
     /**
      * TODO PC端行政检查/部门抽查模板保存
      * <p>
@@ -3350,7 +3349,6 @@ public class VillageController extends BaseController {
             Integer checkType = (Integer) map.get("checkType"); //检查类型 -1 现场 -2 就是基础
             String a = (String) map.get("selectItems");
 
-
             if (null == a || "".equals(a)) {
                 result.setStatus("1");
                 result.setMess("页面保存数据为空");
@@ -3359,9 +3357,7 @@ public class VillageController extends BaseController {
 
             String[] split = a.split(",");
 
-
             List<Map<String, String>> inputItems = (List<Map<String, String>>) map.get("inputItems");
-
 
             User user = getLoginUser(request);
             // 保存model表数据

@@ -1972,6 +1972,7 @@ public class VillageController extends BaseController {
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
         model.addAttribute("userId", user.getId());
+      
         List<Map> list = new ArrayList<>();
         if(flag==1){
             list = tCheckItemMapper.selectListBystatus(user.getId(), flag);

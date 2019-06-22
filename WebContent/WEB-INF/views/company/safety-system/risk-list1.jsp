@@ -124,6 +124,7 @@
 
 
         function redit(id, type) {
+            console.log(id);
             var titles;
             titles = ['', "职业危害物理因素选择", '职业危害化学因素选择', '职业危害高危工艺选择', '物料辨识选择', '高危作业选择'];
             show_dialog(titles[type], '/company/safety-system/set-choose?id=' + id + "&type=" + type);
@@ -236,10 +237,11 @@
                             </c:if>
                             <c:if test="${!empty type}">
                                 <th style="padding:0;width:20%">车间/场所</th>
-                                <th style="width:10%">环节/部位</th>
+                                <th style="width:10%">岗位</th>
                             </c:if>
                             <c:if test="${type eq 1}">
-                                <th>职业危害物理因素</th>                            </c:if>
+                                <th>职业危害物理因素</th>
+                            </c:if>
                             <c:if test="${type eq 2}">
                                 <th>职业危害化学因素</th>
                             </c:if>

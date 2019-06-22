@@ -266,7 +266,7 @@
         distinguish_type t2 on t1.id = t2.dep_id AND  t2.flag = #{flag,jdbcType=INTEGER}
         WHERE
         t1.del = 0
-        AND t1.uid = #{uid,jdbcType=INTEGER} AND t1.flag = 1
+        AND t1.uid = #{uid,jdbcType=INTEGER} AND t1.flag = 1 AND t1.level = 2
         ORDER BY parName ASC
 
     </select>

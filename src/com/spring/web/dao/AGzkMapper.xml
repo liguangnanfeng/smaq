@@ -110,4 +110,16 @@
     where
         uid in (select id from a_company_manual_tbl where uid = #{uid} and del = 0)
   </select>
+
+  <select id="selectByUids" resultType="com.spring.web.model.AGzk">
+    select uid, hxys, wlys
+    from
+    a_gzk_tbl
+    where
+    uid = #{uid}
+  </select>
+
+
+
+
 </mapper>

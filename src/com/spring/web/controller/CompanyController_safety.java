@@ -452,9 +452,9 @@ public class CompanyController_safety extends BaseController {
                 return "company/safety-system/risk-list1";
             } else {
                 zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type);
-                acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);
+                /*acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);*/
                 model.addAttribute("zzjg",zzjg);
-                model.addAttribute("dL", acL);
+                /*model.addAttribute("dL", acL);*/
                 model.addAttribute("type", type);
                 return "company/safety-system/risk-list1";
             }
@@ -1046,8 +1046,6 @@ public class CompanyController_safety extends BaseController {
                 result.setMess("保存成功。");
             }
         }
-        return result;
-
 
        /* ACompanyManual a = aCompanyManualMapper.selectByPrimaryKey(ac.getId());
 
@@ -1056,10 +1054,10 @@ public class CompanyController_safety extends BaseController {
         ac.setLevel2(a.getLevel2());
         aCompanyManualMapper.updateByL1L2(ac);
 
-        aCompanyManualMapper.updateCompanyDlevel(user.getId());
+        aCompanyManualMapper.updateCompanyDlevel(user.getId());*/
 
         if (null != gzkhxys || null != gzkwlys) {
-            AGzk gzk = aGzkMapper.selectByPrimaryKey(ac.getId());
+            AGzk gzk = aGzkMapper.selectByPrimaryKey(user.getId());
             if (null == gzk) {
                 gzk = new AGzk(ac.getId(), gzkhxys, gzkwlys);
                 aGzkMapper.insertSelective(gzk);
@@ -1103,7 +1101,7 @@ public class CompanyController_safety extends BaseController {
                 }
             }
         }
-        return result;*/
+        return result;
     }
 
     /**
@@ -1246,7 +1244,7 @@ public class CompanyController_safety extends BaseController {
     @RequestMapping(value = "harm-list")
     public String gzk(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
-        List<AGzk> gzk = aGzkMapper.selectByUid(user.getId());
+        List<AGzk> gzk = aGzkMapper.selectByUids(user.getId());
         Set<String> s = new HashSet<String>();
         for (AGzk a : gzk) {
             if (StringUtils.isNotBlank(a.getWlys())) {
@@ -1265,7 +1263,7 @@ public class CompanyController_safety extends BaseController {
     @RequestMapping(value = "risk-information-list2")
     public String riskInformationList2(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
-        List<AGzk> gzk = aGzkMapper.selectByUid(user.getId());
+        List<AGzk> gzk = aGzkMapper.selectByUids(user.getId());
         Set<String> s = new HashSet<String>();
         for (AGzk a : gzk) {
             if (StringUtils.isNotBlank(a.getHxys())) {

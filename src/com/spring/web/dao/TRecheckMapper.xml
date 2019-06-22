@@ -185,12 +185,12 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-
    <select id="selectByCheckId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_recheck_tbl
     where check_id = #{checkId}
     order by id desc
+    limit 0,1;
   </select>
 </mapper>

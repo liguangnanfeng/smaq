@@ -394,14 +394,14 @@ public class CgfServiceImpl implements CgfService {
      * @throws Exception
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
-    public void recheckSave(RecheckSaveReqDTO dto) throws Exception {
+    public void recheckSave(RecheckSaveReqDTO dto,Date date1) throws Exception {
         Date date = new Date();
         Integer checkId = dto.getRecheck().getCheckId();
         TCheck c = tCheckMapper.selectByPrimaryKey(checkId);
         // 第一步先根据checkId查询 tRecheck
         List<TRecheck> tRechecks = tRecheckMapper.selectByCheckId(checkId);
         TRecheck recheck =null;
-        if(null==tRechecks.get(0)){
+        if(tRechecks.size()==0){
             //没有就进行保存
             recheck= dto.getRecheck();
             recheck.setUserId(c.getUserId());
@@ -409,6 +409,7 @@ public class CgfServiceImpl implements CgfService {
             tRecheckMapper.insertSelective(recheck);
         }else{
             //表示有数据
+            recheck = tRechecks.get(0);
             recheck.setCreateTime(date);
             tRecheckMapper.updateByPrimaryKeySelective(recheck);
         }
@@ -422,10 +423,11 @@ public class CgfServiceImpl implements CgfService {
                     if(null==tRecheckItem1){
                         tRecheckItem.setRecheckId(recheck.getId());
                         // 表示数据库没有数据
+                        tRecheckItem.setDeadline(date1);
                         tRecheckItemMapper.insertSelective(tRecheckItem);
                     }else{
                         // 表示数据库有数据 就进行更新
-                        tRecheckItem1.setDeadline(tRecheckItem.getDeadline());
+                        tRecheckItem1.setDeadline(date1);
                         tRecheckItem1.setStatus(tRecheckItem.getStatus());
                         tRecheckItem1.setRecheckId(recheck.getId());
                         if(null!=tRecheckItem.getFile()){
@@ -457,7 +459,9 @@ public class CgfServiceImpl implements CgfService {
                         tCheckItem.setMemo(tRecheckItem.getMemo());
                         tCheckItem.setRecheckMemo(tRecheckItem.getMemo());
                     }
-                    tCheckItem.setRecheckTime(tRecheckItem.getDeadline());
+                    tCheckItem.setDeadline(date1);
+                    tCheckItem.setPlanTime(new Date());
+                    tCheckItem.setRecheckTime(new Date());
                     tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
                 }
             }

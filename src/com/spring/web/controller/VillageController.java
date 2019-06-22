@@ -1496,7 +1496,7 @@ public class VillageController extends BaseController {
      * 但是在查询记录的时候，点击一个整改详情的时候，会
      */
     @RequestMapping(value = "check-rectification")
-    public String checkRectification(Integer id, Model model, Integer flag) throws Exception {
+    public String checkRectification(Integer id, Model model, Integer flag,Integer number) throws Exception {
         //log.error("checkId："+id);
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
         Integer type = tc.getType();
@@ -1564,18 +1564,18 @@ public class VillageController extends BaseController {
         //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
         model.addAttribute("itemL", iteml);
 
-
+        model.addAttribute("number",number);
         model.addAttribute("company", companyMapper.selectByPrimaryKey(check.getInteger("userId")));
         model.addAttribute("flag", flag);
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
         log.error("check-rectification：" + 6);
-
-        if (type == 9) {
+        return "village/danger/opinion-detail";
+        /*if (type == 9) {
             return "village/danger/opinion-detailrjcb";
         } else {
             return "village/danger/opinion-detail";
-        }
+        }*/
 
     }
 
@@ -1957,6 +1957,8 @@ public class VillageController extends BaseController {
 
     /**
      * TODO 隐患治理记录, 整改不合格的 新建立的页面
+     * 有三种情况,企业自查 行政检查  部门抽查
+     *
      *
      * @param request 请求
      * @param flag    方式
@@ -1970,19 +1972,46 @@ public class VillageController extends BaseController {
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
         model.addAttribute("userId", user.getId());
-        List<Map> list = tCheckItemMapper.selectListBystatus(user.getId(), flag);
-        for (Map map : list) {
-            Date realTime = (Date) map.get("realTime");
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-            String format = sdf.format(realTime);
-            String level = (String) map.get("level");
-            if(null!=level&&"红色".equals(level)){
-
-                map.put("fjgkfzr",company.getCharge()+company.getChargeContact());
+      
+        List<Map> list = new ArrayList<>();
+        if(flag==1){
+            list = tCheckItemMapper.selectListBystatus(user.getId(), flag);
+            for (Map map : list) {
+                Date realTime = (Date) map.get("realTime");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                String format = sdf.format(realTime);
+                String level = (String) map.get("level");
+                if(null!=level&&"红色".equals(level)){
+                    map.put("fjgkfzr",company.getCharge()+company.getChargeContact());
+                }
+                map.put("realTimeStr", format);
             }
-            map.put("realTimeStr", format);
+        }else if(flag==2){
+            // 表示的是行政检查
+            list = tCheckItemMapper.selectXZListBystatus(user.getId(), flag);
+            for (Map map : list) {
+                Date realTime = (Date) map.get("realTime");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                String format = sdf.format(realTime);
+                String level = (String) map.get("level");
+                map.put("realTimeStr", format);
+                map.put("fjgkfzr",company.getCharge()+company.getChargeContact());
+                // 获取
+            }
+        }else if(flag==3){
+            // 表示的是行政检查
+            list = tCheckItemMapper.selectBMCCListBystatus(user.getId(), flag);
+            for (Map map : list) {
+                Date realTime = (Date) map.get("realTime");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                String format = sdf.format(realTime);
+                String level = (String) map.get("level");
+                map.put("fjgkfzr",company.getCharge()+company.getChargeContact());
+                map.put("realTimeStr", format);
+            }
         }
         String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        model.addAttribute("companyName",user.getUserName());
         model.addAttribute("host",host);
         model.addAttribute("list", list);
         return "company/danger/hidden-danger-list";
@@ -3409,7 +3438,7 @@ public class VillageController extends BaseController {
                         TCheckItem tCheckItem = new TCheckItem();
                         tCheckItem.setLevelId(aDangerManual.getId());     // companyManualTbl的id
                         tCheckItem.setContent(aDangerManual.getFactors()); //检查内容
-                        tCheckItem.setLevels(aDangerManual.getLevel3());   // 场所/环节/部门 三级
+                        tCheckItem.setLevels(aDangerManual.getLevel1()+"/"+aDangerManual.getLevel2()+"/"+aDangerManual.getLevel3());   // 场所/环节/部门 三级
                         tCheckItem.setReference(aDangerManual.getReference()); // 依据
                         tCheckItem.setMemo(aDangerManual.getFactors());   // 较大危险因素
                         tCheckItem.setPartId(tCheckPart.getId());
@@ -3433,7 +3462,7 @@ public class VillageController extends BaseController {
                         TCheckItem tCheckItem = new TCheckItem();
                         tCheckItem.setLevelId(Integer.parseInt(id));     // companyManualTbl的id
                         tCheckItem.setContent(tLevel.getFactors()); //检查内容
-                        tCheckItem.setLevels(tLevel.getLevel3());   // 场所/环节/部门 三级
+                        tCheckItem.setLevels(tLevel.getLevel1()+"/"+tLevel.getLevel2()+"/"+tLevel.getLevel3());   // 场所/环节/部门 三级
                         tCheckItem.setReference(tLevel.getReference()); // 依据
                         tCheckItem.setMemo(tLevel.getFactors());   // 较大危险因素
                         tCheckItem.setPartId(tCheckPart.getId());

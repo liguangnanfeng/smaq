@@ -106,7 +106,7 @@ function showpicture(src){
       <c:choose>
         <c:when test="${check.flag == 1}">
           <button onClick="pr_()" class="btn btn-success radius ml-20" type="button" style="padding: 0 70px;">
-          <i class="Hui-iconfont mr-10">&#xe652;</i>打印
+          <i class="Hui-iconfont mr-10">&#xe652;</i>打印预览
           </button>
 <%--          <button onClick="parent.show_dialog('检查表打印', getRootPath()+'/company/plan-next-print?id=${check.id}')" class="btn btn-success radius"--%>
 <%--            type="button" style="padding: 0 60px;margin-right: 20px">--%>
@@ -117,7 +117,7 @@ function showpicture(src){
         </c:when>
         <c:otherwise>
           <button onClick="pr_()" class="btn btn-success radius ml-20" type="button" style="padding: 0 70px;">
-          <i class="Hui-iconfont mr-10">&#xe652;</i>打印
+          <i class="Hui-iconfont mr-10">&#xe652;</i>打印预览
           </button>
 <%--          <button onClick="parent.show_dialog('检查表打印', getRootPath()+'/village/check-document?checkId=${check.id}&flag=8')"--%>
 <%--            class="btn btn-success radius" type="button" style="padding: 0 60px;margin-right: 20px">--%>
@@ -142,7 +142,7 @@ function showpicture(src){
         </c:choose> -->
 
         <c:if test="${not empty number}">
-          <button onClick="location.href = '/village/check-rectification?flag=${flag}&id=${listM.id}'"
+          <button onClick="location.href = '/village/check-rectification?flag=${flag}&id=${listM.id}&number=${number}'"
                   class="btn btn-success radius" type="button" style="padding: 0 70px;margin-right: 20px">整改详情</button>
           <button onClick="location.href = '/company/recheck-add?checkId=${check.id}'"
                   class="btn btn-success radius" type="button" style="padding: 0 70px;">实施复查</button>
@@ -150,7 +150,7 @@ function showpicture(src){
 
         <!-- 已经有复查 -->
         <c:if test="${listM.c3 > 0}">
-          <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }&flag=${flag}'"
+          <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }&flag=${flag}&number=${number}'"
             class="btn btn-success radius" type="button" style="padding: 0 70px;">复查详情</button>
         </c:if>
 

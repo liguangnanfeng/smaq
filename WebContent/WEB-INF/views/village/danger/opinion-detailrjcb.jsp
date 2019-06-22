@@ -101,14 +101,14 @@ function init_all_box() {
     <%-- <button onClick="top.show_tab('排查治理记录', '${ly }/village/check-list?flag=${flag }')" class="btn btn-success radius" type="button" style="padding: 0 15px;margin-right: 20px">
         <i class="Hui-iconfont mr-10">&#xe652;</i>返回排查治理记录列表
     </button> --%>
-    <button onClick="location.href = '/company/check-detail?flag=${flag }&id=${listM.id }'"
+    <button onClick="location.href = '/company/check-detail?flag=${flag }&id=${listM.id }&number=${number}'"
               class="btn btn-success radius" type="button" style="padding: 0 60px;margin-right: 20px">检查详情</button>
       <!-- 判断是否有治理意见表 -->
       <c:if test="${listM.c > 0 && listM.status == 2 }">
        
         <!-- 已经有复查 -->
         <c:if test="${listM.c3 > 0}">
-          <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }'"
+          <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }&number=${number}'"
             class="btn btn-success radius" type="button" style="padding: 0 70px;">复查详情</button>
         </c:if>
       </c:if>

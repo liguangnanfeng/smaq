@@ -12,6 +12,7 @@ import com.spring.web.tobject.cgf.*;
 import org.springframework.ui.Model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public interface CgfService extends Serializable {
@@ -69,7 +70,7 @@ public interface CgfService extends Serializable {
     /**
     * @throws Exception 
     */
-    public void recheckSave(RecheckSaveReqDTO dto) throws Exception;
+    public void recheckSave(RecheckSaveReqDTO dto, Date date) throws Exception;
     
     /** 
      * @param tr 委托排查保存

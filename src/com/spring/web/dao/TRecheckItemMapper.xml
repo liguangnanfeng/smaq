@@ -157,10 +157,11 @@
     </foreach>
   </insert>
 
-  <!--查询所有的数据,并直接显示内容-->
+  <!--复查详情查询所有的数据查询所有的数据,并直接显示内容
+  -->
   <select id="selectByCheckId" resultType="java.util.Map">
       select
-       T1.id, T1.content, T1.reference,T1.levels, T0.status, T1.files, T0.file recheckFile, T0.deadline, T0.recheck_id recheckId,
+       T1.id, T1.content, T1.reference,T1.levels, T0.status, T1.files, T1.recheck_file as  recheckFile, T1.deadline, T0.recheck_id recheckId,
        T1.memo,
        T2.level1, T2.level2, T2.level3, (select name from t_check_part_tbl where id = T1.part_id) partName,
        T0.memo recheckMemo
@@ -176,7 +177,6 @@
       T3.check_id =#{checkId} AND T0.status>1 AND T1.memo!=''
     group by T1.id;
   </select>
-
 
   <select id="selectByCheckItemId" resultType="com.spring.web.model.TRecheckItem">
     select * from  t_recheck_item_tbl where  check_item_id=#{id} order By id  limit 0,1 ;

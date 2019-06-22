@@ -4011,9 +4011,10 @@ public class CompanyController_cd extends BaseController {
      * 表示的就是整改合格之后的复查记录
      * 表示在这里将数据进行保存到 tRecheckItemMapper
      * 这里也是需要改掉
+     * 没有数据的
      */
     @RequestMapping(value = "recheck-detail")
-    public String recheckDetail(Integer checkId, Model model,Integer flag ) throws Exception {
+    public String recheckDetail(Integer checkId, Model model,Integer flag,Integer number) throws Exception {
         Integer id = checkId;
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
         List<Map> maps = tCheckItemMapper.selectAllByCheckId(checkId);
@@ -4036,6 +4037,7 @@ public class CompanyController_cd extends BaseController {
                 tRecheckItemMapper.insertSelective(id1);
             }
         }
+        model.addAttribute("number",number);
         model.addAttribute("flag",flag);
         model.addAttribute("check", check);
         model.addAttribute("company", companyMapper.selectByPrimaryKey(Integer.parseInt(String.valueOf(check.get("userId")))));
@@ -4076,19 +4078,25 @@ public class CompanyController_cd extends BaseController {
     }
 
     /**
-     * 编辑检查表
+     * 实施整改
      */
     @RequestMapping(value = "recheck-save")
     public @ResponseBody
-    Result recheckSave(@RequestBody RecheckSaveReqDTO dto, HttpServletRequest request) {
+    Result recheckSave(@RequestBody RecheckSaveReqDTO dto, HttpServletRequest request) throws ParseException {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
-        dto.getRecheck().setCreateUser(user.getId());
-        // 首先保存
 
+        Date date = null;
+        if (null==dto.getNextTime()||"".equals(dto.getNextTime())){
+            date = new Date();
+        }else{
+            String nextTime =dto.getNextTime();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            date = simpleDateFormat.parse(nextTime);
+        }
 
         try {
-            cgfService.recheckSave(dto);
+            cgfService.recheckSave(dto,date);
         } catch (Exception e) {
             e.printStackTrace();
             result.setStatus("1");

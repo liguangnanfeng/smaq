@@ -166,10 +166,10 @@
                         <input type="text" value="" name="name" id="name" class="input-text">
 
                     </div>
-                    <div class="formControls col-xs-3 col-sm-3" style="margin-top:8px;display: none" id="dangerID">
+                    <%--<div class="formControls col-xs-3 col-sm-3" style="margin-top:8px;display: none" id="dangerID">
                         <input type="radio" name="killOrder" value="1" checked>现场
                         <input type="radio" name="killOrder" value="2" style="margin-left: 3px">基础
-                    </div>
+                    </div>--%>
                 </div>
                 <%--四个隐藏域 将域中的数据进行传递 --%>
                 <input type="hidden" id="type"/><!-- 1 添加企业 2添加部门 3添加班组 -->
@@ -201,7 +201,7 @@
         }
         $("#label_").text(titles[1]);
         $("#type").val(1);
-        $("#dangerID").css('display', 'none');
+       /* $("#dangerID").css('display', 'none');*/
         $("#win-add").modal("show");
         $("#name").focus();
     }
@@ -238,7 +238,7 @@
                     cid: $("#cid").val(),
                     level: 1,
                     id: $("#id").val(),
-                    dangerId: $("input[name='killOrder']:checked").val()
+                   /* dangerId: $("input[name='killOrder']:checked").val()*/
                 }, function (result) {
                     layer.close(i);
                     $("#win-add").modal("hide");
@@ -313,7 +313,7 @@
                 }
                 $("#label_").text(titles[1]);
                 $("#type").val(1);
-                $("#dangerID").css('display', 'none');
+                /*$("#dangerID").css('display', 'none');*/
                 $("#win-add").modal("show");
                 $("#name").focus();
             } else {
@@ -351,7 +351,7 @@
                 }
                 $("#label_").text(titles[2]);
                 $("#type").val(2);
-                $("#dangerID").css('display', 'block');
+               /* $("#dangerID").css('display', 'block');*/
                 $("#win-add").modal("show");
                 $("#name").focus();
             } else {
@@ -390,7 +390,7 @@
                 }
                 $("#label_").text(titles[3]);
                 $("#type").val(3);
-                $("#dangerID").css('display', 'none');
+                /*$("#dangerID").css('display', 'none');*/
                 $("#win-add").modal("show");
                 $("#name").focus();
             } else {
@@ -429,11 +429,11 @@
         } else {
             titles = ["", "公司名称", "车间名称", "岗位/部位名称"];
         }
-        if (type == 2) {
+       /* if (type == 2) {
             $("#dangerID").css('display', 'block');
         } else {
             $("#dangerID").css('display', 'none');
-        }
+        }*/
 
         $("#label_").text(titles[type]);
         $("#type").val(type);

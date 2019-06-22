@@ -1,8 +1,9 @@
 package com.spring.web.dao;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 import com.spring.web.model.AGzk;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface AGzkMapper {
     /**
@@ -54,4 +55,6 @@ public interface AGzkMapper {
     int updateByPrimaryKey(AGzk record);
     
     List<AGzk> selectByUid(@Param("uid") Integer uid);
+
+    List<AGzk> selectByUids(@Param("uid")Integer uid);
 }

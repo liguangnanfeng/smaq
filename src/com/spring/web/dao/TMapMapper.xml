@@ -4,7 +4,7 @@
 
     <!--新增图片-->
     <insert id="insertTMap" parameterType="com.spring.web.model.request.TMap" >
-        insert into t_map values(#{userId},#{files});
+        insert into t_map (userId,files) values(#{userId},#{files});
     </insert>
 
     <!--查询图片-->

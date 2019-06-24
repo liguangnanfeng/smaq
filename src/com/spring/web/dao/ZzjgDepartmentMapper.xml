@@ -401,7 +401,6 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-
     <!-- 根据 ID 修改  -->
     <update id="updateDangerId" parameterType="com.spring.web.model.ZzjgDepartment">
         update zzjg_department_tbl
@@ -409,8 +408,11 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="selectAllByUserId" resultType="String" parameterType="Integer"  >
-        select name from zzjg_department_tbl where uid=#{id} and level=2 and del=0   and flag=1 group by name ;
+    <!--
+        根据父级id进行排序
+    -->
+    <select id="selectAllByUserId" resultType="String" parameterType="Integer">
+        select name from zzjg_department_tbl where uid=#{id} and level=2 and del=0   and flag=1 order by pid ;
     </select>
 
 </mapper>

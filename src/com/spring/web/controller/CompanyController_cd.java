@@ -2809,6 +2809,7 @@ public class CompanyController_cd extends BaseController {
                     if (null == tLevel) {
                         break;
                     }
+                    a.put("levels",tLevel.getLevel1()+tLevel.getLevel2()+tLevel.getLevel3());
                     a.put("levelId", Integer.parseInt(levelsArr[i]));
                     a.put("dangerType", tLevel.getType());
                     a.put("factors", tLevel.getFactors());
@@ -2826,6 +2827,7 @@ public class CompanyController_cd extends BaseController {
                     a.put("dangerType", tCheck.getType());
                     a.put("factors", map.get("content"));
                     a.put("measures", map.get("reference"));
+                    a.put("levels",map.get("levels"));
                     if (null == a.get("measures") || "".equals(a.get("measures"))) {
                         a.put("measures", map.get("content"));
 
@@ -2847,6 +2849,7 @@ public class CompanyController_cd extends BaseController {
                     if (null == companyManual) {
                         break;
                     }
+                    a.put("levels",companyManual.getLevel1()+companyManual.getLevel2()+companyManual.getLevel3());
                     a.put("levelId", Integer.parseInt(levelsArr[i]));
                     a.put("dangerType", companyManual.getType());
                     a.put("factors", companyManual.getFactors());
@@ -2860,6 +2863,7 @@ public class CompanyController_cd extends BaseController {
                 List<Map<String, Object>> maps = tCheckItemMapper.selectByCheckId(tCheck.getId());
                 for (Map<String, Object> map : maps) {
                     Map<String, Object> a = new HashMap<String, Object>();
+                    a.put("levels",map.get("levels"));
                     a.put("levelId", map.get("level_id"));
                     a.put("dangerType", tCheck.getType());
                     a.put("factors", map.get("content"));

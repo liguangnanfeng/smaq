@@ -136,8 +136,8 @@
         }
 
         .jt {
-            max-width:80%;
-			width:auto;
+            max-width: 80%;
+            width: auto;
             height: auto;
             max-height: 80%;
         }
@@ -147,6 +147,9 @@
     <%--    截取地图js--%>
 
     <script type="text/javascript">
+        function print() {
+            $("#jietu").jqprint();
+        }
     </script>
 
 </head>
@@ -165,7 +168,12 @@
         <i class="Hui-iconfont">&#xe68f;</i>
     </a>
 
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
+    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;"
+       href="javascript:history.back(-1)" title="返回">返回</a>
+    <a class="btn btn-success radius r " style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;"
+       href="javascript:print();" title="打印">
+        打印
+    </a>
     <a class="btn btn-success radius r " style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;"
        href="javascript:showMAp();" title="查看地图">
         查看地图
@@ -177,6 +185,7 @@
 
 
 <div id="jietu" class="jtrq">
+    <h3 id="title" style="margin-bottom: 20px;">${companyName}风险分布图</h3>
     <img id="fxt" src="" class="jt"/>
 </div>
 
@@ -198,7 +207,7 @@
             success: function (res) {
                 //请求成功时处理
                 if (res != null) {
-                    $("#fxt").attr("src",res);
+                    $("#fxt").attr("src", res);
                     <%--$("#fxt").attr("src", '${ly}/images/ceshi.jpg');--%>
                     ;
                 } else {

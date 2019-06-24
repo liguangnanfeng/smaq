@@ -55,23 +55,12 @@
         }
 
         .photo {
-        display: inline-block;
         text-align: center;
+        width:97%;
         padding: 10px;
         height: 245px;
         box-shadow: 0 0 5px #f1f1f1;
-        margin-top: 10px;
-        float: left;
-        }
-        @media screen and (min-width: 1400px) {
-        .photo {
-        width: 31%;
-        }
-        }
-        @media screen and (max-width: 1400px) {
-        .photo {
-        width: 47%;
-        }
+        margin-top: 20px;
         }
         .photo img {
         max-width: 100%;
@@ -116,6 +105,11 @@
         margin: 0 auto;
         width: 500px
         }
+        .contarName{
+        text-align: center;
+        font-size: 20px;
+        margin-top: 10px;
+        }
         </style>
         </head>
         <body style="padding:0 15px;">
@@ -130,16 +124,17 @@
         </span>
         </div>
         <button class="btn btn-primary" onclick="upload()">确定上传</button>
+            <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
         </div>
         </div>
-
+        <p class="contarName">${compangName}风险分布图</p>
         <c:forEach items="${list }" var="be">
             <form action="#" id="imgform${be.id}" class="photo">
             <input name="src" value="${be.url1}" style="display:none;">
             <div style="height:100%;position: relative;">
-            <img src="${be.url}">
+            <a href="${be.url}" target="_blank"><img src="${be.url}"></a>
             <%--<span onclick="del(${be.id})">X</span>--%>
-            <p style="position: absolute;bottom: 0;left: 38%;margin-bottom: 0;">
+            <p style="position: absolute;bottom: 0;left: 45.5%;margin-bottom: 0;">
             <button class="detailBtn" onclick="amend('${be.id}','${be.coordinate}')">编辑</button>
             <button class="detailBtn" onclick="del(${be.id})">删除</button>
             </p>
@@ -151,6 +146,7 @@
         <script type="text/javascript" src="${ly}/js/html2canvas.min.js"></script>
         <script type="text/javascript">
         $(function () {
+        <%--$('.contarName').text(getCookie('companyName')+'公司风险分布图')--%>
         $('.table-sort').dataTable({
         "aaSorting": [[0, "asc"]],//默认第几个排序
         "bStateSave": false,//状态保存
@@ -233,6 +229,9 @@
         close: function (t) {
         return t.length, !0
         },
+        clickArea: function() {},
+        edit: function(t) {},
+        startArea: function() {},
         confirm: function (t) {
         <%-- 提交 --%>
 
@@ -258,7 +257,6 @@
         useCORS: true, allowTaint: false, foreignObjectRendering: true, taintTest: true, scale: 1
         }).then(function (canvas) {
         var image = canvas.toDataURL("image/png", 0.1);
-            console.log(image)
         $.ajax({
         type: "POST",
         url: getRootPath() + '/company/safety-system/control-addCoordinate',

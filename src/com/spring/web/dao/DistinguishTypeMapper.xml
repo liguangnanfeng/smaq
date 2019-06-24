@@ -26,7 +26,6 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
-
     <select id="selectNum" resultType="com.spring.web.model.DistinguishType" >
         SELECT
         *
@@ -35,6 +34,17 @@
         WHERE
         dep_id = #{dep_id,jdbcType=INTEGER} and flag = #{flag,jdbcType=INTEGER} and user_id = #{user_id,jdbcType=INTEGER}
     </select>
+
+
+    <select id="selectNums" resultType="com.spring.web.model.DistinguishType"  >
+        select
+        <include refid="Base_Column_List"/>
+        from
+        distinguish_type
+        where
+        dep_id = #{dep_id,jdbcType=INTEGER} and flag = #{flag,jdbcType=INTEGER} and user_id = #{user_id,jdbcType=INTEGER}
+    </select>
+
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from distinguish_type

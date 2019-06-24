@@ -994,7 +994,7 @@ public class CompanyController_safety extends BaseController {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         // 根据 dep_id 去数据库查询数据
-        DistinguishType distinguishType1 = distinguishTypeMapper.selectNum(ac.getId(),ac.getType(),user.getId());
+        DistinguishType distinguishType1 = distinguishTypeMapper.selectNum(ac.getId(),Integer.parseInt(ac.getType()),user.getId());
         DistinguishType distinguishType;
         if (null == distinguishType1){
             distinguishType = new DistinguishType();
@@ -1127,7 +1127,12 @@ public class CompanyController_safety extends BaseController {
     public String setChoose(Model model, Integer id, Integer type, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         model.addAttribute("id",id);
-        model.addAttribute("ac", aCompanyManualMapper.selectByPrimaryKey(id));
+        DistinguishType distinguishType = distinguishTypeMapper.selectNums(id,type,user.getId());
+        if (null != distinguishType){
+            model.addAttribute("ac",distinguishType.getDanger_point());
+        }
+
+        /*model.addAttribute("ac", aCompanyManualMapper.selectByPrimaryKey(id));*/
         model.addAttribute("aGzk", aGzkMapper.selectByPrimaryKey(id));
         model.addAttribute("type", type);
         if (type.intValue() == 1) {//物理因素
@@ -1319,12 +1324,17 @@ public class CompanyController_safety extends BaseController {
     public String selectPhoto(HttpServletRequest request, Model model) {
 
         User user = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        model.addAttribute("compangName",company.getName());
         List<ImportPhoto> importPhotos = importPhotoMapper.selectPhoto(user.getId());
         if(null== importPhotos || importPhotos.size()==0){
             model.addAttribute("list", importPhotos);
 
             return "company/safety-system/control-photo";
         }
+
+
+
 
         // 不是就表示有数据
        /* for (ImportPhoto importPhoto : importPhotos) {

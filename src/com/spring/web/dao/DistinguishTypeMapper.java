@@ -9,8 +9,10 @@ public interface DistinguishTypeMapper {
 
     int insert(DistinguishType distinguishType);
 
-    DistinguishType selectNum(@Param("dep_id")Integer dep_id, @Param("flag")String flag, @Param("user_id")Integer user_id);
+    DistinguishType selectNum(@Param("dep_id")Integer dep_id, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
     boolean updatePoint(DistinguishType distinguishType);
+
+    DistinguishType selectNums(@Param("dep_id")Integer dep_id,@Param("flag") Integer flag, @Param("user_id")Integer user_id);
 }
 

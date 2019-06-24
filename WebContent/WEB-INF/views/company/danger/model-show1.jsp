@@ -102,7 +102,7 @@ function uploadpicture(obj){
         </tr>
 
         </c:forEach>
-        
+
         <tr>
           <td colspan="3">
             <div class="div_pleft  mt-10 mb-10">检查人员签字：</div>
@@ -121,6 +121,8 @@ function uploadpicture(obj){
     </table>
   </div>
 </div>
-
+<biv>
+  显示内容:  ${itemL }
+</biv>
 </body>
 </html>

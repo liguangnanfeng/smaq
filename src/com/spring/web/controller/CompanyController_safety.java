@@ -1056,14 +1056,30 @@ public class CompanyController_safety extends BaseController {
 
         aCompanyManualMapper.updateCompanyDlevel(user.getId());*/
 
+
         if (null != gzkhxys || null != gzkwlys) {
             AGzk gzk = aGzkMapper.selectByPrimaryKey(user.getId());
+
             if (null == gzk) {
-                gzk = new AGzk(ac.getId(), gzkhxys, gzkwlys);
+                gzk = new AGzk(user.getId(), gzkhxys, gzkwlys);
                 aGzkMapper.insertSelective(gzk);
             } else {
-                gzk.setHxys(gzkhxys);
-                gzk.setWlys(gzkwlys);
+                if ("" != gzkhxys && null != gzkhxys ){
+                    if (null != gzk.getHxys() && "" != gzk.getHxys()){
+                        gzk.setHxys(gzkhxys+","+gzk.getHxys());
+                    }else {
+                        gzk.setHxys(gzkhxys);
+                    }
+                }
+
+                if ("" != gzkwlys && null != gzkwlys ){
+                    if (null != gzk.getWlys() && "" != gzk.getWlys()){
+                        gzk.setWlys(gzkwlys+","+gzk.getWlys());
+                    }else {
+                        gzk.setWlys(gzkwlys);
+                    }
+                }
+
                 aGzkMapper.updateByPrimaryKeySelective(gzk);
             }
         }
@@ -1239,7 +1255,9 @@ public class CompanyController_safety extends BaseController {
     }
 
     /**
-     * 告知卡
+     * create by  : 小明！！！
+     * description: 物理因素告知牌
+     * create time: 16:38 2019/6/22
      */
     @RequestMapping(value = "harm-list")
     public String gzk(Model model, HttpServletRequest request) throws Exception {
@@ -1258,7 +1276,9 @@ public class CompanyController_safety extends BaseController {
     }
 
     /**
-     * 主要物质理化、危险、有害特性表
+     * create by  : 小明！！！
+     * description: 化学因素告知牌
+     * create time: 16:38 2019/6/22
      */
     @RequestMapping(value = "risk-information-list2")
     public String riskInformationList2(Model model, HttpServletRequest request) throws Exception {

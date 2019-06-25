@@ -110,6 +110,11 @@
             margin-right: 8px;
         }
     </style>
+    <script>
+        $(function(){
+            $('#partNamme').val('${ids}');
+        })
+    </script>
     <script type="text/javascript">
 
         /* 弹窗工具添加 */
@@ -217,6 +222,15 @@
                 <button class="btn btn-primary radius" onClick="selectBase()">基础管理</button>
 
                 <button class="btn btn-primary radius" onClick=" BaseSet()">部门确定</button>
+
+                <c:if test="${number == null || number != 3}">
+                    <select class="sel_area" id="partNamme"  onchange="Partname()" >
+                        <option value="" >请选择</option>
+                        <c:forEach items="${zzjgDep1 }" var="be">
+                            <option value="${be.id}" >${be.name }</option>
+                        </c:forEach>
+                    </select>
+                </c:if>
 
             </c:if>
 
@@ -568,6 +582,16 @@
         window.location.href = '${ly}/company/safety-system/risk-list?number=3'
     }
 
+
+    function Partname() {
+        var vs = $('select  option:selected').val();
+
+        window.location.href = '${ly}/company/safety-system/risk-list?dmid='+vs+"&number="+${number}
+
+    }
+
+
+
     function checkShowType(obj, id) {
         var parent = $(obj).parent();
         var xc = parent.children('input[name="xc"]');  //现场checkbox
@@ -586,8 +610,6 @@
             }
 
         })
-
-
     }
 
 

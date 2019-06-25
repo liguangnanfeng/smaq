@@ -183,4 +183,21 @@ public class ZzjgDepartment {
     public void setFlag(Integer flag) {
         this.flag = flag;
     }
+
+    @Override
+    public String toString() {
+        return "ZzjgDepartment{" +
+                "id=" + id +
+                ", ctime=" + ctime +
+                ", utime=" + utime +
+                ", del=" + del +
+                ", name='" + name + '\'' +
+                ", cid=" + cid +
+                ", pid=" + pid +
+                ", level=" + level +
+                ", uid=" + uid +
+                ", dangerId=" + dangerId +
+                ", flag=" + flag +
+                '}';
+    }
 }

@@ -1667,10 +1667,11 @@ public class VillageController extends BaseController {
      * 8 现场检查记录
      */
     @RequestMapping(value = "check-document")
-    public String checkDocument(Integer checkId, Integer flag, Model model, TRectification tr) throws Exception {
+    public String checkDocument(HttpServletRequest request, Integer checkId, Integer flag, Model model, TRectification tr) throws Exception {
         if (null == flag) {
             flag = 8;// 现场检查记录
         }
+        User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("checkId", checkId);
         m.put("flag", flag);
@@ -1688,13 +1689,14 @@ public class VillageController extends BaseController {
             model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(checkId, null));
             model.addAttribute("itemL1", tCheckItemMapper.selectDangerByCheckId(checkId, 1));
             model.addAttribute("rectification", tr);
-            model.addAttribute("company", companyMapper.selectByPrimaryKey(check.getUserId()));
         } else {
             model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(checkId, null));
             model.addAttribute("itemL1", tCheckItemMapper.selectDangerByCheckId(checkId, 1));
             model.addAttribute("document", doc);
             return "village/danger/opinion-detail2";
         }
+        model.addAttribute("check",check);
+        model.addAttribute("company",companyMapper.selectByPrimaryKey(user.getId()));
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
         model.addAttribute("userId", check.getUserId());
         model.addAttribute("checkId", checkId);

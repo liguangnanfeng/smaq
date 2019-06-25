@@ -159,14 +159,14 @@
         <p class="MsoNormal">
             <span style="vertical-align: bottom;"><span>检查人员（签名）：</span></span>
             <%-- <u><span style="border-bottom:1px solid #333;vertical-align: text-bottom; width:20%;display:inline-block;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;${check.cheker }&nbsp;&nbsp;&nbsp;&nbsp;</span></u> --%>
-            <u><span id="id1" style="border-bottom:1px solid #333;vertical-align: text-bottom; width:15%;text-align: center;display:inline-block;" contenteditable="true"></span></u>
+            <u><span id="id1" style="border-bottom:1px solid #333;vertical-align: text-bottom; width:15%;text-align: center;display:inline-block;" contenteditable="true">${check.cheker}</span></u>
             &nbsp;&nbsp;&nbsp;<u><span id="id2" style="border-bottom:1px solid #333;vertical-align: text-bottom; width:15%;text-align: center;display:inline-block;" contenteditable="true"></span></u>
         </p>
         <p class="MsoNormal" style="text-align:left;margin-top:10px;height:180px;">
             <span style="float:left;margin: 0 8px 0 0;">检查单位（盖章）:</span>
             
             <span style="float:left;">
-            	<span contenteditable="true" style="border-bottom:1px solid #333;float:left;padding: 0 20px;line-height: 22px;height: 22px;"></span>
+            	<span contenteditable="true" style="border-bottom:1px solid #333;float:left;padding: 0 20px;line-height: 22px;height: 22px;">${check.checkCompany}</span>
             </span>
             
             <span style="" id="zhang_img">

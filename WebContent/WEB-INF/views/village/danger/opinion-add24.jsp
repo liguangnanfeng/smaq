@@ -101,7 +101,7 @@
         </div>
         <p class="MsoNormal" style="margin-top:30px">
             <span style=""><span>被复查单位负责人（签名）：</span></span>
-            <u><span style="text-decoration:underline;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
+            <u><span style="text-decoration:underline;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${company.charge}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
         </p>
         <p class="MsoNormal" style="margin-top:15px;">
             <span style=""><span>安全生产检查人员（签名）：</span> </span>

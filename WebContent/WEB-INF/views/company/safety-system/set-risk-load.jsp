@@ -15,35 +15,40 @@
 <style type="text/css">
 </style>
 <script type="text/javascript">
+  console.log('${ac}');
 var type = '${type}';
-var hxys = '${ac.hxys}';
-var gy = '${ac.gy}';
-var wlbs = '${ac.wlbs}';
-var gwzy = '${ac.gwzy}';
 var id = '${id}';
+var ac = '${ac}';
+var list = ac.split("!@#");
+
+<%--var hxys = '${ac.hxys}';--%>
+<%--var gy = '${ac.gy}';--%>
+<%--var wlbs = '${ac.wlbs}';--%>
+<%--var gwzy = '${ac.gwzy}';--%>
+
 $(function() {
-  var material = $("#material").text();
-  
-  var list;
-  if(type == '1') {
-    list = hxys.split("!@#");
-  }
-  if(type == '2') {
-    list = material.split("!@#");
-  }
-  if(type == '3') {
-    list = gy.split("!@#");
-  }
-  if(type == '4') {
-    list = wlbs.split("!@#");
-  }
-  if(type == '5') {
-    list = gwzy.split("!@#");
-  }
- /* $.each(list, function(i,item) {
+  <%--var material = $("#material").text();--%>
+
+  <%--var list;--%>
+  <%--if(type == '1') {--%>
+    <%--list = hxys.split("!@#");--%>
+  <%--}--%>
+  <%--if(type == '2') {--%>
+    <%--list = material.split("!@#");--%>
+  <%--}--%>
+  <%--if(type == '3') {--%>
+    <%--list = gy.split("!@#");--%>
+  <%--}--%>
+  <%--if(type == '4') {--%>
+    <%--list = wlbs.split("!@#");--%>
+  <%--}--%>
+  <%--if(type == '5') {--%>
+    <%--list = gwzy.split("!@#");--%>
+  <%--}--%>
+  $.each(list, function(i,item) {
     $(":checkbox[value='"+item+"']").prop("checked", true);
-  })*/
-  
+  })
+
 });
 
 function ser() {
@@ -95,7 +100,7 @@ function save() {
 </script>
 </head>
 <body>
-  <div style="display: none;" id="material">${ac.material}</div>
+  <%--<div style="display: none;" id="material">${ac.material}</div>--%>
   <div class="page-container">
     <div class="div-set">
       <div class="div-redit" style="display: block;">

@@ -307,7 +307,8 @@ public class CompanyController_cd extends BaseController {
             result.setMap("item", qccData.getData());
             return result;
         }
-        String url = "http://i.yjapi.com/ECIV4/GetDetailsByName";
+        /*String url = "http://i.yjapi.com/ECIV4/GetDetailsByName";*/
+        String url = "http://api.qichacha.com/ECIV4/Search";
         String key = "30871bb9213d45489680e4e7ec48c52e";
         String queryString = "key=" + key + "&keyword=" + companyName;
         String data = WeixinUtil.doGet(url, queryString, "UTF-8", false);

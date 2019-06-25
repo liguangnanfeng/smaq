@@ -975,7 +975,7 @@
 <script type="text/javascript" src="${ly}/js/html2canvas.min.js"></script>
 <script type="text/javascript">
     var ic = new ImgCropper("bgDiv", "dragDiv",
-        localStorage.getItem('basic'),
+        sessionStorage.getItem('basic'),
         {
             Width: 1000, Height: 500, Color: "#000",
             Resize: true,
@@ -983,7 +983,6 @@
             RightDown: "rRightDown", LeftDown: "rLeftDown", RightUp: "rRightUp", LeftUp: "rLeftUp",
             Preview: "viewDiv", viewWidth: 300, viewHeight: 300
         })
-
 
     function save() {
 
@@ -1024,7 +1023,7 @@
                                 //请求成功时处理
                                 console.log(res,'请求成功')
                                  alert('截图保存成功')
-                
+
                                 setTimeout(function () {
                                     window.history.back();
                                 },1000);

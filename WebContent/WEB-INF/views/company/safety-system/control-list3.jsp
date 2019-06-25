@@ -15,12 +15,11 @@
     <meta name="keywords" content="风险分级管控 隐患排查治理智能化平台">
     <meta name="description" content="风险分级管控 隐患排查治理智能化平台">
 
-<%--    <link rel="stylesheet" type="text/css" href="css/normalize.css" />--%>
+    <%--    <link rel="stylesheet" type="text/css" href="css/normalize.css" />--%>
 
-<%--    <link rel="stylesheet" type="text/css" href="css/demo.css" />--%>
+    <%--    <link rel="stylesheet" type="text/css" href="css/demo.css" />--%>
 
-<%--    <link rel="stylesheet" type="text/css" href="css/component.css" />--%>
-
+    <%--    <link rel="stylesheet" type="text/css" href="css/component.css" />--%>
 
 
     <style type="text/css">
@@ -62,19 +61,62 @@
             position: fixed;
             z-index: 998;
             background-color: #fcf9f2;
-            /*display: none;*/
+            display: none;
             border-radius: 5px;
             box-shadow: 2px 2px 5px #333333;
-            height: 300px;
-            width:400px;
-            right:0px;
+            width: 300px;
+            right: 10px;
+            top: 45px;
             overflow-y: auto;
+            max-height: calc(100% - 100px);
         }
 
         .my_delete {
             float: right;
             margin-top: 5px;
 
+        }
+
+
+         .my_white{
+            color: #fff!important;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .my_black{
+            color: #000!important;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .my_flex{
+            display: -webkit-box; /* Chrome 4+, Safari 3.1, iOS Safari 3.2+ */
+            display: -moz-box; /* Firefox 17- */
+            display: -webkit-flex; /* Chrome 21+, Safari 6.1+, iOS Safari 7+, Opera 15/16 */
+            display: -moz-flex; /* Firefox 18+ */
+            display: -ms-flexbox; /* IE 10 */
+            display: flex; /* Chrome 29+, Firefox 22+, IE 11+, Opera 12.1/17/18, Android 4.4+ */
+
+            -webkit-box-orient: vertical;
+            -ms-flex-direction: column;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+        .my_mark{
+            position: relative;
+            left:-2px;
         }
     </style>
 
@@ -132,6 +174,9 @@
     <%--    截取地图js--%>
 
     <script type="text/javascript">
+        var hasMark = false;
+
+
     </script>
 
 </head>
@@ -144,15 +189,15 @@
     <span class="c-gray en">&gt;</span> <span>${company.name}风险分布图</span>
 
     <!--</div>-->
-   
+
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
        href="javascript:location.replace(location.href);" title="刷新">
         <i class="Hui-iconfont">&#xe68f;</i>
     </a>
-<%--	<a id="fxan" class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;display:none"--%>
-<%--       href="javascript:showJiePing();" title="显示企业风险图片">--%>
-<%--        显示风险图片--%>
-<%--    </a>--%>
+    <%--	<a id="fxan" class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;display:none"--%>
+    <%--       href="javascript:showJiePing();" title="显示企业风险图片">--%>
+    <%--        显示风险图片--%>
+    <%--    </a>--%>
 
 
     <a class="btn btn-success radius r " style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;"
@@ -172,12 +217,48 @@
 <%--截图地图--%>
 
 <a href="${ly }/api/map/jietu" data-title="截图"
- style="display: none" id="tiaozhuan">跳转</a>
+   style="display: none" id="tiaozhuan">跳转</a>
 <%--隐藏的风险图--%>
 
 
-<div class="div_cmap" id="map" style="position: absolute;top: 0px;bottom: 50px;"></div>
+<div class="div_cmap" id="map" style="position: absolute;top: 0px;bottom: 50px;">
 
+</div>
+<%--    截图时悬浮的悬浮框--%>
+<div id="juxfk" >
+    <table id="juxfkable" class="table table-border table-bordered table-bg table-hover table-sort">
+        <thead>
+        <tr class="text-c">
+            <th style="width:60px">序号</th>
+            <th style="min-width:140px">岗位/部位</th>
+            <th style="min-width:100px">风险等级</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${list2 }" var="be" varStatus="index">
+            <c:if test="${not empty be.lnglat}">
+                <script>
+                    hasMark=true;
+                </script>
+                <tr >
+                    <td class="text-c">${index.index + 1}</td>
+                    <td><c:if test="${not empty be.level1}">${be.level1 } > ${be.level2 }</c:if></td>
+                    <td class="text-c">
+                        <c:choose>
+                            <c:when test="${be.level eq '红色'}"><font class="col-a">${be.level}</font></c:when>
+                            <c:when test="${be.level eq '橙色'}"><font class="col-b">${be.level}</font></c:when>
+                            <c:when test="${be.level eq '黄色'}"><font class="col-c">${be.level}</font></c:when>
+                            <c:when test="${be.level eq '蓝色'}"><font class="col-d">${be.level}</font></c:when>
+                        </c:choose>
+                    </td>
+
+                </tr>
+            </c:if>
+        </c:forEach>
+        </tbody>
+    </table>
+
+</div>
 
 <!--<div class="input-card" style="padding: 10px 10px 10px;text-align: center;position:fixed;top: 60px;right:
 140px;z-index: 999;background-color: #fcf9f2;border-radius: 5px;box-shadow: 2px 2px 5px #333333;">
@@ -197,9 +278,9 @@
             <th style="min-width:100px">岗位/部位</th>
             <th style="min-width:100px">风险等级</th>
             <th style="min-width:100px">地图标示</th>
-<%--            <th style="min-width:150px">风险类型</th>--%>
-<%--            <th style="min-width:200px">风险因素</th>--%>
-<%--            <th style="min-width:200px">防范措施</th>--%>
+            <%--            <th style="min-width:150px">风险类型</th>--%>
+            <%--            <th style="min-width:200px">风险因素</th>--%>
+            <%--            <th style="min-width:200px">防范措施</th>--%>
         </tr>
         </thead>
         <tbody>
@@ -232,52 +313,6 @@
     </table>
 
 </div>
-
-<%--截图时悬浮的悬浮框--%>
-<div id="juxfk">
-    <table id="juxfkable" class="table table-border table-bordered table-bg table-hover table-sort">
-        <thead>
-        <tr class="text-c">
-            <th style="width:40px">序号</th>
-            <th style="min-width:100px">岗位/部位</th>
-            <th style="min-width:100px">风险等级</th>
-            <th style="min-width:100px">地图标示</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${list2 }" var="be" varStatus="index">
-            <tr id="line_${index.index + 1}">
-                <td class="text-c">${index.index + 1}</td>
-                <td><c:if test="${not empty be.level1}">${be.level1 } > ${be.level2 }</c:if></td>
-                <td class="text-c">
-                    <c:choose>
-                        <c:when test="${be.level eq '红色'}"><font class="col-a">${be.level}</font></c:when>
-                        <c:when test="${be.level eq '橙色'}"><font class="col-b">${be.level}</font></c:when>
-                        <c:when test="${be.level eq '黄色'}"><font class="col-c">${be.level}</font></c:when>
-                        <c:when test="${be.level eq '蓝色'}"><font class="col-d">${be.level}</font></c:when>
-                    </c:choose>
-                </td>
-                <td class="text-c">
-                    <c:choose>
-                        <c:when test="${not empty be.lnglat}"><font style="color:green">是</font></c:when>
-                        <c:when test="${empty be.lnglat}"><font style="color:red">否</font></c:when>
-                    </c:choose>
-                </td>
-                <td style="display:none">${be.type }</td>
-                <td style="display:none">${be.factors }</td>
-                <td style="display:none">${be.lnglat }</td>
-                <td style="display:none">${be.id }</td>
-                <td style="display:none">${empty be.gkcs ? be.measures :be.gkcs }</td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-
-</div>
-
-
-
-
 
 
 </body>
@@ -385,19 +420,21 @@
             var dlevel = levlearray[i];
             //alert(parent.children[2].children[0].textContent);
             var dicolorCss = "";
+            var xhCss="my_white"
             if (dlevel == "红色") {
                 dicolorCss = "dicolor1";
             } else if (dlevel == "橙色") {
                 dicolorCss = "dicolor2";
             } else if (dlevel == "黄色") {
                 dicolorCss = "dicolor3";
+                xhCss="my_black";
             } else if (dlevel == "蓝色") {
                 dicolorCss = "dicolor4";
             } else {
                 dicolorCss = "dicolor4";
             }
             var marker = new AMap.Marker({
-                content: "<div class='mark " + dicolorCss + "'> </div>",
+                content: "<div class='mark my_flex " + dicolorCss + "'><span class='my_mark "+xhCss+"'> " + xuhao + "</span></div>",
                 position: jwarray[i].split(","),
                 clickable: true
             });
@@ -578,46 +615,47 @@
 
     //开始截屏
     function jieping() {
-        $(".breadcrumb").children('a').attr("disabled",true).css("pointer-events","none");
+        $(".breadcrumb").children('a').attr("disabled", true).css("pointer-events", "none");
+        $('.breadcrumb').css('display','none');
+        if(hasMark){
+            $('#juxfk').css('display','block');
+        }
+
         layer.msg('绘制地图比较耗时,请耐心等待 ! 不要做其他操作!', {
             time: 1000, //1s后自动关闭
         });
         setTimeout(function () {
-            html2canvas(document.querySelector(".amap-maps"), {
-               useCORS:true,allowTaint: false,foreignObjectRendering: true,taintTest: true,scale:1
+            html2canvas(document.querySelector(".div_cmap"), {
+                useCORS: true, allowTaint: true, foreignObjectRendering: true,
             }).then(function (canvas) {
                 var image = canvas.toDataURL("image/png", 1);
-    console.log(image)
-    sessionStorage.setItem("basic", image);
+                sessionStorage.setItem("basic", image);
                 <%--localStorage.setItem('basic', image);--%>
-    <%--document.cookie = "basic"--%>
+                <%--document.cookie = "basic"--%>
                 document.querySelector('#tiaozhuan').click()
             });
-        },1000);
+        }, 1000);
 
     }
 
 
-
-
-
- // 显示风险图
- // function showJiePing(){
-	// $("#fxt").css("display","block");
-	// layer.open({
-	//   type: 1,
-	//   content: $('#fxt'),
- //      area: ['90%', '90%'],
-	//   btnAlign: 'c',
-	//   title: false,
- //      closeBtn: 0,
- //      btn: ['关闭'],
- //      yes: function(index, layero){
- //      //按钮【按钮一】的回调
-	//   $("#fxt").css("display","none");
- //      layer.close(index);
- //     }
-	// });
- // }
+    // 显示风险图
+    // function showJiePing(){
+    // $("#fxt").css("display","block");
+    // layer.open({
+    //   type: 1,
+    //   content: $('#fxt'),
+    //      area: ['90%', '90%'],
+    //   btnAlign: 'c',
+    //   title: false,
+    //      closeBtn: 0,
+    //      btn: ['关闭'],
+    //      yes: function(index, layero){
+    //      //按钮【按钮一】的回调
+    //   $("#fxt").css("display","none");
+    //      layer.close(index);
+    //     }
+    // });
+    // }
 </script>
 </html>

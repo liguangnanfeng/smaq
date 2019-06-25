@@ -416,13 +416,10 @@ public class CompanyController_safety extends BaseController {
      * @throws Exception
      **/
     @RequestMapping({"risk-list"})
-    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number,Integer style) throws Exception {
+    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number) throws Exception {
 
         User user = this.getLoginUser(request);
         Company company = this.companyMapper.selectByPrimaryKey(user.getId());
-
-
-        model.addAttribute("style",style);
 
         if (StringUtils.isEmpty(company.getIndustry())) {
             model.addAttribute("url", request.getRequestURI());
@@ -436,8 +433,23 @@ public class CompanyController_safety extends BaseController {
             List<Map<Object, Object>> zzjg = null;
             List acL = null;
             if (type == null) {
+                if (null == number){ // 设置
+                    String dangerIds = "1";
+                    zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
+                    if (null == zzjg || zzjg.size() == 0){
+                        dangerIds = "2";
+                        zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
+                        if (null == zzjg || zzjg.size() == 0){
+                           number = 3;
+                        }else if (null != zzjg || zzjg.size() != 0){
+                            number = 2;
+                        }
+                    }else if (null != zzjg){
+                        number = 1;
+                    }
+                }
 
-                if (null == number || number == 1) { // 现场
+                if (number == 1) { // 现场
                     String dangerIds = "1,3";
                     acL = this.aCompanyManualMapper.selectByAll(m);
                     zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
@@ -447,9 +459,11 @@ public class CompanyController_safety extends BaseController {
                     acL = this.aCompanyManualMapper.selectBase(m);
                     zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
 
-                }else if (number == 3){ // 设置
+                }else if (number == 3) { // 设置
                     zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
                 }
+
+
                 model.addAttribute("number", number);
                 model.addAttribute("zzjgDep", zzjg);
                 model.addAttribute("acL", acL);

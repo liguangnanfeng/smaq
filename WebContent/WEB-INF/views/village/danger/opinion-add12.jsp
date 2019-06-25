@@ -148,9 +148,9 @@
         <p class="MsoNormal" style="text-align:right;margin-top:50px">
             <span style=""><span>安全生产监督管理部门（印章）</span></span><span style=""></span>
             <span style="" id="zhang_img">
-                <c:if test="${check.checkCompany eq '无锡市安泰安全技术服务有限公司' }">
+              <%--  <c:if test="${check.checkCompany eq '无锡市安泰安全技术服务有限公司' }">
                 <img src="${ly }/images/zhang.png" style="height:180px;"/>
-                </c:if>
+                </c:if>--%>
             </span>
         </p>
         <p class="MsoNormal" style="text-align:right">

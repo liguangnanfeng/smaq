@@ -1371,19 +1371,98 @@ public class VillageController extends BaseController {
      * TODO 显示小程序端检查记录的检查定位
      */
     @RequestMapping("loadMap")
-    public String loadMap(Model model, String latitude, String longitude,Integer checkId,HttpServletRequest request ){
+    public String loadMap(Model model, String latitude, String longitude, Integer checkId, HttpServletRequest request) {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
-        model.addAttribute("areaRange",company.getAreaRange());
-        model.addAttribute("latitude",latitude);
-        model.addAttribute("longitude",longitude);
+        model.addAttribute("areaRange", company.getAreaRange());
+        model.addAttribute("latitude", latitude);
+        model.addAttribute("longitude", longitude);
         return "company/danger/xcxMap";
     }
+
+
+    /**
+     * TODO 查询检查表数据
+     */
+    @RequestMapping(value = "plan-next2")//生成检查表，modify by zhangcl 2018.10.27
+    public String checkNext2(Integer id, Integer type, Model model, HttpServletRequest request) throws Exception {
+        //log.error("checkNext checkid : "+id);
+        User user = getLoginUser(request);
+
+        TCheck tc = tCheckMapper.selectCheckBymodelIdAndStatus(id, 0);
+
+        //log.error("tCheckMapper检查表信息:"+tc.toString());
+        type = tc.getType();// add wz 190110
+
+        List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(tc.getId());
+        //log.error("tCheckPartMapper条目信息:"+partL.toString());
+        for (TCheckPart a : partL) {
+            String levels = a.getLevels();
+            //log.error("levels:"+levels);
+        }
+
+        model.addAttribute("check", tc);
+        model.addAttribute("partL", partL);
+        //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
+        List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(tc.getId());
+        //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
+
+        if (type != null && type == 9) {
+            for (Map<String, Object> a : iteml) {
+                //log.error("checkNext:"+1);
+                Integer[] ids = new Integer[1];
+                ids[0] = (Integer) a.get("levelId");
+                //log.error("ids:"+ids[0]);
+                //log.error("a:"+a.toString());
+                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
+                String dangertype = "";
+                String factors = "";
+                String measures = "";
+                String level1 = "";
+                String level2 = "";
+                String level3 = "";
+                for (ACompanyManual aa : rets) {
+                    //log.error("checkNext:"+2);
+                    dangertype = aa.getType();
+                    factors = aa.getFactors();
+                    measures = aa.getMeasures();
+                    level1 = aa.getLevel1();
+                    level2 = aa.getLevel2();
+                    level3 = aa.getLevel3();
+                    //log.error("type:"+dangertype);
+                    break;
+                }
+                a.put("dangerType", dangertype);
+                a.put("factors", factors);
+                a.put("measures", measures);
+                a.put("level1", level1);
+                a.put("level2", level2);
+                a.put("level3", level3);
+                log.error("level1/2/3 : " + level1 + "/" + level2 + "/" + level3);
+            }
+        }
+        //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
+        model.addAttribute("itemL", iteml);
+        //log.error("checkNext:"+33);
+        if (tc.getStatus() == 2) {// 已检查
+            return "company/danger/plan-detail";
+        }
+        model.addAttribute("now", new Date());
+        model.addAttribute("company", companyMapper.selectByPrimaryKey(tc.getUserId()));
+
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("userId", user.getId());
+
+        model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
+        return "village/danger/plan-next2";
+
+    }
+
 
     /**
      * TODO 生成检查表数据
      *
-     * @param id    model表的id
+     * @param id      model表的id
      * @param type
      * @param model
      * @param request
@@ -1496,7 +1575,7 @@ public class VillageController extends BaseController {
      * 但是在查询记录的时候，点击一个整改详情的时候，会
      */
     @RequestMapping(value = "check-rectification")
-    public String checkRectification(Integer id, Model model, Integer flag,Integer number) throws Exception {
+    public String checkRectification(Integer id, Model model, Integer flag, Integer number) throws Exception {
         //log.error("checkId："+id);
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
         Integer type = tc.getType();
@@ -1564,7 +1643,7 @@ public class VillageController extends BaseController {
         //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
         model.addAttribute("itemL", iteml);
 
-        model.addAttribute("number",number);
+        model.addAttribute("number", number);
         model.addAttribute("company", companyMapper.selectByPrimaryKey(check.getInteger("userId")));
         model.addAttribute("flag", flag);
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
@@ -1959,7 +2038,6 @@ public class VillageController extends BaseController {
      * TODO 隐患治理记录, 整改不合格的 新建立的页面
      * 有三种情况,企业自查 行政检查  部门抽查
      *
-     *
      * @param request 请求
      * @param flag    方式
      * @param status  状态
@@ -1972,21 +2050,21 @@ public class VillageController extends BaseController {
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
         model.addAttribute("userId", user.getId());
-      
+
         List<Map> list = new ArrayList<>();
-        if(flag==1){
+        if (flag == 1) {
             list = tCheckItemMapper.selectListBystatus(user.getId(), flag);
             for (Map map : list) {
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String format = sdf.format(realTime);
                 String level = (String) map.get("level");
-                if(null!=level&&"红色".equals(level)){
-                    map.put("fjgkfzr",company.getCharge()+company.getChargeContact());
+                if (null != level && "红色".equals(level)) {
+                    map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
                 }
                 map.put("realTimeStr", format);
             }
-        }else if(flag==2){
+        } else if (flag == 2) {
             // 表示的是行政检查
             list = tCheckItemMapper.selectXZListBystatus(user.getId(), flag);
             for (Map map : list) {
@@ -1995,10 +2073,10 @@ public class VillageController extends BaseController {
                 String format = sdf.format(realTime);
                 String level = (String) map.get("level");
                 map.put("realTimeStr", format);
-                map.put("fjgkfzr",company.getCharge()+company.getChargeContact());
+                map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
                 // 获取
             }
-        }else if(flag==3){
+        } else if (flag == 3) {
             // 表示的是行政检查
             list = tCheckItemMapper.selectBMCCListBystatus(user.getId(), flag);
             for (Map map : list) {
@@ -2006,13 +2084,13 @@ public class VillageController extends BaseController {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String format = sdf.format(realTime);
                 String level = (String) map.get("level");
-                map.put("fjgkfzr",company.getCharge()+company.getChargeContact());
+                map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
                 map.put("realTimeStr", format);
             }
         }
         String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-        model.addAttribute("companyName",user.getUserName());
-        model.addAttribute("host",host);
+        model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("host", host);
         model.addAttribute("list", list);
         return "company/danger/hidden-danger-list";
     }
@@ -3371,7 +3449,7 @@ public class VillageController extends BaseController {
         Result result = new ResultImpl();
 
         try {
-            String tableName = (String) map.get("tableName"); //表名
+            // String tableName = (String) map.get("tableName"); //表名
             Integer flag = (Integer) map.get("flag"); //检查方式
             Integer checkType = (Integer) map.get("checkType"); //检查类型 -1 现场 -2 就是基础
             String a = (String) map.get("selectItems");
@@ -3389,7 +3467,11 @@ public class VillageController extends BaseController {
             User user = getLoginUser(request);
             // 保存model表数据
             TModel model = new TModel();
-            model.setTitle(tableName); // 计划检查名
+            if (flag == 2) {
+                model.setTitle("行政检查表"); // 计划检查名
+            } else {
+                model.setTitle("部门检查表"); // 计划检查名
+            }
             model.setUserId(user.getId());    // 企业id
             model.setFlag(flag);     //检查方式 1. 企业自查  2 行政检查  3 部门检查
             model.setType(5);//  检查类型  日常, 定期, 临时
@@ -3407,7 +3489,11 @@ public class VillageController extends BaseController {
             TCheck tCheck = new TCheck();
 
             tCheck.setFlag(flag);                                                   // 1. 企业自查  2 行政检查  3 第三方
-            tCheck.setTitle(tableName);                                             // 被检查的标题
+            if (flag == 2) {
+                tCheck.setTitle("行政检查表"); // 计划检查名
+            } else {
+                tCheck.setTitle("部门检查表"); // 计划检查名
+            }
             tCheck.setDepart("全公司");                                              // 被检查的部门
             tCheck.setUserId(user.getId());                                         // 企业公司id
             tCheck.setCreateUser(user.getId());                                     // 创建人的id
@@ -3417,7 +3503,7 @@ public class VillageController extends BaseController {
             tCheck.setExpectTime(new Date());                                       // 预计检查时间
             //tCheck.setCheker(user.getUserName());                                   // 检查人 当前的公司名称
             tCheck.setContact(companyMapper.selectByPrimaryKey(user.getId()).getChargeContact());  // 检查人的联系方式无
-            tCheck.setStatus(0);                                                    // 表示未检查
+            tCheck.setStatus(0);                                                    // 表示最开始的检查模版
             tCheck.setCreateTime(new Date());                                       // 创建时间
             //tCheck.setCheckCompany(user.getUserName());                             // 检查公司
 
@@ -3438,7 +3524,7 @@ public class VillageController extends BaseController {
                         TCheckItem tCheckItem = new TCheckItem();
                         tCheckItem.setLevelId(aDangerManual.getId());     // companyManualTbl的id
                         tCheckItem.setContent(aDangerManual.getFactors()); //检查内容
-                        tCheckItem.setLevels(aDangerManual.getLevel1()+"/"+aDangerManual.getLevel2()+"/"+aDangerManual.getLevel3());   // 场所/环节/部门 三级
+                        tCheckItem.setLevels(aDangerManual.getLevel1() + "/" + aDangerManual.getLevel2() + "/" + aDangerManual.getLevel3());   // 场所/环节/部门 三级
                         tCheckItem.setReference(aDangerManual.getReference()); // 依据
                         tCheckItem.setMemo(aDangerManual.getFactors());   // 较大危险因素
                         tCheckItem.setPartId(tCheckPart.getId());
@@ -3462,7 +3548,7 @@ public class VillageController extends BaseController {
                         TCheckItem tCheckItem = new TCheckItem();
                         tCheckItem.setLevelId(Integer.parseInt(id));     // companyManualTbl的id
                         tCheckItem.setContent(tLevel.getFactors()); //检查内容
-                        tCheckItem.setLevels(tLevel.getLevel1()+"/"+tLevel.getLevel2()+"/"+tLevel.getLevel3());   // 场所/环节/部门 三级
+                        tCheckItem.setLevels(tLevel.getLevel1() + "/" + tLevel.getLevel2() + "/" + tLevel.getLevel3());   // 场所/环节/部门 三级
                         tCheckItem.setReference(tLevel.getReference()); // 依据
                         tCheckItem.setMemo(tLevel.getFactors());   // 较大危险因素
                         tCheckItem.setPartId(tCheckPart.getId());
@@ -3609,7 +3695,7 @@ public class VillageController extends BaseController {
             //tCheck.setCheker(user.getUserName());                                  // 检查人 当前的公司名称
             //tCheck.setContact(user.getUserName());                               // 检查人的联系方式无
 
-            tCheck.setStatus(0);                                                   // 表示未检查
+            tCheck.setStatus(0);                                                   // 最开始的检查模版
             tCheck.setCreateTime(new Date());                                      // 创建时间
             tCheck.setCheckCompany(user.getUserName());                            // 检查公司
 

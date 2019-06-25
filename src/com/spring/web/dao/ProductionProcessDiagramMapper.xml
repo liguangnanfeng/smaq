@@ -242,7 +242,7 @@
       <if test="townId != null"> and T2.town_id = #{townId}</if>
       <if test="districtId != null"> and T2.district_id = #{districtId}</if>
     </where>
-    order by id desc
+    order by id asc;
   </select>
    <select id="selectList1" resultType="java.util.Map">
      select 

@@ -3410,16 +3410,16 @@ public class VillageController extends BaseController {
             tCheck.setTitle(tableName);                                             // 被检查的标题
             tCheck.setDepart("全公司");                                              // 被检查的部门
             tCheck.setUserId(user.getId());                                         // 企业公司id
-            tCheck.setCreateUser(user.getId());                                     // 被创建人的id
+            tCheck.setCreateUser(user.getId());                                     // 创建人的id
             tCheck.setModelId(model.getId());                                       // 模版id
             tCheck.setType(5);                                                      // 1. 日常 ,2. 定期 3 临时 5 综合
             tCheck.setIndustryType(Math.abs(checkType));                            //  2. 现场
             tCheck.setExpectTime(new Date());                                       // 预计检查时间
-            tCheck.setCheker(user.getUserName());                                   // 检查人 当前的公司名称
+            //tCheck.setCheker(user.getUserName());                                   // 检查人 当前的公司名称
             tCheck.setContact(companyMapper.selectByPrimaryKey(user.getId()).getChargeContact());  // 检查人的联系方式无
             tCheck.setStatus(0);                                                    // 表示未检查
             tCheck.setCreateTime(new Date());                                       // 创建时间
-            tCheck.setCheckCompany(user.getUserName());                             // 检查公司
+            //tCheck.setCheckCompany(user.getUserName());                             // 检查公司
 
             tCheckMapper.insertSelective(tCheck);
             Integer tCheckId = tCheck.getId();
@@ -3606,7 +3606,7 @@ public class VillageController extends BaseController {
                 tCheck.setIndustryType(3);                                          // 3 高危
             }
             tCheck.setExpectTime(new Date());                                      // 预计检查时间
-            tCheck.setCheker(user.getUserName());                                  // 检查人 当前的公司名称
+            //tCheck.setCheker(user.getUserName());                                  // 检查人 当前的公司名称
             //tCheck.setContact(user.getUserName());                               // 检查人的联系方式无
 
             tCheck.setStatus(0);                                                   // 表示未检查

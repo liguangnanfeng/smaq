@@ -416,10 +416,14 @@ public class CompanyController_safety extends BaseController {
      * @throws Exception
      **/
     @RequestMapping({"risk-list"})
-    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number) throws Exception {
+    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number,Integer style) throws Exception {
 
         User user = this.getLoginUser(request);
         Company company = this.companyMapper.selectByPrimaryKey(user.getId());
+
+
+        model.addAttribute("style",style);
+
         if (StringUtils.isEmpty(company.getIndustry())) {
             model.addAttribute("url", request.getRequestURI());
             return "company/safety-system/type";

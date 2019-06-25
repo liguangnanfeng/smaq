@@ -118,20 +118,20 @@
         </p>
         <p class="MsoNormal" style="margin-top:15px;">
             <span style=""><span>检查人员（签名）：</span></span>
-            <u><span style="text-decoration:underline;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
+            <u><span style="text-decoration:underline;" contenteditable="true">&nbsp;&nbsp;${check.cheker}&nbsp;&nbsp;&nbsp;</span></u>
             <u><span style="text-decoration:underline;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
         </p>
         <p class="MsoNormal" style="text-align:left;margin-top:10px;height:180px;">
             <span style="float:left;margin: 0 8px 0 0;">检查单位（盖章）:</span>
             
             <span style="float:left;">
-            	<span contenteditable="true" style="border-bottom:1px solid #333;float:left;padding: 0 20px;line-height: 22px;height: 22px;"></span>
+            	<span contenteditable="true" style="border-bottom:1px solid #333;float:left;padding: 0 20px;line-height: 22px;height: 22px;">${check.checkCompany}</span>
             </span>
             
             <span style="" id="zhang_img">
-                <c:if test="${check.checkCompany eq '无锡市安泰安全技术服务有限公司' }">
+               <%-- <c:if test="${check.checkCompany eq '无锡市安泰安全技术服务有限公司' }">
                 <img src="${ly }/images/zhang.png" style="height:180px;"/>
-                </c:if>
+                </c:if>--%>
             </span>
         </p>
         <p class="MsoNormal" style="text-align:right;margin-top:15px;">

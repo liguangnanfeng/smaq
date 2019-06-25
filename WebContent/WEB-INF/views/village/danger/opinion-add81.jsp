@@ -166,7 +166,7 @@
       </div>
       <p class="MsoNormal" style="text-align:left;">
         <span style="vertical-align: bottom;"><span>检查人员（签名）：</span></span>
-        <u><span id="id1" style="border-bottom:1px solid #333;vertical-align: text-bottom; width:15%;text-align: center;display:inline-block;height: 23px;" contenteditable="true"></span></u>
+        <u><span id="id1" style="border-bottom:1px solid #333;vertical-align: text-bottom; width:15%;text-align: center;display:inline-block;height: 23px;" contenteditable="true">${check.cheker}</span></u>
         &nbsp;&nbsp;&nbsp;<u><span id="id2" style="border-bottom:1px solid #333;vertical-align: text-bottom; width:15%;text-align: center;display:inline-block;height: 23px;" contenteditable="true"></span></u>
     </p>
     <p class="MsoNormal" style="text-align:left;margin-top:15px">

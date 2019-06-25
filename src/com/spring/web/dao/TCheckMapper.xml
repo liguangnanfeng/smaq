@@ -39,6 +39,17 @@
         where id = #{id,jdbcType=INTEGER}
 
     </select>
+
+    <select id="selectCheckBymodelIdAndStatus" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_tbl
+        where model_id = #{modelId,jdbcType=INTEGER}
+        and status=#{status} limit 0,1 ;
+
+    </select>
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from t_check_tbl
         where id = #{id,jdbcType=INTEGER}

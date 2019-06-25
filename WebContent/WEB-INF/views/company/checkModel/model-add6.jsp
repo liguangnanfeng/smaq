@@ -194,19 +194,19 @@
 
     <div class="modal-body">
         <form class="form form-horizontal" id="form">
-            <div class="row cl">
-                <label class="form-label col-xs-2 col-sm-2" style=""><span class="c-red">*</span>检查表名称：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <c:if test="${not empty tableName}">
-                        <input type="text" id="title" style="width:350px" value="${tableName}" class="input-text"
-                               maxlength="50" placeholder="请填写检查表名名称"/>
-                    </c:if>
-                    <c:if test="${empty tableName}">
-                        <input type="text" id="title" style="width:350px" class="input-text"
-                               maxlength="50" placeholder="请填写检查表名名称"/>
-                    </c:if>
-                </div>
-            </div>
+<%--            <div class="row cl">--%>
+<%--                <label class="form-label col-xs-2 col-sm-2" style=""><span class="c-red">*</span>检查表名称：</label>--%>
+<%--                <div class="formControls col-xs-8 col-sm-9">--%>
+<%--                    <c:if test="${not empty tableName}">--%>
+<%--                        <input type="text" id="title" style="width:350px" value="${tableName}" class="input-text"--%>
+<%--                               maxlength="50" placeholder="请填写检查表名名称"/>--%>
+<%--                    </c:if>--%>
+<%--                    <c:if test="${empty tableName}">--%>
+<%--                        <input type="text" id="title" style="width:350px" class="input-text"--%>
+<%--                               maxlength="50" placeholder="请填写检查表名名称"/>--%>
+<%--                    </c:if>--%>
+<%--                </div>--%>
+<%--            </div>--%>
 
             <div class="row cl" style="margin-top: 20px">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查性质 :</label>
@@ -311,11 +311,11 @@
     var depId = '${depId}';
 
     function save_1() {
-        var tableName = $("#title").val();
+        // var tableName = $("#title").val();
         var checkType = $("#checkNature").val();
-        if(!tableName){
-            layer.alert('请填写检查表名称')
-        }
+        // if(!tableName){
+        //     layer.alert('请填写检查表名称')
+        // }
         if(checkType==0||checkType==''||checkType==null){
             layer.alert('请选择检查类别')
         }
@@ -333,7 +333,7 @@
         var i = layer.load();
         var params = {
             "flag":parseInt('${flag}'),
-            "tableName": tableName,//检查表名称
+            // "tableName": tableName,//检查表名称
             "checkType": parseInt(checkType),//检查方式
             "selectItems": ids,      //检查项
         }

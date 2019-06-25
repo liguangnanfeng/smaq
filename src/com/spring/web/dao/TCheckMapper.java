@@ -73,4 +73,13 @@ public interface TCheckMapper {
     List<Map<String,Object>> selectAllLevel(@Param("id")Integer id);
 
     List<Map<String,Object>> selectAllDanger(@Param("id")Integer id);
+
+    /**
+     * 根据模版id查询最开始模版记录详情
+     * @param id
+     * @param i
+     * @return
+     */
+    TCheck selectCheckBymodelIdAndStatus(@Param("modelId")Integer id, @Param("status")int i);
+
 }

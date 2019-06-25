@@ -225,16 +225,19 @@
 
                 <c:if test="${number == null || number != 3}">
                     <select class="sel_area" id="partNamme"  onchange="Partname()" >
-                        <option value="" >请选择</option>
+                        <option value="" >全部</option>
                         <c:forEach items="${zzjgDep1 }" var="be">
                             <option value="${be.id}" >${be.name }</option>
                         </c:forEach>
                     </select>
                 </c:if>
-
             </c:if>
 
+            <c:if test="${not empty type}">
+                <a class="btn btn-primary radius" href="${ly }/company/safety-system/risk-list?type=${type}&flag=1">编辑</a>
 
+                <a class="btn btn-primary radius" href="${ly }/company/safety-system/risk-list?type=${type}&flag=2">确定</a>
+            </c:if>
             <div class="mt-20">
                 <%--如果不是设置--%>
                 <c:if test="${number == null || number != 3}">
@@ -249,26 +252,51 @@
                                 <th style="width:8%">风险类型</th>
                                 <th style="width:50%">风险因素</th>
                             </c:if>
-                            <c:if test="${!empty type}">
-                                <th style="padding:0;width:20%">车间/场所</th>
-                                <th style="width:10%">岗位</th>
+                            <c:if test="${flags == 2}">
+                                <c:if test="${!empty type}">
+                                    <th style="padding:0;width:20%">车间/场所</th>
+                                    <th style="width:10%">岗位</th>
+                                </c:if>
+                                <c:if test="${type eq 1}">
+                                    <th>职业危害物理因素</th>
+                                </c:if>
+                                <c:if test="${type eq 2}">
+                                    <th>职业危害化学因素</th>
+                                </c:if>
+                                <c:if test="${type eq 3}">
+                                    <th>高危工艺</th>
+                                </c:if>
+                                <c:if test="${type eq 4}">
+                                    <th>物料辨识</th>
+                                </c:if>
+                                <c:if test="${type eq 5}">
+                                    <th>高危作业</th>
+                                </c:if>
+                                
                             </c:if>
-                            <c:if test="${type eq 1}">
-                                <th>职业危害物理因素</th>
+
+                            <c:if test="${flags == 1}">
+                                <c:if test="${!empty type}">
+                                    <th style="padding:0;width:20%">车间/场所</th>
+                                    <th style="width:10%">岗位</th>
+                                </c:if>
+                                <c:if test="${type eq 1}">
+                                    <th>职业危害物理因素</th>
+                                </c:if>
+                                <c:if test="${type eq 2}">
+                                    <th>职业危害化学因素</th>
+                                </c:if>
+                                <c:if test="${type eq 3}">
+                                    <th>高危工艺</th>
+                                </c:if>
+                                <c:if test="${type eq 4}">
+                                    <th>物料辨识</th>
+                                </c:if>
+                                <c:if test="${type eq 5}">
+                                    <th>高危作业</th>
+                                </c:if>
+                                <th style="width:10%">操作</th>
                             </c:if>
-                            <c:if test="${type eq 2}">
-                                <th>职业危害化学因素</th>
-                            </c:if>
-                            <c:if test="${type eq 3}">
-                                <th>高危工艺</th>
-                            </c:if>
-                            <c:if test="${type eq 4}">
-                                <th>物料辨识</th>
-                            </c:if>
-                            <c:if test="${type eq 5}">
-                                <th>高危作业</th>
-                            </c:if>
-                            <th style="width:10%">操作</th>
                         </tr>
                         </thead>
                         <tbody style="display: none" id="myTable">
@@ -372,7 +400,7 @@
                         </c:if>
                         <c:if test="${not empty type }">
 
-
+                            <c:if test="${flags == 1}">
                                 <c:forEach items="${zzjg }" var="be3">
 
                                     <tr>
@@ -383,27 +411,60 @@
                                             <a class="btn-cz" onclick="redit(${be3.id}, ${type })" href="javascript:;"
                                                title="选择">选择</a>
                                         </td>
-                                       <%-- <td class="text-c">${be3.danger_point != null ? be3.danger_point : "暂无风险因素" }</td>--%>
-                                        <%-- <td class="text-c">${be4.danger_point != null ? be4.danger_point : "暂无数据" }</td>--%>
-                                       <%-- <c:if test="${type eq 1}">
-                                            <td>${fn:replace(be3.hxys, '!@#', ",") }</td>
-                                        </c:if>
-                                        <c:if test="${type eq 2}">
-                                            <td>${fn:replace(be3.material, '!@#', ",") }</td>
-                                        </c:if>
-                                        <c:if test="${type eq 3}">
-                                            <td>${fn:replace(be3.gy, '!@#', ",") }</td>
-                                        </c:if>
-                                        <c:if test="${type eq 4}">
-                                            <td>${fn:replace(be3.wlbs, '!@#', ",") }</td>
-                                        </c:if>
-                                        <c:if test="${type eq 5}">
-                                            <td>${fn:replace(be3.gwzy, '!@#', ",") }</td>
-                                        </c:if>--%>
+                                            <%-- <td class="text-c">${be3.danger_point != null ? be3.danger_point : "暂无风险因素" }</td>--%>
+                                            <%-- <td class="text-c">${be4.danger_point != null ? be4.danger_point : "暂无数据" }</td>--%>
+                                            <%-- <c:if test="${type eq 1}">
+                                                 <td>${fn:replace(be3.hxys, '!@#', ",") }</td>
+                                             </c:if>
+                                             <c:if test="${type eq 2}">
+                                                 <td>${fn:replace(be3.material, '!@#', ",") }</td>
+                                             </c:if>
+                                             <c:if test="${type eq 3}">
+                                                 <td>${fn:replace(be3.gy, '!@#', ",") }</td>
+                                             </c:if>
+                                             <c:if test="${type eq 4}">
+                                                 <td>${fn:replace(be3.wlbs, '!@#', ",") }</td>
+                                             </c:if>
+                                             <c:if test="${type eq 5}">
+                                                 <td>${fn:replace(be3.gwzy, '!@#', ",") }</td>
+                                             </c:if>--%>
                                     </tr>
 
                                 </c:forEach>
+                            </c:if>
 
+                            <c:if test="${flags == 2}">
+                                <c:forEach items="${zzjg }" var="be3">
+
+                                    <tr>
+                                        <td class="text-c" rowspan="1">${be3.parName != null ? be3.parName : "暂无数据" }</td>
+                                        <td class="text-c">${be3.name != null ? be3.name : "暂无数据" }</td>
+                                        <td class="text-c">${fn:replace(be3.danger_point, '!@#', ",") }</td>
+                                        <%--<td class="text-c" style="width:90px">
+                                            <a class="btn-cz" onclick="redit(${be3.id}, ${type })" href="javascript:;"
+                                               title="选择">选择</a>
+                                        </td>--%>
+                                            <%-- <td class="text-c">${be3.danger_point != null ? be3.danger_point : "暂无风险因素" }</td>--%>
+                                            <%-- <td class="text-c">${be4.danger_point != null ? be4.danger_point : "暂无数据" }</td>--%>
+                                            <%-- <c:if test="${type eq 1}">
+                                                 <td>${fn:replace(be3.hxys, '!@#', ",") }</td>
+                                             </c:if>
+                                             <c:if test="${type eq 2}">
+                                                 <td>${fn:replace(be3.material, '!@#', ",") }</td>
+                                             </c:if>
+                                             <c:if test="${type eq 3}">
+                                                 <td>${fn:replace(be3.gy, '!@#', ",") }</td>
+                                             </c:if>
+                                             <c:if test="${type eq 4}">
+                                                 <td>${fn:replace(be3.wlbs, '!@#', ",") }</td>
+                                             </c:if>
+                                             <c:if test="${type eq 5}">
+                                                 <td>${fn:replace(be3.gwzy, '!@#', ",") }</td>
+                                             </c:if>--%>
+                                    </tr>
+
+                                </c:forEach>
+                            </c:if>
 
                         </c:if>
                         </tbody>
@@ -418,46 +479,50 @@
                             <th style="width:70%">车间/场所</th>
                             <th style="width:30%">设置</th>
                         </tr>
+
                         </thead>
                         <tbody>
-                        <c:forEach items="${zzjgDep }" var="be">
-                            <tr>
-                                <td><p style="text-align:center;">${be.name }</p></td>
-                                <td style="text-align: center">
-                                    <c:if test="${be.dangerId==null||be.dangerId==4}">
-                                        <input type="checkbox" name="xc"
-                                               onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场
-                                        <input type="checkbox" name="jc"
-                                               onchange="checkShowType(this,'${be.id}')"
-                                               style="margin-left: 20px;margin-right: 3px"/>基础
-                                    </c:if>
-                                    <c:if test="${be.dangerId==1}">
-                                        <input type="checkbox" checked name="xc"
-                                               onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场
-                                        <input type="checkbox" name="jc"
-                                               onchange="checkShowType(this,'${be.id}')"
-                                               style="margin-left: 20px;margin-right: 3px"/>基础
-                                    </c:if>
-                                    <c:if test="${be.dangerId==2}">
-                                        <input type="checkbox" name="xc"
-                                               onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场
-                                        <input type="checkbox" checked name="jc"
-                                               onchange="checkShowType(this,'${be.id}')"
-                                               style="margin-left: 20px;margin-right: 3px"/>基础
-                                    </c:if>
-                                    <c:if test="${be.dangerId==3}">
-                                        <input type="checkbox" checked name="xc"
-                                               onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场
-                                        <input type="checkbox" checked name="jc"
-                                               onchange="checkShowType(this,'${be.id}')"
-                                               style="margin-left: 20px;margin-right: 3px"/>基础
-                                    </c:if>
+                            <c:forEach items="${zzjgDep }" var="be">
+                                <tr>
+                                    <td><p style="text-align:center;">${be.name }</p></td>
+                                    <td style="text-align: center">
+                                        <c:if test="${be.dangerId==null||be.dangerId==4}">
+                                            <input type="checkbox" name="xc"
+                                                   onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场
+                                            <input type="checkbox" name="jc"
+                                                   onchange="checkShowType(this,'${be.id}')"
+                                                   style="margin-left: 20px;margin-right: 3px"/>基础
+                                        </c:if>
+                                        <c:if test="${be.dangerId==1}">
+                                            <input type="checkbox" checked name="xc"
+                                                   onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场
+                                            <input type="checkbox" name="jc"
+                                                   onchange="checkShowType(this,'${be.id}')"
+                                                   style="margin-left: 20px;margin-right: 3px"/>基础
+                                        </c:if>
+                                        <c:if test="${be.dangerId==2}">
+                                            <input type="checkbox" name="xc"
+                                                   onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场
+                                            <input type="checkbox" checked name="jc"
+                                                   onchange="checkShowType(this,'${be.id}')"
+                                                   style="margin-left: 20px;margin-right: 3px"/>基础
+                                        </c:if>
+                                        <c:if test="${be.dangerId==3}">
+                                            <input type="checkbox" checked name="xc"
+                                                   onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场
+                                            <input type="checkbox" checked name="jc"
+                                                   onchange="checkShowType(this,'${be.id}')"
+                                                   style="margin-left: 20px;margin-right: 3px"/>基础
+                                        </c:if>
 
-                                </td>
-                            </tr>
-                        </c:forEach>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
+                    <div  style="padding-left: 745px;padding-top: 10px" >
+                        <button class="btn btn-primary radius" onClick="selectNow()">确定</button>
+                    </div>
                 </c:if>
             </div>
         </div>
@@ -589,7 +654,6 @@
         window.location.href = '${ly}/company/safety-system/risk-list?dmid='+vs+"&number="+${number}
 
     }
-
 
 
     function checkShowType(obj, id) {

@@ -416,7 +416,7 @@ public class CompanyController_safety extends BaseController {
      * @throws Exception
      **/
     @RequestMapping({"risk-list"})
-    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number,Integer dmid) throws Exception {
+    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number,Integer dmid,Integer flag) throws Exception {
         User user = this.getLoginUser(request);
         Company company = this.companyMapper.selectByPrimaryKey(user.getId());
         if (StringUtils.isEmpty(company.getIndustry())) {
@@ -480,12 +480,24 @@ public class CompanyController_safety extends BaseController {
                 model.addAttribute("acL", acL);
                 return "company/safety-system/risk-list1";
             } else {
-                zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type);
-                /*acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);*/
+                if (null == flag){
+                    flag = 2;
+                }
+                if (flag == 1){
+                    zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type);
+                    flag = 1;
+                }else if (flag == 2){
+                    zzjg = this.zzjgDepartmentMapper.selectNotEmpy(user.getId(),type);
+                    flag = 2;
+                }
+
+                model.addAttribute("flags",flag);
                 model.addAttribute("zzjg",zzjg);
-                /*model.addAttribute("dL", acL);*/
                 model.addAttribute("type", type);
                 return "company/safety-system/risk-list1";
+
+                /*acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);*/
+                /*model.addAttribute("dL", acL);*/
             }
         }
     }

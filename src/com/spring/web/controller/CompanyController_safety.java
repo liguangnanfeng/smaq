@@ -416,11 +416,9 @@ public class CompanyController_safety extends BaseController {
      * @throws Exception
      **/
     @RequestMapping({"risk-list"})
-    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number) throws Exception {
-
+    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number,Integer dmid) throws Exception {
         User user = this.getLoginUser(request);
         Company company = this.companyMapper.selectByPrimaryKey(user.getId());
-
         if (StringUtils.isEmpty(company.getIndustry())) {
             model.addAttribute("url", request.getRequestURI());
             return "company/safety-system/type";
@@ -430,14 +428,18 @@ public class CompanyController_safety extends BaseController {
             m.put("type", type);
             m.put("flag", "1,2,3,4,5");
             m.put("uid", user.getId());
+            if (null != dmid){
+                m.put("dmid", dmid);
+            }
             List<Map<Object, Object>> zzjg = null;
+            List<Map<Object, Object>> zzjg1 = null;
             List acL = null;
             if (type == null) {
                 if (null == number){ // 设置
-                    String dangerIds = "1";
+                    String dangerIds = "1,3";
                     zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
                     if (null == zzjg || zzjg.size() == 0){
-                        dangerIds = "2";
+                        dangerIds = "2,3";
                         zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
                         if (null == zzjg || zzjg.size() == 0){
                            number = 3;
@@ -448,22 +450,31 @@ public class CompanyController_safety extends BaseController {
                         number = 1;
                     }
                 }
-
                 if (number == 1) { // 现场
                     String dangerIds = "1,3";
-                    acL = this.aCompanyManualMapper.selectByAll(m);
-                    zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
 
+                    zzjg1 = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
+
+                    acL = this.aCompanyManualMapper.selectByAll(m);
+                    if (null == dmid){
+                        zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
+                    }else {
+                        zzjg = this.zzjgDepartmentMapper.selectLevel1One(user.getId(),dangerIds,dmid);
+                    }
                 } else if (number == 2) { // 基础
                     String dangerIds = "2,3";
                     acL = this.aCompanyManualMapper.selectBase(m);
-                    zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
-
+                    zzjg1 = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
+                    if (null == dmid){
+                        zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
+                    }else {
+                        zzjg = this.zzjgDepartmentMapper.selectLevel1One(user.getId(),dangerIds,dmid);
+                    }
                 }else if (number == 3) { // 设置
                     zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
                 }
-
-
+                model.addAttribute("ids",dmid);
+                model.addAttribute("zzjgDep1", zzjg1);
                 model.addAttribute("number", number);
                 model.addAttribute("zzjgDep", zzjg);
                 model.addAttribute("acL", acL);

@@ -377,6 +377,9 @@
         <if test="uid != null">
             and T1.uid = #{uid}
         </if>
+        <if test="dmid != null">
+            and T1.dmid = #{dmid}
+        </if>
         order by T1.level1 asc, T1.riskId asc
     </select>
 

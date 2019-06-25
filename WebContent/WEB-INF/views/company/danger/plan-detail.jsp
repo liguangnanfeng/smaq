@@ -172,7 +172,7 @@ function showpicture(src){
     <h2 class="text-c mb-10">检查详情表</h2>
     <div class="f-l div_pdetail mt-10">
       <c:if test="${flag==2 || flag== 3 }" >
-        <font>检查公司：${user.userName }</font>
+        <font>受检公司：${user.userName }</font>
       </c:if>
       <c:if test="${flag==1}" >
         <font>检查部门：${check.depart }</font>

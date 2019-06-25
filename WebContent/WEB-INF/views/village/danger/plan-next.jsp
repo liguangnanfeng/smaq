@@ -123,7 +123,13 @@
     <div class="f-l div_pdetail mt-10">
         <%--<font>受检${check.flag == 1 ? '部门' : '单位'}：${check.depart }</font>
         <label>检查日期：<fmt:formatDate value="${now }" pattern="yyyy年MM月dd日"/></label>--%>
-        <font >受检单位：${company.name }</font>
+        <c:if test="${check.flag==1}">
+            <font >检查单位：${company.name }</font>
+        </c:if>
+        <c:if test="${check.flag!=1}">
+            <font >受检单位：${company.name }</font>
+        </c:if>
+
     </div>
     <div class="f-l mt-20" style="width:100%">
         <table class="f-l table table-border table-bordered table-bg table-hover table-sort" id="table"
@@ -202,10 +208,10 @@
             <tr>
                 <td colspan="3">
                     <div style="float:left;width:100%;position: relative;min-height:150px;">
-                        <c:if test="${check.flag == 3 && check.checkCompany eq '无锡市安泰安全技术服务有限公司'}">
+                       <%-- <c:if test="${check.flag == 3 && check.checkCompany eq '无锡市安泰安全技术服务有限公司'}">
                             <img alt="" src="${ly }/images/zhang.png"
                                  style="position: absolute;bottom:10px;right:10px;height:130px;"/>
-                        </c:if>
+                        </c:if>--%>
                         <c:if test="${check.flag > 1}">
                             <div class="div_pleft  mt-10 mb-10">检查部门/单位：</div>
                             <div class="div_pright  mt-10 mb-10">

@@ -179,6 +179,6 @@
          <if test="proName != null and proName != ''">
             and product_name LIKE CONCAT('%', #{proName},'%')
             </if>
-        order by id desc
+        order by id asc ;
     </select>
 </mapper>

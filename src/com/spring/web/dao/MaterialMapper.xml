@@ -191,7 +191,7 @@
          <if test="materialName != null and materialName != ''">
             and material LIKE CONCAT('%', #{materialName},'%')
             </if>
-            order by id desc
+            order by id asc ;
     </select>
 
 </mapper>

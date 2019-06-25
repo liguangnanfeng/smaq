@@ -55,6 +55,22 @@
             overflow-y: auto;
         }
 
+
+        #juxfk {
+            padding: 10px 10px 10px;
+            text-align: center;
+            position: fixed;
+            z-index: 998;
+            background-color: #fcf9f2;
+            /*display: none;*/
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px #333333;
+            height: 300px;
+            width:400px;
+            right:0px;
+            overflow-y: auto;
+        }
+
         .my_delete {
             float: right;
             margin-top: 5px;
@@ -181,16 +197,16 @@
             <th style="min-width:100px">岗位/部位</th>
             <th style="min-width:100px">风险等级</th>
             <th style="min-width:100px">地图标示</th>
-           <%-- <th style="min-width:150px">风险类型</th>
-            <th style="min-width:200px">风险因素</th>
-            <th style="min-width:200px">防范措施</th>--%>
+<%--            <th style="min-width:150px">风险类型</th>--%>
+<%--            <th style="min-width:200px">风险因素</th>--%>
+<%--            <th style="min-width:200px">防范措施</th>--%>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${list2}" var="be" varStatus="index">
+        <c:forEach items="${list2 }" var="be" varStatus="index">
             <tr id="line_${index.index + 1}">
                 <td class="text-c">${index.index + 1}</td>
-                <td><c:if test="${not empty be.level1}">${be.level1 } <%--> ${be.level2 }--%></c:if></td>
+                <td><c:if test="${not empty be.level1}">${be.level1 } > ${be.level2 }</c:if></td>
                 <td class="text-c">
                     <c:choose>
                         <c:when test="${be.level eq '红色'}"><font class="col-a">${be.level}</font></c:when>
@@ -206,7 +222,7 @@
                     </c:choose>
                 </td>
                 <td style="display:none">${be.type }</td>
-                <td style="display:none"> ${be.factors }</td>
+                <td style="display:none">${be.factors }</td>
                 <td style="display:none">${be.lnglat }</td>
                 <td style="display:none">${be.id }</td>
                 <td style="display:none">${empty be.gkcs ? be.measures :be.gkcs }</td>
@@ -217,7 +233,47 @@
 
 </div>
 
+<%--截图时悬浮的悬浮框--%>
+<div id="juxfk">
+    <table id="juxfkable" class="table table-border table-bordered table-bg table-hover table-sort">
+        <thead>
+        <tr class="text-c">
+            <th style="width:40px">序号</th>
+            <th style="min-width:100px">岗位/部位</th>
+            <th style="min-width:100px">风险等级</th>
+            <th style="min-width:100px">地图标示</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${list2 }" var="be" varStatus="index">
+            <tr id="line_${index.index + 1}">
+                <td class="text-c">${index.index + 1}</td>
+                <td><c:if test="${not empty be.level1}">${be.level1 } > ${be.level2 }</c:if></td>
+                <td class="text-c">
+                    <c:choose>
+                        <c:when test="${be.level eq '红色'}"><font class="col-a">${be.level}</font></c:when>
+                        <c:when test="${be.level eq '橙色'}"><font class="col-b">${be.level}</font></c:when>
+                        <c:when test="${be.level eq '黄色'}"><font class="col-c">${be.level}</font></c:when>
+                        <c:when test="${be.level eq '蓝色'}"><font class="col-d">${be.level}</font></c:when>
+                    </c:choose>
+                </td>
+                <td class="text-c">
+                    <c:choose>
+                        <c:when test="${not empty be.lnglat}"><font style="color:green">是</font></c:when>
+                        <c:when test="${empty be.lnglat}"><font style="color:red">否</font></c:when>
+                    </c:choose>
+                </td>
+                <td style="display:none">${be.type }</td>
+                <td style="display:none">${be.factors }</td>
+                <td style="display:none">${be.lnglat }</td>
+                <td style="display:none">${be.id }</td>
+                <td style="display:none">${empty be.gkcs ? be.measures :be.gkcs }</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 
+</div>
 
 
 
@@ -251,17 +307,14 @@
         var jwzb = document.getElementById("line_" + xuhao).children[6].textContent;
         var gkcs = document.getElementById("line_" + xuhao).children[8].textContent;
 
-
         infowin.setContent(
             "<b>序号: </b>" + xuhao + "<br>"
             + "<b>岗位/部位：</b>" + gwbw + "<br>"
-            // + "<b>风险类型：</b>" + fxlx + "<br>"
-            // + "<b>风险因素：</b>" + fxys + "<br>"
-            // + "<b>管控措施：</b>" + gkcs + "<br>"
+            + "<b>风险类型：</b>" + fxlx + "<br>"
+            + "<b>风险因素：</b>" + fxys + "<br>"
+            + "<b>管控措施：</b>" + gkcs + "<br>"
             + "<div class=my_delete onclick=deleteBj(" + xuhao + ")>删除标记</div>"
         );
-
-
         infowin.open(map, new AMap.LngLat(jwzb.split(',')[0], jwzb.split(',')[1]));
     }
 
@@ -318,7 +371,8 @@
     var jwarray = new Array();
     var xuhaoarray = new Array();
     var levlearray = new Array();
-    <c:forEach items="${list}" var="be" varStatus="index">
+    <%--<c:forEach items="${list}" var="be" varStatus="index">--%>  //原先的循环语句
+    <c:forEach items="${list2}" var="be" varStatus="index">
     xuhaoarray.push(${index.index + 1});
     jwarray.push("${be.lnglat}"); //js中可以使用此标签，将EL表达式中的值push到数组中
     levlearray.push("${be.level}");
@@ -532,8 +586,11 @@
             html2canvas(document.querySelector(".amap-maps"), {
                useCORS:true,allowTaint: false,foreignObjectRendering: true,taintTest: true,scale:1
             }).then(function (canvas) {
-                var image = canvas.toDataURL("image/png", 0.1);
-                localStorage.setItem('basic', image);
+                var image = canvas.toDataURL("image/png", 1);
+    console.log(image)
+    sessionStorage.setItem("basic", image);
+                <%--localStorage.setItem('basic', image);--%>
+    <%--document.cookie = "basic"--%>
                 document.querySelector('#tiaozhuan').click()
             });
         },1000);

@@ -1705,7 +1705,7 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * @return 整改指令书保存
+     * TODO  @return 整改指令书保存 在保存时间点
      */
     @RequestMapping(value = "check-document-save")
     public @ResponseBody
@@ -3562,8 +3562,7 @@ public class VillageController extends BaseController {
 
             }
 
-
-           /* if (null != inputItems || inputItems.size() > 0) {
+            if (null != inputItems || inputItems.size() > 0) {
                 // 保存自定义内容
                 for (Map<String, String> mapStr : inputItems) {
 
@@ -3581,9 +3580,8 @@ public class VillageController extends BaseController {
                     tCheckItem.setCheckId(tCheckId);
                     tCheckItemMapper.insertSelective(tCheckItem);
 
-
                 }
-            }*/
+            }
             result.setStatus("0");
             result.setMess("保存成功");
             return result;

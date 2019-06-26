@@ -39,7 +39,7 @@ import com.spring.web.util.SessionUtil;
  * @author FL
  * @date 2016年1月19日 下午2:21:49
  * @version V1.0
- * @param  总控制器的概念
+ * @param
  *
  */
 public class BaseController implements Serializable {
@@ -280,6 +280,10 @@ public class BaseController implements Serializable {
 
     @Autowired
     protected SaveMessageService saveMessageService;
+
+
+    @Autowired
+    protected TSafetyStandardMapper tSafetyStandardMapper;
 
     /** Mapper类引入结束 */
 

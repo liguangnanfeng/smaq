@@ -650,7 +650,6 @@
 
     function Partname() {
         var vs = $('select  option:selected').val();
-
         window.location.href = '${ly}/company/safety-system/risk-list?dmid='+vs+"&number="+${number}
 
     }

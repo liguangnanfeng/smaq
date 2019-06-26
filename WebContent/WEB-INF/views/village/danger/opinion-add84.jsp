@@ -221,7 +221,7 @@ function opente(){
         <%-- <u><span style="border-bottom:1px solid #333;vertical-align: text-bottom; width:20%;display:inline-block;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;${x[0] }&nbsp;&nbsp;&nbsp;&nbsp;</span></u> --%>
         <u><span id="id1"
           style="border-bottom: 1px solid #333; vertical-align: text-bottom; width: 15%; text-align: center; display: inline-block;height: 23px;"
-          contenteditable="true"></span></u> &nbsp;&nbsp;&nbsp;<u><span id="id2"
+          contenteditable="true"></span></u> &nbsp;&nbsp;${check.cheker}&nbsp;<u><span id="id2"
           style="border-bottom: 1px solid #333; vertical-align: text-bottom; width: 15%; text-align: center; display: inline-block;height: 23px;"
           contenteditable="true"></span></u>
       </p>

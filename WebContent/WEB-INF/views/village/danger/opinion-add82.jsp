@@ -123,7 +123,7 @@
             <span style="vertical-align: bottom;"><span>我们是</span></span>
             <u><span style="border-bottom:1px solid #333;vertical-align: text-bottom; width:11%;display:inline-block;text-indent: 0;" contenteditable="true">&nbsp;</span></u>
             <span style="vertical-align: bottom;"><span>安全生产监督管理局行政执法人员</span></span>
-            <u><span style="border-bottom:1px solid #333;vertical-align: text-bottom; width:11%;display:inline-block;text-indent: 0;" contenteditable="true">&nbsp;</span></u>
+            <u><span style="border-bottom:1px solid #333;vertical-align: text-bottom; width:11%;display:inline-block;text-indent: 0;" contenteditable="true">&nbsp;${check.cheker}</span></u>
             <span style="vertical-align: bottom;"><span>、</span></span>
             <u><span style="border-bottom:1px solid #333;vertical-align: text-bottom; width:11%;display:inline-block;text-indent: 0;" contenteditable="true">&nbsp;</span></u>
             <span style="vertical-align: bottom;"><span>，</span></span>

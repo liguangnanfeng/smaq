@@ -114,18 +114,18 @@
         </div>
         <p class="MsoNormal" style="margin-top:30px">
             <span style=""><span>被复查单位负责人（签名）：</span></span>
-            <u><span style="text-decoration:underline;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
+            <u><span style="text-decoration:underline;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${company.charge}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
             <u><span style="text-decoration:underline;"></span></u>
         </p>
         <p class="MsoNormal"style="margin-top:15px">
             <span style=""><span>安全生产监管行政执法人员（签名）：</span> </span>
-            <u><span style="text-decoration:underline;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
+            <u><span style="text-decoration:underline;" contenteditable="true">&nbsp;&nbsp;&nbsp;${check.cheker}&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
             <span style=""><span>证号：</span></span>
             <u><span style="text-decoration:underline;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u><span style="">&nbsp;</span><span style=""></span>
         </p>
         <p class="MsoNormal">
             <span style="visibility:hidden"><span>安全生产监管行政执法人员（签名）：</span> </span>
-            <u><span style="text-decoration:underline;text-indent: 0;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
+            <u><span style="text-decoration:underline;text-indent: 0;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;${check.cheker}&nbsp;&nbsp;&nbsp;</span></u>
             <span style=""><span>证号：</span></span>
             <u><span style="text-decoration:underline;text-indent: 0;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
             <span style="">&nbsp;</span>

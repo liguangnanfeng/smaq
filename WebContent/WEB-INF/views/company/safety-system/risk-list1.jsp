@@ -224,7 +224,7 @@
                 <button class="btn btn-primary radius" onClick=" BaseSet()">部门确定</button>
 
                 <c:if test="${number == null || number != 3}">
-                    <select class="sel_area" id="partNamme"  onchange="Partname()" >
+                    <select class="sel_area" id="partNamme"  onchange="Partname()" style="position: relative;top:2px" >
                         <option value="" >全部</option>
                         <c:forEach items="${zzjgDep1 }" var="be">
                             <option value="${be.id}" >${be.name }</option>

@@ -204,7 +204,6 @@
     where check_id = #{checkId} 
   </select>
 
-
   <select id="selectAlls" parameterType="java.lang.Integer" resultType="com.spring.web.model.TRectification">
     select
     *

@@ -134,11 +134,30 @@
             <span style="vertical-align: bottom;"><span>二、下列事故隐患</span></span>
             <u><span style="border-bottom:1px solid #333;min-width:10%;max-width:100%;display:inline-block;vertical-align: text-bottom;text-indent: 0;" contenteditable="true">&nbsp;${empty xx ? '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' : xx}</span></u>
             <span style="vertical-align: bottom;"><span>应于</span></span>
-            <u><span style="border-bottom:1px solid #333;width:10%;display:inline-block;vertical-align: text-bottom;text-indent: 0;" contenteditable="true">&nbsp;<fmt:formatDate value="${!empty rectification ? rectification.deadline : timenow }" pattern="yyyy"/></span></u>
-            <span style="vertical-align: bottom;"><span>年</span></span>
-            <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;" contenteditable="true">&nbsp;<fmt:formatDate value="${rectification.deadline}" pattern="MM"/></span></u>
-            <span style="vertical-align: bottom;"><span>月</span></span>
-            <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;" contenteditable="true">&nbsp;<fmt:formatDate value="${rectification.deadline}" pattern="dd"/></span></u>
+<%--            <u><span style="border-bottom:1px solid #333;width:10%;display:inline-block;vertical-align: text-bottom;text-indent: 0;" contenteditable="true">&nbsp;<fmt:formatDate value="${!empty rectification ? rectification.deadline : timenow }" pattern="yyyy"/></span></u>--%>
+<%--            <span style="vertical-align: bottom;"><span>年</span></span>--%>
+<%--            <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;" contenteditable="true">&nbsp;<fmt:formatDate value="${rectification.deadline}" pattern="MM"/></span></u>--%>
+<%--            <span style="vertical-align: bottom;"><span>月</span></span>--%>
+<%--            <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;" contenteditable="true">&nbsp;<fmt:formatDate value="${rectification.deadline}" pattern="dd"/></span></u>--%>
+
+            <c:if test="${not empty deadline}">
+                <c:set var="date1" value="${fn:split(deadline,'-') }" />
+                <u><span style="border-bottom:1px solid #333;width:10%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgY">&nbsp;${date1[0]}</span></u>
+                <span style="vertical-align: bottom;"><span>年</span></span>
+                <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgM">&nbsp;${date1[1]}</span></u>
+                <span style="vertical-align: bottom;"><span>月</span></span>
+                <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgD">&nbsp;${date1[2]}</span></u>
+            </c:if>
+            <c:if test="${empty deadline}">
+
+                <u><span style="border-bottom:1px solid #333;width:10%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgY"></span></u>
+                <span style="vertical-align: bottom;"><span>年</span></span>
+                <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgM">&nbsp;</span></u>
+                <span style="vertical-align: bottom;"><span>月</span></span>
+                <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgD">&nbsp;</span></u>
+
+            </c:if>
+
             <span style="vertical-align: bottom;"><span>日前整改完毕。</span></span>
         </p>
         <p class="MsoNormal" style="text-align:left;">
@@ -148,14 +167,32 @@
         </p>
         <p class="MsoNormal" style="text-align:left;">
             <span style="vertical-align: bottom;"><span>四、我们将于</span></span>
-            <u><span style="border-bottom:1px solid #333;width:15%;display:inline-block;vertical-align: text-bottom;text-indent: 0;" contenteditable="true">&nbsp;<fmt:formatDate value="${!empty rectification ? rectification.planTime : timenow }" pattern="yyyy"/>&nbsp;</span></u>
+<%--            <u><span style="border-bottom:1px solid #333;width:15%;display:inline-block;vertical-align: text-bottom;text-indent: 0;" contenteditable="true">&nbsp;<fmt:formatDate value="${!empty rectification ? rectification.planTime : timenow }" pattern="yyyy"/>&nbsp;</span></u>--%>
+<%--            <span style="vertical-align: bottom;"><span>年</span></span>--%>
+<%--            <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;" contenteditable="true">&nbsp;<fmt:formatDate value="${rectification.planTime}" pattern="MM"/>&nbsp;</span></u>--%>
+<%--            <span style="vertical-align: bottom;"><span>月</span></span>--%>
+<%--            <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;" contenteditable="true">&nbsp;<fmt:formatDate value="${rectification.planTime}" pattern="dd"/>&nbsp;</span></u>--%>
+         <c:if test="${not empty planTime}">
+                <c:set var="date1" value="${fn:split(planTime,'-') }" />
+                <u><span style="border-bottom:1px solid #333;width:15%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcY">&nbsp;&nbsp;${date1[0]}</span></u>
+                <span style="vertical-align: bottom;"><span>年</span></span>
+                <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcM">&nbsp;&nbsp;${date1[1]}</span></u>
+                <span style="vertical-align: bottom;"><span>月</span></span>
+                <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcD">&nbsp;&nbsp;${date1[2]}</span></u>
+
+         </c:if>
+        <c:if test="${empty planTime}">
+
+            <u><span style="border-bottom:1px solid #333;width:15%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcY">&nbsp;&nbsp;</span></u>
             <span style="vertical-align: bottom;"><span>年</span></span>
-            <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;" contenteditable="true">&nbsp;<fmt:formatDate value="${rectification.planTime}" pattern="MM"/>&nbsp;</span></u>
+            <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcM">&nbsp;&nbsp;</span></u>
             <span style="vertical-align: bottom;"><span>月</span></span>
-            <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;" contenteditable="true">&nbsp;<fmt:formatDate value="${rectification.planTime}" pattern="dd"/>&nbsp;</span></u>
+            <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcD">&nbsp;&nbsp;</span></u>
+
+        </c:if>
             <span style="vertical-align: bottom;"><span>日对整改情况进行复查。</span></span>
         </p>
-        
+
         <p class="MsoNormal">
             <span style="vertical-align: bottom;"><span>检查人员（签名）：</span></span>
             <%-- <u><span style="border-bottom:1px solid #333;vertical-align: text-bottom; width:20%;display:inline-block;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;${check.cheker }&nbsp;&nbsp;&nbsp;&nbsp;</span></u> --%>
@@ -167,7 +204,7 @@
             <span style="float:left;">
             	<span contenteditable="true" style="border-bottom:1px solid #333;float:left;padding: 0 20px;line-height: 22px;height: 22px;">${check.checkCompany}</span>
             </span>
-            
+
             <span style="" id="zhang_img">
               <%--  <c:if test="${check.checkCompany eq '无锡市安泰安全技术服务有限公司' }">
                 <img src="${ly }/images/zhang.png" style="height:180px;"/>
@@ -189,8 +226,8 @@
         </p>
         </div>
     </div>
-    
-    <!-- 弹窗隐患 -->    
+
+    <!-- 弹窗隐患 -->
      <!-- <div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content radius">
@@ -203,7 +240,7 @@
                     <label class="form-label col-sm-2" style="width:20%">检查情况：</label>
                     <div class="formControls col-sm-8" style="width:60%">
                       <textarea class="textarea" resize="none" style="height:50px" id="memo_text"></textarea>
-                    </div> 
+                    </div>
                   </div>
                   <div class="row cl" style="margin-top:15px;">
                     <label class="form-label col-sm-2" style="width:20%">检查结果：</label>
@@ -216,7 +253,7 @@
                         <input id="x3" type="radio" name="radio-status" value="2" checked="checked">
                         <label for="x3">不合格</label>
                       </div>
-                    </div> 
+                    </div>
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -225,8 +262,8 @@
                 </div>
             </div>
         </div>
-    </div>  --> 
-    
+    </div>  -->
+
      <div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard=false>
         <div class="modal-dialog">
             <div class="modal-content radius">
@@ -242,7 +279,7 @@
                       <c:forEach items="${itemL }" var="be" varStatus="index">
                         <p class="oneyhms">${index.index + 1}.<span data-lid="${be.levelId }" data-name="item-memo">${be.memo }</span></p><br>
                       </c:forEach>
-                    </div> 
+                    </div>
                   </div>
                   <div class="row cl" style="margin-top:15px;">
                     <label class="form-label col-sm-2" style="width:80%">针对上述隐患，根据有关规定，现提出如下整改要求：</label>
@@ -260,11 +297,11 @@
                         </div>
                        </c:forEach>
                       <!-- 循环结束 -->
-                    </div> 
+                    </div>
                   </div>
                   <div class="row cl" style="margin-top:15px;">
                     <div class="form-label col-sm-2" style="width:80%">期限：
-                      <input type="text" id="deadline" value=""  class="input-text Wdate" onfocus="WdatePicker({minDate:'<fmt:formatDate value="${check.realTime }" pattern="yyyy-MM-dd"/>',dateFmt:'yyyy-MM-dd'})" style="width:250px;">
+                      <input type="text" id="deadline" value=""  class="input-text Wdate" autocomplete="off"  onfocus="WdatePicker({minDate:'<fmt:formatDate value="${check.realTime }" pattern="yyyy-MM-dd"/>',dateFmt:'yyyy-MM-dd'})" style="width:250px;" onchange="zgqx(this)">
                     </div>
                   </div>
                   <div class="row cl" style="margin-top:15px;">
@@ -285,11 +322,11 @@
                         </div>
                       </c:forEach>
                       <!-- 循环结束 -->
-                    </div> 
+                    </div>
                   </div>
                   <div class="row cl" style="margin-top:15px;">
                     <div class="form-label col-sm-2" style="width:80%">3、整改复查时间：
-                      <input type="text" id="planTime" value=""  class="input-text Wdate" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'deadline\')||$dp.$DV(\'<fmt:formatDate value="${check.realTime }" pattern="yyyy-MM-dd"/>\');}',dateFmt:'yyyy-MM-dd'})" style="width:250px;">
+                      <input type="text" id="planTime" value=""  class="input-text Wdate" autocomplete="off"  onfocus="WdatePicker({minDate:'#F{$dp.$D(\'deadline\')||$dp.$DV(\'<fmt:formatDate value="${check.realTime }" pattern="yyyy-MM-dd"/>\');}',dateFmt:'yyyy-MM-dd'})" style="width:250px;" onchange="fcqx(this)">
                     </div>
                   </div>
                 </div>
@@ -299,12 +336,38 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
 </body>
 <script type="text/javascript">
 var checkId = ${checkId};
 var userId = ${company.userId };
 var rectificationId = '${rectification.id}';
+
+function zgqx(obj){
+    var dom = $(obj);
+    var value = dom.val();
+    zgTime=value;
+    zgTime = zgTime.replace(/-/g,'/');
+    zgTime = new Date(zgTime).getTime();
+    var data = value.split('-');
+    $('#zgY').html(data[0]);
+    $('#zgM').html(data[1]);
+    $('#zgD').html(data[2]);
+}
+
+function fcqx(obj){
+    var dom = $(obj);
+    var value = dom.val();
+    fcTime=value;
+    fcTime = fcTime.replace(/-/g,'/');
+    fcTime = new Date(fcTime).getTime();
+    var data = value.split('-');
+    $('#fcY').html(data[0]);
+    $('#fcM').html(data[1]);
+    $('#fcD').html(data[2]);
+}
+
+
 function save_() {
   if(rectificationId == '') {
     $("#modal-demo").modal("show");

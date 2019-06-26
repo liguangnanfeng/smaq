@@ -1668,6 +1668,8 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value = "check-document")
     public String checkDocument(HttpServletRequest request, Integer checkId, Integer flag, Model model, TRectification tr) throws Exception {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
         if (null == flag) {
             flag = 8;// 现场检查记录
         }
@@ -1690,10 +1692,27 @@ public class VillageController extends BaseController {
             model.addAttribute("itemL1", tCheckItemMapper.selectDangerByCheckId(checkId, 1));
             model.addAttribute("rectification", tr);
         } else {
+
             model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(checkId, null));
             model.addAttribute("itemL1", tCheckItemMapper.selectDangerByCheckId(checkId, 1));
             model.addAttribute("document", doc);
             return "village/danger/opinion-detail2";
+        }
+        List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(checkId);
+        for (TCheckItem tCheckItem : tCheckItems) {
+            if(2== tCheckItem.getStatus()){
+                if(null!=tCheckItem.getDeadline()){
+                    model.addAttribute("deadline",simpleDateFormat.format(tCheckItem.getDeadline()).toString());
+                }
+                if(null!=tCheckItem.getRecheckTime()){
+                    model.addAttribute("planTime",simpleDateFormat.format(tCheckItem.getRecheckTime()).toString());
+                }
+                break;
+            }
+        }
+        TRectification rectification = tRectificationMapper.selectByCheckId(tr.getCheckId());
+        if(null!=rectification){
+            model.addAttribute("rectification",rectification);
         }
         model.addAttribute("check",check);
         model.addAttribute("company",companyMapper.selectByPrimaryKey(user.getId()));

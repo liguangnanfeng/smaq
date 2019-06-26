@@ -20,6 +20,34 @@
             <arg column="danger11" javaType="java.lang.Double" jdbcType="DOUBLE"/>
             <arg column="danger12" javaType="java.lang.Double" jdbcType="DOUBLE"/>
             <arg column="danger13" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger14" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger15" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger16" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger17" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger18" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger19" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger20" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger21" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger22" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger23" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger24" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger25" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger26" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger27" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger28" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger29" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger30" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger31" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger32" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger33" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger34" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger35" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger36" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger37" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger38" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger39" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger40" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="danger41" javaType="java.lang.Double" jdbcType="DOUBLE"/>
             <arg column="counts" javaType="java.lang.Double" jdbcType="DOUBLE"/>
             <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="utime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
@@ -31,7 +59,9 @@
     </resultMap>
     <sql id="Base_Column_List">
         id, user_id, danger1, danger2, danger3, danger4, danger5, danger6, danger7, danger8, danger9,
-        danger10, danger11, danger12, danger13, counts, ctime, utime, important1, important2, important3, important4
+        danger10, danger11, danger12, danger13, danger14, danger15, danger16, danger17, danger18, danger19, danger20, danger21, danger22, danger23, danger24, danger25,
+        danger26, danger27, danger28, danger29, danger30, danger31, danger32, danger33, danger34, danger35, danger36, danger37, danger38, danger39, danger40, danger41,
+        counts, ctime, utime, important1, important2, important3, important4
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
 
@@ -62,14 +92,21 @@
         danger2, danger3, danger4,
         danger5, danger6, danger7,
         danger8, danger9, danger10,
-        danger11, danger12, danger13,
+        danger11, danger12, danger13,danger14, danger15, danger16, danger17, danger18, danger19, danger20, danger21, danger22, danger23, danger24, danger25,
+        danger26, danger27, danger28, danger29, danger30, danger31, danger32, danger33, danger34, danger35, danger36, danger37, danger38, danger39, danger40, danger41,
         counts, ctime, utime, important1, important2, important3, important4)
         values ( #{user_id,jdbcType=INTEGER},
         #{danger1,jdbcType=DOUBLE},#{danger2,jdbcType=DOUBLE},#{danger3,jdbcType=DOUBLE},
         #{danger4,jdbcType=DOUBLE},#{danger5,jdbcType=DOUBLE},#{danger6,jdbcType=DOUBLE},
         #{danger7,jdbcType=DOUBLE},#{danger8,jdbcType=DOUBLE},#{danger9,jdbcType=DOUBLE},
         #{danger10,jdbcType=DOUBLE},#{danger11,jdbcType=DOUBLE},#{danger12,jdbcType=DOUBLE},
-        #{danger13,jdbcType=DOUBLE},#{counts,jdbcType=DOUBLE},#{ctime,jdbcType=TIMESTAMP},#{utime,jdbcType=TIMESTAMP},
+        #{danger13,jdbcType=DOUBLE},#{danger14,jdbcType=DOUBLE},#{danger15,jdbcType=DOUBLE},#{danger16,jdbcType=DOUBLE},#{danger17,jdbcType=DOUBLE},
+        #{danger18,jdbcType=DOUBLE},#{danger19,jdbcType=DOUBLE},#{danger20,jdbcType=DOUBLE},#{danger21,jdbcType=DOUBLE},#{danger22,jdbcType=DOUBLE},
+        #{danger23,jdbcType=DOUBLE},#{danger24,jdbcType=DOUBLE},#{danger25,jdbcType=DOUBLE},#{danger26,jdbcType=DOUBLE},#{danger27,jdbcType=DOUBLE},
+        #{danger28,jdbcType=DOUBLE},#{danger29,jdbcType=DOUBLE},#{danger30,jdbcType=DOUBLE},#{danger31,jdbcType=DOUBLE},#{danger32,jdbcType=DOUBLE},
+        #{danger33,jdbcType=DOUBLE},#{danger34,jdbcType=DOUBLE},#{danger35,jdbcType=DOUBLE},#{danger36,jdbcType=DOUBLE},#{danger37,jdbcType=DOUBLE},
+        #{danger38,jdbcType=DOUBLE},#{danger39,jdbcType=DOUBLE},#{danger40,jdbcType=DOUBLE},#{danger41,jdbcType=DOUBLE},#{counts,jdbcType=DOUBLE},
+        #{ctime,jdbcType=TIMESTAMP},#{utime,jdbcType=TIMESTAMP},
         #{important1,jdbcType=INTEGER},#{important2,jdbcType=INTEGER},#{important3,jdbcType=INTEGER},#{important4,jdbcType=INTEGER}
        )
     </insert>
@@ -89,6 +126,34 @@
         danger11 = #{danger11,jdbcType=DOUBLE},
         danger12 = #{danger12,jdbcType=DOUBLE},
         danger13 = #{danger13,jdbcType=DOUBLE},
+        danger14 = #{danger14,jdbcType=DOUBLE},
+        danger15 = #{danger15,jdbcType=DOUBLE},
+        danger16 = #{danger16,jdbcType=DOUBLE},
+        danger17 = #{danger17,jdbcType=DOUBLE},
+        danger18 = #{danger18,jdbcType=DOUBLE},
+        danger19 = #{danger19,jdbcType=DOUBLE},
+        danger20 = #{danger20,jdbcType=DOUBLE},
+        danger21 = #{danger21,jdbcType=DOUBLE},
+        danger22 = #{danger22,jdbcType=DOUBLE},
+        danger23 = #{danger23,jdbcType=DOUBLE},
+        danger24 = #{danger24,jdbcType=DOUBLE},
+        danger25 = #{danger25,jdbcType=DOUBLE},
+        danger26 = #{danger26,jdbcType=DOUBLE},
+        danger27 = #{danger27,jdbcType=DOUBLE},
+        danger28 = #{danger28,jdbcType=DOUBLE},
+        danger29 = #{danger29,jdbcType=DOUBLE},
+        danger30 = #{danger30,jdbcType=DOUBLE},
+        danger31 = #{danger31,jdbcType=DOUBLE},
+        danger32 = #{danger32,jdbcType=DOUBLE},
+        danger33 = #{danger33,jdbcType=DOUBLE},
+        danger34 = #{danger34,jdbcType=DOUBLE},
+        danger35 = #{danger35,jdbcType=DOUBLE},
+        danger36 = #{danger36,jdbcType=DOUBLE},
+        danger37 = #{danger37,jdbcType=DOUBLE},
+        danger38 = #{danger38,jdbcType=DOUBLE},
+        danger39 = #{danger39,jdbcType=DOUBLE},
+        danger40 = #{danger40,jdbcType=DOUBLE},
+        danger41 = #{danger41,jdbcType=DOUBLE},
         counts = #{counts,jdbcType=DOUBLE},
         utime = #{utime,jdbcType=TIMESTAMP},
         important1 = #{important1,jdbcType=INTEGER},

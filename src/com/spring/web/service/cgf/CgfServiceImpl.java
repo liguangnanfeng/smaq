@@ -359,6 +359,22 @@ public class CgfServiceImpl implements CgfService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public void rectificationSave(TRectification tr) throws Exception {
         TRectification rectification = tRectificationMapper.selectByCheckId(tr.getCheckId());
+
+        // 根据checkId进行查询
+        List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(tr.getCheckId());
+        if(tCheckItems.size()>0){
+            for (TCheckItem tCheckItem : tCheckItems) {
+                tCheckItem.setDeadline(tr.getDeadline());
+                tCheckItem.setPlanTime(tr.getPlanTime());
+                tCheckItem.setRecheckTime(tr.getPlanTime());
+                tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
+                TRecheckItem tRecheckItem = tRecheckItemMapper.selectByCheckItemId(tCheckItem.getId());
+                if(null!=tRecheckItem){
+                    tRecheckItem.setDeadline(tr.getDeadline());
+                    tRecheckItemMapper.updateByPrimaryKeySelective(tRecheckItem);
+                }
+            }
+        }
         if (null == rectification) {
             TCheck c = tCheckMapper.selectByPrimaryKey(tr.getCheckId());
             tr.setCreateTime(new Date());
@@ -373,7 +389,7 @@ public class CgfServiceImpl implements CgfService {
         if (!StringUtils.isEmpty(tr.getItem1())) {
             m.put("ids", tr.getItem1());
             m.put("suggest", 1);
-            m.put("deadline", null);
+            m.put("deadline", tr.getDeadline());
             m.put("planTime", tr.getPlanTime());
             tCheckItemMapper.updSuggest(m);
         }

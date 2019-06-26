@@ -343,7 +343,7 @@
         var gkcs = document.getElementById("line_" + xuhao).children[8].textContent;
 
         infowin.setContent(
-            "<b>序号: </b>" + xuhao + "<br>"
+            "<b>序号: </b>" + xuhao+  "<br>"
             + "<b>岗位/部位：</b>" + gwbw + "<br>"
             + "<b>风险类型：</b>" + fxlx + "<br>"
             + "<b>风险因素：</b>" + fxys + "<br>"

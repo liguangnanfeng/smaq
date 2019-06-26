@@ -95,7 +95,7 @@
         </c:forEach>
         </div>
         <p class="MsoNormal" style="text-indent:27.7500pt;">
-            <span style="vertical-align: bottom;"><span>其中事故隐患第</span></span>
+            <span style="vertical-align: bottom;"><span>其中事故隐患                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     第</span></span>
             <u><span style="border-bottom:1px solid #333;width:30%;display:inline-block;vertical-align: text-bottom;text-indent: 0;">&nbsp;&nbsp;${yy }</span></u>
             <span style="vertical-align: bottom;"><span>项属于重大隐患。</span></span>
         </p>

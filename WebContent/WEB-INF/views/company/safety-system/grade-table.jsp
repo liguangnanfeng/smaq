@@ -158,7 +158,7 @@
                         <th style="width:20%">类别</th>
                         <th style="width:20%">项目（分值）</th>
                         <th style="width:50%">评估内容</th>
-                        <th style="width:10%">扣分值</th>
+                        <th style="width:10%">分值</th>
 
                     </thead>
                     <tbody id="tableaaa">
@@ -166,102 +166,103 @@
                         <td>1.固有危险性</td>
                         <td>重大危险源（10分）</td>
                         <td>存在一级危险化学品重大危险源的，扣10分;</td>
-                        <td rowspan="4" onclick="dafen('danger1',10,this)" class="my_text danger1"></td>
+                        <td onclick="dafen('danger1',10,this,-1)" class="my_text danger1"></td>
                     </tr>
                     <tr>
                         <td>1.固有危险性</td>
                         <td>重大危险源（10分）</td>
                         <td>存在二级危险化学品重大危险源的，扣8分;</td>
-
+                        <td onclick="dafen('danger2',8,this,-1)" class="my_text danger2"></td>
                     </tr>
 
                     <tr>
                         <td>1.固有危险性</td>
                         <td>重大危险源（10分）</td>
                         <td>存在三级危险化学品重大危险源的，扣6分;</td>
-
+                        <td onclick="dafen('danger3',6,this,-1)" class="my_text danger3"></td>
                     </tr>
 
                     <tr>
                         <td>1.固有危险性</td>
                         <td>重大危险源（10分）</td>
                         <td>存在四级危险化学品重大危险源的，扣4分;</td>
+                        <td onclick="dafen('danger4',4,this,-1)" class="my_text danger4"></td>
                     </tr>
 
                     <tr>
                         <td>1.固有危险性</td>
                         <td>物质危险性（5分）</td>
                         <td>生产、储存爆炸品的（实验室化学试剂除外），每一种扣2分；</td>
-                        <td rowspan="3" onclick="dafen('danger2',5,this)" class="my_text danger2"></td>
+                        <td onclick="dafen('danger5',5,this,-1)" class="my_text danger5"></td>
                     </tr>
 
                     <tr>
                         <td>1.固有危险性</td>
                         <td>物质危险性（5分）</td>
                         <td>生产、储存（含管道输送）氯气、光气等吸入性剧毒化学品的（实验室化学试剂除外），每一种扣2分；</td>
-
+                        <td onclick="dafen('danger6',5,this,-1)" class="my_text danger6"></td>
                     </tr>
 
                     <tr>
                         <td>1.固有危险性</td>
                         <td>物质危险性（5分）</td>
                         <td>生产、储存其他重点监管危险化学品的（实验室化学试剂除外），每一种扣0.1分。</td>
-
+                        <td onclick="dafen('danger7',5,this,-1)" class="my_text danger7"></td>
                     </tr>
 
                     <tr>
                         <td>1.固有危险性</td>
                         <td>危险化工工艺种类（10分）</td>
                         <td>涉及18种危险化工工艺的，每一种扣2分。</td>
-                        <td onclick="dafen('danger3',10,this)" class="my_text danger3"></td>
+                        <td onclick="dafen('danger8',10,this,-1)" class="my_text danger8"></td>
                     </tr>
 
                     <tr>
                         <td>1.固有危险性</td>
                         <td>火灾爆炸危险性（5分）</td>
                         <td>涉及甲类/乙类火灾危险性类别厂房、库房或者罐区的，每涉及一处扣1/0.5分；</td>
-                        <td rowspan="2" onclick="dafen('danger4',5,this)" class="my_text danger4"></td>
+                        <td onclick="dafen('danger9',5,this,-1)" class="my_text danger9"></td>
                     </tr>
 
                     <tr>
                         <td>1.固有危险性</td>
                         <td>火灾爆炸危险性（5分）</td>
                         <td>涉及甲类、乙类火灾危险性罐区、气柜与加热炉等与产生明火的设施、装置比邻布置的，扣5分。</td>
-
+                        <td onclick="dafen('danger10',5,this,-1)" class="my_text danger10"></td>
                     </tr>
                     <tr>
                         <td>2.周边环境</td>
                         <td>周边环境(10分）</td>
                         <td>企业在化工园区（化工集中区）外的，扣3分；</td>
-                        <td rowspan="2" onclick="dafen('danger5',10,this)" class="my_text danger5"></td>
+                        <td onclick="dafen('danger11',3,this,-1)" class="my_text danger11"></td>
                     </tr>
 
                     <tr>
                         <td>2.周边环境</td>
                         <td>周边环境(10分）</td>
                         <td>企业外部安全防护距离不符合《危险化学品生产、储存装置个人可接受风险标准和社会可接受风险标准（试行）》的，扣10分。</td>
-
+                        <td onclick="dafen('danger12',10,this,-1)" class="my_text danger12"></td>
                     </tr>
 
                     <tr>
                         <td>3.设计与评估</td>
                         <td>设计与评估（10分）</td>
                         <td>国内首次使用的化工工艺未经过省级人民政府有关部门组织安全可靠性论证的，扣5分；</td>
-                        <td rowspan="3" onclick="dafen('danger6',10,this)" class="my_text danger6"></td>
+                        <td onclick="dafen('danger13',5,this,-1)" class="my_text danger13"></td>
                     </tr>
 
                     <tr>
                         <td>3.设计与评估</td>
                         <td>设计与评估（10分）</td>
                         <td>精细化工企业未按规范性文件要求开展反应安全风险评估的，扣10分；</td>
-
+                        <td onclick="dafen('danger14',10,this,-1)" class="my_text danger14"></td>
                     </tr>
 
                     <tr>
                         <td>3.设计与评估</td>
                         <td>设计与评估（10分）</td>
                         <td>企业危险化学品生产储存装置均由甲级资质设计单位进行全面设计的，加2分。</td>
-
+                        <td onclick="dafen('danger15',2,this,1)" class="my_text danger15"></td>
                     </tr>
 
 
@@ -269,35 +270,35 @@
                         <td>4.设备</td>
                         <td>设备（5分）</td>
                         <td>使用淘汰落后安全技术工艺、设备目录列出的工艺及设备的，每一项扣2分；</td>
-                        <td rowspan="3" onclick="dafen('danger7',5,this)" class="my_text danger7"></td>
+                        <td onclick="dafen('danger16',5,this,-1)" class="my_text danger16"></td>
                     </tr>
 
                     <tr>
                         <td>4.设备</td>
                         <td>设备（5分）</td>
                         <td>特种设备没有办理使用登记证书的，或者未按要求定期检验的，扣2分；</td>
-
+                        <td onclick="dafen('danger17',2,this,-1)" class="my_text danger17"></td>
                     </tr>
 
                     <tr>
                         <td>4.设备</td>
                         <td>设备（5分）</td>
                         <td>化工生产装置未按国家标准要求设置双电源或者双回路供电的，扣5分。</td>
-
+                        <td onclick="dafen('danger18',5,this,-1)" class="my_text danger18"></td>
                     </tr>
 
                     <tr>
                         <td>5.自控与安全设施</td>
                         <td>自控与安全设施（10分）</td>
                         <td>涉及重点监管危险化工工艺的装置未按要求实现自动化控制，系统未实现紧急停车功能，装备的自动化控制系统、紧急停车系统未投入使用的，扣10分；</td>
-                        <td rowspan="7" onclick="dafen('danger8',10,this)" class="my_text danger8"></td>
+                        <td onclick="dafen('danger19',10,this,-1)" class="my_text danger19"></td>
                     </tr>
 
                     <tr>
                         <td>5.自控与安全设施</td>
                         <td>自控与安全设施（10分）</td>
                         <td>涉及毒性气体、液化气体、剧毒液体的一级、二级重大危险源的危险化学品罐区未配备独立的安全仪表系统的，扣10分；</td>
-
+                        <td onclick="dafen('danger20',10,this,-1)" class="my_text danger20"></td>
                     </tr>
 
 
@@ -305,14 +306,14 @@
                         <td>5.自控与安全设施</td>
                         <td>自控与安全设施（10分）</td>
                         <td>构成一级、二级重大危险源的危险化学品罐区未实现紧急切断功能的，扣5分；</td>
-
+                        <td onclick="dafen('danger21',5,this,-1)" class="my_text danger21"></td>
                     </tr>
 
                     <tr>
                         <td>5.自控与安全设施</td>
                         <td>自控与安全设施（10分）</td>
                         <td>危险化学品重大危险源未设置压力、液位、温度远传监控和超限位报警装置的，每涉及一项扣1分；</td>
-
+                        <td onclick="dafen('danger22',10,this,-1)" class="my_text danger22"></td>
                     </tr>
 
 
@@ -320,21 +321,21 @@
                         <td>5.自控与安全设施</td>
                         <td>自控与安全设施（10分）</td>
                         <td>涉及可燃和有毒有害气体泄漏的场所未按国家标准设置检测声光报警设施的，每一处扣1分；</td>
-
+                        <td onclick="dafen('danger23',10,this,-1)" class="my_text danger23"></td>
                     </tr>
 
                     <tr>
                         <td>5.自控与安全设施</td>
                         <td>自控与安全设施（10分）</td>
                         <td>防爆区域未按国家标准安装使用防爆电气设备的，每一处扣1分；</td>
-
+                        <td onclick="dafen('danger24',10,this,-1)" class="my_text danger24"></td>
                     </tr>
 
                     <tr>
                         <td>5.自控与安全设施</td>
                         <td>自控与安全设施（10分）</td>
                         <td>甲类、乙类火灾危险性生产装置内设有办公室、操作室、固定操作岗位或休息室的，每涉及一处扣5分。</td>
-
+                        <td onclick="dafen('danger25',10,this,-1)" class="my_text danger25"></td>
                     </tr>
 
 
@@ -342,28 +343,28 @@
                         <td>6.人员资质</td>
                         <td>人员资质（15分）</td>
                         <td>企业主要负责人和安全生产管理人员未依法经考核合格的，每一人次扣5分；</td>
-                        <td rowspan="5" onclick="dafen('danger9',15,this)" class="my_text danger9"></td>
+                        <td onclick="dafen('danger26',15,this,-1)" class="my_text danger26"></td>
                     </tr>
 
                     <tr>
                         <td>6.人员资质</td>
                         <td>人员资质（15分）</td>
                         <td>企业专职安全生产管理人员不具备国民教育化工化学类（或安全工程）中等职业教育以上学历或者化工化学类中级以上专业技术职称的，每一人次扣5分；</td>
-
+                        <td onclick="dafen('danger27',15,this,-1)" class="my_text danger27"></td>
                     </tr>
 
                     <tr>
                         <td>6.人员资质</td>
                         <td>人员资质（15分）</td>
                         <td>涉及“两重点一重大”装置的生产、设备及工艺专业管理人员不具有相应专业大专以上学历的，每一人次扣5分；</td>
-
+                        <td onclick="dafen('danger28',15,this,-1)" class="my_text danger28"></td>
                     </tr>
 
                     <tr>
                         <td>6.人员资质</td>
                         <td>人员资质（15分）</td>
                         <td>企业未按有关要求配备注册安全工程师的，扣3分；</td>
-
+                        <td onclick="dafen('danger29',3,this,-1)" class="my_text danger29"></td>
                     </tr>
 
 
@@ -371,7 +372,7 @@
                         <td>6.人员资质</td>
                         <td>人员资质（15分）</td>
                         <td>企业主要负责人、分管安全生产工作负责人、安全管理部门主要负责人为化学化工类专业毕业的，每一人次加2分。</td>
-
+                        <td onclick="dafen('danger30',15,this,1)" class="my_text danger30"></td>
                     </tr>
 
 
@@ -379,7 +380,7 @@
                         <td>7.安全管理制度</td>
                         <td>管理制度（10分）</td>
                         <td>未制定操作规程和工艺控制指标或者制定的操作规程和工艺控制指标不完善的，扣5分；</td>
-                        <td rowspan="3" onclick="dafen('danger10',10,this)" class="my_text danger10"></td>
+                        <td onclick="dafen('danger31',5,this,-1)" class="my_text danger31"></td>
                     </tr>
 
 
@@ -387,56 +388,56 @@
                         <td>7.安全管理制度</td>
                         <td>管理制度（10分）</td>
                         <td>动火、进入受限空间等特殊作业管理制度不符合国家标准或未有效执行的，扣10分；</td>
-
+                        <td onclick="dafen('danger32',10,this,-1)" class="my_text danger32"></td>
                     </tr>
 
                     <tr>
                         <td>7.安全管理制度</td>
                         <td>管理制度（10分）</td>
                         <td>未建立与岗位相匹配的全员安全生产责任制的，每涉及一个岗位扣2分。</td>
-
+                        <td onclick="dafen('danger33',10,this,-1)" class="my_text danger33"></td>
                     </tr>
 
                     <tr>
                         <td>8.应急管理</td>
                         <td>应急配备</td>
                         <td>企业自设专职消防应急队伍的，加3分。</td>
-                        <td onclick="dafen('danger11',10,this)" class="my_text danger11"></td>
+                        <td onclick="dafen('danger34',3,this,1)" class="my_text danger34"></td>
                     </tr>
 
                     <tr>
                         <td>9.安全管理绩效</td>
                         <td>安全生产标准化达标</td>
                         <td>安全生产标准化为一级的，加15分；</td>
-                        <td rowspan="3" onclick="dafen('danger12',15,this)" class="my_text danger12"></td>
+                        <td onclick="dafen('danger35',15,this,1)" class="my_text danger35"></td>
                     </tr>
 
                     <tr>
                         <td>9.安全管理绩效</td>
                         <td>安全生产标准化达标</td>
                         <td>安全生产标准化为二级的，加5分；</td>
-
+                        <td onclick="dafen('danger36',5,this,1)" class="my_text danger36"></td>
                     </tr>
 
                     <tr>
                         <td>9.安全管理绩效</td>
                         <td>安全生产标准化达标</td>
                         <td>安全生产标准化为三级的，加2分。</td>
-
+                        <td onclick="dafen('danger37',2,this,1)" class="my_text danger37"></td>
                     </tr>
 
                     <tr>
                         <td>9.安全管理绩效</td>
                         <td>安全事故情况（10分）</td>
                         <td>三年内发生过1起较大安全事故的，扣10分;</td>
-                        <td rowspan="4" onclick="dafen('danger13',10,this)" class="my_text danger13"></td>
+                        <td onclick="dafen('danger38',10,this,-1)" class="my_text danger38"></td>
                     </tr>
 
                     <tr>
                         <td>9.安全管理绩效</td>
                         <td>安全事故情况（10分）</td>
                         <td>三年内发生过1起安全事故造成1-2人死亡的，扣8分;</td>
-
+                        <td onclick="dafen('danger39',8,this,-1)" class="my_text danger39"></td>
                     </tr>
 
 
@@ -444,7 +445,7 @@
                         <td>9.安全管理绩效</td>
                         <td>安全事故情况（10分）</td>
                         <td>三年内发生过爆炸、着火、中毒等具有社会影响的安全事故，但未造成人员伤亡的，扣5分;</td>
-
+                        <td onclick="dafen('danger40',5,this,-1)" class="my_text danger40"></td>
                     </tr>
 
 
@@ -452,7 +453,7 @@
                         <td>9.安全管理绩效</td>
                         <td>安全事故情况（10分）</td>
                         <td>五年内未发生安全事故的，加5分。</td>
-
+                        <td onclick="dafen('danger41',5,this,1)" class="my_text danger41"></td>
                     </tr>
 
 
@@ -569,6 +570,10 @@
         danger11: 0,
         danger12: 0,
         danger13: 0,
+        danger14: 0,
+        danger15: 0,
+        danger16: 0,danger17: 0,danger18: 0,danger19: 0,danger10: 0,danger21: 0,danger22: 0,danger23: 0,danger24: 0,danger25: 0,danger26: 0,danger27: 0,danger28: 0,danger29: 0,danger30: 0,
+        danger31: 0,danger32: 0,danger33: 0,danger34: 0,danger35: 0,danger36: 0,danger37: 0,danger38: 0,danger39: 0,danger40: 0,danger41: 0,
         important1:0,
         important2:0,
         important3:0,
@@ -576,7 +581,9 @@
         counts: 100
     };
     var arr=['danger1','danger2','danger3','danger4','danger5','danger6','danger7','danger8','danger9','danger10','danger11',
-        'danger12','danger13','counts'
+        'danger12','danger13','danger14','danger15','danger16','danger17','danger18','danger19','danger20','danger21','danger22','danger23','danger24',
+        'danger25','danger26','danger27','danger28','danger29','danger30','danger31','danger32','danger33','danger34','danger35','danger36','danger37',
+        'danger38','danger39','danger40','danger41','counts'
     ]
     var arr2=['important1','important2','important3','important4']
     $(function(){
@@ -628,14 +635,20 @@
 
 
     var current = '';  //当前要复制的postData的key
-    var currentDom = ''  // 当前要操作的dom
-    var max = 0    //当前能输入的最大值
-    function dafen(zd, xz, dom) {  //zd 要赋值的变量名    xz 表示输入最大的范围
+    var currentDom = '';  // 当前要操作的dom
+    var max = 0;    //当前能输入的最大值
+    function dafen(zd, xz, dom, flag) {  //zd 要赋值的变量名    xz 表示输入最大的范围
         current = zd;
         currentDom = $(dom);
-        $('#trInput').val(currentDom.text());
+        if (flag == 1){
+            $('#trInput').val("+"+currentDom.text());
+        }else if (flag == -1){
+            $('#trInput').val("-"+currentDom.text());
+        }
+
         max = xz;
         $("#modal-plan2").modal("show");
+
     }
 
     function dagou(zd,obj){
@@ -677,8 +690,8 @@
             postData[current] = val;
             currentDom.text(val);
             var count =  100;
-            for(i = 0; i < 13; i++){
-                if(i==10||i==11){
+            for(i = 0; i < 41; i++){
+                if(i == 29 || i == 33 || i == 34 || i == 35 || i == 36 || i == 40){
                     count = count + parseFloat(postData['danger'+(i+1)]);
                 }else{
                     count = count - parseFloat(postData['danger'+(i+1)]);

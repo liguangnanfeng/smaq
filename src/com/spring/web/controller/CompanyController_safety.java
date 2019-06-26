@@ -646,6 +646,34 @@ public class CompanyController_safety extends BaseController {
                 dangerCoordinate1.setDanger11(0.00);
                 dangerCoordinate1.setDanger12(0.00);
                 dangerCoordinate1.setDanger13(0.00);
+                dangerCoordinate1.setDanger14(0.00);
+                dangerCoordinate1.setDanger15(0.00);
+                dangerCoordinate1.setDanger16(0.00);
+                dangerCoordinate1.setDanger17(0.00);
+                dangerCoordinate1.setDanger18(0.00);
+                dangerCoordinate1.setDanger19(0.00);
+                dangerCoordinate1.setDanger20(0.00);
+                dangerCoordinate1.setDanger21(0.00);
+                dangerCoordinate1.setDanger22(0.00);
+                dangerCoordinate1.setDanger23(0.00);
+                dangerCoordinate1.setDanger24(0.00);
+                dangerCoordinate1.setDanger25(0.00);
+                dangerCoordinate1.setDanger26(0.00);
+                dangerCoordinate1.setDanger27(0.00);
+                dangerCoordinate1.setDanger28(0.00);
+                dangerCoordinate1.setDanger29(0.00);
+                dangerCoordinate1.setDanger30(0.00);
+                dangerCoordinate1.setDanger31(0.00);
+                dangerCoordinate1.setDanger32(0.00);
+                dangerCoordinate1.setDanger33(0.00);
+                dangerCoordinate1.setDanger34(0.00);
+                dangerCoordinate1.setDanger35(0.00);
+                dangerCoordinate1.setDanger36(0.00);
+                dangerCoordinate1.setDanger37(0.00);
+                dangerCoordinate1.setDanger38(0.00);
+                dangerCoordinate1.setDanger39(0.00);
+                dangerCoordinate1.setDanger40(0.00);
+                dangerCoordinate1.setDanger41(0.00);
                 dangerCoordinate1.setCounts(100.00);
                 dangerCoordinate1.setCtime(new Date());
                 dangerCoordinate1.setUtime(new Date());
@@ -676,7 +704,10 @@ public class CompanyController_safety extends BaseController {
     @ResponseBody
     public Result coordinate(Model model, HttpServletRequest request,Integer id, Double danger1, Double danger2, Double danger3,
                              Double danger4, Double danger5,Double danger6, Double danger7, Double danger8, Double danger9,
-                             Double danger10,Double danger11, Double danger12, Double danger13, Double counts,
+                             Double danger10,Double danger11, Double danger12, Double danger13, Double danger14, Double danger15, Double danger16, Double danger17, Double danger18,
+                             Double danger19, Double danger20, Double danger21, Double danger22, Double danger23, Double danger24, Double danger25, Double danger26, Double danger27,
+                             Double danger28, Double danger29, Double danger30, Double danger31, Double danger32, Double danger33, Double danger34, Double danger35, Double danger36,
+                             Double danger37, Double danger38, Double danger39, Double danger40, Double danger41, Double counts,
                              Integer important1,Integer important2,Integer important3,Integer important4) throws Exception {
         User user = this.getLoginUser(request);
         Result result = new ResultImpl();
@@ -755,6 +786,146 @@ public class CompanyController_safety extends BaseController {
             dangerCoordinate.setDanger13(0.00);
         } else {
             dangerCoordinate.setDanger13(danger13*1.00);
+        }
+        if (null == danger14) {
+            dangerCoordinate.setDanger14(0.00);
+        } else {
+            dangerCoordinate.setDanger14(danger14*1.00);
+        }
+        if (null == danger15) {
+            dangerCoordinate.setDanger15(0.00);
+        } else {
+            dangerCoordinate.setDanger15(danger15*1.00);
+        }
+        if (null == danger16) {
+            dangerCoordinate.setDanger16(0.00);
+        } else {
+            dangerCoordinate.setDanger16(danger16*1.00);
+        }
+        if (null == danger17) {
+            dangerCoordinate.setDanger17(0.00);
+        } else {
+            dangerCoordinate.setDanger17(danger17*1.00);
+        }
+        if (null == danger18) {
+            dangerCoordinate.setDanger18(0.00);
+        } else {
+            dangerCoordinate.setDanger18(danger18*1.00);
+        }
+        if (null == danger19) {
+            dangerCoordinate.setDanger19(0.00);
+        } else {
+            dangerCoordinate.setDanger19(danger19*1.00);
+        }
+        if (null == danger20) {
+            dangerCoordinate.setDanger20(0.00);
+        } else {
+            dangerCoordinate.setDanger20(danger20*1.00);
+        }
+        if (null == danger21) {
+            dangerCoordinate.setDanger21(0.00);
+        } else {
+            dangerCoordinate.setDanger21(danger21*1.00);
+        }
+        if (null == danger22) {
+            dangerCoordinate.setDanger22(0.00);
+        } else {
+            dangerCoordinate.setDanger22(danger22*1.00);
+        }
+        if (null == danger23) {
+            dangerCoordinate.setDanger23(0.00);
+        } else {
+            dangerCoordinate.setDanger23(danger23*1.00);
+        }
+        if (null == danger24) {
+            dangerCoordinate.setDanger24(0.00);
+        } else {
+            dangerCoordinate.setDanger24(danger24*1.00);
+        }
+        if (null == danger25) {
+            dangerCoordinate.setDanger25(0.00);
+        } else {
+            dangerCoordinate.setDanger25(danger25*1.00);
+        }
+        if (null == danger26) {
+            dangerCoordinate.setDanger26(0.00);
+        } else {
+            dangerCoordinate.setDanger26(danger26*1.00);
+        }
+        if (null == danger27) {
+            dangerCoordinate.setDanger27(0.00);
+        } else {
+            dangerCoordinate.setDanger27(danger27*1.00);
+        }
+        if (null == danger28) {
+            dangerCoordinate.setDanger28(0.00);
+        } else {
+            dangerCoordinate.setDanger28(danger28*1.00);
+        }
+        if (null == danger29) {
+            dangerCoordinate.setDanger29(0.00);
+        } else {
+            dangerCoordinate.setDanger29(danger29*1.00);
+        }
+        if (null == danger30) {
+            dangerCoordinate.setDanger30(0.00);
+        } else {
+            dangerCoordinate.setDanger30(danger30*1.00);
+        }
+        if (null == danger31) {
+            dangerCoordinate.setDanger31(0.00);
+        } else {
+            dangerCoordinate.setDanger31(danger31*1.00);
+        }
+        if (null == danger32) {
+            dangerCoordinate.setDanger32(0.00);
+        } else {
+            dangerCoordinate.setDanger32(danger32*1.00);
+        }
+        if (null == danger33) {
+            dangerCoordinate.setDanger33(0.00);
+        } else {
+            dangerCoordinate.setDanger33(danger33*1.00);
+        }
+        if (null == danger34) {
+            dangerCoordinate.setDanger34(0.00);
+        } else {
+            dangerCoordinate.setDanger34(danger34*1.00);
+        }
+        if (null == danger35) {
+            dangerCoordinate.setDanger35(0.00);
+        } else {
+            dangerCoordinate.setDanger35(danger35*1.00);
+        }
+        if (null == danger36) {
+            dangerCoordinate.setDanger36(0.00);
+        } else {
+            dangerCoordinate.setDanger36(danger36*1.00);
+        }
+        if (null == danger37) {
+            dangerCoordinate.setDanger37(0.00);
+        } else {
+            dangerCoordinate.setDanger37(danger37*1.00);
+        }
+        if (null == danger38) {
+            dangerCoordinate.setDanger38(0.00);
+        } else {
+            dangerCoordinate.setDanger38(danger38*1.00);
+        }
+        if (null == danger39) {
+            dangerCoordinate.setDanger39(0.00);
+        } else {
+            dangerCoordinate.setDanger39(danger39*1.00);
+        }
+        if (null == danger40) {
+            dangerCoordinate.setDanger40(0.00);
+        } else {
+            dangerCoordinate.setDanger40(danger40*1.00);
+        }
+        if (null == danger41) {
+            dangerCoordinate.setDanger41(0.00);
+        } else {
+            dangerCoordinate.setDanger41(danger41*1.00);
         }
         if (null == counts) {
             dangerCoordinate.setCounts(0.00);

@@ -123,8 +123,8 @@
     .item_content>span a{
         color:#fff;
         background:blue;
-    border-radius:6px;
-    padding:4px 15px;
+        border-radius:6px;
+        padding:4px 15px;
     }
     .item_content>span a:first-child{
         margin-right:5px;
@@ -203,34 +203,78 @@
         <c:forEach items="${list }" varStatus="index" var="t">
             <div class="item_container">
                 <div class="item_content my_flex f_r f_j_c f_z_c" >
-            <span><a onclick="amend(${t.id})">编辑</a><a onclick="del(${t.id})">删除</a></span>
+                    <span><a onclick="addNew(${t.id})">编辑</a><a onclick="del(${t.id})">删除</a></span>
                         ${t.name }
                     <div></div>
                 </div>
             </div>
         </c:forEach>
     </div>
+
+
+    <!-- 弹窗输入 -->
+    <div id="modal-plan2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="margin-top: 150px">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">输入评分(只能输入数字)</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body" style="height: 200px; overflow-y: auto">
+                    <div class="form form-horizontal">
+                        <div class="row cl dq">
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入评分
+                                :</label>
+                            <div class="formControls col-xs-5 col-sm-5">
+                                <input class="input-text" type="text" name="" id="trInput"
+                                       style="width:150px">
+                            </div>
+                            <div class="col-xs-3 col-sm-3">
+                                <button class="btn radius btn-primary size-S" onclick="queren()">
+                                    确认
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 <!-- 弹窗上传资料 -->
 
 <script type="text/javascript">
 <%-- 新增 --%>
-
-    function addNew(){
-    console.log(1111)
-    console.log('新增')
-    layer.prompt({title: '输入任何口令，并确认', formType: 1}, function(pass, index){
-        layer.close(index);
-    layer.prompt({title: '随便写点啥，并确认', formType: 2}, function(text, index){
-        layer.close(index);
-        layer.msg('演示完毕！您的口令：'+ pass +'<br>您最后写下了：'+text);
-    });
-    });
-<%--    $.post(getRootPath() + "/company/tables/tab-del", {--%>
-<%--        id: id,--%>
-<%--    }, function (reuslt) {--%>
-<%--        location.reload()--%>
-<%--    })--%>
+    var str = 0
+    function addNew(v){
+        if(v&&v!=''){
+            str = v
+        }else{
+            str = 0
+        }
+        $("#modal-plan2").modal("show");
+    }
+<%--  添加保存  --%>
+    function queren(){
+        $.ajax({
+            url: getRootPath() + "/api/safety_Standard/save",    //请求的url地址 
+            data: JSON.stringify({
+                parentId: str,
+                name: $('#trInput').val()}),    //参数值
+            type: "POST",   //请求方式
+            dataType: 'json', //返回值类型 一般设置为json
+            contentType: "application/json",
+            success: function (res) {
+                    layer.alert(res.mess, "", function () {
+                        $("#modal-plan2").modal("hide");
+                        if(res.mess=="保存成功"){
+                            location.reload();
+                        }
+                    })
+            }
+        });
     }
     /*删除*/
     function del(id) {
@@ -239,11 +283,6 @@
         }, function (reuslt) {
             location.reload()
         })
-    }
-<%-- 编辑 --%>
-    function amend(id){
-    console.log('编辑')
-    console.log(id)
     }
     /*上传*/
     function upload(isType) {

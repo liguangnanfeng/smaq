@@ -106,8 +106,9 @@
         }
     </style>
     <script type="text/javascript">
-        $(function () {
+        var m_index=0;
 
+        $(function () {
             $(".three_danger").each(function () {
                 var s = $(this).find("label").html();
                 var h = $(this).prev().find("label").html();
@@ -297,6 +298,19 @@
             </c:forEach>
             <!-- 一级结束  -->
         </div>
+
+
+        <form class="form form-horizontal" id="form2">
+            <div id="addContainer" class="row"></div>
+            <div class="addCh1 row cl" >
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2 mt-20">
+                    <button onClick="addItem()" class="btn btn-primary radius" type="button"
+                            style="padding: 0 70px;">
+                        <i class="Hui-iconfont">&#xe632;</i>新增自定义检查项
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 
     <div class="mt-20 f-l mb-40" style="width:100%;text-align:center;">
@@ -309,17 +323,53 @@
 <script type="text/javascript">
     var depId = '${depId}';
 
+
+    function addItem(){
+        m_index++;
+        var add1 = `<div class="row" style="height: 31px">
+        <div class="col-xs-5 cl level1">
+        <label class="form-label col-xs-5 col-sm-5"><span class="c-red">*</span>检查项目 :</label>
+        <div class="formControls col-xs-7 col-sm-7">
+        <input type="text" id="project` + m_index + `" class="input-text" style="width:300px;">
+        </div>
+        </div>
+        <div class="col-xs-5 cl level1">
+        <label class="form-label col-xs-5 col-sm-5"><span class="c-red">*</span>检查内容 :</label>
+        <div class="formControls col-xs-7 col-sm-7">
+        <input type="text" id="content` + m_index + `"class="input-text" style="width:300px;">
+        </div>
+        </div>
+        </div>`;
+        $('#addContainer').append(add1);
+    }
+
+
+
+
     function save_1() {
         // var tableName = $("#title").val();
         var checkType = $("#checkNature").val();
         // if(!tableName){
         //     layer.alert('请填写检查表名称')
+        // return false;
         // }
         if(checkType==0||checkType==''||checkType==null){
             layer.alert('请选择检查类别')
+            return false;
+        }
+        var cusCheckItemList = [];//自定义检查项
+        for (var j = 1; j <=m_index; j++) {
+            var cusCheck = {
+                'level3': $('#project' + j).val(),
+                'level4': $('#content' + j).val(),
+            }
+            if (cusCheck.level3&&cusCheck.level4) {
+                cusCheckItemList.push(cusCheck);
+            }
+
         }
         var l = $(":checkbox:checked[data-l='4']");
-        if (l.length == 0) {
+        if (l.length == 0&&cusCheckItemList.length==0) {
             layer.alert("请至少选择一个风险。");
             return false;
         }
@@ -335,6 +385,7 @@
             // "tableName": tableName,//检查表名称
             "checkType": parseInt(checkType),//检查方式
             "selectItems": ids,      //检查项
+            "cusCheckItemList":cusCheckItemList  //自定义检查项
         }
         $.ajax({
             type: "POST",

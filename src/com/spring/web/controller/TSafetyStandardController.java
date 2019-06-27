@@ -153,6 +153,7 @@ public class TSafetyStandardController extends BaseController {
      * @return
      */
     @RequestMapping(value="/delete-tSafetyStandard")
+    @ResponseBody
     public Result deleteTSafetyStandard(Integer safetyStandardlistId ){
         Result result = new ResultImpl();
         try {

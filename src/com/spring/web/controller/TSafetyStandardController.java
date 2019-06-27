@@ -193,32 +193,57 @@ public class TSafetyStandardController extends BaseController {
      * @return
      */
     @RequestMapping("/Automatic-import")
+    @SuppressWarnings("all")
     public Result automaticImport(HttpServletRequest request){
         Result result = new ResultImpl();
-        User user = getLoginUser(request);// 获取公司名称
-        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        try {
+            User user = getLoginUser(request);// 获取公司名称
+            Company company = companyMapper.selectByPrimaryKey(user.getId());
 
-        String industry = company.getIndustry();
-        Integer industryType =null;
-        if(industry.indexOf("化工")!=-1){
-            industryType=1; // 危化企业
-        }else{
-            industryType=2; // 工贸企业
+            String industry = company.getIndustry();
+            Integer industryType =null;
+            if(industry.indexOf("化工")!=-1){
+                industryType=1; // 危化企业
+            }else{
+                industryType=2; // 工贸企业
+            }
+            // 1. 查询关于该行业的A级要素
+            List<TSafety> tSafetyList= tSafetyMapper.selectAByIndustryType(industryType,0);
+            for (TSafety tSafety : tSafetyList) {
+                //先插入A级要素
+                TSafetyStandard tSafetyStandard = new TSafetyStandard();
+                tSafetyStandard.setUserId(user.getId());   // 公司id
+                tSafetyStandard.setName(tSafety.getName());// 要素名称
+                tSafetyStandard.setDel(0); //表示未删除
+                tSafetyStandard.setIndustryId(industryType); // 行业类型 1. 危化  2. 工贸
+                tSafetyStandard.setFlag(1); // A级要素
+                tSafetyStandard.setParentId(0);// 表示未删除
+                tSafetyStandardMapper.insertSelective(tSafetyStandard);
+                Integer tSafetyStandardId = tSafetyStandard.getId(); // 获取插入的A级要素id
+                List<TSafety> list = tSafetyMapper.selectBBytSafetyStandardId();
+                for (TSafety safety : list) {
+                    TSafetyStandard tSafetyStandard1 = new TSafetyStandard();
+                    tSafetyStandard1.setUserId(user.getId());   // 公司id
+                    tSafetyStandard1.setName(safety.getName()); // 要素名称
+                    tSafetyStandard1.setIndustryId(industryType); // 行业类型 1. 危化 2 工贸
+                    tSafetyStandard1.setParentId(tSafetyStandardId); // 对应的A类要素id
+                    tSafetyStandard1.setFlag(2); // b级要素
+                    tSafetyStandard1.setContent(safety.getContent()); // 内容
+                    tSafetyStandard1.setDel(0); //表示未删除
+                    tSafetyStandardMapper.insertSelective(tSafetyStandard1);
+                }
+
+            }
+            result.setStatus("0");
+            result.setMess("插入成功");
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMess("插入失败");
+            return result;
         }
-        // 1. 查询关于该行业的A级要素
-        List<TSafety> tSafetyList= tSafetyMapper.selectAByIndustryType(industryType);
-        for (TSafety tSafety : tSafetyList) {
-            //先插入A级要素
-            TSafetyStandard tSafetyStandard = new TSafetyStandard();
-            tSafetyStandard.setUserId(user.getId());
-            tSafetyStandard.setDel(0); //表示未删除
-
-        }
-
-        //判断该公司类型
-        return result;
     }
-
 
     /**
      * 自动导入文本文件数据进行保存

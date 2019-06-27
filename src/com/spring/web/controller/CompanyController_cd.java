@@ -3033,7 +3033,7 @@ public class CompanyController_cd extends BaseController {
         if (setUserId(user, m1)) {
             clearVillageTown(m1);
             List<Map<String, Object>> list1 = tCheckMapper.selectList(m1);
-            model.addAttribute("CheckList", list1);
+            model.addAttribute("checkList", list1);
 
             Integer sum = 0;
             for (int i = 0; i < list1.size(); i++) {

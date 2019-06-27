@@ -102,9 +102,8 @@
         }
 
         .item_content {
-            border: 1px #ccc solid;
-            -moz-box-shadow: 10px 10px 5px #efefef; /* 老的 Firefox */
-            box-shadow: 10px 10px 5px #efefef;
+            -moz-box-shadow: 0px 0px 10px #efefef;
+            box-shadow: 0px 0px 10px #efefef;
             width: 100%;
             height: 100%;
             padding:10px;
@@ -119,12 +118,15 @@
         position: absolute;
         right: 0;
         top: 7px;
+        padding-right:5px;
+        display:none;
     }
     .item_content>span a{
         color:#fff;
-        background:blue;
+        background:#429842;
         border-radius:6px;
         padding:4px 15px;
+        text-decoration:none;
     }
     .item_content>span a:first-child{
         margin-right:5px;
@@ -201,7 +203,7 @@
         <%--        </table>--%>
 
         <c:forEach items="${list }" varStatus="index" var="t">
-            <div class="item_container">
+            <div class="item_container" onfocus="showDiv(this)">
                 <div class="item_content my_flex f_r f_j_c f_z_c" >
                     <span><a onclick="addNew(${t.id})">编辑</a><a onclick="del(${t.id})">删除</a></span>
                         ${t.name }
@@ -246,6 +248,10 @@
 <!-- 弹窗上传资料 -->
 
 <script type="text/javascript">
+<%--  显示  --%>
+    function showDiv(that){
+        console.log(that)
+    }
 <%-- 新增 --%>
     var str = 0
     function addNew(v){
@@ -278,13 +284,6 @@
     }
     /*删除*/
     function del(id) {
-    console.log(222222)
-    console.log('222222')
-<%--        $.post(getRootPath() + "/api/safety_Standard/delete-tSafetyStandard", {--%>
-<%--        'safetyStandardlistId': parseInt(id),--%>
-<%--        }, function (res) {--%>
-<%--            console.log(res)--%>
-<%--        })--%>
     $.ajax({
         url: getRootPath() + "/api/safety_Standard/delete-tSafetyStandard",    //请求的url地址 
         data: {
@@ -292,7 +291,11 @@
         },    //参数值
         type: "POST",   //请求方式
         success: function (res) {
-            console.log(res)
+            layer.alert(res.mess, "", function () {
+                if(res.status=='0'){
+                    location.reload();
+                }
+            })
         }
         });
     }

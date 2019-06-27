@@ -1,10 +1,14 @@
 package com.spring.web.controller;
 
 import com.spring.web.BaseController;
+import com.spring.web.dao.TSafetyMapper;
+import com.spring.web.model.Company;
+import com.spring.web.model.TSafety;
 import com.spring.web.model.TSafetyStandard;
 import com.spring.web.model.User;
 import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * TODO (要标注的类的作用)
+ * TODO (安全生产标准话实体类)
  *
  * @author 桃红梨白
  * @Date 2019/6/26 16:02
@@ -27,6 +31,8 @@ public class TSafetyStandardController extends BaseController {
 
     private static final long serialVersionUID = 6784473267577273720L;
 
+    @Autowired
+    private TSafetyMapper tSafetyMapper;
 
     /**
      * 根据条件查询安全生产标准化数据
@@ -81,9 +87,6 @@ public class TSafetyStandardController extends BaseController {
         return "company/tables/tab-biaozhun2";
     }
 
-
-
-    
     /**
      * 保存插入数据
      *
@@ -92,9 +95,20 @@ public class TSafetyStandardController extends BaseController {
      */
     @RequestMapping(value = "/save")
     public @ResponseBody
-    Result save(@RequestBody TSafetyStandard tSafetyStandard) {
+    Result save(@RequestBody TSafetyStandard tSafetyStandard,HttpServletRequest request) {
         Result result = new ResultImpl();
+        User loginUser = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(loginUser.getId());
         try{
+
+            String industry = company.getIndustry();
+            if(industry.indexOf("化工")!=-1){
+                tSafetyStandard.setIndustryId(1);
+            }else{
+                tSafetyStandard.setIndustryId(2);
+            }
+            tSafetyStandard.setUserId(loginUser.getId());
+
             tSafetyStandardMapper.insertSelective(tSafetyStandard);
 
             result.setMess("保存成功");
@@ -158,7 +172,43 @@ public class TSafetyStandardController extends BaseController {
             result.setMess("未成功删除,请重试!");
             return result;
         }
-
     }
+
+
+
+
+    /**
+     * 自动导入功能
+     *
+     * 先根据名称进行判断,是否包含化工企业,
+     * 两种企业, 工贸/化工
+     *
+     *
+     * @return
+     */
+    @RequestMapping("/Automatic-import")
+    public Result automaticImport(HttpServletRequest request){
+        Result result = new ResultImpl();
+
+        User user = getLoginUser(request);// 获取公司名称
+        //判断该公司类型
+        return result;
+    }
+
+
+    /**
+     * 自动导入文本文件数据进行保存
+     *
+     */
+    @RequestMapping("/import-table")
+    @ResponseBody
+    public Result importTable(@RequestBody  TSafety tSafety){
+        Result result = new ResultImpl();
+        tSafetyMapper.insertTSafety(tSafety);
+        //判断该公司类型
+        result.setObject(tSafety.getId());
+        return result;
+    }
+
 
 }

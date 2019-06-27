@@ -62,7 +62,8 @@
             <p>${be.sglx }</p>
           </td>
           <td  rowspan="2" class="td-gao">
-          <p>${be.fxysZd }${be.fxys }</p>
+         <%-- <p>${be.fxysZd }${be.fxys }</p>--%>
+           <p>${be.fxys }</p>
           </td>
         </tr>
         <tr>

@@ -2008,7 +2008,9 @@ public class CompanyController_safety extends BaseController {
             }
 
         }
+        Integer load3 = 1;
         model.addAttribute("be", be);
+        model.addAttribute("load3",load3);
         return "company/safety-system/risk-information-list-load";
     }
 
@@ -2076,8 +2078,10 @@ public class CompanyController_safety extends BaseController {
             }
 
         }
+        Integer load3 = 2;
         model.addAttribute("name1",name1);
         model.addAttribute("be", be);
+        model.addAttribute("load3",load3);
         return "company/safety-system/risk-information-list-load";
     }
 

@@ -62,9 +62,15 @@
             <p>${be.sglx }</p>
           </td>
           <td  rowspan="2" class="td-gao">
-         <%-- <p>${be.fxysZd }${be.fxys }</p>--%>
-           <p>${be.fxys }</p>
-          </td>
+            <c:if test="${load3 == 1}">
+              <p>${be.fxys }</p>
+            </c:if>
+            <c:if test="${load3 == 2}">
+              <p>${be.fxysZd }</p>
+            </c:if>
+         <%-- <p>${be.fxysZd }${be.fxys }</p>
+          &lt;%&ndash; <p>${be.fxys }</p>&ndash;%&gt;
+          </td>--%>
         </tr>
         <tr>
           <td class="text-c">

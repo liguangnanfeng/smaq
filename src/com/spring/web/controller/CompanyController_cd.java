@@ -2948,7 +2948,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "model-list-cx")
     public String modelList1(Integer type, Integer flag, String title, Integer industryType, HttpServletRequest request,
-                             Model model, Integer template) throws Exception {
+                             Model model, Integer template,Integer status) throws Exception {
         User user = getLoginUser(request);
 
         model.addAttribute("type", type);
@@ -3009,6 +3009,47 @@ public class CompanyController_cd extends BaseController {
             }
         }*/
         model.addAttribute("list", list);
+
+        // -------------------------------检查记录-----------------------------------
+        Map<String, Object> m1 = new HashMap<String, Object>();
+
+        if (user.getUserType() == 3) {//镇
+            model.addAttribute("villageL", villageMapper.selectListByTown(m));
+        }
+        if (user.getUserType() == 6) {//区
+            model.addAttribute("townL", townMapper.selectListByDistrict(m));
+        }
+
+        // 向map集合进行存储
+        m1.put("flag", flag);
+        m1.put("title", title);
+        if(null==status){
+            m1.put("status", 2);
+        }else{
+            m1.put("status", status);
+        }
+
+        // 进行判断
+        if (setUserId(user, m1)) {
+            clearVillageTown(m1);
+            List<Map<String, Object>> list1 = tCheckMapper.selectList(m1);
+            model.addAttribute("CheckList", list1);
+
+            Integer sum = 0;
+            for (int i = 0; i < list1.size(); i++) {
+                sum += Integer.parseInt(String.valueOf(list1.get(i).get("c")));
+            }
+            model.addAttribute("sum", sum);
+        }
+
+        model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("title", title);
+        model.addAttribute("status", status);
+        Date d = new Date();
+        String x = DateFormatUtils.format(d, "yyyy-MM-dd");
+        d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
+        model.addAttribute("t", d.getTime());
+
 
         return "company/danger/model-list-cx";
     }

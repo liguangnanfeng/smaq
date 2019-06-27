@@ -142,7 +142,7 @@
         <include refid="Base_Column_List"/>
         from t_safety_standard_tbl
         <where>
-
+            del != 1
         <if test="flag != null">
             AND  flag=#{flag,jdbcType=INTEGER}
         </if>
@@ -178,7 +178,7 @@
     </select>
 
     <select id="deleteTSafetyStandard" parameterType="Integer">
-        delete from t_safety_standard_tbl where id =#{safetyStandardlistId};
+        delete from t_safety_standard_tbl where id =#{safetyStandardlistId} and del !=1 ;
     </select>
 
 </mapper>

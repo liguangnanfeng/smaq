@@ -58,6 +58,17 @@ public class TSafetyStandardController extends BaseController {
     }
 
     /**
+     *  根据A级元素id查询B级元素
+     * @return
+     */
+    @RequestMapping(value="/findByParentId")
+    public String findByParentId(Integer safetyStandardlistId,Model model){
+        List<TSafetyStandard> TSafetyStandard = tSafetyStandardMapper.findByparentId(safetyStandardlistId);
+        model.addAttribute("list",TSafetyStandard);
+        return "";
+    }
+
+    /**
      * 根据 id查询项目信息 并调转动修改的页面
      * @param safetyStandardlistId
      * @param model
@@ -66,16 +77,13 @@ public class TSafetyStandardController extends BaseController {
     @RequestMapping(value = "/findOne")
     public String findOne(Integer safetyStandardlistId, Model model) {
         TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
-
         model.addAttribute("model",TSafetyStandard);
         return "company/tables/tab-biaozhun2";
-
     }
 
 
 
-
-
+    
     /**
      * 保存插入数据
      *

@@ -105,6 +105,10 @@
             background-color: #980c10 !important;
             color: #fff !important;
         }
+
+        .dataTables_wrapper{
+            margin-bottom:50px;
+        }
     </style>
 
 </head>
@@ -241,6 +245,53 @@
                     </tbody>
                 </table>
             </div>
+            <h3 style="text-align: center;width:100%">检查记录</h3>
+            <table class="table table-border table-bordered table-bg table-hover table-sort" >
+                <thead>
+                <tr class="text-c">
+                    <th width="5%">序号</th>
+                    <th width="20%">检查表名称</th>
+                    <th width="10%">检查方式</th>
+                    <th width="10%">检查日期</th>
+                    <th width="10%">检查人员</th>
+                    <th width="10%">隐患数量</th>
+                    <th width="10%">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- 循环-->
+                <c:forEach items="${list2 }" varStatus="index" var="be">
+                    <tr class="text-c">
+                        <td>${index.index + 1 }</td>
+                        <td><c:if test="${be.status == 1 and (!empty be.expectTime and be.expectTime.time < t)}"><font color="red">【过期】</font></c:if>${be.title }</td>
+                        <c:if test="${flag == 1}">
+                            <td>
+                                <c:choose>
+                                    <c:when test="${be.type == 1 }">日常</c:when>
+                                    <c:when test="${be.type == 2 }">定期</c:when>
+                                    <c:when test="${be.type == 3 }">季节</c:when>
+                                    <c:when test="${be.type == 4 }">其它</c:when>
+                                    <c:when test="${be.type == 5 }">综合</c:when>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <fmt:formatDate value="${be.realTime }" pattern="yyyy-MM-dd"/>
+                            </td>
+                        </c:if>
+                        <td>${be.cheker} </td>
+                        <td>${be.c }</td>
+                        <td>
+                            <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag}&id=${be.id }&number=${be.c}')" href="javascript:;">查看详情</a>
+                            <c:if test="${be.c!=0}">
+                                <a style="text-decoration:none" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">整改详情</a>
+                                <a style="text-decoration:none" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">实施复查</a>
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:forEach>
+                <!-- 循环结束 -->
+                </tbody>
+            </table>
         </div>
         <div class="tabCon">
             <div class="mt-20">
@@ -345,7 +396,56 @@
                     <!-- 循环结束 -->
                     </tbody>
                 </table>
+
+
             </div>
+            <h3 style="text-align: center;width:100%">检查记录</h3>
+            <table class="table table-border table-bordered table-bg table-hover table-sort">
+                <thead>
+                <tr class="text-c">
+                    <th width="5%">序号</th>
+                    <th width="20%">检查表名称</th>
+                    <th width="10%">检查方式</th>
+                    <th width="10%">检查日期</th>
+                    <th width="10%">检查人员</th>
+                    <th width="10%">隐患数量</th>
+                    <th width="10%">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- 循环-->
+                <c:forEach items="${list1 }" varStatus="index" var="be">
+                    <tr class="text-c">
+                        <td>${index.index + 1 }</td>
+                        <td><c:if test="${be.status == 1 and (!empty be.expectTime and be.expectTime.time < t)}"><font color="red">【过期】</font></c:if>${be.title }</td>
+                        <c:if test="${flag == 1}">
+                            <td>
+                                <c:choose>
+                                    <c:when test="${be.type == 1 }">日常</c:when>
+                                    <c:when test="${be.type == 2 }">定期</c:when>
+                                    <c:when test="${be.type == 3 }">季节</c:when>
+                                    <c:when test="${be.type == 4 }">其它</c:when>
+                                    <c:when test="${be.type == 5 }">综合</c:when>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <fmt:formatDate value="${be.realTime }" pattern="yyyy-MM-dd"/>
+                            </td>
+                        </c:if>
+                        <td>${be.cheker} </td>
+                        <td>${be.c }</td>
+                        <td>
+                            <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag}&id=${be.id }&number=${be.c}')" href="javascript:;">查看详情</a>
+                            <c:if test="${be.c!=0}">
+                                <a style="text-decoration:none" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">整改详情</a>
+                                <a style="text-decoration:none" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">实施复查</a>
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:forEach>
+                <!-- 循环结束 -->
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -492,6 +592,10 @@
 
 </div>
 <script type="text/javascript">
+
+
+
+
     HUItab = function (tabBar, tabCon, class_name, tabEvent, i) {
         var $tab_menu = $(tabBar);
         // 初始化操作

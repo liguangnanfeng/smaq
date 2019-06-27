@@ -36,5 +36,23 @@ public interface TSafetyStandardMapper {
     List<TSafetyStandard> findAll(Map<String,Object> map);
 
 
+    /**
+     * 根据id查询详细信息
+     * @param safetyStandardlistId
+     * @return
+     */
+    TSafetyStandard findOne(Integer safetyStandardlistId);
 
+    /**
+     * 判断该要素有没有子要素
+     * @param safetyStandardlistId
+     * @return
+     */
+    List<TSafetyStandard> findByparentId(Integer safetyStandardlistId);
+
+    /**
+     * 根据id 删除数据
+     * @param safetyStandardlistId
+     */
+    void deleteTSafetyStandard(Integer safetyStandardlistId);
 }

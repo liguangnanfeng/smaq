@@ -1710,10 +1710,12 @@ public class VillageController extends BaseController {
                 break;
             }
         }
-        TRectification rectification = tRectificationMapper.selectByCheckId(tr.getCheckId());
-        if(null!=rectification){
-            model.addAttribute("rectification",rectification);
+
+        TRectification tRectification = tRectificationMapper.selectByCheckId(checkId);
+        if(null!=tRectification){
+            model.addAttribute("rectification",tRectification);
         }
+
         model.addAttribute("check",check);
         model.addAttribute("company",companyMapper.selectByPrimaryKey(user.getId()));
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
@@ -3483,7 +3485,7 @@ public class VillageController extends BaseController {
 
             String[] split = a.split(",");
 
-            List<Map<String, String>> inputItems = (List<Map<String, String>>) map.get("inputItems");
+            List<Map<String, String>> inputItems = (List<Map<String, String>>) map.get("cusCheckItemList");
 
             User user = getLoginUser(request);
             // 保存model表数据
@@ -3552,9 +3554,7 @@ public class VillageController extends BaseController {
                         tCheckItem.setCheckId(tCheckId);
                         tCheckItemMapper.insertSelective(tCheckItem);
                     }
-
                 }
-
             } else {
                 // 表示是基础
                 for (String id : split) {
@@ -3578,12 +3578,9 @@ public class VillageController extends BaseController {
                     }
 
                 }
-
             }
 
-          
-
-            if (null != inputItems || inputItems.size() > 0) {
+            if (null != inputItems && inputItems.size() > 0) {
                 // 保存自定义内容
                 for (Map<String, String> mapStr : inputItems) {
 

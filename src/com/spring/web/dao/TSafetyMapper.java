@@ -3,6 +3,8 @@ package com.spring.web.dao;
 import com.spring.web.model.TSafety;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * TODO (安全生产标准化的引用数据)
  *
@@ -16,4 +18,6 @@ public interface TSafetyMapper {
      * @return
      */
     Integer insertTSafety(TSafety tSafety);
+
+    List<TSafety> selectAByIndustryType(Integer industryType);
 }

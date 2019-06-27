@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,11 +68,11 @@ public class TSafetyStandardController extends BaseController {
      *  根据A级元素id查询B级元素
      * @return
      */
-    @RequestMapping(value="/findByParentId")
+    @RequestMapping(value="/findByParentId",method = RequestMethod.POST)
     public String findByParentId(Integer safetyStandardlistId,Model model){
         List<TSafetyStandard> TSafetyStandard = tSafetyStandardMapper.findByparentId(safetyStandardlistId);
         model.addAttribute("list",TSafetyStandard);
-        return "";
+        return "company/tables/tab-biaozhunB";
     }
 
     /**
@@ -177,6 +178,7 @@ public class TSafetyStandardController extends BaseController {
 
     /**
      * 自动导入功能
+     * 首先判断这个公司类型
      *
      * 先根据名称进行判断,是否包含化工企业,
      * 两种企业, 工贸/化工
@@ -187,8 +189,26 @@ public class TSafetyStandardController extends BaseController {
     @RequestMapping("/Automatic-import")
     public Result automaticImport(HttpServletRequest request){
         Result result = new ResultImpl();
-
         User user = getLoginUser(request);// 获取公司名称
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+
+        String industry = company.getIndustry();
+        Integer industryType =null;
+        if(industry.indexOf("化工")!=-1){
+            industryType=1; // 危化企业
+        }else{
+            industryType=2; // 工贸企业
+        }
+        // 1. 查询关于该行业的A级要素
+        List<TSafety> tSafetyList= tSafetyMapper.selectAByIndustryType(industryType);
+        for (TSafety tSafety : tSafetyList) {
+            //先插入A级要素
+            TSafetyStandard tSafetyStandard = new TSafetyStandard();
+            tSafetyStandard.setUserId(user.getId());
+            tSafetyStandard.setDel(0); //表示未删除
+
+        }
+
         //判断该公司类型
         return result;
     }

@@ -2319,7 +2319,6 @@ public class CompanyController_cd extends BaseController {
         return "company/tables/tab-weilist";
     }
 
-
     /**
      * 安全标准化
      */
@@ -2337,7 +2336,6 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("isType", isType);
         return "company/tables/tab-biaozhun";
     }
-
 
     /**
      * 8:安全工作台账    9:安全档案    10：安全标准化
@@ -2360,7 +2358,6 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("isType", isType);
         return "company/tables/tab-taizhang";
     }
-
 
     /**
      * 安全档案
@@ -3266,7 +3263,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "model-list-main")
     public String modelListMain(HttpServletRequest request,
-                                Model model, Integer flag
+                                Model model, Integer flag,Integer status
     ) throws ParseException {
         // 获取用户信息
         User user = getLoginUser(request);
@@ -3283,8 +3280,6 @@ public class CompanyController_cd extends BaseController {
             map.put(4, 0);
             String level1 = (String) jiChuItem.get(i).get("level1");
             List<Integer> types1 = tModelMapper.selecttype(level1, user.getId(), 1, flag);
-            System.out.println(types1 + "咋回事");
-            System.out.println(map + "咋回事");
             for (Integer integer : types1) {
                 map.put(integer, 1);
             }
@@ -3300,8 +3295,6 @@ public class CompanyController_cd extends BaseController {
             map.put(4, 0);
             String level1 = (String) objectObjectMap.get("level1");
             List<Integer> types2 = tModelMapper.selecttype(level1, user.getId(), 2, flag);
-            System.out.println(types2 + "咋回事");
-            System.out.println(map + "咋回事");
             for (Integer integer : types2) {
                 map.put(integer, 1);
             }
@@ -3310,6 +3303,49 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
         model.addAttribute("flag", flag);
+
+        // ----------------------------------检查记录功能----------------------------------------------------------------------------------
+        Map<String, Object> m = new HashMap<String, Object>();
+
+        // 向map集合进行存储
+        m.put("flag", flag);  // 1
+        m.put("title", 1); // 1
+       // m.put("villageId", villageId);  //1
+        if(null==status){
+            m.put("status", 2); //状态  null
+        }else{
+            m.put("status", status);
+        }
+            // 基础和现场
+            if (setUserId(user, m)) {
+                clearVillageTown(m);
+                List<Map<String, Object>> list = tCheckMapper.selectList(m);
+                List list1 =new ArrayList();
+                List list2 =new ArrayList();
+                for (Map<String, Object> stringObjectMap : list) {
+                   Integer   industryType = (Integer) stringObjectMap.get("industryType");
+                    if(industryType==1){
+                        list1.add(stringObjectMap);
+                    }else{
+                        list2.add(stringObjectMap);
+                    }
+                }
+                model.addAttribute("list1", list1);
+                model.addAttribute("list2", list2);
+
+                Integer sum = 0;
+                for (int i = 0; i < list.size(); i++) {
+                    sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
+                }
+                model.addAttribute("sum", sum);
+            }
+
+        model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("status", status);
+        Date d = new Date();
+        String x = DateFormatUtils.format(d, "yyyy-MM-dd");
+        d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
+        model.addAttribute("t", d.getTime());
 
         return "company/danger/model-list-main";
 

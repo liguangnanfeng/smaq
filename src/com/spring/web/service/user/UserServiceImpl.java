@@ -68,8 +68,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private CgfService cgfService;
     /** (非 Javadoc) 
-    *  注册 或 村保存企业
-    */
+     *  注册 或 村保存企业
+     */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public void registar(User user, Result result, User user_d, Integer villageId) throws Exception {
 
@@ -81,20 +81,20 @@ public class UserServiceImpl implements UserService {
         }
         user.setIsDel("0");
         userMapper.insertSelective(user);
-        
+
         Company co = new Company();
         co.setName(user.getUserName());
         co.setUserId(user.getId());
         co.setVillageId(villageId);
         co.setIsKey(0);
         companyMapper.insertSelective(co);
-        
+
         Integer id = user.getId();
         Regulation rg = new Regulation();
         rg.setUserId(id);
         regulationMapper.insertSelective(rg);
-        
-        
+
+
         if (null != user_d && user_d.getUserType() == 10) {
             TradeCompany tradeCompany = new TradeCompany();
             tradeCompany.setTid(user_d.getId());
@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
         Workbook wb = null;
 
         String messages = "";
-        
+
         List<Company> companyInfoList = new ArrayList<Company>();
         try {
             wb = new XSSFWorkbook(file.getInputStream());
@@ -141,14 +141,14 @@ public class UserServiceImpl implements UserService {
             List<User> d_userList = userMapper.selectAllUser();
             List<Company> d_company = companyMapper.selectAllCompany();
             List<String> nameList = new ArrayList<String>();
-            
+
             for (int i = 1; i < totalRows; i++) {
                 Row row = sheet.getRow(i);
                 String userName = row.getCell(0).toString().trim();
                 if (null != userName && !"".equals(userName)) {
                     for (Company companyInfo : d_company) {
                         if (companyInfo.getName().equalsIgnoreCase(userName)) {
-                            
+
                             if(ExcelUtil.getCellData(row.getCell(2)) != null){
                                 companyInfo.setEmail(ExcelUtil.getCellData(row.getCell(2)).split("、")[0]);
                             }
@@ -170,7 +170,7 @@ public class UserServiceImpl implements UserService {
                             continue;
                         }
                     }
-                    
+
                     boolean d_flag = false;
                     for (User user : d_userList) {
                         if (user.getUserName().equalsIgnoreCase(userName)) {
@@ -178,7 +178,7 @@ public class UserServiceImpl implements UserService {
                             break;
                         }
                     }
-                    
+
                     boolean n_flag = false;
                     for (String name : nameList) {
                         if (name.equalsIgnoreCase(userName)) {
@@ -197,7 +197,7 @@ public class UserServiceImpl implements UserService {
                         user.setCreateTime(new Date());
                         user.setIsDel("0");
                         userMapper.insertSelective(user);
-                        
+
                         Company companyInfo = new Company();
                         companyInfo.setUserId(user.getId());
                         companyInfo.setName(user.getUserName());
@@ -219,19 +219,19 @@ public class UserServiceImpl implements UserService {
                         }
                         companyInfo.setScope(ExcelUtil.getCellData(row.getCell(10)));
                         companyInfo.setVillageId(villageId);
-                        
+
                         companyInfoList.add(companyInfo);
-                        
+
                         nameList.add(userName);
                     }
                 }
             }
-            
+
             if(companyInfoList.size() > 0) {
                 companyMapper.insertBatch(companyInfoList);
             }
         } catch (Exception e) {
-            
+
         }
         if(messages.length() > 3){
             messages = messages.substring(0,messages.length() - 3);
@@ -240,7 +240,7 @@ public class UserServiceImpl implements UserService {
         result.setMap("count", companyInfoList.size());
         result.setMess(messages);
     }
-    
+
     /**
      * (非 Javadoc) 批量导入持证上岗人员名单
      */
@@ -272,9 +272,9 @@ public class UserServiceImpl implements UserService {
                 return;
             }
             int totalRows = sheet.getPhysicalNumberOfRows();
-            
+
             List<Company> d_company = companyMapper.selectAllCompany();
-            
+
             List<Sperson> list = new ArrayList<Sperson>();
             List<Sperson> spersonInfoList = new ArrayList<Sperson>();
             for (int i = 1; i < totalRows; i++) {
@@ -293,28 +293,28 @@ public class UserServiceImpl implements UserService {
                         map.put("userId", userId);
                         list = spersonMapper.selectAllUser(map);
                     }
-                    
+
                     if (null == userId) {
                         messages += "第" + i + "行\t" + "单位不存在、" + "\r\n";
                     } else {
                         boolean h = false;
                         if(list.size() != 0){
                             for (Sperson sperson : list) {
-                                if(sperson.getName().equalsIgnoreCase(name) 
-                                		&& sperson.getFlag().intValue() == flag 
-                                		&& sperson.getUserId().intValue() == userId){
-                                	sperson.setType(ExcelUtil.getCellData(row.getCell(4)));
-                                	sperson.setReviewTime(ExcelUtil.getCellData(row.getCell(2)));
-                                	sperson.setForensicTime(ExcelUtil.getCellData(row.getCell(3)));
-                                	sperson.setCertificateNumber(ExcelUtil.getCellData(row.getCell(5)));
-                                	sperson.setRemark(ExcelUtil.getCellData(row.getCell(6)));
+                                if(sperson.getName().equalsIgnoreCase(name)
+                                        && sperson.getFlag().intValue() == flag
+                                        && sperson.getUserId().intValue() == userId){
+                                    sperson.setType(ExcelUtil.getCellData(row.getCell(4)));
+                                    sperson.setReviewTime(ExcelUtil.getCellData(row.getCell(2)));
+                                    sperson.setForensicTime(ExcelUtil.getCellData(row.getCell(3)));
+                                    sperson.setCertificateNumber(ExcelUtil.getCellData(row.getCell(5)));
+                                    sperson.setRemark(ExcelUtil.getCellData(row.getCell(6)));
                                     spersonMapper.updateByPrimaryKeySelective(sperson);
                                     h = true;
                                     break;
                                 }
                             }
                         }
-                        
+
                         if(!h) {
                             Sperson spersonInfo = new Sperson();
                             spersonInfo.setUserId(userId);
@@ -333,7 +333,7 @@ public class UserServiceImpl implements UserService {
             }
             spersonMapper.insertSpersonBatch(spersonInfoList);
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
         if(messages.length() > 3){
             messages = messages.substring(0,messages.length() - 3);
@@ -341,7 +341,7 @@ public class UserServiceImpl implements UserService {
         result.setStatus("0");
         result.setMess(messages);
     }
-    
+
     /**
      * (非 Javadoc) 集团企业批量导入持证上岗人员名单
      */
@@ -373,10 +373,10 @@ public class UserServiceImpl implements UserService {
                 return;
             }
             int totalRows = sheet.getPhysicalNumberOfRows();
-            
+
             List<Company> d_company = companyMapper.selectAllCompany();
             List<Trade> d_clique = tradeMapper.selectAllClique();
-            
+
             List<Sperson> list = new ArrayList<Sperson>();
             List<Sperson> spersonInfoList = new ArrayList<Sperson>();
             for (int i = 1; i < totalRows; i++) {
@@ -393,7 +393,7 @@ public class UserServiceImpl implements UserService {
                         }
                     }
                     if(userId == null){
-                    	for (Trade user : d_clique) {
+                        for (Trade user : d_clique) {
                             if (user.getName().equalsIgnoreCase(userName)) {
                                 userId = user.getUserId();
                                 break;
@@ -404,28 +404,28 @@ public class UserServiceImpl implements UserService {
                         map.put("userId", userId);
                         list = spersonMapper.selectAllUser(map);
                     }
-                    
+
                     if (null == userId) {
                         messages += "第" + i + "行\t" + "单位不存在、" + "\r\n";
                     } else {
                         boolean h = false;
                         if(list.size() != 0){
                             for (Sperson sperson : list) {
-                                if(sperson.getName().equalsIgnoreCase(name) 
-                                		&& sperson.getFlag().intValue() == flag 
-                                		&& sperson.getUserId().intValue() == userId){
-                                	sperson.setType(ExcelUtil.getCellData(row.getCell(4)));
-                                	sperson.setReviewTime(ExcelUtil.getCellData(row.getCell(2)));
-                                	sperson.setForensicTime(ExcelUtil.getCellData(row.getCell(3)));
-                                	sperson.setCertificateNumber(ExcelUtil.getCellData(row.getCell(5)));
-                                	sperson.setRemark(ExcelUtil.getCellData(row.getCell(6)));
+                                if(sperson.getName().equalsIgnoreCase(name)
+                                        && sperson.getFlag().intValue() == flag
+                                        && sperson.getUserId().intValue() == userId){
+                                    sperson.setType(ExcelUtil.getCellData(row.getCell(4)));
+                                    sperson.setReviewTime(ExcelUtil.getCellData(row.getCell(2)));
+                                    sperson.setForensicTime(ExcelUtil.getCellData(row.getCell(3)));
+                                    sperson.setCertificateNumber(ExcelUtil.getCellData(row.getCell(5)));
+                                    sperson.setRemark(ExcelUtil.getCellData(row.getCell(6)));
                                     spersonMapper.updateByPrimaryKeySelective(sperson);
                                     h = true;
                                     break;
                                 }
                             }
                         }
-                        
+
                         if(!h) {
                             Sperson spersonInfo = new Sperson();
                             spersonInfo.setUserId(userId);
@@ -451,7 +451,7 @@ public class UserServiceImpl implements UserService {
         result.setStatus("0");
         result.setMess(messages);
     }
-    
+
     /**
      * (非 Javadoc) 批量导入特种设备
      */
@@ -471,7 +471,7 @@ public class UserServiceImpl implements UserService {
             result.setMap("message", "请选择excel文件。");
             return;
         }
-        
+
         Workbook wb = null;
         Set<String> set = new LinkedHashSet<String>();
         try {
@@ -483,13 +483,13 @@ public class UserServiceImpl implements UserService {
                 result.setMap("message", "此表不是特种设备表，请重新选择");
                 return;
             }
-            
+
             int totalRows = sheet.getPhysicalNumberOfRows();
             Map<String, Object> m = new HashMap<String, Object>();
             List<LlHashMap<String, Object>> list = sequipmentMapper.selectSequipmentList(m);
-            
+
             Map<String, Integer> companyMap = new HashMap<String, Integer>();
-            
+
             List<Sequipment> l = new LinkedList<Sequipment>();
             for (int i = 1; i < totalRows; i++) {
                 Row row = sheet.getRow(i);
@@ -504,7 +504,7 @@ public class UserServiceImpl implements UserService {
                 Integer userId = getUserIdByCompanyName(companyMap, companyName);
                 if(null != userId) {
                     Sequipment s = new Sequipment(null, userId, se_name, type, fileNumber, null, "", expirationTime, "");
-                    
+
                     Integer c = checkSequipment(list, s);
                     if(c.intValue() == 0) {//新增
                         l.add(s);
@@ -516,7 +516,7 @@ public class UserServiceImpl implements UserService {
                     set.add("企业" + companyName + "不存在");
                 }
             }
-            
+
             if(l.size() > 0) {
                 m.put("list", l);
                 sequipmentMapper.insertBatch2(m);
@@ -531,7 +531,7 @@ public class UserServiceImpl implements UserService {
             result.setMap("message", "系统异常");
         }
     }
-    
+
     /**
      * (非 Javadoc) 集团批量导入特种设备
      */
@@ -551,7 +551,7 @@ public class UserServiceImpl implements UserService {
             result.setMap("message", "请选择excel文件。");
             return;
         }
-        
+
         Workbook wb = null;
         Set<String> set = new LinkedHashSet<String>();
         try {
@@ -563,13 +563,13 @@ public class UserServiceImpl implements UserService {
                 result.setMap("message", "此表不是特种设备表，请重新选择");
                 return;
             }
-            
+
             int totalRows = sheet.getPhysicalNumberOfRows();
             Map<String, Object> m = new HashMap<String, Object>();
             List<LlHashMap<String, Object>> list = sequipmentMapper.selectSequipmentList(m);
-            
+
             Map<String, Integer> companyMap = new HashMap<String, Integer>();
-            
+
             List<Sequipment> l = new LinkedList<Sequipment>();
             for (int i = 1; i < totalRows; i++) {
                 Row row = sheet.getRow(i);
@@ -584,7 +584,7 @@ public class UserServiceImpl implements UserService {
                 Integer userId = getUserIdByCompanyName(companyMap, companyName);
                 if(null != userId) {
                     Sequipment s = new Sequipment(null, userId, se_name, type, fileNumber, null, "", expirationTime, "");
-                    
+
                     Integer c = checkSequipment(list, s);
                     if(c.intValue() == 0) {//新增
                         l.add(s);
@@ -596,7 +596,7 @@ public class UserServiceImpl implements UserService {
                     set.add("企业" + companyName + "不存在");
                 }
             }
-            
+
             if(l.size() > 0) {
                 m.put("list", l);
                 sequipmentMapper.insertBatch2(m);
@@ -611,41 +611,41 @@ public class UserServiceImpl implements UserService {
             result.setMap("message", "系统异常");
         }
     }
-    
+
     /** (非 Javadoc) 
      *  企业更改名称
      */
-     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
-     public void editName(User user, Result result, User user2, Integer id , String userName) throws Exception {
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    public void editName(User user, Result result, User user2, Integer id , String userName) throws Exception {
 
-         if(null == user){
-             result.setStatus("1");
-             result.setMap("message", "企业不存在！");
-         }else {
-             if(user.getUserName() == userName){
-                 result.setStatus("1");
-                 result.setMap("message", "更改名称不能与原名称相同！");
-             }else{
-                 if (null == user2) {
-                     user.setId(id);
-                     user.setUserName(userName);
-                     userMapper.updateByPrimaryKeySelective(user);
-                     Company co = companyMapper.selectByPrimaryKey(id);
-                     co.setName(userName);
-                     companyMapper.updateByPrimaryKeySelective(co);
-                 }else{
-                     result.setStatus("1");
-                     result.setMap("message", "该更改企业名称已存在！");
-                 }
-             }
-         }
-     }
-    
-    /** 
-    * @param l
-    * @param se
-    * @return 0 新增 -1 不操作 2跟新 传id
-    */
+        if(null == user){
+            result.setStatus("1");
+            result.setMap("message", "企业不存在！");
+        }else {
+            if(user.getUserName() == userName){
+                result.setStatus("1");
+                result.setMap("message", "更改名称不能与原名称相同！");
+            }else{
+                if (null == user2) {
+                    user.setId(id);
+                    user.setUserName(userName);
+                    userMapper.updateByPrimaryKeySelective(user);
+                    Company co = companyMapper.selectByPrimaryKey(id);
+                    co.setName(userName);
+                    companyMapper.updateByPrimaryKeySelective(co);
+                }else{
+                    result.setStatus("1");
+                    result.setMap("message", "该更改企业名称已存在！");
+                }
+            }
+        }
+    }
+
+    /**
+     * @param l
+     * @param se
+     * @return 0 新增 -1 不操作 2跟新 传id
+     */
     Integer checkSequipment(List<LlHashMap<String, Object>> l, Sequipment se) {
         for(LlHashMap<String, Object> ll : l) {
             Integer userId = ll.getInteger("userId");
@@ -653,7 +653,7 @@ public class UserServiceImpl implements UserService {
             String type = ll.getString("type");
             String fileNumber = ll.getString("fileNumber");
             String expirationTime = ll.getString("expirationTime");
-            
+
             if(se.getUserId().compareTo(userId) == 0 && seName.equals(se.getSeName()) && type.equals(se.getType())
                     && fileNumber.equals(se.getFileNumber())) {
                 if(expirationTime.equals(se.getExpirationTime())) {
@@ -665,7 +665,7 @@ public class UserServiceImpl implements UserService {
         }
         return 0;
     }
-    
+
     Integer getUserIdByCompanyName(Map<String, Integer> companyMap, String companyName) {
         Integer id = companyMap.get("companyName");
         if(null == id) {
@@ -676,13 +676,13 @@ public class UserServiceImpl implements UserService {
         }
         return id;
     }
-    
+
     Integer getUserIdForClique(Map<String, Integer> companyMap, String companyName) {
         Integer id = companyMap.get("companyName");
         if(null == id) {
             id = userMapper.selectAllUser5(companyName);
             if(id == null){
-            	id = tradeMapper.selectByNameForClique(companyName);
+                id = tradeMapper.selectByNameForClique(companyName);
             }
             companyMap.put(companyName, null == id ? -1 : id);
         } else if(id.intValue() == -1) {
@@ -690,7 +690,7 @@ public class UserServiceImpl implements UserService {
         }
         return id;
     }
-    
+
     Integer youwu(String v) {
         if ("有".equals(v)) {
             return 1;
@@ -737,7 +737,7 @@ public class UserServiceImpl implements UserService {
         Cell cell = rowx.getCell(col);
         return tos(cell);
     }
-    
+
     public List<Integer> selectCount(CompanyListReqDTO dto, User user) {
         Map<String, Object> m = new HashMap<String, Object>();
         if(StringUtils.isBlank(dto.getUserIds())) {
@@ -751,7 +751,7 @@ public class UserServiceImpl implements UserService {
         } else {
             m.put("userIds", dto.getUserIds());
         }
-        
+
         Date n = new Date();
         Date th = DateConvertUtil.addMonths(n, 3);
         Date six = DateConvertUtil.addMonths(n, 6);
@@ -761,7 +761,7 @@ public class UserServiceImpl implements UserService {
         m.put("time3", DateFormatUtils.format(six, "yyyy-MM-dd"));
         m.put("now", DateFormatUtils.format(n, "yyyy-MM"));
         m.put("now1", DateFormatUtils.format(n, "yyyy-MM-dd"));
-        
+
 //        if(userType.intValue() == 9) {//全国
 //            return companyMapper.selectYuCountAll(m);
 //        }
@@ -770,7 +770,7 @@ public class UserServiceImpl implements UserService {
 //        }
         return companyMapper.selectYuCountAll(m);
     }
-    
+
     @Override
     public TCleanWarnSetting geTCleanWarnSetting(Integer creator) {
         List<TCleanWarnSetting> settings = tcleanWarnSettingMapper.getCleanSettings(creator);
@@ -793,7 +793,7 @@ public class UserServiceImpl implements UserService {
             return tcleanWarnSettingMapper.insertSelective(setting)>0?true:false;
         }
     }
-    
+
     /**
      * (非 Javadoc) 批量导入特种设备
      */
@@ -813,7 +813,7 @@ public class UserServiceImpl implements UserService {
             result.setMap("message", "请选择excel文件。");
             return;
         }
-        
+
         Workbook wb = null;
         Set<String> set = new LinkedHashSet<String>();
         try {
@@ -825,7 +825,7 @@ public class UserServiceImpl implements UserService {
                 result.setMap("message", "此表不是特种设备表，请重新选择");
                 return;
             }
-            
+
             int totalRows = sheet.getPhysicalNumberOfRows();
             for (int i = 1; i < totalRows; i++) {
                 Row row = sheet.getRow(i);
@@ -835,7 +835,7 @@ public class UserServiceImpl implements UserService {
                 String detectionTime = tos(row, 3);
                 String expirationTime = tos(row, 4);
                 String remark = tos(row, 5);
-                
+
                 Sequipment item = new Sequipment();
                 item.setUserId(userId);
                 item.setSeName(seName);
@@ -847,7 +847,7 @@ public class UserServiceImpl implements UserService {
                 item.setRemark(remark);
                 sequipmentMapper.insertSelective(item);
             }
-            
+
             result.setMap("message", StringUtils.join(set, "<br>"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -855,7 +855,7 @@ public class UserServiceImpl implements UserService {
             result.setMap("message", "系统异常");
         }
     }
-    
+
     /**
      * (非 Javadoc) 批量导入主要设备
      */
@@ -875,7 +875,7 @@ public class UserServiceImpl implements UserService {
             result.setMap("message", "请选择excel文件。");
             return;
         }
-        
+
         Workbook wb = null;
         Set<String> set = new LinkedHashSet<String>();
         try {
@@ -887,7 +887,7 @@ public class UserServiceImpl implements UserService {
                 result.setMap("message", "此表不是主要设备表，请重新选择");
                 return;
             }
-            
+
             int totalRows = sheet.getPhysicalNumberOfRows();
             for (int i = 1; i < totalRows; i++) {
                 Row row = sheet.getRow(i);
@@ -896,7 +896,7 @@ public class UserServiceImpl implements UserService {
                 String processParameters = tos(row, 2);//设备档案号
                 String amount = tos(row, 3);
                 String remark = tos(row, 4);
-                
+
                 Mequipment item = new Mequipment();
                 item.setUserId(userId);
                 item.setEquipmentName(equipmentName);
@@ -908,7 +908,7 @@ public class UserServiceImpl implements UserService {
                 item.setRemark(remark);
                 mequipmentMapper.insertSelective(item);
             }
-            
+
             result.setMap("message", StringUtils.join(set, "<br>"));
         } catch (Exception e) {
             e.printStackTrace();

@@ -61,4 +61,100 @@ public class CheckItem {
      */
     public List<CheckLevel> checkLevels;
 
+    public CheckItem() {
+    }
+
+
+    public CheckItem(Integer uid, String template, Integer title, Integer flag, Integer checkType, Integer cycle, Integer departmentId, String sessionId, String access_token, List<CheckLevel> checkLevels) {
+        this.uid = uid;
+        this.template = template;
+        this.title = title;
+        this.flag = flag;
+        this.checkType = checkType;
+        this.cycle = cycle;
+        this.departmentId = departmentId;
+        SessionId = sessionId;
+        this.access_token = access_token;
+        this.checkLevels = checkLevels;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
+    }
+
+    public Integer getTitle() {
+        return title;
+    }
+
+    public void setTitle(Integer title) {
+        this.title = title;
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
+
+    public Integer getCheckType() {
+        return checkType;
+    }
+
+    public void setCheckType(Integer checkType) {
+        this.checkType = checkType;
+    }
+
+    public Integer getCycle() {
+        return cycle;
+    }
+
+    public void setCycle(Integer cycle) {
+        this.cycle = cycle;
+    }
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public String getSessionId() {
+        return SessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        SessionId = sessionId;
+    }
+
+    public String getAccess_token() {
+        return access_token;
+    }
+
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
+    }
+
+    public List<CheckLevel> getCheckLevels() {
+        return checkLevels;
+    }
+
+    public void setCheckLevels(List<CheckLevel> checkLevels) {
+        this.checkLevels = checkLevels;
+    }
 }

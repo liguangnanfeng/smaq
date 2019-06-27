@@ -55,4 +55,90 @@ public class SaveDataMessageItem {
      */
     public List<SaveDataMessage> list;
 
+    public SaveDataMessageItem() {
+    }
+
+    public SaveDataMessageItem(Integer uid, Integer checkId, String access_token, String sessionId, Integer zrrId, BigDecimal longitude, BigDecimal latitude, String type, List<SaveDataMessage> list) {
+        this.uid = uid;
+        this.checkId = checkId;
+        this.access_token = access_token;
+        this.sessionId = sessionId;
+        this.zrrId = zrrId;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.type = type;
+        this.list = list;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
+    public Integer getCheckId() {
+        return checkId;
+    }
+
+    public void setCheckId(Integer checkId) {
+        this.checkId = checkId;
+    }
+
+    public String getAccess_token() {
+        return access_token;
+    }
+
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public Integer getZrrId() {
+        return zrrId;
+    }
+
+    public void setZrrId(Integer zrrId) {
+        this.zrrId = zrrId;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+    }
+
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<SaveDataMessage> getList() {
+        return list;
+    }
+
+    public void setList(List<SaveDataMessage> list) {
+        this.list = list;
+    }
 }

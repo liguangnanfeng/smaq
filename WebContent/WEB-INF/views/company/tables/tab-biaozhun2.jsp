@@ -278,11 +278,23 @@
     }
     /*删除*/
     function del(id) {
-        $.post(getRootPath() + "/company/tables/tab-del", {
-            id: id,
-        }, function (reuslt) {
-            location.reload()
-        })
+    console.log(222222)
+    console.log('222222')
+<%--        $.post(getRootPath() + "/api/safety_Standard/delete-tSafetyStandard", {--%>
+<%--        'safetyStandardlistId': parseInt(id),--%>
+<%--        }, function (res) {--%>
+<%--            console.log(res)--%>
+<%--        })--%>
+    $.ajax({
+        url: getRootPath() + "/api/safety_Standard/delete-tSafetyStandard",    //请求的url地址 
+        data: {
+            'safetyStandardlistId': parseInt(id)
+        },    //参数值
+        type: "POST",   //请求方式
+        success: function (res) {
+            console.log(res)
+        }
+        });
     }
     /*上传*/
     function upload(isType) {

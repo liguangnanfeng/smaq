@@ -68,7 +68,7 @@ public class TSafetyStandardController extends BaseController {
      *  根据A级元素id查询B级元素
      * @return
      */
-    @RequestMapping(value="/findByParentId",method = RequestMethod.POST)
+    @RequestMapping(value="/findByParentId")
     public String findByParentId(Integer safetyStandardlistId,Model model){
         List<TSafetyStandard> TSafetyStandard = tSafetyStandardMapper.findByparentId(safetyStandardlistId);
         model.addAttribute("list",TSafetyStandard);
@@ -109,7 +109,13 @@ public class TSafetyStandardController extends BaseController {
                 tSafetyStandard.setIndustryId(2);
             }
             tSafetyStandard.setUserId(loginUser.getId());
+            if(tSafetyStandard.getParentId()==0){
+                tSafetyStandard.setFlag(1);
+            }else{
+                tSafetyStandard.setFlag(2);
+            }
 
+            tSafetyStandard.setDel(0);
             tSafetyStandardMapper.insertSelective(tSafetyStandard);
 
             result.setMess("保存成功");

@@ -97,8 +97,8 @@
             width: 20%;
             height: 10vw;
             padding: 10px;
-            box-sizing: border-box
-
+            box-sizing: border-box;
+            position: relative;
         }
 
         .item_content {
@@ -114,22 +114,26 @@
             box-sizing: border-box;
             position: relative;
         }
-    .item_content>span{
+    .item_container>span{
         position: absolute;
-        right: 0;
-        top: 7px;
+        right: 12px;
+        top: 17px;
         padding-right:5px;
-        display:none;
+        display: none;
     }
-    .item_content>span a{
+    .item_container>span a{
         color:#fff;
         background:#429842;
         border-radius:6px;
         padding:4px 15px;
         text-decoration:none;
     }
-    .item_content>span a:first-child{
+    .item_container>span a:first-child{
         margin-right:5px;
+    }
+
+    .item_container:hover .my_span{
+        display:block ;
     }
     </style>
     <script type="text/javascript">
@@ -203,12 +207,11 @@
         <%--        </table>--%>
 
         <c:forEach items="${list }" varStatus="index" var="t">
-            <div class="item_container" onfocus="showDiv(this)">
-                <div class="item_content my_flex f_r f_j_c f_z_c" >
-                    <span><a onclick="addNew(${t.id})">编辑</a><a onclick="del(${t.id})">删除</a></span>
+            <div class="item_container">
+                <div class="item_content my_flex f_r f_j_c f_z_c" onclick="location.href = '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${t.id}'">
                         ${t.name }
-                    <div></div>
                 </div>
+                <span class="my_span"><a onclick="addNew(${t.id})">编辑</a><a onclick="del(${t.id})">删除</a></span>
             </div>
         </c:forEach>
     </div>
@@ -220,19 +223,23 @@
         <div class="modal-dialog" style="margin-top: 150px">
             <div class="modal-content radius">
                 <div class="modal-header">
-                    <h3 class="modal-title">输入评分(只能输入数字)</h3>
+                    <h3 class="modal-title">输入要新增A级要素</h3>
                     <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
                 </div>
                 <div class="modal-body" style="height: 200px; overflow-y: auto">
                     <div class="form form-horizontal">
                         <div class="row cl dq">
-                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入评分
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入
                                 :</label>
                             <div class="formControls col-xs-5 col-sm-5">
-                                <input class="input-text" type="text" name="" id="trInput"
-                                       style="width:150px">
+<%--                                <input class="input-text" type="text" name="" id="trInput"--%>
+<%--                                       style="width:150px">--%>
+                           <textarea  cols="6" rows="6"   style="overflow:hidden;width: 300px"></textarea>
                             </div>
-                            <div class="col-xs-3 col-sm-3">
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3 col-sm-3 offset3">
                                 <button class="btn radius btn-primary size-S" onclick="queren()">
                                     确认
                                 </button>
@@ -254,12 +261,7 @@
     }
 <%-- 新增 --%>
     var str = 0
-    function addNew(v){
-        if(v&&v!=''){
-            str = v
-        }else{
-            str = 0
-        }
+    function addNew(){
         $("#modal-plan2").modal("show");
     }
 <%--  添加保存  --%>

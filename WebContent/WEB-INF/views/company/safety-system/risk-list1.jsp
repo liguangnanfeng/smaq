@@ -177,7 +177,7 @@
                 <c:when test="${fn:contains(company.name, '油') }">
                 </c:when>
                 <c:otherwise>
-                    <a class="btn default ${3 eq  type ? 'btn-primary' : 'radius'}"
+                    <a class="btn default ${3 eq type ? 'btn-primary' : 'radius'}"
                        href="${ly }/company/safety-system/risk-list?type=3">高危工艺辨识</a>
                 </c:otherwise>
             </c:choose>

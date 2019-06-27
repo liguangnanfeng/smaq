@@ -145,6 +145,16 @@
       </span>&ndash;%&gt;--%>
   <div class="cl pd-5 bg-1 bk-gray mt-20">
     <a class="btn btn-danger radius" href="javascript:void(0)" onClick="del_bath()"><i class="Hui-iconfont" style="font-size:15px;">&#xe609;</i> 删除</a>
+    <c:if test="${industry eq '化工企业（危化生产、使用）'}">
+      <a class="btn btn-danger radius" href="javascript:void(0)" onClick="show_dialog('企业评分','${ly }/company/safety-system/grade-table')">企业评分</a>
+    </c:if>
+
+    <c:if test="${industry eq '冶金行业' || industry eq '有色行业' || industry eq '建材行业'|| industry eq '机械行业'|| industry eq '轻工行业'|| industry eq '纺织行业'|| industry eq '烟草行业'|| industry eq '商贸行业' }">
+      <a class="btn btn-danger radius" href="javascript:void(0)" onClick="show_dialog('工贸企业','${ly }/company/safety-system/danger-table')">工贸评定</a>
+    </c:if>
+    <a class="btn btn-success-outline radius" href="javascript:void(0)" onclick="show_dialog('作业条件风险程度评价','/company/safety-system/assess2?id=')"><i class="Hui-iconfont" style="font-size:15px;"></i> LEC评测</a>
+    <a class="btn btn-success-outline radius" href="javascript:void(0)" onclick="show_dialog('风险矩阵法评价','/company/safety-system/assess3?id=')"><i class="Hui-iconfont" style="font-size:15px;"></i> LS评测</a>
+
     <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
   </div>
   <div class="mt-20">

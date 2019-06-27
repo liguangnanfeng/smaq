@@ -281,10 +281,10 @@
                         <td>${be.cheker} </td>
                         <td>${be.c }</td>
                         <td>
-                            <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag}&id=${be.id }&number=${be.c}')" href="javascript:;">查看详情</a>
+<%--                            <a style="text-decoration:none;" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag}&id=${be.id }&number=${be.c}')" href="javascript:;">查看详情</a></br>--%>
                             <c:if test="${be.c!=0}">
-                                <a style="text-decoration:none" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">整改详情</a>
-                                <a style="text-decoration:none" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">实施复查</a>
+                                <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">整改详情</a></br>
+                                <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">实施复查</a>
                             </c:if>
                         </td>
                     </tr>
@@ -435,10 +435,10 @@
                         <td>${be.cheker} </td>
                         <td>${be.c }</td>
                         <td>
-                            <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag}&id=${be.id }&number=${be.c}')" href="javascript:;">查看详情</a>
+<%--                            <a style="text-decoration:none;" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag}&id=${be.id }&number=${be.c}')" href="javascript:;">查看详情</a></br>--%>
                             <c:if test="${be.c!=0}">
-                                <a style="text-decoration:none" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">整改详情</a>
-                                <a style="text-decoration:none" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">实施复查</a>
+                                <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">整改详情</a></br>
+                                <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">实施复查</a>
                             </c:if>
                         </td>
                     </tr>

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -152,7 +153,7 @@ public class TSafetyStandardController extends BaseController {
      * @param safetyStandardlistId
      * @return
      */
-    @RequestMapping(value="/delete-tSafetyStandard")
+    @RequestMapping(value="/delete-tSafetyStandard",method = RequestMethod.POST)
     @ResponseBody
     public Result deleteTSafetyStandard(Integer safetyStandardlistId ){
         Result result = new ResultImpl();

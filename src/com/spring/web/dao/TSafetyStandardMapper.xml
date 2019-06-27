@@ -142,7 +142,7 @@
         <include refid="Base_Column_List"/>
         from t_safety_standard_tbl
         <where>
-
+            del != 1
         <if test="flag != null">
             AND  flag=#{flag,jdbcType=INTEGER}
         </if>
@@ -162,6 +162,23 @@
         <if test="sort==2">
             order by  id desc
         </if>
+    </select>
+
+    <!--根据id查询单条数据的详细信息-->
+    <select id="findOne" resultType="com.spring.web.model.TSafetyStandard" parameterType="Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_safety_standard_tbl where id=#{safetyStandardlistId};
+    </select>
+
+    <select id="findByparentId" resultType="com.spring.web.model.TSafetyStandard" parameterType="Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_safety_standard_tbl where parentId=#{safetyStandardlistId};
+    </select>
+
+    <select id="deleteTSafetyStandard" parameterType="Integer">
+        delete from t_safety_standard_tbl where id =#{safetyStandardlistId} and del !=1 ;
     </select>
 
 </mapper>

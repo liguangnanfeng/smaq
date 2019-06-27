@@ -156,15 +156,17 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <c:if test="${sort==1}">
             <button onClick="location.href = '${ly}/api/safety_Standard/findAll?parendId=0&flag=1&sort=2'"
+                  
                     class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">顺序
             </button>
         </c:if>
         <c:if test="${sort==2}">
             <button onClick="location.href = '${ly}/api/safety_Standard/findAll?parendId=0&flag=1&sort=1'"
+              
                     class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">顺序
             </button>
         </c:if>
-
+  
 <%--        <button onClick="location.href = '${ly}/api/safety_Standard/findAll?parendId=0&flag=1&sort=1'"--%>
 <%--                class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">添加--%>
 <%--        </button>--%>

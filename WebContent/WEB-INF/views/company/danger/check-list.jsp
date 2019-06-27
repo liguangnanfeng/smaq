@@ -241,7 +241,8 @@ body .dis-ib{margin-right:15px;}
 <%--              <a style="text-decoration:none" onClick="show_dialog('隐患描述与图片_${be.id }', '${ly}/company/danger-detail?flag=${flag }&id=${be.id }')" href="javascript:;">隐患与图片</a><br>--%>
 <%--              </c:if>--%>
 <%--              &lt;%&ndash; <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除检查记录</a> &ndash;%&gt;--%>
-                 <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }&number=${be.c}')" href="javascript:;">查看详情</a>
+    <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除</a>
+    <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }&number=${be.c}')" href="javascript:;">查看详情</a>
             </td>
             </tr>
           </c:forEach>

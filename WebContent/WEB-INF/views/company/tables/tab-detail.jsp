@@ -295,7 +295,7 @@
 
     function add1(){
         type=1;
-        $("#modal-plan1").modal("show");
+        show_dialog('编辑文档', '${ly}/api/safety_Standard/tab-richtext?safetyStandardlistId=${t.id}&type='+type);
     }
 
     function add3(){

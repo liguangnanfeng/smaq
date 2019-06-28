@@ -93,11 +93,6 @@ public class TSafetyStandardController extends BaseController {
     public String findOne(Integer safetyStandardlistId,Model model,HttpServletRequest request) {
 
         TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
-     /* String path =  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-    
-          TSafetyStandard.setFiles(path+TSafetyStandard.getFiles());
-      
-      }*/
         model.addAttribute("item",TSafetyStandard);
         return "company/tables/tab-detail";
     }
@@ -113,11 +108,6 @@ public class TSafetyStandardController extends BaseController {
     public String findOneTwo(Integer safetyStandardlistId,Model model,HttpServletRequest request) {
 
         TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
-        
-
-       /* if(null!=TSafetyStandard.getFiles()&&"".equals(TSafetyStandard.getFiles())){
-            TSafetyStandard.setFiles(path+TSafetyStandard.getFiles());
-        }*/
         model.addAttribute("item",TSafetyStandard);
         return "company/tables/tab-detail";
     }
@@ -218,7 +208,7 @@ public class TSafetyStandardController extends BaseController {
         }
     }
 
-    @RequestMapping(value="tab-richtext",method=RequestMethod.POST)
+    @RequestMapping(value="tab-richtext")
     public String  jumpTabRichtext(Integer safetyStandardlistId , Integer type,Model model){
         model.addAttribute("type",type);
         model.addAttribute("safetyStandardlistId",safetyStandardlistId);

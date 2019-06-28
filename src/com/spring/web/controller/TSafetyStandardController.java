@@ -2,23 +2,25 @@ package com.spring.web.controller;
 
 import com.spring.web.BaseController;
 import com.spring.web.dao.TSafetyMapper;
-import com.spring.web.model.Company;
-import com.spring.web.model.TSafety;
-import com.spring.web.model.TSafetyStandard;
-import com.spring.web.model.User;
+import com.spring.web.model.*;
+import com.spring.web.result.AppResult;
+import com.spring.web.result.AppResultImpl;
 import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /**
  * TODO (安全生产标准话实体类)
@@ -89,6 +91,21 @@ public class TSafetyStandardController extends BaseController {
      */
     @RequestMapping(value = "/findOne")
     public String findOne(Integer safetyStandardlistId,Model model) {
+
+        TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
+        model.addAttribute("item",TSafetyStandard);
+        return "company/tables/tab-detail";
+    }
+
+    /**
+     * 根据id查询详细信息并返回页面
+     *
+     * @param safetyStandardlistId
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/findOne-two")
+    public String findOneTwo(Integer safetyStandardlistId,Model model) {
 
         TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
         model.addAttribute("item",TSafetyStandard);
@@ -266,6 +283,76 @@ public class TSafetyStandardController extends BaseController {
         result.setObject(tSafety.getId());
         return result;
     }
+
+
+    /**
+     * 治理方案文件上传的接口
+     */
+    @RequestMapping("B005")
+    @SuppressWarnings("all")
+    public @ResponseBody
+    AppResult uploadFiles(@RequestParam(value = "file", required = false) MultipartFile file, Integer safetyStandardlistId ,Integer type, HttpServletRequest request) throws IOException {
+        AppResult result = new AppResultImpl();
+        System.out.println("执行文件上传");
+        request.setCharacterEncoding("UTF-8");
+
+        String realPath1 = "/images/upload/";
+        String path = null;
+        if (!file.isEmpty()) {
+            String fileName = file.getOriginalFilename();
+
+            String name = null;
+            name = fileName.indexOf(".") != -1 ? fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()) : null;
+            if (name != null) {
+                if ("PDF".equals(name.toUpperCase())) {
+                    // 项目在容器中实际发布运行的根路径
+                    String realPath = request.getSession().getServletContext().getRealPath("/");
+                    String realPath2 = realPath.replaceAll("\\\\", "/");
+
+                    SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+                    String oldname = file.getOriginalFilename();
+                    String fileExt = oldname.substring(oldname.lastIndexOf(".") + 1).toLowerCase();
+                    String newFileName = df.format(new Date()) + "_" + new Random().nextInt(1000) + "." + fileExt;
+                    // 设置存放图片文件的路径
+                    path = realPath2 + "images/upload/" + newFileName;
+                    // 判断是否存在
+                    File file1 = new File(realPath2 + "images/upload/");
+                    if (!file1.exists() && !file1.isDirectory()) {
+                        file1.mkdir();
+                    }
+                    realPath1 += newFileName;
+                    file.transferTo(new File(path));
+                    TSafetyStandard one = tSafetyStandardMapper.findOne(safetyStandardlistId);
+                    one.setType(type);
+                    one.setFiles(realPath1);
+                    tSafetyStandardMapper.updateTSafetyStandard(one);
+                } else {
+                    result.setStatus("1");
+                    result.setMessage("请上传pdf格式的文件。");
+                    return result;
+                }
+            } else {
+                result.setStatus("1");
+                result.setMessage("文件类型为空");
+                return result;
+
+            }
+        } else {
+
+            result.setStatus("1");
+            result.setMessage("没有找到相对应的文件");
+
+            return result;
+
+        }
+        result.setStatus("0");
+        result.setMessage("保存成功");
+        realPath1.replace("\\", "/");
+        result.setData(realPath1);
+        return result;
+
+    }
+
 
 
 }

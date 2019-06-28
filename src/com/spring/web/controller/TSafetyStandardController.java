@@ -94,8 +94,9 @@ public class TSafetyStandardController extends BaseController {
 
         TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
      /* String path =  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-      if(null!=TSafetyStandard.getFiles()&&"".equals(TSafetyStandard.getFiles())){
+    
           TSafetyStandard.setFiles(path+TSafetyStandard.getFiles());
+      
       }*/
         model.addAttribute("item",TSafetyStandard);
         return "company/tables/tab-detail";
@@ -112,6 +113,7 @@ public class TSafetyStandardController extends BaseController {
     public String findOneTwo(Integer safetyStandardlistId,Model model,HttpServletRequest request) {
 
         TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
+        
 
        /* if(null!=TSafetyStandard.getFiles()&&"".equals(TSafetyStandard.getFiles())){
             TSafetyStandard.setFiles(path+TSafetyStandard.getFiles());

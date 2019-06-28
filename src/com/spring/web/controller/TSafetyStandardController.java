@@ -93,10 +93,10 @@ public class TSafetyStandardController extends BaseController {
     public String findOne(Integer safetyStandardlistId,Model model,HttpServletRequest request) {
 
         TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
-      String path =  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+     /* String path =  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
       if(null!=TSafetyStandard.getFiles()&&"".equals(TSafetyStandard.getFiles())){
           TSafetyStandard.setFiles(path+TSafetyStandard.getFiles());
-      }
+      }*/
         model.addAttribute("item",TSafetyStandard);
         return "company/tables/tab-detail";
     }
@@ -112,10 +112,10 @@ public class TSafetyStandardController extends BaseController {
     public String findOneTwo(Integer safetyStandardlistId,Model model,HttpServletRequest request) {
 
         TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
-        String path =  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-        if(null!=TSafetyStandard.getFiles()&&"".equals(TSafetyStandard.getFiles())){
+
+       /* if(null!=TSafetyStandard.getFiles()&&"".equals(TSafetyStandard.getFiles())){
             TSafetyStandard.setFiles(path+TSafetyStandard.getFiles());
-        }
+        }*/
         model.addAttribute("item",TSafetyStandard);
         return "company/tables/tab-detail";
     }
@@ -215,6 +215,15 @@ public class TSafetyStandardController extends BaseController {
             return result;
         }
     }
+
+    @RequestMapping(value="tab-richtext",method=RequestMethod.POST)
+    public String  jumpTabRichtext(Integer safetyStandardlistId , Integer type,Model model){
+        model.addAttribute("type",type);
+        model.addAttribute("safetyStandardlistId",safetyStandardlistId);
+        return "company/tables/tab-richtext";
+    }
+
+
 
     /**
      * 自动导入功能
@@ -332,7 +341,13 @@ public class TSafetyStandardController extends BaseController {
                     file.transferTo(new File(path));
                     TSafetyStandard one = tSafetyStandardMapper.findOne(safetyStandardlistId);
                     one.setType(type);
-                    one.setFiles(realPath1);
+                    String url= "";
+                    if("8080".equals(request.getServerPort())){
+                         url =  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+                    }else{
+                         url =  request.getScheme() + "://" + request.getServerName();
+                    }
+                    one.setFiles(url+realPath1);
                     tSafetyStandardMapper.updateTSafetyStandard(one);
                 } else {
                     result.setStatus("1");

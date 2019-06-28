@@ -177,7 +177,7 @@
 
 
     <div class="mt-20 f-l mb-40" style="width:100%;text-align:center;">
-        <button onClick="save_1()" class="btn btn-primary radius mt-20" type="button" style="padding: 0 70px;">
+        <button onClick="save()" class="btn btn-primary radius mt-20" type="button" style="padding: 0 70px;">
             <i class="Hui-iconfont mr-10">&#xe632;</i>保存
         </button>
     </div>
@@ -188,8 +188,10 @@
 <script type="text/javascript">
     var id='${safetyStandardlistId}';
     var type ='${type}';
+    var html = '${item.content}';
+    var ue=null;
     $(function(){
-        var ue = UE.getEditor('editor',{
+         ue = UE.getEditor('editor',{
             imageActionName : "<c:url value='/village/new/ueditorUpload'/>",
             imageFieldName : "file",
             imageAllowFiles : ['.png','.jpg','.jpeg','.gif','.bmp']
@@ -200,6 +202,32 @@
     })
 
 
+
+    function save() {
+        var content = ue.getContent();
+        $.ajax({
+            url: getRootPath() + "/api/safety_Standard/update-tSafetyStandard",    //请求的url地址 
+            data: JSON.stringify({          //参数值
+                id:id,
+                type:type,
+                content: content
+            }),
+            type: "POST",   //请求方式
+            dataType: 'json', //返回值类型 一般设置为json
+            contentType: "application/json",
+            success: function (res) {
+                layer.msg(res.mess);
+                if(res.status==0){
+                    setInterval(function(){
+                        window.parent.location.href = '${ly}/api/safety_Standard/findOne?safetyStandardlistId='+id;
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    }, 1000)
+                }
+
+            }
+        });
+    }
 
 
 

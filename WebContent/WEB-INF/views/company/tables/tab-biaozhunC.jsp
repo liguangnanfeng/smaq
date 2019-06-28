@@ -149,28 +149,27 @@
     </script>
 </head>
 <body>
-<%--<nav class="breadcrumb">--%>
-<%--    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>--%>
-<%--    <span class="c-gray en">&gt;</span> <span>安全生产标准化</span>--%>
-<%--    <span class="c-gray en">&gt;</span><span>安全生产管理档案</span>--%>
-<%--    <span class="c-gray en">&gt;</span> <span>危险作业证</span>--%>
-<%--    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"--%>
-<%--       href="javascript:location.replace(location.href);" title="刷新">--%>
-<%--        <i class="Hui-iconfont">&#xe68f;</i>--%>
-<%--    </a>--%>
-<%--</nav>--%>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+    <span class="c-gray en">&gt;</span> <span>安全生产标准化</span>
+    <span class="c-gray en">&gt;</span><span>安全生产管理档案</span>
+    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
 <div class="page-container">
     <div class="text-c">
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <c:if test="${sort==1}">
-            <button onClick="location.href = '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${parentId}&sort=2'"
+            <button onClick="location.href = '${ly}/api/safety_Standard/tab-biaozhunC?safetyStandardlistId=${parentId}&sort=2'"
 
                     class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">顺序
             </button>
         </c:if>
         <c:if test="${sort==2}">
-            <button onClick="location.href = '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${parentId}&sort=1'"
+            <button onClick="location.href = '${ly}/api/safety_Standard/tab-biaozhunC?safetyStandardlistId=${parentId}&sort=1'"
 
                     class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">顺序
             </button>
@@ -184,6 +183,7 @@
         </button>
 
         <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
+        <a href="#" class="btn btn-success radius" onClick=" show_tab('B级元素', '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${fuId}')">返回</a>
     </div>
     <div class="mt-20 my_flex f_j_c f_wrap" style="width:100%;">
                 <table class="table table-border table-bordered table-bg table-hover table-sort">

@@ -146,6 +146,9 @@ public class TSafetyStandardController extends BaseController {
                 tSafetyStandard.setFlag(2);
             }
 
+            if(null==tSafetyStandard.getOder()){
+                tSafetyStandard.setOder(0);
+            }
             tSafetyStandard.setDel(0);
             tSafetyStandardMapper.insertSelective(tSafetyStandard);
 
@@ -174,6 +177,9 @@ public class TSafetyStandardController extends BaseController {
         Result result = new ResultImpl();
 
         try {
+            if(null==tSafetyStandard.getOder()){
+                tSafetyStandard.setOder(0);
+            }
             tSafetyStandardMapper.updateTSafetyStandard(tSafetyStandard);
             result.setStatus("0");
             result.setMess("修改成功");

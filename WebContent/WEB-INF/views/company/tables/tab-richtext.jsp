@@ -160,194 +160,57 @@
 </head>
 <body>
 <div class="page-container">
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <button onClick="add1()"
-                class="btn btn-success radius" title="编辑富文本" type="button" style="padding: 0 50px;">编辑富文本
+<%--    <div class="cl pd-5 bg-1 bk-gray mt-20">--%>
+<%--        <button onClick="add1()"--%>
+<%--                class="btn btn-success radius" title="编辑富文本" type="button" style="padding: 0 50px;">编辑富文本--%>
+<%--        </button>--%>
+<%--        <button onClick="uploadfile()"--%>
+<%--                class="btn btn-success radius" title="上传PDF" type="button" style="padding: 0 50px;">上传PDF--%>
+<%--        </button>--%>
+<%--        <button onClick="add3()"--%>
+<%--                class="btn btn-success radius" title="编辑清单网址" type="button" style="padding: 0 50px;">编辑网址--%>
+<%--        </button>--%>
+
+<%--    </div>--%>
+    <script id="editor" type="text/plain" style="width:auto;height:400px;"></script>
+
+
+
+    <div class="mt-20 f-l mb-40" style="width:100%;text-align:center;">
+        <button onClick="save()" class="btn btn-primary radius mt-20" type="button" style="padding: 0 70px;">
+            <i class="Hui-iconfont mr-10">&#xe632;</i>保存
         </button>
-        <button onClick="uploadfile()"
-                class="btn btn-success radius" title="上传PDF" type="button" style="padding: 0 50px;">上传PDF
-        </button>
-        <button onClick="add3()"
-                class="btn btn-success radius" title="编辑清单网址" type="button" style="padding: 0 50px;">编辑网址
-        </button>
-
     </div>
 
-
-
-
-    <div id="container"  >
-                <c:if test="${item.type==1}">
-                    <div>我是富文本</div>
-                </c:if>
-                <c:if test="${item.type==2}">
-                    <iframe src="${item.files}" width='100%' height="100%"  frameborder='1'>
-                    </iframe>
-<%--                    <div>我是pdf</div>--%>
-                </c:if>
-                <c:if test="${item.type==3}">
-                    <iframe src="${item.fileAddress}" width='100%' height='100%' frameborder='1'>
-                    </iframe>
-<%--                    <div>我是网页</div>--%>
-                </c:if>
-                <c:if test="${item.type==null}">
-                    <div>请先添加清单</div>
-                </c:if>
-    </div>
-
-
-
-
-
-
-    <!-- 富文本编辑 -->
-    <div id="modal-plan1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" style="margin-top: 150px">
-            <div class="modal-content radius">
-                <div class="modal-header">
-                    <h3 class="modal-title">编辑文档</h3>
-                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
-                </div>
-                <script id="editor" type="text/plain" style="width:auto;height:330px;"></script>
-            </div>
-        </div>
-
-    </div>
-
-
-    <!-- pdf上传 -->
-    <form enctype="multipart/form-data" id="fm1" method='post'>
-        <input type="text" name="safetyStandardlistId" value='' style="display: none" id="fm1_imput"/>
-        <input type="text" name="type" value='' style="display: none" id="fm1_imput2"/>
-        <input type="file" name="file"   accept=".pdf" id="upload" style="display: none">
-    </form>
-
-
-    <!-- 编辑网址 -->
-    <div id="modal-plan2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" style="margin-top: 150px">
-            <div class="modal-content radius">
-                <div class="modal-header">
-                    <h3 class="modal-title">输入要展示的网址</h3>
-                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
-                </div>
-                <div class="modal-body" style="height: 200px; overflow-y: auto">
-                    <div class="form form-horizontal">
-                        <div class="row cl dq">
-                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入网址
-                                :</label>
-                            <div class="formControls col-xs-5 col-sm-5">
-                               <input class="input-text" type="text" name="" id="webInput"
-                                style="width:300px">
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-3 col-sm-3 col-xs-offset-8 col-sm-offset-8">
-                                <button class="btn radius btn-primary size-S" onclick="queren2()">
-                                    确认
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
 </div>
 
 
 <script type="text/javascript">
-    var id='${item.id}';
-    var type = 0;
-
-
+    var id='${safetyStandardlistId}';
+    var type ='${type}';
+    var html = '${item.content}';
+    var ue=null;
     $(function(){
-        var ue = UE.getEditor('editor',{
+         ue = UE.getEditor('editor',{
             imageActionName : "<c:url value='/village/new/ueditorUpload'/>",
             imageFieldName : "file",
             imageAllowFiles : ['.png','.jpg','.jpeg','.gif','.bmp']
         });
+
+
+
     })
 
 
 
-    function add1(){
-        type=1;
-        $("#modal-plan1").modal("show");
-    }
-
-    function add3(){
-        type=3;
-        $('#webInput').val('http://');
-        $("#modal-plan2").modal("show");
-    }
-
-
-    function uploadfile() {
-        type=2;
-        $("#upload").click();
-    }
-
-    $("#upload").change(function () {
-        $('#fm1_imput').val(id);
-        $('#fm1_imput2').val(type);
-        var form = document.querySelector("#fm1");
-        var formdata = new FormData(form);
-        $.ajax({
-            url: getRootPath() + "/api/safety_Standard/B005",    //请求的url地址 
-            data: formdata,    //参数值
-            type: "POST",   //请求方式
-            processData: false,
-            contentType: false,
-            success: function (res) {
-                //请求成功时处理
-                layer.msg(res.message);
-                var file = document.getElementById('upload');
-                file.value = ''; //把file 内容清空
-                if (res.status == 0) {
-                    setInterval(function(){
-                        location.reload();
-                    }, 1000)
-                }
-            },
-            error: function (res) {
-                //请求出错处理
-                console.log(res, '请求失败');
-                layer.msg('上传失败');
-            }
-        });
-    });
-
-
-    function queren2() {
+    function save() {
+        var content = ue.getContent();
         $.ajax({
             url: getRootPath() + "/api/safety_Standard/update-tSafetyStandard",    //请求的url地址 
             data: JSON.stringify({          //参数值
                 id:id,
                 type:type,
-                fileAddress: $('#webInput').val()
+                content: content
             }),
             type: "POST",   //请求方式
             dataType: 'json', //返回值类型 一般设置为json
@@ -356,13 +219,17 @@
                 layer.msg(res.mess);
                 if(res.status==0){
                     setInterval(function(){
-                        location.reload();
+                        window.parent.location.href = '${ly}/api/safety_Standard/findOne?safetyStandardlistId='+id;
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
                     }, 1000)
                 }
 
             }
         });
     }
+
+
 
 </script>
 </body>

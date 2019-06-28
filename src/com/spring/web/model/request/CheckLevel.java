@@ -100,6 +100,30 @@ public class CheckLevel implements Serializable {
     public String sessionId;
 
 
+    public CheckLevel() {
+    }
+
+    public CheckLevel(Integer id, Integer uid, String type, String level1, String level2, String level3, String level4, String reference, String factors, String types, String flag, String gkcs, String gkzt, String files, Integer checkType, Integer industryId, String access_token, String sessionId) {
+        this.id = id;
+        this.uid = uid;
+        this.type = type;
+        this.level1 = level1;
+        this.level2 = level2;
+        this.level3 = level3;
+        this.level4 = level4;
+        this.reference = reference;
+        this.factors = factors;
+        this.types = types;
+        this.flag = flag;
+        this.gkcs = gkcs;
+        this.gkzt = gkzt;
+        this.files = files;
+        this.checkType = checkType;
+        this.industryId = industryId;
+        this.access_token = access_token;
+        this.sessionId = sessionId;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -212,6 +236,35 @@ public class CheckLevel implements Serializable {
         this.files = files;
     }
 
+    public Integer getCheckType() {
+        return checkType;
+    }
 
+    public void setCheckType(Integer checkType) {
+        this.checkType = checkType;
+    }
 
+    public Integer getIndustryId() {
+        return industryId;
+    }
+
+    public void setIndustryId(Integer industryId) {
+        this.industryId = industryId;
+    }
+
+    public String getAccess_token() {
+        return access_token;
+    }
+
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
 }

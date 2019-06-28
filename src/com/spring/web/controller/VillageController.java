@@ -2968,7 +2968,7 @@ public class VillageController extends BaseController {
         // 获取所有的部门 使用list集合
         Map<String, Integer> names = new HashMap<>();
         for (Map<Object, Object> map : maps) {
-            if (1 == map.get("level")) { //表示是一级目录
+            if (1 == (Integer) map.get("level")) { //表示是一级目录
                 String name = (String) map.get("name");//部门名称
                 Integer id = (Integer) map.get("id");//部门id
                 names.put(name, id);
@@ -3033,7 +3033,7 @@ public class VillageController extends BaseController {
 
         Map<String, Integer> names = new HashMap<>();
         for (Map<Object, Object> map : maps) {
-            if (1 == map.get("level")) { //表示是一级目录
+            if (1 == (Integer) map.get("level")) { //表示是一级目录
                 String name = (String) map.get("name");//部门名称
                 Integer id = (Integer) map.get("id");//部门id
                 names.put(name, id);

@@ -177,7 +177,7 @@
                 <c:when test="${fn:contains(company.name, '油') }">
                 </c:when>
                 <c:otherwise>
-                    <a class="btn default ${3 eq type ? 'btn-primary' : 'radius'}"
+                    <a class="btn default ${3 eq  type ? 'btn-primary' : 'radius'}"
                        href="${ly }/company/safety-system/risk-list?type=3">高危工艺辨识</a>
                 </c:otherwise>
             </c:choose>
@@ -224,7 +224,7 @@
                 <button class="btn btn-primary radius" onClick=" BaseSet()">部门确定</button>
 
                 <c:if test="${number == null || number != 3}">
-                    <select class="sel_area" id="partNamme"  onchange="Partname()" style="position: relative;top:2px" >
+                    <select class="sel_area" id="partNamme"  onchange="Partname()" >
                         <option value="" >全部</option>
                         <c:forEach items="${zzjgDep1 }" var="be">
                             <option value="${be.id}" >${be.name }</option>
@@ -251,6 +251,7 @@
                                 <th style="width:8%">环节/部位</th>
                                 <th style="width:8%">风险类型</th>
                                 <th style="width:50%">风险因素</th>
+
                             </c:if>
                             <c:if test="${flags == 2}">
                                 <c:if test="${!empty type}">
@@ -272,7 +273,7 @@
                                 <c:if test="${type eq 5}">
                                     <th>高危作业</th>
                                 </c:if>
-                                
+
                             </c:if>
 
                             <c:if test="${flags == 1}">
@@ -295,8 +296,9 @@
                                 <c:if test="${type eq 5}">
                                     <th>高危作业</th>
                                 </c:if>
-                                <th style="width:10%">操作</th>
+
                             </c:if>
+                            <th style="width:10%">操作</th>
                         </tr>
                         </thead>
                         <tbody style="display: none" id="myTable">
@@ -650,6 +652,7 @@
 
     function Partname() {
         var vs = $('select  option:selected').val();
+
         window.location.href = '${ly}/company/safety-system/risk-list?dmid='+vs+"&number="+${number}
 
     }

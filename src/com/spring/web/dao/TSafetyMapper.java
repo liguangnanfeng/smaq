@@ -20,12 +20,12 @@ public interface TSafetyMapper {
      */
     Integer insertTSafety(TSafety tSafety);
 
-    List<TSafety> selectAByIndustryType(@Param("industryType") Integer industryType, @Param("ParentId")Integer ParentId);
+    List<TSafety> selectAByIndustryType(@Param("industryType") Integer industryType, @Param("parentId")Integer ParentId);
 
     /**
      * 根据A级要素id查询所有的B级要素
      * @return
      */
-    List<TSafety> selectBBytSafetyStandardId();
+    List<TSafety> selectBBytSafetyStandardId(Integer id);
 
 }

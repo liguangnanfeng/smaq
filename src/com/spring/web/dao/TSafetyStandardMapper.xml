@@ -174,7 +174,15 @@
     <select id="findByparentId" resultType="com.spring.web.model.TSafetyStandard" parameterType="Integer">
         select
         <include refid="Base_Column_List"/>
-        from t_safety_standard_tbl where parentId=#{safetyStandardlistId};
+        from t_safety_standard_tbl <where> parentId=#{id}
+
+        <if test=" sort==1">
+            order by  id asc
+        </if>
+        <if test="  sort==2">
+            order by  id desc
+        </if>
+    </where>;
     </select>
 
     <select id="deleteTSafetyStandard" parameterType="Integer">

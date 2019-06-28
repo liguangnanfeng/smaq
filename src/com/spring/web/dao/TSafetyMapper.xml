@@ -72,7 +72,7 @@
         根据A级要素查询对应的B级要素
     -->
     <select id="selectBBytSafetyStandardId" resultType="com.spring.web.model.TSafety">
-        select * from t_safety_tbl where  parentId=#{parentId} and del =0  order By id asc;
+        select * from t_safety_tbl where  parentId=#{id} and del =0  order By id asc;
     </select>
 
 </mapper>

@@ -65,11 +65,24 @@
             <u><span style="text-decoration:underline;text-indent: 0;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
             <span style=""><span>委托</span></span>
             <span style=""><span>于</span></span>
-            <u><span style="text-decoration:underline;text-indent: 0;" contenteditable="true">&nbsp;&nbsp;&nbsp;</span></u>
-            <span style=""><span>年</span></span>
-            <u><span style="text-decoration:underline;text-indent: 0;" contenteditable="true">&nbsp;&nbsp;</span></u>
-            <span style=""><span>月</span></span>
-            <u><span style="text-decoration:underline;text-indent: 0;" contenteditable="true">&nbsp;&nbsp;</span></u>
+            <c:if test="${empty planTime}">
+
+                <u><span style="text-decoration:underline;text-indent: 0;" contenteditable="true">&nbsp;&nbsp;&nbsp;</span></u>
+                <span style=""><span>年</span></span>
+                <u><span style="text-decoration:underline;text-indent: 0;" contenteditable="true">&nbsp;&nbsp;</span></u>
+                <span style=""><span>月</span></span>
+                <u><span style="text-decoration:underline;text-indent: 0;" contenteditable="true">&nbsp;&nbsp;</span></u>
+
+            </c:if>
+            <c:if test="${not empty  planTime}">
+                <c:set var="date1" value="${fn:split(planTime,'-') }" />
+                <u><span style="text-decoration:underline;text-indent: 0;" contenteditable="true">&nbsp;&nbsp;&nbsp;${date1[0]}</span></u>
+                <span style=""><span>年</span></span>
+                <u><span style="text-decoration:underline;text-indent: 0;" contenteditable="true">&nbsp;&nbsp;&nbsp;${date1[1]}</span></u>
+                <span style=""><span>月</span></span>
+                <u><span style="text-decoration:underline;text-indent: 0;" contenteditable="true">&nbsp;&nbsp;&nbsp;${date1[2]}</span></u>
+
+            </c:if>
             <span style=""><span>对你单位进行了安全检查并提出了整改意见。现对你单位的整改情况进行了复查,根据检查情况，提出如下意见：</span></span>
             <span style=""></span>
         </p>
@@ -196,6 +209,8 @@
       </div>
     </div>
   </div>
+
+
 </body>
 <script type="text/javascript">
 var checkId = ${checkId};

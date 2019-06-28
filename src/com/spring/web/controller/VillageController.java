@@ -1713,9 +1713,13 @@ public class VillageController extends BaseController {
 
         TRectification tRectification = tRectificationMapper.selectByCheckId(checkId);
         if(null!=tRectification){
-            model.addAttribute("rectification",tRectification);
-        }
 
+        }else{
+            TRectification tRectification1 = new TRectification();
+            tRectification1.setDeadline(new Date());
+            tRectification1.setPlanTime(new Date());
+        }
+        model.addAttribute("rectification",tRectification);
         model.addAttribute("check",check);
         model.addAttribute("company",companyMapper.selectByPrimaryKey(user.getId()));
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));

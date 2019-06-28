@@ -218,7 +218,7 @@
 <%--                >--%>
 <%--                        ${t.name}--%>
 <%--                </div>--%>
-<%--                <span class="my_span"><a onclick="edit('${t.id}','${t.name }')">编辑</a><a onclick="del('${t.id}')">删除</a></span>--%>
+<%--                <span class="my_span"><a onclick="edit('${t.id}','${t.name }','${t.oder}')">编辑</a><a onclick="del('${t.id}')">删除</a></span>--%>
 <%--            </div>--%>
 <%--        </c:forEach>--%>
     </div>
@@ -236,14 +236,23 @@
                 <div class="modal-body" style="height: 200px; overflow-y: auto">
                     <div class="form form-horizontal">
                         <div class="row cl dq">
-                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>名称
                                 :</label>
                             <div class="formControls col-xs-5 col-sm-5">
 
-                                <%--         <input class="input-text" type="text" name="" id="trInput"
-                                                style="width:150px">--%>
-                                <textarea id="trInput" cols="6" rows="3"
-                                          style="width: 300px;padding:5px"></textarea>
+                                <input class="input-text" type="text" name="" id="trInput"
+                                                style="width:300px">
+                                <!-- <textarea id="trInput" cols="6" rows="3"
+                                          style="width: 300px;padding:5px"></textarea> -->
+                            </div>
+
+                        </div>
+						 <div class="row cl dq">
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>排序(输入数字)
+                                :</label>
+                            <div class="formControls col-xs-5 col-sm-5">
+                                <input class="input-text" type="text" name="" id="trInput4"  style="width:150px" oninput = "value=value.replace(/[^\d]/g,'')">
+                               <!--  <textarea cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea> -->
                             </div>
 
                         </div>
@@ -267,17 +276,26 @@
         <div class="modal-dialog" style="margin-top: 150px">
             <div class="modal-content radius">
                 <div class="modal-header">
-                    <h3 class="modal-title">修改A级要素</h3>
+                    <h3 class="modal-title">修改C级要素</h3>
                     <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
                 </div>
                 <div class="modal-body" style="height: 200px; overflow-y: auto">
                     <div class="form form-horizontal">
                         <div class="row cl dq">
-                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>名称
                                 :</label>
                             <div class="formControls col-xs-5 col-sm-5">
+                                <input class="input-text" type="text" name="" id="trInput2"  style="width:300px">
+                               <!--  <textarea cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea> -->
+                            </div>
 
-                                <textarea cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea>
+                        </div>
+						  <div class="row cl dq">
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>排序(输入数字)
+                                :</label>
+                            <div class="formControls col-xs-5 col-sm-5">
+                                <input class="input-text" type="text" name="" id="trInput3"  style="width:150px" oninput = "value=value.replace(/[^\d]/g,'')">
+                               <!--  <textarea cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea> -->
                             </div>
 
                         </div>
@@ -308,13 +326,15 @@
     <%-- 新增 --%>
 
     function addNew() {
+        $('#trInput4').val(0);
         $("#modal-plan2").modal("show");
     }
 
-    function edit(id,name) {
+    function edit(id,name,oder) {
         p_name = name ;
         p_id = parseInt(id);
         $('#trInput2').val(name);
+		$('#trInput3').val(oder);
         $("#modal-plan3").modal("show");
     }
 
@@ -325,7 +345,9 @@
             url: getRootPath() + "/api/safety_Standard/save",    //请求的url地址 
             data: JSON.stringify({
                 parentId: str,
-                name: $('#trInput').val()
+                name: $('#trInput').val(),
+				oder:parseInt($('trInput4').val())
+
             }),    //参数值
             type: "POST",   //请求方式
             dataType: 'json', //返回值类型 一般设置为json
@@ -347,7 +369,8 @@
             data: JSON.stringify({          //参数值
                 parentId: str,
                 id:p_id,
-                name: $('#trInput2').val()
+                name: $('#trInput2').val(),
+				oder:parseInt($('trInput3').val())
             }),
             type: "POST",   //请求方式
             dataType: 'json', //返回值类型 一般设置为json

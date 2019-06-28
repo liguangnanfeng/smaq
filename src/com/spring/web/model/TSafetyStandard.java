@@ -7,16 +7,27 @@ package com.spring.web.model;
  * @Date 2019/6/26 11:58
  */
 public class TSafetyStandard {
+    /*主键id*/
     private Integer id;
+    /*公司id*/
     private Integer userId;
+    /*要素名称*/
     private String  name;
+    /*行业id 1: 危化  2 : 工贸*/
     private Integer industryId;
+    /*上级id*/
     private Integer parentId;
+    /*1. 富文本 2.文件上传  3 链接*/
     private Integer type;
+    /*1: A级要素  2 : B级要素*/
     private Integer flag;
+    /*富文本内容*/
     private String  content;
+    /*文件上传地址*/
     private String  files;
+    /*链接地址*/
     private String  fileAddress;
+    /*是否删除*/
     private Integer del;
 
     public TSafetyStandard() {

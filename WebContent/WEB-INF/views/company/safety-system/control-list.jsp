@@ -266,7 +266,6 @@
 
                 <c:if test="${be.flag == 2}">
                   <td class="text-c">公司</td>
-
                 </c:if>
 
                 <c:if test="${be.flag != 2}">
@@ -288,7 +287,7 @@
                 <td class="text-c">${be.type }</td>
                 <td class="text-c">${be.factors }</td>
                 <%--<td class="text-c">${gkzt != null ? gkzt : "暂无数据" }</td>--%>
-                <c:if test="${be.level eq '红色'}">
+                <%--<c:if test="${be.level eq '红色'}">
                   <td class="text-c">公司</td>
 
                   <td class="text-c">
@@ -297,29 +296,28 @@
                     </c:forEach>
                   </td>
 
-                </c:if>
+                </c:if>--%>
 
 
-                <c:if test="${be.level ne '红色'}">
                   <td class="text-c">${be.gkzt != null ? be.gkzt : "暂无数据"}</td>
 
                   <td class="text-c">${be.fjgkfzr != null ? be.fjgkfzr : "暂无数据"}</td>
-                </c:if>
+
 
                 <td><p>${empty be.gkcs ? be.measures : be.gkcs}</p></td>
                 <td class="text-c div-pcz">
                   <input type="hidden" name="gkcs" value="${empty be.gkcs ? be.measures : be.gkcs }"/>
-                  <c:if test="${be.level eq '红色'}">
+                 <%-- <c:if test="${be.level eq '红色'}">
                       <input type="hidden" name="gkzt" value="公司"/>
                       <c:forEach items="${companyList}" var="be3" >
                         <input type="hidden" name="fjgkfzr" value="${be3.charge}"/>
                       </c:forEach>
                   </c:if>
 
-                  <c:if test="${be.level ne '红色'}">
+                  <c:if test="${be.level ne '红色'}">--%>
                   <input type="hidden" name="gkzt" value="${be.gkzt}"/>
                   <input type="hidden" name="fjgkfzr" value="${be.fjgkfzr }"/>
-                </c:if>
+               <%-- </c:if>--%>
                   <input type="hidden" name="buwei" value="${be.level2}"/>
 
                 <c:if test="${empty be.gkzt}">

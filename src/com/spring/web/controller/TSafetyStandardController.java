@@ -69,9 +69,13 @@ public class TSafetyStandardController extends BaseController {
      * @return
      */
     @RequestMapping(value="/findByParentId")
-    public String findByParentId(Integer safetyStandardlistId,Model model){
-        List<TSafetyStandard> TSafetyStandard = tSafetyStandardMapper.findByparentId(safetyStandardlistId);
+    public String findByParentId(Integer safetyStandardlistId,Model model,Integer sort){
+        if(null==sort){
+            sort=1;
+        }
+        List<TSafetyStandard> TSafetyStandard = tSafetyStandardMapper.findByparentId(safetyStandardlistId,sort);
         model.addAttribute("list",TSafetyStandard);
+        model.addAttribute("sort",sort);
         return "company/tables/tab-biaozhunB";
     }
 
@@ -174,7 +178,7 @@ public class TSafetyStandardController extends BaseController {
     public Result deleteTSafetyStandard(Integer safetyStandardlistId ){
         Result result = new ResultImpl();
         try {
-            List<TSafetyStandard> TSafetyStandard = tSafetyStandardMapper.findByparentId(safetyStandardlistId);
+            List<TSafetyStandard> TSafetyStandard = tSafetyStandardMapper.findByparentId(safetyStandardlistId,null);
             if(null!=TSafetyStandard&&TSafetyStandard.size()>0){
                 result.setStatus("1");
                 result.setMess("该数据存在下级要素点,请删除完后在进行删除");

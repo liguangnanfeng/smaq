@@ -238,6 +238,12 @@
     </select>
 
 
+    <!-- 根据 职位名称，level=1，uid，pid 查询数据信息 -->
+    <select id="selectNameLevel2" resultType="com.spring.web.model.ZzjgDepartment">
+        SELECT * FROM zzjg_department_tbl WHERE uid = #{uid} AND pid = #{pid} AND name = #{name} AND del = 0 AND level = #{level}
+    </select>
+
+
 
     <!--  查询 ZzjgDepartment 表中 pid 为 zzjgDepartment.getId() 并且 level = 2 的 数据信息 -->
     <select id="selectOnes" resultType="com.spring.web.model.ZzjgDepartment">

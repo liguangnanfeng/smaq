@@ -216,7 +216,7 @@
             <div class="item_container">
                 <div class="item_content my_flex f_r f_j_c f_z_c"
                      onClick="show_tab('B级元素', '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${t.id}')">
-                        ${t.name }
+                    <h5>${t.name }</h5>
                 </div>
          
                 <span class="my_span"><a onclick="edit('${t.id}','${t.name }')">编辑</a><a onclick="del('${t.id}')">删除</a></span>

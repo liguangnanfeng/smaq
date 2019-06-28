@@ -189,8 +189,8 @@
                 <table class="table table-border table-bordered table-bg table-hover table-sort">
                     <thead>
                     <tr class="text-c">
-                        <th width="5%">序号</th>
-                        <th width="40%">要素名称</th>
+                        <th width="15%">序号</th>
+                        <th width="60%">要素名称</th>
                         <th width="15%">操作</th>
                     </tr>
                     </thead>
@@ -199,11 +199,11 @@
                     <c:forEach items="${list }" varStatus="index" var="t">
                         <tr class="text-c">
                             <td>${index.index+1 }</td>
-                            <td>${t.name }</td>
+                            <td>  <h5>${t.name }</h5></td>
                             <td>
-                                <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">查看详情</a></br>
-                                <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">删除</a>
-                                <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">删除</a>
+                                <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('详情清单', '${ly}/api/safety_Standard/findOne?safetyStandardlistId=${t.id}')" href="javascript:;">查看详情</a>
+                                <a style="text-decoration:none;margin-left: 5px" onclick="edit('${t.id}','${t.name }')" href="javascript:;">编辑</a>
+                                <a style="text-decoration:none;margin-left: 5px" onclick="del('${t.id}')" href="javascript:;">删除</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -230,7 +230,7 @@
         <div class="modal-dialog" style="margin-top: 150px">
             <div class="modal-content radius">
                 <div class="modal-header">
-                    <h3 class="modal-title">输入要新增A级要素</h3>
+                    <h3 class="modal-title">输入要新增C级要素</h3>
                     <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
                 </div>
                 <div class="modal-body" style="height: 200px; overflow-y: auto">
@@ -306,7 +306,6 @@
 
 
     <%-- 新增 --%>
-
 
     function addNew() {
         $("#modal-plan2").modal("show");

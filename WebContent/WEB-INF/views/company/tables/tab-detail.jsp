@@ -191,7 +191,7 @@
                     </iframe>
                 </c:if>
                 <c:if test="${item.type==null}">
-                    <div>请先添加清单</div>
+                    <div style="text-align: center;width:100%;padding:50px;font-size: 25px;font-weight: bold">请先添加清单</div>
                 </c:if>
     </div>
 

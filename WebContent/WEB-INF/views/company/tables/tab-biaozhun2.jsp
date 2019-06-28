@@ -240,9 +240,9 @@
                             <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入
                                 :</label>
                             <div class="formControls col-xs-5 col-sm-5">
-                                <%--                                <input class="input-text" type="text" name="" id="trInput"--%>
-                                <%--                                       style="width:150px">--%>
-                                <textarea cols="6" rows="3" style="overflow:hidden;width: 300px"></textarea>
+                                                       <%--         <input class="input-text" type="text" name="" id="trInput"
+                                                                       style="width:150px">--%>
+                                <textarea id="trInput" cols="6" rows="3" style="overflow:hidden;width: 300px"></textarea>
                             </div>
 
                         </div>
@@ -275,9 +275,9 @@
                             <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入
                                 :</label>
                             <div class="formControls col-xs-5 col-sm-5">
-                                <%--                                <input class="input-text" type="text" name="" id="trInput"--%>
-                                <%--                                       style="width:150px">--%>
-                                <textarea cols="6" rows="6" style="overflow:hidden;width: 300px"></textarea>
+                                                           <%--     <input class="input-text" type="text" name="" id="trInput"
+                                                                       style="width:150px">--%>
+                                <textarea id="trInput"  cols="6" rows="6" style="overflow:hidden;width: 300px"></textarea>
                             </div>
 
                         </div>

@@ -46,7 +46,7 @@ public class TSafetyStandardController extends BaseController {
     public String findAll(Integer parendId, Integer flag, HttpServletRequest request, Model model,Integer  sort) {
         User user = getLoginUser(request);
         if(null==sort){
-            sort=2;
+            sort=1;
         }
         HashMap<String, Object> map = new HashMap<>();
 
@@ -78,12 +78,11 @@ public class TSafetyStandardController extends BaseController {
     /**
      * 根据 id查询项目信息 并调转动修改的页面
      * @param safetyStandardlistId
-     * @param model
      * @return
      */
     @RequestMapping(value = "/findOne",method=RequestMethod.POST)
     @ResponseBody
-    public Result findOne(Integer safetyStandardlistId, Model model) {
+    public Result findOne(Integer safetyStandardlistId) {
         Result  result =new ResultImpl();
         try {
             TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
@@ -147,7 +146,7 @@ public class TSafetyStandardController extends BaseController {
      * @param tSafetyStandard
      * @return
      */
-    @RequestMapping(value="/update-tSafetyStandard")
+    @RequestMapping(value="/update-tSafetyStandard",method = RequestMethod.POST)
     public @ResponseBody
     Result updateTSafetyStandard(@RequestBody TSafetyStandard tSafetyStandard){
         Result result =new ResultImpl();

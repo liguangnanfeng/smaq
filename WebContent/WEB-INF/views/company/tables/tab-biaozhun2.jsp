@@ -219,7 +219,7 @@
                      onclick="location.href = '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${t.id}'">
                         ${t.name }
                 </div>
-                <span class="my_span"><a onclick="addNew(${t.id})">编辑</a><a onclick="del(${t.id})">删除</a></span>
+                <span class="my_span"><a onclick="edit(${t.id},${t.name })">编辑</a><a onclick="del(${t.id})">删除</a></span>
             </div>
         </c:forEach>
     </div>
@@ -242,7 +242,7 @@
                             <div class="formControls col-xs-5 col-sm-5">
                                 <%--                                <input class="input-text" type="text" name="" id="trInput"--%>
                                 <%--                                       style="width:150px">--%>
-                                <textarea cols="6" rows="3" style="overflow:hidden;width: 300px"></textarea>
+                                <textarea cols="6" rows="4" style="width: 300px;padding:5px" id="trInput"></textarea>
                             </div>
 
                         </div>
@@ -266,7 +266,7 @@
         <div class="modal-dialog" style="margin-top: 150px">
             <div class="modal-content radius">
                 <div class="modal-header">
-                    <h3 class="modal-title">输入要新增A级要素</h3>
+                    <h3 class="modal-title">修改A级要素</h3>
                     <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
                 </div>
                 <div class="modal-body" style="height: 200px; overflow-y: auto">
@@ -277,13 +277,13 @@
                             <div class="formControls col-xs-5 col-sm-5">
                                 <%--                                <input class="input-text" type="text" name="" id="trInput"--%>
                                 <%--                                       style="width:150px">--%>
-                                <textarea cols="6" rows="6" style="overflow:hidden;width: 300px"></textarea>
+                                <textarea  id cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea>
                             </div>
 
                         </div>
                         <div class="row">
-                            <div class="col-xs-3 col-sm-3 offset3">
-                                <button class="btn radius btn-primary size-S" onclick="queren()">
+                            <div class="col-xs-3 col-sm-3 col-xs-offset-8 col-sm-offset-8">
+                                <button class="btn radius btn-primary size-S" onclick="queren2()">
                                     确认
                                 </button>
                             </div>
@@ -299,19 +299,23 @@
 
 <script type="text/javascript">
     <%--  显示  --%>
+    var p_id='';   //要传递的id字段
+    var p_name =''   //要传递的name字段
+    var str = 0
 
-    function showDiv(that) {
-        console.log(that)
-    }
+
 
     <%-- 新增 --%>
-    var str = 0
+
 
     function addNew() {
         $("#modal-plan2").modal("show");
     }
 
-    function edit() {
+    function edit(id,name) {
+        p_name = name ;
+        p_id = id;
+        $('#trInput').val(name);
         $("#modal-plan3").modal("show");
     }
 
@@ -320,10 +324,10 @@
     function queren() {
         $.ajax({
             url: getRootPath() + "/api/safety_Standard/save",    //请求的url地址 
-            data: JSON.stringify({
+            data: {
                 parentId: str,
                 name: $('#trInput').val()
-            }),    //参数值
+            },    //参数值
             type: "POST",   //请求方式
             dataType: 'json', //返回值类型 一般设置为json
             contentType: "application/json",
@@ -338,6 +342,26 @@
         });
     }
 
+    function queren2() {
+        $.ajax({
+            url: getRootPath() + "/api/safety_Standard/findOne",    //请求的url地址 
+            data: JSON.stringify({
+                parentId: str,
+                safetyStandardlistId:p_id,
+                name: $('#trInput2').val()
+            }),    //参数值
+            type: "POST",   //请求方式
+            dataType: 'json', //返回值类型 一般设置为json
+            success: function (res) {
+                layer.alert(res.mess, "", function () {
+                    $("#modal-plan2").modal("hide");
+                    if (res.mess == "保存成功") {
+                        location.reload();
+                    }
+                })
+            }
+        });
+    }
 
     function daoru() {
         $.ajax({

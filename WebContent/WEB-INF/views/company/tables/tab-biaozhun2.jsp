@@ -106,35 +106,38 @@
             box-shadow: 0px 0px 10px #efefef;
             width: 100%;
             height: 100%;
-            padding:10px;
+            padding: 10px;
             cursor: pointer;
-            overflow:hidden;
-            text-overflow : ellipsis;
+            overflow: hidden;
+            text-overflow: ellipsis;
             /*background-color: #0B9EFB;*/
             box-sizing: border-box;
             position: relative;
         }
-    .item_container>span{
-        position: absolute;
-        right: 12px;
-        top: 17px;
-        padding-right:5px;
-        display: none;
-    }
-    .item_container>span a{
-        color:#fff;
-        background:#429842;
-        border-radius:6px;
-        padding:4px 15px;
-        text-decoration:none;
-    }
-    .item_container>span a:first-child{
-        margin-right:5px;
-    }
 
-    .item_container:hover .my_span{
-        display:block ;
-    }
+        .item_container > span {
+            position: absolute;
+            right: 12px;
+            top: 17px;
+            padding-right: 5px;
+            display: none;
+        }
+
+        .item_container > span a {
+            color: #fff;
+            background: #429842;
+            border-radius: 6px;
+            padding: 4px 15px;
+            text-decoration: none;
+        }
+
+        .item_container > span a:first-child {
+            margin-right: 5px;
+        }
+
+        .item_container:hover .my_span {
+            display: block;
+        }
     </style>
     <script type="text/javascript">
         var id;
@@ -162,22 +165,26 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <c:if test="${sort==1}">
             <button onClick="location.href = '${ly}/api/safety_Standard/findAll?parendId=0&flag=1&sort=2'"
-                  
-                    class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">顺序
+
+                    class="btn btn-success radius" title="顺序" type="button" style="padding: 0 50px;">顺序
             </button>
         </c:if>
         <c:if test="${sort==2}">
             <button onClick="location.href = '${ly}/api/safety_Standard/findAll?parendId=0&flag=1&sort=1'"
-              
-                    class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">顺序
+
+                    class="btn btn-success radius" title="顺序" type="button" style="padding: 0 50px;">顺序
             </button>
         </c:if>
-  
-<%--        <button onClick="location.href = '${ly}/api/safety_Standard/findAll?parendId=0&flag=1&sort=1'"--%>
-<%--                class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">添加--%>
-<%--        </button>--%>
+
+        <%--        <button onClick="location.href = '${ly}/api/safety_Standard/findAll?parendId=0&flag=1&sort=1'"--%>
+        <%--                class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">添加--%>
+        <%--        </button>--%>
         <button onClick="addNew()"
-                class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">添加
+                class="btn btn-success radius" title="添加" type="button" style="padding: 0 50px;">添加
+        </button>
+
+        <button onClick="daoru()"
+                class="btn btn-success radius" title="一键导入" type="button" style="padding: 0 50px;">一键导入
         </button>
 
         <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
@@ -208,7 +215,8 @@
 
         <c:forEach items="${list }" varStatus="index" var="t">
             <div class="item_container">
-                <div class="item_content my_flex f_r f_j_c f_z_c" onclick="location.href = '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${t.id}'">
+                <div class="item_content my_flex f_r f_j_c f_z_c"
+                     onclick="location.href = '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${t.id}'">
                         ${t.name }
                 </div>
                 <span class="my_span"><a onclick="addNew(${t.id})">编辑</a><a onclick="del(${t.id})">删除</a></span>
@@ -232,9 +240,44 @@
                             <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入
                                 :</label>
                             <div class="formControls col-xs-5 col-sm-5">
-<%--                                <input class="input-text" type="text" name="" id="trInput"--%>
-<%--                                       style="width:150px">--%>
-                           <textarea  cols="6" rows="6"   style="overflow:hidden;width: 300px"></textarea>
+                                <%--                                <input class="input-text" type="text" name="" id="trInput"--%>
+                                <%--                                       style="width:150px">--%>
+                                <textarea cols="6" rows="3" style="overflow:hidden;width: 300px"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3 col-sm-3 col-xs-offset-8 col-sm-offset-8">
+                                <button class="btn radius btn-primary size-S" onclick="queren()">
+                                    确认
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 弹窗修改输入 -->
+    <div id="modal-plan3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="margin-top: 150px">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">输入要新增A级要素</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body" style="height: 200px; overflow-y: auto">
+                    <div class="form form-horizontal">
+                        <div class="row cl dq">
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入
+                                :</label>
+                            <div class="formControls col-xs-5 col-sm-5">
+                                <%--                                <input class="input-text" type="text" name="" id="trInput"--%>
+                                <%--                                       style="width:150px">--%>
+                                <textarea cols="6" rows="6" style="overflow:hidden;width: 300px"></textarea>
                             </div>
 
                         </div>
@@ -255,52 +298,77 @@
 <!-- 弹窗上传资料 -->
 
 <script type="text/javascript">
-<%--  显示  --%>
-    function showDiv(that){
+    <%--  显示  --%>
+
+    function showDiv(that) {
         console.log(that)
     }
-<%-- 新增 --%>
+
+    <%-- 新增 --%>
     var str = 0
-    function addNew(){
+
+    function addNew() {
         $("#modal-plan2").modal("show");
     }
-<%--  添加保存  --%>
-    function queren(){
+
+    function edit() {
+        $("#modal-plan3").modal("show");
+    }
+
+    <%--  添加保存  --%>
+
+    function queren() {
         $.ajax({
             url: getRootPath() + "/api/safety_Standard/save",    //请求的url地址 
             data: JSON.stringify({
                 parentId: str,
-                name: $('#trInput').val()}),    //参数值
+                name: $('#trInput').val()
+            }),    //参数值
             type: "POST",   //请求方式
             dataType: 'json', //返回值类型 一般设置为json
             contentType: "application/json",
             success: function (res) {
-                    layer.alert(res.mess, "", function () {
-                        $("#modal-plan2").modal("hide");
-                        if(res.mess=="保存成功"){
-                            location.reload();
-                        }
-                    })
+                layer.alert(res.mess, "", function () {
+                    $("#modal-plan2").modal("hide");
+                    if (res.mess == "保存成功") {
+                        location.reload();
+                    }
+                })
             }
         });
     }
-    /*删除*/
-    function del(id) {
-    $.ajax({
-        url: getRootPath() + "/api/safety_Standard/delete-tSafetyStandard",    //请求的url地址 
-        data: {
-            'safetyStandardlistId': parseInt(id)
-        },    //参数值
-        type: "POST",   //请求方式
-        success: function (res) {
-            layer.alert(res.mess, "", function () {
-                if(res.status=='0'){
-                    location.reload();
-                }
-            })
-        }
+
+
+    function daoru() {
+        $.ajax({
+            url: getRootPath() + "/api/safety_Standard/Automatic-import",    //请求的url地址 
+            type: "POST",   //请求方式
+            dataType: 'json', //返回值类型 一般设置为json
+            success: function (res) {
+               layer.msg(res.mess);
+                location.reload();
+            }
         });
     }
+
+    /*删除*/
+    function del(id) {
+        $.ajax({
+            url: getRootPath() + "/api/safety_Standard/delete-tSafetyStandard",    //请求的url地址 
+            data: {
+                'safetyStandardlistId': parseInt(id)
+            },    //参数值
+            type: "POST",   //请求方式
+            success: function (res) {
+                layer.alert(res.mess, "", function () {
+                    if (res.status == '0') {
+                        location.reload();
+                    }
+                })
+            }
+        });
+    }
+
     /*上传*/
     function upload(isType) {
         $.ajaxFileUpload({

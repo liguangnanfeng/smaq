@@ -3350,7 +3350,6 @@ public class CompanyController_cd extends BaseController {
 
         // 向map集合进行存储
         m.put("flag", flag);  // 1
-        m.put("title", 1); // 1
        // m.put("villageId", villageId);  //1
         if(null==status){
             m.put("status", 2); //状态  null

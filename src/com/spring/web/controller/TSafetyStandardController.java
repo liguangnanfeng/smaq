@@ -194,6 +194,7 @@ public class TSafetyStandardController extends BaseController {
      */
     @RequestMapping("/Automatic-import")
     @SuppressWarnings("all")
+    @ResponseBody
     public Result automaticImport(HttpServletRequest request){
         Result result = new ResultImpl();
         try {
@@ -220,7 +221,7 @@ public class TSafetyStandardController extends BaseController {
                 tSafetyStandard.setParentId(0);// 表示未删除
                 tSafetyStandardMapper.insertSelective(tSafetyStandard);
                 Integer tSafetyStandardId = tSafetyStandard.getId(); // 获取插入的A级要素id
-                List<TSafety> list = tSafetyMapper.selectBBytSafetyStandardId();
+                List<TSafety> list = tSafetyMapper.selectBBytSafetyStandardId(tSafety.getId());
                 for (TSafety safety : list) {
                     TSafetyStandard tSafetyStandard1 = new TSafetyStandard();
                     tSafetyStandard1.setUserId(user.getId());   // 公司id

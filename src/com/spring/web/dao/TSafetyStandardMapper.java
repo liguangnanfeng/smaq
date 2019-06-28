@@ -1,6 +1,7 @@
 package com.spring.web.dao;
 
 import com.spring.web.model.TSafetyStandard;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public interface TSafetyStandardMapper {
      * @param safetyStandardlistId
      * @return
      */
-    List<TSafetyStandard> findByparentId(Integer safetyStandardlistId);
+    List<TSafetyStandard> findByparentId(@Param("id") Integer safetyStandardlistId, @Param("sort")Integer sort);
 
     /**
      * 根据id 删除数据

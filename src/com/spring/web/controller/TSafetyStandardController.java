@@ -105,21 +105,20 @@ public class TSafetyStandardController extends BaseController {
     /**
      * 根据id查询详细信息并返回页面
      *
-     * @param safetyStandardlistId
-     * @param model
-     * @return
+     * @param safetyStandardlistId  @id
+     * @param model                 model
+     * @return                      html
      */
-    @RequestMapping(value = "/findOne-two")
-    public String findOneTwo(Integer safetyStandardlistId,Model model,HttpServletRequest request) {
-
-        TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
-        
-
-       /* if(null!=TSafetyStandard.getFiles()&&"".equals(TSafetyStandard.getFiles())){
-            TSafetyStandard.setFiles(path+TSafetyStandard.getFiles());
-        }*/
-        model.addAttribute("item",TSafetyStandard);
-        return "company/tables/tab-detail";
+    @RequestMapping(value = "/tab-biaozhunC")
+    public String findOneTwo(Integer safetyStandardlistId,Integer sort,Model model,HttpServletRequest request) {
+        if (null == sort) {
+            sort = 1;
+        }
+        List<TSafetyStandard> TSafetyStandard = tSafetyStandardMapper.findByparentId(safetyStandardlistId, sort);
+        model.addAttribute("list", TSafetyStandard);
+        model.addAttribute("parentId", safetyStandardlistId);
+        model.addAttribute("sort", sort);
+        return "company/tables/tab-biaozhunC";
     }
 
     /**

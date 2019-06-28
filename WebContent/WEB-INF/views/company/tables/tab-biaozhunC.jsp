@@ -163,15 +163,15 @@
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <c:if test="${sort==1}">
-            <button onClick="location.href = '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${parentId}&sort=2'"
+            <button onClick="location.href = '${ly}/api/safety_Standard/tab-biaozhunC?safetyStandardlistId=${parentId}&sort=2'"
 
-                    class="btn btn-success radius" title="倒序" type="button" style="padding: 0 30px;">顺序
+                    class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">顺序
             </button>
         </c:if>
         <c:if test="${sort==2}">
-            <button onClick="location.href = '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${parentId}&sort=1'"
+            <button onClick="location.href = '${ly}/api/safety_Standard/tab-biaozhunC?safetyStandardlistId=${parentId}&sort=1'"
 
-                    class="btn btn-success radius" title="倒序" type="button" style="padding: 0 30px;">顺序
+                    class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">顺序
             </button>
         </c:if>
 
@@ -179,49 +179,48 @@
         <%--                class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">添加--%>
         <%--        </button>--%>
         <button onClick="addNew()"
-                class="btn btn-success radius" title="倒序" type="button" style="padding: 0 30px;">添加
+                class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">添加
         </button>
 
-
-
-
         <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
-        <a href="#" class="btn btn-success radius" onClick=" show_tab('详情清单', '${ly}/api/safety_Standard/findAll?parendId=0&flag=1')">返回</a>
+        <a href="#" class="btn btn-success radius" onClick=" show_tab('B级元素', '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${fuId}')">返回</a>
     </div>
     <div class="mt-20 my_flex f_j_c f_wrap" style="width:100%;">
-        <%--        <table class="table table-border table-bordered table-bg table-hover table-sort">--%>
-        <%--            <thead>--%>
-        <%--            <tr class="text-c">--%>
-        <%--                <th width="5%">序号</th>--%>
-        <%--                <th width="40%">要素名称</th>--%>
-        <%--                <th width="15%">操作</th>--%>
-        <%--            </tr>--%>
-        <%--            </thead>--%>
-        <%--            <tbody>--%>
-        <%--            <!-- 循环-->--%>
-        <%--            <c:forEach items="${list }" varStatus="index" var="t">--%>
-        <%--                <tr class="text-c">--%>
-        <%--                    <td>${index.index+1 }</td>--%>
-        <%--                    <td>${t.name }</td>--%>
-        <%--                    <td>--%>
-        <%--                        详情,删除,修改--%>
-        <%--                    </td>--%>
-        <%--                </tr>--%>
-        <%--            </c:forEach>--%>
-        <%--            <!-- 循环结束 -->--%>
-        <%--            </tbody>--%>
-        <%--        </table>--%>
+                <table class="table table-border table-bordered table-bg table-hover table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="5%">序号</th>
+                        <th width="40%">要素名称</th>
+                        <th width="15%">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- 循环-->
+                    <c:forEach items="${list }" varStatus="index" var="t">
+                        <tr class="text-c">
+                            <td>${index.index+1 }</td>
+                            <td>${t.name }</td>
+                            <td>
+                                <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">查看详情</a></br>
+                                <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">删除</a>
+                                <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">删除</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    <!-- 循环结束 -->
+                    </tbody>
+                </table>
 
-        <c:forEach items="${list }" varStatus="index" var="t">
-            <div class="item_container">
-                <div class="item_content my_flex f_r f_j_c f_z_c"
-                     onClick=" show_tab('C级元素', '${ly}/api/safety_Standard/tab-biaozhunC?safetyStandardlistId=${t.id}');"
-                >
-                        ${t.name}
-                </div>
-                <span class="my_span"><a onclick="edit('${t.id}','${t.name }')">编辑</a><a onclick="del('${t.id}')">删除</a></span>
-            </div>
-        </c:forEach>
+<%--        <c:forEach items="${list }" varStatus="index" var="t">--%>
+<%--            <div class="item_container">--%>
+<%--                <div class="item_content my_flex f_r f_j_c f_z_c"--%>
+<%--                     onClick=" show_tab('详情清单', '${ly}/api/safety_Standard/findOne?safetyStandardlistId=${t.id}');"--%>
+<%--                >--%>
+<%--                        ${t.name}--%>
+<%--                </div>--%>
+<%--                <span class="my_span"><a onclick="edit('${t.id}','${t.name }')">编辑</a><a onclick="del('${t.id}')">删除</a></span>--%>
+<%--            </div>--%>
+<%--        </c:forEach>--%>
     </div>
 
 

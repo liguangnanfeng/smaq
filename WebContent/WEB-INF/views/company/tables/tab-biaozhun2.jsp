@@ -153,7 +153,6 @@
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>安全生产标准化</span>
     <span class="c-gray en">&gt;</span><span>安全生产管理档案</span>
-    <span class="c-gray en">&gt;</span> <span>危险作业证</span>
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
        href="javascript:location.replace(location.href);" title="刷新">
         <i class="Hui-iconfont">&#xe68f;</i>
@@ -183,9 +182,9 @@
                 class="btn btn-success radius" title="添加" type="button" style="padding: 0 50px;">添加
         </button>
 
-        <button onClick="daoru()"
-                class="btn btn-success radius" title="一键导入" type="button" style="padding: 0 50px;">一键导入
-        </button>
+<%--        <button onClick="daoru()"--%>
+<%--                class="btn btn-success radius" title="一键导入" type="button" style="padding: 0 50px;">一键导入--%>
+<%--        </button>--%>
 
         <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
     </div>
@@ -216,7 +215,7 @@
         <c:forEach items="${list }" varStatus="index" var="t">
             <div class="item_container">
                 <div class="item_content my_flex f_r f_j_c f_z_c"
-                     onClick="show_dialog('B级元素', '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${t.id}')">
+                     onClick="show_tab('B级元素', '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${t.id}')">
                         ${t.name }
                 </div>
          

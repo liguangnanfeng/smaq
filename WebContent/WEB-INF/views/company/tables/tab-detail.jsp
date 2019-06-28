@@ -178,17 +178,17 @@
 
     <div id="container"  >
                 <c:if test="${item.type==1}">
-                    <div>我是富文本</div>
+                    <div class="page-container">
+                        ${item.content}
+                    </div>
                 </c:if>
                 <c:if test="${item.type==2}">
                     <iframe src="${item.files}" width='100%' height="100%"  frameborder='1'>
                     </iframe>
-<%--                    <div>我是pdf</div>--%>
                 </c:if>
                 <c:if test="${item.type==3}">
                     <iframe src="${item.fileAddress}" width='100%' height='100%' frameborder='1'>
                     </iframe>
-<%--                    <div>我是网页</div>--%>
                 </c:if>
                 <c:if test="${item.type==null}">
                     <div>请先添加清单</div>
@@ -259,21 +259,6 @@
     </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
 </div>
 
@@ -282,20 +267,9 @@
     var id='${item.id}';
     var type = 0;
 
-
-    $(function(){
-        var ue = UE.getEditor('editor',{
-            imageActionName : "<c:url value='/village/new/ueditorUpload'/>",
-            imageFieldName : "file",
-            imageAllowFiles : ['.png','.jpg','.jpeg','.gif','.bmp']
-        });
-    })
-
-
-
     function add1(){
         type=1;
-        show_dialog('编辑文档', '${ly}/api/safety_Standard/tab-richtext?safetyStandardlistId=${t.id}&type='+type);
+        show_dialog('编辑文档', '${ly}/api/safety_Standard/tab-richtext?safetyStandardlistId=${item.id}&type='+type);
     }
 
     function add3(){

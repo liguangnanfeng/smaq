@@ -110,8 +110,10 @@ public class TSafetyStandardController extends BaseController {
         if (null == sort) {
             sort = 1;
         }
-        List<TSafetyStandard> TSafetyStandard = tSafetyStandardMapper.findByparentId(safetyStandardlistId, sort);
-        model.addAttribute("list", TSafetyStandard);
+        List<TSafetyStandard> tSafetyStandard = tSafetyStandardMapper.findByparentId(safetyStandardlistId, sort);
+        TSafetyStandard  one  =  tSafetyStandardMapper.findOne(safetyStandardlistId);
+        model.addAttribute("fuId",one.getParentId());
+        model.addAttribute("list", tSafetyStandard);
         model.addAttribute("parentId", safetyStandardlistId);
         model.addAttribute("sort", sort);
         return "company/tables/tab-biaozhunC";

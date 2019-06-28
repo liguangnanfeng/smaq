@@ -218,10 +218,19 @@ public class TSafetyStandardController extends BaseController {
         }
     }
 
+    /**
+     * 富文本内容
+     * @param safetyStandardlistId
+     * @param type
+     * @param model
+     * @return
+     */
     @RequestMapping(value="tab-richtext",method=RequestMethod.POST)
     public String  jumpTabRichtext(Integer safetyStandardlistId , Integer type,Model model){
+        TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
         model.addAttribute("type",type);
         model.addAttribute("safetyStandardlistId",safetyStandardlistId);
+        model.addAttribute("item",TSafetyStandard);
         return "company/tables/tab-richtext";
     }
 

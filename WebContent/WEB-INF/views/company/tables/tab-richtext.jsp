@@ -160,20 +160,19 @@
 </head>
 <body>
 <div class="page-container">
-<%--    <div class="cl pd-5 bg-1 bk-gray mt-20">--%>
-<%--        <button onClick="add1()"--%>
-<%--                class="btn btn-success radius" title="编辑富文本" type="button" style="padding: 0 50px;">编辑富文本--%>
-<%--        </button>--%>
-<%--        <button onClick="uploadfile()"--%>
-<%--                class="btn btn-success radius" title="上传PDF" type="button" style="padding: 0 50px;">上传PDF--%>
-<%--        </button>--%>
-<%--        <button onClick="add3()"--%>
-<%--                class="btn btn-success radius" title="编辑清单网址" type="button" style="padding: 0 50px;">编辑网址--%>
-<%--        </button>--%>
+    <%--    <div class="cl pd-5 bg-1 bk-gray mt-20">--%>
+    <%--        <button onClick="add1()"--%>
+    <%--                class="btn btn-success radius" title="编辑富文本" type="button" style="padding: 0 50px;">编辑富文本--%>
+    <%--        </button>--%>
+    <%--        <button onClick="uploadfile()"--%>
+    <%--                class="btn btn-success radius" title="上传PDF" type="button" style="padding: 0 50px;">上传PDF--%>
+    <%--        </button>--%>
+    <%--        <button onClick="add3()"--%>
+    <%--                class="btn btn-success radius" title="编辑清单网址" type="button" style="padding: 0 50px;">编辑网址--%>
+    <%--        </button>--%>
 
-<%--    </div>--%>
+    <%--    </div>--%>
     <script id="editor" type="text/plain" style="width:auto;height:400px;"></script>
-
 
 
     <div class="mt-20 f-l mb-40" style="width:100%;text-align:center;">
@@ -186,30 +185,32 @@
 
 
 <script type="text/javascript">
-    var id='${safetyStandardlistId}';
-    var type ='${type}';
-    var html = '${item.content}';
-    var ue=null;
-    $(function(){
-         ue = UE.getEditor('editor',{
-            imageActionName : "<c:url value='/village/new/ueditorUpload'/>",
-            imageFieldName : "file",
-            imageAllowFiles : ['.png','.jpg','.jpeg','.gif','.bmp']
+    var id = '${safetyStandardlistId}';
+    var type = '${type}';
+    var ue = null;
+    $(function () {
+        ue = UE.getEditor('editor', {
+            imageActionName: "<c:url value='/village/new/ueditorUpload'/>",
+            imageFieldName: "file",
+            imageAllowFiles: ['.png', '.jpg', '.jpeg', '.gif', '.bmp']
         });
 
-
+        ue.ready(function() {
+            var html = '${item.content}';
+            if (html) {
+                ue.setContent(html)
+            }
+        });
 
     })
-
-
 
     function save() {
         var content = ue.getContent();
         $.ajax({
             url: getRootPath() + "/api/safety_Standard/update-tSafetyStandard",    //请求的url地址 
             data: JSON.stringify({          //参数值
-                id:id,
-                type:type,
+                id: id,
+                type: type,
                 content: content
             }),
             type: "POST",   //请求方式
@@ -217,9 +218,9 @@
             contentType: "application/json",
             success: function (res) {
                 layer.msg(res.mess);
-                if(res.status==0){
-                    setInterval(function(){
-                        window.parent.location.href = '${ly}/api/safety_Standard/findOne?safetyStandardlistId='+id;
+                if (res.status == 0) {
+                    setInterval(function () {
+                        window.parent.location.href = '${ly}/api/safety_Standard/findOne?safetyStandardlistId=' + id;
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     }, 1000)
@@ -228,7 +229,6 @@
             }
         });
     }
-
 
 
 </script>

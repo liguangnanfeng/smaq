@@ -29,30 +29,10 @@ public class TSafetyStandard {
     private String  fileAddress;
     /*是否删除*/
     private Integer del;
+    /*排序*/
+    private Integer oder;
 
     public TSafetyStandard() {
-    }
-
-    public TSafetyStandard(Integer id, Integer userId, String name, Integer industryId, Integer parentId, Integer type, Integer flag, String content, String files, String fileAddress, Integer del) {
-        this.id = id;
-        this.userId = userId;
-        this.name = name;
-        this.industryId = industryId;
-        this.parentId = parentId;
-        this.type = type;
-        this.flag = flag;
-        this.content = content;
-        this.files = files;
-        this.fileAddress = fileAddress;
-        this.del = del;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Integer getId() {
@@ -69,6 +49,14 @@ public class TSafetyStandard {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getIndustryId() {
@@ -133,5 +121,28 @@ public class TSafetyStandard {
 
     public void setDel(Integer del) {
         this.del = del;
+    }
+
+    public Integer getOder() {
+        return oder;
+    }
+
+    public void setOder(Integer oder) {
+        this.oder = oder;
+    }
+
+    public TSafetyStandard(Integer id, Integer userId, String name, Integer industryId, Integer parentId, Integer type, Integer flag, String content, String files, String fileAddress, Integer del, Integer oder) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+        this.industryId = industryId;
+        this.parentId = parentId;
+        this.type = type;
+        this.flag = flag;
+        this.content = content;
+        this.files = files;
+        this.fileAddress = fileAddress;
+        this.del = del;
+        this.oder = oder;
     }
 }

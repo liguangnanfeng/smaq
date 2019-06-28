@@ -223,8 +223,6 @@ public class TSafetyStandardController extends BaseController {
         return "company/tables/tab-richtext";
     }
 
-
-
     /**
      * 自动导入功能
      * 首先判断这个公司类型

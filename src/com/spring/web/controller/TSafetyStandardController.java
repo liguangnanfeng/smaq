@@ -349,7 +349,8 @@ public class TSafetyStandardController extends BaseController {
                     TSafetyStandard one = tSafetyStandardMapper.findOne(safetyStandardlistId);
                     one.setType(type);
                     String url= "";
-                    if("8080".equals(request.getServerPort())){
+                    System.out.println(request.getServerPort());
+                    if(8080==request.getServerPort()){
                          url =  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
                     }else{
                          url =  request.getScheme() + "://" + request.getServerName();

@@ -185,21 +185,21 @@ function showpicture(src){
       <table class="f-l table table-border table-bordered table-bg table-hover table-sort">
         <thead>
           <tr class="text-c">
-            <th width="7%">检查类型</th>
+            <th width="5%">检查类型</th>
             <th width="7%">车间/场所</th>
             <c:if test="${flag == 1}" >
               <th width="10%">系统</th>
             </c:if>
-            <th width="10%">环节/部位</th>
+            <th width="3%">环节/部位</th>
             <th width="5%">检查方式</th>
-            <th width="5%">检查形式</th>
-            <th width="10%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>
-            <th width="5%">检查结果</th>
+            <th width="3%">检查形式</th>
+            <th width="12%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>
+            <th width="4%">检查结果</th>
             <th width="15%">隐患内容</th>
             <c:if test="${flag == 1}" >
               <th width="7%">隐患等级</th>
             </c:if>
-            <th width="12%">查看</th>
+            <th width="9%">查看</th>
           </tr>
         </thead>
         <tbody>
@@ -241,16 +241,7 @@ function showpicture(src){
               </c:choose>
             </td>
 
-            <c:if test="${ empty ch.factors}">
-              <td>暂无数据</td>
-            </c:if>
-
-            <c:if test="${ not empty ch.factors}">
-              <td class="text-c" >
-                  ${ch.factors}
-              </td>
-            </c:if>
-
+            <td class="text-c" >${ch.measures == "" ? "暂无数据" : ch.measures}</td>
 
             <c:if test="${ empty ch.status}">
               <td>没有数据</td>
@@ -266,7 +257,15 @@ function showpicture(src){
             </td>
             </c:if>
 
-            <td class="text-c" >${ch.measures == "" ? "暂无数据" : ch.measures}</td>
+            <c:if test="${ empty ch.factors}">
+              <td>暂无数据</td>
+            </c:if>
+
+            <c:if test="${ not empty ch.factors}">
+              <td class="text-c" >
+                  ${ch.factors}
+              </td>
+            </c:if>
 
             <c:if test="${flag == 1}" >
               <td>

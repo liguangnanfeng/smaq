@@ -269,7 +269,6 @@ public class CompanyController_cd extends BaseController {
             user.setLongitude(x[0]);
             userMapper.updateByPrimaryKeySelective(user);
         }
-        log.error("data：" + userMapper.selectByPrimaryKey(user.getId()));
         result.setMap("data", userMapper.selectByPrimaryKey(user.getId()));
         return result;
     }

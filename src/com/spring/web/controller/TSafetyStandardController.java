@@ -81,11 +81,22 @@ public class TSafetyStandardController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/findOne")
-    public String findOne(Integer safetyStandardlistId, Model model) {
-        TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
-        model.addAttribute("model",TSafetyStandard);
-        return "company/tables/tab-biaozhun2";
+    @RequestMapping(value = "/findOne",method=RequestMethod.POST)
+    @ResponseBody
+    public Result findOne(Integer safetyStandardlistId, Model model) {
+        Result  result =new ResultImpl();
+        try {
+            TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
+            result.setMess("查询成功");
+            result.setObject(TSafetyStandard);
+            result.setStatus("0");
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMess("未找到数据");
+            return result;
+        }
     }
 
     /**

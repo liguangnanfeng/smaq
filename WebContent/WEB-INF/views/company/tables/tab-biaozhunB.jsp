@@ -149,16 +149,16 @@
     </script>
 </head>
 <body>
-<nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-    <span class="c-gray en">&gt;</span> <span>安全生产标准化</span>
-    <span class="c-gray en">&gt;</span><span>安全生产管理档案</span>
-    <span class="c-gray en">&gt;</span> <span>危险作业证</span>
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
-       href="javascript:location.replace(location.href);" title="刷新">
-        <i class="Hui-iconfont">&#xe68f;</i>
-    </a>
-</nav>
+<%--<nav class="breadcrumb">--%>
+<%--    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>--%>
+<%--    <span class="c-gray en">&gt;</span> <span>安全生产标准化</span>--%>
+<%--    <span class="c-gray en">&gt;</span><span>安全生产管理档案</span>--%>
+<%--    <span class="c-gray en">&gt;</span> <span>危险作业证</span>--%>
+<%--    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"--%>
+<%--       href="javascript:location.replace(location.href);" title="刷新">--%>
+<%--        <i class="Hui-iconfont">&#xe68f;</i>--%>
+<%--    </a>--%>
+<%--</nav>--%>
 <div class="page-container">
     <div class="text-c">
     </div>
@@ -212,7 +212,7 @@
         <c:forEach items="${list }" varStatus="index" var="t">
             <div class="item_container">
                 <div class="item_content my_flex f_r f_j_c f_z_c"
-                     onclick="location.href = '${ly}/api/safety_Standard/findOne?id=${t.id}'"
+                     onClick=" show_dialog('详情清单', '${ly}/api/safety_Standard/findOne?safetyStandardlistId=${t.id}');"
                 >
                         ${t.name}
                 </div>

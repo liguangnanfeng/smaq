@@ -172,7 +172,7 @@
     <%--        </button>--%>
 
     <%--    </div>--%>
-    <script id="editor" type="text/plain" style="width:auto;height:400px;"></script>
+    <script id="editor" type="text/plain" style="width:100%;height:400px;"></script>
 
 
     <div class="mt-20 f-l mb-40" style="width:100%;text-align:center;">

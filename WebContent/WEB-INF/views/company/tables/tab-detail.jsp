@@ -161,13 +161,14 @@
 
 
 
-    <div  id = "container" class="mt-20 my_flex f_j_c f_wrap" style="width:100%;">
+    <div class="mt-20" style="width:100%;">
                 <c:if test="${item.type==1}">
                     <div>我是富文本</div>
                 </c:if>
                 <c:if test="${item.type==2}">
-                    <iframe src="${item.file}" width='100%' height='100%' frameborder='1'>
-                    </iframe>
+<%--                    <iframe src="${item.file}" width='100%' height='100%' frameborder='1'>--%>
+<%--                    </iframe>--%>
+                    <div>我是pdf</div>
                 </c:if>
                 <c:if test="${item.type==3}">
                     <div>我是网页</div>
@@ -288,8 +289,7 @@
 <script type="text/javascript">
     var id='${item.id}';
     var type = 0;
-
-
+    console.log("${item.file}")
 
 
 
@@ -314,7 +314,7 @@
             contentType: false,
             success: function (res) {
                 //请求成功时处理
-                layer.msg(res.mess);
+                layer.msg(res.message);
                 var file = document.getElementById('upload');
                 file.value = ''; //把file 内容清空
                 if (res.status == 0) {

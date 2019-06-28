@@ -212,7 +212,7 @@
         <c:forEach items="${list }" varStatus="index" var="t">
             <div class="item_container">
                 <div class="item_content my_flex f_r f_j_c f_z_c"
-                     onClick=" show_dialog('详情清单', '${ly}/api/safety_Standard/findOne?safetyStandardlistId=${t.id}');"
+                     onClick=" show_tab('详情清单', '${ly}/api/safety_Standard/findOne?safetyStandardlistId=${t.id}');"
                 >
                         ${t.name}
                 </div>

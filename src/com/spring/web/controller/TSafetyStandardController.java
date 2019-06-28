@@ -94,7 +94,7 @@ public class TSafetyStandardController extends BaseController {
 
         TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
       String path =  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-      if(null!=TSafetyStandard.getFiles()&&"".equals(TSafetyStandard.getFiles())){
+      if(null!=TSafetyStandard.getFiles()&&!"".equals(TSafetyStandard.getFiles())){
           TSafetyStandard.setFiles(path+TSafetyStandard.getFiles());
       }
         model.addAttribute("item",TSafetyStandard);

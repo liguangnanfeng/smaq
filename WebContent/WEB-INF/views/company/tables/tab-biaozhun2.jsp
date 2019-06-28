@@ -219,7 +219,7 @@
                      onclick="location.href = '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${t.id}'">
                         ${t.name }
                 </div>
-                <span class="my_span"><a onclick="edit(${t.id},${t.name })">编辑</a><a onclick="del(${t.id})">删除</a></span>
+                <span class="my_span"><a onclick="edit('${t.id}','${t.name }')">编辑</a><a onclick="del('${t.id}')">删除</a></span>
             </div>
         </c:forEach>
     </div>
@@ -277,7 +277,7 @@
                             <div class="formControls col-xs-5 col-sm-5">
                                 <%--                                <input class="input-text" type="text" name="" id="trInput"--%>
                                 <%--                                       style="width:150px">--%>
-                                <textarea  id cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea>
+                                <textarea   cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea>
                             </div>
 
                         </div>
@@ -314,8 +314,8 @@
 
     function edit(id,name) {
         p_name = name ;
-        p_id = id;
-        $('#trInput').val(name);
+        p_id = parseInt(id);
+        $('#trInput2').val(name);
         $("#modal-plan3").modal("show");
     }
 
@@ -344,21 +344,21 @@
 
     function queren2() {
         $.ajax({
-            url: getRootPath() + "/api/safety_Standard/findOne",    //请求的url地址 
-            data: JSON.stringify({
+            url: getRootPath() + "/api/safety_Standard/update-tSafetyStandard",    //请求的url地址 
+            data: JSON.stringify({          //参数值
                 parentId: str,
-                safetyStandardlistId:p_id,
+                id:p_id,
                 name: $('#trInput2').val()
-            }),    //参数值
+            }),    
             type: "POST",   //请求方式
             dataType: 'json', //返回值类型 一般设置为json
+            contentType: "application/json",
             success: function (res) {
-                layer.alert(res.mess, "", function () {
-                    $("#modal-plan2").modal("hide");
-                    if (res.mess == "保存成功") {
-                        location.reload();
-                    }
-                })
+                layer.msg(res.mess);
+                setInterval(function(){
+                    location.reload();
+                }, 1000)
+
             }
         });
     }
@@ -369,6 +369,7 @@
             type: "POST",   //请求方式
             dataType: 'json', //返回值类型 一般设置为json
             success: function (res) {
+
                layer.msg(res.mess);
                 location.reload();
             }
@@ -384,11 +385,7 @@
             },    //参数值
             type: "POST",   //请求方式
             success: function (res) {
-                layer.alert(res.mess, "", function () {
-                    if (res.status == '0') {
-                        location.reload();
-                    }
-                })
+                layer.msg(res.mess)
             }
         });
     }

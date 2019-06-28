@@ -178,17 +178,17 @@
 
     <div id="container"  >
                 <c:if test="${item.type==1}">
-                  ${item.content}
+                    <div class="page-container">
+                        ${item.content}
+                    </div>
                 </c:if>
                 <c:if test="${item.type==2}">
                     <iframe src="${item.files}" width='100%' height="100%"  frameborder='1'>
                     </iframe>
-<%--                    <div>我是pdf</div>--%>
                 </c:if>
                 <c:if test="${item.type==3}">
                     <iframe src="${item.fileAddress}" width='100%' height='100%' frameborder='1'>
                     </iframe>
-<%--                    <div>我是网页</div>--%>
                 </c:if>
                 <c:if test="${item.type==null}">
                     <div>请先添加清单</div>

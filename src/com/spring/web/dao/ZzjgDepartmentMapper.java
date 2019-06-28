@@ -141,4 +141,6 @@ public interface ZzjgDepartmentMapper {
     List<Map<Object,Object>> selectLevel1One(@Param("uid")Integer uid, @Param("dangerIds")String dangerIds, @Param("id")Integer id);
 
     List<Map<Object, Object>> selectNotEmpy(@Param("uid") Integer uid,@Param("flag") Integer flag);
+
+    List<ZzjgDepartment> selectNameLevel2(@Param("uid")Integer uid, @Param("pid")Integer pid, @Param("name")String name, @Param("level")int level);
 }

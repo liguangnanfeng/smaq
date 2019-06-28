@@ -2376,7 +2376,7 @@ public class CompanyController_safety extends BaseController {
 
         List<Map<String, Object>> list = aCompanyManualMapper.selectByAcs(m);
         model.addAttribute("list", list);
-        List<ZzjgPersonnel> zzjgPersonnelList = null;
+       /* List<ZzjgPersonnel> zzjgPersonnelList = null;
         List<Company> companyList = null;
         for(Map<String, Object> name : list){
             String names = null;
@@ -2391,7 +2391,7 @@ public class CompanyController_safety extends BaseController {
         }
         
         model.addAttribute("zzjgPersonnelList", zzjgPersonnelList);
-        model.addAttribute("companyList", companyList);
+        model.addAttribute("companyList", companyList);*/
 
         Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
 
@@ -2679,7 +2679,7 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setLevel3(a.getLevel1() + "/" + a.getLevel2() + "/" + a.getLevel3());
             aCompanyManual.setFactors(a.getFactors());
             aCompanyManual.setReference(a.getReference());
-            aCompanyManual.setGkzt(level1);
+
             aCompanyManual.setCtime(new Date());
             aCompanyManual.setDel(0);
             aCompanyManual.setDmid(depId);
@@ -2688,6 +2688,23 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setType(a.getType());
             aCompanyManual.setMeasures(a.getMeasures());
             aCompanyManual.setRiskId(a.getId());
+            // 根据公司 ID  和 车间 ID 查询部门名称为：负责人的名称
+            if (Integer.parseInt(a.getFlag()) == 2 && a.getLevel().equals("红色")){
+                List<Company> companyList = companyMapper.selectByPrimaryKeys(user.getId());
+                aCompanyManual.setFjgkfzr(companyList.get(0).getCharge()+"-"+companyList.get(0).getChargeContact());
+                aCompanyManual.setGkzt("公司");
+            }else {
+                List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),depId,"负责人",2);
+                if (zzjgDepartment1.size() != 0){
+                    // 根据 ID 查询 name
+                    ZzjgPersonnel zzjgPersonnel1 = zzjgPersonnelMapper.selectNameDid(zzjgDepartment1.get(0).getId());
+                    aCompanyManual.setFjgkfzr(zzjgPersonnel1.getName()+"-"+zzjgPersonnel1.getMobile());
+                }else {
+                    aCompanyManual.setFjgkfzr("");
+                }
+                aCompanyManual.setGkzt(level1);
+            }
+
             aCompanyManualMapper.insert(aCompanyManual);
             // 给 zzjg_department_tbl 添加数据信息
             List<ZzjgDepartment> zzjgDepartmentList = zzjgDepartmentMapper.selectCount(depId, a.getName());
@@ -2747,6 +2764,16 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setType(a.getType());
             aCompanyManual.setMeasures(a.getMeasures());
             aCompanyManual.setRiskId(a.getId());
+            // 根据公司 ID  和 车间 ID 查询部门名称为：负责人的名称
+            List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),depId,"负责人",2);
+            if (zzjgDepartment1.size() != 0){
+                // 根据 ID 查询 name
+                ZzjgPersonnel zzjgPersonnel1 = zzjgPersonnelMapper.selectNameDid(zzjgDepartment1.get(0).getId());
+                aCompanyManual.setFjgkfzr(zzjgPersonnel1.getName()+"-"+zzjgPersonnel1.getMobile());
+            }else {
+                aCompanyManual.setFjgkfzr("");
+            }
+
             aCompanyManualMapper.insertAdd(aCompanyManual);
 
             // 给 zzjg_department_tbl 添加数据信息
@@ -2883,22 +2910,58 @@ public class CompanyController_safety extends BaseController {
     @ResponseBody
     public Result zpSave(Integer id, String level, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
+        User user = getLoginUser(request);
         ACompanyManual acm = new ACompanyManual();
         acm.setId(id);
         acm.setLevel(level);
+
         if (level != null && level.equals("红色")) {
+            List<Company> companyList = companyMapper.selectByPrimaryKeys(user.getId());
+            if (companyList.size() != 0){
+                acm.setFjgkfzr(companyList.get(0).getCharge()+"-"+companyList.get(0).getChargeContact());
+            }else{
+                acm.setFjgkfzr("");
+            }
+            acm.setGkzt("公司");
             acm.setFlag("2");
         }
 
         if (level != null && level.equals("橙色")) {
+            ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(id);
+            List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),aCompanyManual.getDmid(),"负责人",2);
+            if (zzjgDepartment1.size() != 0){
+                // 根据 ID 查询 name
+                ZzjgPersonnel zzjgPersonnel1 = zzjgPersonnelMapper.selectNameDid(zzjgDepartment1.get(0).getId());
+                acm.setFjgkfzr(zzjgPersonnel1.getName()+"-"+zzjgPersonnel1.getMobile());
+            }else {
+                acm.setFjgkfzr("");
+            }
             acm.setFlag("1");
         }
 
         if (level != null && level.equals("黄色")) {
+            ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(id);
+            List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),aCompanyManual.getDmid(),"负责人",2);
+            if (zzjgDepartment1.size() != 0){
+                // 根据 ID 查询 name
+                ZzjgPersonnel zzjgPersonnel1 = zzjgPersonnelMapper.selectNameDid(zzjgDepartment1.get(0).getId());
+                acm.setFjgkfzr(zzjgPersonnel1.getName()+"-"+zzjgPersonnel1.getMobile());
+            }else {
+                acm.setFjgkfzr("");
+            }
             acm.setFlag("3");
         }
 
         if (level != null && level.equals("蓝色")) {
+            ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(id);
+            List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),aCompanyManual.getDmid(),"负责人",2);
+            if (zzjgDepartment1.size() != 0){
+                // 根据 ID 查询 name
+                ZzjgPersonnel zzjgPersonnel1 = zzjgPersonnelMapper.selectNameDid(zzjgDepartment1.get(0).getId());
+                acm.setFjgkfzr(zzjgPersonnel1.getName()+"-"+zzjgPersonnel1.getMobile());
+            }else {
+                acm.setFjgkfzr("");
+            }
             acm.setFlag("3");
         }
 

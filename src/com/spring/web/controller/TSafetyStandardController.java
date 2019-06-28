@@ -90,9 +90,13 @@ public class TSafetyStandardController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/findOne")
-    public String findOne(Integer safetyStandardlistId,Model model) {
+    public String findOne(Integer safetyStandardlistId,Model model,HttpServletRequest request) {
 
         TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
+      String path =  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+      if(null!=TSafetyStandard.getFiles()&&"".equals(TSafetyStandard.getFiles())){
+          TSafetyStandard.setFiles(path+TSafetyStandard.getFiles());
+      }
         model.addAttribute("item",TSafetyStandard);
         return "company/tables/tab-detail";
     }
@@ -105,9 +109,13 @@ public class TSafetyStandardController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/findOne-two")
-    public String findOneTwo(Integer safetyStandardlistId,Model model) {
+    public String findOneTwo(Integer safetyStandardlistId,Model model,HttpServletRequest request) {
 
         TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
+        String path =  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        if(null!=TSafetyStandard.getFiles()&&"".equals(TSafetyStandard.getFiles())){
+            TSafetyStandard.setFiles(path+TSafetyStandard.getFiles());
+        }
         model.addAttribute("item",TSafetyStandard);
         return "company/tables/tab-detail";
     }
@@ -352,7 +360,5 @@ public class TSafetyStandardController extends BaseController {
         return result;
 
     }
-
-
 
 }

@@ -1697,8 +1697,8 @@ public class CompanyController_safety extends BaseController {
      *  TODO 车间/岗位 文件上传！！！
      */
     @RequestMapping(value = "save-photo", method = RequestMethod.POST)
-    public void companyLeadin(@RequestParam MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Result result = exportService.photoImport(file, getLoginUser(request).getId(), request);
+    public void companyLeadin(@RequestParam MultipartFile file, HttpServletRequest request, HttpServletResponse response,String name) throws Exception {
+        Result result = exportService.photoImport(file, getLoginUser(request).getId(), request,name);
         OutPrintUtil.OutPrint(response, result);
     }
 
@@ -2936,6 +2936,7 @@ public class CompanyController_safety extends BaseController {
             }else {
                 acm.setFjgkfzr("");
             }
+            acm.setGkzt(aCompanyManual.getLevel1());
             acm.setFlag("1");
         }
 
@@ -2949,6 +2950,7 @@ public class CompanyController_safety extends BaseController {
             }else {
                 acm.setFjgkfzr("");
             }
+            acm.setGkzt(aCompanyManual.getLevel1());
             acm.setFlag("3");
         }
 
@@ -2962,6 +2964,7 @@ public class CompanyController_safety extends BaseController {
             }else {
                 acm.setFjgkfzr("");
             }
+            acm.setGkzt(aCompanyManual.getLevel1());
             acm.setFlag("3");
         }
 

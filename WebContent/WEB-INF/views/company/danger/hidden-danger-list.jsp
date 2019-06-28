@@ -334,9 +334,7 @@
 
     <form enctype="multipart/form-data" id="fm1" method='post'>
         <input type="text" name="itemId" value='' style="display: none" id="fm1_imput"/>
-        <input type="file" name="file"
-               accept=".pdf"
-               id="upload" style="display: none">
+        <input type="file" name="file"   accept=".pdf" id="upload" style="display: none">
     </form>
 
 

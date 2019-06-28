@@ -139,90 +139,97 @@
             display: block;
         }
     </style>
-    <script type="text/javascript">
-        var id;
 
-        function openzl(Id) {
-            id = Id
-            $("#upload-zl").modal("show")
-        }
-    </script>
 </head>
 <body>
-<nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-    <span class="c-gray en">&gt;</span> <span>安全生产标准化</span>
-    <span class="c-gray en">&gt;</span><span>安全生产管理档案</span>
-    <span class="c-gray en">&gt;</span> <span>危险作业证</span>
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
-       href="javascript:location.replace(location.href);" title="刷新">
-        <i class="Hui-iconfont">&#xe68f;</i>
-    </a>
-</nav>
 <div class="page-container">
     <div class="text-c">
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <c:if test="${sort==1}">
-            <button onClick="location.href = '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${parentId}&sort=2'"
-
-                    class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">顺序
-            </button>
-        </c:if>
-        <c:if test="${sort==2}">
-            <button onClick="location.href = '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${parentId}&sort=1'"
-
-                    class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">顺序
-            </button>
-        </c:if>
-
-        <%--        <button onClick="location.href = '${ly}/api/safety_Standard/findAll?parendId=0&flag=1&sort=1'"--%>
-        <%--                class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">添加--%>
-        <%--        </button>--%>
-        <button onClick="addNew()"
-                class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">添加
+        <button onClick="add1()"
+                class="btn btn-success radius" title="编辑富文本" type="button" style="padding: 0 50px;">编辑富文本
+        </button>
+        <button onClick="uploadfile()"
+                class="btn btn-success radius" title="上传PDF" type="button" style="padding: 0 50px;">上传PDF
+        </button>
+        <button onClick="add3()"
+                class="btn btn-success radius" title="编辑清单网址" type="button" style="padding: 0 50px;">编辑清单网址
         </button>
 
-        <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
     </div>
-    <div class="mt-20 my_flex f_j_c f_wrap" style="width:100%;">
-        <%--        <table class="table table-border table-bordered table-bg table-hover table-sort">--%>
-        <%--            <thead>--%>
-        <%--            <tr class="text-c">--%>
-        <%--                <th width="5%">序号</th>--%>
-        <%--                <th width="40%">要素名称</th>--%>
-        <%--                <th width="15%">操作</th>--%>
-        <%--            </tr>--%>
-        <%--            </thead>--%>
-        <%--            <tbody>--%>
-        <%--            <!-- 循环-->--%>
-        <%--            <c:forEach items="${list }" varStatus="index" var="t">--%>
-        <%--                <tr class="text-c">--%>
-        <%--                    <td>${index.index+1 }</td>--%>
-        <%--                    <td>${t.name }</td>--%>
-        <%--                    <td>--%>
-        <%--                        详情,删除,修改--%>
-        <%--                    </td>--%>
-        <%--                </tr>--%>
-        <%--            </c:forEach>--%>
-        <%--            <!-- 循环结束 -->--%>
-        <%--            </tbody>--%>
-        <%--        </table>--%>
 
-        <c:forEach items="${list }" varStatus="index" var="t">
-            <div class="item_container">
-                <div class="item_content my_flex f_r f_j_c f_z_c"
-                     onclick="location.href = '${ly}/api/safety_Standard/findOne?id=${t.id}'"
-                >
-                        ${t.name}
+
+
+
+    <div class="mt-20" style="width:100%;">
+                <c:if test="${item.type==1}">
+                    <div>我是富文本</div>
+                </c:if>
+                <c:if test="${item.type==2}">
+<%--                    <iframe src="${item.file}" width='100%' height='100%' frameborder='1'>--%>
+<%--                    </iframe>--%>
+                    <div>我是pdf</div>
+                </c:if>
+                <c:if test="${item.type==3}">
+                    <div>我是网页</div>
+                </c:if>
+                <c:if test="${item.type==null}">
+                    <div>请先添加清单</div>
+                </c:if>
+    </div>
+
+
+
+
+
+
+    <!-- 富文本编辑 -->
+    <div id="modal-plan1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="margin-top: 150px">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">输入要新增A级要素</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
                 </div>
-                <span class="my_span"><a onclick="edit('${t.id}','${t.name }')">编辑</a><a onclick="del('${t.id}')">删除</a></span>
+                <div class="modal-body" style="height: 200px; overflow-y: auto">
+                    <div class="form form-horizontal">
+                        <div class="row cl dq">
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入
+                                :</label>
+                            <div class="formControls col-xs-5 col-sm-5">
+
+                                <%--         <input class="input-text" type="text" name="" id="trInput"
+                                                style="width:150px">--%>
+                                <textarea id="trInput" cols="6" rows="3"
+                                          style="width: 300px;padding:5px"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3 col-sm-3 col-xs-offset-8 col-sm-offset-8">
+                                <button class="btn radius btn-primary size-S" onclick="queren()">
+                                    确认
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </c:forEach>
+        </div>
+
     </div>
 
 
-    <!-- 弹窗输入 -->
+    <!-- pdf上传 -->
+    <form enctype="multipart/form-data" id="fm1" method='post'>
+        <input type="text" name="safetyStandardlistId" value='' style="display: none" id="fm1_imput"/>
+        <input type="text" name="type" value='' style="display: none" id="fm1_imput2"/>
+        <input type="file" name="file"   accept=".pdf" id="upload" style="display: none">
+    </form>
+
+
+    <!-- 编辑网址 -->
     <div id="modal-plan2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" style="margin-top: 150px">
@@ -259,158 +266,74 @@
 
     </div>
 
-    <!-- 弹窗修改输入 -->
-    <div id="modal-plan3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" style="margin-top: 150px">
-            <div class="modal-content radius">
-                <div class="modal-header">
-                    <h3 class="modal-title">修改A级要素</h3>
-                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
-                </div>
-                <div class="modal-body" style="height: 200px; overflow-y: auto">
-                    <div class="form form-horizontal">
-                        <div class="row cl dq">
-                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入
-                                :</label>
-                            <div class="formControls col-xs-5 col-sm-5">
 
-                                <textarea cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea>
-                            </div>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-3 col-sm-3 col-xs-offset-8 col-sm-offset-8">
-                                <button class="btn radius btn-primary size-S" onclick="queren2()">
-                                    确认
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     </div>
 </div>
-<!-- 弹窗上传资料 -->
+
 
 <script type="text/javascript">
-    <%--  显示  --%>
-    var p_id='';   //要传递的id字段
-    var p_name =''   //要传递的name字段
-    var str = '${parentId}'
+    var id='${item.id}';
+    var type = 0;
+    console.log("${item.file}")
 
 
 
-    <%-- 新增 --%>
 
 
-    function addNew() {
-        $("#modal-plan2").modal("show");
+
+    function uploadfile() {
+        type=2;
+        $("#upload").click();
     }
 
-    function edit(id,name) {
-        p_name = name ;
-        p_id = parseInt(id);
-        $('#trInput2').val(name);
-        $("#modal-plan3").modal("show");
-    }
-
-    <%--  添加保存  --%>
-
-    function queren() {
+    $("#upload").change(function () {
+        $('#fm1_imput').val(id);
+        $('#fm1_imput2').val(type);
+        var form = document.querySelector("#fm1");
+        var formdata = new FormData(form);
         $.ajax({
-            url: getRootPath() + "/api/safety_Standard/save",    //请求的url地址 
-            data: JSON.stringify({
-                parentId: str,
-                name: $('#trInput').val()
-            }),    //参数值
+            url: getRootPath() + "/api/safety_Standard/B005",    //请求的url地址 
+            data: formdata,    //参数值
             type: "POST",   //请求方式
-            dataType: 'json', //返回值类型 一般设置为json
-            contentType: "application/json",
+            processData: false,
+            contentType: false,
             success: function (res) {
-                layer.msg(res.mess);
-                if(res.status==0){
+                //请求成功时处理
+                layer.msg(res.message);
+                var file = document.getElementById('upload');
+                file.value = ''; //把file 内容清空
+                if (res.status == 0) {
                     setInterval(function(){
                         location.reload();
                     }, 1000)
-                }
-            }
-        });
-    }
-
-    function queren2() {
-        $.ajax({
-            url: getRootPath() + "/api/safety_Standard/update-tSafetyStandard",    //请求的url地址 
-            data: JSON.stringify({          //参数值
-                parentId: str,
-                id:p_id,
-                name: $('#trInput2').val()
-            }),
-            type: "POST",   //请求方式
-            dataType: 'json', //返回值类型 一般设置为json
-            contentType: "application/json",
-            success: function (res) {
-                layer.msg(res.mess);
-                if(res.status==0){
-                    setInterval(function(){
-                        location.reload();
-                    }, 1000)
-                }
-
-            }
-        });
-    }
-
-
-    /*删除*/
-    function del(id) {
-        $.ajax({
-            url: getRootPath() + "/api/safety_Standard/delete-tSafetyStandard",    //请求的url地址 
-            data: {
-                'safetyStandardlistId': parseInt(id)
-            },    //参数值
-            type: "POST",   //请求方式
-            success: function (res) {
-                layer.msg(res.mess)
-                if(res.status==0){
-                    setInterval(function(){
-                        location.reload();
-                    }, 1000)
-                }
-            }
-        });
-    }
-
-    /*上传*/
-    function upload(isType) {
-        $.ajaxFileUpload({
-            url: getRootPath() + '/company/tables/tab-leadin?isType=' + isType + "&id=" + id, //用于文件上传的服务器端请求地址
-            secureuri: false, //一般设置为false
-            fileElementId: 'file', //文件上传空间的id属性  <input type="file" id="file" name="file" />
-            dataType: 'json', //返回值类型 一般设置为json
-            async: false,
-            success: function (result) { //服务器成功响应处理函数
-                $(".upload-url").val("");
-                if (result.status == '0') {
-                    layer.alert("导入成功", "", function () {
-                        location.reload();
-                    })
-                } else {
-                    if (null != result.map.message) {
-                        layer.alert(result.map.message);
-                    } else {
-                        var list = result.map.list;
-                        layer.alert(list.join("<br>"));
-                    }
                 }
             },
-            error: function (data, status, e) {//服务器响应失败处理函数
-                alert("文件上传失败");
+            error: function (res) {
+                //请求出错处理
+                console.log(res, '请求失败');
+                layer.msg('上传失败');
             }
-        })
-    }
+        });
+    });
+
+
+
+
 </script>
 </body>
 </html>

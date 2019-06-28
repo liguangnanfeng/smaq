@@ -216,7 +216,7 @@
         <c:forEach items="${list }" varStatus="index" var="t">
             <div class="item_container">
                 <div class="item_content my_flex f_r f_j_c f_z_c"
-                     onclick="location.href = '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${t.id}'">
+                     onClick="show_dialog('B级元素', '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${t.id}')">
                         ${t.name }
                 </div>
          

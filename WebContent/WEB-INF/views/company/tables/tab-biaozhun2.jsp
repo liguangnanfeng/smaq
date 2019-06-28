@@ -244,7 +244,7 @@
                            
                                                        <%--         <input class="input-text" type="text" name="" id="trInput"
                                                                        style="width:150px">--%>
-                                <textarea id="trInput" cols="6" rows="3" style="overflow:hidden;width: 300px"></textarea>
+                                <textarea id="trInput" cols="6" rows="3" style="width: 300px;padding:5px"></textarea>
                             </div>
 
                         </div>
@@ -325,20 +325,20 @@
     function queren() {
         $.ajax({
             url: getRootPath() + "/api/safety_Standard/save",    //请求的url地址 
-            data: {
+            data: JSON.stringify({
                 parentId: str,
                 name: $('#trInput').val()
-            },    //参数值
+            }),    //参数值
             type: "POST",   //请求方式
             dataType: 'json', //返回值类型 一般设置为json
             contentType: "application/json",
             success: function (res) {
-                layer.alert(res.mess, "", function () {
-                    $("#modal-plan2").modal("hide");
-                    if (res.mess == "保存成功") {
+                layer.msg(res.mess);
+                if(res.status==0){
+                    setInterval(function(){
                         location.reload();
-                    }
-                })
+                    }, 1000)
+                }
             }
         });
     }
@@ -356,9 +356,11 @@
             contentType: "application/json",
             success: function (res) {
                 layer.msg(res.mess);
-                setInterval(function(){
-                    location.reload();
-                }, 1000)
+                if(res.status==0){
+                    setInterval(function(){
+                        location.reload();
+                    }, 1000)
+                }
 
             }
         });
@@ -387,6 +389,11 @@
             type: "POST",   //请求方式
             success: function (res) {
                 layer.msg(res.mess)
+                if(res.status==0){
+                    setInterval(function(){
+                        location.reload();
+                    }, 1000)
+                }
             }
         });
     }

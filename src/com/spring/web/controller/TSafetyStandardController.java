@@ -17,10 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * TODO (安全生产标准话实体类)
@@ -84,34 +81,35 @@ public class TSafetyStandardController extends BaseController {
 
     /**
      * 根据 id查询项目信息 并调转动修改的页面
-     *  普通的跳转页面,没有请求
+     * 普通的跳转页面,没有请求
+     *
      * @param safetyStandardlistId
      * @return
      */
     @RequestMapping(value = "/findOne")
-    public String findOne(Integer safetyStandardlistId,Model model,HttpServletRequest request) {
+    public String findOne(Integer safetyStandardlistId, Model model, HttpServletRequest request) {
 
         TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
-        model.addAttribute("item",TSafetyStandard);
+        model.addAttribute("item", TSafetyStandard);
         return "company/tables/tab-detail";
     }
 
     /**
      * 根据id查询详细信息并返回页面
      *
-     * @param safetyStandardlistId  @id
-     * @param model                 model
-     * @return                      html
+     * @param safetyStandardlistId @id
+     * @param model                model
+     * @return html
      */
-  
+
     @RequestMapping(value = "/tab-biaozhunC")
-    public String findOneTwo(Integer safetyStandardlistId,Integer sort,Model model,HttpServletRequest request) {
+    public String findOneTwo(Integer safetyStandardlistId, Integer sort, Model model, HttpServletRequest request) {
         if (null == sort) {
             sort = 1;
         }
         List<TSafetyStandard> tSafetyStandard = tSafetyStandardMapper.findByparentId(safetyStandardlistId, sort);
-        TSafetyStandard  one  =  tSafetyStandardMapper.findOne(safetyStandardlistId);
-        model.addAttribute("fuId",one.getParentId());
+        TSafetyStandard one = tSafetyStandardMapper.findOne(safetyStandardlistId);
+        model.addAttribute("fuId", one.getParentId());
         model.addAttribute("list", tSafetyStandard);
         model.addAttribute("parentId", safetyStandardlistId);
         model.addAttribute("sort", sort);
@@ -145,7 +143,7 @@ public class TSafetyStandardController extends BaseController {
                 tSafetyStandard.setFlag(2);
             }
 
-            if(null==tSafetyStandard.getOder()){
+            if (null == tSafetyStandard.getOder()) {
                 tSafetyStandard.setOder(0);
             }
             tSafetyStandard.setDel(0);
@@ -176,7 +174,7 @@ public class TSafetyStandardController extends BaseController {
         Result result = new ResultImpl();
 
         try {
-            if(null==tSafetyStandard.getOder()){
+            if (null == tSafetyStandard.getOder()) {
                 tSafetyStandard.setOder(0);
             }
             tSafetyStandardMapper.updateTSafetyStandard(tSafetyStandard);
@@ -220,20 +218,21 @@ public class TSafetyStandardController extends BaseController {
         }
     }
 
-  
+
     /**
      * 富文本内容
+     *
      * @param safetyStandardlistId
      * @param type
      * @param model
      * @return
      */
-    @RequestMapping(value="tab-richtext")
-    public String  jumpTabRichtext(Integer safetyStandardlistId , Integer type,Model model){
+    @RequestMapping(value = "tab-richtext")
+    public String jumpTabRichtext(Integer safetyStandardlistId, Integer type, Model model) {
         TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
-        model.addAttribute("type",type);
-        model.addAttribute("safetyStandardlistId",safetyStandardlistId);
-        model.addAttribute("item",TSafetyStandard);
+        model.addAttribute("type", type);
+        model.addAttribute("safetyStandardlistId", safetyStandardlistId);
+        model.addAttribute("item", TSafetyStandard);
         return "company/tables/tab-richtext";
     }
 
@@ -265,6 +264,7 @@ public class TSafetyStandardController extends BaseController {
             // 1. 查询关于该行业的A级要素
             List<TSafety> tSafetyList = tSafetyMapper.selectAByIndustryType(industryType, 0);
             for (TSafety tSafety : tSafetyList) {
+                // A级
                 //先插入A级要素
                 TSafetyStandard tSafetyStandard = new TSafetyStandard();
                 tSafetyStandard.setUserId(user.getId());   // 公司id
@@ -277,6 +277,7 @@ public class TSafetyStandardController extends BaseController {
                 Integer tSafetyStandardId = tSafetyStandard.getId(); // 获取插入的A级要素id
                 List<TSafety> list = tSafetyMapper.selectBBytSafetyStandardId(tSafety.getId());
                 for (TSafety safety : list) {
+                    // B级要素
                     TSafetyStandard tSafetyStandard1 = new TSafetyStandard();
                     tSafetyStandard1.setUserId(user.getId());   // 公司id
                     tSafetyStandard1.setName(safety.getName()); // 要素名称
@@ -286,8 +287,22 @@ public class TSafetyStandardController extends BaseController {
                     tSafetyStandard1.setContent(safety.getContent()); // 内容
                     tSafetyStandard1.setDel(0); //表示未删除
                     tSafetyStandardMapper.insertSelective(tSafetyStandard1);
+                    List<TSafety> tSafetyList2 = tSafetyMapper.selectAByIndustryType(safety.getId(), 0);
+                    for (TSafety tSafety1 : tSafetyList2) {
+                        // c级
+                        if(null!=tSafety1){
+                            TSafetyStandard tSafetyStandard2 = new TSafetyStandard();
+                            tSafetyStandard2.setUserId(user.getId());   // 公司id
+                            tSafetyStandard2.setName(tSafety1.getName()); // 要素名称
+                            tSafetyStandard2.setIndustryId(industryType); // 行业类型 1. 危化 2 工贸
+                            tSafetyStandard2.setParentId(tSafety1.getId()); // 对应的B类要素id
+                            tSafetyStandard2.setFlag(3); // C级要素
+                            tSafetyStandard2.setContent(tSafety1.getContent()); // 内容
+                            tSafetyStandard2.setDel(0); //表示未删除
+                            tSafetyStandardMapper.insertSelective(tSafetyStandard2);
+                        }
+                    }
                 }
-
             }
             result.setStatus("0");
             result.setMess("插入成功");
@@ -314,12 +329,35 @@ public class TSafetyStandardController extends BaseController {
     }
 
     /*
-    * 
-    *
-    * */
+     *
+     * 根据传递的字符串进行切割,然后进行保存
+     * */
+    @RequestMapping("/import-table-string")
+    @ResponseBody
+    public Result importTableString(@RequestBody Map<String,Object> map) {
+        Integer parentId = (Integer) map.get("parentId");         // 父id
+        Integer industryType = (Integer)map.get("industryType");  // 行业id
+        String array  = (String) map.get("StrArray");
+        String[] split = array.split(",");
+        for (int i = 0; i < split.length; i++) {
+            if(!"".equals(split[i])){
+              TSafety tSafety = new TSafety();
+                tSafety.setName(split[i]);
+                tSafety.setDel(0);
+                tSafety.setParentId(parentId);
+                tSafety.setIndustryType(industryType);
 
+              tSafetyMapper.insertTSafety(tSafety);
+            }
+        }
 
+        Result result = new ResultImpl();
 
+        //判断该公司类型
+        result.setStatus("0");
+        result.setMess("保存成功");
+        return result;
+    }
 
     /**
      * 治理方案文件上传的接口
@@ -327,7 +365,7 @@ public class TSafetyStandardController extends BaseController {
     @RequestMapping("B005")
     @SuppressWarnings("all")
     public @ResponseBody
-    AppResult uploadFiles(@RequestParam(value = "file", required = false) MultipartFile file, Integer safetyStandardlistId ,Integer type, HttpServletRequest request) throws IOException {
+    AppResult uploadFiles(@RequestParam(value = "file", required = false) MultipartFile file, Integer safetyStandardlistId, Integer type, HttpServletRequest request) throws IOException {
         AppResult result = new AppResultImpl();
         System.out.println("执行文件上传");
         request.setCharacterEncoding("UTF-8");
@@ -360,14 +398,14 @@ public class TSafetyStandardController extends BaseController {
                     file.transferTo(new File(path));
                     TSafetyStandard one = tSafetyStandardMapper.findOne(safetyStandardlistId);
                     one.setType(type);
-                    String url= "";
+                    String url = "";
                     System.out.println(request.getServerPort());
-                    if(8080==request.getServerPort()){
-                         url =  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-                    }else{
-                         url =  request.getScheme() + "://" + request.getServerName();
+                    if (8080 == request.getServerPort()) {
+                        url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+                    } else {
+                        url = request.getScheme() + "://" + request.getServerName();
                     }
-                    one.setFiles(url+realPath1);
+                    one.setFiles(url + realPath1);
                     tSafetyStandardMapper.updateTSafetyStandard(one);
                 } else {
                     result.setStatus("1");

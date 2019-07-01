@@ -264,8 +264,7 @@ public class TSafetyStandardController extends BaseController {
             // 1. 查询关于该行业的A级要素
             List<TSafety> tSafetyList = tSafetyMapper.selectAByIndustryType(industryType, 0);
             for (TSafety tSafety : tSafetyList) {
-                // A级
-                //先插入A级要素
+                //A级要素
                 TSafetyStandard tSafetyStandard = new TSafetyStandard();
                 tSafetyStandard.setUserId(user.getId());   // 公司id
                 tSafetyStandard.setName(tSafety.getName());// 要素名称
@@ -284,23 +283,22 @@ public class TSafetyStandardController extends BaseController {
                     tSafetyStandard1.setIndustryId(industryType); // 行业类型 1. 危化 2 工贸
                     tSafetyStandard1.setParentId(tSafetyStandardId); // 对应的A类要素id
                     tSafetyStandard1.setFlag(2); // b级要素
-                    tSafetyStandard1.setContent(safety.getContent()); // 内容
                     tSafetyStandard1.setDel(0); //表示未删除
                     tSafetyStandardMapper.insertSelective(tSafetyStandard1);
-                    List<TSafety> tSafetyList2 = tSafetyMapper.selectAByIndustryType(safety.getId(), 0);
+                    Integer id = tSafetyStandard1.getId();
+                    List<TSafety> tSafetyList2 = tSafetyMapper.selectBBytSafetyStandardId(safety.getId());
                     for (TSafety tSafety1 : tSafetyList2) {
-                        // c级
-                        if(null!=tSafety1){
+                        // C级要素
+
                             TSafetyStandard tSafetyStandard2 = new TSafetyStandard();
                             tSafetyStandard2.setUserId(user.getId());   // 公司id
                             tSafetyStandard2.setName(tSafety1.getName()); // 要素名称
                             tSafetyStandard2.setIndustryId(industryType); // 行业类型 1. 危化 2 工贸
-                            tSafetyStandard2.setParentId(tSafety1.getId()); // 对应的B类要素id
+                            tSafetyStandard2.setParentId(id); // 对应的B类要素id
                             tSafetyStandard2.setFlag(3); // C级要素
-                            tSafetyStandard2.setContent(tSafety1.getContent()); // 内容
                             tSafetyStandard2.setDel(0); //表示未删除
                             tSafetyStandardMapper.insertSelective(tSafetyStandard2);
-                        }
+
                     }
                 }
             }

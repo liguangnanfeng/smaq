@@ -6,6 +6,7 @@ package com.spring.web.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.spring.web.BaseController;
+import com.spring.web.dao.HiddenPlanMapper;
 import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.*;
 import com.spring.web.result.AppResult;
@@ -57,6 +58,8 @@ public class CompanyController_cd extends BaseController {
     private TroubleService troubleService;
     @Autowired
     private CgfService cgfService;
+    @Autowired
+    private HiddenPlanMapper hiddenPlanMapper;
 
     /**
      * 修改风险等级
@@ -3296,6 +3299,275 @@ public class CompanyController_cd extends BaseController {
     }
 
     /**
+     * @author     ：小明！！！
+     * @description：隐患排查计划  页面跳转
+     */
+    @RequestMapping(value = "model-list-plan")
+    public String modelListMain(HttpServletRequest request,Model model) {
+        User user = getLoginUser(request);
+
+        List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(user.getId());
+
+        model.addAttribute("list",list);
+
+        return "company/danger/model-list-main";
+    }
+
+
+    /**
+     * @author     ：小明！！！
+     * @description：隐患排查计划  数据添加
+     */
+    @RequestMapping(value = "model-list-save")
+    @ResponseBody
+    public Result modelListMain(HttpServletRequest request,Model model,Integer danger1,Integer danger2,String danger3,Integer danger4,Integer danger5,
+                                String danger6,Integer danger7,Integer danger8,String danger9,Integer danger10,Integer danger11,String danger12,Integer danger13,
+                                Integer danger14,String danger15,Integer danger16,Integer danger17,String danger18,Integer danger19,String danger20,Integer id,Integer dpid) {
+
+        User user = getLoginUser(request);
+        Result result = new ResultImpl();
+        Integer a = null;
+        Integer b = null;
+        // 根据 ID 查询数据信息
+        List<HiddenPlan> hiddenPlan2 = hiddenPlanMapper.selectDpid(dpid);
+        HiddenPlan hiddenPlan1 = new HiddenPlan();
+        if (null == hiddenPlan2 || hiddenPlan2.size() == 0){
+            hiddenPlan1.setUid(user.getId());
+            hiddenPlan1.setDpid(dpid);
+            if (null != danger1 && danger1 != 0){
+                hiddenPlan1.setSyn_month(danger1);
+            }else {
+                hiddenPlan1.setSyn_month(0);
+            }
+            if (null != danger2 &&danger2 != 0){
+                hiddenPlan1.setSyn_year(danger2);
+            }else {
+                hiddenPlan1.setSyn_year(0);
+            }
+            if (null != danger3){
+                hiddenPlan1.setSyn_ratio(danger3);
+            }else {
+                hiddenPlan1.setSyn_ratio("0:0");
+            }
+            if (null != danger4 && danger4 != 0){
+                hiddenPlan1.setEve_month(danger4);
+            }else {
+                hiddenPlan1.setEve_month(0);
+            }
+            if (null != danger5 && danger5 != 0){
+                hiddenPlan1.setEve_year(danger5);
+            }else {
+                hiddenPlan1.setEve_year(0);
+            }
+            if (null != danger6){
+                hiddenPlan1.setEve_ratio(danger6);
+            }else {
+                hiddenPlan1.setEve_ratio("0:0");
+            }
+            if (null != danger7 && danger7 != 0){
+                hiddenPlan1.setReg_month(danger7);
+            }else{
+                hiddenPlan1.setReg_month(0);
+            }
+            if (null != danger8 && danger8 != 0){
+                hiddenPlan1.setReg_year(danger8);
+            }else{
+                hiddenPlan1.setReg_year(0);
+            }
+            if (null != danger9){
+                hiddenPlan1.setReg_ratio(danger9);
+            }else {
+                hiddenPlan1.setReg_ratio("0:0");
+            }
+
+            if (null != danger10 && danger10 != 0){
+                hiddenPlan1.setSea_month(danger10);
+            }else {
+                hiddenPlan1.setSea_month(0);
+            }
+            if (null != danger11 && danger11 != 0){
+                hiddenPlan1.setSea_year(danger11);
+            }else {
+                hiddenPlan1.setSea_year(0);
+            }
+            if (null != danger12){
+                hiddenPlan1.setSea_ratio(danger12);
+            }else{
+                hiddenPlan1.setSea_ratio("0:0");
+            }
+
+            if (null != danger13 && danger13 != 0){
+                hiddenPlan1.setEls_month(danger13);
+            }else{
+                hiddenPlan1.setEls_month(0);
+            }
+            if (null != danger14 && danger14 != 0){
+                hiddenPlan1.setEls_year(danger14);
+            }else{
+                hiddenPlan1.setEls_year(0);
+            }
+            if (null != danger15){
+                hiddenPlan1.setEls_ratio(danger15);
+            }else{
+                hiddenPlan1.setEls_ratio("0:0");
+            }
+
+            if (null != danger16 && danger16 != 0){
+                hiddenPlan1.setBas_month(danger16);
+            }else{
+                hiddenPlan1.setBas_month(0);
+            }
+            if (null != danger17 && danger17 != 0){
+                hiddenPlan1.setBas_year(danger17);
+            }else{
+                hiddenPlan1.setBas_year(0);
+            }
+            if (null != danger18){
+                hiddenPlan1.setBas_ratio(danger18);
+            }else{
+                hiddenPlan1.setBas_ratio("0:0");
+            }
+
+            if (null != danger19 && danger19 != 0){
+                hiddenPlan1.setTotal_count(danger19);
+            }else{
+                hiddenPlan1.setTotal_count(0);
+            }
+            if (null != danger20){
+                hiddenPlan1.setTotal_ratio(danger20);
+            }else{
+                hiddenPlan1.setTotal_ratio("0:0");
+            }
+
+            hiddenPlan1.setCreate_time(new Date());
+            hiddenPlan1.setUpdate_time(new Date());
+            a = hiddenPlanMapper.insert(hiddenPlan1);
+
+        }else {
+            hiddenPlan1.setUid(user.getId());
+            hiddenPlan1.setDpid(dpid);
+            if (null != danger1 && danger1 != 0){
+                hiddenPlan1.setSyn_month(danger1);
+            }else {
+                hiddenPlan1.setSyn_month(hiddenPlan2.get(0).getSyn_month());
+            }
+            if (null != danger2 &&danger2 != 0){
+                hiddenPlan1.setSyn_year(danger2);
+            }else {
+                hiddenPlan1.setSyn_year(hiddenPlan2.get(0).getSyn_year());
+            }
+            if (null != danger3){
+                hiddenPlan1.setSyn_ratio(danger3);
+            }else {
+                hiddenPlan1.setSyn_ratio(hiddenPlan2.get(0).getSyn_ratio());
+            }
+            if (null != danger4 && danger4 != 0){
+                hiddenPlan1.setEve_month(danger4);
+            }else {
+                hiddenPlan1.setEve_month(hiddenPlan2.get(0).getEve_month());
+            }
+            if (null != danger5 && danger5 != 0){
+                hiddenPlan1.setEve_year(danger5);
+            }else {
+                hiddenPlan1.setEve_year(hiddenPlan2.get(0).getEve_year());
+            }
+            if (null != danger6){
+                hiddenPlan1.setEve_ratio(danger6);
+            }else {
+                hiddenPlan1.setEve_ratio(hiddenPlan2.get(0).getEve_ratio());
+            }
+            if (null != danger7 && danger7 != 0){
+                hiddenPlan1.setReg_month(danger7);
+            }else{
+                hiddenPlan1.setReg_month(hiddenPlan2.get(0).getReg_month());
+            }
+            if (null != danger8 && danger8 != 0){
+                hiddenPlan1.setReg_year(danger8);
+            }else{
+                hiddenPlan1.setReg_year(hiddenPlan2.get(0).getReg_year());
+            }
+            if (null != danger9){
+                hiddenPlan1.setReg_ratio(danger9);
+            }else {
+                hiddenPlan1.setReg_ratio(hiddenPlan2.get(0).getReg_ratio());
+            }
+
+            if (null != danger10 && danger10 != 0){
+                hiddenPlan1.setSea_month(danger10);
+            }else {
+                hiddenPlan1.setSea_month(hiddenPlan2.get(0).getSea_month());
+            }
+            if (null != danger11 && danger11 != 0){
+                hiddenPlan1.setSea_year(danger11);
+            }else {
+                hiddenPlan1.setSea_year(hiddenPlan2.get(0).getSea_year());
+            }
+            if (null != danger12){
+                hiddenPlan1.setSea_ratio(danger12);
+            }else{
+                hiddenPlan1.setSea_ratio(hiddenPlan2.get(0).getSea_ratio());
+            }
+
+            if (null != danger13 && danger13 != 0){
+                hiddenPlan1.setEls_month(danger13);
+            }else{
+                hiddenPlan1.setEls_month(hiddenPlan2.get(0).getEls_month());
+            }
+            if (null != danger14 && danger14 != 0){
+                hiddenPlan1.setEls_year(danger14);
+            }else{
+                hiddenPlan1.setEls_year(hiddenPlan2.get(0).getEls_year());
+            }
+            if (null != danger15){
+                hiddenPlan1.setEls_ratio(danger15);
+            }else{
+                hiddenPlan1.setEls_ratio(hiddenPlan2.get(0).getEls_ratio());
+            }
+
+            if (null != danger16 && danger16 != 0){
+                hiddenPlan1.setBas_month(danger16);
+            }else{
+                hiddenPlan1.setBas_month(hiddenPlan2.get(0).getBas_month());
+            }
+            if (null != danger17 && danger17 != 0){
+                hiddenPlan1.setBas_year(danger17);
+            }else{
+                hiddenPlan1.setBas_year(hiddenPlan2.get(0).getBas_year());
+            }
+            if (null != danger18){
+                hiddenPlan1.setBas_ratio(danger18);
+            }else{
+                hiddenPlan1.setBas_ratio(hiddenPlan2.get(0).getBas_ratio());
+            }
+
+            if (null != danger19 && danger19 != 0){
+                hiddenPlan1.setTotal_count(danger19);
+            }else{
+                hiddenPlan1.setTotal_count(hiddenPlan2.get(0).getTotal_count());
+            }
+            if (null != danger20){
+                hiddenPlan1.setTotal_ratio(danger20);
+            }else{
+                hiddenPlan1.setTotal_ratio(hiddenPlan2.get(0).getTotal_ratio());
+            }
+            hiddenPlan1.setCreate_time(new Date());
+            hiddenPlan1.setUpdate_time(new Date());
+            hiddenPlan1.setId(hiddenPlan2.get(0).getId());
+            b = hiddenPlanMapper.updateByPrimaryKey(hiddenPlan1);
+        }
+
+        if ((null != b && b != 0) || null != a && a != 0 ){
+            result.setStatus("0");
+            result.setMess("保存成功");
+        }else {
+            result.setStatus("1");
+            result.setMess("保存失败，请检查数据！！！");
+        }
+        return result;
+    }
+
+
+    /**
      * TODO 隐患排查治理板块 => 检查设置实施中首页表显示车间
      * <p>
      * 是根据conpanyManual这张表中的数据车间数据进行查询
@@ -3385,6 +3657,10 @@ public class CompanyController_cd extends BaseController {
         String x = DateFormatUtils.format(d, "yyyy-MM-dd");
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
         model.addAttribute("t", d.getTime());
+
+        List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(user.getId());
+
+        model.addAttribute("list",list);
 
         return "company/danger/model-list-main";
 

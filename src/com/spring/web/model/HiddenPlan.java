@@ -12,6 +12,7 @@ public class HiddenPlan {
     private Integer id;
     private Integer uid;
     private Integer dpid;
+
     private Integer syn_month;
     private Integer syn_year;
     private String syn_ratio;

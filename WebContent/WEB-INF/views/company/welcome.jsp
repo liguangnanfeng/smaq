@@ -5,8 +5,8 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="apple-mobile-web-app-capable" content="yes">  
-<meta name="mobile-web-app-capable" content="yes"> 
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="viewport" content="width=1400, initial-scale=1, maximum-scale=1, user-scalable=yes, minimal-ui">
 <%@ include file="/WEB-INF/inc/back-header.inc"%>
 <title>风险分级管控   隐患排查治理智能化平台</title>
@@ -54,8 +54,8 @@ $(function(){
   });
 function openzl(){
   $("#upload-zl").modal("show")}
-  
-  
+
+
 function showping(){
   $("#win-ping").modal("show")}
 </script>
@@ -237,12 +237,12 @@ function showping(){
                     <img alt="" src="${ly }/images/httb10.png"/>
                     <font class="font_tx1 pos-a <c:if test="${count[8] >0}">blink</c:if>">${count[8] }</font>
                     <font class="font_tx2 pos-a">应急预案</font>
-                  </a> 
+                  </a>
                 </div>
             </div>
         </div>
     </div>
-      
+
       <div class="div_tx mt-15">
         <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">隐患排查治理汇总</div>
         <div class="div_hz">
@@ -325,7 +325,7 @@ function showping(){
               <img alt="" src="${ly }/images/fore/atpx4.jpg"/>
               <font class="font_txs2">普天防雷检测</font>
             </a>
-          
+
           </div>
           <div class="tabCon">
              <a class="one_tx2 radius" style="width:23%;margin-left:1%"  data-title="行政许可" data-href="http://223.111.68.8:8008/waoswh1/main1.aspx" onclick="Hui_admin_tab(this)" href="javascript:;" style="margin-left:1%">
@@ -386,7 +386,7 @@ function showping(){
 					<option <c:if test="${c.dlevel == l.name}"> selected</c:if>>${l.name }</option>
 			 		 </c:forEach>
                   </select>
-                </div> 
+                </div>
               </div>
             </div>
             <div class="modal-footer">
@@ -408,7 +408,7 @@ function showping(){
       </a>
     </div>
   </div>
-  
+
   <div class="panel panel-default" style="width:100%;margin-right:10px;float:right;margin-top:15px;">
     <div class="panel-body" style="padding:8px">
       <a class="title_xw div_xinw" data-href="${ly }/fore/notice-list1"  data-title="法律法规标准规范" onclick="Hui_admin_tab(this)" href="javascript:;">
@@ -556,18 +556,18 @@ function change(dlevel){
       }
     });
   }
-  
+
   getCountData();
-  
+
   var intervalIndex = setInterval(function(){
     getCountData();
   },1000*60);
-  
+
       var websocket = null;
       var userno="${loginUserId}";
       //判断当前浏览器是否支持WebSocket
       WEB_SOCKET_SWF_LOCATION = "${ly }/js/plugins/websocket/WebSocketMain.swf";
-      if(window.WebSocket){  
+      if(window.WebSocket){
           websocket = new WebSocket("wss://"+location.hostname+":"+location.port+"/village/websocket/danger/"+userno);
   	}
       else {
@@ -595,11 +595,11 @@ function change(dlevel){
           //alert(event.data);
           //tips_pop(event.data);
         if("" != $.trim(event.data)){
-          
+
         }else{
           getCountData();
-        } 
-          
+        }
+
       }
 
 
@@ -618,6 +618,6 @@ function change(dlevel){
       function closeWebSocket() {
           websocket.close();
       }
-      
+
 </script>
 </html>

@@ -50,6 +50,16 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
+
+    <select id="selectDpid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+        select
+        <include refid="Base_Column_List"/>
+        from hidden_plan
+        where dpid = #{dpid,jdbcType=INTEGER}
+    </select>
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 
         delete from hidden_plan
@@ -336,23 +346,23 @@
 
         update hidden_plan
         set
-        #{uid,jdbcType=INTEGER}, #{dpid,jdbcType=INTEGER},
+        uid = #{uid,jdbcType=INTEGER}, dpid = #{dpid,jdbcType=INTEGER},
 
-        #{syn_month,jdbcType=INTEGER}, #{syn_year,jdbcType=INTEGER}, #{syn_ratio,jdbcType=VARCHAR},
+        syn_month = #{syn_month,jdbcType=INTEGER}, syn_year = #{syn_year,jdbcType=INTEGER}, syn_ratio = #{syn_ratio,jdbcType=VARCHAR},
 
-        #{eve_month,jdbcType=INTEGER}, #{eve_year,jdbcType=INTEGER}, #{eve_ratio,jdbcType=VARCHAR},
+        eve_month = #{eve_month,jdbcType=INTEGER}, eve_year = #{eve_year,jdbcType=INTEGER}, eve_ratio = #{eve_ratio,jdbcType=VARCHAR},
 
-        #{reg_month,jdbcType=INTEGER}, #{reg_year,jdbcType=INTEGER}, #{reg_ratio,jdbcType=VARCHAR},
+        reg_month = #{reg_month,jdbcType=INTEGER}, reg_year = #{reg_year,jdbcType=INTEGER}, reg_ratio = #{reg_ratio,jdbcType=VARCHAR},
 
-        #{sea_month,jdbcType=INTEGER}, #{sea_year,jdbcType=INTEGER}, #{sea_ratio,jdbcType=VARCHAR},
+        sea_month = #{sea_month,jdbcType=INTEGER}, sea_year = #{sea_year,jdbcType=INTEGER}, sea_ratio = #{sea_ratio,jdbcType=VARCHAR},
 
-        #{els_month,jdbcType=INTEGER}, #{els_year,jdbcType=INTEGER}, #{els_ratio,jdbcType=VARCHAR},
+        els_month = #{els_month,jdbcType=INTEGER}, els_year = #{els_year,jdbcType=INTEGER}, els_ratio = #{els_ratio,jdbcType=VARCHAR},
 
-        #{bas_month,jdbcType=INTEGER}, #{bas_year,jdbcType=INTEGER}, #{bas_ratio,jdbcType=VARCHAR},
+        bas_month = #{bas_month,jdbcType=INTEGER}, bas_year = #{bas_year,jdbcType=INTEGER}, bas_ratio = #{bas_ratio,jdbcType=VARCHAR},
 
-        #{total_count,jdbcType=INTEGER}, #{total_ratio,jdbcType=INTEGER}, #{create_time,jdbcType=TIMESTAMP},
+        total_count = #{total_count,jdbcType=INTEGER}, total_ratio = #{total_ratio,jdbcType=VARCHAR}, create_time = #{create_time,jdbcType=TIMESTAMP},
 
-        #{update_time,jdbcType=TIMESTAMP}
+        update_time = #{update_time,jdbcType=TIMESTAMP}
 
         where id = #{id,jdbcType=INTEGER}
     </update>

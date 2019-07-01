@@ -1526,7 +1526,6 @@ public class CompanyController_safety extends BaseController {
             return result;
         }
 
-
         result.setMess("查询成功");
         result.setStatus("0");
         result.setObject(importPhotos);

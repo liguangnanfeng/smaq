@@ -453,4 +453,16 @@
         select name from zzjg_department_tbl where uid=#{id} and level=2 and del=0   and flag=1 order by pid ;
     </select>
 
+
+
+    <select id="selectHiddenPlan"  resultType="java.util.Map" >
+
+      SELECT z1.name,z1.id c,h1.* FROM `zzjg_department_tbl` z1  LEFT JOIN  hidden_plan h1 ON  h1.`dpid` = z1.id  WHERE z1.uid = #{uid} AND z1.level = 1 AND z1.del = 0
+
+    </select>
+
+
+
+
+
 </mapper>

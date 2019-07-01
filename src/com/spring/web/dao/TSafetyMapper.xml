@@ -69,7 +69,7 @@
     </select>
 
     <!--
-        根据A级要素查询对应的B级要素
+        根据parentId查询所有的下级id
     -->
     <select id="selectBBytSafetyStandardId" resultType="com.spring.web.model.TSafety">
         select * from t_safety_tbl where  parentId=#{id} and del =0  order By id asc;

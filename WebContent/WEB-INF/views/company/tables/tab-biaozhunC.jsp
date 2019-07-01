@@ -346,7 +346,7 @@
             data: JSON.stringify({
                 parentId: str,
                 name: $('#trInput').val(),
-				oder:parseInt($('trInput4').val())
+				oder:parseInt($('#trInput4').val())
 
             }),    //参数值
             type: "POST",   //请求方式

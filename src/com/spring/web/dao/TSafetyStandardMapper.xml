@@ -166,7 +166,7 @@
             AND  userId = #{userId,jdbcType=INTEGER}
         </if>
     </where>
-            order by  oder asc;
+            order by  oder asc,id asc;
     </select>
 
     <!--根据id查询单条数据的详细信息-->
@@ -179,7 +179,7 @@
     <select id="findByparentId" resultType="com.spring.web.model.TSafetyStandard" parameterType="Integer">
         select
         <include refid="Base_Column_List"/>
-        from t_safety_standard_tbl where parentId=#{id}  order by  oder asc;
+        from t_safety_standard_tbl where parentId=#{id}  order by  oder asc,id asc;
 
     </select>
 

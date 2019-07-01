@@ -152,7 +152,7 @@
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>安全生产标准化</span>
-    <span class="c-gray en">&gt;</span><span>安全生产管理档案</span>
+<!--     <span class="c-gray en">&gt;</span><span>安全生产管理档案</span> -->
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
        href="javascript:location.replace(location.href);" title="刷新">
         <i class="Hui-iconfont">&#xe68f;</i>
@@ -186,7 +186,7 @@
 
 
         <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
-        <a href="#" class="btn btn-success radius" onClick=" show_tab('详情清单', '${ly}/api/safety_Standard/findAll?parendId=0&flag=1')">返回</a>
+        <a href="#" class="btn btn-success radius" onClick=" show_tab('安全标准化', '${ly}/api/safety_Standard/findAll?parendId=0&flag=1')">返回</a>
     </div>
     <div class="mt-20 my_flex f_j_c f_wrap" style="width:100%;">
         <%--        <table class="table table-border table-bordered table-bg table-hover table-sort">--%>
@@ -215,11 +215,11 @@
         <c:forEach items="${list }" varStatus="index" var="t">
             <div class="item_container">
                 <div class="item_content my_flex f_r f_j_c f_z_c"
-                     onClick=" show_tab('C级元素', '${ly}/api/safety_Standard/tab-biaozhunC?safetyStandardlistId=${t.id}');"
+                     onClick=" show_tab('安全标准化', '${ly}/api/safety_Standard/tab-biaozhunC?safetyStandardlistId=${t.id}');"
                 >
                     <h5>${t.name }</h5>
                 </div>
-                <span class="my_span"><a onclick="edit('${t.id}','${t.name }','${t.oder}')">编辑</a><a onclick="tip('${t.id}')">删除</a></span>
+                <span class="my_span"><a onclick="edit('${t.id}','${t.name }','${t.oder}')">操作</a><a onclick="tip('${t.id}')">删除</a></span>
             </div>
         </c:forEach>
     </div>

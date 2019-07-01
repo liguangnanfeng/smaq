@@ -271,7 +271,8 @@ public class TSafetyStandardController extends BaseController {
                 tSafetyStandard.setDel(0); //表示未删除
                 tSafetyStandard.setIndustryId(industryType); // 行业类型 1. 危化  2. 工贸
                 tSafetyStandard.setFlag(1); // A级要素
-                tSafetyStandard.setParentId(0);// 表示未删除
+                tSafetyStandard.setParentId(0);// 父id
+                tSafetyStandard.setOder(0);
                 tSafetyStandardMapper.insertSelective(tSafetyStandard);
                 Integer tSafetyStandardId = tSafetyStandard.getId(); // 获取插入的A级要素id
                 List<TSafety> list = tSafetyMapper.selectBBytSafetyStandardId(tSafety.getId());
@@ -284,20 +285,22 @@ public class TSafetyStandardController extends BaseController {
                     tSafetyStandard1.setParentId(tSafetyStandardId); // 对应的A类要素id
                     tSafetyStandard1.setFlag(2); // b级要素
                     tSafetyStandard1.setDel(0); //表示未删除
+                    tSafetyStandard1.setOder(0);
                     tSafetyStandardMapper.insertSelective(tSafetyStandard1);
                     Integer id = tSafetyStandard1.getId();
                     List<TSafety> tSafetyList2 = tSafetyMapper.selectBBytSafetyStandardId(safety.getId());
                     for (TSafety tSafety1 : tSafetyList2) {
                         // C级要素
 
-                            TSafetyStandard tSafetyStandard2 = new TSafetyStandard();
-                            tSafetyStandard2.setUserId(user.getId());   // 公司id
-                            tSafetyStandard2.setName(tSafety1.getName()); // 要素名称
-                            tSafetyStandard2.setIndustryId(industryType); // 行业类型 1. 危化 2 工贸
-                            tSafetyStandard2.setParentId(id); // 对应的B类要素id
-                            tSafetyStandard2.setFlag(3); // C级要素
-                            tSafetyStandard2.setDel(0); //表示未删除
-                            tSafetyStandardMapper.insertSelective(tSafetyStandard2);
+                        TSafetyStandard tSafetyStandard2 = new TSafetyStandard();
+                        tSafetyStandard2.setUserId(user.getId());   // 公司id
+                        tSafetyStandard2.setName(tSafety1.getName()); // 要素名称
+                        tSafetyStandard2.setIndustryId(industryType); // 行业类型 1. 危化 2 工贸
+                        tSafetyStandard2.setParentId(id); // 对应的B类要素id
+                        tSafetyStandard2.setFlag(3); // C级要素
+                        tSafetyStandard2.setDel(0); //表示未删除
+                        tSafetyStandard2.setOder(0);
+                        tSafetyStandardMapper.insertSelective(tSafetyStandard2);
 
                     }
                 }
@@ -332,20 +335,20 @@ public class TSafetyStandardController extends BaseController {
      * */
     @RequestMapping("/import-table-string")
     @ResponseBody
-    public Result importTableString(@RequestBody Map<String,Object> map) {
+    public Result importTableString(@RequestBody Map<String, Object> map) {
         Integer parentId = (Integer) map.get("parentId");         // 父id
-        Integer industryType = (Integer)map.get("industryType");  // 行业id
-        String array  = (String) map.get("StrArray");
+        Integer industryType = (Integer) map.get("industryType");  // 行业id
+        String array = (String) map.get("StrArray");
         String[] split = array.split(",");
         for (int i = 0; i < split.length; i++) {
-            if(!"".equals(split[i])){
-              TSafety tSafety = new TSafety();
+            if (!"".equals(split[i])) {
+                TSafety tSafety = new TSafety();
                 tSafety.setName(split[i]);
                 tSafety.setDel(0);
                 tSafety.setParentId(parentId);
                 tSafety.setIndustryType(industryType);
 
-              tSafetyMapper.insertTSafety(tSafety);
+                tSafetyMapper.insertTSafety(tSafety);
             }
         }
 

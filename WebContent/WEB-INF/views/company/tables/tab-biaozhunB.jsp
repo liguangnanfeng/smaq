@@ -219,7 +219,7 @@
                 >
                     <h5>${t.name }</h5>
                 </div>
-                <span class="my_span"><a onclick="edit('${t.id}','${t.name }','${t.oder}')">编辑</a><a onclick="del('${t.id}')">删除</a></span>
+                <span class="my_span"><a onclick="edit('${t.id}','${t.name }','${t.oder}')">编辑</a><a onclick="tip('${t.id}')">删除</a></span>
             </div>
         </c:forEach>
     </div>
@@ -385,6 +385,17 @@
                 }
 
             }
+        });
+    }
+
+    //提示删除
+    function tip(id){
+        layer.confirm('删除后将无法恢复,确认删除？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            del(id)
+        }, function(){
+            return
         });
     }
 

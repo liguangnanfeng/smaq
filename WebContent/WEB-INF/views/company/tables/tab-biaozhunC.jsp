@@ -203,7 +203,7 @@
                             <td>
                                 <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('详情清单', '${ly}/api/safety_Standard/findOne?safetyStandardlistId=${t.id}')" href="javascript:;">查看详情</a>
                                 <a style="text-decoration:none;margin-left: 5px" onclick="edit('${t.id}','${t.name }','${t.oder}')" href="javascript:;">编辑</a>
-                                <a style="text-decoration:none;margin-left: 5px" onclick="del('${t.id}')" href="javascript:;">删除</a>
+                                <a style="text-decoration:none;margin-left: 5px" onclick="tip('${t.id}')" href="javascript:;">删除</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -387,6 +387,15 @@
         });
     }
 
+    function tip(id){
+        layer.confirm('删除后将无法恢复,确认删除？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            del(id)
+        }, function(){
+            return
+        });
+    }
 
     /*删除*/
     function del(id) {

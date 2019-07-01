@@ -63,7 +63,8 @@
                 del,
             </if>
             <if test="oder != null">
-                oder,
+              
+                oder
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -101,7 +102,8 @@
                 #{del,jdbcType=INTEGER},
             </if>
             <if test="oder != null">
-                #{oder,jdbcType=INTEGER},
+               
+                #{oder,jdbcType=INTEGER}
             </if>
         </trim>
     </insert>
@@ -141,7 +143,8 @@
                 del=#{del,jdbcType=INTEGER},
             </if>
             <if test="oder != null">
-                del=#{oder,jdbcType=INTEGER},
+               
+                oder=#{oder,jdbcType=INTEGER},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -152,7 +155,6 @@
         <include refid="Base_Column_List"/>
         from t_safety_standard_tbl
         <where>
-
         <if test="flag != null">
            flag=#{flag,jdbcType=INTEGER}
         </if>
@@ -166,7 +168,8 @@
             AND  userId = #{userId,jdbcType=INTEGER}
         </if>
     </where>
-            order by  oder asc;
+          
+            order by  oder asc,id asc;
     </select>
 
     <!--根据id查询单条数据的详细信息-->
@@ -179,8 +182,8 @@
     <select id="findByparentId" resultType="com.spring.web.model.TSafetyStandard" parameterType="Integer">
         select
         <include refid="Base_Column_List"/>
-        from t_safety_standard_tbl where parentId=#{id}  order by  oder asc;
-
+      
+        from t_safety_standard_tbl where parentId=#{id}  order by  oder asc,id asc;
     </select>
 
     <select id="deleteTSafetyStandard" parameterType="Integer">

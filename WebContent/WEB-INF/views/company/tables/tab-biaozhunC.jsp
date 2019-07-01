@@ -202,7 +202,7 @@
                             <td>  <h5>${t.name }</h5></td>
                             <td>
                                 <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('详情清单', '${ly}/api/safety_Standard/findOne?safetyStandardlistId=${t.id}')" href="javascript:;">查看详情</a>
-                                <a style="text-decoration:none;margin-left: 5px" onclick="edit('${t.id}','${t.name }')" href="javascript:;">编辑</a>
+                                <a style="text-decoration:none;margin-left: 5px" onclick="edit('${t.id}','${t.name }','${t.oder}')" href="javascript:;">编辑</a>
                                 <a style="text-decoration:none;margin-left: 5px" onclick="del('${t.id}')" href="javascript:;">删除</a>
                             </td>
                         </tr>
@@ -346,7 +346,7 @@
             data: JSON.stringify({
                 parentId: str,
                 name: $('#trInput').val(),
-				oder:parseInt($('trInput4').val())
+				oder:parseInt($('#trInput4').val())
 
             }),    //参数值
             type: "POST",   //请求方式
@@ -370,7 +370,7 @@
                 parentId: str,
                 id:p_id,
                 name: $('#trInput2').val(),
-				oder:parseInt($('trInput3').val())
+				oder:parseInt($('#trInput3').val())
             }),
             type: "POST",   //请求方式
             dataType: 'json', //返回值类型 一般设置为json

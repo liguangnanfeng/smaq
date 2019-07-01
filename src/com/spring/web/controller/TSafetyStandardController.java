@@ -55,7 +55,6 @@ public class TSafetyStandardController extends BaseController {
         map.put("userId", user.getId());
         map.put("parentId", parendId);
         map.put("flag", flag);
-        map.put("sort", sort);
 
         List<TSafetyStandard> TSafetyStandardlist = tSafetyStandardMapper.findAll(map);
 
@@ -313,6 +312,13 @@ public class TSafetyStandardController extends BaseController {
         result.setObject(tSafety.getId());
         return result;
     }
+
+    /*
+    * 
+    *
+    * */
+
+
 
 
     /**

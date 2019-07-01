@@ -162,18 +162,18 @@
     <div class="text-c">
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <c:if test="${sort==1}">
+       <!--  <c:if test="${sort==1}">
             <button onClick="location.href = '${ly}/api/safety_Standard/findAll?parendId=0&flag=1&sort=2'"
-
+        
                     class="btn btn-success radius" title="顺序" type="button" style="padding: 0 50px;">顺序
             </button>
         </c:if>
         <c:if test="${sort==2}">
             <button onClick="location.href = '${ly}/api/safety_Standard/findAll?parendId=0&flag=1&sort=1'"
-
+        
                     class="btn btn-success radius" title="顺序" type="button" style="padding: 0 50px;">顺序
             </button>
-        </c:if>
+        </c:if> -->
 
         <%--        <button onClick="location.href = '${ly}/api/safety_Standard/findAll?parendId=0&flag=1&sort=1'"--%>
         <%--                class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">添加--%>
@@ -181,10 +181,9 @@
         <button onClick="addNew()"
                 class="btn btn-success radius" title="添加" type="button" style="padding: 0 50px;">添加
         </button>
-
-<%--        <button onClick="daoru()"--%>
-<%--                class="btn btn-success radius" title="一键导入" type="button" style="padding: 0 50px;">一键导入--%>
-<%--        </button>--%>
+<button onClick="daoru()"
+               class="btn btn-success radius" title="一键导入" type="button" style="padding: 0 50px;">一键导入
+        </button>
 
         <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
     </div>
@@ -219,7 +218,7 @@
                     <h5>${t.name }</h5>
                 </div>
          
-                <span class="my_span"><a onclick="edit('${t.id}','${t.name }')">编辑</a><a onclick="del('${t.id}')">删除</a></span>
+                <span class="my_span"><a onclick="edit('${t.id}','${t.name }','${t.oder}')">编辑</a><a onclick="del('${t.id}')">删除</a></span>
             </div>
         </c:forEach>
     </div>
@@ -237,13 +236,22 @@
                 <div class="modal-body" style="height: 200px; overflow-y: auto">
                     <div class="form form-horizontal">
                         <div class="row cl dq">
-                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>名称
                                 :</label>
                             <div class="formControls col-xs-5 col-sm-5">
                            
-                                                       <%--         <input class="input-text" type="text" name="" id="trInput"
-                                                                       style="width:150px">--%>
-                                <textarea id="trInput" cols="6" rows="3" style="width: 300px;padding:5px"></textarea>
+                                  <input class="input-text" type="text" name="" id="trInput" style="width:300px">
+                               <!--  <textarea id="trInput" cols="6" rows="3" style="width: 300px;padding:5px"></textarea> -->
+                            </div>
+
+                        </div>
+
+						<div class="row cl dq">
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>排序(输入数字)
+                                :</label>
+                            <div class="formControls col-xs-5 col-sm-5">
+                                <input class="input-text" type="text" name="" id="trInput3"  style="width:150px" oninput = "value=value.replace(/[^\d]/g,'')">
+                               <!--  <textarea cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea> -->
                             </div>
 
                         </div>
@@ -273,14 +281,26 @@
                 <div class="modal-body" style="height: 200px; overflow-y: auto">
                     <div class="form form-horizontal">
                         <div class="row cl dq">
-                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>输入
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>名称
                                 :</label>
                             <div class="formControls col-xs-5 col-sm-5">
-                              
-                                <textarea   cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea>
+                               <input class="input-text" type="text" name="" id="trInput2" style="width:300px">
+                               <!--  <textarea   cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea> -->
                             </div>
 
                         </div>
+
+						<div class="row cl dq">
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>排序(输入数字)
+                                :</label>
+                            <div class="formControls col-xs-5 col-sm-5">
+                                <input class="input-text" type="text" name="" id="trInput4"  style="width:150px" oninput = "value=value.replace(/[^\d]/g,'')">
+                               <!--  <textarea cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea> -->
+                            </div>
+
+                        </div>
+
+
                         <div class="row">
                             <div class="col-xs-3 col-sm-3 col-xs-offset-8 col-sm-offset-8">
                                 <button class="btn radius btn-primary size-S" onclick="queren2()">
@@ -309,13 +329,15 @@
 
 
     function addNew() {
+		$('#trInput3').val(0);
         $("#modal-plan2").modal("show");
     }
 
-    function edit(id,name) {
+    function edit(id,name,oder) {
         p_name = name ;
         p_id = parseInt(id);
         $('#trInput2').val(name);
+		$('#trInput4').val(oder);
         $("#modal-plan3").modal("show");
     }
 
@@ -326,7 +348,8 @@
             url: getRootPath() + "/api/safety_Standard/save",    //请求的url地址 
             data: JSON.stringify({
                 parentId: str,
-                name: $('#trInput').val()
+                name: $('#trInput').val(),
+				oder:parseInt($('#trInput3').val())
             }),    //参数值
             type: "POST",   //请求方式
             dataType: 'json', //返回值类型 一般设置为json
@@ -348,7 +371,8 @@
             data: JSON.stringify({          //参数值
                 parentId: str,
                 id:p_id,
-                name: $('#trInput2').val()
+                name: $('#trInput2').val(),
+				oder:parseInt($('#trInput4').val())
             }),    
             type: "POST",   //请求方式
             dataType: 'json', //返回值类型 一般设置为json

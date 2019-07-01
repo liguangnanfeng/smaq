@@ -286,10 +286,10 @@ public class TSafetyStandardController extends BaseController {
                     tSafetyStandard1.setDel(0); //表示未删除
                     tSafetyStandardMapper.insertSelective(tSafetyStandard1);
                     Integer id = tSafetyStandard1.getId();
-                    List<TSafety> tSafetyList2 = tSafetyMapper.selectAByIndustryType(id, 0);
+                    List<TSafety> tSafetyList2 = tSafetyMapper.selectBBytSafetyStandardId(safety.getId());
                     for (TSafety tSafety1 : tSafetyList2) {
                         // C级要素
-                        if(null!=tSafety1){
+
                             TSafetyStandard tSafetyStandard2 = new TSafetyStandard();
                             tSafetyStandard2.setUserId(user.getId());   // 公司id
                             tSafetyStandard2.setName(tSafety1.getName()); // 要素名称
@@ -298,7 +298,7 @@ public class TSafetyStandardController extends BaseController {
                             tSafetyStandard2.setFlag(3); // C级要素
                             tSafetyStandard2.setDel(0); //表示未删除
                             tSafetyStandardMapper.insertSelective(tSafetyStandard2);
-                        }
+
                     }
                 }
             }

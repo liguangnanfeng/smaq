@@ -396,7 +396,6 @@
             type: "POST",   //请求方式
             dataType: 'json', //返回值类型 一般设置为json
             success: function (res) {
-
                layer.msg(res.mess);
                 location.reload();
             }
@@ -412,8 +411,7 @@
              return
          });
      }
-
-
+    
     /*删除*/
     function del(id) {
         $.ajax({

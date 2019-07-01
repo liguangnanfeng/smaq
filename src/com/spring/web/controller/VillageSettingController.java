@@ -529,11 +529,13 @@ public class VillageSettingController extends BaseController{
     
     @RequestMapping("company/zdlist")
     public String zdlist(HttpServletRequest request,Model model,Integer yzz){
+
     	model.addAttribute("yzz", yzz);
         String companyId = request.getParameter("companyId");
         model.addAttribute("companyId", companyId);
         model.addAttribute("typeList", tWarnmsgMapper.getSensorTypes(3));
         model.addAttribute("from", request.getParameter("from"));
+
         return "village/newWarn/zdlist";
     }
     

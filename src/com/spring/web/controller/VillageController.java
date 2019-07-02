@@ -3334,7 +3334,7 @@ public class VillageController extends BaseController {
     }
 
     /**
-     * TODO 根据高危的行业id查询检查项
+     * TODO 根据高危的行业id查询检查项(废弃)
      */
     @RequestMapping("findGaoWeiAndJiChu")
     public @ResponseBody

@@ -2913,29 +2913,6 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("industryType", industryType);
         return "company/danger/model-list";
     }
-//    /**
-//     * 检查设置与实施-企业自查1
-//     */
-//    @RequestMapping(value = "model-list-cx")
-//    public String modelList1(Integer type, Integer flag, String title, Integer industryType, HttpServletRequest request,
-//            Model model) throws Exception {
-//        User user = getLoginUser(request); 
-//        
-//        model.addAttribute("type", type);
-//        model.addAttribute("flag", flag);
-//        model.addAttribute("industryType", industryType);
-//        
-//        Map<String, Object> m = new HashMap<String, Object>();
-//        //log.error("type数据类型："+type.getClass());
-//        m.put("type", type);
-//        m.put("title", title);
-//        m.put("flag", flag);
-//        m.put("industryType", industryType);
-//        setUserId(user, m);    
-//        model.addAttribute("list", tModelMapper.selectByMap(m));
-//
-//        return "company/danger/model-list-cx";
-//    }
 
     /**
      *
@@ -2958,13 +2935,10 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("industryType", industryType);
         model.addAttribute("template", template);
         Map<String, Object> m = new HashMap<String, Object>();
-        //log.error("type数据类型："+type.getClass());
         m.put("title", title);
         m.put("flag", flag);
         m.put("industryType", industryType);
         setUserId(user, m);
-        //log.error("m："+m.toString());
-        //log.error("定期检查表type=2："+tModelMapper.selectByMap(m).get(0));
         List<Map<String, Object>> list = null;
         if (null != template && template == 1) { //综合检查表
             m.remove("type");
@@ -2981,47 +2955,21 @@ public class CompanyController_cd extends BaseController {
         /*
          * 监管行业不能为空
          */
-        //log.error("监管行业："+ company.getIndustry());
         if (null != company.getHazard()) {
             if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危化生产、使用）")) {//显示效果需要
-                //log.error("监管行业："+company.getIndustry());
-                //log.error("是否构成重大危险源、1是："+company.getHazard());
                 model.addAttribute("rjcbxs", 1);
 
             }
         }
-        /*if (type == 2) {
-
-            if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危化生产、使用）")) {//取数据
-                //log.error("查询出日检查表和定期检查表检查周期不为1表单！");
-                List<Map<String, Object>> lista = tModelMapper.selectByMap2(m);//定期检查表——检查周期不为1
-                Integer type9 = 9;
-                m.put("type", type9);
-                List<Map<String, Object>> listb = tModelMapper.selectByMap2(m);
-                lista.addAll(listb);
-                model.addAttribute("list", lista);
-                return "company/danger/model-list-cx";
-
-            } else {
-                //查询日检查表 wz 190109
-                Integer type9 = 9;
-                m.put("type", type9);
-                List<Map<String, Object>> list1 = tModelMapper.selectByMap(m);
-                list.addAll(list1);
-            }
-        }*/
         model.addAttribute("list", list);
-
-        // -------------------------------检查记录-----------------------------------
-        Map<String, Object> m1 = new HashMap<String, Object>();
-
+        // -------------------------------检查记录,(已废弃不需要)-----------------------------------
+       /* Map<String, Object> m1 = new HashMap<String, Object>();
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
         }
         if (user.getUserType() == 6) {//区
             model.addAttribute("townL", townMapper.selectListByDistrict(m));
         }
-
         // 向map集合进行存储
         m1.put("flag", flag);
         m1.put("title", title);
@@ -3030,7 +2978,6 @@ public class CompanyController_cd extends BaseController {
         }else{
             m1.put("status", status);
         }
-
         // 进行判断
         if (setUserId(user, m1)) {
             clearVillageTown(m1);
@@ -3042,7 +2989,7 @@ public class CompanyController_cd extends BaseController {
                 sum += Integer.parseInt(String.valueOf(list1.get(i).get("c")));
             }
             model.addAttribute("sum", sum);
-        }
+        }*/
 
         model.addAttribute("companyName", user.getUserName());
         model.addAttribute("title", title);
@@ -3051,7 +2998,6 @@ public class CompanyController_cd extends BaseController {
         String x = DateFormatUtils.format(d, "yyyy-MM-dd");
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
         model.addAttribute("t", d.getTime());
-
 
         return "company/danger/model-list-cx";
     }

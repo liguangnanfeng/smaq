@@ -185,7 +185,6 @@ public class VillageController extends BaseController {
                 dL.set(0, (String) dL.get(0) + "(" + x + ")");
             }
         }
-
         result.setMap("dataD", dataD);
 
         //监管行业汇总
@@ -1455,9 +1454,7 @@ public class VillageController extends BaseController {
 
         model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
         return "village/danger/plan-next2";
-
     }
-
 
     /**
      * TODO 生成检查表数据

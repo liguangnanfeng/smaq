@@ -106,4 +106,6 @@ public interface ZzjgPersonnelMapper {
     boolean updateIds(Integer id);
 
     ZzjgPersonnel selectNameDid(@Param("did") Integer did);
+
+    List<ZzjgPersonnel> selectDpidAndDid(@Param("did") Integer did,@Param("dpid") Integer dpid);
 }

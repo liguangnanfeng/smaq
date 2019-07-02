@@ -1169,6 +1169,13 @@ public class CompanyController_safety extends BaseController {
             }*/
             m.put("flag", "1");
             List<Map<String, Object>> acL = this.aCompanyManualMapper.selectByMap(m);
+            Integer indus = 0;
+            if (company.getIndustry().contains("化工")){
+                indus = 1;
+            }else {
+                indus = 2;
+            }
+            model.addAttribute("indus",indus);
             model.addAttribute("list", acL);
             model.addAttribute("depL", this.zzjgDepartmentMapper.selectLevel2ByUid(user.getId()));
             model.addAttribute("shL", this.aGwyjShMapper.selectAll());
@@ -1748,6 +1755,13 @@ public class CompanyController_safety extends BaseController {
             m.put("flag", "3");
             List<Map<String, Object>> acL = this.aCompanyManualMapper.selectByFlag3(m);
             model.addAttribute("list", acL);
+            Integer indus = 0;
+            if (company.getIndustry().contains("化工")){
+                indus = 1;
+            }else {
+                indus = 2;
+            }
+            model.addAttribute("indus",indus);
             return "company/safety-system/assess6";
         }
     }
@@ -2345,6 +2359,13 @@ public class CompanyController_safety extends BaseController {
             return "company/safety-system/type";
         }
         List<ACompanyManual> aCompanyManualList = aCompanyManualMapper.findALLsss("2", user.getId());
+        Integer indus = 0;
+        if (company.getIndustry().contains("化工")){
+            indus = 1;
+        }else {
+            indus = 2;
+        }
+        model.addAttribute("indus",indus);
         model.addAttribute("industry",company.getIndustry());
         model.addAttribute("company", company);
         model.addAttribute("list", aCompanyManualList);
@@ -2688,17 +2709,23 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setType(a.getType());
             aCompanyManual.setMeasures(a.getMeasures());
             aCompanyManual.setRiskId(a.getId());
+
+
             // 根据公司 ID  和 车间 ID 查询部门名称为：负责人的名称
             if (Integer.parseInt(a.getFlag()) == 2 && a.getLevel().equals("红色")){
                 List<Company> companyList = companyMapper.selectByPrimaryKeys(user.getId());
                 aCompanyManual.setFjgkfzr(companyList.get(0).getCharge()+"-"+companyList.get(0).getChargeContact());
                 aCompanyManual.setGkzt("公司");
-            }else {
+            }else if (null == a.getFlag() || Integer.parseInt(a.getFlag()) != 2){
                 List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),depId,"负责人",2);
                 if (zzjgDepartment1.size() != 0){
                     // 根据 ID 查询 name
-                    ZzjgPersonnel zzjgPersonnel1 = zzjgPersonnelMapper.selectNameDid(zzjgDepartment1.get(0).getId());
-                    aCompanyManual.setFjgkfzr(zzjgPersonnel1.getName()+"-"+zzjgPersonnel1.getMobile());
+                    List<ZzjgPersonnel> zzjgPersonnel1 = zzjgPersonnelMapper.selectDpidAndDid(zzjgDepartment1.get(0).getId(),depId);
+                    if (null != zzjgPersonnel1 && zzjgPersonnel1.size() != 0){
+                        aCompanyManual.setFjgkfzr(zzjgPersonnel1.get(0).getName()+"-"+zzjgPersonnel1.get(0).getMobile());
+                    }else {
+                        aCompanyManual.setFjgkfzr("");
+                    }
                 }else {
                     aCompanyManual.setFjgkfzr("");
                 }
@@ -2768,8 +2795,12 @@ public class CompanyController_safety extends BaseController {
             List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),depId,"负责人",2);
             if (zzjgDepartment1.size() != 0){
                 // 根据 ID 查询 name
-                ZzjgPersonnel zzjgPersonnel1 = zzjgPersonnelMapper.selectNameDid(zzjgDepartment1.get(0).getId());
-                aCompanyManual.setFjgkfzr(zzjgPersonnel1.getName()+"-"+zzjgPersonnel1.getMobile());
+                List<ZzjgPersonnel> zzjgPersonnel1 = zzjgPersonnelMapper.selectDpidAndDid(zzjgDepartment1.get(0).getId(),depId);
+                if (null != zzjgPersonnel1 && zzjgPersonnel1.size() != 0){
+                    aCompanyManual.setFjgkfzr(zzjgPersonnel1.get(0).getName()+"-"+zzjgPersonnel1.get(0).getMobile());
+                }else {
+                    aCompanyManual.setFjgkfzr("");
+                }
             }else {
                 aCompanyManual.setFjgkfzr("");
             }

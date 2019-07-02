@@ -3588,9 +3588,18 @@ public class CompanyController_cd extends BaseController {
     ) throws ParseException {
         // 获取用户信息
         User user = getLoginUser(request);
-        // 根据用户获取用户信息
-        List<Map<String, Object>> jiChuItem = aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理");
-        List<Map<String, Object>> XianChangItem = aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理");
+
+        Map<String,Object> map1 = new LinkedHashMap<String,Object>(2);
+        map1.put("level1","全公司");
+        map1.put("dmid",1);
+
+        List<Map<String, Object>> jiChuItem = new ArrayList<>();
+        jiChuItem.add(map1);
+        jiChuItem.addAll(aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理"));
+
+        List<Map<String, Object>> XianChangItem = new ArrayList<>();
+        XianChangItem.add(map1);
+        XianChangItem.addAll(aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理"));
 
         for (int i = 0; i < jiChuItem.size(); i++) {
             Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
@@ -3662,10 +3671,10 @@ public class CompanyController_cd extends BaseController {
 
         model.addAttribute("companyName", user.getUserName());
         model.addAttribute("status", status);
-        Date d = new Date();
+       /* Date d = new Date();
         String x = DateFormatUtils.format(d, "yyyy-MM-dd");
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
-        model.addAttribute("t", d.getTime());
+        model.addAttribute("t", d.getTime());*/
 
         List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(user.getId());
 

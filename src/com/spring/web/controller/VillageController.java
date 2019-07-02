@@ -1236,6 +1236,7 @@ public class VillageController extends BaseController {
             }
             model.addAttribute("sum", sum);
         }
+
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
         model.addAttribute("companyName", companyName);

@@ -180,9 +180,7 @@
             }else{
                 var tableName = $('#title').val();
                 window.location.href="${ly}/village/select-all-level1?flag=${flag}&tableName="+tableName+'&checkType='+checkType
-
             }
-
 
         }
 

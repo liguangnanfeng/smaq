@@ -22,7 +22,7 @@ body .dis-ib{margin-right:15px;}
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
     <span class="c-gray en">&gt;</span> <span>${flag==1 ? '隐患排查治理系统' : '行政执法系统'}</span>
     <c:if test="${flag == 1}">
-      <span class="c-gray en">&gt;</span> <span>${dmname}隐患排查记录</span>
+      <span class="c-gray en">&gt;</span> <span>${dmName}隐患排查记录</span>
     </c:if>
     <c:if test="${flag != 1}">
       <span class="c-gray en">&gt;</span> <span>执法记录</span> 
@@ -35,7 +35,7 @@ body .dis-ib{margin-right:15px;}
 
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <span class="l">
-
+       <a href="#" class="btn btn-success radius" onClick=" show_tab('检查设置实施', '${ly}/company/model-list-main?flag=1')">返回</a>
       </span>
       <span class="r">检查总数：<strong>${fn:length(list) }</strong> 条；隐患数量：<strong>${sum}</strong> 条</span>
     </div>

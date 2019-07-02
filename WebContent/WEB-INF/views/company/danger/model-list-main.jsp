@@ -637,8 +637,7 @@
     }
     function szss_list(dmname, industryType,template, flag) {   //点击整改复查实施方法
 
-        var url = '${ly}/company/check-list-szss?dmname='+dmname+'&flag=' + flag + '&industryType=' +industryType+'&template = '+template;
-        console.log(url);
+        var url = '${ly}/company/check-list-szss?dmName='+dmname+'&flag=' + flag + '&industryType=' +industryType+'&template = '+template;
         window.location.href = url;
 
     }

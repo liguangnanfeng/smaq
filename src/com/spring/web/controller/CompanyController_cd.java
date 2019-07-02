@@ -2937,8 +2937,10 @@ public class CompanyController_cd extends BaseController {
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("flag", flag);
-        industryType= Math.abs(industryType);
-        m.put("industryType",industryType);
+        if(null!=industryType){
+            industryType= Math.abs(industryType);
+            m.put("industryType",industryType);
+        }
 
         // 表示是企业自查,根据名称进行查询
         if (flag == 1) {
@@ -3656,14 +3658,14 @@ public class CompanyController_cd extends BaseController {
                 sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
             }
             model.addAttribute("sum", sum);
-        }
+        }*/
 
         model.addAttribute("companyName", user.getUserName());
         model.addAttribute("status", status);
         Date d = new Date();
         String x = DateFormatUtils.format(d, "yyyy-MM-dd");
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
-        model.addAttribute("t", d.getTime());*/
+        model.addAttribute("t", d.getTime());
 
         List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(user.getId());
 

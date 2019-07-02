@@ -335,6 +335,9 @@
             <if test="flag != null">
                 and T1.flag = #{flag}
             </if>
+            <if test="dmName != null">
+                and T1.depart = #{dmName}
+            </if>
             <if test="extime != null">
                 and expect_time is not null and expect_time &lt; #{now1}
             </if>

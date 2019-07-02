@@ -2764,8 +2764,8 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * TODO 查询检查表详情(已修改)(有两种情况)一种是基础检查  一种是现场检查, 是从不同的表中查询出字段的
-     *      只有行政检查和部门抽查才会走这个方法, 就是只有两种情况
-     *      判断是基础还是现场,
+     * 只有行政检查和部门抽查才会走这个方法, 就是只有两种情况
+     * 判断是基础还是现场,
      *
      * @param id    modelId
      * @param model 前端model
@@ -2775,7 +2775,7 @@ public class CompanyController_cd extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "model-show/{id}")
-    public String modelShow(@PathVariable Integer id, Model model, Integer flag, Integer type,HttpServletRequest request) throws Exception {
+    public String modelShow(@PathVariable Integer id, Model model, Integer flag, Integer type, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         TModel tc = tModelMapper.selectByPrimaryKey(id);
         List<TModelPart> partL = tModelPartMapper.selectByModelId(id);
@@ -2796,7 +2796,7 @@ public class CompanyController_cd extends BaseController {
         }
 
         //判断是基础还是现场
-        if(type != null &&tc.getIndustryType()==1){          // 基础检查
+        if (type != null && tc.getIndustryType() == 1) {          // 基础检查
             //保存的就是这个
             List<Map<String, Object>> iteml = new ArrayList<Map<String, Object>>();
             String[] levelsArr = levelIds.toString().split(",");
@@ -2809,7 +2809,7 @@ public class CompanyController_cd extends BaseController {
                     if (null == tLevel) {
                         break;
                     }
-                    a.put("levels",tLevel.getLevel1()+tLevel.getLevel2()+tLevel.getLevel3());
+                    a.put("levels", tLevel.getLevel1() + tLevel.getLevel2() + tLevel.getLevel3());
                     a.put("levelId", Integer.parseInt(levelsArr[i]));
                     a.put("dangerType", tLevel.getType());
                     a.put("factors", tLevel.getFactors());
@@ -2827,7 +2827,7 @@ public class CompanyController_cd extends BaseController {
                     a.put("dangerType", tCheck.getType());
                     a.put("factors", map.get("content"));
                     a.put("measures", map.get("reference"));
-                    a.put("levels",map.get("levels"));
+                    a.put("levels", map.get("levels"));
                     if (null == a.get("measures") || "".equals(a.get("measures"))) {
                         a.put("measures", map.get("content"));
 
@@ -2837,7 +2837,7 @@ public class CompanyController_cd extends BaseController {
                 }
             }
             model.addAttribute("itemL", iteml);
-        }else if(type != null && tc.getIndustryType() == 2){ //现场检查
+        } else if (type != null && tc.getIndustryType() == 2) { //现场检查
             List<Map<String, Object>> iteml = new ArrayList<Map<String, Object>>();
             String[] levelsArr = levelIds.toString().split(",");
 
@@ -2849,7 +2849,7 @@ public class CompanyController_cd extends BaseController {
                     if (null == companyManual) {
                         break;
                     }
-                    a.put("levels",companyManual.getLevel1()+companyManual.getLevel2()+companyManual.getLevel3());
+                    a.put("levels", companyManual.getLevel1() + companyManual.getLevel2() + companyManual.getLevel3());
                     a.put("levelId", Integer.parseInt(levelsArr[i]));
                     a.put("dangerType", companyManual.getType());
                     a.put("factors", companyManual.getFactors());
@@ -2863,7 +2863,7 @@ public class CompanyController_cd extends BaseController {
                 List<Map<String, Object>> maps = tCheckItemMapper.selectByCheckId(tCheck.getId());
                 for (Map<String, Object> map : maps) {
                     Map<String, Object> a = new HashMap<String, Object>();
-                    a.put("levels",map.get("levels"));
+                    a.put("levels", map.get("levels"));
                     a.put("levelId", map.get("level_id"));
                     a.put("dangerType", tCheck.getType());
                     a.put("factors", map.get("content"));
@@ -2879,7 +2879,7 @@ public class CompanyController_cd extends BaseController {
             }
 
             model.addAttribute("itemL", iteml);
-        }else{
+        } else {
             // 高危检查
             model.addAttribute("itemL", tItemMapper.selectByLevelIdsModel(levelIds.toString()));
         }
@@ -2937,10 +2937,55 @@ public class CompanyController_cd extends BaseController {
 //        return "company/danger/model-list-cx";
 //    }
 
+
     /**
+     * TODO 检查设置实施中实施整改按钮中,返回查询记录,可以进行实施复查(2019/7/2 10添加)
      *
+     * @param dmName       部门名称
+     * @param flag         1. 企业自查  2 部门抽查  3 行政检查
+     * @param industryType 1 基础  2 现场
+     * @param template     不了解
+     * @return
+     */
+    @RequestMapping("check-list-szss")
+    public String checkListSzss(String dmName, Integer flag, Integer industryType, Integer template, HttpServletRequest request, Model model, Integer status) {
+
+        User user = getLoginUser(request);
+
+        model.addAttribute("dmName", dmName);
+        model.addAttribute("flag", flag);
+        model.addAttribute("industryType", industryType);
+        model.addAttribute("template", template);
+
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("flag", flag);
+        m.put("industryType", industryType);
+
+        // 表示是企业自查,根据名称进行查询
+        if (flag == 1) {
+        m.put("dmName",dmName);
+        }
+        status = status==null ? 2:status;
+        m.put("status",status);
+        if (setUserId(user, m)) {
+            clearVillageTown(m);
+            List<Map<String, Object>> list1 = tCheckMapper.selectList(m);
+            model.addAttribute("checkList", list1);
+
+            Integer sum = 0;
+            for (int i = 0; i < list1.size(); i++) {
+                sum += Integer.parseInt(String.valueOf(list1.get(i).get("c")));
+            }
+            model.addAttribute("sum", sum);
+        }
+
+        return "company/danger/check-list-szss";
+    }
+
+
+    /**
      * TODO 检查设置与实施
-     *      行政检查/部门抽查
+     * 行政检查/部门抽查
      * <p>
      * <p>
      * 综合检查表(Template 1)
@@ -2950,7 +2995,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "model-list-cx")
     public String modelList1(Integer type, Integer flag, String title, Integer industryType, HttpServletRequest request,
-                             Model model, Integer template,Integer status) throws Exception {
+                             Model model, Integer template, Integer status) throws Exception {
         User user = getLoginUser(request);
 
         model.addAttribute("type", type);
@@ -3013,7 +3058,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("list", list);
 
         // -------------------------------检查记录-----------------------------------
-        Map<String, Object> m1 = new HashMap<String, Object>();
+       /* Map<String, Object> m1 = new HashMap<String, Object>();
 
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
@@ -3042,7 +3087,7 @@ public class CompanyController_cd extends BaseController {
                 sum += Integer.parseInt(String.valueOf(list1.get(i).get("c")));
             }
             model.addAttribute("sum", sum);
-        }
+        }*/
 
         model.addAttribute("companyName", user.getUserName());
         model.addAttribute("title", title);
@@ -3273,7 +3318,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
 
-      
+
         if (user.getUserType() == 5) {
             //企业用户
             return "company/danger/model-list-cx";
@@ -3299,30 +3344,30 @@ public class CompanyController_cd extends BaseController {
     }
 
     /**
-     * @author     ：小明！！！
-     * @description：隐患排查计划  页面跳转
+     * @author ：小明！！！
+     * @description：隐患排查计划 页面跳转
      */
     @RequestMapping(value = "model-list-plan")
-    public String modelListMain(HttpServletRequest request,Model model) {
+    public String modelListMain(HttpServletRequest request, Model model) {
         User user = getLoginUser(request);
 
         List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(user.getId());
 
-        model.addAttribute("list",list);
+        model.addAttribute("list", list);
 
         return "company/danger/model-list-main";
     }
 
 
     /**
-     * @author     ：小明！！！
-     * @description：隐患排查计划  数据添加
+     * @author ：小明！！！
+     * @description：隐患排查计划 数据添加
      */
     @RequestMapping(value = "model-list-save")
     @ResponseBody
-    public Result modelListMain(HttpServletRequest request,Model model,Integer danger1,Integer danger2,String danger3,Integer danger4,Integer danger5,
-                                String danger6,Integer danger7,Integer danger8,String danger9,Integer danger10,Integer danger11,String danger12,Integer danger13,
-                                Integer danger14,String danger15,Integer danger16,Integer danger17,String danger18,Integer danger19,String danger20,Integer id,Integer dpid) {
+    public Result modelListMain(HttpServletRequest request, Model model, Integer danger1, Integer danger2, String danger3, Integer danger4, Integer danger5,
+                                String danger6, Integer danger7, Integer danger8, String danger9, Integer danger10, Integer danger11, String danger12, Integer danger13,
+                                Integer danger14, String danger15, Integer danger16, Integer danger17, String danger18, Integer danger19, String danger20, Integer id, Integer dpid) {
 
         User user = getLoginUser(request);
         Result result = new ResultImpl();
@@ -3331,111 +3376,111 @@ public class CompanyController_cd extends BaseController {
         // 根据 ID 查询数据信息
         List<HiddenPlan> hiddenPlan2 = hiddenPlanMapper.selectDpid(dpid);
         HiddenPlan hiddenPlan1 = new HiddenPlan();
-        if (null == hiddenPlan2 || hiddenPlan2.size() == 0){
+        if (null == hiddenPlan2 || hiddenPlan2.size() == 0) {
             hiddenPlan1.setUid(user.getId());
             hiddenPlan1.setDpid(dpid);
-            if (null != danger1 && danger1 != 0){
+            if (null != danger1 && danger1 != 0) {
                 hiddenPlan1.setSyn_month(danger1);
-            }else {
+            } else {
                 hiddenPlan1.setSyn_month(0);
             }
-            if (null != danger2 &&danger2 != 0){
+            if (null != danger2 && danger2 != 0) {
                 hiddenPlan1.setSyn_year(danger2);
-            }else {
+            } else {
                 hiddenPlan1.setSyn_year(0);
             }
-            if (null != danger3){
+            if (null != danger3) {
                 hiddenPlan1.setSyn_ratio(danger3);
-            }else {
+            } else {
                 hiddenPlan1.setSyn_ratio("0:0");
             }
-            if (null != danger4 && danger4 != 0){
+            if (null != danger4 && danger4 != 0) {
                 hiddenPlan1.setEve_month(danger4);
-            }else {
+            } else {
                 hiddenPlan1.setEve_month(0);
             }
-            if (null != danger5 && danger5 != 0){
+            if (null != danger5 && danger5 != 0) {
                 hiddenPlan1.setEve_year(danger5);
-            }else {
+            } else {
                 hiddenPlan1.setEve_year(0);
             }
-            if (null != danger6){
+            if (null != danger6) {
                 hiddenPlan1.setEve_ratio(danger6);
-            }else {
+            } else {
                 hiddenPlan1.setEve_ratio("0:0");
             }
-            if (null != danger7 && danger7 != 0){
+            if (null != danger7 && danger7 != 0) {
                 hiddenPlan1.setReg_month(danger7);
-            }else{
+            } else {
                 hiddenPlan1.setReg_month(0);
             }
-            if (null != danger8 && danger8 != 0){
+            if (null != danger8 && danger8 != 0) {
                 hiddenPlan1.setReg_year(danger8);
-            }else{
+            } else {
                 hiddenPlan1.setReg_year(0);
             }
-            if (null != danger9){
+            if (null != danger9) {
                 hiddenPlan1.setReg_ratio(danger9);
-            }else {
+            } else {
                 hiddenPlan1.setReg_ratio("0:0");
             }
 
-            if (null != danger10 && danger10 != 0){
+            if (null != danger10 && danger10 != 0) {
                 hiddenPlan1.setSea_month(danger10);
-            }else {
+            } else {
                 hiddenPlan1.setSea_month(0);
             }
-            if (null != danger11 && danger11 != 0){
+            if (null != danger11 && danger11 != 0) {
                 hiddenPlan1.setSea_year(danger11);
-            }else {
+            } else {
                 hiddenPlan1.setSea_year(0);
             }
-            if (null != danger12){
+            if (null != danger12) {
                 hiddenPlan1.setSea_ratio(danger12);
-            }else{
+            } else {
                 hiddenPlan1.setSea_ratio("0:0");
             }
 
-            if (null != danger13 && danger13 != 0){
+            if (null != danger13 && danger13 != 0) {
                 hiddenPlan1.setEls_month(danger13);
-            }else{
+            } else {
                 hiddenPlan1.setEls_month(0);
             }
-            if (null != danger14 && danger14 != 0){
+            if (null != danger14 && danger14 != 0) {
                 hiddenPlan1.setEls_year(danger14);
-            }else{
+            } else {
                 hiddenPlan1.setEls_year(0);
             }
-            if (null != danger15){
+            if (null != danger15) {
                 hiddenPlan1.setEls_ratio(danger15);
-            }else{
+            } else {
                 hiddenPlan1.setEls_ratio("0:0");
             }
 
-            if (null != danger16 && danger16 != 0){
+            if (null != danger16 && danger16 != 0) {
                 hiddenPlan1.setBas_month(danger16);
-            }else{
+            } else {
                 hiddenPlan1.setBas_month(0);
             }
-            if (null != danger17 && danger17 != 0){
+            if (null != danger17 && danger17 != 0) {
                 hiddenPlan1.setBas_year(danger17);
-            }else{
+            } else {
                 hiddenPlan1.setBas_year(0);
             }
-            if (null != danger18){
+            if (null != danger18) {
                 hiddenPlan1.setBas_ratio(danger18);
-            }else{
+            } else {
                 hiddenPlan1.setBas_ratio("0:0");
             }
 
-            if (null != danger19 && danger19 != 0){
+            if (null != danger19 && danger19 != 0) {
                 hiddenPlan1.setTotal_count(danger19);
-            }else{
+            } else {
                 hiddenPlan1.setTotal_count(0);
             }
-            if (null != danger20){
+            if (null != danger20) {
                 hiddenPlan1.setTotal_ratio(danger20);
-            }else{
+            } else {
                 hiddenPlan1.setTotal_ratio("0:0");
             }
 
@@ -3443,111 +3488,111 @@ public class CompanyController_cd extends BaseController {
             hiddenPlan1.setUpdate_time(new Date());
             a = hiddenPlanMapper.insert(hiddenPlan1);
 
-        }else {
+        } else {
             hiddenPlan1.setUid(user.getId());
             hiddenPlan1.setDpid(dpid);
-            if (null != danger1 && danger1 != 0){
+            if (null != danger1 && danger1 != 0) {
                 hiddenPlan1.setSyn_month(danger1);
-            }else {
+            } else {
                 hiddenPlan1.setSyn_month(hiddenPlan2.get(0).getSyn_month());
             }
-            if (null != danger2 &&danger2 != 0){
+            if (null != danger2 && danger2 != 0) {
                 hiddenPlan1.setSyn_year(danger2);
-            }else {
+            } else {
                 hiddenPlan1.setSyn_year(hiddenPlan2.get(0).getSyn_year());
             }
-            if (null != danger3){
+            if (null != danger3) {
                 hiddenPlan1.setSyn_ratio(danger3);
-            }else {
+            } else {
                 hiddenPlan1.setSyn_ratio(hiddenPlan2.get(0).getSyn_ratio());
             }
-            if (null != danger4 && danger4 != 0){
+            if (null != danger4 && danger4 != 0) {
                 hiddenPlan1.setEve_month(danger4);
-            }else {
+            } else {
                 hiddenPlan1.setEve_month(hiddenPlan2.get(0).getEve_month());
             }
-            if (null != danger5 && danger5 != 0){
+            if (null != danger5 && danger5 != 0) {
                 hiddenPlan1.setEve_year(danger5);
-            }else {
+            } else {
                 hiddenPlan1.setEve_year(hiddenPlan2.get(0).getEve_year());
             }
-            if (null != danger6){
+            if (null != danger6) {
                 hiddenPlan1.setEve_ratio(danger6);
-            }else {
+            } else {
                 hiddenPlan1.setEve_ratio(hiddenPlan2.get(0).getEve_ratio());
             }
-            if (null != danger7 && danger7 != 0){
+            if (null != danger7 && danger7 != 0) {
                 hiddenPlan1.setReg_month(danger7);
-            }else{
+            } else {
                 hiddenPlan1.setReg_month(hiddenPlan2.get(0).getReg_month());
             }
-            if (null != danger8 && danger8 != 0){
+            if (null != danger8 && danger8 != 0) {
                 hiddenPlan1.setReg_year(danger8);
-            }else{
+            } else {
                 hiddenPlan1.setReg_year(hiddenPlan2.get(0).getReg_year());
             }
-            if (null != danger9){
+            if (null != danger9) {
                 hiddenPlan1.setReg_ratio(danger9);
-            }else {
+            } else {
                 hiddenPlan1.setReg_ratio(hiddenPlan2.get(0).getReg_ratio());
             }
 
-            if (null != danger10 && danger10 != 0){
+            if (null != danger10 && danger10 != 0) {
                 hiddenPlan1.setSea_month(danger10);
-            }else {
+            } else {
                 hiddenPlan1.setSea_month(hiddenPlan2.get(0).getSea_month());
             }
-            if (null != danger11 && danger11 != 0){
+            if (null != danger11 && danger11 != 0) {
                 hiddenPlan1.setSea_year(danger11);
-            }else {
+            } else {
                 hiddenPlan1.setSea_year(hiddenPlan2.get(0).getSea_year());
             }
-            if (null != danger12){
+            if (null != danger12) {
                 hiddenPlan1.setSea_ratio(danger12);
-            }else{
+            } else {
                 hiddenPlan1.setSea_ratio(hiddenPlan2.get(0).getSea_ratio());
             }
 
-            if (null != danger13 && danger13 != 0){
+            if (null != danger13 && danger13 != 0) {
                 hiddenPlan1.setEls_month(danger13);
-            }else{
+            } else {
                 hiddenPlan1.setEls_month(hiddenPlan2.get(0).getEls_month());
             }
-            if (null != danger14 && danger14 != 0){
+            if (null != danger14 && danger14 != 0) {
                 hiddenPlan1.setEls_year(danger14);
-            }else{
+            } else {
                 hiddenPlan1.setEls_year(hiddenPlan2.get(0).getEls_year());
             }
-            if (null != danger15){
+            if (null != danger15) {
                 hiddenPlan1.setEls_ratio(danger15);
-            }else{
+            } else {
                 hiddenPlan1.setEls_ratio(hiddenPlan2.get(0).getEls_ratio());
             }
 
-            if (null != danger16 && danger16 != 0){
+            if (null != danger16 && danger16 != 0) {
                 hiddenPlan1.setBas_month(danger16);
-            }else{
+            } else {
                 hiddenPlan1.setBas_month(hiddenPlan2.get(0).getBas_month());
             }
-            if (null != danger17 && danger17 != 0){
+            if (null != danger17 && danger17 != 0) {
                 hiddenPlan1.setBas_year(danger17);
-            }else{
+            } else {
                 hiddenPlan1.setBas_year(hiddenPlan2.get(0).getBas_year());
             }
-            if (null != danger18){
+            if (null != danger18) {
                 hiddenPlan1.setBas_ratio(danger18);
-            }else{
+            } else {
                 hiddenPlan1.setBas_ratio(hiddenPlan2.get(0).getBas_ratio());
             }
 
-            if (null != danger19 && danger19 != 0){
+            if (null != danger19 && danger19 != 0) {
                 hiddenPlan1.setTotal_count(danger19);
-            }else{
+            } else {
                 hiddenPlan1.setTotal_count(hiddenPlan2.get(0).getTotal_count());
             }
-            if (null != danger20){
+            if (null != danger20) {
                 hiddenPlan1.setTotal_ratio(danger20);
-            }else{
+            } else {
                 hiddenPlan1.setTotal_ratio(hiddenPlan2.get(0).getTotal_ratio());
             }
             hiddenPlan1.setCreate_time(new Date());
@@ -3556,10 +3601,10 @@ public class CompanyController_cd extends BaseController {
             b = hiddenPlanMapper.updateByPrimaryKey(hiddenPlan1);
         }
 
-        if ((null != b && b != 0) || null != a && a != 0 ){
+        if ((null != b && b != 0) || null != a && a != 0) {
             result.setStatus("0");
             result.setMess("保存成功");
-        }else {
+        } else {
             result.setStatus("1");
             result.setMess("保存失败，请检查数据！！！");
         }
@@ -3575,7 +3620,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "model-list-main")
     public String modelListMain(HttpServletRequest request,
-                                Model model, Integer flag,Integer status
+                                Model model, Integer flag, Integer status
     ) throws ParseException {
         // 获取用户信息
         User user = getLoginUser(request);
@@ -3621,35 +3666,35 @@ public class CompanyController_cd extends BaseController {
 
         // 向map集合进行存储
         m.put("flag", flag);  // 1
-       // m.put("villageId", villageId);  //1
-        if(null==status){
+        // m.put("villageId", villageId);  //1
+        if (null == status) {
             m.put("status", 2); //状态  null
-        }else{
+        } else {
             m.put("status", status);
         }
-            // 基础和现场
-            if (setUserId(user, m)) {
-                clearVillageTown(m);
-                List<Map<String, Object>> list = tCheckMapper.selectList(m);
-                List list1 =new ArrayList();
-                List list2 =new ArrayList();
-                for (Map<String, Object> stringObjectMap : list) {
-                   Integer   industryType = (Integer) stringObjectMap.get("industryType");
-                    if(industryType==1){
-                        list1.add(stringObjectMap);
-                    }else{
-                        list2.add(stringObjectMap);
-                    }
+        // 基础和现场
+        if (setUserId(user, m)) {
+            clearVillageTown(m);
+            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            List list1 = new ArrayList();
+            List list2 = new ArrayList();
+            for (Map<String, Object> stringObjectMap : list) {
+                Integer industryType = (Integer) stringObjectMap.get("industryType");
+                if (industryType == 1) {
+                    list1.add(stringObjectMap);
+                } else {
+                    list2.add(stringObjectMap);
                 }
-                model.addAttribute("list1", list1);
-                model.addAttribute("list2", list2);
-
-                Integer sum = 0;
-                for (int i = 0; i < list.size(); i++) {
-                    sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
-                }
-                model.addAttribute("sum", sum);
             }
+            model.addAttribute("list1", list1);
+            model.addAttribute("list2", list2);
+
+            Integer sum = 0;
+            for (int i = 0; i < list.size(); i++) {
+                sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
+            }
+            model.addAttribute("sum", sum);
+        }
 
         model.addAttribute("companyName", user.getUserName());
         model.addAttribute("status", status);
@@ -3660,7 +3705,7 @@ public class CompanyController_cd extends BaseController {
 
         List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(user.getId());
 
-        model.addAttribute("list",list);
+        model.addAttribute("list", list);
 
         return "company/danger/model-list-main";
 
@@ -3973,7 +4018,7 @@ public class CompanyController_cd extends BaseController {
      * 没有兼容小程序
      */
     @RequestMapping(value = "check-detail")
-    public String checkDetail(Integer id, Model model, Integer jcxq,HttpServletRequest request,Integer flag,Integer number) throws Exception {
+    public String checkDetail(Integer id, Model model, Integer jcxq, HttpServletRequest request, Integer flag, Integer number) throws Exception {
         User loginUser = getLoginUser(request);
         // 根据id查询的是检查表信息
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
@@ -3981,31 +4026,31 @@ public class CompanyController_cd extends BaseController {
         //log.error("检查表type："+type);
         List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(id);
 
-        String name =tc.getDapartContact();
+        String name = tc.getDapartContact();
 
         //设置名称
-        if(null==tc.getDapartContact()||tc.getDapartContact().matches("[0-9]{1,}")||"".equals(name)){
+        if (null == tc.getDapartContact() || tc.getDapartContact().matches("[0-9]{1,}") || "".equals(name)) {
             // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
-                List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId(id);
-                if(null!=integers&&integers.size()>0){
-                    // 这里进行名称的获取,进行全部循环,获取数据的方式,在数据库中进行查询
-                    List<String> list = new ArrayList<String>();
-                    for (Integer integer : integers) {
-                        if(null!=integer){
-                            ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(integer);
-                            if(null!=aCompanyManual&&null!=aCompanyManual.getFjgkfzr()){
-                                list.add(aCompanyManual.getFjgkfzr());
-                            }
+            List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId(id);
+            if (null != integers && integers.size() > 0) {
+                // 这里进行名称的获取,进行全部循环,获取数据的方式,在数据库中进行查询
+                List<String> list = new ArrayList<String>();
+                for (Integer integer : integers) {
+                    if (null != integer) {
+                        ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(integer);
+                        if (null != aCompanyManual && null != aCompanyManual.getFjgkfzr()) {
+                            list.add(aCompanyManual.getFjgkfzr());
                         }
                     }
-                if(list.size()==0){
+                }
+                if (list.size() == 0) {
                     name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
                     tc.setCheckCompany(name);
-                }else{
+                } else {
                     name = list.get(0);
                     tc.setCheckCompany(name);
                 }
-            }else{
+            } else {
                 name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
                 tc.setCheckCompany(name);
             }
@@ -4015,15 +4060,15 @@ public class CompanyController_cd extends BaseController {
         //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
         /*List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(id);*/
         List<Map<String, Object>> iteml = null;
-        if (flag == 1){
-            iteml  = tCheckMapper.selectLevels(id);
-        }else if(flag != 1) {
+        if (flag == 1) {
+            iteml = tCheckMapper.selectLevels(id);
+        } else if (flag != 1) {
             // 根据 ID 查询对应的数据 是 基础 还是 现场
             TCheck tCheck = tCheckMapper.selectByPrimaryKey(id);
-            if (tCheck.getIndustryType() == 1){ // 基础
-                iteml  = tCheckMapper.selectAllLevel(id);
-            }else if (tCheck.getIndustryType() == 2){ // 现场
-                iteml  = tCheckMapper.selectAllDanger(id);
+            if (tCheck.getIndustryType() == 1) { // 基础
+                iteml = tCheckMapper.selectAllLevel(id);
+            } else if (tCheck.getIndustryType() == 2) { // 现场
+                iteml = tCheckMapper.selectAllDanger(id);
             }
         }
 
@@ -4065,21 +4110,21 @@ public class CompanyController_cd extends BaseController {
         }
         //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
         model.addAttribute("check", tc);
-        model.addAttribute("flag",tc.getFlag());
+        model.addAttribute("flag", tc.getFlag());
         model.addAttribute("itemL", iteml);
-        model.addAttribute("user",loginUser);
-        model.addAttribute("number",number);
-        if(null==name||"".equals(name)){
+        model.addAttribute("user", loginUser);
+        model.addAttribute("number", number);
+        if (null == name || "".equals(name)) {
             name = companyMapper.selectByPrimaryKey(loginUser.getId()).getSafety();
         }
-        model.addAttribute("name",name);
+        model.addAttribute("name", name);
         // 根据检查记录的id获取详细的信息
-        if(null!=tc.getLatitude()&&null!=tc.getLongitude()){
-            model.addAttribute("latitude",tc.getLatitude());
-            model.addAttribute("longitude",tc.getLongitude());
-        }else{
-            model.addAttribute("latitude",null);
-            model.addAttribute("longitude",null);
+        if (null != tc.getLatitude() && null != tc.getLongitude()) {
+            model.addAttribute("latitude", tc.getLatitude());
+            model.addAttribute("longitude", tc.getLongitude());
+        } else {
+            model.addAttribute("latitude", null);
+            model.addAttribute("longitude", null);
         }
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
         log.error("整改详情进行显示的条件" + tCheckMapper.selectCompany(id));
@@ -4370,7 +4415,7 @@ public class CompanyController_cd extends BaseController {
      * 没有数据的
      */
     @RequestMapping(value = "recheck-detail")
-    public String recheckDetail(Integer checkId, Model model,Integer flag,Integer number) throws Exception {
+    public String recheckDetail(Integer checkId, Model model, Integer flag, Integer number) throws Exception {
         Integer id = checkId;
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
         List<Map> maps = tCheckItemMapper.selectAllByCheckId(checkId);
@@ -4393,15 +4438,15 @@ public class CompanyController_cd extends BaseController {
                 tRecheckItemMapper.insertSelective(id1);
             }
         }
-        model.addAttribute("number",number);
-        model.addAttribute("flag",flag);
+        model.addAttribute("number", number);
+        model.addAttribute("flag", flag);
         model.addAttribute("check", check);
         model.addAttribute("company", companyMapper.selectByPrimaryKey(Integer.parseInt(String.valueOf(check.get("userId")))));
 
         List<Map<String, Object>> maps1 = tRecheckItemMapper.selectByCheckId(checkId);
         model.addAttribute("recheckList", tRechecks);
         //model.addAttribute("recheckList", maps1);
-        model.addAttribute("itemList",maps1);
+        model.addAttribute("itemList", maps1);
         return "company/danger/check-fudetail";
     }
 
@@ -4443,16 +4488,16 @@ public class CompanyController_cd extends BaseController {
         User user = getLoginUser(request);
 
         Date date = null;
-        if (null==dto.getNextTime()||"".equals(dto.getNextTime())){
+        if (null == dto.getNextTime() || "".equals(dto.getNextTime())) {
             date = new Date();
-        }else{
-            String nextTime =dto.getNextTime();
+        } else {
+            String nextTime = dto.getNextTime();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             date = simpleDateFormat.parse(nextTime);
         }
 
         try {
-            cgfService.recheckSave(dto,date);
+            cgfService.recheckSave(dto, date);
         } catch (Exception e) {
             e.printStackTrace();
             result.setStatus("1");

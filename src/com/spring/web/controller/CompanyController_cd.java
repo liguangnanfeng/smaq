@@ -2944,14 +2944,15 @@ public class CompanyController_cd extends BaseController {
      * @param dmName       部门名称
      * @param flag         1. 企业自查  2 部门抽查  3 行政检查
      * @param industryType 1 基础  2 现场
-     * @param template     不了解
-     * @return
+     * @param template     前端传递字符
+     * @return 速度还是没有发生改变呀,真的好气呀
      */
     @RequestMapping("check-list-szss")
     public String checkListSzss(String dmName, Integer flag, Integer industryType, Integer template, HttpServletRequest request, Model model, Integer status) {
 
         User user = getLoginUser(request);
 
+        model.addAttribute("companyName", user.getUserName());
         model.addAttribute("dmName", dmName);
         model.addAttribute("flag", flag);
         model.addAttribute("industryType", industryType);
@@ -2959,7 +2960,8 @@ public class CompanyController_cd extends BaseController {
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("flag", flag);
-        m.put("industryType", industryType);
+        industryType= Math.abs(industryType);
+        m.put("industryType",industryType);
 
         // 表示是企业自查,根据名称进行查询
         if (flag == 1) {
@@ -2969,12 +2971,25 @@ public class CompanyController_cd extends BaseController {
         m.put("status",status);
         if (setUserId(user, m)) {
             clearVillageTown(m);
-            List<Map<String, Object>> list1 = tCheckMapper.selectList(m);
-            model.addAttribute("checkList", list1);
+            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+
+            if(flag==1){
+                List list1 = new ArrayList();
+                for (Map<String, Object> stringObjectMap : list) {
+                    int industry = (Integer) stringObjectMap.get("industryType");
+                    if (industryType == industry) {
+                        list1.add(stringObjectMap);
+                    }
+                }
+                model.addAttribute("list", list1);
+
+            }else{
+                model.addAttribute("list", list);
+            }
 
             Integer sum = 0;
-            for (int i = 0; i < list1.size(); i++) {
-                sum += Integer.parseInt(String.valueOf(list1.get(i).get("c")));
+            for (int i = 0; i < list.size(); i++) {
+                sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
             }
             model.addAttribute("sum", sum);
         }
@@ -3662,7 +3677,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("flag", flag);
 
         // ----------------------------------检查记录功能----------------------------------------------------------------------------------
-        Map<String, Object> m = new HashMap<String, Object>();
+       /* Map<String, Object> m = new HashMap<String, Object>();
 
         // 向map集合进行存储
         m.put("flag", flag);  // 1
@@ -3701,7 +3716,7 @@ public class CompanyController_cd extends BaseController {
         Date d = new Date();
         String x = DateFormatUtils.format(d, "yyyy-MM-dd");
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
-        model.addAttribute("t", d.getTime());
+        model.addAttribute("t", d.getTime());*/
 
         List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(user.getId());
 
@@ -4931,7 +4946,7 @@ public class CompanyController_cd extends BaseController {
     @RequestMapping("product/lightning-list")
     public String lightningList(Model model, HttpServletRequest request, String project) throws Exception {
         User user = getLoginUser(request);
-        Map<String, Object> m = new HashMap<String, Object>();
+        Map<String, Object> m = new HashMap<String, Object>(16);
         setUserId(user, m);
         m.put("project", project);
         List<Map<String, Object>> list = lightningProtectionMapper.selectList(m);

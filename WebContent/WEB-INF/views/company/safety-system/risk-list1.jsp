@@ -109,10 +109,14 @@
             margin-top: 8px;
             margin-right: 8px;
         }
+    <%--.hideDiv{--%>
+        <%--display:none;--%>
+    <%--}--%>
     </style>
     <script>
         $(function(){
             $('#partNamme').val('${ids}');
+            $('.isShow').css('display','inline-block')
         })
     </script>
     <script type="text/javascript">
@@ -152,7 +156,15 @@
     </script>
     <script type="text/javascript">
         function pr_() {
+
+            $('.isShow').css('display','none')
+            $('.isHide').css('display','none')
             $("#div_container").jqprint();
+            setTimeout(function () {
+    console.log('执行1')
+                $('.isShow').css('display','inline-block')
+                $('.isHide').css('display','')
+            },2000)
         }
     </script>
     <script src="/js/jquery.jqprint-0.3.js"></script>
@@ -197,34 +209,35 @@
         <div class="div-print">
 
             <c:if test="${empty type}">
-                <h3 class="text-c">${company.name}风险因素辨识表</h3>
+                <h3 class="text-c">${company.name}风险因素辨识</h3>
             </c:if>
             <c:if test="${type eq 1}">
-                <h3 class="text-c">${company.name}职业病风险物理因素辨识表</h3>
+                <h3 class="text-c">${company.name}职业病风险物理因素辨识</h3>
             </c:if>
             <c:if test="${type eq 2}">
-                <h3 class="text-c">${company.name}职业病风险化学因素辨识表</h3>
+                <h3 class="text-c">${company.name}职业病风险化学因素辨识</h3>
             </c:if>
             <c:if test="${type eq 3}">
-                <h3 class="text-c">${company.name}高危工艺辨识表</h3>
+                <h3 class="text-c">${company.name}高危工艺辨识</h3>
             </c:if>
             <c:if test="${type eq 4}">
-                <h3 class="text-c">${company.name}物料风险辨识表</h3>
+                <h3 class="text-c">${company.name}物料风险辨识</h3>
             </c:if>
             <c:if test="${type eq 5}">
-                <h3 class="text-c">${company.name}高危作业辨识表</h3>
+                <h3 class="text-c">${company.name}高危作业辨识</h3>
             </c:if>
 
             <c:if test="${empty type}">
+			    <button class="btn btn-primary radius isShow" onClick=" BaseSet()">部门确定</button>
 
-                <button class="btn btn-primary radius" onClick="selectNow()">现场管理</button>
+                <button class="btn btn-primary radius isShow" onClick="selectNow()">现场管理</button>
 
-                <button class="btn btn-primary radius" onClick="selectBase()">基础管理</button>
+                <button class="btn btn-primary radius isShow" onClick="selectBase()">基础管理</button>
 
-                <button class="btn btn-primary radius" onClick=" BaseSet()">部门确定</button>
+               
 
                 <c:if test="${number == null || number != 3}">
-                    <select class="sel_area" id="partNamme"  onchange="Partname()" >
+                    <select class="sel_area isShow" id="partNamme"  onchange="Partname()" style="position:relative;top:3px">
                         <option value="" >全部</option>
                         <c:forEach items="${zzjgDep1 }" var="be">
                             <option value="${be.id}" >${be.name }</option>
@@ -234,9 +247,9 @@
             </c:if>
 
             <c:if test="${not empty type}">
-                <a class="btn btn-primary radius" href="${ly }/company/safety-system/risk-list?type=${type}&flag=1">编辑</a>
+                <a class="btn btn-primary radius isShow" href="${ly }/company/safety-system/risk-list?type=${type}&flag=1">辨识</a>
 
-                <a class="btn btn-primary radius" href="${ly }/company/safety-system/risk-list?type=${type}&flag=2">确定</a>
+                <a class="btn btn-primary radius isShow" href="${ly }/company/safety-system/risk-list?type=${type}&flag=2">确定</a>
             </c:if>
             <div class="mt-20">
                 <%--如果不是设置--%>
@@ -249,9 +262,9 @@
                                 <th style="width:8%">车间/场所</th>
                                 <th style="width:8%">系统</th>
                                 <th style="width:8%">环节/部位</th>
-                                <th style="width:8%">风险类型</th>
+                                <th style="width:8%">事故类型</th>
                                 <th style="width:50%">风险因素</th>
-                                <th class="isHide" style="width:10%">操作</th>
+								<th class="isHide" style="width:10%">操作</th>
                             </c:if>
                             <c:if test="${flags == 2}">
                                 <c:if test="${!empty type}">
@@ -273,6 +286,7 @@
                                 <c:if test="${type eq 5}">
                                     <th>高危作业</th>
                                 </c:if>
+
                             </c:if>
 
                             <c:if test="${flags == 1}">
@@ -295,9 +309,9 @@
                                 <c:if test="${type eq 5}">
                                     <th>高危作业</th>
                                 </c:if>
-                                <th class="isHide" style="width:10%">操作</th>
+								<th class="isHide" style="width:10%">操作</th>
                             </c:if>
-
+                            
                         </tr>
                         </thead>
                         <tbody style="display: none" id="myTable">
@@ -348,18 +362,18 @@
                                                 <c:if test="${x==1}">
                                             <td style="width:30%;" class="text-c"></c:if>
                                                 <p style="float:left;width:80%;">${ac.factors}</p>
-                                                <button class="btn btn-success radius" onClick="del('${ac.id}')">删除
+                                                <button class="btn btn-success radius isShow" onClick="del('${ac.id}')">删除
                                                 </button>
                                             </td>
                                             <td class="text-c">
                                                 <c:if test="${empty type}">
                                                     <c:if test="${number == null || number == 1}">
-                                                        <button class="btn btn-primary radius"
+                                                        <button class="btn btn-primary radius isShow"
                                                                 onClick="addgj('${be.id}')">现场风险辨识
                                                         </button>
                                                     </c:if>
                                                     <c:if test="${number == 2}">
-                                                        <button class="btn btn-primary radius"
+                                                        <button class="btn btn-primary radius isShow"
                                                                 onClick="addgjs('${be.id}')">基础风险辨识
                                                         </button>
                                                     </c:if>
@@ -382,12 +396,12 @@
                                             <c:if test="${empty type}">
 
                                                 <c:if test="${number == null || number == 1}">
-                                                    <button class="btn btn-primary radius" onClick="addgj('${be.id}')">
+                                                    <button class="btn btn-primary radius isShow" onClick="addgj('${be.id}')">
                                                         现场风险辨识
                                                     </button>
                                                 </c:if>
                                                 <c:if test="${number == 2}">
-                                                    <button class="btn btn-primary radius" onClick="addgjs('${be.id}')">
+                                                    <button class="btn btn-primary radius isShow" onClick="addgjs('${be.id}')">
                                                         基础风险辨识
                                                     </button>
                                                 </c:if>

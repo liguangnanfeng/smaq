@@ -147,9 +147,9 @@
         <%--<a class="btn btn-primary radius" href="javascript:void(0)" onClick="add()"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加风险点</a> --%>
        <%-- <a class="btn btn-primary radius" href="javascript:void(0);" onclick="update()">风险因素辨识 </a>--%>
         <a class="btn btn-danger radius" href="javascript:void(0)" onClick="del_bath()"><i class="Hui-iconfont" style="font-size:15px;">&#xe609;</i> 删除</a>
-		  <c:if test="${industry eq '化工企业（危化生产、使用）'}">
-            <a class="btn btn-danger radius" href="javascript:void(0)" onClick="show_dialog('企业评分','${ly }/company/safety-system/grade-table')">企业评分</a>
-          </c:if>
+		   <c:if test="${indus == 1}">
+             <a class="btn btn-danger radius" href="javascript:void(0)" onClick="show_dialog('企业评分','${ly }/company/safety-system/grade-table')">企业评分</a>
+           </c:if>
 
           <c:if test="${industry eq '冶金行业' || industry eq '有色行业' || industry eq '建材行业'|| industry eq '机械行业'|| industry eq '轻工行业'|| industry eq '纺织行业'|| industry eq '烟草行业'|| industry eq '商贸行业' }">
               <a class="btn btn-danger radius" href="javascript:void(0)" onClick="show_dialog('工贸企业','${ly }/company/safety-system/danger-table')">工贸评定</a>

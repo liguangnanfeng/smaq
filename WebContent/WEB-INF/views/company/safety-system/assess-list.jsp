@@ -145,8 +145,8 @@
       </span>&ndash;%&gt;--%>
   <div class="cl pd-5 bg-1 bk-gray mt-20">
     <a class="btn btn-danger radius" href="javascript:void(0)" onClick="del_bath()"><i class="Hui-iconfont" style="font-size:15px;">&#xe609;</i> 删除</a>
-    
-	  <c:if test="${industry eq '化工企业（危化生产、使用）'}">
+
+          <c:if test="${indus == 1}">
             <a class="btn btn-danger radius" href="javascript:void(0)" onClick="show_dialog('企业评分','${ly }/company/safety-system/grade-table')">企业评分</a>
           </c:if>
 

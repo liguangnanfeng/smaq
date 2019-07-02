@@ -262,7 +262,7 @@
                                 <th style="width:8%">车间/场所</th>
                                 <th style="width:8%">系统</th>
                                 <th style="width:8%">环节/部位</th>
-                                <th style="width:8%">风险类型</th>
+                                <th style="width:8%">事故类型</th>
                                 <th style="width:50%">风险因素</th>
 								<th class="isHide" style="width:10%">操作</th>
                             </c:if>

@@ -173,6 +173,10 @@
                onclick="Hui_admin_tab(this)" href="javascript:;">
               <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加检查模版
           </a>
+            <a class="btn btn-primary radius" onclick="show_tab('检查设置实施','${ly}/company/check-list-szss?flag=${flag}')"
+                 onclick="Hui_admin_tab(this)" href="javascript:;">
+                  整改复查
+              </a>
 <%--               <a class="btn btn-primary radius" onclick="show_dialog('','${ly }/village/addCheckModel?flag=${flag}')"--%>
 <%--                  onclick="Hui_admin_tab(this)" href="javascript:;">--%>
 <%--              <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加标准检查模版--%>
@@ -458,63 +462,6 @@
                 </tbody>
             </table>
         </div>
-
-        <h3 style="text-align: center;width:100%">检查记录</h3>
-        <table class="table table-border table-bordered table-bg table-hover table-sort">
-        <thead>
-        <tr class="text-c">
-            <th width="5%">序号</th>
-            <th width="20%">检查表名称</th>
-            <th width="10%">${flag == 1 ? '检查方式' : '检查日期'}</th>
-            <th width="10%">${flag == 1 ? '检查日期' : '检查部门'}</th>
-            <th width="10%">检查人员</th>
-            <th width="10%">隐患数量</th>
-            <th width="10%">操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- 循环-->
-        <c:forEach items="${checkList}" varStatus="index" var="be">
-            <tr class="text-c">
-                <td>${index.index + 1 }</td>
-                <td><c:if test="${be.status == 1 and (!empty be.expectTime and be.expectTime.time < t)}"><font color="red">【过期】</font></c:if>${be.title }</td>
-                <c:if test="${flag == 1}">
-                    <td>
-                        <c:choose>
-                            <c:when test="${be.type == 1 }">日常</c:when>
-                            <c:when test="${be.type == 2 }">定期</c:when>
-                            <c:when test="${be.type == 3 }">季节</c:when>
-                            <c:when test="${be.type == 4 }">其它</c:when>
-                            <c:when test="${be.type == 5 }">综合</c:when>
-                        </c:choose>
-                    </td>
-                    <td>
-                        <fmt:formatDate value="${be.realTime }" pattern="yyyy-MM-dd"/>
-                    </td>
-                </c:if>
-                <c:if test="${flag != 1}">
-                    <td>
-                        <fmt:formatDate value="${be.realTime }" pattern="yyyy-MM-dd"/>
-                    </td>
-
-                    <td>
-                            ${be.depart}
-                    </td>
-                </c:if>
-                <td>${be.cheker} </td>
-                <td>${be.c }</td>
-                <td>
-                        <%--                            <a style="text-decoration:none;" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag}&id=${be.id }&number=${be.c}')" href="javascript:;">查看详情</a></br>--%>
-                    <c:if test="${be.c!=0}">
-                        <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">整改详情</a></br>
-                        <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">实施复查</a>
-                    </c:if>
-                </td>
-            </tr>
-        </c:forEach>
-        <!-- 循环结束 -->
-        </tbody>
-    </table>
 <%--    </c:if>--%>
 
     <%--<c:if test="${type == 3}">

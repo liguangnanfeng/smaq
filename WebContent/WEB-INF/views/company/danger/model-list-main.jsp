@@ -263,8 +263,7 @@
                                 </c:forEach>
                                 <td>
                                     <a style="text-decoration:none"
-                                        class="used"
-                                        onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
+                                       onClick="szss_list('${be.level1 }',-2,${status[0]+1},'${flag}')"
                                         href="javascript:;">实施
                                      </a>
                                 </td>
@@ -322,8 +321,7 @@
                                 </c:forEach>
                                 <td>
                                     <a style="text-decoration:none"
-                                       class="used"
-                                       onClick="szss_detail('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
+                                       onClick="szss_list('${be.level1 }',-1,${status[0]+1},'${flag}')"
                                        href="javascript:;">实施
                                     </a>
                                 </td>
@@ -637,21 +635,12 @@
             }
         })
     }
-    function szss_detail(dmname, dmid, checkType, industryType, template, flag) {   //点击整改复查实施方法
-        $.post(getRootPath() + "/company/check-list-szss", {
-            dmname: dmname, dmid: dmid, checkType: checkType, industryType: industryType, template: template, flag: flag
-        }, function (result, status) {
-            if (status == 'success') {
-                if (result.status == 0) {
-                    var url = '${ly}/village/plan-next?flag=' + result.data.flag + '&id=' + result.data.modelId;
-                    window.location.href = url;
-                } else {
-                    layer.msg('请先设置检查表');
-                }
-            } else {
-                layer.msg('网络错误');
-            }
-        })
+    function szss_list(dmname, industryType,template, flag) {   //点击整改复查实施方法
+
+        var url = '${ly}/company/check-list-szss?dmname='+dmname+'&flag=' + flag + '&industryType=' +industryType+'&template = '+template;
+        console.log(url);
+        window.location.href = url;
+
     }
 
 

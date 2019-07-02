@@ -20,11 +20,11 @@ body .dis-ib{margin-right:15px;}
 <body>
   <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-    <span class="c-gray en">&gt;</span> <span>${flag!=2 ? '隐患排查治理系统' : '行政执法系统'}</span> 
-    <c:if test="${flag != 2}">
-      <span class="c-gray en">&gt;</span> <span>隐患排查记录</span> 
+    <span class="c-gray en">&gt;</span> <span>${flag==1 ? '隐患排查治理系统' : '行政执法系统'}</span>
+    <c:if test="${flag == 1}">
+      <span class="c-gray en">&gt;</span> <span>${dmname}隐患排查记录</span>
     </c:if>
-    <c:if test="${flag == 2}">
+    <c:if test="${flag != 1}">
       <span class="c-gray en">&gt;</span> <span>执法记录</span> 
     </c:if>
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">

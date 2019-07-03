@@ -75,14 +75,14 @@ public class ZzjgDepartment {
      */
     private Integer uid;
 
-    private Integer dangerId;
+    private String dangerId;
 
     private Integer flag;
 
     public ZzjgDepartment() {
     }
 
-    public ZzjgDepartment(Integer id, Date ctime, Date utime, Integer del, String name, Integer cid, Integer pid, Integer level, Integer uid, Integer dangerId, Integer flag) {
+    public ZzjgDepartment(Integer id, Date ctime, Date utime, Integer del, String name, Integer cid, Integer pid, Integer level, Integer uid, String dangerId, Integer flag) {
         this.id = id;
         this.ctime = ctime;
         this.utime = utime;
@@ -168,11 +168,11 @@ public class ZzjgDepartment {
         this.uid = uid;
     }
 
-    public Integer getDangerId() {
+    public String getDangerId() {
         return dangerId;
     }
 
-    public void setDangerId(Integer dangerId) {
+    public void setDangerId(String dangerId) {
         this.dangerId = dangerId;
     }
 
@@ -196,7 +196,7 @@ public class ZzjgDepartment {
                 ", pid=" + pid +
                 ", level=" + level +
                 ", uid=" + uid +
-                ", dangerId=" + dangerId +
+                ", dangerId='" + dangerId + '\'' +
                 ", flag=" + flag +
                 '}';
     }

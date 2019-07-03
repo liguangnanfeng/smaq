@@ -17,6 +17,7 @@ import com.spring.web.result.ResultImpl;
 import com.spring.web.service.cgf.CgfService;
 import com.spring.web.service.trouble.TroubleService;
 import com.spring.web.util.OutPrintUtil;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -436,10 +437,10 @@ public class CompanyController_safety extends BaseController {
             List acL = null;
             if (type == null) {
                 if (null == number){ // 设置
-                    String dangerIds = "1,3";
+                    String dangerIds = "1"; // 现场
                     zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
                     if (null == zzjg || zzjg.size() == 0){
-                        dangerIds = "2,3";
+                        dangerIds = "2";
                         zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
                         if (null == zzjg || zzjg.size() == 0){
                            number = 3;
@@ -451,7 +452,7 @@ public class CompanyController_safety extends BaseController {
                     }
                 }
                 if (number == 1) { // 现场
-                    String dangerIds = "1,3";
+                    String dangerIds = "1";
 
                     zzjg1 = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
 
@@ -462,7 +463,7 @@ public class CompanyController_safety extends BaseController {
                         zzjg = this.zzjgDepartmentMapper.selectLevel1One(user.getId(),dangerIds,dmid);
                     }
                 } else if (number == 2) { // 基础
-                    String dangerIds = "2,3";
+                    String dangerIds = "2";
                     acL = this.aCompanyManualMapper.selectBase(m);
                     zzjg1 = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
                     if (null == dmid){
@@ -478,9 +479,45 @@ public class CompanyController_safety extends BaseController {
                 model.addAttribute("number", number);
                 model.addAttribute("zzjgDep", zzjg);
                 model.addAttribute("acL", acL);
+
                 return "company/safety-system/risk-list1";
             } else {
-                if (null == flag){
+                String dangerId = null;
+                if (type == 1){ // 职业病风险物理因素
+                    dangerId = "4";
+                }else if(type == 2){ // 职业病风险化学因素
+                    dangerId = "5";
+                }else if(type == 3){ // 高危工艺辨识
+                    dangerId = "6";
+                }else if(type == 4){ // 物料风险辨识
+                    dangerId = "7";
+                }else if(type == 5){ // 高危作业辨识
+                    dangerId = "8";
+                }
+                List<ZzjgDepartment> zzjgDepartment = zzjgDepartmentMapper.selectDangerIds(user.getId(),dangerId);
+                StringBuffer sb = new StringBuffer();
+                for (int i = 0; i < zzjgDepartment.size(); i++) {
+                    if (i == zzjgDepartment.size()-1){
+                        sb.append(zzjgDepartment.get(i).getId());
+                    }else {
+                        sb.append(zzjgDepartment.get(i).getId()).append(",");
+                    }
+                }
+                if (sb.toString().length() != 0){
+                    zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type,sb.toString());
+                    zzjg1 = this.zzjgDepartmentMapper.selectAllName(user.getId(),type,sb.toString());
+                    if (null == dmid){
+                        zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type,sb.toString());
+                    }else {
+                        zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type,dmid.toString());
+                    }
+                }
+
+                model.addAttribute("zzjgDep1", zzjgDepartment);
+                model.addAttribute("zzjg",zzjg);
+                model.addAttribute("type", type);
+                return "company/safety-system/risk-list1";
+                /* if (null == flag){
                     flag = 2;
                 }
                 if (flag == 1){
@@ -489,15 +526,10 @@ public class CompanyController_safety extends BaseController {
                 }else if (flag == 2){
                     zzjg = this.zzjgDepartmentMapper.selectNotEmpy(user.getId(),type);
                     flag = 2;
-                }
-
-                model.addAttribute("flags",flag);
-                model.addAttribute("zzjg",zzjg);
-                model.addAttribute("type", type);
-                return "company/safety-system/risk-list1";
-
+                }*/
                 /*acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);*/
                 /*model.addAttribute("dL", acL);*/
+                /*model.addAttribute("flags",flag);*/
             }
         }
     }
@@ -508,9 +540,103 @@ public class CompanyController_safety extends BaseController {
     * */
     @RequestMapping({"risk-set"})
     @ResponseBody
-    public Result riskSet(Model model, Integer xc, Integer jc,Integer id){
+    public Result riskSet(Model model, String dpId, String number1, String number2, String number3, String number4,
+                          String number5, String number6, String number7, String number8,Boolean flag){
         Result result = new ResultImpl();
-        // 根据 ID 修改对应的数据信息在 zzjg_department_tbl 表中
+        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectByPrimaryKey(Integer.parseInt(dpId));
+
+        String  dangerId = null;
+        if (flag){
+            if (null != number1){
+                if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
+                    dangerId = "1";
+                }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0){
+                    dangerId = zzjgDepartment.getDangerId() + "," + "1"; // 现场
+                }
+            }
+            if (null != number2){
+                if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
+                    dangerId = "2";
+                }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0){
+                    dangerId = zzjgDepartment.getDangerId() + "," + "2"; // 基础
+                }
+            }
+            if (null != number3){
+                if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
+                    dangerId = "3";
+                }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0){
+                    dangerId = zzjgDepartment.getDangerId() + "," + "3"; // 安全风险
+                }
+            }
+            if (null != number4){
+                if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
+                    dangerId = "4";
+                }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0){
+                    dangerId = zzjgDepartment.getDangerId() + "," + "4";  // 职业病物理因素
+                }
+            }
+            if (null != number5){
+                if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
+                    dangerId = "5";
+                }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0) {
+                    dangerId = zzjgDepartment.getDangerId() + "," + "5"; // 职业病化学因素
+                }
+            }
+            if (null != number6){
+                if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
+                    dangerId = "4";
+                }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0) {
+                    dangerId = zzjgDepartment.getDangerId() + "," + "6"; // 高危工艺
+                }
+            }
+            if (null != number7){
+                if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
+                    dangerId = "4";
+                }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0) {
+                    dangerId = zzjgDepartment.getDangerId() + "," + "7"; // 物料
+                }
+            }
+            if (null != number8){
+                if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
+                    dangerId = "4";
+                }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0) {
+                    dangerId = zzjgDepartment.getDangerId() + "," + "8"; // 高危作业
+                }
+            }
+        }else if (flag == false && null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0){
+            String[] str = zzjgDepartment.getDangerId().split(",");
+            String[]  test = null;
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < str.length; i++) {
+                if (null != number1 && number1.equals(str[i])){
+                    test =  ArrayUtils.remove(str,i);
+                }else if (null != number2 && number2.equals(str[i])){
+                    test =  ArrayUtils.remove(str,i);
+                }else if (null != number3 && number3.equals(str[i])){
+                    test =  ArrayUtils.remove(str,i);
+                }else if (null != number4 && number4.equals(str[i])){
+                    test =  ArrayUtils.remove(str,i);
+                }else if (null != number5 && number5.equals(str[i])){
+                    test =  ArrayUtils.remove(str,i);
+                }else if (null != number6 && number6.equals(str[i])){
+                    test =  ArrayUtils.remove(str,i);
+                }else if (null != number7 && number7.equals(str[i])){
+                    test =  ArrayUtils.remove(str,i);
+                }else if (null != number8 && number8.equals(str[i])){
+                    test =  ArrayUtils.remove(str,i);
+                }
+            }
+            for (int i = 0; i < test.length; i++) {
+                sb.append(test[i]).append(",");
+            }
+            dangerId = sb.toString();
+        }
+
+
+
+        boolean b = zzjgDepartmentMapper.updateDangerId(Integer.parseInt(dpId),dangerId);
+
+       /* // 根据 ID 修改对应的数据信息在 zzjg_department_tbl 表中
         Integer  dangerId = null;
         if (null != xc && null != jc){
             if (xc == 1 && jc == 1){ // 现场/基础 都有
@@ -530,7 +656,7 @@ public class CompanyController_safety extends BaseController {
             }
         }else {
             result.setStatus("1");
-        }
+        }*/
         return result;
     }
 
@@ -2700,7 +2826,6 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setLevel3(a.getLevel1() + "/" + a.getLevel2() + "/" + a.getLevel3());
             aCompanyManual.setFactors(a.getFactors());
             aCompanyManual.setReference(a.getReference());
-
             aCompanyManual.setCtime(new Date());
             aCompanyManual.setDel(0);
             aCompanyManual.setDmid(depId);
@@ -2709,8 +2834,6 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setType(a.getType());
             aCompanyManual.setMeasures(a.getMeasures());
             aCompanyManual.setRiskId(a.getId());
-
-
             // 根据公司 ID  和 车间 ID 查询部门名称为：负责人的名称
             if (Integer.parseInt(a.getFlag()) == 2 && a.getLevel().equals("红色")){
                 List<Company> companyList = companyMapper.selectByPrimaryKeys(user.getId());
@@ -2751,7 +2874,7 @@ public class CompanyController_safety extends BaseController {
                 zzjgDepartment.setPid(depId);
                 zzjgDepartment.setLevel(2);
                 zzjgDepartment.setUid(user.getId());
-                zzjgDepartment.setDangerId(1);
+                zzjgDepartment.setDangerId("1");
                 zzjgDepartment.setFlag(2);
                 zzjgDepartmentMapper.add(zzjgDepartment);
             }
@@ -2773,7 +2896,6 @@ public class CompanyController_safety extends BaseController {
         ZzjgDepartment dep = zzjgDepartmentMapper.selectByPrimaryKey(depId);
         String level1 = dep.getName();
         List<TLevel> tLevelList = tLevelMapper.selectAllIds(ids);
-
         ACompanyManual aCompanyManual;
         for (TLevel a : tLevelList) {
             aCompanyManual = new ACompanyManual();
@@ -2787,10 +2909,11 @@ public class CompanyController_safety extends BaseController {
             aCompanyManual.setCtime(new Date());
             aCompanyManual.setDel(0);
             aCompanyManual.setDmid(depId);
-            aCompanyManual.setFlag("3");
+            aCompanyManual.setFlag(a.getFlag().toString());
             aCompanyManual.setType(a.getType());
             aCompanyManual.setMeasures(a.getMeasures());
             aCompanyManual.setRiskId(a.getId());
+            aCompanyManual.setLevel(a.getLevel());
             // 根据公司 ID  和 车间 ID 查询部门名称为：负责人的名称
             List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),depId,"负责人",2);
             if (zzjgDepartment1.size() != 0){
@@ -2804,9 +2927,7 @@ public class CompanyController_safety extends BaseController {
             }else {
                 aCompanyManual.setFjgkfzr("");
             }
-
             aCompanyManualMapper.insertAdd(aCompanyManual);
-
             // 给 zzjg_department_tbl 添加数据信息
             List<ZzjgDepartment> zzjgDepartmentList = zzjgDepartmentMapper.selectCount(depId, a.getName());
             if (zzjgDepartmentList.size() != 0) {
@@ -2825,7 +2946,7 @@ public class CompanyController_safety extends BaseController {
                 zzjgDepartment.setPid(depId);
                 zzjgDepartment.setLevel(2);
                 zzjgDepartment.setUid(user.getId());
-                zzjgDepartment.setDangerId(2);
+                zzjgDepartment.setDangerId("2");
                 zzjgDepartment.setFlag(2);
                 zzjgDepartmentMapper.add(zzjgDepartment);
             }

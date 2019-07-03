@@ -125,10 +125,10 @@ public interface ZzjgDepartmentMapper {
 
     List<Map<Object,Object>> selectLevel1ByUid(@Param("uid")Integer uid);
 
-    boolean updateDangerId(@Param("id")Integer id, @Param("dangerId")Integer dangerId);
+    boolean updateDangerId(@Param("id")Integer id, @Param("dangerId")String dangerId);
 
   
-    List<Map<Object, Object>> selectAllName(@Param("uid") Integer uid,@Param("flag") Integer flag);
+    List<Map<Object, Object>> selectAllName(@Param("uid") Integer uid,@Param("flag") Integer flag,@Param("pids") String pids);
 
     /**
      * 根据公司id查询所有岗位
@@ -145,4 +145,6 @@ public interface ZzjgDepartmentMapper {
     List<ZzjgDepartment> selectNameLevel2(@Param("uid")Integer uid, @Param("pid")Integer pid, @Param("name")String name, @Param("level")int level);
 
     List<Map<String,Object>> selectHiddenPlan(@Param("uid")Integer uid);
+
+    List<ZzjgDepartment> selectDangerIds(@Param("uid")Integer uid, @Param("dangerIds")String dangerIds);
 }

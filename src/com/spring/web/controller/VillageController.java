@@ -1553,7 +1553,7 @@ public class VillageController extends BaseController {
         }
         String departName = "";
         for (String s : set) {
-            departName+=s;
+            departName+=s+"/";
         }
 
         model.addAttribute("departName",departName);

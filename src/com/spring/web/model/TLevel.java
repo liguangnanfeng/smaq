@@ -158,4 +158,23 @@ public class TLevel implements Serializable {
     public void setFlag(Integer flag) {
         this.flag = flag;
     }
+
+    @Override
+    public String toString() {
+        return "TLevel{" +
+                "id=" + id +
+                ", industry='" + industry + '\'' +
+                ", level1='" + level1 + '\'' +
+                ", level2='" + level2 + '\'' +
+                ", level3='" + level3 + '\'' +
+                ", factors='" + factors + '\'' +
+                ", industry_id=" + industry_id +
+                ", type='" + type + '\'' +
+                ", measures='" + measures + '\'' +
+                ", reference='" + reference + '\'' +
+                ", name='" + name + '\'' +
+                ", level='" + level + '\'' +
+                ", flag=" + flag +
+                '}';
+    }
 }

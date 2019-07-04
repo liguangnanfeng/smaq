@@ -202,7 +202,7 @@
                 <th width="3%">检查形式</th>
                 <th width="12%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>
                 <th width="4%">检查结果</th>
-                <th width="15%">隐患内容</th>
+<%--                <th width="15%">隐患内容</th>--%>
                 <c:if test="${flag == 1}">
                     <th width="7%">隐患等级</th>
                 </c:if>
@@ -246,6 +246,7 @@
                         </c:choose>
                     </td>
 
+<%--                    <td class="text-c">${ch.measures == "" ? "暂无数据" : ch.measures}</td>--%>
                     <td class="text-c">${ch.measures == "" ? "暂无数据" : ch.measures}</td>
                     <td>
                         <c:if test="${ empty ch.status}">没有数据</c:if>
@@ -257,14 +258,14 @@
                             </c:choose>
                         </c:if>
                     </td>
-                    <td>
-                        <c:if test="${ empty ch.factors}">
-                            暂无数据
-                        </c:if>
-                        <c:if test="${ not empty ch.factors}">
-                            ${ch.factors}
-                        </c:if>
-                    </td>
+<%--                    <td>--%>
+<%--                        <c:if test="${ empty ch.factors}">--%>
+<%--                            暂无数据--%>
+<%--                        </c:if>--%>
+<%--                        <c:if test="${ not empty ch.factors}">--%>
+<%--                            ${ch.factors}--%>
+<%--                        </c:if>--%>
+<%--                    </td>--%>
 
                         <c:if test="${flag == 1}">
                     <td>

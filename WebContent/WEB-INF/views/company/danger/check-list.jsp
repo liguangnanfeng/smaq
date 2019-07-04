@@ -261,7 +261,7 @@ $(function() {
     });
 });
 /*删除*/
-/* function del_(id){
+ function del_(id){
   layer.confirm("要删除该记录？", function(i) {
     layer.close(i);
     $.post(getRootPath()+"/company/check-del",{
@@ -270,7 +270,7 @@ $(function() {
       location.reload();
     })
   })
-} */
+}
 
 var type = '${type}';
 function copy_(id) {

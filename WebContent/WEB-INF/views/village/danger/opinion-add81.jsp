@@ -78,7 +78,7 @@
         </p>
         <p class="MsoNormal" style="text-align:left;">
             <span style="vertical-align: bottom;"><span>地&emsp;&emsp;&emsp;址</span></span>
-            <u><span style="text-align:center;vertical-align: text-bottom;border-bottom:1px solid #333; width:81%;display:inline-block;" contenteditable="true">&nbsp;${company.address }</span></u>
+            <u><span style="text-align:center;vertical-align: text-bottom;border-bottom:1px solid #333; width:81%;display:inline-block;" contenteditable="true">&nbsp;111111${company.address }</span></u>
         </p>
         <p class="MsoNormal" style="text-align:left;">
             <span style="vertical-align: bottom;"><span>法定代表人（负责人）</span></span>

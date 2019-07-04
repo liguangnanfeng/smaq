@@ -117,9 +117,10 @@
                 success: function (result) {
                     var dataObj = result,
                         con = "";
+    console.log(result)
                     $.each(dataObj, function (index, item) {
                         con += "<tr class=\"text-c\">";
-                        con += "<td><input type=\"radio\" name=\"radio-2\" value='" + item.name + "'></td>";
+                        con += "<td><input type=\"checkbox\" name=\"radio-2\" value='" + item.name + ","+item.id+"'></td>";
                         con += "<td>"+item.name+"</td>";
                         con += "<td>"+item.companyName+"</td>";
                         con += "<td>"+item.dpname+"</td>";
@@ -172,12 +173,14 @@
       }
 
       function save_() {
+        console.log($("#fjgkfzrId").val())
           var obj = {
               "fjgkfzr" : $("#fjgkfzr").val(),
               "gkcs" : $("#gkcs").val(),
               "gkzt" : $("#gkzt").val(),
               "level2" : $("#buwei").val(),
               "id" : id,
+              "dataId" : $("#fjgkfzrId").val(),
               "ids": dmid,
               "dianhuas" : $("#dianhuas").val(),
           }
@@ -234,6 +237,7 @@
     <button onClick="pr_()" class="btn btn-success radius " type="button" style="padding: 0 70px;">
       <i class="Hui-iconfont mr-10">&#xe652;</i>打印
     </button>
+    ${dataId}
   </div>
   <div class="mt-20" id="container" style="margin:auto;">
     <h3 class="text-c">${company.name}分级管控表</h3>
@@ -245,7 +249,7 @@
         <th style="min-width:80px">系统</th>
         <th style="min-width:80px">环节/部位</th>
         <th style="min-width:70px">风险等级</th>
-        <th style="min-width:150px">风险类型</th>
+        <th style="min-width:150px">事故类型</th>
         <th style="min-width:200px">风险因素</th>
         <th style="min-width:70px">管控主体</th>
         <th style="min-width:150px">责任人</th>
@@ -407,6 +411,7 @@
           <label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">责任人：</label>
           <div class="formControls col-xs-8 col-sm-9" style="width: 80%;" readonly="readonly">
             <input type="text" id="fjgkfzr" value="" style="width: 357px" class="input-text required">
+            <input type="hidden" id="fjgkfzrId" value="" style="width: 357px" class="input-text required">
             <c:if test="${not empty perL}">
               <button class="btn btn-primary radius" type="button" onclick="chosem2()">
                 <i class="Hui-iconfont">&#xe611;</i>选择责任人
@@ -548,13 +553,15 @@
 <script type="text/javascript">
 
     function per_choose() {
-        var list = $("#win-add3 :checked");
-        var v = [];
+        var list = $("#win-add3 input:checkbox:checkbox");
+        var v = [],s = [];
         list.each(function() {
-            v.push($(this).val());
+            var arr = $(this).val().split(',')
+            v.push(arr[0]);
+            s.push(arr[1]);
         })
+        $("#fjgkfzrId").val(s.join(","));
         $("#fjgkfzr").val(v.join(","));
-
         $("#win-add3").modal("hide");
     }
 </script>

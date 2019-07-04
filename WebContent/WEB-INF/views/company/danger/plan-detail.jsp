@@ -176,7 +176,7 @@
     </div>
 </div>
 <div id="div_container">
-    <h2 class="text-c mb-10">检查详情表</h2>
+    <h2 class="text-c mb-10">检查详情</h2>
     <div class="f-l div_pdetail mt-10">
         <c:if test="${flag==2 || flag== 3 }">
             <font>受检公司：${user.userName }</font>
@@ -222,13 +222,11 @@
                         </c:choose>
                     </td>
                     <td class="text-c">${ch.part == "" ? "暂无数据" : ch.part}</td>
-
+                    <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
                     <c:if test="${flag == 1}">
                         <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
                         <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
                     </c:if>
-
-                    <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
 
                     <td>
                         <c:choose>
@@ -267,18 +265,18 @@
                             ${ch.factors}
                         </c:if>
                     </td>
-                    <td>
-                        <c:if test="${flag == 1}">
 
+                        <c:if test="${flag == 1}">
+                    <td>
                             <c:choose>
                                 <c:when test="${ch.level eq '红色'}"><font class="col-a">${ch.level}</font></c:when>
                                 <c:when test="${ch.level eq '橙色'}"><font class="col-b">${ch.level}</font></c:when>
                                 <c:when test="${ch.level eq '黄色'}"><font class="col-c">${ch.level}</font></c:when>
                                 <c:when test="${ch.level eq '蓝色'}"><font class="col-d">${ch.level}</font></c:when>
                             </c:choose>
-
-                        </c:if>
                     </td>
+                        </c:if>
+
                     <td class="text-c">
                         <button class="btn radius btn-danger size-S ml-20" onClick="showpicture('${ch.files}')">
                             <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 查看图片

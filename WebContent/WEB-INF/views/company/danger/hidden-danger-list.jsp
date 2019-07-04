@@ -118,7 +118,7 @@
             <tr class="text-c">
                 <th width="5%">检查类型</th>
                 <c:if test="${flag==1}">
-                <th width="5%">车间/场所</th>
+                    <th width="5%">车间/场所</th>
                 </c:if>
                 <c:if test="${flag!=1}">
                     <th width="5%">公司</th>
@@ -162,28 +162,35 @@
                             <td>综合</td>
                         </c:when>
                     </c:choose>
-                    <c:if test="${flag==1}">
-                        <td>${list.depart }</td>
-                    </c:if>
-                    <c:if test="${flag!=1}">
-                        <td>${companyName}</td>
-                    </c:if>
+                    <td>
+                        <c:if test="${flag==1}">
+                            ${list.depart }
+                        </c:if>
+                        <c:if test="${flag!=1}">
+                            ${companyName}
+                        </c:if>
+                    </td>
+
 
                     <c:if test="${list.levels!=null}">
                         <c:set var="item" value="${fn:split(list.levels,'/') }"/>
                     </c:if>
-                    <c:if test="${empty item[1]}">
-                        <td>暂无数据</td>
+                    <td>
+                    <c:if test="${empty item[2]}">
+                        暂无数据
                     </c:if>
-                    <c:if test="${not empty item[1]}">
-                        <td>${item[1]}</td>
+                    <c:if test="${not empty item[2]}">
+                        ${item[2]}
                     </c:if>
+                    </td>
+                    <td>
                     <c:if test="${empty list.level2}">
-                        <td>暂无数据</td>
+                       暂无数据
                     </c:if>
                     <c:if test="${not empty list.level2}">
-                        <td>${list.level2 }</td>
+                       ${list.level2 }
                     </c:if>
+                    </td>
                         <%--<c:if test="${list.levels!=null}">
                             <c:if test="${not empty item[0]}">
                                 <td>${item[1]}</td>
@@ -334,7 +341,7 @@
 
     <form enctype="multipart/form-data" id="fm1" method='post'>
         <input type="text" name="itemId" value='' style="display: none" id="fm1_imput"/>
-        <input type="file" name="file"   accept=".pdf" id="upload" style="display: none">
+        <input type="file" name="file" accept=".pdf" id="upload" style="display: none">
     </form>
 
 

@@ -4029,12 +4029,26 @@ public class CompanyController_cd extends BaseController {
             }
 
         }
+
         model.addAttribute("partL", partL);
         //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
         /*List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(id);*/
         List<Map<String, Object>> iteml = null;
         if (flag == 1) {
             iteml = tCheckMapper.selectLevels(id);
+            for (int i = 0; i < iteml.size(); i++) {
+                if("全公司".equals(iteml.get(i).get("depart"))){
+                    TCheck tCheck = tCheckMapper.selectByPrimaryKey(id);
+                    if (tCheck.getIndustryType() == 1) { // 基础
+                        iteml = tCheckMapper.selectAllLevel(id);
+                        break;
+                    } else if (tCheck.getIndustryType() == 2) { // 现场
+                        iteml = tCheckMapper.selectAllDanger(id);
+                        break;
+                    }
+                }
+            }
+
         } else if (flag != 1) {
             // 根据 ID 查询对应的数据 是 基础 还是 现场
             TCheck tCheck = tCheckMapper.selectByPrimaryKey(id);

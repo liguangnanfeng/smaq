@@ -451,8 +451,11 @@
 
             <%-- <li><a data-href="${ly }/company/tables/tab-biaozhun" data-title="安全标准化"
              href="javascript:void(0)">安全标准化</a></li>--%>
-        <li><a data-href="${ly }/api/safety_Standard/findAll?parendId=0&flag=1" data-title="安全标准化"
+        <li><a data-href="${ly }/api/safety_Standard/findAll?parentId=0&flag=1" data-title="安全标准化"
           href="javascript:void(0)">安全标准化</a></li>
+
+        <li><a data-href="${ly }/api/safety_Standard/tab-biaozhun-my?parentId=0" data-title="安全标准化"
+               href="javascript:void(0)">安全标准化--编辑版</a></li>
         <li><a data-href="${ly }/company/threeLeft?leftBasic=18" data-title="设备设施管理"
         href="javascript:void(0)">设备设施管理</a></li>
         <%--<li><a data-href="${ly }/company/threeLeft?leftBasic=17&userName=${userName}" data-title="教育培训"--%>

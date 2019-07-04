@@ -42,7 +42,7 @@ public class TSafetyStandardController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/findAll")
-    public String findAll(Integer parendId, Integer flag, HttpServletRequest request, Model model, Integer sort) {
+    public String findAll(Integer parentId, Integer flag, HttpServletRequest request, Model model, Integer sort) {
         User user = getLoginUser(request);
         if (null == sort) {
             sort = 1;
@@ -50,7 +50,7 @@ public class TSafetyStandardController extends BaseController {
         HashMap<String, Object> map = new HashMap<>();
 
         map.put("userId", user.getId());
-        map.put("parentId", parendId);
+        map.put("parentId", parentId);
         map.put("flag", flag);
 
         List<TSafetyStandard> TSafetyStandardlist = tSafetyStandardMapper.findAll(map);
@@ -435,5 +435,72 @@ public class TSafetyStandardController extends BaseController {
         return result;
 
     }
+
+    /**
+     * 查询所有的文件
+     * @param
+     * @param model
+     * @return
+     */
+    @RequestMapping("tab-biaozhun-my")
+    public String selectSafety(Integer parentId,Model model){
+        List<TSafety> list = tSafetyMapper.selectBBytSafetyStandardId(parentId);
+        model.addAttribute("list",list);
+        model.addAttribute("parentId",parentId);
+        return "company/tables/tab-biaozhun-my";
+    }
+
+    /**
+     * 保存插入数据
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/save-safety")
+    public @ResponseBody
+    Result saveSafety(@RequestBody TSafety tSafety, HttpServletRequest request) {
+        Result result = new ResultImpl();
+        User loginUser = getLoginUser(request);
+
+        try {
+            tSafety.setDel(0);
+            tSafetyMapper.insertTSafety(tSafety);
+
+            result.setMess("保存成功");
+            result.setStatus("0");
+            result.setObject(tSafety.getId());
+            return result;
+        } catch (Exception e) {
+            result.setMess("保存失败");
+            result.setStatus("1");
+            result.setObject(tSafety.getId());
+            return result;
+        }
+
+    }
+
+    /**
+     * 修改数据
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/update-tSafety", method = RequestMethod.POST)
+    public @ResponseBody
+    Result updateTSafety(@RequestBody TSafety tSafety) {
+        Result result = new ResultImpl();
+        try {
+            tSafetyMapper.updateTSafety(tSafety);
+            result.setStatus("0");
+            result.setMess("修改成功");
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMess("修改失败");
+            return result;
+        }
+    }
+
 
 }

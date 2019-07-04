@@ -106,7 +106,7 @@
         }
     </style>
     <script type="text/javascript">
-        var m_index=0;
+        var m_index = 0;
 
         $(function () {
             $(".three_danger").each(function () {
@@ -170,16 +170,16 @@
         });
 
 
-
         function nature(obj) {
 
             var cType = $(obj);
             checkType = parseInt(cType.val());
             if (checkType == 0) {
-                window.location.href="${ly}/village/getCheckModelBasic?flag=${flag}"
-            }else{
-                var tableName = $('#title').val();
-                window.location.href="${ly}/village/select-all-level1?flag=${flag}&tableName="+tableName+'&checkType='+checkType
+                window.location.href = "${ly}/village/getCheckModelBasic?flag=${flag}"
+            } else {
+                // var tableName = $('#title').val();
+                <%--window.location.href="${ly}/village/select-all-level1?flag=${flag}&tableName="+tableName+'&checkType='+checkType--%>
+                window.location.href = "${ly}/village/select-all-level1?flag=${flag}&checkType=" + checkType
             }
 
         }
@@ -193,38 +193,51 @@
 
     <div class="modal-body">
         <form class="form form-horizontal" id="form">
-<%--            <div class="row cl">--%>
-<%--                <label class="form-label col-xs-2 col-sm-2" style=""><span class="c-red">*</span>检查表名称：</label>--%>
-<%--                <div class="formControls col-xs-8 col-sm-9">--%>
-<%--                    <c:if test="${not empty tableName}">--%>
-<%--                        <input type="text" id="title" style="width:350px" value="${tableName}" class="input-text"--%>
-<%--                               maxlength="50" placeholder="请填写检查表名名称"/>--%>
-<%--                    </c:if>--%>
-<%--                    <c:if test="${empty tableName}">--%>
-<%--                        <input type="text" id="title" style="width:350px" class="input-text"--%>
-<%--                               maxlength="50" placeholder="请填写检查表名名称"/>--%>
-<%--                    </c:if>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-            <div class="row cl" style="margin-top: 20px">
+            <%--                        <div class="row cl">--%>
+            <%--                            <label class="form-label col-xs-2 col-sm-2" style=""><span class="c-red">*</span>检查表名称：</label>--%>
+            <%--                            <div class="formControls col-xs-8 col-sm-9">--%>
+            <%--                                <c:if test="${not empty tableName}">--%>
+            <%--                                    <input type="text" id="title" style="width:350px" value="${tableName}" class="input-text"--%>
+            <%--                                           maxlength="50" placeholder="请填写检查表名名称"/>--%>
+            <%--                                </c:if>--%>
+            <%--                                <c:if test="${empty tableName}">--%>
+            <%--                                    <input type="text" id="title" style="width:350px" class="input-text"--%>
+            <%--                                           maxlength="50" placeholder="请填写检查表名名称"/>--%>
+            <%--                                </c:if>--%>
+            <%--                            </div>--%>
+            <%--                        </div>--%>
+
+            <c:if test="${flag==1&&lxType==2}">
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2" style=""><span class="c-red">*</span>填写周期天数：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="number" min="1" max="7" id="cycle" style="width:200px" class="input-text"
+                               maxlength="50" placeholder="填写周期天数"/>
+                    </div>
+                </div>
+            </c:if>
+            <div class="row cl" style="margin-top: 20px;${flag==1?'display:none':'display:block'}">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择检查性质 :</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <c:if test="${checkType==-1}">
-                        <select name="checkNature" class="select" id="checkNature" onchange="nature(this)" style="width:350px;height: 31px">
+                        <select name="checkNature" class="select" id="checkNature" onchange="nature(this)"
+                                style="width:350px;height: 31px">
                             <option value="0">请选择检查类别</option>
                             <option value="-1" selected>基础</option>
                             <option value="-2">现场</option>
                         </select>
                     </c:if>
                     <c:if test="${checkType==-2}">
-                        <select name="checkNature" class="select" id="checkNature" onchange="nature(this)" style="width:350px;height: 31px">
+                        <select name="checkNature" class="select" id="checkNature" onchange="nature(this)"
+                                style="width:350px;height: 31px">
                             <option value="0">请选择检查类别</option>
                             <option value="-1">基础</option>
                             <option value="-2" selected>现场</option>
                         </select>
                     </c:if>
                     <c:if test="${empty checkType}">
-                        <select name="checkNature" class="select" id="checkNature" onchange="nature(this)" style="width:350px;height: 31px">
+                        <select name="checkNature" class="select" id="checkNature" onchange="nature(this)"
+                                style="width:350px;height: 31px">
                             <option value="0">请选择检查类别</option>
                             <option value="-1">基础</option>
                             <option value="-2">现场</option>
@@ -300,7 +313,7 @@
 
         <form class="form form-horizontal" id="form2">
             <div id="addContainer" class="row"></div>
-            <div class="addCh1 row cl" >
+            <div class="addCh1 row cl">
                 <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2 mt-20">
                     <button onClick="addItem()" class="btn btn-primary radius" type="button"
                             style="padding: 0 70px;">
@@ -320,9 +333,9 @@
 </body>
 <script type="text/javascript">
     var depId = '${depId}';
+    var flag = '${flag}';
 
-
-    function addItem(){
+    function addItem() {
         m_index++;
         var add1 = `<div class="row" style="height: 31px">
         <div class="col-xs-5 cl level1">
@@ -342,8 +355,6 @@
     }
 
 
-
-
     function save_1() {
         // var tableName = $("#title").val();
         var checkType = $("#checkNature").val();
@@ -351,23 +362,31 @@
         //     layer.alert('请填写检查表名称')
         // return false;
         // }
-        if(checkType==0||checkType==''||checkType==null){
+        if (checkType == 0 || checkType == '' || checkType == null) {
             layer.alert('请选择检查类别')
             return false;
         }
+
+        if ('${flag}' == 1 && '${lxType}' == 2) {
+            if (!$('#cycle').val()) {
+                layer.alert('请填写周期天数,且不能为零')
+                return false;
+            }
+
+        }
         var cusCheckItemList = [];//自定义检查项
-        for (var j = 1; j <=m_index; j++) {
+        for (var j = 1; j <= m_index; j++) {
             var cusCheck = {
                 'level3': $('#project' + j).val(),
                 'level4': $('#content' + j).val(),
             }
-            if (cusCheck.level3&&cusCheck.level4) {
+            if (cusCheck.level3 && cusCheck.level4) {
                 cusCheckItemList.push(cusCheck);
             }
 
         }
         var l = $(":checkbox:checked[data-l='4']");
-        if (l.length == 0&&cusCheckItemList.length==0) {
+        if (l.length == 0 && cusCheckItemList.length == 0) {
             layer.alert("请至少选择一个风险。");
             return false;
         }
@@ -379,11 +398,17 @@
         ids += ',';
         var i = layer.load();
         var params = {
-            "flag":parseInt('${flag}'),
+            "flag": parseInt('${flag}'),
             // "tableName": tableName,//检查表名称
             "checkType": parseInt(checkType),//检查方式
             "selectItems": ids,      //检查项
-            "cusCheckItemList":cusCheckItemList  //自定义检查项
+            "cusCheckItemList": cusCheckItemList  //自定义检查项
+        }
+        if (flag == 1) {
+            params.lxType = parseInt('${lxType}');
+            if ('${lxType}' == 2) {
+                params.cycle = parseInt($('#cycle').val());
+            }
         }
         $.ajax({
             type: "POST",
@@ -396,7 +421,12 @@
                 if (result.status == 0) {
                     layer.close(i);
                     layer.alert('保存成功');
-                    window.parent.location.href = '${ly }/company/model-list-cx?flag=${flag}&type=1&template=2';
+                    if (flag == 1) {
+                        window.parent.location.href = '${ly }/company/model-list-main?flag=1';
+                    } else {
+                        window.parent.location.href = '${ly }/company/model-list-cx?flag=${flag}&type=1&template=2';
+                    }
+
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
                 } else {

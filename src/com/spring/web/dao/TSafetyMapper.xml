@@ -61,6 +61,25 @@
         </trim>
     </insert>
 
+    <update id="updateTSafety" parameterType="com.spring.web.model.TSafety">
+        update t_safety_tbl
+        <set>
+            <if test="name != null">
+                name=  #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="industryType != null">
+                and industryType=  #{industryType,jdbcType=INTEGER}
+            </if>
+            <if test="content != null">
+              and content=  #{content,jdbcType=VARCHAR}
+            </if>
+            <if test="del != null">
+               and del = #{del,jdbcType=INTEGER}
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
     <!--
         根据行业id查询,所有的A级要素
     -->

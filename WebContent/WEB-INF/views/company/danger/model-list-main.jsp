@@ -217,7 +217,7 @@
                     </table>
                 </div>
             </div>
-            <div class="tabCon" style="display: block;">
+            <div class="tabCon" >
                 <div class="mt-20">
                     <table class="table table-border table-bordered table-bg table-hover table-sort">
                         <thead>
@@ -243,7 +243,7 @@
                                         <c:set value="${fn:split(item,'=' )}" var="status"></c:set>
                                         <c:if test="${be.level1=='全公司' }">
                                             <a style="text-decoration:none"
-                                               onclick="show_dialog('添加检查表','/village/getCheckModelBasic?flag=1')"
+                                               onclick="show_dialog('生成检查表','${ly}/village/select-all-level1?flag=${flag}&checkType=-2&lxType=${status[0]}')"
                                                href="javascript:;">设置</a>
                                         </c:if>
                                         <c:if test="${be.level1!='全公司' }">
@@ -287,7 +287,7 @@
                     </table>
                 </div>
             </div>
-            <div class="tabCon" style="display: block;">
+            <div class="tabCon" >
                 <div class="mt-20">
                     <table class="table table-border table-bordered table-bg table-hover table-sort">
                         <thead>
@@ -311,9 +311,19 @@
                                 <c:forEach items="${be.array}" varStatus="index2" var="item">
                                     <td>
                                         <c:set value="${fn:split(item,'=' )}" var="status"></c:set>
-                                        <a style="text-decoration:none"
-                                           onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-1&flag=${flag}')"
-                                           href="javascript:;">设置</a>
+                                        <c:if test="${be.level1=='全公司' }">
+                                            <a style="text-decoration:none"
+                                               onclick="show_dialog('生成检查表','${ly}/village/select-all-level1?flag=${flag}&checkType=-1&lxType=${status[0]}')"
+                                               href="javascript:;">设置</a>
+                                        </c:if>
+                                        <c:if test="${be.level1!='全公司' }">
+                                            <a style="text-decoration:none"
+                                               onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-1&flag=${flag}')"
+                                               href="javascript:;">设置</a>
+                                        </c:if>
+<%--                                        <a style="text-decoration:none"--%>
+<%--                                           onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-1&flag=${flag}')"--%>
+<%--                                           href="javascript:;">设置</a>--%>
                                             <%--                                <a style="text-decoration:none"--%>
                                             <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"--%>
                                             <%--

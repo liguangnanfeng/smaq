@@ -19,7 +19,7 @@ public interface TSafetyMapper {
      * @return
      */
     Integer insertTSafety(TSafety tSafety);
-
+    void updateTSafety(TSafety tSafety);
     List<TSafety> selectAByIndustryType(@Param("industryType") Integer industryType, @Param("parentId")Integer ParentId);
 
     /**

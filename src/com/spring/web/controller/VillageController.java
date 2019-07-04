@@ -32,6 +32,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.jnlp.IntegrationService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -1698,28 +1699,28 @@ public class VillageController extends BaseController {
         }
         List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(checkId);
         for (TCheckItem tCheckItem : tCheckItems) {
-            if(2== tCheckItem.getStatus()){
-                if(null!=tCheckItem.getDeadline()){
-                    model.addAttribute("deadline",simpleDateFormat.format(tCheckItem.getDeadline()).toString());
+            if (2 == tCheckItem.getStatus()) {
+                if (null != tCheckItem.getDeadline()) {
+                    model.addAttribute("deadline", simpleDateFormat.format(tCheckItem.getDeadline()).toString());
                 }
-                if(null!=tCheckItem.getRecheckTime()){
-                    model.addAttribute("planTime",simpleDateFormat.format(tCheckItem.getRecheckTime()).toString());
+                if (null != tCheckItem.getRecheckTime()) {
+                    model.addAttribute("planTime", simpleDateFormat.format(tCheckItem.getRecheckTime()).toString());
                 }
                 break;
             }
         }
 
         TRectification tRectification = tRectificationMapper.selectByCheckId(checkId);
-        if(null!=tRectification){
+        if (null != tRectification) {
 
-        }else{
+        } else {
             TRectification tRectification1 = new TRectification();
             tRectification1.setDeadline(new Date());
             tRectification1.setPlanTime(new Date());
         }
-        model.addAttribute("rectification",tRectification);
-        model.addAttribute("check",check);
-        model.addAttribute("company",companyMapper.selectByPrimaryKey(user.getId()));
+        model.addAttribute("rectification", tRectification);
+        model.addAttribute("check", check);
+        model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
         model.addAttribute("userId", check.getUserId());
         model.addAttribute("checkId", checkId);
@@ -2078,7 +2079,9 @@ public class VillageController extends BaseController {
 
         List<Map> list = new ArrayList<>();
         if (flag == 1) {
+
             list = tCheckItemMapper.selectListBystatus(user.getId(), flag);
+
             for (Map map : list) {
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -2088,6 +2091,47 @@ public class VillageController extends BaseController {
                     map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
                 }
                 map.put("realTimeStr", format);
+
+                if("全公司".equals(map.get("depart"))){
+                    Integer checkId = (Integer) map.get("checkId");
+                    map.put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
+                    Integer industryType = (Integer) map.get("industryType");
+                    if(null!=industryType&&1==industryType){
+                        map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                    }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                        map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                    }
+                }
+
+                if(null==map.get("fjgkfzr")||"".equals(map.get("fjgkfzr"))){
+                    String name = "";
+                    TCheck tc = tCheckMapper.selectByPrimaryKey((Integer) map.get("checkId"));
+                    // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
+                    List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId((Integer)map.get("checkItemId"));
+                    if (null != integers && integers.size() > 0) {
+                        // 这里进行名称的获取,进行全部循环,获取数据的方式,在数据库中进行查询
+                        List<String> list1 = new ArrayList<String>();
+                        for (Integer integer : integers) {
+                            if (null != integer) {
+                                ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(integer);
+                                if (null != aCompanyManual && null != aCompanyManual.getFjgkfzr()) {
+                                    list1.add(aCompanyManual.getFjgkfzr());
+                                }
+                            }
+                        }
+                        if (list1.size() == 0) {
+                            name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                            tc.setCheckCompany(name);
+                        } else {
+                            name = list1.get(0);
+                            tc.setCheckCompany(name);
+                        }
+                    } else {
+                        name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                        tc.setCheckCompany(name);
+                    }
+                    map.put("fjgkfzr", name);
+                }
             }
         } else if (flag == 2) {
             // 表示的是行政检查
@@ -2097,18 +2141,28 @@ public class VillageController extends BaseController {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String format = sdf.format(realTime);
                 String level = (String) map.get("level");
+                if(null!=map.get("industryType")&&1==map.get("industryType")){
+                    map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                    map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                }
                 map.put("realTimeStr", format);
                 map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
                 // 获取
             }
         } else if (flag == 3) {
-            // 表示的是行政检查
+            // 表示的是部门抽查
             list = tCheckItemMapper.selectBMCCListBystatus(user.getId(), flag);
             for (Map map : list) {
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String format = sdf.format(realTime);
                 String level = (String) map.get("level");
+                if(null!=map.get("industryType")&&1==map.get("industryType")){
+                    map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                    map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                }
                 map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
                 map.put("realTimeStr", format);
             }
@@ -3175,7 +3229,7 @@ public class VillageController extends BaseController {
      *
      */
     @RequestMapping(value = "select-all-level1")
-    public String selectAllLevel1(Integer checkType, String industry, HttpServletRequest request, Model model, String tableName, Integer flag) {
+    public String selectAllLevel1(Integer checkType, String industry,Integer lxType, HttpServletRequest request, Model model, String tableName, Integer flag) {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         if (StringUtils.isNotBlank(industry)) {
@@ -3189,6 +3243,7 @@ public class VillageController extends BaseController {
         model.addAttribute("industry", industry);
         model.addAttribute("flag", flag);
         model.addAttribute("tableName", tableName);
+        model.addAttribute("lxType", lxType);
 
         // 根据 checkType 查询对应的 level1 信息
         if (-2 == checkType) {
@@ -3463,7 +3518,6 @@ public class VillageController extends BaseController {
 
     /**
      * TODO PC端行政检查/部门抽查模板保存
-     * <p>
      * 检查类型就是固定的 都是综合检查表
      *
      * @return message
@@ -3478,7 +3532,9 @@ public class VillageController extends BaseController {
             Integer flag = (Integer) map.get("flag"); //检查方式
             Integer checkType = (Integer) map.get("checkType"); //检查类型 -1 现场 -2 就是基础
             String a = (String) map.get("selectItems");
-
+            Integer type = (Integer) map.get("lxType");
+            Integer cycle = (Integer) map.get("cycle");
+            String [] str = {"日常","定期","季节","其他","综合"};
             if (null == a || "".equals(a)) {
                 result.setStatus("1");
                 result.setMess("页面保存数据为空");
@@ -3492,15 +3548,39 @@ public class VillageController extends BaseController {
             User user = getLoginUser(request);
             // 保存model表数据
             TModel model = new TModel();
-            if (flag == 2) {
+            if (flag==1){
+                model.setTitle("全企业"+str[type-1]+"检查表");
+                if(null!=cycle){
+                    Date d = new Date();
+                    long time1 = d.getTime();
+                    int i = cycle * 24 * 60 * 60 * 1000;
+                    long l = time1 + i;
+                    Date t = new Date(l);
+                    model.setCycle(cycle); //定期周期天数
+                    model.setNextTime(t);     // 下次生成的时间
+                    model.setNextCheckTime(t); // 定期检查的时间
+                    model.setOpen(1);          // 定期生成
+                }
+
+            }else if (flag == 2) {
                 model.setTitle("行政检查表"); // 计划检查名
             } else {
                 model.setTitle("部门检查表"); // 计划检查名
             }
             model.setUserId(user.getId());    // 企业id
             model.setFlag(flag);     //检查方式 1. 企业自查  2 行政检查  3 部门检查
-            model.setType(5);//  检查类型  日常, 定期, 临时
-            model.setPart(user.getUserName()); // 被检查的部门
+            if(null!=type){
+                model.setType(type);//  检查类型  日常, 定期, 临时
+            }else{
+                model.setType(5);//  检查类型  日常, 定期, 临时
+            }
+
+            if(flag==1){
+                model.setPart("全公司"); // 被检查的部门
+            }else{
+                model.setPart(user.getUserName()); // 被检查的部门
+            }
+
             model.setIndustryType(Math.abs(checkType));//基础, 现场, 高危
             model.setCreateTime(new Date()); //创建时间
             tModelMapper.insertSelective(model);
@@ -3514,18 +3594,33 @@ public class VillageController extends BaseController {
             TCheck tCheck = new TCheck();
 
             tCheck.setFlag(flag);                                                   // 1. 企业自查  2 行政检查  3 第三方
-            if (flag == 2) {
+
+            if (flag==1){
+                tCheck.setTitle("全公司"+str[type-1]+"检查表");
+                if(null!=cycle){
+                    Date d = new Date();
+                    long time1 = d.getTime();
+                    int i = cycle * 24 * 60 * 60 * 1000;
+                    long l = time1 + i;
+                    Date t = new Date(l);
+                    tCheck.setExpectTime(t);
+                }
+            }else if (flag == 2) {
                 tCheck.setTitle("行政检查表"); // 计划检查名
             } else {
                 tCheck.setTitle("部门检查表"); // 计划检查名
             }
+
             tCheck.setDepart("全公司");                                              // 被检查的部门
             tCheck.setUserId(user.getId());                                         // 企业公司id
             tCheck.setCreateUser(user.getId());                                     // 创建人的id
             tCheck.setModelId(model.getId());                                       // 模版id
-            tCheck.setType(5);                                                      // 1. 日常 ,2. 定期 3 临时 5 综合
+            if(null!=type){
+                tCheck.setType(type);//  检查类型  日常, 定期, 临时
+            }else{
+                tCheck.setType(5);                                                      // 1. 日常 ,2. 定期 3 临时 5 综合
+            }
             tCheck.setIndustryType(Math.abs(checkType));                            //  2. 现场
-            tCheck.setExpectTime(new Date());                                       // 预计检查时间
             //tCheck.setCheker(user.getUserName());                                   // 检查人 当前的公司名称
             tCheck.setContact(companyMapper.selectByPrimaryKey(user.getId()).getChargeContact());  // 检查人的联系方式无
             tCheck.setStatus(0);                                                    // 表示最开始的检查模版
@@ -3601,7 +3696,7 @@ public class VillageController extends BaseController {
                     tCheckItemMapper.insertSelective(tCheckItem);
 
                 }
-          
+
             }
             result.setStatus("0");
             result.setMess("保存成功");

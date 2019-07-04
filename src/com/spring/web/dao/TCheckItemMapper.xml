@@ -925,6 +925,8 @@
                T4.fjgkfzr,
                T4.level2,
                T1.money,
+               T1.level_id as levelId,
+               T2.industry_type as industryType,
                T1.id as checkItemId,
                T2.id as checkId,
                T4.id as companyManualId,
@@ -941,7 +943,8 @@
           and T1.recheck_file is not null
           order by T2.real_time desc;
     </select>
-    <!-- 行政检查
+    <!--
+    现场
     -->
     <select id="selectXZListBystatus" resultType="java.util.Map">
         select T2.type,
@@ -956,6 +959,8 @@
                T4.level,
                T4.name level2,
                T1.money,
+                T1.level_id as levelId,
+               T2.industry_type as industryType,
                T1.id as checkItemId,
                T2.id as checkId,
                T4.id as companyManualId,
@@ -973,7 +978,7 @@
           order by T2.real_time desc;
     </select>
     <!--
-           部门抽查
+          基础
     -->
     <select id="selectBMCCListBystatus" resultType="java.util.Map">
         select T2.type,
@@ -987,6 +992,8 @@
                T1.status,
                T4.name level2,
                T1.money,
+               T1.level_id as levelId,
+               T2.industry_type as industryType,
                T1.id as checkItemId,
                T2.id as checkId,
                T4.id as companyManualId,

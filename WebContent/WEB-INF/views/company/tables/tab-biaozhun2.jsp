@@ -183,10 +183,12 @@
         <button onClick="addNew()"
                 class="btn btn-success radius" title="添加" type="button" style="padding: 0 50px;">添加
         </button>
-<button onClick="daoru()"
+        <c:set var="length" value="${fn:length(list) }" />
+        <c:if test="${length<4}">
+        <button onClick="daoru()"
                class="btn btn-success radius" title="一键导入" type="button" style="padding: 0 50px;">一键导入
         </button>
-
+        </c:if>
         <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
     </div>
     <div class="mt-20 my_flex f_j_c f_wrap" style="width:100%;">

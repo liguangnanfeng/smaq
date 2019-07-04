@@ -113,7 +113,7 @@ function init_all_box() {
         </c:if>
       </c:if>
   </div>
-  <h2 class="text-c mb-10">隐患整改意见表</h2>
+  <h2 class="text-c mb-10">隐患整改表</h2>
   <div class="div_pdetail">
   	<font>受检${check.flag == 1 ? '部门' : '单位'}：${check.depart }</font>
     <label>检查日期：<fmt:formatDate value="${check.realTime }" pattern="yyyy年MM月dd日"/></label>

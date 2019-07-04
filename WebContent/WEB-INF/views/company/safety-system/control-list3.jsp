@@ -61,7 +61,7 @@
             position: fixed;
             z-index: 998;
             background-color: #fcf9f2;
-            display: none;
+            <%--display: none;--%>
             border-radius: 5px;
             box-shadow: 2px 2px 5px #333333;
             width: 300px;
@@ -343,7 +343,7 @@
         var gkcs = document.getElementById("line_" + xuhao).children[8].textContent;
 
         infowin.setContent(
-            "<b>序号: </b>" + xuhao+  "<br>"
+            "<b>序号: </b>" + xuhao + "<br>"
             + "<b>岗位/部位：</b>" + gwbw + "<br>"
             + "<b>风险类型：</b>" + fxlx + "<br>"
             + "<b>风险因素：</b>" + fxys + "<br>"

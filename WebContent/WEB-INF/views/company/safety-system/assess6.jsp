@@ -135,7 +135,8 @@
 </head>
 <body>
 <nav class="breadcrumb text-c">
-  <a class="btn-page"  data-href="${ly }/company/safety-system/assess5"  data-title="重大风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">重大风险评估</a>
+  <a class="btn-page"  data-href="${ly }/company/safety-system/assess7"  data-title="重大风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">评估操作</a>
+  <a class="btn-page"  data-href="${ly }/company/safety-system/assess"  data-title="重大风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">重大风险评估</a>
   <a class="btn-page" data-href="${ly }/company/safety-system/assess-list"  data-title="较大风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">较大风险评估</a>
   <a class="btn-page pagexz" href="javascript:;">一般和较小风险评估</a>
   <%--<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>--%>
@@ -169,11 +170,13 @@
       <thead>
       <tr class="text-c">
         <th style="width:40px"><input type="checkbox" value="${be.id }" class="check-all"/></th>
-        <th style="min-width:100px">辨识类型</th>
-        <th style="min-width:100px">系统</th>
-        <th style="min-width:100px">环节/部位</th>
-        <th style="min-width:100px">风险因素</th>
-        <th style="min-width:100px">风险等级</th>
+        <th style="min-width:80px">辨识类型</th>
+        <th style="min-width:80px">车间/场所</th>
+        <th style="min-width:80px">系统</th>
+        <th style="min-width:80px">环节/部位</th>
+        <th style="min-width:70px">风险等级</th>
+        <th style="min-width:150px">事故类型</th>
+        <th style="min-width:200px">风险因素</th>
         <!-- <th style="min-width:100px">作业条件风险程度评价(LEC)</th>
         <th style="min-width:100px">风险矩阵法评价(LS)</th> -->
         <th style="min-width:265px">评估</th>
@@ -181,27 +184,25 @@
       </thead>
       <tbody>
       <c:forEach items="${list }" var="be" varStatus="index">
-        <tr class="text-c">
-          <td><input type="checkbox" value="${be.id }"/></td>
+        <tr>
+          <td class="text-c"><input type="checkbox" value="${be.id}"/></td>
+            <%-- <td class="text-c">${be.level3 }</td> --%>
           <c:set value="${fn:split(be.level3,'/')}" var="ls"></c:set>
-          <c:set value="0" var="y"/>
-          <c:forEach items="${ls}" var="l">
-            <c:set value="${y+1}" var="y"/>
-            <c:if test="${y==1}">
-              <c:set value="${l}" var="point1"/>
-            </c:if>
-            <c:if test="${y==2}">
-              <c:set value="${l}" var="point2"/>
-            </c:if>
-            <c:if test="${y==3}">
-              <c:set value="${l}" var="point3"/>
-            </c:if>
-          </c:forEach>
-          <td><p>${point1}</p></td>
-          <td><p>${point2}</p></td>
-          <td><p>${point3}</p></td>
-          <td>${be.factors }</td>
-          <td>
+
+          <td class="text-c">${ls[0] != null ? ls[0] : "暂无数据" }</td>
+
+          <c:if test="${be.flag == 2}">
+            <td class="text-c">公司</td>
+          </c:if>
+
+          <c:if test="${be.flag != 2}">
+            <td class="text-c">${be.gkzt != null ? be.gkzt : "暂无数据" }</td>
+          </c:if>
+
+          <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
+
+          <td class="text-c">${be.level2 == null ? "暂无数据" : be.level2}</td>
+          <td class="text-c">
             <c:choose>
               <c:when test="${be.level eq '红色'}"><font class="col-a">${be.level}</font></c:when>
               <c:when test="${be.level eq '橙色'}"><font class="col-b">${be.level}</font></c:when>
@@ -209,13 +210,36 @@
               <c:when test="${be.level eq '蓝色'}"><font class="col-d">${be.level}</font></c:when>
             </c:choose>
           </td>
-          <td>
+          <td class="text-c">${be.type }</td>
+          <td class="text-c">${be.factors }</td>
+
+          <td class="text-c">
             <input class="btn btn-danger-outline size-S radius ml-5" type="button" value="红色" onclick="zpLevel_save_(${be.id},this)"/>
             <input class="btn btn-warning-outline size-S radius ml-5" type="button" value="橙色" onclick="zpLevel_save_(${be.id},this)"/>
             <input class="btn btn-warning-outline size-S radius btn-huang ml-5" type="button" value="黄色" onclick="zpLevel_save_(${be.id},this)"/>
             <input class="btn btn-secondary-outline size-S radius ml-5 mr-5" type="button" value="蓝色" onclick="zpLevel_save_(${be.id},this)"/>
-            <a class="btn size-S radius" style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;" title="删除">删除</a>
+            <a class="btn-cz" style="text-decoration:none;" onClick="del_(${be.id})" href="javascript:;" title="删除">删除</a>
           </td>
+            <%-- <c:set value="${fn:split(be.level3,'/')}" var="ls"></c:set>
+             <c:set value="0" var="y"/>
+             <c:forEach items="${ls}" var="l">
+               <c:set value="${y+1}" var="y"/>
+               <c:if test="${y==3}">
+                 <c:set value="${l}" var="point"/>
+               </c:if>
+             </c:forEach>
+             <p>${point}</p>--%>
+            <%-- </td>
+             <td class="text-c"><font class="col-a">红色</font></td>
+             <td>${be.factors }</td>
+             &lt;%&ndash;<td>${be.type }</td>&ndash;%&gt;
+             <td class="text-c">
+               <input class="btn btn-danger-outline size-S radius ml-5" type="button" value="红色" onclick="zpLevel_save_(${be.id},this)"/>
+               <input class="btn btn-warning-outline size-S radius ml-5" type="button" value="橙色" onclick="zpLevel_save_(${be.id},this)"/>
+               <input class="btn btn-warning-outline size-S radius btn-huang ml-5" type="button" value="黄色" onclick="zpLevel_save_(${be.id},this)"/>
+               <input class="btn btn-secondary-outline size-S radius ml-5 mr-5" type="button" value="蓝色" onclick="zpLevel_save_(${be.id},this)"/>
+               <a class="btn-cz" style="text-decoration:none;" onClick="del_(${be.id})" href="javascript:;" title="删除">删除</a>
+             </td>--%>
         </tr>
       </c:forEach>
       </tbody>

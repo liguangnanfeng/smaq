@@ -1897,6 +1897,42 @@ public class CompanyController_safety extends BaseController {
         }
     }
 
+
+    /**
+     * @author     ：小明！！！
+     * @description：未辨识风险展示
+     */
+    /**
+     * 一般和较小判定
+     */
+    @RequestMapping({"assess7"})
+    public String assess7(Model model, HttpServletRequest request) throws Exception {
+        User user = this.getLoginUser(request);
+        Company company = this.companyMapper.selectByPrimaryKey(user.getId());
+        if (StringUtils.isEmpty(company.getIndustry())) {
+            model.addAttribute("url", request.getRequestURI());
+            return "company/safety-system/type";
+        } else {
+            model.addAttribute("company", company);
+            Map<String, Object> m = new HashMap();
+            m.put("uid", user.getId());
+            m.put("flag", "3");
+            List<Map<String, Object>> acL = this.aCompanyManualMapper.selectByAssess7(m);
+            model.addAttribute("list", acL);
+            Integer indus = 0;
+            if (company.getIndustry().contains("化工")){
+                indus = 1;
+            }else {
+                indus = 2;
+            }
+            model.addAttribute("indus",indus);
+            return "company/safety-system/assess7";
+        }
+    }
+
+
+
+
     /**
      * TODO 岗位风险公告牌 风险告知牌
      */
@@ -2482,7 +2518,7 @@ public class CompanyController_safety extends BaseController {
      * 重大风险判定
      */
     @RequestMapping(value = "assess5")
-    public String assess5(Model model, HttpServletRequest request) throws Exception {
+    public String assess5(Model model, HttpServletRequest request, String number) throws Exception {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         if (StringUtils.isEmpty(company.getIndustry())) {

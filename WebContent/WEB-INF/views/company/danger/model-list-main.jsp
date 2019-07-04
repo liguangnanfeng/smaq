@@ -553,6 +553,8 @@
         var idx = '';
         var zzJid = '';
         var vid = '';
+
+
         $('.table-sort').dataTable({
             "aaSorting": [[0, "asc"]],//默认第几个排序
             "bStateSave": false,//状态保存
@@ -647,6 +649,10 @@
         }, function (result, status) {
             if (status == 'success') {
                 if (result.status == 0) {
+                    localStorage.setItem('flag', flag);
+                    localStorage.setItem('dmname', dmname);
+                    localStorage.setItem('industryType', industryType);
+                    localStorage.setItem('template', template);
                     var url = '${ly}/village/plan-next?flag=' + result.data.flag + '&id=' + result.data.modelId;
                     window.location.href = url;
                 } else {
@@ -658,7 +664,10 @@
         })
     }
     function szss_list(dmname, industryType,template, flag) {   //点击整改复查实施方法
-
+        localStorage.setItem('flag', flag);
+        localStorage.setItem('dmname', dmname);
+        localStorage.setItem('industryType', industryType);
+        localStorage.setItem('template', template);
         var url = '${ly}/company/check-list-szss?dmName='+dmname+'&flag=' + flag + '&industryType=' +industryType+'&template = '+template;
         window.location.href = url;
 

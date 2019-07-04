@@ -576,8 +576,22 @@
         from
         a_company_manual_tbl T1
         where
-        T1.uid = #{uid} and T1.del = 0 and T1.flag = #{flag}
+        T1.uid = #{uid} and T1.del = 0 and T1.flag != 1 and T1.flag != 2 and T1.level != ""
     </select>
+
+
+    <select id="selectByAssess7" resultType="java.util.HashMap">
+        select
+        T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
+        T1.flag,
+        T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
+        from
+        a_company_manual_tbl T1
+        where
+        T1.uid = #{uid} and T1.del = 0 and T1.level = ""
+    </select>
+
 
 
     <select id="selectByMapGroupByLevel1Level2" resultType="java.util.HashMap">
@@ -1110,9 +1124,9 @@
     </insert>
 
     <!-- 添加数据信息到数据库！！！ -->
-    <insert id="insertAdd">
+        <insert id="insertAdd">
         insert into a_company_manual_tbl (uid,dmid,
-        level1, level2, level3, factors, type, measures, reference, flag, del, ctime,gkzt, fjgkfzr, riskId)
+        level1, level2, level3, factors, type, measures, reference, flag, level, del, ctime,gkzt, fjgkfzr, riskId)
         values (#{uid,jdbcType=INTEGER}, #{dmid,jdbcType=INTEGER},
         #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},#{factors,jdbcType=VARCHAR},
         #{type,jdbcType=VARCHAR}, #{measures,jdbcType=VARCHAR},#{reference,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR},#{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP},

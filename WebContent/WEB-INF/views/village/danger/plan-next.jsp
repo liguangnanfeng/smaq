@@ -125,14 +125,14 @@
         <label>检查日期：<fmt:formatDate value="${now }" pattern="yyyy年MM月dd日"/></label>--%>
         <c:if test="${check.flag==1}">
             <c:if test="${check.depart=='全公司'}">
-             <font >检查单位：${company.name }</font>
+                <font>检查单位：${company.name }</font>
             </c:if>
             <c:if test="${check.depart!='全公司'}">
-                <font >检查单位：${check.depart }</font>
+                <font>检查单位：${check.depart }</font>
             </c:if>
         </c:if>
         <c:if test="${check.flag!=1}">
-            <font >受检单位：${company.name }</font>
+            <font>受检单位：${company.name }</font>
         </c:if>
 
     </div>
@@ -171,7 +171,7 @@
                             <tr>
                         </c:if>
                         <c:set var="split" value="${fn:split(ch.levels,'/') }"/>
-<%--                        <td class="text-l">${check.depart}</td>--%>
+                        <%--                        <td class="text-l">${check.depart}</td>--%>
                         <td class="text-l">${check.depart}(${departName})</td>
                         <td class="text-l">
                             <c:if test="${check.industryType==1}">基础检查</c:if>
@@ -214,10 +214,10 @@
             <tr>
                 <td colspan="3">
                     <div style="float:left;width:100%;position: relative;min-height:150px;">
-                       <%-- <c:if test="${check.flag == 3 && check.checkCompany eq '无锡市安泰安全技术服务有限公司'}">
-                            <img alt="" src="${ly }/images/zhang.png"
-                                 style="position: absolute;bottom:10px;right:10px;height:130px;"/>
-                        </c:if>--%>
+                        <%-- <c:if test="${check.flag == 3 && check.checkCompany eq '无锡市安泰安全技术服务有限公司'}">
+                             <img alt="" src="${ly }/images/zhang.png"
+                                  style="position: absolute;bottom:10px;right:10px;height:130px;"/>
+                         </c:if>--%>
                         <c:if test="${check.flag > 1}">
                             <div class="div_pleft  mt-10 mb-10">检查部门/单位：</div>
                             <div class="div_pright  mt-10 mb-10">
@@ -508,6 +508,7 @@
     })
 
     function article_save_submit() {
+
         if ($("#cheker").val() == '') {
             layer.alert("检查人不能为空");
             return false;
@@ -535,6 +536,10 @@
                 layer.alert(result.map.message);
             } else {
                 top.ref_ifm();
+                var l_flag = parseInt(localStorage.getItem('flag'))  ;
+                var l_dmname =localStorage.getItem('dmname').replace(/\s*/g,"");
+                var l_industryType = parseInt(localStorage.getItem('industryType'));
+
                 var x = "企业自查";
                 if (flag == 2) {
                     x = "行政检查";
@@ -546,7 +551,9 @@
                     if ($(":radio[value='2']:checked").length > 0) {
                         top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);
                     } else {
-                        top.show_tab(x, '/village/check-list?flag=' + flag)
+                        var url = '${ly}/company/check-list-szss?dmName='+l_dmname+'&flag='+l_flag+'&industryType='+l_industryType;
+                        top.show_tab(x, url)
+                        // top.show_tab(x, '/village/check-list?flag=' + flag)
                     }
                 } else {
                     close_dialog(function () {

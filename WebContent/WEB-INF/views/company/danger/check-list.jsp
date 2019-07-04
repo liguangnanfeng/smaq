@@ -273,12 +273,16 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(function () {
-        $('.table-sort').dataTable({
-            "aaSorting": [[0, "asc"]],//默认第几个排序
-            "bStateSave": false,//状态保存
-            "aoColumnDefs": []
-        });
+
+$(function() {
+    sessionStorage.setItem('jumpFlag', 'pcjl');
+
+
+  $('.table-sort').dataTable({
+    "aaSorting": [[0, "asc"]],//默认第几个排序
+    "bStateSave": false,//状态保存
+    "aoColumnDefs": [
+    ]
     });
 
     /*删除*/

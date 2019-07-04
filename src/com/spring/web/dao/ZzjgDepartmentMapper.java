@@ -147,4 +147,5 @@ public interface ZzjgDepartmentMapper {
     List<Map<String,Object>> selectHiddenPlan(@Param("uid")Integer uid);
 
     List<ZzjgDepartment> selectDangerIds(@Param("uid")Integer uid, @Param("dangerIds")String dangerIds);
+
 }

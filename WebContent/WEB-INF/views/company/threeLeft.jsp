@@ -94,7 +94,7 @@
         <!-- 风险评估 -->
         <c:if test="${leftBasic== 2}">
             <ul>
-            <li><a href="${ly }/company/safety-system/assess5" data-title="评估操作"
+            <li><a href="${ly }/company/safety-system/assess7" data-title="评估操作"
             href="javascript:void(0)">评估操作</a></li>
             <li><a href="${ly }/company/safety-system/control-list2?flag=1" data-title="评估结果"
             href="javascript:void(0)">评估结果</a></li>

@@ -56,7 +56,7 @@ function pr_() {
   </div>
   <div class="page-container" id="div_container" >
     <div class="div-print">
-      <c:if test="${flag == 1}"><h3 class="text-c">${company.name}评估结果表</h3></c:if>
+      <c:if test="${flag == 1}"><h3 class="text-c">${company.name}风险评估结果表</h3></c:if>
       <c:if test="${flag == 3}"><h3 class="text-c">${company.name}风险分布表</h3></c:if>
         <div class="cl pd-5 bg-1 bk-gray mt-20">
      		<span class="r">共有数据：<strong>${fn:length(list) }</strong> 条；重大风险：<strong>${fn:length(list11) }</strong> 条；较大风险：<strong>${fn:length(list22) }</strong> 条
@@ -158,5 +158,5 @@ function pr_() {
     </div>
   </div>
 </body>
-<script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset_top3col.js"></script>
+<%--<script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset_top3col.js"></script>--%>
 </html>

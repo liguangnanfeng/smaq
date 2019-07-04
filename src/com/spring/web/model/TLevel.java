@@ -28,10 +28,14 @@ public class TLevel implements Serializable {
 
     private String name;
 
+    private String level;
+
+    private Integer flag;
+
     public TLevel() {
     }
 
-    public TLevel(Integer id, String industry, String level1, String level2, String level3, String factors, Integer industry_id, String type, String measures, String reference, String name) {
+    public TLevel(Integer id, String industry, String level1, String level2, String level3, String factors, Integer industry_id, String type, String measures, String reference, String name, String level, Integer flag) {
         this.id = id;
         this.industry = industry;
         this.level1 = level1;
@@ -43,6 +47,8 @@ public class TLevel implements Serializable {
         this.measures = measures;
         this.reference = reference;
         this.name = name;
+        this.level = level;
+        this.flag = flag;
     }
 
     public static long getSerialVersionUID() {
@@ -135,5 +141,21 @@ public class TLevel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
     }
 }

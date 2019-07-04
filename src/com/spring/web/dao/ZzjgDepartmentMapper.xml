@@ -16,7 +16,7 @@
             <arg column="pid" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="level" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="uid" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="dangerId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="dangerId" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="flag" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         </constructor>
     </resultMap>
@@ -127,7 +127,7 @@
                 #{uid,jdbcType=INTEGER},
             </if>
             <if test="dangerId != null">
-                #{dangerId,jdbcType=INTEGER},
+                #{dangerId,jdbcType=VARCHAR},
             </if>
             <if test="flag != null">
                 #{flag,jdbcType=INTEGER},
@@ -166,7 +166,7 @@
                 uid = #{uid,jdbcType=INTEGER},
             </if>
             <if test="dangerId != null">
-                dangerId = #{dangerId,jdbcType=INTEGER},
+                dangerId = #{dangerId,jdbcType=VARCHAR},
             </if>
             <if test="flag != null">
                 flag = #{flag,jdbcType=INTEGER},
@@ -188,7 +188,7 @@
         pid = #{pid,jdbcType=INTEGER},
         level = #{level,jdbcType=INTEGER},
         uid = #{uid,jdbcType=INTEGER},
-        dangerId = #{dangerId,jdbcType=INTEGER}
+        dangerId = #{dangerId,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
 
@@ -258,12 +258,22 @@
     </select>
 
 
+
+    <!--  查询 ID 查询对应的 name 信息 -->
+    <select id="selectDangerIds" resultType="com.spring.web.model.ZzjgDepartment">
+        SELECT * FROM `zzjg_department_tbl` where uid = #{uid} and del = 0 and level = 1 and dangerId like  CONCAT('%', #{dangerIds},'%')
+    </select>
+
+
+
+
     <select id="selectAllName" resultType="java.util.Map">
         SELECT
             t1.id,
             t1.name,
             t1.level,
             t1.flag,
+            t1.pid,
             ( SELECT name FROM zzjg_department_tbl WHERE id = t1.pid ) parName,
             t2.danger_point
         FROM
@@ -272,7 +282,7 @@
         distinguish_type t2 on t1.id = t2.dep_id AND  t2.flag = #{flag,jdbcType=INTEGER}
         WHERE
         t1.del = 0
-        AND t1.uid = #{uid,jdbcType=INTEGER} AND t1.flag = 1 AND t1.level = 2
+        AND t1.uid = #{uid,jdbcType=INTEGER} AND t1.flag = 1 AND t1.level = 2 and t1.pid in (${pids})
         ORDER BY parName ASC
 
     </select>
@@ -316,7 +326,7 @@
         (select name from zzjg_company_tbl where id = t1.cid) companyName
         from zzjg_department_tbl t1
         where
-        t1.del = 0 and t1.level = 1 and t1.dangerId in (${dangerIds})
+        t1.del = 0 and t1.level = 1 and t1.dangerId like CONCAT('%', #{dangerIds},'%')
         and t1.uid = #{uid,jdbcType=INTEGER}
         order by t1.id asc
     </select>
@@ -429,8 +439,21 @@
         uid, dangerId, flag)
         values (#{ctime,jdbcType=TIMESTAMP}, #{utime,jdbcType=TIMESTAMP}, #{del,jdbcType=INTEGER},
         #{name,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{level,jdbcType=INTEGER},
-        #{uid,jdbcType=INTEGER}, #{dangerId,jdbcType=INTEGER} , #{flag,jdbcType=INTEGER})
+        #{uid,jdbcType=INTEGER}, #{dangerId,jdbcType=VARCHAR} , #{flag,jdbcType=INTEGER})
     </insert>
+
+
+
+    <!-- 修改数据时间信息 -->
+    <update id="updateDangerId" parameterType="com.spring.web.model.ZzjgDepartment">
+        update zzjg_department_tbl
+        set dangerId = #{dangerId,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+
+
 
     <!-- 修改数据时间信息 -->
     <update id="updateAll" parameterType="com.spring.web.model.ZzjgDepartment">
@@ -439,12 +462,6 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <!-- 根据 ID 修改  -->
-    <update id="updateDangerId" parameterType="com.spring.web.model.ZzjgDepartment">
-        update zzjg_department_tbl
-        set dangerId = #{dangerId,jdbcType=INTEGER}
-        where id = #{id,jdbcType=INTEGER}
-    </update>
 
     <!--
         根据父级id进行排序

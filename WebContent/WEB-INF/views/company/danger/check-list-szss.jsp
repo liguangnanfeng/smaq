@@ -93,8 +93,14 @@ body .dis-ib{margin-right:15px;}
             <%--<td>${flag == 1 ? be.depart : be.checkCompany}</td>--%>
             <td>
                 <c:if test="${be.c!=0}">
-                    <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">整改详情</a></br>
                     <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">实施复查</a>
+                    <br>
+                    <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">整改详情</a>
+                    <br>
+                    <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }&number=${be.c}')" href="javascript:;">查看详情</a>
+                    <br>
+                    <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除</a>
+
                 </c:if>
             </td>
             </tr>
@@ -129,6 +135,19 @@ var type = '${type}';
 function copy_(id) {
   show_tab('添加自查记录', getRootPath()+'/company/check-copy?id=' + id);
 }
+
+
+function del_(id){
+    layer.confirm("要删除该记录？", function(i) {
+        layer.close(i);
+        $.post(getRootPath()+"/company/check-del",{
+            id:id
+        },function(reuslt){
+            location.reload();
+        })
+    })
+}
+
 </script> 
 </body>
 </html>

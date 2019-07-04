@@ -1182,15 +1182,17 @@ public class VillageController extends BaseController {
         if (setUserId(user, m)) {
             clearVillageTown(m);
             List<Map<String, Object>> list = tCheckMapper.selectListByMap(m);
-            model.addAttribute("list", list);
 
             Integer sum = 0;
 
             for (int i = 0; i < list.size(); i++) {
+
                 sum += Integer.parseInt(String.valueOf((Long) list.get(i).get("c")));
             }
             model.addAttribute("sum", sum);
+            model.addAttribute("list", list);
         }
+
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
         model.addAttribute("title", title);
@@ -1229,13 +1231,16 @@ public class VillageController extends BaseController {
         if (setUserId(user, m)) {
             clearVillageTown(m);
             List<Map<String, Object>> list = tCheckMapper.selectList(m);
-            model.addAttribute("list", list);
+
 
             Integer sum = 0;
             for (int i = 0; i < list.size(); i++) {
+                DynamicParameter<String, Object> id = tCheckMapper.selectCompany((Integer) list.get(i).get("id"));
+                list.get(i).put("listM",id);
                 sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
             }
             model.addAttribute("sum", sum);
+            model.addAttribute("list", list);
         }
 
         model.addAttribute("type", type);

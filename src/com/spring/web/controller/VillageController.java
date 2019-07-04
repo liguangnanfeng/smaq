@@ -1484,10 +1484,10 @@ public class VillageController extends BaseController {
 
         List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(checkItemByModelId.getCheckId());
         //log.error("tCheckPartMapper条目信息:"+partL.toString());
-        for (TCheckPart a : partL) {
-            String levels = a.getLevels();
-            //log.error("levels:"+levels);
-        }
+
+
+
+        //
 
         model.addAttribute("check", tc);
         model.addAttribute("partL", partL);
@@ -1541,6 +1541,22 @@ public class VillageController extends BaseController {
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("userId", user.getId());
 
+        Set<String> set = new LinkedHashSet<String>();
+
+        for (Map<String, Object> stringObjectMap : iteml) {
+
+            String levels = (String) stringObjectMap.get("levels");
+            if(levels.contains("/")){
+                String[] split = levels.split("/");
+                set.add(split[1]);
+            }
+        }
+        String departName = "";
+        for (String s : set) {
+            departName+=s;
+        }
+
+        model.addAttribute("departName",departName);
         model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
         log.error("plan-next：" + 6);
         if (type == 9) {

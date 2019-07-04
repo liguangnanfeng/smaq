@@ -2783,7 +2783,6 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("partL", partL);
         model.addAttribute("user", user);
         StringBuffer levelIds = new StringBuffer();
-        // 第一次我要将里面的数据便利出来获取唯一的值
         Set<String> set = new LinkedHashSet<String>();
         for (TModelPart tModelPart : partL) {
             set.add(tModelPart.getLevels());
@@ -3574,7 +3573,6 @@ public class CompanyController_cd extends BaseController {
         }
         return result;
     }
-
 
     /**
      * TODO 隐患排查治理板块 => 检查设置实施中首页表显示车间

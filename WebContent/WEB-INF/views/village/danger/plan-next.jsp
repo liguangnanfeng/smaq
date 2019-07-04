@@ -124,7 +124,12 @@
         <%--<font>受检${check.flag == 1 ? '部门' : '单位'}：${check.depart }</font>
         <label>检查日期：<fmt:formatDate value="${now }" pattern="yyyy年MM月dd日"/></label>--%>
         <c:if test="${check.flag==1}">
-            <font >检查单位：${check.depart }</font>
+            <c:if test="${check.depart=='全公司'}">
+             <font >检查单位：${company.name }</font>
+            </c:if>
+            <c:if test="${check.depart!='全公司'}">
+                <font >检查单位：${check.depart }</font>
+            </c:if>
         </c:if>
         <c:if test="${check.flag!=1}">
             <font >受检单位：${company.name }</font>
@@ -166,7 +171,8 @@
                             <tr>
                         </c:if>
                         <c:set var="split" value="${fn:split(ch.levels,'/') }"/>
-                        <td class="text-l">${check.depart}</td>
+<%--                        <td class="text-l">${check.depart}</td>--%>
+                        <td class="text-l">${departName}</td>
                         <td class="text-l">
                             <c:if test="${check.industryType==1}">基础检查</c:if>
                             <c:if test="${check.industryType==2}">现场检查</c:if>

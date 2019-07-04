@@ -481,10 +481,22 @@
                 layer.alert(result.map.message);
             } else {
                 top.ref_ifm();
+                var x = "企业自查";
+                if (flag == 2) {
+                    x = "行政检查";
+                }
+                if (flag == 3) {
+                    x = "部门抽查";
+                }
                 if (flag != 1) {
                     top.show_tab('现场检查记录_' + checkId, '/village/check-document?checkId=' + checkId + '&flag=8')
                 } else {
-                    location.reload();
+                    var l_flag = parseInt(localStorage.getItem('flag'))  ;
+                    var l_dmname =localStorage.getItem('dmname').replace(/\s*/g,"");
+                    var l_industryType = parseInt(localStorage.getItem('industryType'));
+                    var url = '${ly}/company/check-list-szss?dmName='+l_dmname+'&flag='+l_flag+'&industryType='+l_industryType;
+                    top.show_tab(x, url)
+                    // location.reload();
                 }
 
 

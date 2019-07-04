@@ -85,8 +85,8 @@
 </head>
 <body>
 <nav class="breadcrumb text-c">
-  <a class="btn-page"  data-href="${ly }/company/safety-system/assess7"  data-title="重大风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">评估操作</a>
-  <a class="btn-page pagexz" href="javascript:;">重大风险评估</a>
+  <a class="btn-page"  data-href="${ly }/company/safety-system/assess7"  data-title="评估操作" onclick="Hui_admin_tab(this)" href="javascript:;">评估操作</a>
+  <a class="btn-page pagexz" href="javascript:;" >重大风险评估</a>
   <a class="btn-page" data-href="${ly }/company/safety-system/assess-list"  data-title="较大风险风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">较大风险风险评估</a>
   <a class="btn-page"  data-href="${ly }/company/safety-system/assess6"  data-title="一般和较小风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">一般和较小风险评估</a>
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
@@ -109,7 +109,6 @@
           </c:if>
 		    <a class="btn btn-success-outline radius" href="javascript:void(0)" onclick="show_dialog('作业条件风险程度评价','/company/safety-system/assess2?id=')"><i class="Hui-iconfont" style="font-size:15px;"></i> LEC评测</a>
             <a class="btn btn-success-outline radius" href="javascript:void(0)" onclick="show_dialog('风险矩阵法评价','/company/safety-system/assess3?id=')"><i class="Hui-iconfont" style="font-size:15px;"></i> LS评测</a>
-
 
         </span>
   </div>

@@ -132,11 +132,11 @@
           })
       })
   </script>
-</head>
+</head>s
 <body>
 <nav class="breadcrumb text-c">
-  <a class="btn-page"  data-href="${ly }/company/safety-system/assess7"  data-title="重大风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">评估操作</a>
-  <a class="btn-page"  data-href="${ly }/company/safety-system/assess"  data-title="重大风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">重大风险评估</a>
+  <a class="btn-page"  data-href="${ly }/company/safety-system/assess7"  data-title="评估操作" onclick="Hui_admin_tab(this)" href="javascript:;">评估操作</a>
+  <a class="btn-page"  data-href="${ly }/company/safety-system/assess5"  data-title="重大风险评估" onclick="Hui_admin_tab(this)" href="javascript:;">重大风险评估</a>
   <a class="btn-page" data-href="${ly }/company/safety-system/assess-list"  data-title="较大风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">较大风险评估</a>
   <a class="btn-page pagexz" href="javascript:;">一般和较小风险评估</a>
   <%--<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>--%>

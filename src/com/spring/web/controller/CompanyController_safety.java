@@ -1306,8 +1306,10 @@ public class CompanyController_safety extends BaseController {
             }else {
                 indus = 2;
             }
+
             model.addAttribute("indus",indus);
             model.addAttribute("list", acL);
+            model.addAttribute("industry",company.getIndustry());
             model.addAttribute("depL", this.zzjgDepartmentMapper.selectLevel2ByUid(user.getId()));
             model.addAttribute("shL", this.aGwyjShMapper.selectAll());
             return "company/safety-system/assess-list";
@@ -1892,6 +1894,7 @@ public class CompanyController_safety extends BaseController {
             }else {
                 indus = 2;
             }
+            model.addAttribute("industry",company.getIndustry());
             model.addAttribute("indus",indus);
             return "company/safety-system/assess6";
         }
@@ -1925,6 +1928,7 @@ public class CompanyController_safety extends BaseController {
             }else {
                 indus = 2;
             }
+            model.addAttribute("industry",company.getIndustry());
             model.addAttribute("indus",indus);
             return "company/safety-system/assess7";
         }

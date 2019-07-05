@@ -3504,7 +3504,6 @@ public class CompanyController_cd extends BaseController {
         return result;
     }
 
-
     /**
      * TODO 隐患排查治理板块 => 检查设置实施中首页表显示车间
      * 是根据conpanyManual这张表中的数据车间数据进行查询
@@ -3529,38 +3528,42 @@ public class CompanyController_cd extends BaseController {
         jiChuItem.add(map1);
         jiChuItem.addAll(aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理"));
 
+        Map<String, Object> map2 = new LinkedHashMap<String, Object>();
+        map2.put("level1", "全公司");
         List<Map<String, Object>> XianChangItem = new ArrayList<>();
-        XianChangItem.add(map1);
+        XianChangItem.add(map2);
         XianChangItem.addAll(aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理"));
 
-        for (Map<String, Object> jiChuMap: jiChuItem) {
-            Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
-            map.put(5, 0);
-            map.put(1, 0);
-            map.put(2, 0);
-            map.put(3, 0);
-            map.put(4, 0);
-            String level1 = (String) jiChuMap.get("level1");
-            List<Integer> types = tModelMapper.selecttype(level1, user.getId(), 1, flag);
-            for (Integer integer : types) {
-                map.put(integer, 1);
+        for (Map<String, Object> XianChangMap : XianChangItem) {
+            Map<Integer, Integer> Xianmap = new LinkedHashMap<Integer, Integer>();
+            Xianmap.put(5, 0);
+            Xianmap.put(1, 0);
+            Xianmap.put(2, 0);
+            Xianmap.put(3, 0);
+            Xianmap.put(4, 0);
+            String level1 = (String) XianChangMap.get("level1");
+            List<Integer> Xiantypes = tModelMapper.selecttype(level1, user.getId(), 2, flag);
+            for (Integer integer : Xiantypes) {
+                Xianmap.put(integer, 1);
             }
-            jiChuMap.put("array", map);
+            System.out.println("现场"+Xianmap);
+            XianChangMap.put("array", Xianmap);
         }
 
-        for (Map<String, Object> XianChangMap : XianChangItem) {
-            Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
-            map.put(5, 0);
-            map.put(1, 0);
-            map.put(2, 0);
-            map.put(3, 0);
-            map.put(4, 0);
-            String level1 = (String) XianChangMap.get("level1");
-            List<Integer> types = tModelMapper.selecttype(level1, user.getId(), 2, flag);
-            for (Integer integer : types) {
-                map.put(integer, 1);
+        for (Map<String, Object> jiChuMap: jiChuItem) {
+            Map<Integer, Integer> Jimap = new LinkedHashMap<Integer, Integer>();
+            Jimap.put(5, 0);
+            Jimap.put(1, 0);
+            Jimap.put(2, 0);
+            Jimap.put(3, 0);
+            Jimap.put(4, 0);
+            String level1 = (String) jiChuMap.get("level1");
+            List<Integer> Jitypes = tModelMapper.selecttype(level1, user.getId(), 1, flag);
+            for (Integer integer : Jitypes) {
+                Jimap.put(integer, 1);
             }
-            XianChangMap.put("array", map);
+            System.out.println("基础"+Jimap);
+            jiChuMap.put("array", Jimap);
         }
 
         model.addAttribute("flag", flag);
@@ -4077,27 +4080,13 @@ public class CompanyController_cd extends BaseController {
             model.addAttribute("latitude", null);
             model.addAttribute("longitude", null);
         }
+
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
         log.error("整改详情进行显示的条件" + tCheckMapper.selectCompany(id));
 
         log.error("检查详情：" + jcxq);//首页——定期检查——检查详情显示为未检查
         return "company/danger/plan-detail";
-
-        /*if (jcxq == null) {
-            if (type == 9) {
-                return "company/danger/plan-detailrjcb";
-            } else {
-                // 走的是这里
-                return "company/danger/plan-detail";
-            }
-        } else {
-            if (type == 9) {
-                return "company/danger/plan-detailrjcbjcxq";
-            } else {
-                return "company/danger/plan-detailjcxq";
-            }
-        }*/
-
+        
     }
 
     /**

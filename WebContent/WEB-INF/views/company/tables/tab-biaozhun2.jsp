@@ -152,7 +152,7 @@
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>安全生产标准化</span>
-   <!--  <span class="c-gray en">&gt;</span><span>安全生产管理档案</span> -->
+    <!--  <span class="c-gray en">&gt;</span><span>安全生产管理档案</span> -->
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
        href="javascript:location.replace(location.href);" title="刷新">
         <i class="Hui-iconfont">&#xe68f;</i>
@@ -160,11 +160,11 @@
 </nav>
 <div class="page-container">
     <div class="text-c">
-    <h3>${companyName}企业安全标准化操作系统</h3>
+        <h3>${companyName}企业安全标准化操作系统</h3>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
 
-       <!--  <c:if test="${sort==1}">
+        <!--  <c:if test="${sort==1}">
             <button onClick="location.href = '${ly}/api/safety_Standard/findAll?parendId=0&flag=1&sort=2'"
         
                     class="btn btn-success radius" title="顺序" type="button" style="padding: 0 50px;">顺序
@@ -183,11 +183,11 @@
         <button onClick="addNew()"
                 class="btn btn-success radius" title="添加" type="button" style="padding: 0 50px;">添加
         </button>
-        <c:set var="length" value="${fn:length(list) }" />
+        <c:set var="length" value="${fn:length(list) }"/>
         <c:if test="${length<4}">
-        <button onClick="daoru()"
-               class="btn btn-success radius" title="一键导入" type="button" style="padding: 0 50px;">一键导入
-        </button>
+            <button onClick="daoru()"
+                    class="btn btn-success radius" title="一键导入" type="button" style="padding: 0 50px;">一键导入
+            </button>
         </c:if>
         <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
     </div>
@@ -218,11 +218,12 @@
         <c:forEach items="${list }" varStatus="index" var="t">
             <div class="item_container">
                 <div class="item_content my_flex f_r f_j_c f_z_c"
-                     onClick="show_tab('安全标准化', '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=${t.id}')">
+                     onClick="jump('${t.fileAddress}','${t.id}')">
                     <h5>${t.name }</h5>
                 </div>
-         
-                <span class="my_span"><a onclick="edit('${t.id}','${t.name }','${t.oder}')">操作</a><a onclick="tip('${t.id}')">删除</a></span>
+
+                <span class="my_span"><a onclick="edit('${t.id}','${t.name }','${t.oder}','${t.fileAddress}')">操作</a><a
+                        onclick="tip('${t.id}')">删除</a></span>
             </div>
         </c:forEach>
     </div>
@@ -243,19 +244,30 @@
                             <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>名称
                                 :</label>
                             <div class="formControls col-xs-5 col-sm-5">
-                           
-                                  <input class="input-text" type="text" name="" id="trInput" style="width:300px">
-                               <!--  <textarea id="trInput" cols="6" rows="3" style="width: 300px;padding:5px"></textarea> -->
+
+                                <input class="input-text" type="text" name="" id="trInput" style="width:300px">
+                                <!--  <textarea id="trInput" cols="6" rows="3" style="width: 300px;padding:5px"></textarea> -->
                             </div>
 
                         </div>
 
-						<div class="row cl dq">
+                        <div class="row cl dq">
                             <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>排序(输入数字)
                                 :</label>
                             <div class="formControls col-xs-5 col-sm-5">
-                                <input class="input-text" type="text" name="" id="trInput3"  style="width:150px" oninput = "value=value.replace(/[^\d]/g,'')">
-                               <!--  <textarea cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea> -->
+                                <input class="input-text" type="text" name="" id="trInput3" style="width:150px"
+                                       oninput="value=value.replace(/[^\d]/g,'')">
+                                <!--  <textarea cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea> -->
+                            </div>
+
+                        </div>
+                        <div class="row cl dq">
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>展示网址
+                                :</label>
+                            <div class="formControls col-xs-5 col-sm-5">
+
+                                <input class="input-text" type="text" name="" id="trInput5" style="width:300px">
+                                <!--  <textarea id="trInput" cols="6" rows="3" style="width: 300px;padding:5px"></textarea> -->
                             </div>
 
                         </div>
@@ -288,22 +300,33 @@
                             <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>名称
                                 :</label>
                             <div class="formControls col-xs-5 col-sm-5">
-                               <input class="input-text" type="text" name="" id="trInput2" style="width:300px">
-                               <!--  <textarea   cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea> -->
+                                <input class="input-text" type="text" name="" id="trInput2" style="width:300px">
+                                <!--  <textarea   cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea> -->
                             </div>
 
                         </div>
 
-						<div class="row cl dq">
+                        <div class="row cl dq">
                             <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>排序(输入数字)
                                 :</label>
                             <div class="formControls col-xs-5 col-sm-5">
-                                <input class="input-text" type="text" name="" id="trInput4"  style="width:150px" oninput = "value=value.replace(/[^\d]/g,'')">
-                               <!--  <textarea cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea> -->
+                                <input class="input-text" type="text" name="" id="trInput4" style="width:150px"
+                                       oninput="value=value.replace(/[^\d]/g,'')">
+                                <!--  <textarea cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea> -->
                             </div>
 
                         </div>
 
+                        <div class="row cl dq">
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>展示网址
+                                :</label>
+                            <div class="formControls col-xs-5 col-sm-5">
+
+                                <input class="input-text" type="text" name="" id="trInput6" style="width:300px">
+                                <!--  <textarea id="trInput" cols="6" rows="3" style="width: 300px;padding:5px"></textarea> -->
+                            </div>
+
+                        </div>
 
                         <div class="row">
                             <div class="col-xs-3 col-sm-3 col-xs-offset-8 col-sm-offset-8">
@@ -323,25 +346,50 @@
 
 <script type="text/javascript">
     <%--  显示  --%>
-    var p_id='';   //要传递的id字段
-    var p_name =''   //要传递的name字段
+    var p_id = '';   //要传递的id字段
+    var p_name = ''   //要传递的name字段
     var str = 0
 
+
+    // 跳转
+    function jump(url, id) {
+        if (url) {
+            show_dialog('安全标准化', url)
+            <%--$.ajax({--%>
+            <%--    type: "GET",--%>
+            <%--    cache: false,--%>
+            <%--    url: url,--%>
+            <%--    success: function() {--%>
+            <%--        alert(url);--%>
+
+            <%--    },--%>
+            <%--    error: function() {--%>
+            <%--        var p_id = parseInt(id);--%>
+            <%--        show_tab('安全标准化', '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId='+p_id)--%>
+            <%--    }--%>
+            <%--});--%>
+        } else {
+            var p_id = parseInt(id);
+            show_tab('安全标准化', '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=' + p_id)
+        }
+    }
 
 
     <%-- 新增 --%>
 
 
     function addNew() {
-		$('#trInput3').val(0);
+        $('#trInput3').val(0);
+        $('#trInput5').val('');
         $("#modal-plan2").modal("show");
     }
 
-    function edit(id,name,oder) {
-        p_name = name ;
+    function edit(id, name, oder, url) {
+        p_name = name;
         p_id = parseInt(id);
         $('#trInput2').val(name);
-		$('#trInput4').val(oder);
+        $('#trInput4').val(oder);
+        $('#trInput6').val(url);
         $("#modal-plan3").modal("show");
     }
 
@@ -353,15 +401,16 @@
             data: JSON.stringify({
                 parentId: str,
                 name: $('#trInput').val(),
-				oder:parseInt($('#trInput3').val())
+                oder: parseInt($('#trInput3').val()),
+                fileAddress: $('#trInput5').val(),
             }),    //参数值
             type: "POST",   //请求方式
             dataType: 'json', //返回值类型 一般设置为json
             contentType: "application/json",
             success: function (res) {
                 layer.msg(res.mess);
-                if(res.status==0){
-                    setInterval(function(){
+                if (res.status == 0) {
+                    setInterval(function () {
                         location.reload();
                     }, 1000)
                 }
@@ -374,17 +423,18 @@
             url: getRootPath() + "/api/safety_Standard/update-tSafetyStandard",    //请求的url地址 
             data: JSON.stringify({          //参数值
                 parentId: str,
-                id:p_id,
+                id: p_id,
                 name: $('#trInput2').val(),
-				oder:parseInt($('#trInput4').val())
-            }),    
+                oder: parseInt($('#trInput4').val()),
+                fileAddress: $('#trInput6').val(),
+            }),
             type: "POST",   //请求方式
             dataType: 'json', //返回值类型 一般设置为json
             contentType: "application/json",
             success: function (res) {
                 layer.msg(res.mess);
-                if(res.status==0){
-                    setInterval(function(){
+                if (res.status == 0) {
+                    setInterval(function () {
                         location.reload();
                     }, 1000)
                 }
@@ -401,21 +451,22 @@
             dataType: 'json', //返回值类型 一般设置为json
             success: function (res) {
 
-               layer.msg(res.mess);
+                layer.msg(res.mess);
                 location.reload();
             }
         });
     }
+
     //提示删除
-     function tip(id){
-         layer.confirm('删除后将无法恢复,确认删除？', {
-             btn: ['确定','取消'] //按钮
-         }, function(){
-             del(id)
-         }, function(){
-             return
-         });
-     }
+    function tip(id) {
+        layer.confirm('删除后将无法恢复,确认删除？', {
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            del(id)
+        }, function () {
+            return
+        });
+    }
 
 
     /*删除*/
@@ -428,8 +479,8 @@
             type: "POST",   //请求方式
             success: function (res) {
                 layer.msg(res.mess)
-                if(res.status==0){
-                    setInterval(function(){
+                if (res.status == 0) {
+                    setInterval(function () {
                         location.reload();
                     }, 1000)
                 }

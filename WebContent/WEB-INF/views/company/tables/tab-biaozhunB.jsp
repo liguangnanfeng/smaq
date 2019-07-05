@@ -225,7 +225,6 @@
         </c:forEach>
     </div>
 
-
     <!-- 弹窗输入 -->
     <div id="modal-plan2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">

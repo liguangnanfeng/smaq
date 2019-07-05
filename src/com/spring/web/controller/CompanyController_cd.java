@@ -4062,12 +4062,21 @@ public class CompanyController_cd extends BaseController {
                 //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
             }
         }
-        //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
+        //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString()); 隐患
         model.addAttribute("check", tc);
         model.addAttribute("flag", tc.getFlag());
         model.addAttribute("itemL", iteml);
         model.addAttribute("user", loginUser);
-        model.addAttribute("number", number);
+        if(null==number){
+            Integer count = tCheckMapper.selectHiddenDangerNumber(id);
+            if(null==count){
+                count = 0;
+            }
+            model.addAttribute("number", count);
+        }else{
+            model.addAttribute("number", number);
+        }
+
         if (null == name || "".equals(name)) {
             name = companyMapper.selectByPrimaryKey(loginUser.getId()).getSafety();
         }
@@ -4081,12 +4090,15 @@ public class CompanyController_cd extends BaseController {
             model.addAttribute("longitude", null);
         }
 
+        // 获取是否有不合格项
+
+
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
         log.error("整改详情进行显示的条件" + tCheckMapper.selectCompany(id));
 
         log.error("检查详情：" + jcxq);//首页——定期检查——检查详情显示为未检查
         return "company/danger/plan-detail";
-        
+
     }
 
     /**

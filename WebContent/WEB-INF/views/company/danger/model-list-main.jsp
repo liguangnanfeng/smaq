@@ -263,13 +263,13 @@
                                         <c:if test="${status[1]==1}">
                                             <a style="text-decoration:none"
                                                onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
-                                               href="javascript:;">实施</a>
+                                               href="javascript:;">实施${status[0]}:${status[1]}</a>
                                         </c:if>
                                         <c:if test="${status[1]==0}">
                                             <a style="text-decoration:none"
                                                class="used"
                                                onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
-                                               href="javascript:;">实施</a>
+                                               href="javascript:;">实施${status[0]}:${status[1]}</a>
                                         </c:if>
                                     </td>
                                 </c:forEach>
@@ -331,13 +331,13 @@
                                         <c:if test="${status[1]==1}">
                                             <a style="text-decoration:none"
                                                onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-1,${status[0]+1},'${flag}')"
-                                               href="javascript:;">实施</a>
+                                               href="javascript:;">实施${status[0]}:${status[1]}</a>
                                         </c:if>
                                         <c:if test="${status[1]==0}">
                                             <a style="text-decoration:none"
                                                class="used"
                                                onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-1,${status[0]+1},'${flag}')"
-                                               href="javascript:;">实施</a>
+                                               href="javascript:;">实施${status[0]}:${status[1]}</a>
                                         </c:if>
                                     </td>
                                 </c:forEach>

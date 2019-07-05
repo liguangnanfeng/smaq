@@ -82,4 +82,5 @@ public interface TCheckMapper {
      */
     TCheck selectCheckBymodelIdAndStatus(@Param("modelId")Integer id, @Param("status")int i);
 
+    Integer selectHiddenDangerNumber(Integer id);
 }

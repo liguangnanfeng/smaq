@@ -607,4 +607,9 @@
         SELECT * FROM t_check_tbl  WHERE create_user = #{id} and status=2  group by id desc ;
     </select>
 
+    <!--获取这一条检查记录是否有不合格项-->
+    <select id="selectHiddenDangerNumber" parameterType="Integer" resultType="Integer">
+        select count(0) from t_check_item_tbl where check_id = T1.id and status > 1
+    </select>
+
 </mapper>

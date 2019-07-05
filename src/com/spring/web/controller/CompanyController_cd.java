@@ -4090,9 +4090,14 @@ public class CompanyController_cd extends BaseController {
             model.addAttribute("longitude", null);
         }
 
-        // 获取是否有不合格项
-
-
+        // 判断是否整改复查过
+        TRectification tRectification = tRectificationMapper.selectByCheckId(id);
+        if(null==tRectification){
+            model.addAttribute("is_re",0);
+        }else{
+            model.addAttribute("is_re",1);
+        }
+        
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
         log.error("整改详情进行显示的条件" + tCheckMapper.selectCompany(id));
 

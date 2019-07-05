@@ -2975,12 +2975,44 @@ public class CompanyController_cd extends BaseController {
         return "company/danger/check-list-szss";
     }
 
+    /**
+     * TODO 检查设置与实施中行政检查/部门抽查 显示检查记录(2019/7/5)
+     * @return
+     */
+    @RequestMapping(value="model-list-cx2")
+    public String modelListCX2(Integer flag,Integer type,Integer template,HttpServletRequest request ,Model model,Integer status){
+
+        User user = getLoginUser(request);
+        model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("flag", flag);
+        model.addAttribute("template", template);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("flag", flag);
+
+
+
+        status = status==null ? 2:status;
+        m.put("status",status);
+        if (setUserId(user, m)) {
+            clearVillageTown(m);
+            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+
+            model.addAttribute("list", list);
+
+            Integer sum = 0;
+            for (int i = 0; i < list.size(); i++) {
+                sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
+            }
+            model.addAttribute("sum", sum);
+        }
+
+        return "model-list-cx";
+    }
+
 
     /**
      * TODO 检查设置与实施
      * 行政检查/部门抽查
-     * <p>
-     * <p>
      * 综合检查表(Template 1)
      * 日检查表(Template 2)
      * 临时检查表(template 4)

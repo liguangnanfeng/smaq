@@ -3721,6 +3721,7 @@ public class VillageController extends BaseController {
             }
             result.setStatus("0");
             result.setMess("保存成功");
+            result.setObject(model.getId());
             return result;
         } catch (NullPointerException e) {
             e.printStackTrace();

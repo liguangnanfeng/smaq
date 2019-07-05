@@ -3006,10 +3006,9 @@ public class CompanyController_cd extends BaseController {
             model.addAttribute("sum", sum);
         }
 
-        return "model-list-cx";
+        return "company/danger/model-list-cx";
     }
-
-
+    
     /**
      * TODO 检查设置与实施
      * 行政检查/部门抽查

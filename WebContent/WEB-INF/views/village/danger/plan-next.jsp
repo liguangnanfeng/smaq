@@ -551,6 +551,7 @@
                         top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);
                     } else {
                         var url = '${ly}/company/check-list-szss?dmName='+l_dmname+'&flag='+l_flag+'&industryType='+l_industryType;
+                        console.log(url)
                         top.show_tab(x, url)
                         // top.show_tab(x, '/village/check-list?flag=' + flag)
                     }

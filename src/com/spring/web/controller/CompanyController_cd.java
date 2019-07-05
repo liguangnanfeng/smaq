@@ -3589,7 +3589,7 @@ public class CompanyController_cd extends BaseController {
 
         Map<String,Object> map1 = new LinkedHashMap<String,Object>(2);
         map1.put("level1","全公司");
-        map1.put("dmid",1);
+        // map1.put("dmid",1);
 
         List<Map<String, Object>> jiChuItem = new ArrayList<>();
         jiChuItem.add(map1);
@@ -3599,19 +3599,19 @@ public class CompanyController_cd extends BaseController {
         XianChangItem.add(map1);
         XianChangItem.addAll(aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理"));
 
-        for (int i = 0; i < jiChuItem.size(); i++) {
+        for (Map<String, Object> objectObjectMap : jiChuItem) {
             Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
             map.put(5, 0);
             map.put(1, 0);
             map.put(2, 0);
             map.put(3, 0);
             map.put(4, 0);
-            String level1 = (String) jiChuItem.get(i).get("level1");
-            List<Integer> types1 = tModelMapper.selecttype(level1, user.getId(), 1, flag);
-            for (Integer integer : types1) {
+            String level1 = (String) objectObjectMap.get("level1");
+            List<Integer> types2 = tModelMapper.selecttype(level1, user.getId(), 2, flag);
+            for (Integer integer : types2) {
                 map.put(integer, 1);
             }
-            jiChuItem.get(i).put("array", map);
+            objectObjectMap.put("array", map);
         }
 
         for (Map<String, Object> objectObjectMap : XianChangItem) {

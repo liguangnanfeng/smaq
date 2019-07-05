@@ -536,6 +536,8 @@
                 layer.alert(result.map.message);
             } else {
                 top.ref_ifm();
+
+
                 var x = "企业自查";
                 if (flag == 2) {
                     x = "行政检查";
@@ -544,21 +546,30 @@
                     x = "部门抽查";
                 }
                 if (flag == 1) {//自查
-                    var l_flag = parseInt(sessionStorage.getItem('flag'))  ;
+                    var l_flag = parseInt(sessionStorage.getItem('flag'));
                     var l_dmname =sessionStorage.getItem('dmname').replace(/\s*/g,"");
                     var l_industryType = parseInt(sessionStorage.getItem('industryType'));
                     if ($(":radio[value='2']:checked").length > 0) {
                         top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);
                     } else {
                         var url = '${ly}/company/check-list-szss?dmName='+l_dmname+'&flag='+l_flag+'&industryType='+l_industryType;
-                        console.log(url)
-                        top.show_tab(x, url)
+                        top.show_tab(x, url);
                         // top.show_tab(x, '/village/check-list?flag=' + flag)
                     }
                 } else {
-                    close_dialog(function () {
-                        parent.show_dialog(x + "_现场检查记录", '/village/check-document?checkId=' + checkId + '&flag=8');
-                    })
+                    //新版跳转
+                    if ($(":radio[value='2']:checked").length > 0) {
+                        // top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);
+                        top.show_tab("检查详情" + checkId, '/company/check-detail?flag=' + flag + '&id=' + checkId);
+                    } else {
+                        var url = '${ly }/company/model-list-cx2?flag='+flag+'&type=1&template=2';
+                        top.show_tab(x, url)
+                    }
+
+                    //旧版跳转
+                    // close_dialog(function () {
+                    //     parent.show_dialog(x + "_现场检查记录", '/village/check-document?checkId=' + checkId + '&flag=8');
+                    // })
                 }
             }
         })

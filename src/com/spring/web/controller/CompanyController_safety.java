@@ -417,7 +417,7 @@ public class CompanyController_safety extends BaseController {
      * @throws Exception
      **/
     @RequestMapping({"risk-list"})
-    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number,Integer dmid,Integer flag) throws Exception {
+    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number,Integer dmid,Integer flag,String types,String id) throws Exception {
         User user = this.getLoginUser(request);
         Company company = this.companyMapper.selectByPrimaryKey(user.getId());
         if (StringUtils.isEmpty(company.getIndustry())) {
@@ -426,17 +426,19 @@ public class CompanyController_safety extends BaseController {
         } else {
             model.addAttribute("company", company);
             Map<String, Object> m = new HashMap();
-            m.put("type", type);
+            if (null != types){
+                m.put("type", Integer.parseInt(types));
+            }
             m.put("flag", "1,2,3,4,5");
             m.put("uid", user.getId());
             if (null != dmid){
-                m.put("dmid", dmid);
+                m.put("dmid", Integer.parseInt(id));
             }
             List<Map<Object, Object>> zzjg = null;
             List<Map<Object, Object>> zzjg1 = null;
             List acL = null;
-            if (type == null) {
-                if (null == number){ // 设置
+            /*if (type == null) {*/
+                /*if (null == number){ // 设置
                     String dangerIds = "1"; // 现场
                     zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
                     if (null == zzjg || zzjg.size() == 0){
@@ -450,6 +452,14 @@ public class CompanyController_safety extends BaseController {
                     }else if (null != zzjg){
                         number = 1;
                     }
+                }*/
+            if (null == types || Integer.parseInt(types) == 1 || Integer.parseInt(types) == 2) {
+                if (null == number && null == types){
+                    number = 3;
+                }else if (null != types && types.equals("1")){ // 现场
+                    number = 1;
+                }else if (null != types && types.equals("2")){ // 基础
+                    number = 2;
                 }
                 if (number == 1) { // 现场
                     String dangerIds = "1";
@@ -457,19 +467,19 @@ public class CompanyController_safety extends BaseController {
                     zzjg1 = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
 
                     acL = this.aCompanyManualMapper.selectByAll(m);
-                    if (null == dmid){
+                    if (null == id){
                         zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
                     }else {
-                        zzjg = this.zzjgDepartmentMapper.selectLevel1One(user.getId(),dangerIds,dmid);
+                        zzjg = this.zzjgDepartmentMapper.selectLevel1One(user.getId(),dangerIds,Integer.parseInt(id));
                     }
                 } else if (number == 2) { // 基础
                     String dangerIds = "2";
                     acL = this.aCompanyManualMapper.selectBase(m);
                     zzjg1 = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
-                    if (null == dmid){
+                    if (null == id){
                         zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
                     }else {
-                        zzjg = this.zzjgDepartmentMapper.selectLevel1One(user.getId(),dangerIds,dmid);
+                        zzjg = this.zzjgDepartmentMapper.selectLevel1One(user.getId(),dangerIds,Integer.parseInt(id));
                     }
                 }else if (number == 3) { // 设置
                     zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
@@ -482,7 +492,7 @@ public class CompanyController_safety extends BaseController {
                     indus = 2;
                 }
                 model.addAttribute("indus",indus);
-                model.addAttribute("ids",dmid);
+                model.addAttribute("ids",id);
                 model.addAttribute("zzjgDep1", zzjg1);
                 model.addAttribute("number", number);
                 model.addAttribute("zzjgDep", zzjg);
@@ -490,7 +500,7 @@ public class CompanyController_safety extends BaseController {
 
                 return "company/safety-system/risk-list1";
             } else {
-                String dangerId = null;
+                /*String dangerId = null;
                 if (type == 1){ // 职业病风险物理因素
                     dangerId = "4";
                 }else if(type == 2){ // 职业病风险化学因素
@@ -501,6 +511,23 @@ public class CompanyController_safety extends BaseController {
                     dangerId = "7";
                 }else if(type == 5){ // 高危作业辨识
                     dangerId = "8";
+                }*/
+                String dangerId = null;
+                if (Integer.parseInt(types) == 4){ // 职业病风险物理因素
+                    dangerId = "4";
+                    type = 1;
+                }else if(Integer.parseInt(types) == 5){ // 职业病风险化学因素
+                    dangerId = "5";
+                    type = 2;
+                }else if(Integer.parseInt(types) == 6){ // 高危工艺辨识
+                    dangerId = "6";
+                    type = 3;
+                }else if(Integer.parseInt(types) == 7){ // 物料风险辨识
+                    dangerId = "7";
+                    type = 4;
+                }else if(Integer.parseInt(types) == 8){ // 高危作业辨识
+                    dangerId = "8";
+                    type = 5;
                 }
                 List<ZzjgDepartment> zzjgDepartment = zzjgDepartmentMapper.selectDangerIds(user.getId(),dangerId);
                 if (null != zzjgDepartment && zzjgDepartment.size() != 0){
@@ -549,7 +576,6 @@ public class CompanyController_safety extends BaseController {
             }
         }
     }
-
 
     /*
     * 风险辨识 ：设置按钮！！！
@@ -678,6 +704,22 @@ public class CompanyController_safety extends BaseController {
         }*/
         return result;
     }
+
+    /**
+     * @author     ：小明！！！
+     * @description：风险辨识编辑按钮
+     */
+    @RequestMapping({"risk-deleteAll"})
+    @ResponseBody
+    public Result riskDeleteAll (Model model,HttpServletRequest request){
+        Result result = new ResultImpl();
+        User user = this.getLoginUser(request);
+        // 根据 uid 修改 dangerId 为 null
+        Integer a = zzjgDepartmentMapper.deleteAll(null,user.getId(),new Date());
+        return result;
+    }
+
+
 
 
 

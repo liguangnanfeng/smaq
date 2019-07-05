@@ -459,7 +459,10 @@
                 and part = #{dmname}
             </if>
             <if test="type!=null">
-                and type = #{type}
+            and type = #{type}
+        </if>
+            <if test="industryType!=null">
+                and industry_type = #{industryType}
             </if>
             <if test="flag!=null">
                 and flag = #{flag}
@@ -468,7 +471,9 @@
         order by create_time desc
         limit 0,1;
     </select>
-    <!--根据条件查询是否有相应的检查表-->
+    <!--根据条件查询是否有相应的检查表
+
+    -->
     <select id="selecttype" resultType="INTEGER" >
         select
         type

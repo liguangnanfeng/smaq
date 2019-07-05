@@ -2921,7 +2921,7 @@ public class CompanyController_cd extends BaseController {
      * @param flag         1. 企业自查  2 部门抽查  3 行政检查
      * @param industryType 1 基础  2 现场
      * @param template     前端传递字符
-     * @return 速度还是没有发生改变呀,真的好气呀
+     * @return 速度还是没有发生改变呀, 真的好气呀
      */
     @RequestMapping("check-list-szss")
     public String checkListSzss(String dmName, Integer flag, Integer industryType, Integer template, HttpServletRequest request, Model model, Integer status) {
@@ -2936,22 +2936,22 @@ public class CompanyController_cd extends BaseController {
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("flag", flag);
-        if(null!=industryType){
-            industryType= Math.abs(industryType);
-            m.put("industryType",industryType);
+        if (null != industryType) {
+            industryType = Math.abs(industryType);
+            m.put("industryType", industryType);
         }
 
         // 表示是企业自查,根据名称进行查询
         if (flag == 1) {
-        m.put("dmName",dmName);
+            m.put("dmName", dmName);
         }
-        status = status==null ? 2:status;
-        m.put("status",status);
+        status = status == null ? 2 : status;
+        m.put("status", status);
         if (setUserId(user, m)) {
             clearVillageTown(m);
             List<Map<String, Object>> list = tCheckMapper.selectList(m);
 
-            if(flag==1){
+            if (flag == 1) {
                 List list1 = new ArrayList();
                 for (Map<String, Object> stringObjectMap : list) {
                     int industry = (Integer) stringObjectMap.get("industryType");
@@ -2961,7 +2961,7 @@ public class CompanyController_cd extends BaseController {
                 }
                 model.addAttribute("list", list1);
 
-            }else{
+            } else {
                 model.addAttribute("list", list);
             }
 
@@ -2977,10 +2977,11 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * TODO 检查设置与实施中行政检查/部门抽查 显示检查记录(2019/7/5)
+     *
      * @return
      */
-    @RequestMapping(value="model-list-cx2")
-    public String modelListCX2(Integer flag,Integer type,Integer template,HttpServletRequest request ,Model model,Integer status){
+    @RequestMapping(value = "model-list-cx2")
+    public String modelListCX2(Integer flag, Integer type, Integer template, HttpServletRequest request, Model model, Integer status) {
 
         User user = getLoginUser(request);
         model.addAttribute("companyName", user.getUserName());
@@ -2989,10 +2990,8 @@ public class CompanyController_cd extends BaseController {
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("flag", flag);
 
-
-
-        status = status==null ? 2:status;
-        m.put("status",status);
+        status = status == null ? 2 : status;
+        m.put("status", status);
         if (setUserId(user, m)) {
             clearVillageTown(m);
             List<Map<String, Object>> list = tCheckMapper.selectList(m);
@@ -3008,7 +3007,7 @@ public class CompanyController_cd extends BaseController {
 
         return "company/danger/model-list-cx";
     }
-    
+
     /**
      * TODO 检查设置与实施
      * 行政检查/部门抽查
@@ -3092,106 +3091,6 @@ public class CompanyController_cd extends BaseController {
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
         model.addAttribute("t", d.getTime());
 
-        return "company/danger/model-list-cx";
-    }
-
-    /**
-     * TODO 用户点击检查设置实施=> 实施 =>点击执行的时候获取这个方法的检查模版的最新的一条记录,
-     * 没有就显示为null
-     * 每一次获取的就是最新的
-     * 没有就表示数据库没有这个部门的模版,让用户直接添加
-     */
-    @ResponseBody
-    @RequestMapping(value = "model-list-ss")
-    public AppResult modelListss(HttpServletRequest request, Model model, String dmname, Integer dmid, Integer checkType,
-                                 Integer industryType, Integer template, Integer flag) {
-        AppResult result = new AppResultImpl();
-        User user = getLoginUser(request);
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
-        map.put("userId", user.getId());    // 公司id,必要
-        map.put("dmname", dmname);          // 部门名称
-        map.put("dmid", dmid);              // 部门id
-        map.put("type", checkType);         // 检查方式
-        if (industryType == -1) {
-            map.put("industryType", 1);  // 基础类型
-        } else if (industryType == -2) {
-            map.put("industryType", 2);  // 现场类型
-        } else {
-            map.put("industryType", 3);  // 高危类型
-        }
-
-        map.put("flag", flag);
-        TModel tModel = tModelMapper.selectModelByMapAndLimit1(map);
-        if (null == tModel) {
-            result.setStatus("1");
-            return result;
-        }
-
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("modelId", tModel.getId());
-        resultMap.put("flag", flag);
-
-        result.setStatus("0");
-        result.setData(resultMap);
-        return result;
-
-    }
-
-    /**
-     * TODO 用户点击检查设置实施=> 实施 => 查询对应的model模版
-     *
-     * @param request      前端请求
-     * @param model        mvc数据存储
-     * @param dmname       部门名称
-     * @param dmid         部门id
-     * @param checkType    检查方式
-     * @param industryType 检查类型 基础/现场
-     * @return
-     */
-    @RequestMapping(value = "model-list-tj")
-    public String modelListtj(HttpServletRequest request, Model model, String dmname, Integer dmid, Integer checkType,
-                              Integer industryType, Integer template, Integer flag) {
-        User user = getLoginUser(request);
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
-        map.put("userId", user.getId());    // 公司id,必要
-        map.put("dmname", dmname);          // 部门名称
-        map.put("dmid", dmid);              // 部门id
-        map.put("type", checkType);         // 检查方式
-        if (industryType == -1) {
-            map.put("industryType", 1);  // 基础类型
-        } else if (industryType == -2) {
-            map.put("industryType", 2);  // 现场类型
-        } else {
-            map.put("industryType", 3);  // 高危类型
-        }
-
-        map.put("flag", flag);
-
-        List<Map<String, Object>> list = tModelMapper.selectByMap4(map);
-        model.addAttribute("list", list);
-        model.addAttribute("dmname", dmname);
-        model.addAttribute("dmid", dmid);
-        model.addAttribute("type", checkType);
-        model.addAttribute("industryType", industryType);
-        model.addAttribute("userId", user.getId());
-        model.addAttribute("template", template);
-        model.addAttribute("flag", flag);
-
-        //企业类型为 化工 或 构成重大危险源 则企业自查处 日检查表显示 wz 190108
-        Company company = companyMapper.selectByPrimaryKey(user.getId());
-
-        /*
-         * 监管行业不能为空
-         */
-        //log.error("监管行业："+ company.getIndustry());
-        if (null != company.getHazard()) {
-            if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危化生产、使用）")) {//显示效果需要
-                //log.error("监管行业："+company.getIndustry());
-                //log.error("是否构成重大危险源、1是："+company.getHazard());
-                model.addAttribute("rjcbxs", 1);
-
-            }
-        }
         return "company/danger/model-list-cx";
     }
 
@@ -3605,22 +3504,26 @@ public class CompanyController_cd extends BaseController {
         return result;
     }
 
+
     /**
      * TODO 隐患排查治理板块 => 检查设置实施中首页表显示车间
-     * <p>
      * 是根据conpanyManual这张表中的数据车间数据进行查询
      * 跳转到新一轮的页面进行修改
+     *
+     * @param request 请求
+     * @param model   存储域
+     * @param flag    检查方式 1. 企业自查  2 行政检查 3 部门抽查
+     * @param status
+     * @return
+     * @throws ParseException
      */
     @RequestMapping(value = "model-list-main")
-    public String modelListMain(HttpServletRequest request,
-                                Model model, Integer flag, Integer status
-    ) throws ParseException {
-        // 获取用户信息
+    public String modelListMain(HttpServletRequest request, Model model, Integer flag, Integer status) throws ParseException {
+
         User user = getLoginUser(request);
 
-        Map<String,Object> map1 = new LinkedHashMap<String,Object>(2);
-        map1.put("level1","全公司");
-        // map1.put("dmid",1);
+        Map<String, Object> map1 = new LinkedHashMap<String, Object>();
+        map1.put("level1", "全公司");
 
         List<Map<String, Object>> jiChuItem = new ArrayList<>();
         jiChuItem.add(map1);
@@ -3638,8 +3541,8 @@ public class CompanyController_cd extends BaseController {
             map.put(3, 0);
             map.put(4, 0);
             String level1 = (String) objectObjectMap.get("level1");
-            List<Integer> types2 = tModelMapper.selecttype(level1, user.getId(), 2, flag);
-            for (Integer integer : types2) {
+            List<Integer> types = tModelMapper.selecttype(level1, user.getId(), 1, flag);
+            for (Integer integer : types) {
                 map.put(integer, 1);
             }
             objectObjectMap.put("array", map);
@@ -3653,64 +3556,119 @@ public class CompanyController_cd extends BaseController {
             map.put(3, 0);
             map.put(4, 0);
             String level1 = (String) objectObjectMap.get("level1");
-            List<Integer> types2 = tModelMapper.selecttype(level1, user.getId(), 2, flag);
-            for (Integer integer : types2) {
+            List<Integer> types = tModelMapper.selecttype(level1, user.getId(), 2, flag);
+            for (Integer integer : types) {
                 map.put(integer, 1);
             }
             objectObjectMap.put("array", map);
         }
+
+        model.addAttribute("flag", flag);
+        model.addAttribute("status", status);
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
-        model.addAttribute("flag", flag);
-
-        // ----------------------------------检查记录功能----------------------------------------------------------------------------------
-       /* Map<String, Object> m = new HashMap<String, Object>();
-
-        // 向map集合进行存储
-        m.put("flag", flag);  // 1
-        // m.put("villageId", villageId);  //1
-        if (null == status) {
-            m.put("status", 2); //状态  null
-        } else {
-            m.put("status", status);
-        }
-        // 基础和现场
-        if (setUserId(user, m)) {
-            clearVillageTown(m);
-            List<Map<String, Object>> list = tCheckMapper.selectList(m);
-            List list1 = new ArrayList();
-            List list2 = new ArrayList();
-            for (Map<String, Object> stringObjectMap : list) {
-                Integer industryType = (Integer) stringObjectMap.get("industryType");
-                if (industryType == 1) {
-                    list1.add(stringObjectMap);
-                } else {
-                    list2.add(stringObjectMap);
-                }
-            }
-            model.addAttribute("list1", list1);
-            model.addAttribute("list2", list2);
-
-            Integer sum = 0;
-            for (int i = 0; i < list.size(); i++) {
-                sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
-            }
-            model.addAttribute("sum", sum);
-        }*/
-
         model.addAttribute("companyName", user.getUserName());
-        model.addAttribute("status", status);
-       /* Date d = new Date();
-        String x = DateFormatUtils.format(d, "yyyy-MM-dd");
-        d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
-        model.addAttribute("t", d.getTime());*/
-
-        List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(user.getId());
-
-        model.addAttribute("list", list);
 
         return "company/danger/model-list-main";
 
+    }
+
+    /**
+     * TODO 用户点击检查设置实施=> 实施 =>点击执行的时候获取这个方法的检查模版的最新的一条记录,
+     * 没有就显示为null
+     * 每一次获取的就是最新的
+     * 没有就表示数据库没有这个部门的模版,让用户直接添加
+     */
+    @ResponseBody
+    @RequestMapping(value = "model-list-ss")
+    public AppResult modelListss(HttpServletRequest request, Model model, String dmname, Integer dmid, Integer checkType,
+                                 Integer industryType, Integer template, Integer flag) {
+        AppResult result = new AppResultImpl();
+        User user = getLoginUser(request);
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        map.put("userId", user.getId());    // 公司id,必要
+        map.put("dmname", dmname);          // 部门名称
+        map.put("type", checkType);         // 检查方式
+        map.put("flag", flag);
+        if (industryType == -1) {
+            map.put("industryType", 1);  // 基础类型
+        } else if (industryType == -2) {
+            map.put("industryType", 2);  // 现场类型
+        } else {
+            map.put("industryType", 3);  // 高危类型
+        }
+
+        TModel tModel = tModelMapper.selectModelByMapAndLimit1(map);
+        if (null == tModel) {
+            result.setStatus("1");
+            return result;
+        }
+
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("modelId", tModel.getId());
+        resultMap.put("flag", flag);
+        result.setStatus("0");
+        result.setData(resultMap);
+        return result;
+
+    }
+
+    /**
+     * TODO 用户点击检查设置实施=> 实施 => 查询对应的model模版
+     *
+     * @param request      前端请求
+     * @param model        mvc数据存储
+     * @param dmname       部门名称
+     * @param dmid         部门id
+     * @param checkType    检查方式
+     * @param industryType 检查类型 基础/现场
+     * @return
+     */
+    @RequestMapping(value = "model-list-tj")
+    public String modelListtj(HttpServletRequest request, Model model, String dmname, Integer dmid, Integer checkType,
+                              Integer industryType, Integer template, Integer flag) {
+        User user = getLoginUser(request);
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        map.put("userId", user.getId());    // 公司id,必要
+        map.put("dmname", dmname);          // 部门名称
+        map.put("dmid", dmid);              // 部门id
+        map.put("type", checkType);         // 检查方式
+        if (industryType == -1) {
+            map.put("industryType", 1);  // 基础类型
+        } else if (industryType == -2) {
+            map.put("industryType", 2);  // 现场类型
+        } else {
+            map.put("industryType", 3);  // 高危类型
+        }
+
+        map.put("flag", flag);
+
+        List<Map<String, Object>> list = tModelMapper.selectByMap4(map);
+        model.addAttribute("list", list);
+        model.addAttribute("dmname", dmname);
+        model.addAttribute("dmid", dmid);
+        model.addAttribute("type", checkType);
+        model.addAttribute("industryType", industryType);
+        model.addAttribute("userId", user.getId());
+        model.addAttribute("template", template);
+        model.addAttribute("flag", flag);
+
+        //企业类型为 化工 或 构成重大危险源 则企业自查处 日检查表显示 wz 190108
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+
+        /*
+         * 监管行业不能为空
+         */
+        //log.error("监管行业："+ company.getIndustry());
+        if (null != company.getHazard()) {
+            if (company.getHazard() == 1 || company.getIndustry().trim().equals("化工企业（危化生产、使用）")) {//显示效果需要
+                //log.error("监管行业："+company.getIndustry());
+                //log.error("是否构成重大危险源、1是："+company.getHazard());
+                model.addAttribute("rjcbxs", 1);
+
+            }
+        }
+        return "company/danger/model-list-cx";
     }
 
     /**
@@ -3756,29 +3714,6 @@ public class CompanyController_cd extends BaseController {
         return "village/danger/check-list";
     }
 
-    /**
-     * 企业自查添加模板
-     */
-//    @RequestMapping(value = "model-add")
-//    public String modelAdd(Integer type, Integer flag, Integer industryId, HttpServletRequest request, Model model)
-//            throws Exception {
-//        User user = getLoginUser(request);
-//        TCompany tc = tCompanyMapper.selectByPrimaryKey(user.getId());
-//        model.addAttribute("type", type);
-//        model.addAttribute("flag", flag);
-//        if (null == tc) {
-//            return "redirect:/village/trouble-set?url="
-//                    + URLEncoder.encode("/company/model-add?type=" + type + "&flag=" + flag, "utf-8");
-//        }
-//        model.addAttribute("ind1", tIndustryMapper.selectByPrimaryKey(tc.getIndustry1()));// 基础检查类别
-//        if (StringUtils.isNotBlank(tc.getIndustry2())) {
-//            model.addAttribute("ind2L", tIndustryMapper.selectByIds(tc.getIndustry2()));// 现场检查类别
-//        }
-//        if (StringUtils.isNotBlank(tc.getIndustry3())) {
-//            model.addAttribute("ind3L", tIndustryMapper.selectByIds(tc.getIndustry3()));// 高危检查类别
-//        }
-//        return "company/danger/model-add2";
-//    }
     @RequestMapping(value = "model-add")//modify by zhangcl 2018.10.24
     public String modelAdd(Integer type, Integer flag, Integer[] ids, Integer depId,
                            Integer industryId, HttpServletRequest request, Model model)
@@ -4066,7 +4001,7 @@ public class CompanyController_cd extends BaseController {
         if (flag == 1) {
             iteml = tCheckMapper.selectLevels(id);
             for (int i = 0; i < iteml.size(); i++) {
-                if("全公司".equals(iteml.get(i).get("depart"))){
+                if ("全公司".equals(iteml.get(i).get("depart"))) {
                     TCheck tCheck = tCheckMapper.selectByPrimaryKey(id);
                     if (tCheck.getIndustryType() == 1) { // 基础
                         iteml = tCheckMapper.selectAllLevel(id);

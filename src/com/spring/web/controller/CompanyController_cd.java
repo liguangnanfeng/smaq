@@ -3533,34 +3533,34 @@ public class CompanyController_cd extends BaseController {
         XianChangItem.add(map1);
         XianChangItem.addAll(aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理"));
 
-        for (Map<String, Object> objectObjectMap : jiChuItem) {
+        for (Map<String, Object> jiChuMap: jiChuItem) {
             Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
             map.put(5, 0);
             map.put(1, 0);
             map.put(2, 0);
             map.put(3, 0);
             map.put(4, 0);
-            String level1 = (String) objectObjectMap.get("level1");
+            String level1 = (String) jiChuMap.get("level1");
             List<Integer> types = tModelMapper.selecttype(level1, user.getId(), 1, flag);
             for (Integer integer : types) {
                 map.put(integer, 1);
             }
-            objectObjectMap.put("array", map);
+            jiChuMap.put("array", map);
         }
 
-        for (Map<String, Object> objectObjectMap : XianChangItem) {
+        for (Map<String, Object> XianChangMap : XianChangItem) {
             Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
             map.put(5, 0);
             map.put(1, 0);
             map.put(2, 0);
             map.put(3, 0);
             map.put(4, 0);
-            String level1 = (String) objectObjectMap.get("level1");
+            String level1 = (String) XianChangMap.get("level1");
             List<Integer> types = tModelMapper.selecttype(level1, user.getId(), 2, flag);
             for (Integer integer : types) {
                 map.put(integer, 1);
             }
-            objectObjectMap.put("array", map);
+            XianChangMap.put("array", map);
         }
 
         model.addAttribute("flag", flag);

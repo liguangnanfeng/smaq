@@ -424,7 +424,11 @@
                     if (flag == 1) {
                         window.parent.location.href = '${ly }/company/model-list-main?flag=1';
                     } else {
-                        window.parent.location.href = '${ly }/company/model-list-cx?flag=${flag}&type=1&template=2';
+
+                        //行政检查和部门抽查生成完毕后直接跳转到检查页
+                        
+                        window.parent.location.href = '${ly }/village/plan-next?flag='+flag+'&id='+result.object;
+                        <%--window.parent.location.href = '${ly }/company/model-list-cx?flag=${flag}&type=1&template=2';--%>
                     }
 
                     var index = parent.layer.getFrameIndex(window.name);

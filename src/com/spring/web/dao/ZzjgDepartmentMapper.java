@@ -148,4 +148,5 @@ public interface ZzjgDepartmentMapper {
 
     List<ZzjgDepartment> selectDangerIds(@Param("uid")Integer uid, @Param("dangerIds")String dangerIds);
 
+    Integer deleteAll(@Param("dangerId")String dangerId, @Param("uid")Integer uid, @Param("utime")Date date);
 }

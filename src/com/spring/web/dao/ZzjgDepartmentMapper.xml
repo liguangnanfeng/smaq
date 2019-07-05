@@ -45,6 +45,7 @@
         delete from zzjg_department_tbl
         where id = #{id,jdbcType=INTEGER}
     </delete>
+
     <insert id="insert" parameterType="com.spring.web.model.ZzjgDepartment">
         <!--
           WARNING - @mbggenerated
@@ -192,6 +193,17 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+
+
+    <update id="deleteAll" parameterType="com.spring.web.model.ZzjgDepartment">
+        update zzjg_department_tbl
+        set dangerId = #{dangerId,jdbcType=VARCHAR},
+         utime = #{utime,jdbcType=TIMESTAMP}
+        where uid = #{uid,jdbcType=INTEGER} and del = 0
+    </update>
+
+
+
     <select id="selectByCompanyId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -337,7 +349,7 @@
         (select name from zzjg_company_tbl where id = t1.cid) companyName
         from zzjg_department_tbl t1
         where
-        t1.del = 0 and t1.level = 1 and t1.dangerId in (${dangerIds})
+        t1.del = 0 and t1.level = 1 and t1.dangerId like CONCAT('%', #{dangerIds},'%')
         and t1.uid = #{uid,jdbcType=INTEGER} and t1.id = #{id,jdbcType=INTEGER}
         order by t1.id asc
     </select>

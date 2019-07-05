@@ -253,9 +253,7 @@ body .dis-ib{margin-right:15px;}
   </div>
 <script type="text/javascript">
 $(function() {
-    sessionStorage.setItem('jumpFlag', 'pcjl');
-
-
+    sessionStorage.clear();
   $('.table-sort').dataTable({
     "aaSorting": [[0, "asc"]],//默认第几个排序
     "bStateSave": false,//状态保存

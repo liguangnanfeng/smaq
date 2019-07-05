@@ -491,11 +491,18 @@
                 if (flag != 1) {
                     top.show_tab('现场检查记录_' + checkId, '/village/check-document?checkId=' + checkId + '&flag=8')
                 } else {
-                    var l_flag = parseInt(localStorage.getItem('flag'))  ;
-                    var l_dmname =localStorage.getItem('dmname').replace(/\s*/g,"");
-                    var l_industryType = parseInt(localStorage.getItem('industryType'));
-                    var url = '${ly}/company/check-list-szss?dmName='+l_dmname+'&flag='+l_flag+'&industryType='+l_industryType;
-                    top.show_tab(x, url)
+                    if(sessionStorage.getItem('flag')){
+                        var l_flag = parseInt(sessionStorage.getItem('flag'))  ;
+                        var l_dmname =sessionStorage.getItem('dmname').replace(/\s*/g,"");
+                        var l_industryType = parseInt(sessionStorage.getItem('industryType'));
+                        var url = '${ly}/company/check-list-szss?dmName='+l_dmname+'&flag='+l_flag+'&industryType='+l_industryType;
+                        top.show_tab(x, url)
+                    }else{
+                        close_dialog(function () {
+                            parent.location.reload();
+                        })
+                    }
+
                     // location.reload();
                 }
 

@@ -536,10 +536,6 @@
                 layer.alert(result.map.message);
             } else {
                 top.ref_ifm();
-                var l_flag = parseInt(localStorage.getItem('flag'))  ;
-                var l_dmname =localStorage.getItem('dmname').replace(/\s*/g,"");
-                var l_industryType = parseInt(localStorage.getItem('industryType'));
-
                 var x = "企业自查";
                 if (flag == 2) {
                     x = "行政检查";
@@ -548,6 +544,9 @@
                     x = "部门抽查";
                 }
                 if (flag == 1) {//自查
+                    var l_flag = parseInt(sessionStorage.getItem('flag'))  ;
+                    var l_dmname =sessionStorage.getItem('dmname').replace(/\s*/g,"");
+                    var l_industryType = parseInt(sessionStorage.getItem('industryType'));
                     if ($(":radio[value='2']:checked").length > 0) {
                         top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);
                     } else {

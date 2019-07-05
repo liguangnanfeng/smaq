@@ -474,6 +474,14 @@ public class CompanyController_safety extends BaseController {
                 }else if (number == 3) { // 设置
                     zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
                 }
+
+                Integer indus = 0;
+                if (company.getIndustry().contains("化工")){
+                    indus = 1;
+                }else {
+                    indus = 2;
+                }
+                model.addAttribute("indus",indus);
                 model.addAttribute("ids",dmid);
                 model.addAttribute("zzjgDep1", zzjg1);
                 model.addAttribute("number", number);
@@ -514,7 +522,13 @@ public class CompanyController_safety extends BaseController {
                         }
                     }
                 }
-
+                Integer indus = 0;
+                if (company.getIndustry().contains("化工")){
+                    indus = 1;
+                }else {
+                    indus = 2;
+                }
+                model.addAttribute("indus",indus);
                 model.addAttribute("zzjgDep1", zzjgDepartment);
                 model.addAttribute("zzjg",zzjg);
                 model.addAttribute("type", type);

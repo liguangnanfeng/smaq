@@ -261,107 +261,107 @@
                                     </c:if>
 
 
-                                        <%--                                        <a style="text-decoration:none"--%>
-                                        <%--                                           onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-2&flag=${flag}')"--%>
-                                        <%--                                           href="javascript:;">设置</a>--%>
-                                        <%--                                <a style="text-decoration:none"--%>
-                                        <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"--%>
-                                        <%--
-                                                                        href="javascript:;">实施</a>--%>
-                                    <c:if test="${status[1]==1}">
-                                        <a style="text-decoration:none"
-                                           onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
-                                           href="javascript:;">实施</a>
-                                    </c:if>
-                                    <c:if test="${status[1]==0}">
-                                        <a style="text-decoration:none"
-                                           class="used"
-                                           onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
-                                           href="javascript:;">实施</a>
-                                    </c:if>
-                                </td>
-                            </c:forEach>
-                            <td>
-                                <a style="text-decoration:none"
-                                   onClick="szss_list('${be.level1 }',-2,${status[0]+1},'${flag}')"
-                                   href="javascript:;">实施
-                                </a>
-                            </td>
-
-                        </tr>
-                    </c:forEach>
-                    <!-- 循环结束 -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="tabCon" >
-            <div class="mt-20">
-                <table class="table table-border table-bordered table-bg table-hover table-sort">
-                    <thead>
-                    <tr class="text-c">
-                        <th width="45px">序号</th>
-                        <th>受检车间/场所</th>
-                        <th>综合检查</th>
-                        <th>日常检查</th>
-                        <th>定期检查</th>
-                        <th>季节检查</th>
-                        <th>其他检查</th>
-                        <th>整改复查</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!-- 循环-->
-                    <c:forEach items="${jiChuItem}" varStatus="index" var="be">
-                        <tr class="text-c">
-                            <td>${index.index + 1}</td>
-                            <td>${be.level1 }</td>
-                            <c:forEach items="${be.array}" varStatus="index2" var="item">
+<%--                                        <a style="text-decoration:none"--%>
+<%--                                           onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-2&flag=${flag}')"--%>
+<%--                                           href="javascript:;">设置</a>--%>
+                                            <%--                                <a style="text-decoration:none"--%>
+                                            <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"--%>
+                                            <%--
+                                                                            href="javascript:;">实施</a>--%>
+                                        <c:if test="${status[1]==1}">
+                                            <a style="text-decoration:none"
+                                               onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
+                                               href="javascript:;">实施${status[0]}:${status[1]}</a>
+                                        </c:if>
+                                        <c:if test="${status[1]==0}">
+                                            <a style="text-decoration:none"
+                                               class="used"
+                                               onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
+                                               href="javascript:;">实施${status[0]}:${status[1]}</a>
+                                        </c:if>
+                                    </td>
+                                </c:forEach>
                                 <td>
-                                    <c:set value="${fn:split(item,'=' )}" var="status"></c:set>
-                                    <c:if test="${be.level1=='全公司' }">
-                                        <a style="text-decoration:none"
-                                           onclick="show_dialog('生成检查表','${ly}/village/select-all-level1?flag=${flag}&checkType=-1&lxType=${status[0]}')"
-                                           href="javascript:;">设置</a>
-                                    </c:if>
-                                    <c:if test="${be.level1!='全公司' }">
-                                        <a style="text-decoration:none"
-                                           onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-1&flag=${flag}')"
-                                           href="javascript:;">设置</a>
-                                    </c:if>
-                                        <%--                                        <a style="text-decoration:none"--%>
-                                        <%--                                           onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-1&flag=${flag}')"--%>
-                                        <%--                                           href="javascript:;">设置</a>--%>
-                                        <%--                                <a style="text-decoration:none"--%>
-                                        <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"--%>
-                                        <%--
-                                                                        href="javascript:;">实施</a>--%>
-                                    <c:if test="${status[1]==1}">
-                                        <a style="text-decoration:none"
-                                           onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-1,${status[0]+1},'${flag}')"
-                                           href="javascript:;">实施</a>
-                                    </c:if>
-                                    <c:if test="${status[1]==0}">
-                                        <a style="text-decoration:none"
-                                           class="used"
-                                           onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-1,${status[0]+1},'${flag}')"
-                                           href="javascript:;">实施</a>
-                                    </c:if>
+                                    <a style="text-decoration:none"
+                                       onClick="szss_list('${be.level1 }',-2,${status[0]+1},'${flag}')"
+                                        href="javascript:;">实施
+                                     </a>
                                 </td>
-                            </c:forEach>
-                            <td>
-                                <a style="text-decoration:none"
-                                   onClick="szss_list('${be.level1 }',-1,${status[0]+1},'${flag}')"
-                                   href="javascript:;">实施
-                                </a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    <!-- 循环结束 -->
-                    </tbody>
-                </table>
+
+                            </tr>
+                        </c:forEach>
+                        <!-- 循环结束 -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+            <div class="tabCon" >
+                <div class="mt-20">
+                    <table class="table table-border table-bordered table-bg table-hover table-sort">
+                        <thead>
+                        <tr class="text-c">
+                            <th width="45px">序号</th>
+                            <th>受检车间/场所</th>
+                            <th>综合检查</th>
+                            <th>日常检查</th>
+                            <th>定期检查</th>
+                            <th>季节检查</th>
+                            <th>其他检查</th>
+                            <th>整改复查</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- 循环-->
+                        <c:forEach items="${jiChuItem}" varStatus="index" var="be">
+                            <tr class="text-c">
+                                <td>${index.index + 1}</td>
+                                <td>${be.level1 }</td>
+                                <c:forEach items="${be.array}" varStatus="index2" var="item">
+                                    <td>
+                                        <c:set value="${fn:split(item,'=' )}" var="status"></c:set>
+                                        <c:if test="${be.level1=='全公司' }">
+                                            <a style="text-decoration:none"
+                                               onclick="show_dialog('生成检查表','${ly}/village/select-all-level1?flag=${flag}&checkType=-1&lxType=${status[0]}')"
+                                               href="javascript:;">设置</a>
+                                        </c:if>
+                                        <c:if test="${be.level1!='全公司' }">
+                                            <a style="text-decoration:none"
+                                               onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-1&flag=${flag}')"
+                                               href="javascript:;">设置</a>
+                                        </c:if>
+<%--                                        <a style="text-decoration:none"--%>
+<%--                                           onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-1&flag=${flag}')"--%>
+<%--                                           href="javascript:;">设置</a>--%>
+                                            <%--                                <a style="text-decoration:none"--%>
+                                            <%--                                   onClick="tz('${ly}/company/model-list-tj?dmname=${be.level1 }&dmid=${be.dmid }&checkType=5&industryType=-1&template=6&flag=1')"--%>
+                                            <%--
+                                                                            href="javascript:;">实施</a>--%>
+                                        <c:if test="${status[1]==1}">
+                                            <a style="text-decoration:none"
+                                               onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-1,${status[0]+1},'${flag}')"
+                                               href="javascript:;">实施${status[0]}:${status[1]}</a>
+                                        </c:if>
+                                        <c:if test="${status[1]==0}">
+                                            <a style="text-decoration:none"
+                                               class="used"
+                                               onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-1,${status[0]+1},'${flag}')"
+                                               href="javascript:;">实施${status[0]}:${status[1]}</a>
+                                        </c:if>
+                                    </td>
+                                </c:forEach>
+                                <td>
+                                    <a style="text-decoration:none"
+                                       onClick="szss_list('${be.level1 }',-1,${status[0]+1},'${flag}')"
+                                       href="javascript:;">实施
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        <!-- 循环结束 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
     </div>
 
 

@@ -145,6 +145,12 @@
             <span>现场管理</span>
             <span>基础管理</span>
         </div>
+        <c:if test="${flag == 1}">
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+     		<span class="r">日期：<strong>${data}</strong>
+            </span>
+            </div>
+        </c:if>
             <div class="tabCon tabCon1">
                 <div class="mt-20">
                     <table class="table table-border table-bordered table-bg table-hover table-sort">

@@ -183,7 +183,7 @@
        title="返回" onclick="parent.close_tab(function(){})">返回</a>
 </nav>
 <div class="page-container">
-    <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
+    <%--<div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
         <a class="btn default ${empty type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list">安全风险辨识</a>
         <a class="btn default ${1 eq type ? 'btn-primary' : 'radius'}"
            href="${ly }/company/safety-system/risk-list?type=1">职业病风险物理因素辨识</a>
@@ -203,7 +203,7 @@
         </c:if>
         <a class="btn default ${5 eq  type ? 'btn-primary' : 'radius'}"
            href="${ly }/company/safety-system/risk-list?type=5">高危作业辨识</a>
-    </div>
+    </div>--%>
 
     <div class="text-c mt-20">
         <button onClick="pr_()" class="btn btn-primary radius" type="button">

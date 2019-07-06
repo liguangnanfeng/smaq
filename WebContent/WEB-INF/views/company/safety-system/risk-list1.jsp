@@ -1,4 +1,4 @@
-    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/views/taglibs.jsp" %>
 <!DOCTYPE HTML>
 <html>
@@ -183,27 +183,27 @@
        title="返回" onclick="parent.close_tab(function(){})">返回</a>
 </nav>
 <div class="page-container">
-    <%--<div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
-        <a class="btn default ${empty type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list">安全风险辨识</a>
-        <a class="btn default ${1 eq type ? 'btn-primary' : 'radius'}"
-           href="${ly }/company/safety-system/risk-list?type=1">职业病风险物理因素辨识</a>
-        <a class="btn default ${2 eq  type ? 'btn-primary' : 'radius'}"
-           href="${ly }/company/safety-system/risk-list?type=2">职业病风险化学因素辨识</a>
-        <c:if test="${indus==1 }">
-            <c:choose>
-                <c:when test="${fn:contains(company.name, '油') }">
-                </c:when>
-                <c:otherwise>
-                    <a class="btn default ${3 eq  type ? 'btn-primary' : 'radius'}"
-                       href="${ly }/company/safety-system/risk-list?type=3">高危工艺辨识</a>
-                </c:otherwise>
-            </c:choose>
-            <a class="btn default ${4 eq  type ? 'btn-primary' : 'radius'}"
-               href="${ly }/company/safety-system/risk-list?type=4">物料风险辨识</a>
-        </c:if>
-        <a class="btn default ${5 eq  type ? 'btn-primary' : 'radius'}"
-           href="${ly }/company/safety-system/risk-list?type=5">高危作业辨识</a>
-    </div>--%>
+    <%--<div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">--%>
+    <%--<a class="btn default ${empty type ? 'btn-primary' : 'radius'}" href="${ly }/company/safety-system/risk-list">安全风险辨识</a>--%>
+    <%--<a class="btn default ${1 eq type ? 'btn-primary' : 'radius'}"--%>
+    <%--href="${ly }/company/safety-system/risk-list?type=1">职业病风险物理因素辨识</a>--%>
+    <%--<a class="btn default ${2 eq  type ? 'btn-primary' : 'radius'}"--%>
+    <%--href="${ly }/company/safety-system/risk-list?type=2">职业病风险化学因素辨识</a>--%>
+    <%--<c:if test="${indus==1 }">--%>
+    <%--<c:choose>--%>
+    <%--<c:when test="${fn:contains(company.name, '油') }">--%>
+    <%--</c:when>--%>
+    <%--<c:otherwise>--%>
+    <%--<a class="btn default ${3 eq  type ? 'btn-primary' : 'radius'}"--%>
+    <%--href="${ly }/company/safety-system/risk-list?type=3">高危工艺辨识</a>--%>
+    <%--</c:otherwise>--%>
+    <%--</c:choose>--%>
+    <%--<a class="btn default ${4 eq  type ? 'btn-primary' : 'radius'}"--%>
+    <%--href="${ly }/company/safety-system/risk-list?type=4">物料风险辨识</a>--%>
+    <%--</c:if>--%>
+    <%--<a class="btn default ${5 eq  type ? 'btn-primary' : 'radius'}"--%>
+    <%--href="${ly }/company/safety-system/risk-list?type=5">高危作业辨识</a>--%>
+    <%--</div>--%>
 
     <div class="text-c mt-20">
         <button onClick="pr_()" class="btn btn-primary radius" type="button">
@@ -252,14 +252,14 @@
                 </c:if>
 
 
-               <%-- <c:if test="${number == null || number != 3}">
-                    <select class="sel_area isShow" id="partNamme"  onchange="Partname()" style="position:relative;top:3px">
-                        <option value="" >全部</option>
-                        <c:forEach items="${zzjgDep1 }" var="be">
-                            <option value="${be.id}" >${be.name }</option>
-                        </c:forEach>
-                    </select>
-                </c:if>--%>
+                <%-- <c:if test="${number == null || number != 3}">
+                     <select class="sel_area isShow" id="partNamme"  onchange="Partname()" style="position:relative;top:3px">
+                         <option value="" >全部</option>
+                         <c:forEach items="${zzjgDep1 }" var="be">
+                             <option value="${be.id}" >${be.name }</option>
+                         </c:forEach>
+                     </select>
+                 </c:if>--%>
             </c:if>
 
             <%--<c:if test="${not empty type}">
@@ -514,9 +514,9 @@
                         <thead>
                         <tr class="text-c">
                             <th>车间/场所</th>
-                            <th>现场</th>
-                            <th>基础</th>
-                                <%--<th>安全风险</th>--%>
+                                <%--<th>现场</th>--%>
+                                <%--<th>基础</th>--%>
+                            <th>安全风险</th>
                             <th>职业病物理因素</th>
                             <th>职业病化学因素</th>
                             <c:if test="${indus==1 }">
@@ -542,65 +542,65 @@
                                 <c:set value="${fn:split(be.dangerId,',')}" var="idx">
 
                                 </c:set>
-                                <td style="text-align: center">
-
-                                    <c:if test="${idx[0]==1||idx[1]==1||idx[2]==1||idx[3]==1||idx[4]==1||idx[5]==1||idx[6]==1||idx[7]==1||idx[8]==1}">
-                                        <a onclick="amend('${be.id}',1)">查看</a>
-                                    </c:if>
-                                    <c:if test="${idx[0]!=1&&idx[1]!=1&&idx[2]!=1&&idx[3]!=1&&idx[4]!=1&&idx[5]!=1&&idx[6]!=1&&idx[7]!=1&&idx[8]!=1}">
-                                        <input type="checkbox" name="xc" class="hid" onchange="checkShowType(this,1,'${be.id}')" style="margin-right: 3px"/>
-                                    </c:if>
-                                        <%--<c:if test="${be.dangerId==null||be.dangerId!=1}">--%>
-                                        <%--<input type="checkbox" name="xc" onchange="checkShowType(this,1,'${be.id}')" style="margin-right: 3px"/>${be.dangerId}--%>
-                                        <%--</c:if>--%>
-                                        <%--<c:if test="${be.dangerId==null||be.dangerId==4}">--%>
-                                        <%--<input type="checkbox" name="xc"--%>
-                                        <%--onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场--%>
-                                        <%--<input type="checkbox" name="jc"--%>
-                                        <%--onchange="checkShowType(this,'${be.id}')"--%>
-                                        <%--style="margin-left: 20px;margin-right: 3px"/>基础--%>
-                                        <%--</c:if>--%>
-                                        <%--<c:if test="${be.dangerId==1}">--%>
-                                        <%--<input type="checkbox" checked name="xc"--%>
-                                        <%--onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场--%>
-                                        <%--<input type="checkbox" name="jc"--%>
-                                        <%--onchange="checkShowType(this,'${be.id}')"--%>
-                                        <%--style="margin-left: 20px;margin-right: 3px"/>基础--%>
-                                        <%--</c:if>--%>
-                                        <%--<c:if test="${be.dangerId==2}">--%>
-                                        <%--<input type="checkbox" name="xc"--%>
-                                        <%--onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场--%>
-                                        <%--<input type="checkbox" checked name="jc"--%>
-                                        <%--onchange="checkShowType(this,'${be.id}')"--%>
-                                        <%--style="margin-left: 20px;margin-right: 3px"/>基础--%>
-                                        <%--</c:if>--%>
-                                        <%--<c:if test="${be.dangerId==3}">--%>
-                                        <%--<input type="checkbox" checked name="xc"--%>
-                                        <%--onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场--%>
-                                        <%--<input type="checkbox" checked name="jc"--%>
-                                        <%--onchange="checkShowType(this,'${be.id}')"--%>
-                                        <%--style="margin-left: 20px;margin-right: 3px"/>基础--%>
-                                        <%--</c:if>--%>
-
-                                </td>
-                                <td style="text-align: center">
-
-                                    <c:if test="${idx[0]==2||idx[1]==2||idx[2]==2||idx[3]==2||idx[4]==2||idx[5]==2||idx[6]==2||idx[7]==2||idx[8]==2}">
-                                        <%--<input type="checkbox" name="xc" checked onchange="checkShowType(this,2,'${be.id}')" style="margin-right: 3px"/>--%>
-                                        <a onclick="amend('${be.id}',2)">查看</a>
-                                    </c:if>
-                                    <c:if test="${idx[0]!=2&&idx[1]!=2&&idx[2]!=2&&idx[3]!=2&&idx[4]!=2&&idx[5]!=2&&idx[6]!=2&&idx[7]!=2&&idx[8]!=2}">
-                                        <input type="checkbox" name="xc" class="hid" onchange="checkShowType(this,2,'${be.id}')" style="margin-right: 3px"/>
-                                    </c:if>
-                                </td>
                                     <%--<td style="text-align: center">--%>
-                                    <%--<c:if test="${idx[0]==3||idx[1]==3||idx[2]==3||idx[3]==3||idx[4]==3||idx[5]==3||idx[6]==3||idx[7]==3||idx[8]==3}">--%>
-                                    <%--<input type="checkbox" name="xc${be.id}" checked onchange="checkShowType(this,3,'${be.id}')" style="margin-right: 3px"/>--%>
+
+                                    <%--<c:if test="${idx[0]==1||idx[1]==1||idx[2]==1||idx[3]==1||idx[4]==1||idx[5]==1||idx[6]==1||idx[7]==1||idx[8]==1}">--%>
+                                    <%--<a onclick="amend('${be.id}',1)">查看</a>--%>
                                     <%--</c:if>--%>
-                                    <%--<c:if test="${idx[0]!=3&&idx[1]!=3&&idx[2]!=3&&idx[3]!=3&&idx[4]!=3&&idx[5]!=3&&idx[6]!=3&&idx[7]!=3&&idx[8]!=3}">--%>
-                                    <%--<input type="checkbox" name="xc${be.id}" onchange="checkShowType(this,3,'${be.id}')" style="margin-right: 3px"/>--%>
+                                    <%--<c:if test="${idx[0]!=1&&idx[1]!=1&&idx[2]!=1&&idx[3]!=1&&idx[4]!=1&&idx[5]!=1&&idx[6]!=1&&idx[7]!=1&&idx[8]!=1}">--%>
+                                    <%--<input type="checkbox" name="xc" class="hid" onchange="checkShowType(this,1,'${be.id}')" style="margin-right: 3px"/>--%>
+                                    <%--</c:if>--%>
+                                    <%--<c:if test="${be.dangerId==null||be.dangerId!=1}">--%>
+                                    <%--<input type="checkbox" name="xc" onchange="checkShowType(this,1,'${be.id}')" style="margin-right: 3px"/>${be.dangerId}--%>
+                                    <%--</c:if>--%>
+                                    <%--<c:if test="${be.dangerId==null||be.dangerId==4}">--%>
+                                    <%--<input type="checkbox" name="xc"--%>
+                                    <%--onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场--%>
+                                    <%--<input type="checkbox" name="jc"--%>
+                                    <%--onchange="checkShowType(this,'${be.id}')"--%>
+                                    <%--style="margin-left: 20px;margin-right: 3px"/>基础--%>
+                                    <%--</c:if>--%>
+                                    <%--<c:if test="${be.dangerId==1}">--%>
+                                    <%--<input type="checkbox" checked name="xc"--%>
+                                    <%--onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场--%>
+                                    <%--<input type="checkbox" name="jc"--%>
+                                    <%--onchange="checkShowType(this,'${be.id}')"--%>
+                                    <%--style="margin-left: 20px;margin-right: 3px"/>基础--%>
+                                    <%--</c:if>--%>
+                                    <%--<c:if test="${be.dangerId==2}">--%>
+                                    <%--<input type="checkbox" name="xc"--%>
+                                    <%--onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场--%>
+                                    <%--<input type="checkbox" checked name="jc"--%>
+                                    <%--onchange="checkShowType(this,'${be.id}')"--%>
+                                    <%--style="margin-left: 20px;margin-right: 3px"/>基础--%>
+                                    <%--</c:if>--%>
+                                    <%--<c:if test="${be.dangerId==3}">--%>
+                                    <%--<input type="checkbox" checked name="xc"--%>
+                                    <%--onchange="checkShowType(this,'${be.id}')" style="margin-right: 3px"/>现场--%>
+                                    <%--<input type="checkbox" checked name="jc"--%>
+                                    <%--onchange="checkShowType(this,'${be.id}')"--%>
+                                    <%--style="margin-left: 20px;margin-right: 3px"/>基础--%>
+                                    <%--</c:if>--%>
+
+                                    <%--</td>--%>
+                                    <%--<td style="text-align: center">--%>
+
+                                    <%--<c:if test="${idx[0]==2||idx[1]==2||idx[2]==2||idx[3]==2||idx[4]==2||idx[5]==2||idx[6]==2||idx[7]==2||idx[8]==2}">--%>
+                                    <%--&lt;%&ndash;<input type="checkbox" name="xc" checked onchange="checkShowType(this,2,'${be.id}')" style="margin-right: 3px"/>&ndash;%&gt;--%>
+                                    <%--<a onclick="amend('${be.id}',2)">查看</a>--%>
+                                    <%--</c:if>--%>
+                                    <%--<c:if test="${idx[0]!=2&&idx[1]!=2&&idx[2]!=2&&idx[3]!=2&&idx[4]!=2&&idx[5]!=2&&idx[6]!=2&&idx[7]!=2&&idx[8]!=2}">--%>
+                                    <%--<input type="checkbox" name="xc" class="hid" onchange="checkShowType(this,2,'${be.id}')" style="margin-right: 3px"/>--%>
                                     <%--</c:if>--%>
                                     <%--</td>--%>
+                                <td style="text-align: center">
+                                    <c:if test="${idx[0]==3||idx[1]==3||idx[2]==3||idx[3]==3||idx[4]==3||idx[5]==3||idx[6]==3||idx[7]==3||idx[8]==3}">
+                                        <a onclick="amend('${be.id}',3)">查看</a>
+                                    </c:if>
+                                    <c:if test="${idx[0]!=3&&idx[1]!=3&&idx[2]!=3&&idx[3]!=3&&idx[4]!=3&&idx[5]!=3&&idx[6]!=3&&idx[7]!=3&&idx[8]!=3}">
+                                        <input type="checkbox" name="xc${be.id}" class="hid" onchange="checkShowType(this,3,'${be.id}')" style="margin-right: 3px"/>
+                                    </c:if>
+                                </td>
                                 <td style="text-align: center">
                                     <c:if test="${idx[0]==4||idx[1]==4||idx[2]==4||idx[3]==4||idx[4]==4||idx[5]==4||idx[6]==4||idx[7]==4||idx[8]==4}">
                                         <%--<input type="checkbox" name="xc${be.id}" checked onchange="checkShowType(this,4,'${be.id}')" style="margin-right: 3px"/>--%>
@@ -660,9 +660,9 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                   <%-- <div  style="padding-left: 745px;padding-top: 10px" >
-                        <button class="btn btn-primary radius" onClick="selectNow()">确定</button>
-                    </div>--%>
+                    <%-- <div  style="padding-left: 745px;padding-top: 10px" >
+                         <button class="btn btn-primary radius" onClick="selectNow()">确定</button>
+                     </div>--%>
                 </c:if>
             </div>
         </div>
@@ -795,18 +795,20 @@
 
 
     function amend(id,idx) {
-
+        sessionStorage.setItem('jcId',id)
         window.location.href = '${ly}/company/safety-system/risk-list?id='+id+"&types="+idx
     }
 
 
 
     function selectNow() {
-        window.location.href = '${ly}/company/safety-system/risk-list?number=1'
+        <%--window.location.href = '${ly}/company/safety-system/risk-list?number=1'--%>
+        window.location.href = '${ly}/company/safety-system/risk-list?types=3&id='+sessionStorage.getItem('jcId')
     }
 
     function selectBase() {
-        window.location.href = '${ly}/company/safety-system/risk-list?number=2'
+        <%--window.location.href = '${ly}/company/safety-system/risk-list?number=2'--%>
+        window.location.href = '${ly}/company/safety-system/risk-list?types=2&id='+sessionStorage.getItem('jcId')
     }
 
     function BaseSet() {

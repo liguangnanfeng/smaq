@@ -367,6 +367,18 @@
     </select>
 
 
+    <select id="selectLevel1DangerIds" resultType="com.spring.web.model.ZzjgDepartment">
+        select
+        *
+        from zzjg_department_tbl t1
+        where
+        t1.del = 0 and t1.level = 1
+        and t1.uid = #{uid,jdbcType=INTEGER}
+        order by t1.id asc
+    </select>
+
+
+
 
     <select id="selectLevel1ByUids" resultType="java.util.Map">
         select

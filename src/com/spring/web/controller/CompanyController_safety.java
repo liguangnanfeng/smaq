@@ -427,8 +427,11 @@ public class CompanyController_safety extends BaseController {
         }
         if (null != buttons && Integer.parseInt(buttons) == 1){
             // 根据 uid 修改 dangerId 为 null
-            Integer a = zzjgDepartmentMapper.deleteAll(null,user.getId(),new Date());
+            /*Integer a = zzjgDepartmentMapper.deleteAll(null,user.getId(),new Date());*/
+            // 根据 uid 查询所有的数据信息
+            List<ZzjgDepartment> zzjgDeparList = zzjgDepartmentMapper.selectLevel1DangerIds(user.getId());
             model.addAttribute("buttons", 1);
+            model.addAttribute("zzjgDeparList",zzjgDeparList);
         }
         if (null != buttons && Integer.parseInt(buttons) == 2){
             model.addAttribute("buttons", 2);
@@ -466,10 +469,10 @@ public class CompanyController_safety extends BaseController {
                         number = 1;
                     }
                 }*/
-            if (null == types || Integer.parseInt(types) == 1 || Integer.parseInt(types) == 2) {
+            if (null == types || Integer.parseInt(types) == 1 || Integer.parseInt(types) == 2 || Integer.parseInt(types) == 3) {
                 if (null == number && null == types){
                     number = 3;
-                }else if (null != types && types.equals("1")){ // 现场
+                }else if (null != types && types.equals("3")){ // 现场
                     number = 1;
                 }else if (null != types && types.equals("2")){ // 基础
                     number = 2;
@@ -620,9 +623,9 @@ public class CompanyController_safety extends BaseController {
             }
             if (null != number3){
                 if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
-                    dangerId = "3";
+                    dangerId = "1,2,3";
                 }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0){
-                    dangerId = zzjgDepartment.getDangerId() + "," + "3"; // 安全风险
+                    dangerId = zzjgDepartment.getDangerId()+ "," + "1"+ "," + "2" + "," + "3"; // 安全风险
                 }
             }
             if (null != number4){

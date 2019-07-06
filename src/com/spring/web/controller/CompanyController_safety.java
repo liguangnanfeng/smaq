@@ -1737,10 +1737,9 @@ public class CompanyController_safety extends BaseController {
             model.addAttribute("compangName",company.getName());
             return "company/safety-system/control-photo";
         }
-
-
-
-
+        model.addAttribute("compangName",company.getName());
+        model.addAttribute("list", importPhotos);
+        return "company/safety-system/control-photo";
         // 不是就表示有数据
        /* for (ImportPhoto importPhoto : importPhotos) {
             String coordinate = importPhoto.getCoordinate();
@@ -1760,25 +1759,45 @@ public class CompanyController_safety extends BaseController {
                 importPhoto.setObject(list);
             }
         }*/
-        model.addAttribute("list", importPhotos);
-        return "company/safety-system/control-photo";
-
     }
+
+
+    @RequestMapping(value = "update-photo")
+    @ResponseBody
+    public Result updatePhoto(HttpServletRequest request, Integer id,String name) {
+        ImportPhoto importPhoto = importPhotoMapper.selectAllById(id);
+        Result result = new ResultImpl();
+        Integer a = 0;
+        // 判断该条数据是否存在
+        if (null == importPhoto) {
+            result.setStatus("1");
+            result.setMess("修改失败，检查要修改的信息是否符合要求。");
+        }else {
+            a = importPhotoMapper.updatePhotoName(name,id);
+        }
+        if (a != 0){
+            result.setStatus("0");
+            result.setMess("修改成功。");
+        }else {
+            result.setStatus("1");
+            result.setMess("修改失败，检查要修改的信息是否符合要求。");
+        }
+        return result;
+    }
+
+
+
 
     @RequestMapping(value = "modify-photo")
     @ResponseBody
     public Result modifyPhoto(HttpServletRequest request, Integer id) {
-
         ImportPhoto importPhoto = importPhotoMapper.selectAllById(id);
         // 判断图片是否为空
         if (null == importPhoto) {
-
             return null;
         }
-
         Result result = new ResultImpl();
         result.setObject(importPhoto);
-
         return result;
     }
 

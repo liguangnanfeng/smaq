@@ -26,5 +26,7 @@ public interface ImportPhotoMapper {
 
     // 根据更新数据
     void updateByInportPhoto(ImportPhoto importPhoto);
+
+    Integer updatePhotoName(@Param("name")String name, @Param("id")Integer id);
 }
 

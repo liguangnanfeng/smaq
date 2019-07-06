@@ -78,4 +78,15 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+
+    <!-- 根据 ID 修改数据信息 -->
+    <update id="updatePhotoName" parameterType="com.spring.web.model.request.ImportPhoto" >
+        update import_photo
+        set name = #{name,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+
+
 </mapper>

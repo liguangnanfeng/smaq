@@ -165,15 +165,35 @@
 <%--                </button>--%>
             </c:if>
 
-            <%--显示为检查文书--%>
-            <c:if test="${flag==2 || flag== 3 }">
+
+
+
+
+
+
+            <%--显示行政检查文书--%>
+            <c:if test="${flag==2  }">
+
+                    <button onClick="show_dialog('检查文书','/village/check-document?checkId=${check.id }')"
+                            class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书
+                    </button>
+                    <%--                <button onClick="location.href = '/village/check-document?checkId=${check.id }'"--%>
+                    <%--                        class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书--%>
+                    <%--                </button>--%>
+            </c:if>
+
+            <%--显示部门抽查检查文书--%>
+            <c:if test="${flag==3 }">
+                <c:if test="${is_re==1}">
                 <button onClick="show_dialog('检查文书','/village/check-document?checkId=${check.id }')"
                         class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书
                 </button>
 <%--                <button onClick="location.href = '/village/check-document?checkId=${check.id }'"--%>
 <%--                        class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书--%>
 <%--                </button>--%>
+                </c:if>
             </c:if>
+
         </c:if>
 
         <c:if test="${latitude!=null&&longitude!=null}">

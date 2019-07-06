@@ -489,15 +489,16 @@
                     x = "部门抽查";
                 }
                 if (flag != 1) {
-                    top.show_tab('现场检查记录_' + checkId, '/village/check-document?checkId=' + checkId + '&flag=8')
+                    // show_tab('现场检查记录_' + checkId, '/village/check-document?checkId=' + checkId + '&flag=8')
+                    parent.location.reload();
                 } else {
                     if(sessionStorage.getItem('flag')){
                         var l_flag = parseInt(sessionStorage.getItem('flag'))  ;
                         var l_dmname =sessionStorage.getItem('dmname').replace(/\s*/g,"");
                         var l_industryType = parseInt(sessionStorage.getItem('industryType'));
                         var url = '${ly}/company/check-list-szss?dmName='+l_dmname+'&flag='+l_flag+'&industryType='+l_industryType;
-                        console.log(url)
-                        top.show_tab(x, url)
+                        // top.show_tab(x, url)
+                      show_tab(x, url)
                     }else{
                         close_dialog(function () {
                             parent.location.reload();

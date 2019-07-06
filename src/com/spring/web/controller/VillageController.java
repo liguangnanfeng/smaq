@@ -1730,6 +1730,18 @@ public class VillageController extends BaseController {
                 break;
             }
         }
+        model.addAttribute("is_fu",0);
+        for (TCheckItem tCheckItem : tCheckItems) {
+            if(tCheckItem.getStatus()==3){
+                model.addAttribute("is_fu",1);
+                break;
+            }else{
+                if(tCheckItem.getRecheckFile()!=null&&!"".equals(tCheckItem.getRecheckFile())){
+                    model.addAttribute("is_fu",1);
+                    break;
+                }
+            }
+        }
 
         TRectification tRectification = tRectificationMapper.selectByCheckId(checkId);
         if (null != tRectification) {
@@ -1739,14 +1751,34 @@ public class VillageController extends BaseController {
             tRectification1.setDeadline(new Date());
             tRectification1.setPlanTime(new Date());
         }
-        model.addAttribute("rectification", tRectification);
+        model.addAttribute("flag2", check.getFlag());
         model.addAttribute("check", check);
+        model.addAttribute("checkId", checkId);
+        model.addAttribute("userId", check.getUserId());
+        model.addAttribute("rectification", tRectification);
         model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
-        model.addAttribute("userId", check.getUserId());
-        model.addAttribute("checkId", checkId);
+
         log.error("checkid:" + checkId + ",flag:" + flag + ",checkflag:" + check.getFlag());
-        return "village/danger/opinion-add" + flag + check.getFlag();
+
+        // 判断是否整改复查过
+        if(null==tRectification){
+            model.addAttribute("is_re",0);
+        }else{
+            model.addAttribute("is_re",1);
+        }
+
+        if(check.getFlag()==2){
+            // 行政检查
+            return "village/danger/opinion-add" + flag + check.getFlag();
+        }else {
+            // 部门抽查
+            if(flag==8){
+                flag=1;
+            }
+            return "village/danger/opinion-add" + flag + check.getFlag();
+        }
+
     }
 
     /**

@@ -1729,12 +1729,12 @@ public class CompanyController_safety extends BaseController {
     public String selectPhoto(HttpServletRequest request, Model model) {
 
         User user = getLoginUser(request);
-      /*  Company company = companyMapper.selectByPrimaryKey(user.getId());
-        model.addAttribute("compangName",company.getName());*/
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+
         List<ImportPhoto> importPhotos = importPhotoMapper.selectPhoto(user.getId());
         if(null== importPhotos || importPhotos.size()==0){
             model.addAttribute("list", importPhotos);
-
+            model.addAttribute("compangName",company.getName());
             return "company/safety-system/control-photo";
         }
 

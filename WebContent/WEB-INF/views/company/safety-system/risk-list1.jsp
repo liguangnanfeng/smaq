@@ -117,6 +117,11 @@
         $(function(){
             $('#partNamme').val('${ids}');
             $('.isShow').css('display','inline-block')
+            if('${buttons}'==2){
+                $('.hid').css('display','none')
+            }else{
+                $('.hid').css('display','inline-block')
+            }
         })
     </script>
     <script type="text/javascript">
@@ -234,7 +239,7 @@
 
                     <button class="btn btn-primary radius isShow" onClick="deleteAll()">编辑</button>
 
-                    <button class="btn btn-primary radius isShow" onClick="location.reload()">确定</button>
+                    <button class="btn btn-primary radius isShow" onClick="saveAll()">确定</button>
                 </c:if>
 
                 <c:if test="${number != 3}">
@@ -540,11 +545,10 @@
                                 <td style="text-align: center">
 
                                     <c:if test="${idx[0]==1||idx[1]==1||idx[2]==1||idx[3]==1||idx[4]==1||idx[5]==1||idx[6]==1||idx[7]==1||idx[8]==1}">
-<%--                                        <input type="checkbox" name="xc" checked onchange="checkShowType(this,1,'${be.id}')" style="margin-right: 3px"/>--%>
                                         <a onclick="amend('${be.id}',1)">查看</a>
                                     </c:if>
                                     <c:if test="${idx[0]!=1&&idx[1]!=1&&idx[2]!=1&&idx[3]!=1&&idx[4]!=1&&idx[5]!=1&&idx[6]!=1&&idx[7]!=1&&idx[8]!=1}">
-                                        <input type="checkbox" name="xc" onchange="checkShowType(this,1,'${be.id}')" style="margin-right: 3px"/>
+                                        <input type="checkbox" name="xc" class="hid" onchange="checkShowType(this,1,'${be.id}')" style="margin-right: 3px"/>
                                     </c:if>
                                         <%--<c:if test="${be.dangerId==null||be.dangerId!=1}">--%>
                                         <%--<input type="checkbox" name="xc" onchange="checkShowType(this,1,'${be.id}')" style="margin-right: 3px"/>${be.dangerId}--%>
@@ -586,7 +590,7 @@
                                         <a onclick="amend('${be.id}',2)">查看</a>
                                     </c:if>
                                     <c:if test="${idx[0]!=2&&idx[1]!=2&&idx[2]!=2&&idx[3]!=2&&idx[4]!=2&&idx[5]!=2&&idx[6]!=2&&idx[7]!=2&&idx[8]!=2}">
-                                        <input type="checkbox" name="xc" onchange="checkShowType(this,2,'${be.id}')" style="margin-right: 3px"/>
+                                        <input type="checkbox" name="xc" class="hid" onchange="checkShowType(this,2,'${be.id}')" style="margin-right: 3px"/>
                                     </c:if>
                                 </td>
                                     <%--<td style="text-align: center">--%>
@@ -603,7 +607,7 @@
                                         <a onclick="amend('${be.id}',4)">查看</a>
                                     </c:if>
                                     <c:if test="${idx[0]!=4&&idx[1]!=4&&idx[2]!=4&&idx[3]!=4&&idx[4]!=4&&idx[5]!=4&&idx[6]!=4&&idx[7]!=4&&idx[8]!=4}">
-                                        <input type="checkbox" name="xc${be.id}" onchange="checkShowType(this,4,'${be.id}')" style="margin-right: 3px"/>
+                                        <input type="checkbox" name="xc${be.id}" class="hid" onchange="checkShowType(this,4,'${be.id}')" style="margin-right: 3px"/>
                                     </c:if>
                                 </td>
                                 <td style="text-align: center">
@@ -612,7 +616,7 @@
                                         <a onclick="amend('${be.id}',5)">查看</a>
                                     </c:if>
                                     <c:if test="${idx[0]!=5&&idx[1]!=5&&idx[2]!=5&&idx[3]!=5&&idx[4]!=5&&idx[5]!=5&&idx[6]!=5&&idx[7]!=5&&idx[8]!=5}">
-                                        <input type="checkbox" name="xc${be.id}" onchange="checkShowType(this,5,'${be.id}')" style="margin-right: 3px"/>
+                                        <input type="checkbox" name="xc${be.id}" class="hid" onchange="checkShowType(this,5,'${be.id}')" style="margin-right: 3px"/>
                                     </c:if>
                                 </td>
                                 <td style="text-align: center">
@@ -621,7 +625,7 @@
                                         <a onclick="amend('${be.id}',6)">查看</a>
                                     </c:if>
                                     <c:if test="${idx[0]!=6&&idx[1]!=6&&idx[2]!=6&&idx[3]!=6&&idx[4]!=6&&idx[5]!=6&&idx[6]!=6&&idx[7]!=6&&idx[8]!=6}">
-                                        <input type="checkbox" name="xc${be.id}" onchange="checkShowType(this,6,'${be.id}')" style="margin-right: 3px"/>
+                                        <input type="checkbox" name="xc${be.id}" class="hid" onchange="checkShowType(this,6,'${be.id}')" style="margin-right: 3px"/>
                                     </c:if>
                                 </td>
                                 <c:if test="${indus==1 }">
@@ -635,7 +639,7 @@
                                                     <a onclick="amend('${be.id}',7)">查看</a>
                                                 </c:if>
                                                 <c:if test="${idx[0]!=7&&idx[1]!=7&&idx[2]!=7&&idx[3]!=7&&idx[4]!=7&&idx[5]!=7&&idx[6]!=7&&idx[7]!=7&&idx[8]!=7}">
-                                                    <input type="checkbox" name="xc${be.id}" onchange="checkShowType(this,7,'${be.id}')" style="margin-right: 3px"/>
+                                                    <input type="checkbox" name="xc${be.id}" class="hid" onchange="checkShowType(this,7,'${be.id}')" style="margin-right: 3px"/>
                                                 </c:if>
                                             </td>
                                         </c:otherwise>
@@ -646,7 +650,7 @@
                                             <a onclick="amend('${be.id}',8)">查看</a>
                                         </c:if>
                                         <c:if test="${idx[0]!=8&&idx[1]!=8&&idx[2]!=8&&idx[3]!=8&&idx[4]!=8&&idx[5]!=8&&idx[6]!=8&&idx[7]!=8&&idx[8]!=8}">
-                                            <input type="checkbox" name="xc${be.id}" onchange="checkShowType(this,8,'${be.id}')" style="margin-right: 3px"/>
+                                            <input type="checkbox" name="xc${be.id}" class="hid" onchange="checkShowType(this,8,'${be.id}')" style="margin-right: 3px"/>
                                         </c:if>
                                     </td>
                                 </c:if>
@@ -780,16 +784,15 @@
         })
     }*/
     function deleteAll() {
-        // layer.confirm("确定删除该记录?", function (r) {
-            $.post(getRootPath() + "/company/safety-system/risk-deleteAll", {
-                id: id,
-                del: 1
-            }, function (result) {
-                // layer.close(r);
-                location.reload();
-            })
-        // })
+
+        window.location.href = '${ly}/company/safety-system/risk-list?buttons=1'
     }
+
+    function saveAll() {
+
+        window.location.href = '${ly}/company/safety-system/risk-list?buttons=2'
+    }
+
 
     function amend(id,idx) {
 

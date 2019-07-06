@@ -417,9 +417,22 @@ public class CompanyController_safety extends BaseController {
      * @throws Exception
      **/
     @RequestMapping({"risk-list"})
-    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number,Integer dmid,Integer flag,String types,String id) throws Exception {
+    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number,Integer dmid,
+                           Integer flag,String types,String id, String buttons) throws Exception {
         User user = this.getLoginUser(request);
         Company company = this.companyMapper.selectByPrimaryKey(user.getId());
+
+        if (null == buttons){
+            buttons = "2";
+        }
+        if (null != buttons && Integer.parseInt(buttons) == 1){
+            // 根据 uid 修改 dangerId 为 null
+            Integer a = zzjgDepartmentMapper.deleteAll(null,user.getId(),new Date());
+            model.addAttribute("buttons", 1);
+        }
+        if (null != buttons && Integer.parseInt(buttons) == 2){
+            model.addAttribute("buttons", 2);
+        }
         if (StringUtils.isEmpty(company.getIndustry())) {
             model.addAttribute("url", request.getRequestURI());
             return "company/safety-system/type";
@@ -491,6 +504,7 @@ public class CompanyController_safety extends BaseController {
                 }else {
                     indus = 2;
                 }
+                model.addAttribute("buttons",buttons);
                 model.addAttribute("indus",indus);
                 model.addAttribute("ids",id);
                 model.addAttribute("zzjgDep1", zzjg1);
@@ -555,6 +569,7 @@ public class CompanyController_safety extends BaseController {
                 }else {
                     indus = 2;
                 }
+
                 model.addAttribute("indus",indus);
                 model.addAttribute("zzjgDep1", zzjgDepartment);
                 model.addAttribute("zzjg",zzjg);
@@ -704,22 +719,6 @@ public class CompanyController_safety extends BaseController {
         }*/
         return result;
     }
-
-    /**
-     * @author     ：小明！！！
-     * @description：风险辨识编辑按钮
-     */
-    @RequestMapping({"risk-deleteAll"})
-    @ResponseBody
-    public Result riskDeleteAll (Model model,HttpServletRequest request){
-        Result result = new ResultImpl();
-        User user = this.getLoginUser(request);
-        // 根据 uid 修改 dangerId 为 null
-        Integer a = zzjgDepartmentMapper.deleteAll(null,user.getId(),new Date());
-        return result;
-    }
-
-
 
     /**
      * create by  : 小明！！！
@@ -1730,18 +1729,17 @@ public class CompanyController_safety extends BaseController {
     public String selectPhoto(HttpServletRequest request, Model model) {
 
         User user = getLoginUser(request);
-      /*  Company company = companyMapper.selectByPrimaryKey(user.getId());
-        model.addAttribute("compangName",company.getName());*/
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+
         List<ImportPhoto> importPhotos = importPhotoMapper.selectPhoto(user.getId());
         if(null== importPhotos || importPhotos.size()==0){
             model.addAttribute("list", importPhotos);
-
+            model.addAttribute("compangName",company.getName());
             return "company/safety-system/control-photo";
         }
-
-
-
-
+        model.addAttribute("compangName",company.getName());
+        model.addAttribute("list", importPhotos);
+        return "company/safety-system/control-photo";
         // 不是就表示有数据
        /* for (ImportPhoto importPhoto : importPhotos) {
             String coordinate = importPhoto.getCoordinate();
@@ -1761,25 +1759,45 @@ public class CompanyController_safety extends BaseController {
                 importPhoto.setObject(list);
             }
         }*/
-        model.addAttribute("list", importPhotos);
-        return "company/safety-system/control-photo";
-
     }
+
+
+    @RequestMapping(value = "update-photo")
+    @ResponseBody
+    public Result updatePhoto(HttpServletRequest request, Integer id,String name) {
+        ImportPhoto importPhoto = importPhotoMapper.selectAllById(id);
+        Result result = new ResultImpl();
+        Integer a = 0;
+        // 判断该条数据是否存在
+        if (null == importPhoto) {
+            result.setStatus("1");
+            result.setMess("修改失败，检查要修改的信息是否符合要求。");
+        }else {
+            a = importPhotoMapper.updatePhotoName(name,id);
+        }
+        if (a != 0){
+            result.setStatus("0");
+            result.setMess("修改成功。");
+        }else {
+            result.setStatus("1");
+            result.setMess("修改失败，检查要修改的信息是否符合要求。");
+        }
+        return result;
+    }
+
+
+
 
     @RequestMapping(value = "modify-photo")
     @ResponseBody
     public Result modifyPhoto(HttpServletRequest request, Integer id) {
-
         ImportPhoto importPhoto = importPhotoMapper.selectAllById(id);
         // 判断图片是否为空
         if (null == importPhoto) {
-
             return null;
         }
-
         Result result = new ResultImpl();
         result.setObject(importPhoto);
-
         return result;
     }
 
@@ -2918,7 +2936,6 @@ public class CompanyController_safety extends BaseController {
             aCompanyManualMapper.updateByPrimaryKeySelective(be);
         }
         aCompanyManualMapper.updateCompanyDlevel(user.getId());
-        model.addAttribute("dataId",dataId);
         return result;
     }
 

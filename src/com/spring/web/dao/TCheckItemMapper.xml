@@ -959,7 +959,7 @@
                T4.level,
                T4.name level2,
                T1.money,
-                T1.level_id as levelId,
+               T1.level_id as levelId,
                T2.industry_type as industryType,
                T1.id as checkItemId,
                T2.id as checkId,

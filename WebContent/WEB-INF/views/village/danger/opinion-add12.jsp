@@ -46,7 +46,14 @@
           <div class="tabBar clearfix">
             <a href="/village/check-document?checkId=${check.id}&flag=8">现场检查记录</a>
             <a class="current" href="JavaScript:void(0)">责令限期整改意见书</a>
-            <a  href="/village/check-document?checkId=${check.id}&flag=2">整改复查意见书</a>
+              <c:if test="${is_fu==1}">
+                  <a  href="/village/check-document?checkId=${check.id}&flag=2">整改复查意见书</a>
+              </c:if>
+              <c:if test="${is_fu==0}">
+                  <a href="javascript:void(0)" onclick="layer.msg('请先进行复查');setTimeout(function(){window.location.href='${ly}/company/recheck-add?checkId=${check.id}'},1000)">整改复查意见书</a>
+<%--                  <a href="javascript:void(0)" onclick="layer.alert('请先进行复查')">整改复查意见书</a>--%>
+              </c:if>
+
           </div>
         </div>
         <div id="container" style="width:150mm;margin:auto;padding:50px 0 0px 0;">

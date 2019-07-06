@@ -47,7 +47,9 @@
         </div>
         <div class="row cl mb-20">
           <div class="tabBar clearfix">
-            <a href="/village/check-document?checkId=${check.id}&flag=8">现场检查记录</a>
+              <c:if test="${flag2 != 3 }">
+                  <a href="/village/check-document?checkId=${check.id}&flag=8">现场检查记录</a>
+              </c:if>
             <a class="current" href="javascript:void(0)">隐患整改意见书</a>
             <c:if test="${empty check}">
             <a href="javascript:void(0)" onclick="layer.alert('请先保存隐患整改意见书')">整改复查意见书</a>
@@ -59,7 +61,13 @@
                     <a href="javascript:void(0)" onclick="layer.alert('本次检查没有隐患，无需整改')">整改复查意见书</a>
                     </c:when>
                     <c:otherwise>
-                    <a href="/village/check-document?checkId=${check.id}&flag=2">整改复查意见书</a>
+                        <c:if test="${is_fu==1}">
+                            <a href="/village/check-document?checkId=${check.id}&flag=2">整改复查意见书</a>
+                        </c:if>
+                        <c:if test="${is_fu==0}">
+                            <a href="javascript:void(0)" onclick="layer.msg('请先进行复查');setTimeout(function(){window.location.href='${ly}/company/recheck-add?checkId=${check.id}'},1000)">整改复查意见书</a>
+<%--                            <a href="javascript:void(0)" onclick="layer.alert('请先进行复查')">整改复查意见书</a>--%>
+                        </c:if>
                     </c:otherwise>
                 </c:choose>
             </c:if>
@@ -142,19 +150,19 @@
 
             <c:if test="${not empty deadline}">
                 <c:set var="date1" value="${fn:split(deadline,'-') }" />
-                <u><span style="border-bottom:1px solid #333;width:10%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgY">&nbsp;${date1[0]}</span></u>
+                <u><span style="border-bottom:1px solid #333;width:10%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgY" contenteditable="true">&nbsp;${date1[0]}</span></u>
                 <span style="vertical-align: bottom;"><span>年</span></span>
-                <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgM">&nbsp;${date1[1]}</span></u>
+                <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgM" contenteditable="true">&nbsp;${date1[1]}</span></u>
                 <span style="vertical-align: bottom;"><span>月</span></span>
-                <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgD">&nbsp;${date1[2]}</span></u>
+                <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgD" contenteditable="true">&nbsp;${date1[2]}</span></u>
             </c:if>
             <c:if test="${empty deadline}">
 
-                <u><span style="border-bottom:1px solid #333;width:10%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgY"></span></u>
+                <u><span style="border-bottom:1px solid #333;width:10%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgY" contenteditable="true"></span></u>
                 <span style="vertical-align: bottom;"><span>年</span></span>
-                <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgM">&nbsp;</span></u>
+                <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgM" contenteditable="true">&nbsp;</span></u>
                 <span style="vertical-align: bottom;"><span>月</span></span>
-                <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgD">&nbsp;</span></u>
+                <u><span style="border-bottom:1px solid #333;width:5%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="zgD" contenteditable="true">&nbsp;</span></u>
 
             </c:if>
 
@@ -174,20 +182,20 @@
 <%--            <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;" contenteditable="true">&nbsp;<fmt:formatDate value="${rectification.planTime}" pattern="dd"/>&nbsp;</span></u>--%>
          <c:if test="${not empty planTime}">
                 <c:set var="date1" value="${fn:split(planTime,'-') }" />
-                <u><span style="border-bottom:1px solid #333;width:15%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcY">&nbsp;&nbsp;${date1[0]}</span></u>
+                <u><span style="border-bottom:1px solid #333;width:15%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcY" contenteditable="true">&nbsp;&nbsp;${date1[0]}</span></u>
                 <span style="vertical-align: bottom;"><span>年</span></span>
-                <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcM">&nbsp;&nbsp;${date1[1]}</span></u>
+                <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcM" contenteditable="true">&nbsp;&nbsp;${date1[1]}</span></u>
                 <span style="vertical-align: bottom;"><span>月</span></span>
-                <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcD">&nbsp;&nbsp;${date1[2]}</span></u>
+                <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcD" contenteditable="true">&nbsp;&nbsp;${date1[2]}</span></u>
 
          </c:if>
         <c:if test="${empty planTime}">
 
-            <u><span style="border-bottom:1px solid #333;width:15%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcY">&nbsp;&nbsp;</span></u>
+            <u><span style="border-bottom:1px solid #333;width:15%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcY" contenteditable="true">&nbsp;&nbsp;</span></u>
             <span style="vertical-align: bottom;"><span>年</span></span>
-            <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcM">&nbsp;&nbsp;</span></u>
+            <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcM" contenteditable="true">&nbsp;&nbsp;</span></u>
             <span style="vertical-align: bottom;"><span>月</span></span>
-            <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcD">&nbsp;&nbsp;</span></u>
+            <u><span style="border-bottom:1px solid #333;width:8%;display:inline-block;vertical-align: text-bottom;text-indent: 0;"  id="fcD" contenteditable="true">&nbsp;&nbsp;</span></u>
 
         </c:if>
             <span style="vertical-align: bottom;"><span>日对整改情况进行复查。</span></span>

@@ -171,7 +171,7 @@
 <%--          </a>--%>
             <a class="btn btn-primary radius" onclick="show_dialog('添加检查表','${ly }/village/getCheckModelBasic?flag=${flag}')"
                onclick="Hui_admin_tab(this)" href="javascript:;">
-              <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 检查设置实施
+              <i class="Hui-iconfont" style="font-size:15px;">&#xe610;</i> 开始检查
           </a>
 <%--            <a class="btn btn-primary radius" onclick="show_tab('检查设置实施','${ly}/company/check-list-szss?flag=${flag}')"--%>
 <%--                 onclick="Hui_admin_tab(this)" href="javascript:;">--%>

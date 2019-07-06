@@ -50,7 +50,8 @@
                   <a  href="/village/check-document?checkId=${check.id}&flag=2">整改复查意见书</a>
               </c:if>
               <c:if test="${is_fu==0}">
-                  <a href="javascript:void(0)" onclick="layer.alert('请先进行复查')">整改复查意见书</a>
+                  <a href="javascript:void(0)" onclick="layer.msg('请先进行复查');setTimeout(function(){window.location.href='${ly}/company/recheck-add?checkId=${check.id}'},1000)">整改复查意见书</a>
+<%--                  <a href="javascript:void(0)" onclick="layer.alert('请先进行复查')">整改复查意见书</a>--%>
               </c:if>
 
           </div>

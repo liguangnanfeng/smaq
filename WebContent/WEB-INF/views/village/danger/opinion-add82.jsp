@@ -60,17 +60,15 @@
                             <a href="/village/check-document?checkId=${check.id}&flag=1">责令限期整改意见书</a>
                         </c:if>
                         <c:if test="${is_re==0}">
-                            <a href="javascript:void(0)" onclick="layer.alert('请先设置整改详情')">责令限期整改意见书</a>
+                            <a href="javascript:void(0)" onclick="layer.msg('请先设置整改详情');setTimeout(function(){window.location.href='${ly}/village/check-rectification?flag=${check.flag}&id=${check.id}&number=1'},1000) ">责令限期整改意见书</a>
                         </c:if>
-
-
 
 
                         <c:if test="${is_fu==1}">
                             <a href="/village/check-document?checkId=${check.id}&flag=2">整改复查意见书</a>
                         </c:if>
                         <c:if test="${is_fu==0}">
-                            <a href="javascript:void(0)" onclick="layer.alert('请先进行复查')">整改复查意见书</a>
+                            <a href="javascript:void(0)" onclick="layer.msg('请先进行复查');setTimeout(function(){window.location.href='${ly}/company/recheck-add?checkId=${check.id}'},1000)">整改复查意见书</a>
                         </c:if>
                     </c:otherwise>
                 </c:choose>

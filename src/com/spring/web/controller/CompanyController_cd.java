@@ -4154,7 +4154,7 @@ public class CompanyController_cd extends BaseController {
         }else{
             model.addAttribute("is_re",1);
         }
-        
+
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
         log.error("整改详情进行显示的条件" + tCheckMapper.selectCompany(id));
 

@@ -417,9 +417,22 @@ public class CompanyController_safety extends BaseController {
      * @throws Exception
      **/
     @RequestMapping({"risk-list"})
-    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number,Integer dmid,Integer flag,String types,String id) throws Exception {
+    public String riskList(Model model, HttpServletRequest request, Integer type, Integer number,Integer dmid,
+                           Integer flag,String types,String id, String buttons) throws Exception {
         User user = this.getLoginUser(request);
         Company company = this.companyMapper.selectByPrimaryKey(user.getId());
+
+        if (null == buttons){
+            buttons = "2";
+        }
+        if (null != buttons && Integer.parseInt(buttons) == 1){
+            // 根据 uid 修改 dangerId 为 null
+            Integer a = zzjgDepartmentMapper.deleteAll(null,user.getId(),new Date());
+            model.addAttribute("buttons", 1);
+        }
+        if (null != buttons && Integer.parseInt(buttons) == 2){
+            model.addAttribute("buttons", 2);
+        }
         if (StringUtils.isEmpty(company.getIndustry())) {
             model.addAttribute("url", request.getRequestURI());
             return "company/safety-system/type";
@@ -491,6 +504,7 @@ public class CompanyController_safety extends BaseController {
                 }else {
                     indus = 2;
                 }
+                model.addAttribute("buttons",buttons);
                 model.addAttribute("indus",indus);
                 model.addAttribute("ids",id);
                 model.addAttribute("zzjgDep1", zzjg1);
@@ -555,6 +569,7 @@ public class CompanyController_safety extends BaseController {
                 }else {
                     indus = 2;
                 }
+
                 model.addAttribute("indus",indus);
                 model.addAttribute("zzjgDep1", zzjgDepartment);
                 model.addAttribute("zzjg",zzjg);
@@ -704,22 +719,6 @@ public class CompanyController_safety extends BaseController {
         }*/
         return result;
     }
-
-    /**
-     * @author     ：小明！！！
-     * @description：风险辨识编辑按钮
-     */
-    @RequestMapping({"risk-deleteAll"})
-    @ResponseBody
-    public Result riskDeleteAll (Model model,HttpServletRequest request){
-        Result result = new ResultImpl();
-        User user = this.getLoginUser(request);
-        // 根据 uid 修改 dangerId 为 null
-        Integer a = zzjgDepartmentMapper.deleteAll(null,user.getId(),new Date());
-        return result;
-    }
-
-
 
     /**
      * create by  : 小明！！！
@@ -2918,7 +2917,6 @@ public class CompanyController_safety extends BaseController {
             aCompanyManualMapper.updateByPrimaryKeySelective(be);
         }
         aCompanyManualMapper.updateCompanyDlevel(user.getId());
-        model.addAttribute("dataId",dataId);
         return result;
     }
 

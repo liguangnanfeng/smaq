@@ -2193,12 +2193,21 @@ public class VillageController extends BaseController {
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String format = sdf.format(realTime);
-                String level = (String) map.get("level");
+                String levelId ="";
                 if(null!=map.get("industryType")&&1==map.get("industryType")){
-                    map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                    Integer levelId1 = (Integer) map.get("levelId");
+                    if(null!=levelId1){
+                        levelId=  tLevelMapper.selectByPrimaryKey(levelId1).getLevel2();
+                    }
+
                 }else if (null!=map.get("industryType")&&2==map.get("industryType")){
-                    map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                     levelId = aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2();
                 }
+
+                if(StringUtils.isBlank(levelId)){
+                    map.put("level2",levelId);
+                }
+
                 map.put("realTimeStr", format);
                 map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
                 // 获取
@@ -2210,7 +2219,7 @@ public class VillageController extends BaseController {
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String format = sdf.format(realTime);
-                String level = (String) map.get("level");
+              //  String level = (String) map.get("level");
                 if(null!=map.get("industryType")&&1==map.get("industryType")){
                     map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
                 }else if (null!=map.get("industryType")&&2==map.get("industryType")){

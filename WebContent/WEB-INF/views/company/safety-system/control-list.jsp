@@ -228,9 +228,11 @@
   <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
   <span class="c-gray en">&gt;</span> <span>风险分级管控</span>
   <span class="c-gray en">&gt;</span> <span>分级管控</span>
-  <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
+  <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-left:10px;" href="javascript:location.replace(location.href);" title="刷新">
     <i class="Hui-iconfont">&#xe68f;</i>
   </a>
+    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);"
+    title="返回" onclick="parent.close_tab(function(){})">返回</a>
 </nav>
 <div class="page-container">
   <div class="row cl" style="margin-top:20px;text-align:center;">

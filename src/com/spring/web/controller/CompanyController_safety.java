@@ -507,6 +507,16 @@ public class CompanyController_safety extends BaseController {
                 }else {
                     indus = 2;
                 }
+                String parName = null;
+                if (null != zzjg && zzjg.size() == 1){
+                    for (Map<Object, Object> zzjgList : zzjg) {
+                        parName = String.valueOf(zzjgList.get("name"));
+
+                    }
+                }else {
+                    parName = "";
+                }
+                model.addAttribute("parName",parName);
                 model.addAttribute("buttons",buttons);
                 model.addAttribute("indus",indus);
                 model.addAttribute("ids",id);
@@ -547,6 +557,7 @@ public class CompanyController_safety extends BaseController {
                     type = 5;
                 }
                 List<ZzjgDepartment> zzjgDepartment = zzjgDepartmentMapper.selectDangerIds(user.getId(),dangerId);
+                List<ZzjgDepartment> zzjgDepartments = zzjgDepartmentMapper.selectOneName(user.getId(),dangerId,Integer.parseInt(id));
                 if (null != zzjgDepartment && zzjgDepartment.size() != 0){
                     StringBuffer sb = new StringBuffer();
                     for (int i = 0; i < zzjgDepartment.size(); i++) {
@@ -573,6 +584,7 @@ public class CompanyController_safety extends BaseController {
                     indus = 2;
                 }
 
+                model.addAttribute("parName",zzjgDepartments.get(0).getName());
                 model.addAttribute("indus",indus);
                 model.addAttribute("zzjgDep1", zzjgDepartment);
                 model.addAttribute("zzjg",zzjg);

@@ -179,8 +179,9 @@
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>系统设置</span>
     <span class="c-gray en">&gt;</span> <span>风险辨识</span>
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);"
-       title="返回" onclick="parent.close_tab(function(){})">返回</a>
+    <%--<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);"--%>
+       <%--title="返回" onclick="parent.close_tab(function(){})">返回</a>--%>
+    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
 </nav>
 <div class="page-container">
     <%--<div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">--%>
@@ -214,22 +215,22 @@
         <div class="div-print">
 
             <c:if test="${empty type}">
-                <h3 class="text-c">${company.name}风险因素辨识</h3>
+                <h3 class="text-c">${company.name}${parName}风险因素辨识</h3>
             </c:if>
             <c:if test="${type eq 1}">
-                <h3 class="text-c">${company.name}职业病风险物理因素辨识</h3>
+                <h3 class="text-c">${company.name}${parName}职业病风险物理因素辨识</h3>
             </c:if>
             <c:if test="${type eq 2}">
-                <h3 class="text-c">${company.name}职业病风险化学因素辨识</h3>
+                <h3 class="text-c">${company.name}${parName}职业病风险化学因素辨识</h3>
             </c:if>
             <c:if test="${type eq 3}">
-                <h3 class="text-c">${company.name}高危工艺辨识</h3>
+                <h3 class="text-c">${company.name}${parName}高危工艺辨识</h3>
             </c:if>
             <c:if test="${type eq 4}">
-                <h3 class="text-c">${company.name}物料风险辨识</h3>
+                <h3 class="text-c">${company.name}${parName}物料风险辨识</h3>
             </c:if>
             <c:if test="${type eq 5}">
-                <h3 class="text-c">${company.name}高危作业辨识</h3>
+                <h3 class="text-c">${company.name}${parName}高危作业辨识</h3>
             </c:if>
 
             <c:if test="${empty type}">
@@ -467,9 +468,14 @@
                                                  <td>${fn:replace(be3.gwzy, '!@#', ",") }</td>
                                              </c:if>--%>
                                     </tr>
-
                                 </c:forEach>
                             </c:if>
+                            <c:if test="${fn:length(zzjg) == 0}" >
+                                <tr>
+                                    <td class="text-c" rowspan="4" colspan="4" >暂无车间职位信息</td>
+                                </tr>
+                            </c:if>
+
 
                             <%--</c:if>--%>
 

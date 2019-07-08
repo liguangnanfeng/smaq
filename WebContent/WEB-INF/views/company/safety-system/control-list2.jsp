@@ -106,7 +106,8 @@ function pr_() {
               <th style="min-width:100px">环节/部位</th>
               <%--<th style="min-width:100px">风险点</th>--%>
               <th style="min-width:100px">风险等级</th>
-              <th style="min-width:150px">风险类型</th>
+              <%--<th style="min-width:150px">风险类型</th>--%>
+              <th style="min-width:150px">事故类型</th>
               <th style="min-width:200px">风险因素</th>
           </tr>
         </thead>

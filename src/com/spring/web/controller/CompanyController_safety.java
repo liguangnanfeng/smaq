@@ -2783,12 +2783,19 @@ public class CompanyController_safety extends BaseController {
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("uid", user.getId());
         m.put("order", 1);
-
+        Map<String, Object> m2 = new HashMap<String, Object>();
+        m.put("uid", user.getId());
         model.addAttribute("company", company);
         model.addAttribute("user", userMapper.selectByPrimaryKey(company.getUserId()));
         model.addAttribute("v", userMapper.selectByPrimaryKey(company.getVillageId()));
-        List<Map<String, Object>> list = aCompanyManualMapper.selectByMap(m);
+
+
+
+       /* List<Map<String, Object>> list = aCompanyManualMapper.selectRed(m2);*/
         List<Map<String, Object>> list2 = aCompanyManualMapper.selectByMapTwo(m);
+        List<Map<String, Object>> list = aCompanyManualMapper.selectRed(user.getId());
+
+
         model.addAttribute("list", list);
         model.addAttribute("list2", list2);
 
@@ -2836,6 +2843,10 @@ public class CompanyController_safety extends BaseController {
         List<Map<String, Object>> list55 = aCompanyManualMapper.selectNum(m);
         model.addAttribute("list55", list55);
 
+        Integer number = list11.size() + list22.size() +  list33.size() + list44.size() + list55.size();
+
+
+        model.addAttribute("number", number);
         if (flag.equals("2")) {
             //log.error("zhangcl 2018.10.18 controlList3,area_range="+company.getAreaRange());
             return "company/safety-system/control-list3";

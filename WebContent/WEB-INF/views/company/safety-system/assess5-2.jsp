@@ -141,13 +141,16 @@
 
           <td class="text-c">${ls[0] != null ? ls[0] : "暂无数据" }</td>
 
-          <c:if test="${be.flag == 2}">
-            <td class="text-c">公司</td>
-          </c:if>
+          <td class="text-c">${be.level1}</td>
 
-          <c:if test="${be.flag != 2}">
-            <td class="text-c">${be.gkzt != null ? be.gkzt : "暂无数据" }</td>
-          </c:if>
+
+            <%--<c:if test="${be.flag == 2}">
+              <td class="text-c">公司</td>
+            </c:if>
+
+            <c:if test="${be.flag != 2}">
+              <td class="text-c">${be.gkzt != null ? be.gkzt : "暂无数据" }</td>
+            </c:if>--%>
 
           <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
 

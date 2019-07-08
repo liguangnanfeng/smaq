@@ -559,10 +559,10 @@ public class CompanyController_safety extends BaseController {
                     if (sb.toString().length() != 0){
                         zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type,sb.toString());
                         zzjg1 = this.zzjgDepartmentMapper.selectAllName(user.getId(),type,sb.toString());
-                        if (null == dmid){
+                        if (null == id){
                             zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type,sb.toString());
                         }else {
-                            zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type,dmid.toString());
+                            zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type,id);
                         }
                     }
                 }

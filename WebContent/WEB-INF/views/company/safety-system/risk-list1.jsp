@@ -439,35 +439,38 @@
                         <c:if test="${not empty type }">
 
                             <%--   <c:if test="${flags == 1}">--%>
-                            <c:forEach items="${zzjg }" var="be3">
-                                <tr>
-                                    <td class="text-c" rowspan="1">${be3.parName != null ? be3.parName : "暂无数据" }</td>
-                                    <td class="text-c">${be3.name != null ? be3.name : "暂无数据" }</td>
-                                    <td class="text-c">${fn:replace(be3.danger_point, '!@#', ",") }</td>
-                                    <td class="text-c" style="width:90px">
-                                        <a class="btn-cz" onclick="redit(${be3.id}, ${type })" href="javascript:;"
-                                           title="选择">选择</a>
-                                    </td>
-                                        <%-- <td class="text-c">${be3.danger_point != null ? be3.danger_point : "暂无风险因素" }</td>--%>
-                                        <%-- <td class="text-c">${be4.danger_point != null ? be4.danger_point : "暂无数据" }</td>--%>
-                                        <%-- <c:if test="${type eq 1}">
-                                             <td>${fn:replace(be3.hxys, '!@#', ",") }</td>
-                                         </c:if>
-                                         <c:if test="${type eq 2}">
-                                             <td>${fn:replace(be3.material, '!@#', ",") }</td>
-                                         </c:if>
-                                         <c:if test="${type eq 3}">
-                                             <td>${fn:replace(be3.gy, '!@#', ",") }</td>
-                                         </c:if>
-                                         <c:if test="${type eq 4}">
-                                             <td>${fn:replace(be3.wlbs, '!@#', ",") }</td>
-                                         </c:if>
-                                         <c:if test="${type eq 5}">
-                                             <td>${fn:replace(be3.gwzy, '!@#', ",") }</td>
-                                         </c:if>--%>
-                                </tr>
+                            <c:if test="${fn:length(zzjg) != 0}" >
+                                <c:forEach items="${zzjg }" var="be3">
+                                    <tr>
+                                        <td class="text-c" rowspan="1">${be3.parName != null ? be3.parName : "暂无数据" }</td>
+                                        <td class="text-c">${be3.name != null ? be3.name : "暂无数据" }</td>
+                                        <td class="text-c">${fn:replace(be3.danger_point, '!@#', ",") }</td>
+                                        <td class="text-c" style="width:90px">
+                                            <a class="btn-cz" onclick="redit(${be3.id}, ${type })" href="javascript:;"
+                                               title="选择">选择</a>
+                                        </td>
+                                            <%-- <td class="text-c">${be3.danger_point != null ? be3.danger_point : "暂无风险因素" }</td>--%>
+                                            <%-- <td class="text-c">${be4.danger_point != null ? be4.danger_point : "暂无数据" }</td>--%>
+                                            <%-- <c:if test="${type eq 1}">
+                                                 <td>${fn:replace(be3.hxys, '!@#', ",") }</td>
+                                             </c:if>
+                                             <c:if test="${type eq 2}">
+                                                 <td>${fn:replace(be3.material, '!@#', ",") }</td>
+                                             </c:if>
+                                             <c:if test="${type eq 3}">
+                                                 <td>${fn:replace(be3.gy, '!@#', ",") }</td>
+                                             </c:if>
+                                             <c:if test="${type eq 4}">
+                                                 <td>${fn:replace(be3.wlbs, '!@#', ",") }</td>
+                                             </c:if>
+                                             <c:if test="${type eq 5}">
+                                                 <td>${fn:replace(be3.gwzy, '!@#', ",") }</td>
+                                             </c:if>--%>
+                                    </tr>
 
-                            </c:forEach>
+                                </c:forEach>
+                            </c:if>
+
                             <%--</c:if>--%>
 
                             <%-- <c:if test="${flags == 2}">
@@ -538,7 +541,6 @@
                         <tbody>
                         <c:forEach items="${zzjgDep }" var="be">
                             <tr>
-                                <td><p style="text-align:center;">${be.id }</p></td>
                                 <td><p style="text-align:center;">${be.name }</p></td>
                                 <c:set value="${fn:split(be.dangerId,',')}" var="idx">
 

@@ -21,25 +21,25 @@
     .col-b,.col-a,.col-c,.col-d{margin:0;padding:0 15px;height:25px;line-height:25px;}
   </style>
   <script type="text/javascript">
-    var dmid = 0;
+      var dmid = 0;
 
-    function copy_(fjgkfzr,gkcs,gkzt,level2,level,factors,flag,uid) {
+      function copy_(fjgkfzr,gkcs,gkzt,level2,level,factors,flag,uid) {
 
 
-    var data = {
-    "level":level,
-    "factors":factors,
-    "id" : null,
-    "ids": '',
-    "flag":flag,
-    "uid":uid
-    }
+          var data = {
+              "level":level,
+              "factors":factors,
+              "id" : null,
+              "ids": '',
+              "flag":flag,
+              "uid":uid
+          }
 
-    console.log(data);
-    $.post(getRootPath() + "/company/safety-system/aCompanyManual-save", data, function(result) {
-    location.reload();
-    })
-    }
+          console.log(data);
+          $.post(getRootPath() + "/company/safety-system/aCompanyManual-save", data, function(result) {
+              location.reload();
+          })
+      }
       /* 弹窗管控信息添加 */
       function edit(id, obj){
           window.id = id;
@@ -84,81 +84,81 @@
       }
 
 
-    /* 弹窗管控信息添加 */
-    function edits(id,did,obj){
-        window.id = id;
-        dmid = did;
-        var p = $(obj).parent();
+      /* 弹窗管控信息添加 */
+      function edits(id,did,obj){
+          window.id = id;
+          dmid = did;
+          var p = $(obj).parent();
 //        $("#gkzt").val(p.find("input[name='gkzt']").val());
 //        $("#gkcs").val(p.find("input[name='gkcs']").val());
-        $("#fjgkfzr").val(p.find("input[name='fjgkfzr']").val().split("-")[0]);
+          $("#fjgkfzr").val(p.find("input[name='fjgkfzr']").val().split("-")[0]);
 //        $("#buwei").val(p.find("input[name='buwei']").val());
-        $("#win-add").modal("show");
-    }
+          $("#win-add").modal("show");
+      }
 
-    function chosem(){
-        $("#win-add2").modal("show");
-    }
+      function chosem(){
+          $("#win-add2").modal("show");
+      }
 
-    function chosem2(){
-        var name = $("#gkzt").val();
+      function chosem2(){
+          var name = $("#gkzt").val();
 //        var id = $("#gkztIds").val();
-        var id =dmid;
+          var id =dmid;
 
-        if (id == 0){
-            alert("请先选择管控主体。")
-        }else{
-            $("#win-add3").modal("show");
-            $.ajax({ //post也可
-                type: "POST",
-                url: getRootPath() + "/company/safety-system/control-list-person",
-                data: {name: name, pid:id},
-                dataType: 'json',
-                success: function (result) {
-                    var dataObj = result,
-                        con = "";
-    console.log(result)
-                    $.each(dataObj, function (index, item) {
-                        con += "<tr class=\"text-c\">";
-                        con += "<td><input type=\"checkbox\" name=\"radio-2\" value='" + item.name + ","+item.id+"'></td>";
-                        con += "<td>"+item.name+"</td>";
-                        con += "<td>"+item.companyName+"</td>";
-                        con += "<td>"+item.dpname+"</td>";
-                        con += "<td>"+item.dname+"</td>";
-                        con += "<td>"+item.position+"</td>";
-                        con += "<input id = \"dianhuas\" type = \"hidden\"  value='" + item.mobile + "'>";
-                        con += "</tr>";
-                    });
-                    $("#person").html(con);
-                }
-            });
-        }
-    }
-
-
-    function chosem3() {
-      $("#win-add4").modal("show");
-      var name = $("#gkzt").val();
-      var id = $("#gkztIds").val();
-
-      $.ajax({ //post也可
-          type: "POST",
-          url: getRootPath() + "/company/safety-system/control-list-one",
-          data: {name: name, pid:id},
-          dataType: 'json',
-          success: function (result) {
-              var dataObj = result,
-                  con = "";
-              $.each(dataObj, function (index, item) {
-                  con += "<tr class=\"text-c\">";
-                  con += "<td style=\"width:30px;\" align=\"center\" valign=\"middle\"><input  type=\"radio\" name=\"radio-1\" value='" + item.name + "'></td>";
-                  con += "<td align=\"center\" valign=\"middle\">"+item.name+"</td>";
-                  con += "</tr>";
+          if (id == 0){
+              alert("请先选择管控主体。")
+          }else{
+              $("#win-add3").modal("show");
+              $.ajax({ //post也可
+                  type: "POST",
+                  url: getRootPath() + "/company/safety-system/control-list-person",
+                  data: {name: name, pid:id},
+                  dataType: 'json',
+                  success: function (result) {
+                      var dataObj = result,
+                          con = "";
+                      console.log(result)
+                      $.each(dataObj, function (index, item) {
+                          con += "<tr class=\"text-c\">";
+                          con += "<td><input type=\"checkbox\" name=\"radio-2\" value='" + item.name + ","+item.id+"'></td>";
+                          con += "<td>"+item.name+"</td>";
+                          con += "<td>"+item.companyName+"</td>";
+                          con += "<td>"+item.dpname+"</td>";
+                          con += "<td>"+item.dname+"</td>";
+                          con += "<td>"+item.position+"</td>";
+                          con += "<input id = \"dianhuas\" type = \"hidden\"  value='" + item.mobile + "'>";
+                          con += "</tr>";
+                      });
+                      $("#person").html(con);
+                  }
               });
-              $("#test").html(con);
           }
-      });
-    }
+      }
+
+
+      function chosem3() {
+          $("#win-add4").modal("show");
+          var name = $("#gkzt").val();
+          var id = $("#gkztIds").val();
+
+          $.ajax({ //post也可
+              type: "POST",
+              url: getRootPath() + "/company/safety-system/control-list-one",
+              data: {name: name, pid:id},
+              dataType: 'json',
+              success: function (result) {
+                  var dataObj = result,
+                      con = "";
+                  $.each(dataObj, function (index, item) {
+                      con += "<tr class=\"text-c\">";
+                      con += "<td style=\"width:30px;\" align=\"center\" valign=\"middle\"><input  type=\"radio\" name=\"radio-1\" value='" + item.name + "'></td>";
+                      con += "<td align=\"center\" valign=\"middle\">"+item.name+"</td>";
+                      con += "</tr>";
+                  });
+                  $("#test").html(con);
+              }
+          });
+      }
 
       function per_chooses() {
 
@@ -173,7 +173,7 @@
       }
 
       function save_() {
-        console.log($("#fjgkfzrId").val())
+          console.log($("#fjgkfzrId").val())
           var obj = {
               "fjgkfzr" : $("#fjgkfzr").val(),
               "gkcs" : $("#gkcs").val(),
@@ -249,6 +249,7 @@
         <th style="min-width:80px">系统</th>
         <th style="min-width:80px">环节/部位</th>
         <th style="min-width:70px">风险等级</th>
+        <%--<th style="min-width:150px">风险类型</th>--%>
         <th style="min-width:150px">事故类型</th>
         <th style="min-width:200px">风险因素</th>
         <th style="min-width:70px">管控主体</th>
@@ -259,9 +260,9 @@
       </thead>
 
       <tbody>
-    <c:forEach items="${list }" var="be">
-      <c:forEach items="${treeMap }" var="be1" varStatus="index">
-        <c:forEach items="${be1.value }" var="be2">
+      <c:forEach items="${list }" var="be">
+        <c:forEach items="${treeMap }" var="be1" varStatus="index">
+          <c:forEach items="${be1.value }" var="be2">
             <c:if test="${(be.level1 eq be1.key && be.level2 eq be2) || (empty be1.key && empty be.level1)}">
               <tr>
                 <c:set value="${fn:split(be.level3,'/')}" var="ls"></c:set>
@@ -290,69 +291,74 @@
                 </td>
                 <td class="text-c">${be.type }</td>
                 <td class="text-c">${be.factors }</td>
-                <%--<td class="text-c">${gkzt != null ? gkzt : "暂无数据" }</td>--%>
-                <%--<c:if test="${be.level eq '红色'}">
-                  <td class="text-c">公司</td>
+                  <%--<td class="text-c">${gkzt != null ? gkzt : "暂无数据" }</td>--%>
+                  <%--<c:if test="${be.level eq '红色'}">
+                    <td class="text-c">公司</td>
 
-                  <td class="text-c">
-                    <c:forEach items="${companyList}" var="be3" >
-                      ${be3.charge != null ? be3.charge : "暂无数据" }
-                    </c:forEach>
-                  </td>
+                    <td class="text-c">
+                      <c:forEach items="${companyList}" var="be3" >
+                        ${be3.charge != null ? be3.charge : "暂无数据" }
+                      </c:forEach>
+                    </td>
 
-                </c:if>--%>
+                  </c:if>--%>
 
+                <td class="text-c">${be.gkzt != null ? be.gkzt : "暂无数据"}</td>
+                  <%--<td class="text-c">${be.fjgkfzr != null ? be.fjgkfzr : "暂无数据"}</td>--%>
+                <c:set value="${fn:split(be.fjgkfzr,',')}" var="is"></c:set>
+                <td class="text-c">
 
-                  <td class="text-c">${be.gkzt != null ? be.gkzt : "暂无数据"}</td>
+                  <%--<c:forEach items="${is }" var="be">--%>
+                    ${is[0]}<br>${is[1]}
+                  <%--</c:forEach>--%>
 
-                  <td class="text-c">${be.fjgkfzr != null ? be.fjgkfzr : "暂无数据"}</td>
-
+                </td>
 
                 <td><p>${empty be.gkcs ? be.measures : be.gkcs}</p></td>
                 <td class="text-c div-pcz">
                   <input type="hidden" name="gkcs" value="${empty be.gkcs ? be.measures : be.gkcs }"/>
-                 <%-- <c:if test="${be.level eq '红色'}">
-                      <input type="hidden" name="gkzt" value="公司"/>
-                      <c:forEach items="${companyList}" var="be3" >
-                        <input type="hidden" name="fjgkfzr" value="${be3.charge}"/>
-                      </c:forEach>
-                  </c:if>
+                    <%-- <c:if test="${be.level eq '红色'}">
+                         <input type="hidden" name="gkzt" value="公司"/>
+                         <c:forEach items="${companyList}" var="be3" >
+                           <input type="hidden" name="fjgkfzr" value="${be3.charge}"/>
+                         </c:forEach>
+                     </c:if>
 
-                  <c:if test="${be.level ne '红色'}">--%>
+                     <c:if test="${be.level ne '红色'}">--%>
                   <input type="hidden" name="gkzt" value="${be.gkzt}"/>
                   <input type="hidden" name="fjgkfzr" value="${be.fjgkfzr }"/>
-               <%-- </c:if>--%>
+                    <%-- </c:if>--%>
                   <input type="hidden" name="buwei" value="${be.level2}"/>
 
-                <c:if test="${empty be.gkzt}">
-                  <c:if test="${be.level eq '红色'}">
-                    <a style="text-decoration:none;opacity: 0.2" onClick="return false;" href="javascript:return false;" title="默认">默认</a>
-                  </c:if>
+                  <%--<c:if test="${empty be.gkzt}">
+                    <c:if test="${be.level eq '红色'}">
+                      <a style="text-decoration:none;opacity: 0.2" onClick="return false;" href="javascript:return false;" title="默认">默认</a>
+                    </c:if>
 
-                  <c:if test="${be.level ne '红色'}">
-                    <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑管控信息">编辑管控信息</a>
-                  </c:if>
+                    <c:if test="${be.level ne '红色'}">
+                      <a style="text-decoration:none" onClick="edit(${be.id}, this)" href="javascript:;" title="编辑管控信息">编辑管控信息</a>
+                    </c:if>
 
-                </c:if>
+                  </c:if>--%>
 
-                <c:if test="${not empty be.gkzt}">
+                  <%--<c:if test="${not empty be.gkzt}">--%>
 
-                  <c:if test="${be.level eq '红色'}">
-                    <a style="text-decoration:none;opacity: 0.2" onClick="return false;" href="javascript:return false;" title="默认">默认</a>
-                  </c:if>
+                    <c:if test="${be.level eq '红色'}">
+                      <a style="text-decoration:none;opacity: 0.2" onClick="return false;" href="javascript:return false;" title="默认">默认</a>
+                    </c:if>
 
-                  <c:if test="${be.level ne '红色'}">
-                    <a style="text-decoration:none" onClick="edits(${be.id},${be.dmid}, this)" href="javascript:;" title="编辑">编辑</a>
-                  </c:if>
+                    <c:if test="${be.level ne '红色'}">
+                      <a style="text-decoration:none" onClick="edits('${be.id}','${be.dmid}', this)" href="javascript:;" title="编辑">编辑</a>
+                    </c:if>
                     <%-- <a style="text-decoration:none;" onClick="copy_('${be.fjgkfzr}','${be.gkcs}','${be.gkzt}','${be.level2}','${be.level}','${be.factors}','${be.flag}','${be.uid}' )" href="javascript:;" title="复制" >复制</a>--%>
-                </c:if>
+                  <%--</c:if>--%>
 
                 </td>
               </tr>
             </c:if>
           </c:forEach>
+        </c:forEach>
       </c:forEach>
-    </c:forEach>
       </tbody>
     </table>
   </div>
@@ -368,42 +374,42 @@
       </div>
       <div class="modal-body">
         <%--<div class="row cl">--%>
-          <%--<label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控主体：</label>--%>
-          <%--<div class="formControls col-xs-8 col-sm-9" style="width: 80%;">--%>
-            <%--<input type="text" id="gkzt" value="" style="width: 357px" class="input-text required" readonly="readonly">--%>
+        <%--<label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控主体：</label>--%>
+        <%--<div class="formControls col-xs-8 col-sm-9" style="width: 80%;">--%>
+        <%--<input type="text" id="gkzt" value="" style="width: 357px" class="input-text required" readonly="readonly">--%>
 
-            <%--<input type="hidden" id = "gkztIds" >--%>
+        <%--<input type="hidden" id = "gkztIds" >--%>
 
-            <%--<input type="hidden" id = "gkztIdAll" >--%>
-            <%--<c:if test="${not empty departL}">--%>
-              <%--<button class="btn btn-primary radius" type="button" onclick="chosem()">--%>
-                <%--<i class="Hui-iconfont">&#xe611;</i>选择管控主体--%>
-              <%--</button>--%>
-            <%--</c:if>--%>
-          <%--</div>--%>
+        <%--<input type="hidden" id = "gkztIdAll" >--%>
+        <%--<c:if test="${not empty departL}">--%>
+        <%--<button class="btn btn-primary radius" type="button" onclick="chosem()">--%>
+        <%--<i class="Hui-iconfont">&#xe611;</i>选择管控主体--%>
+        <%--</button>--%>
+        <%--</c:if>--%>
+        <%--</div>--%>
         <%--</div>--%>
 
 
         <%--<div class="row cl mt-15">--%>
-          <%--<label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">部位：</label>--%>
-          <%--<div class="formControls col-xs-8 col-sm-9" style="width: 80%;">--%>
-            <%--<input type="text" id="buwei" value="" style="width: 357px" class="input-text required" readonly="readonly">--%>
-            <%--<c:if test="${not empty perL}">--%>
-              <%--<button class="btn btn-primary radius" id = "gangwei" type="button" onclick="chosem3()" >--%>
+        <%--<label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">部位：</label>--%>
+        <%--<div class="formControls col-xs-8 col-sm-9" style="width: 80%;">--%>
+        <%--<input type="text" id="buwei" value="" style="width: 357px" class="input-text required" readonly="readonly">--%>
+        <%--<c:if test="${not empty perL}">--%>
+        <%--<button class="btn btn-primary radius" id = "gangwei" type="button" onclick="chosem3()" >--%>
 
-                <%--<i class="Hui-iconfont" >&#xe611;</i>选择部位--%>
+        <%--<i class="Hui-iconfont" >&#xe611;</i>选择部位--%>
 
-              <%--</button>--%>
-            <%--</c:if>--%>
-          <%--</div>--%>
+        <%--</button>--%>
+        <%--</c:if>--%>
+        <%--</div>--%>
         <%--</div>--%>
 
 
         <%--<div class="row cl mt-15">--%>
-          <%--<label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控措施：</label>--%>
-          <%--<div class="formControls col-xs-8 col-sm-9" style="width: 80%;">--%>
-            <%--<textarea id="gkcs" class="textarea txtarea_sq" style="width: 557px;" ></textarea>--%>
-          <%--</div>--%>
+        <%--<label class="form-label col-xs-4 col-sm-2" style="width: 20%; text-align: right;">管控措施：</label>--%>
+        <%--<div class="formControls col-xs-8 col-sm-9" style="width: 80%;">--%>
+        <%--<textarea id="gkcs" class="textarea txtarea_sq" style="width: 557px;" ></textarea>--%>
+        <%--</div>--%>
         <%--</div>--%>
 
 
@@ -501,18 +507,18 @@
           <tbody id = "person">
 
           </tbody>
-        <%--  <c:forEach items="${perL }" var="be">
-            <tr class="text-c">
-              <th><input type="radio" name="radio-2" value="${be.name }"></th>
-              <th>${be.name }</th>
-              <th>${be.companyName }</th>
-              <th>${be.level == 1 ? be.dname : be.dpname}</th>
-              <th>${be.level == 1 ? '' : be.dname}</th>
-              <th>${be.position }</th>
+          <%--  <c:forEach items="${perL }" var="be">
+              <tr class="text-c">
+                <th><input type="radio" name="radio-2" value="${be.name }"></th>
+                <th>${be.name }</th>
+                <th>${be.companyName }</th>
+                <th>${be.level == 1 ? be.dname : be.dpname}</th>
+                <th>${be.level == 1 ? '' : be.dname}</th>
+                <th>${be.position }</th>
 
-              <input id = "dianhuas" type="hidden" value = "${be.mobile }">
-            </tr>
-          </c:forEach>--%>
+                <input id = "dianhuas" type="hidden" value = "${be.mobile }">
+              </tr>
+            </c:forEach>--%>
         </table>
       </div>
       <div class="modal-footer">

@@ -3508,6 +3508,7 @@ public class CompanyController_cd extends BaseController {
             /*if (null != danger17 && danger17 != 0) {
                 hiddenPlan1.setBas_year(danger17);
             } else {
+            、
                 hiddenPlan1.setBas_year(hiddenPlan2.get(0).getBas_year());
             }*/
             if (null != danger18) {

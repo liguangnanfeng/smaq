@@ -147,7 +147,9 @@
     </div>
     <div id="tab-index-cartegory">
         <div class="tabBar">
+            <span class="selected"> 现场管理</span>
             <span>基础管理</span>
+            <span >排查计划</span>
         </div>
         <c:if test="${flag == 1}">
             <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -155,11 +157,7 @@
             </span>
             </div>
         </c:if>
-<<<<<<< .mine
-
-=======
  
->>>>>>> .theirs
             <div class="tabCon" >
                 <div class="mt-20">
                     <table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -184,12 +182,12 @@
                                 <c:forEach items="${be.array}" varStatus="index2" var="item">
                                     <td>
                                         <c:set value="${fn:split(item,'=' )}" var="status"></c:set>
-                                        <c:if test="${be.level1=='全公司' }">
+                                        <c:if test="${be.level1=='公司级' }">
                                             <a style="text-decoration:none"
                                                onclick="show_dialog('生成检查表','${ly}/village/select-all-level1?flag=${flag}&checkType=-2&lxType=${status[0]}')"
                                                href="javascript:;">设置</a>
                                         </c:if>
-                                        <c:if test="${be.level1!='全公司' }">
+                                        <c:if test="${be.level1!='公司级' }">
                                             <a style="text-decoration:none"
                                                onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-2&flag=${flag}')"
                                                href="javascript:;">设置</a>
@@ -254,12 +252,12 @@
                                 <c:forEach items="${be.array}" varStatus="index2" var="item">
                                     <td>
                                         <c:set value="${fn:split(item,'=' )}" var="status"></c:set>
-                                        <c:if test="${be.level1=='全公司' }">
+                                        <c:if test="${be.level1=='公司级' }">
                                             <a style="text-decoration:none"
                                                onclick="show_dialog('生成检查表','${ly}/village/select-all-level1?flag=${flag}&checkType=-1&lxType=${status[0]}')"
                                                href="javascript:;">设置</a>
                                         </c:if>
-                                        <c:if test="${be.level1!='全公司' }">
+                                        <c:if test="${be.level1!='公司级' }">
                                             <a style="text-decoration:none"
                                                onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-1&flag=${flag}')"
                                                href="javascript:;">设置</a>
@@ -297,86 +295,6 @@
                     </table>
                 </div>
             </div>
-<<<<<<< .mine
-        <div class="tabCon tabCon1">
-            <div class="mt-20">
-                <table class="table table-border table-bordered table-bg table-hover table-sort">
-                    <thead>
-                    <tr class="text-c">
-                        <th width="45px" rowspan="2">序号</th>
-                        <th rowspan="2" class="inline"><span class="title1">部门名称</span><br><span
-                                class="title2">检查方式</span></th>
-                        <th colspan="3">综合检查</th>
-                        <th colspan="3">日常检查</th>
-                        <th colspan="3">定期检查</th>
-                        <th colspan="3">季节检查</th>
-                        <th colspan="3">其他检查</th>
-                        <th colspan="3">基础检测</th>
-                        <th colspan="2">累计</th>
-                    </tr>
-                    <tr>
-                        <th>月计划</th>
-                        <th>年计划</th>
-                        <th>同比</th>
-                        <th>月计划</th>
-                        <th>年计划</th>
-                        <th>同比</th>
-                        <th>月计划</th>
-                        <th>年计划</th>
-                        <th>同比</th>
-                        <th>月计划</th>
-                        <th>年计划</th>
-                        <th>同比</th>
-                        <th>月计划</th>
-                        <th>年计划</th>
-                        <th>同比</th>
-                        <th>月计划</th>
-                        <th>年计划</th>
-                        <th>同比</th>
-                        <th>数量</th>
-                        <th>同比</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!-- 循环-->
-                    <c:forEach items="${list}" varStatus="index" var="be">
-                        <tr class="text-c">
-                            <td>${index.index + 1}</td>
-                            <td>${be.name }</td>
-                            <td onClick="inputC(this,1,'${be.c}',${be.id})">${be.syn_month }</td>
-                            <td>${be.syn_year }</td>
-                            <td onClick="inputC(this,3,'${be.c}',${be.id})">${be.syn_ratio }</td>
-                            <td onClick="inputC(this,4,'${be.c}',${be.id})">${be.eve_month }</td>
-                            <td>${be.eve_year }</td>
-                            <td onClick="inputC(this,6,'${be.c}',${be.id})">${be.eve_ratio }</td>
-                            <td onClick="inputC(this,7,'${be.c}',${be.id})">${be.reg_month }</td>
-                            <td>${be.reg_year }</td>
-                            <td onClick="inputC(this,9,'${be.c}',${be.id})">${be.reg_ratio }</td>
-                            <td onClick="inputC(this,10,'${be.c}',${be.id})">${be.sea_month }</td>
-                            <td>${be.sea_year }</td>
-                            <td onClick="inputC(this,12,'${be.c}',${be.id})">${be.sea_ratio }</td>
-                            <td onClick="inputC(this,13,'${be.c}',${be.id})">${be.els_month }</td>
-                            <td>${be.els_year }</td>
-                            <td onClick="inputC(this,15,'${be.c}',${be.id})">${be.els_ratio }</td>
-                            <td onClick="inputC(this,16,'${be.c}',${be.id})">${be.bas_month }</td>
-                            <td>${be.bas_year }</td>
-                            <td onClick="inputC(this,18,'${be.c}',${be.id})">${be.bas_ratio }</td>
-                            <td onClick="inputC(this,19,'${be.c}',${be.id})">${be.total_count }</td>
-                            <td onClick="inputC(this,20,'${be.c}',${be.id})">${be.total_ratio }</td>
-                        </tr>
-                    </c:forEach>
-                    <!-- 循环结束 -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-
-
-
-
-
-=======
 			           <div class="tabCon tabCon1">
                 <div class="text-c mt-20">
                     <h3>${companyName}隐患排查计划表</h3>
@@ -455,7 +373,6 @@
                     </table>
                 </div>
             </div>
->>>>>>> .theirs
     </div>
 
 

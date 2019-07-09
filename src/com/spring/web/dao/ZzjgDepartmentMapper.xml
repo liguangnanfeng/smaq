@@ -428,6 +428,27 @@
         order by t2.id asc, t1.id asc
     </select>
 
+
+    <select id="selectLevel2ByUidFlag" resultType="java.util.Map">
+        select
+        t1.id, t1.name, t1.level,t1.pid,
+        (select name from zzjg_company_tbl where id = t1.cid) companyName,
+        t2.name parName
+        from zzjg_department_tbl t1
+        left join
+        zzjg_department_tbl t2 on t1.pid = t2.id
+        where
+        t1.del = 0 and t2.del = 0 and t1.flag = 1
+        and t1.uid = #{uid,jdbcType=INTEGER} and t1.level = 2
+        group by parName, name
+        order by t2.id asc, t1.id asc
+    </select>
+
+
+
+
+
+
     <select id="selectFullName" resultType="java.util.Map">
         select
         T2.name pname, T1.name name, T1.id
@@ -509,7 +530,7 @@
         根据父级id进行排序
     -->
     <select id="selectAllByUserId" resultType="String" parameterType="Integer">
-        select name from zzjg_department_tbl where uid=#{id} and level=2 and del=0   and flag=1 order by pid ;
+        select name from zzjg_department_tbl where uid=#{id} and level=2 and del=0 and flag=1 order by pid
     </select>
 
 

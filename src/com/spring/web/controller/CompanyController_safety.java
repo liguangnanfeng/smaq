@@ -660,21 +660,21 @@ public class CompanyController_safety extends BaseController {
             }
             if (null != number6){
                 if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
-                    dangerId = "4";
+                    dangerId = "6";
                 }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0) {
                     dangerId = zzjgDepartment.getDangerId() + "," + "6"; // 高危工艺
                 }
             }
             if (null != number7){
                 if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
-                    dangerId = "4";
+                    dangerId = "7";
                 }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0) {
                     dangerId = zzjgDepartment.getDangerId() + "," + "7"; // 物料
                 }
             }
             if (null != number8){
                 if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
-                    dangerId = "4";
+                    dangerId = "8";
                 }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0) {
                     dangerId = zzjgDepartment.getDangerId() + "," + "8"; // 高危作业
                 }
@@ -683,7 +683,9 @@ public class CompanyController_safety extends BaseController {
             String[] str = zzjgDepartment.getDangerId().split(",");
             String[]  test = null;
             StringBuffer sb = new StringBuffer();
+
             for (int i = 0; i < str.length; i++) {
+
                 if (null != number1 && number1.equals(str[i])){
                     test =  ArrayUtils.remove(str,i);
                 }else if (null != number2 && number2.equals(str[i])){
@@ -702,6 +704,23 @@ public class CompanyController_safety extends BaseController {
                     test =  ArrayUtils.remove(str,i);
                 }
             }
+
+            for (int i = 0; i < test.length; i++) {
+                if (null != number3){
+                    if ("1".equals(test[i])){
+                        test =  ArrayUtils.remove(test,i);
+                    }
+                }
+            }
+
+            for (int i = 0; i < test.length; i++) {
+                if (null != number3){
+                    if ("2".equals(test[i])){
+                        test =  ArrayUtils.remove(test,i);
+                    }
+                }
+            }
+
             for (int i = 0; i < test.length; i++) {
                 sb.append(test[i]).append(",");
             }

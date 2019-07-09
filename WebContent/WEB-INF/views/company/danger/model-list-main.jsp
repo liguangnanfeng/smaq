@@ -579,7 +579,12 @@
             "aoColumnDefs": []
         });
         $(function () {
-            HUItab("#tab-index-cartegory .tabBar span", "#tab-index-cartegory .tabCon", "selected", "click", "0")
+            if('${plan}'==1){
+                HUItab("#tab-index-cartegory .tabBar span", "#tab-index-cartegory .tabCon", "selected", "click", "2")
+            }else{
+                HUItab("#tab-index-cartegory .tabBar span", "#tab-index-cartegory .tabCon", "selected", "click", "0")
+            }
+
         })
     });
 
@@ -593,7 +598,9 @@
         if (cont !== '' || cont !== null || cont !== undefined) {
             $.post(getRootPath() + "/company/model-list-save", pj(cont, idx, zzJid, vid), function (result, status) {
                 if (result.status == 0) {
-                    location.reload();
+                    var url = "${ly }/company/model-list-main?flag=1?plan=1";
+                    window.location.href=url;
+                    // location.reload();
                 } else {
                     layer.msg(result.mess);
                 }

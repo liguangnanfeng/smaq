@@ -2916,6 +2916,8 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * TODO 检查设置实施中实施整改按钮中,返回查询记录,可以进行实施复查(2019/7/2 10添加)
+     * 现在只显示,只有不合格的,全部合格,和全部是复查合格就不要进行显示了
+     *
      *
      * @param dmName       部门名称
      * @param flag         1. 企业自查  2 部门抽查  3 行政检查
@@ -2949,7 +2951,7 @@ public class CompanyController_cd extends BaseController {
         m.put("status", status);
         if (setUserId(user, m)) {
             clearVillageTown(m);
-            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            List<Map<String, Object>> list = tCheckMapper.selectListTwo(m);
 
             if (flag == 1) {
                 List list1 = new ArrayList();

@@ -24,6 +24,13 @@ public interface TCheckMapper {
     /*政府端检查指定公司的所有的检查记录*/
     List<Map<String, Object>> selectList(Map<String, Object> m);
 
+    /**
+     * 根据条件查询只有检查不合格的进行显示
+     * @param m
+     * @return
+     */
+    List<Map<String, Object>> selectListTwo(Map<String, Object> m);
+
     /*企业端获取本公司所有的检查记录*/
     List<Map<String, Object>> selectListByMap(Map<String, Object> m);
 
@@ -83,4 +90,6 @@ public interface TCheckMapper {
     TCheck selectCheckBymodelIdAndStatus(@Param("modelId")Integer id, @Param("status")int i);
 
     Integer selectHiddenDangerNumber(Integer id);
+
+
 }

@@ -498,7 +498,12 @@ public class CompanyController_safety extends BaseController {
                         zzjg = this.zzjgDepartmentMapper.selectLevel1One(user.getId(),dangerIds,Integer.parseInt(id));
                     }
                 }else if (number == 3) { // 设置
-                    zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
+                    if (null != buttons && Integer.parseInt(buttons) == 1){
+                        zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
+                    }else if (Integer.parseInt(buttons) == 2){
+                        zzjg = this.zzjgDepartmentMapper.selectEmpyDangerIds(user.getId());
+                    }
+
                 }
 
                 Integer indus = 0;
@@ -511,7 +516,6 @@ public class CompanyController_safety extends BaseController {
                 if (null != zzjg && zzjg.size() == 1){
                     for (Map<Object, Object> zzjgList : zzjg) {
                         parName = String.valueOf(zzjgList.get("name"));
-
                     }
                 }else {
                     parName = "";
@@ -656,21 +660,21 @@ public class CompanyController_safety extends BaseController {
             }
             if (null != number6){
                 if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
-                    dangerId = "4";
+                    dangerId = "6";
                 }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0) {
                     dangerId = zzjgDepartment.getDangerId() + "," + "6"; // 高危工艺
                 }
             }
             if (null != number7){
                 if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
-                    dangerId = "4";
+                    dangerId = "7";
                 }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0) {
                     dangerId = zzjgDepartment.getDangerId() + "," + "7"; // 物料
                 }
             }
             if (null != number8){
                 if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
-                    dangerId = "4";
+                    dangerId = "8";
                 }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0) {
                     dangerId = zzjgDepartment.getDangerId() + "," + "8"; // 高危作业
                 }
@@ -679,7 +683,9 @@ public class CompanyController_safety extends BaseController {
             String[] str = zzjgDepartment.getDangerId().split(",");
             String[]  test = null;
             StringBuffer sb = new StringBuffer();
+
             for (int i = 0; i < str.length; i++) {
+
                 if (null != number1 && number1.equals(str[i])){
                     test =  ArrayUtils.remove(str,i);
                 }else if (null != number2 && number2.equals(str[i])){
@@ -698,6 +704,23 @@ public class CompanyController_safety extends BaseController {
                     test =  ArrayUtils.remove(str,i);
                 }
             }
+
+            for (int i = 0; i < test.length; i++) {
+                if (null != number3){
+                    if ("1".equals(test[i])){
+                        test =  ArrayUtils.remove(test,i);
+                    }
+                }
+            }
+
+            for (int i = 0; i < test.length; i++) {
+                if (null != number3){
+                    if ("2".equals(test[i])){
+                        test =  ArrayUtils.remove(test,i);
+                    }
+                }
+            }
+
             for (int i = 0; i < test.length; i++) {
                 sb.append(test[i]).append(",");
             }

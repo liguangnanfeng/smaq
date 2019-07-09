@@ -215,8 +215,17 @@
         <div class="div-print">
 
             <c:if test="${empty type}">
-                <h3 class="text-c">${company.name}${parName}风险因素辨识</h3>
+                <c:if test="${buttons == 1}">
+                    <h3 class="text-c">${company.name}风险因素辨识</h3>
+                </c:if>
+                <c:if test="${buttons == 2}">
+                    <h3 class="text-c">${company.name}风险因素辨识表</h3>
+                </c:if>
+                <c:if test="${buttons == 3}">
+                    <h3 class="text-c">${company.name}${parName}风险因素辨识</h3>
+                </c:if>
             </c:if>
+
             <c:if test="${type eq 1}">
                 <h3 class="text-c">${company.name}${parName}职业病风险物理因素辨识</h3>
             </c:if>
@@ -244,7 +253,6 @@
                 </c:if>
 
                 <c:if test="${number != 3}">
-                    <button class="btn btn-primary radius isShow" onClick="BaseSet()">部门、对象确定</button>
 
                     <button class="btn btn-primary radius isShow" onClick="selectNow()">现场管理</button>
 
@@ -833,8 +841,8 @@
 
 
     function amend(id,idx) {
-        sessionStorage.setItem('jcId',id)
-        window.location.href = '${ly}/company/safety-system/risk-list?id='+id+"&types="+idx
+        sessionStorage.setItem('jcId',id);
+        window.location.href = '${ly}/company/safety-system/risk-list?id='+id+"&types="+idx+"&buttons=3"
     }
 
 

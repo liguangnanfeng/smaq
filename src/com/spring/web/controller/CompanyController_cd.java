@@ -3254,9 +3254,26 @@ public class CompanyController_cd extends BaseController {
         danger2 = 0;
         danger5 = 0;
         danger8 = 0;
-        danger11 = 0;
-        danger14 = 0;
-        danger17 = 0;
+        if (null == danger11){
+            danger11 = 0;
+        }
+        if (null == danger14){
+            danger14 = 0;
+        }
+        if (null == danger17){
+            danger17 = 0;
+        }
+        if (null == danger10){
+            danger10 = 0;
+        }
+        if (null == danger13){
+            danger13 = 0;
+        }
+        if (null == danger16){
+            danger16 = 0;
+        }
+
+
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH) + 1;
         Integer year = 12 - (month+1);
@@ -3350,6 +3367,9 @@ public class CompanyController_cd extends BaseController {
             } else {
                 hiddenPlan1.setEls_month(0);
                 hiddenPlan1.setEls_year(0);
+
+
+
             }
             /*if (null != danger14 && danger14 != 0) {
                 hiddenPlan1.setEls_year(danger14);
@@ -3461,17 +3481,15 @@ public class CompanyController_cd extends BaseController {
 
             if (null != danger10 && danger10 != 0) {
                 hiddenPlan1.setSea_month(danger10);
-                count = danger11 = danger10 * year;
-                hiddenPlan1.setSea_year(danger11);
             } else {
                 hiddenPlan1.setSea_month(hiddenPlan2.get(0).getSea_month());
-                hiddenPlan1.setSea_year(hiddenPlan2.get(0).getSea_year());
             }
-            /*if (null != danger11 && danger11 != 0) {
+            if (null != danger11 && danger11 != 0) {
                 hiddenPlan1.setSea_year(danger11);
+                count = danger11;
             } else {
                 hiddenPlan1.setSea_year(hiddenPlan2.get(0).getSea_year());
-            }*/
+            }
             if (null != danger12) {
                 hiddenPlan1.setSea_ratio(danger12);
             } else {
@@ -3480,17 +3498,15 @@ public class CompanyController_cd extends BaseController {
 
             if (null != danger13 && danger13 != 0) {
                 hiddenPlan1.setEls_month(danger13);
-                count = danger14 = danger13 * year;
-                hiddenPlan1.setEls_year(danger14);
             } else {
                 hiddenPlan1.setEls_month(hiddenPlan2.get(0).getEls_month());
-                hiddenPlan1.setEls_year(hiddenPlan2.get(0).getEls_year());
             }
-            /*if (null != danger14 && danger14 != 0) {
+            if (null != danger14 && danger14 != 0) {
                 hiddenPlan1.setEls_year(danger14);
+                count = danger14;
             } else {
                 hiddenPlan1.setEls_year(hiddenPlan2.get(0).getEls_year());
-            }*/
+            }
             if (null != danger15) {
                 hiddenPlan1.setEls_ratio(danger15);
             } else {
@@ -3499,18 +3515,16 @@ public class CompanyController_cd extends BaseController {
 
             if (null != danger16 && danger16 != 0) {
                 hiddenPlan1.setBas_month(danger16);
-                count = danger17 = danger16 * year;
-                hiddenPlan1.setBas_year(danger17);
             } else {
                 hiddenPlan1.setBas_month(hiddenPlan2.get(0).getBas_month());
+            }
+            if (null != danger17 && danger17 != 0) {
+                hiddenPlan1.setBas_year(danger17);
+                count = danger17;
+            } else {
                 hiddenPlan1.setBas_year(hiddenPlan2.get(0).getBas_year());
             }
-            /*if (null != danger17 && danger17 != 0) {
-                hiddenPlan1.setBas_year(danger17);
-            } else {
-            、
-                hiddenPlan1.setBas_year(hiddenPlan2.get(0).getBas_year());
-            }*/
+
             if (null != danger18) {
                 hiddenPlan1.setBas_ratio(danger18);
             } else {
@@ -3522,13 +3536,15 @@ public class CompanyController_cd extends BaseController {
                 number1 = hiddenPlan2.get(0).getEve_month();
             }else if (null != danger7 && danger7 != 0 && null != hiddenPlan2.get(0).getReg_month() && hiddenPlan2.get(0).getReg_month() != 0){
                 number1 = hiddenPlan2.get(0).getReg_month();
-            }else if (null != danger10 && danger10 != 0 && null != hiddenPlan2.get(0).getSea_month() && hiddenPlan2.get(0).getSea_month() != 0){
-                number1 = hiddenPlan2.get(0).getSea_month();
-            }else if (null != danger13 && danger13 != 0 && null != hiddenPlan2.get(0).getEls_month() && hiddenPlan2.get(0).getEls_month() != 0){
-                number1 = hiddenPlan2.get(0).getEls_month();
-            }else if (null != danger16 && danger16 != 0 && null != hiddenPlan2.get(0).getBas_month() && hiddenPlan2.get(0).getBas_month() != 0){
-                number1 = hiddenPlan2.get(0).getBas_month();
+            }else if (null != danger11 && danger11 != 0 && null != hiddenPlan2.get(0).getSea_year() && hiddenPlan2.get(0).getSea_year() != 0){
+                number1 = hiddenPlan2.get(0).getSea_month()/year;
+            }else if (null != danger14 && danger14 != 0 && null != hiddenPlan2.get(0).getEls_year() && hiddenPlan2.get(0).getEls_year() != 0){
+                number1 = hiddenPlan2.get(0).getEls_month()/year;
+            }else if (null != danger17 && danger17 != 0 && null != hiddenPlan2.get(0).getBas_year() && hiddenPlan2.get(0).getBas_year() != 0){
+                number1 = hiddenPlan2.get(0).getBas_month()/year;
             }
+
+
             danger19 = hiddenPlan2.get(0).getSyn_year() + hiddenPlan2.get(0).getEve_year() + hiddenPlan2.get(0).getReg_year() +
                     hiddenPlan2.get(0).getSea_year() + hiddenPlan2.get(0).getEls_year() + hiddenPlan2.get(0).getBas_year() + count - (number1 * year) ;
 
@@ -3572,7 +3588,7 @@ public class CompanyController_cd extends BaseController {
      * @throws ParseException
      */
     @RequestMapping(value = "model-list-main")
-    public String modelListMain(HttpServletRequest request, Model model, Integer flag, Integer status) throws ParseException {
+    public String modelListMain(HttpServletRequest request, Model model, Integer flag, Integer status, Integer plan) throws ParseException {
 
         User user = getLoginUser(request);
 
@@ -3629,7 +3645,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
         model.addAttribute("companyName", user.getUserName());
-
+        model.addAttribute("plan", plan);
         return "company/danger/model-list-main";
 
     }

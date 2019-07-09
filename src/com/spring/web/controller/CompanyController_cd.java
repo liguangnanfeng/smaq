@@ -3577,14 +3577,14 @@ public class CompanyController_cd extends BaseController {
         User user = getLoginUser(request);
 
         Map<String, Object> map1 = new LinkedHashMap<String, Object>();
-        map1.put("level1", "全公司");
+        map1.put("level1", "公司级");
 
         List<Map<String, Object>> jiChuItem = new ArrayList<>();
         jiChuItem.add(map1);
         jiChuItem.addAll(aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理"));
 
         Map<String, Object> map2 = new LinkedHashMap<String, Object>();
-        map2.put("level1", "全公司");
+        map2.put("level1", "公司级");
         List<Map<String, Object>> XianChangItem = new ArrayList<>();
         XianChangItem.add(map2);
         XianChangItem.addAll(aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理"));
@@ -3594,7 +3594,7 @@ public class CompanyController_cd extends BaseController {
             Xianmap.put(5, 0);
             Xianmap.put(1, 0);
             Xianmap.put(2, 0);
-            Xianmap.put(3, 0);
+            /*Xianmap.put(3, 0);*/
             Xianmap.put(4, 0);
             String level1 = (String) XianChangMap.get("level1");
             List<Integer> Xiantypes = tModelMapper.selecttype(level1, user.getId(), 2, flag);
@@ -3610,7 +3610,7 @@ public class CompanyController_cd extends BaseController {
             Jimap.put(5, 0);
             Jimap.put(1, 0);
             Jimap.put(2, 0);
-            Jimap.put(3, 0);
+            /*Jimap.put(3, 0);*/
             Jimap.put(4, 0);
             String level1 = (String) jiChuMap.get("level1");
             List<Integer> Jitypes = tModelMapper.selecttype(level1, user.getId(), 1, flag);
@@ -4062,7 +4062,7 @@ public class CompanyController_cd extends BaseController {
         if (flag == 1) {
             iteml = tCheckMapper.selectLevels(id);
             for (int i = 0; i < iteml.size(); i++) {
-                if ("全公司".equals(iteml.get(i).get("depart"))) {
+                if ("公司级".equals(iteml.get(i).get("depart"))) {
                     TCheck tCheck = tCheckMapper.selectByPrimaryKey(id);
                     if (tCheck.getIndustryType() == 1) { // 基础
                         iteml = tCheckMapper.selectAllLevel(id);

@@ -118,7 +118,7 @@
 </head>
 <body>
 <nav class="breadcrumb">
-    <c:set var="x1" value="${fn:split('企业自查/ /部门抽查/行政检查','/') }"/>
+    <c:set var="x1" value="${fn:split('企业自查/行政检查/部门抽查','/') }"/>
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>隐患排查治理系统</span>
     <span class="c-gray en">&gt;</span> <span>${x1[flag-1] }-检查表 </span>
@@ -476,6 +476,7 @@
             <th width="10%">隐患数量</th>
             <%-- <th width="15%">${flag == 1 ? '受检部门' : '检查单位'}</th>--%>
             <th width="10%">操作</th>
+            <th width="10%">实施</th>
         </tr>
         </thead>
         <tbody>
@@ -518,13 +519,17 @@
                 <td>
                     <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }&number=${be.c}')" href="javascript:;">查看详情</a>
                     <br>
+                    <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除记录</a>
+
+                </td>
+                <td>
+
                     <c:if test="${be.c!=0}">
-                        <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">实施复查</a>
-                        <br>
                         <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">整改详情</a>
                         <br>
+                        <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">实施复查</a>
+                        <br>
 
-                        <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除</a>
 
                     </c:if>
                 </td>

@@ -149,7 +149,7 @@
         <div class="tabBar">
             <span class="selected"> 现场管理</span>
             <span>基础管理</span>
-			  <span >排查计划</span>
+            <span >排查计划</span>
         </div>
         <c:if test="${flag == 1}">
             <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -168,7 +168,7 @@
                             <th>综合检查</th>
                             <th>日常检查</th>
                             <th>定期检查</th>
-                            <th>季节检查</th>
+<%--                            <th>季节检查</th>--%>
                             <th>其他检查</th>
                             <th>整改复查</th>
                         </tr>
@@ -182,12 +182,12 @@
                                 <c:forEach items="${be.array}" varStatus="index2" var="item">
                                     <td>
                                         <c:set value="${fn:split(item,'=' )}" var="status"></c:set>
-                                        <c:if test="${be.level1=='全公司' }">
+                                        <c:if test="${be.level1=='公司级' }">
                                             <a style="text-decoration:none"
                                                onclick="show_dialog('生成检查表','${ly}/village/select-all-level1?flag=${flag}&checkType=-2&lxType=${status[0]}')"
                                                href="javascript:;">设置</a>
                                         </c:if>
-                                        <c:if test="${be.level1!='全公司' }">
+                                        <c:if test="${be.level1!='公司级' }">
                                             <a style="text-decoration:none"
                                                onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-2&flag=${flag}')"
                                                href="javascript:;">设置</a>
@@ -238,7 +238,7 @@
                             <th>综合检查</th>
                             <th>日常检查</th>
                             <th>定期检查</th>
-                            <th>季节检查</th>
+<%--                            <th>季节检查</th>--%>
                             <th>其他检查</th>
                             <th>整改复查</th>
                         </tr>
@@ -252,12 +252,12 @@
                                 <c:forEach items="${be.array}" varStatus="index2" var="item">
                                     <td>
                                         <c:set value="${fn:split(item,'=' )}" var="status"></c:set>
-                                        <c:if test="${be.level1=='全公司' }">
+                                        <c:if test="${be.level1=='公司级' }">
                                             <a style="text-decoration:none"
                                                onclick="show_dialog('生成检查表','${ly}/village/select-all-level1?flag=${flag}&checkType=-1&lxType=${status[0]}')"
                                                href="javascript:;">设置</a>
                                         </c:if>
-                                        <c:if test="${be.level1!='全公司' }">
+                                        <c:if test="${be.level1!='公司级' }">
                                             <a style="text-decoration:none"
                                                onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-1&flag=${flag}')"
                                                href="javascript:;">设置</a>

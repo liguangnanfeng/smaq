@@ -178,11 +178,11 @@
             <span style="vertical-align: bottom;"><span>安全生产监督管理局行政执法人员</span></span>
             <u><span
                     style="border-bottom:1px solid #333;vertical-align: text-bottom; width:20%;display:inline-block;text-indent: 0;"
-                    contenteditable="true">&nbsp;${check.cheker}</span></u>
+                    contenteditable="true" id="id3">&nbsp;</span></u>
             <span style="vertical-align: bottom;"><span>、</span></span>
             <u><span
                     style="border-bottom:1px solid #333;vertical-align: text-bottom; width:20%;display:inline-block;text-indent: 0;"
-                    contenteditable="true">&nbsp;</span></u>
+                    contenteditable="true" id="id4">&nbsp;</span></u>
             <span style="vertical-align: bottom;"><span>，</span></span>
         </p>
         <p class="MsoNormal" style="text-align:left;">
@@ -328,9 +328,12 @@
     var flag = 8, flag2 = 2;
     $(function () {
             var str = '${check.cheker }';
-            var x = str.replace(/、/g, ',').split(",");
+            // var x = str.replace(/、/g, ',').split(",");
+            var x = str.replace(/，/ig,',').split(",");
             $("#id1").html(x[0]);
             $("#id2").html(x[1]);
+            $("#id3").html(x[0]);
+            $("#id4").html(x[1]);
         }
     )
 </script>

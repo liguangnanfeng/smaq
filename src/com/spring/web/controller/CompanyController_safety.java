@@ -498,7 +498,12 @@ public class CompanyController_safety extends BaseController {
                         zzjg = this.zzjgDepartmentMapper.selectLevel1One(user.getId(),dangerIds,Integer.parseInt(id));
                     }
                 }else if (number == 3) { // 设置
-                    zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
+                    if (null != buttons && Integer.parseInt(buttons) == 1){
+                        zzjg = this.zzjgDepartmentMapper.selectLevel1ByUid(user.getId());
+                    }else if (Integer.parseInt(buttons) == 2){
+                        zzjg = this.zzjgDepartmentMapper.selectEmpyDangerIds(user.getId());
+                    }
+
                 }
 
                 Integer indus = 0;
@@ -511,7 +516,6 @@ public class CompanyController_safety extends BaseController {
                 if (null != zzjg && zzjg.size() == 1){
                     for (Map<Object, Object> zzjgList : zzjg) {
                         parName = String.valueOf(zzjgList.get("name"));
-
                     }
                 }else {
                     parName = "";

@@ -168,7 +168,7 @@
                             <th>综合检查</th>
                             <th>日常检查</th>
                             <th>定期检查</th>
-                            <th>季节检查</th>
+<%--                            <th>季节检查</th>--%>
                             <th>其他检查</th>
                             <th>整改复查</th>
                         </tr>
@@ -238,7 +238,7 @@
                             <th>综合检查</th>
                             <th>日常检查</th>
                             <th>定期检查</th>
-                            <th>季节检查</th>
+<%--                            <th>季节检查</th>--%>
                             <th>其他检查</th>
                             <th>整改复查</th>
                         </tr>
@@ -579,6 +579,7 @@
             "aoColumnDefs": []
         });
         $(function () {
+            console.log('${plan}');
             if('${plan}'==1){
                 HUItab("#tab-index-cartegory .tabBar span", "#tab-index-cartegory .tabCon", "selected", "click", "2")
             }else{
@@ -598,7 +599,7 @@
         if (cont !== '' || cont !== null || cont !== undefined) {
             $.post(getRootPath() + "/company/model-list-save", pj(cont, idx, zzJid, vid), function (result, status) {
                 if (result.status == 0) {
-                    var url = "${ly }/company/model-list-main?flag=1?plan=1";
+                    var url = "${ly }/company/model-list-main?flag=1&plan=1";
                     window.location.href=url;
                     // location.reload();
                 } else {

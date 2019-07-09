@@ -59,7 +59,7 @@ function pr_() {
       <c:if test="${flag == 1}"><h3 class="text-c">${company.name}风险评估结果表</h3></c:if>
       <c:if test="${flag == 3}"><h3 class="text-c">${company.name}风险分布表</h3></c:if>
         <div class="cl pd-5 bg-1 bk-gray mt-20">
-     		<span class="r">共有数据：<strong>${fn:length(list) }</strong> 条；重大风险：<strong>${fn:length(list11) }</strong> 条；较大风险：<strong>${fn:length(list22) }</strong> 条
+     		<span class="r">共有数据：<strong>${number}</strong> 条；重大风险：<strong>${fn:length(list11) }</strong> 条；较大风险：<strong>${fn:length(list22) }</strong> 条
              一般风险：<strong>${fn:length(list33) }</strong> 条；
              较小风险：<strong>${fn:length(list44) }</strong> 条；
              未辨识风险：<strong>${fn:length(list55) }</strong> 条；
@@ -106,20 +106,21 @@ function pr_() {
               <th style="min-width:100px">环节/部位</th>
               <%--<th style="min-width:100px">风险点</th>--%>
               <th style="min-width:100px">风险等级</th>
-              <th style="min-width:150px">风险类型</th>
+              <%--<th style="min-width:150px">风险类型</th>--%>
+              <th style="min-width:150px">事故类型</th>
               <th style="min-width:200px">风险因素</th>
           </tr>
         </thead>
         <tbody>
-          <c:forEach items="${treeMap }" var="be1" varStatus="index">
-          <c:forEach items="${be1.value }" var="be2">
+         <%-- <c:forEach items="${treeMap }" var="be1" varStatus="index">
+          <c:forEach items="${be1.value }" var="be2">--%>
           <c:forEach items="${list}" var="be">
           <%--<c:if test="${(be.level1 eq be1.key && be.level2 eq be2) || (empty be1.key && empty be.level1)}">--%>
           <tr>
             <c:set value="${fn:split(be.level3,'/')}" var="ls"></c:set>
             <td class="text-c">${ls[0] != null ? ls[0] : "暂无数据" }</td>
 
-            <td class="text-c">${empty be1.key ? '公司' : be1.key}</td>
+            <td class="text-c">${be.level1}</td>
 
             <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
 
@@ -150,8 +151,8 @@ function pr_() {
           </tr>
           <%--</c:if>--%>
           </c:forEach>
-          </c:forEach>
-          </c:forEach>
+          <%--</c:forEach>
+          </c:forEach>--%>
         </tbody>
         <%-- </c:if> --%>
       </table>

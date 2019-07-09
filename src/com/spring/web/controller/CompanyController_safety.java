@@ -427,8 +427,11 @@ public class CompanyController_safety extends BaseController {
         }
         if (null != buttons && Integer.parseInt(buttons) == 1){
             // 根据 uid 修改 dangerId 为 null
-            Integer a = zzjgDepartmentMapper.deleteAll(null,user.getId(),new Date());
+            /*Integer a = zzjgDepartmentMapper.deleteAll(null,user.getId(),new Date());*/
+            // 根据 uid 查询所有的数据信息
+            List<ZzjgDepartment> zzjgDeparList = zzjgDepartmentMapper.selectLevel1DangerIds(user.getId());
             model.addAttribute("buttons", 1);
+            model.addAttribute("zzjgDeparList",zzjgDeparList);
         }
         if (null != buttons && Integer.parseInt(buttons) == 2){
             model.addAttribute("buttons", 2);
@@ -466,10 +469,10 @@ public class CompanyController_safety extends BaseController {
                         number = 1;
                     }
                 }*/
-            if (null == types || Integer.parseInt(types) == 1 || Integer.parseInt(types) == 2) {
+            if (null == types || Integer.parseInt(types) == 1 || Integer.parseInt(types) == 2 || Integer.parseInt(types) == 3) {
                 if (null == number && null == types){
                     number = 3;
-                }else if (null != types && types.equals("1")){ // 现场
+                }else if (null != types && types.equals("3")){ // 现场
                     number = 1;
                 }else if (null != types && types.equals("2")){ // 基础
                     number = 2;
@@ -504,6 +507,16 @@ public class CompanyController_safety extends BaseController {
                 }else {
                     indus = 2;
                 }
+                String parName = null;
+                if (null != zzjg && zzjg.size() == 1){
+                    for (Map<Object, Object> zzjgList : zzjg) {
+                        parName = String.valueOf(zzjgList.get("name"));
+
+                    }
+                }else {
+                    parName = "";
+                }
+                model.addAttribute("parName",parName);
                 model.addAttribute("buttons",buttons);
                 model.addAttribute("indus",indus);
                 model.addAttribute("ids",id);
@@ -544,6 +557,7 @@ public class CompanyController_safety extends BaseController {
                     type = 5;
                 }
                 List<ZzjgDepartment> zzjgDepartment = zzjgDepartmentMapper.selectDangerIds(user.getId(),dangerId);
+                List<ZzjgDepartment> zzjgDepartments = zzjgDepartmentMapper.selectOneName(user.getId(),dangerId,Integer.parseInt(id));
                 if (null != zzjgDepartment && zzjgDepartment.size() != 0){
                     StringBuffer sb = new StringBuffer();
                     for (int i = 0; i < zzjgDepartment.size(); i++) {
@@ -556,10 +570,10 @@ public class CompanyController_safety extends BaseController {
                     if (sb.toString().length() != 0){
                         zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type,sb.toString());
                         zzjg1 = this.zzjgDepartmentMapper.selectAllName(user.getId(),type,sb.toString());
-                        if (null == dmid){
+                        if (null == id){
                             zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type,sb.toString());
                         }else {
-                            zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type,dmid.toString());
+                            zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type,id);
                         }
                     }
                 }
@@ -570,6 +584,7 @@ public class CompanyController_safety extends BaseController {
                     indus = 2;
                 }
 
+                model.addAttribute("parName",zzjgDepartments.get(0).getName());
                 model.addAttribute("indus",indus);
                 model.addAttribute("zzjgDep1", zzjgDepartment);
                 model.addAttribute("zzjg",zzjg);
@@ -620,9 +635,9 @@ public class CompanyController_safety extends BaseController {
             }
             if (null != number3){
                 if (null == zzjgDepartment.getDangerId() || zzjgDepartment.getDangerId().length() == 0){
-                    dangerId = "3";
+                    dangerId = "1,2,3";
                 }else if (null != zzjgDepartment.getDangerId() && zzjgDepartment.getDangerId().length() != 0){
-                    dangerId = zzjgDepartment.getDangerId() + "," + "3"; // 安全风险
+                    dangerId = zzjgDepartment.getDangerId()+ "," + "1"+ "," + "2" + "," + "3"; // 安全风险
                 }
             }
             if (null != number4){
@@ -2780,12 +2795,19 @@ public class CompanyController_safety extends BaseController {
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("uid", user.getId());
         m.put("order", 1);
-
+        Map<String, Object> m2 = new HashMap<String, Object>();
+        m.put("uid", user.getId());
         model.addAttribute("company", company);
         model.addAttribute("user", userMapper.selectByPrimaryKey(company.getUserId()));
         model.addAttribute("v", userMapper.selectByPrimaryKey(company.getVillageId()));
-        List<Map<String, Object>> list = aCompanyManualMapper.selectByMap(m);
+
+
+
+       /* List<Map<String, Object>> list = aCompanyManualMapper.selectRed(m2);*/
         List<Map<String, Object>> list2 = aCompanyManualMapper.selectByMapTwo(m);
+        List<Map<String, Object>> list = aCompanyManualMapper.selectRed(user.getId());
+
+
         model.addAttribute("list", list);
         model.addAttribute("list2", list2);
 
@@ -2833,6 +2855,10 @@ public class CompanyController_safety extends BaseController {
         List<Map<String, Object>> list55 = aCompanyManualMapper.selectNum(m);
         model.addAttribute("list55", list55);
 
+        Integer number = list11.size() + list22.size() +  list33.size() + list44.size() + list55.size();
+
+
+        model.addAttribute("number", number);
         if (flag.equals("2")) {
             //log.error("zhangcl 2018.10.18 controlList3,area_range="+company.getAreaRange());
             return "company/safety-system/control-list3";

@@ -275,7 +275,10 @@
         SELECT * FROM `zzjg_department_tbl` where uid = #{uid} and del = 0 and level = 1 and dangerId like  CONCAT('%', #{dangerIds},'%')
     </select>
 
-
+    <!--  查询 ID 查询对应的 name 信息 -->
+    <select id="selectOneName" resultType="com.spring.web.model.ZzjgDepartment">
+        SELECT * FROM `zzjg_department_tbl` where uid = #{uid} and del = 0 and level = 1 and id = #{id} and dangerId like  CONCAT('%', #{dangerIds},'%')
+    </select>
 
 
     <select id="selectAllName" resultType="java.util.Map">
@@ -365,6 +368,18 @@
         and t1.uid = #{uid,jdbcType=INTEGER}
         order by t1.id asc
     </select>
+
+
+    <select id="selectLevel1DangerIds" resultType="com.spring.web.model.ZzjgDepartment">
+        select
+        *
+        from zzjg_department_tbl t1
+        where
+        t1.del = 0 and t1.level = 1
+        and t1.uid = #{uid,jdbcType=INTEGER}
+        order by t1.id asc
+    </select>
+
 
 
 

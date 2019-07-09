@@ -149,4 +149,8 @@ public interface ZzjgDepartmentMapper {
     List<ZzjgDepartment> selectDangerIds(@Param("uid")Integer uid, @Param("dangerIds")String dangerIds);
 
     Integer deleteAll(@Param("dangerId")String dangerId, @Param("uid")Integer uid, @Param("utime")Date date);
+
+    List<ZzjgDepartment> selectLevel1DangerIds(@Param("uid")Integer uid);
+
+    List<ZzjgDepartment> selectOneName(@Param("uid")Integer uid, @Param("dangerIds")String dangerIds,@Param("id")Integer id);
 }

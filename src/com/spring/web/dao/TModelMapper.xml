@@ -451,7 +451,7 @@
     <select id="selectModelByMapAndLimit1" parameterType="java.util.Map" resultType="com.spring.web.model.TModel">
         select * from smaq.t_model_tbl
         <where>
-             del=0
+            del=0
             <if test="userId!=null">
                 and user_id = #{userId}
             </if>
@@ -459,8 +459,8 @@
                 and part = #{dmname}
             </if>
             <if test="type!=null">
-            and type = #{type}
-        </if>
+                and type = #{type}
+            </if>
             <if test="industryType!=null">
                 and industry_type = #{industryType}
             </if>
@@ -474,7 +474,7 @@
     <!--根据条件查询是否有相应的检查表
 
     -->
-    <select id="selecttype" resultType="INTEGER" >
+    <select id="selecttype" resultType="INTEGER">
         select
         type
         from smaq.t_model_tbl
@@ -482,5 +482,20 @@
         group by type;
     </select>
 
+    <!--根据公司名称和公司id查询整改复查的数据-->
+    <select id="selectDangerCountByDepartAndUserId" resultType="Integer">
+
+        SELECT
+        SUM(a. count1)
+        FROM (SELECT
+        (SELECT COUNT(0)  FROM t_check_item_tbl WHERE check_id=T1.`id`AND STATUS=2 ) count1
+        FROM t_check_tbl  T1
+        WHERE  T1.del=0
+        AND    T1.status=2
+        AND   T1.user_id=#{userId}
+        AND   T1.depart=#{dmName}
+        and  T1.industry_type=#{industryType}
+        ) a
+    </select>
 
 </mapper>

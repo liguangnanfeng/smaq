@@ -108,4 +108,12 @@ public interface TModelMapper {
      */
 
     List<Integer> selecttype(@Param("dmName") String dmName, @Param("userId")Integer userId, @Param("industryType")int industryType,@Param("flag")Integer flag);
+
+    /**
+     * 根据部门名称查询数据库中改部门有没有整改复查不合格的数据
+     * @param level1
+     * @param id
+     * @return
+     */
+    Integer selectDangerCountByDepartAndUserId(@Param("dmName") String level1, @Param("userId")Integer id, @Param("industryType") Integer IndustryType);
 }

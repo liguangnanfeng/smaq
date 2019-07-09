@@ -3619,8 +3619,14 @@ public class CompanyController_cd extends BaseController {
             for (Integer integer : Xiantypes) {
                 Xianmap.put(integer, 1);
             }
-            System.out.println("现场"+Xianmap);
             XianChangMap.put("array", Xianmap);
+            Integer count =  tModelMapper.selectDangerCountByDepartAndUserId(level1, user.getId(),2);
+            if(null==count){
+                XianChangMap.put("count", 0);
+            }else{
+                XianChangMap.put("count", count);
+            }
+
         }
 
         for (Map<String, Object> jiChuMap: jiChuItem) {
@@ -3635,7 +3641,13 @@ public class CompanyController_cd extends BaseController {
             for (Integer integer : Jitypes) {
                 Jimap.put(integer, 1);
             }
-            System.out.println("基础"+Jimap);
+            Integer count =  tModelMapper.selectDangerCountByDepartAndUserId(level1, user.getId(),1);
+            if(null==count){
+                jiChuMap.put("count", 0);
+            }else{
+                jiChuMap.put("count", count);
+            }
+
             jiChuMap.put("array", Jimap);
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

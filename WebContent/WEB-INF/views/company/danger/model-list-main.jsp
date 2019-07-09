@@ -182,12 +182,12 @@
                                 <c:forEach items="${be.array}" varStatus="index2" var="item">
                                     <td>
                                         <c:set value="${fn:split(item,'=' )}" var="status"></c:set>
-                                        <c:if test="${be.level1=='全公司' }">
+                                        <c:if test="${be.level1=='公司级' }">
                                             <a style="text-decoration:none"
                                                onclick="show_dialog('生成检查表','${ly}/village/select-all-level1?flag=${flag}&checkType=-2&lxType=${status[0]}')"
                                                href="javascript:;">设置</a>
                                         </c:if>
-                                        <c:if test="${be.level1!='全公司' }">
+                                        <c:if test="${be.level1!='公司级' }">
                                             <a style="text-decoration:none"
                                                onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-2&flag=${flag}')"
                                                href="javascript:;">设置</a>
@@ -215,10 +215,20 @@
                                     </td>
                                 </c:forEach>
                                 <td>
-                                    <a style="text-decoration:none"
-                                       onClick="szss_list('${be.level1 }',-2,${status[0]+1},'${flag}')"
-                                        href="javascript:;">实施
-                                     </a>
+                                    <c:if test="${be.count==0}">
+                                        <a style="text-decoration:none"
+                                           class="used"
+                                           onClick="layer.msg('没有要复查整改的项')"
+                                           href="javascript:;">实施
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${be.count!=0}">
+                                        <a style="text-decoration:none"
+                                           onClick="szss_list('${be.level1 }',-2,${status[0]+1},'${flag}')"
+                                           href="javascript:;">实施
+                                        </a>
+                                    </c:if>
+
                                 </td>
 
                             </tr>
@@ -252,12 +262,12 @@
                                 <c:forEach items="${be.array}" varStatus="index2" var="item">
                                     <td>
                                         <c:set value="${fn:split(item,'=' )}" var="status"></c:set>
-                                        <c:if test="${be.level1=='全公司' }">
+                                        <c:if test="${be.level1=='公司级' }">
                                             <a style="text-decoration:none"
                                                onclick="show_dialog('生成检查表','${ly}/village/select-all-level1?flag=${flag}&checkType=-1&lxType=${status[0]}')"
                                                href="javascript:;">设置</a>
                                         </c:if>
-                                        <c:if test="${be.level1!='全公司' }">
+                                        <c:if test="${be.level1!='公司级' }">
                                             <a style="text-decoration:none"
                                                onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-1&flag=${flag}')"
                                                href="javascript:;">设置</a>
@@ -283,10 +293,20 @@
                                     </td>
                                 </c:forEach>
                                 <td>
-                                    <a style="text-decoration:none"
-                                       onClick="szss_list('${be.level1 }',-1,${status[0]+1},'${flag}')"
-                                       href="javascript:;">实施
-                                    </a>
+                                    <c:if test="${be.count==0}">
+                                        <a style="text-decoration:none"
+                                           class="used"
+                                           onClick="layer.msg('没有要复查整改的项')"
+                                           href="javascript:;">实施
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${be.count!=0}">
+                                        <a style="text-decoration:none"
+                                           onClick="szss_list('${be.level1 }',-1,${status[0]+1},'${flag}')"
+                                           href="javascript:;">实施
+                                        </a>
+                                    </c:if>
+
                                 </td>
                             </tr>
                         </c:forEach>
@@ -579,7 +599,6 @@
             "aoColumnDefs": []
         });
         $(function () {
-            console.log('${plan}');
             if('${plan}'==1){
                 HUItab("#tab-index-cartegory .tabBar span", "#tab-index-cartegory .tabCon", "selected", "click", "2")
             }else{

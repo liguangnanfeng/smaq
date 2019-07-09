@@ -204,7 +204,7 @@
         <p class="MsoNormal">
             <span style="vertical-align: bottom;"><span>检查人员（签名）：</span></span>
             <%-- <u><span style="border-bottom:1px solid #333;vertical-align: text-bottom; width:20%;display:inline-block;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;${check.cheker }&nbsp;&nbsp;&nbsp;&nbsp;</span></u> --%>
-            <u><span id="id1" style="border-bottom:1px solid #333;vertical-align: text-bottom; width:15%;text-align: center;display:inline-block;" contenteditable="true">${check.cheker}</span></u>
+            <u><span id="id1" style="border-bottom:1px solid #333;vertical-align: text-bottom; width:15%;text-align: center;display:inline-block;" contenteditable="true"></span></u>
             &nbsp;&nbsp;&nbsp;<u><span id="id2" style="border-bottom:1px solid #333;vertical-align: text-bottom; width:15%;text-align: center;display:inline-block;" contenteditable="true"></span></u>
         </p>
         <p class="MsoNormal" style="text-align:left;margin-top:10px;height:180px;">
@@ -350,6 +350,18 @@
 var checkId = ${checkId};
 var userId = ${company.userId };
 var rectificationId = '${rectification.id}';
+$(function () {
+        var str = '${check.cheker }';
+        // var x = str.replace(/、/g, ',').split(",");
+        var x = str.replace(/，/ig,',').split(",");
+        $("#id1").html(x[0]);
+        $("#id2").html(x[1]);
+
+    }
+)
+
+
+
 
 function zgqx(obj){
     var dom = $(obj);

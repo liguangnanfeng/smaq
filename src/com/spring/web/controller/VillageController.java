@@ -1556,10 +1556,12 @@ public class VillageController extends BaseController {
                 set.add(split[1]);
             }
         }
-        String departName = "";
-        for (String s : set) {
+        //String departName = "";
+        /*for (String s : set) {
             departName+=s+"/";
-        }
+        }*/
+        Object[] objects =  set.toArray();
+        String departName = Arrays.toString(objects);
 
         model.addAttribute("departName",departName);
         model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
@@ -1719,17 +1721,7 @@ public class VillageController extends BaseController {
             return "village/danger/opinion-detail2";
         }
         List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(checkId);
-        for (TCheckItem tCheckItem : tCheckItems) {
-            if (2 == tCheckItem.getStatus()) {
-                if (null != tCheckItem.getDeadline()) {
-                    model.addAttribute("deadline", simpleDateFormat.format(tCheckItem.getDeadline()).toString());
-                }
-                if (null != tCheckItem.getRecheckTime()) {
-                    model.addAttribute("planTime", simpleDateFormat.format(tCheckItem.getRecheckTime()).toString());
-                }
-                break;
-            }
-        }
+
         model.addAttribute("is_fu",0);
         for (TCheckItem tCheckItem : tCheckItems) {
             if(tCheckItem.getStatus()==3){
@@ -1767,6 +1759,20 @@ public class VillageController extends BaseController {
         }else{
             model.addAttribute("is_re",1);
         }
+
+
+        for (TCheckItem tCheckItem : tCheckItems) {
+
+                if (null != tCheckItem.getDeadline()) {
+                    model.addAttribute("deadline", simpleDateFormat.format(tCheckItem.getDeadline()).toString());
+                }
+                if (null != tCheckItem.getRecheckTime()) {
+                    model.addAttribute("planTime", simpleDateFormat.format(tCheckItem.getRecheckTime()).toString());
+                }
+                break;
+
+        }
+
 
         if(check.getFlag()==2){
             // 行政检查

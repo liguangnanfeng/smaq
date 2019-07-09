@@ -172,7 +172,7 @@
                         </c:if>
                         <c:set var="split" value="${fn:split(ch.levels,'/') }"/>
                         <%--                        <td class="text-l">${check.depart}</td>--%>
-                        <td class="text-l">${check.depart}(${departName})</td>
+                        <td class="text-l">${check.depart}&nbsp;&nbsp; ${departName}</td>
                         <td class="text-l">
                             <c:if test="${check.industryType==1}">基础检查</c:if>
                             <c:if test="${check.industryType==2}">现场检查</c:if>

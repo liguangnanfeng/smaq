@@ -145,14 +145,14 @@
 
             <c:if test="${number > 0}">
                 <button onClick="show_dialog('整改详情','/village/check-rectification?flag=${flag}&id=${listM.id}&number=${number}')"
-                        class="btn btn-success radius" type="button" style="padding: 0 70px;margin-right: 20px">整改详情
+                        class="btn btn-success radius" type="button" style="padding: 0 70px;margin-right: 20px">整改意见书
                 </button>
                 <button onClick="show_dialog('实施复查','/company/recheck-add?checkId=${check.id}')"
                         class="btn btn-success radius" type="button" style="padding: 0 70px;">实施复查
                 </button>
-<%--                <button onClick="location.href = '/company/recheck-add?checkId=${check.id}'"--%>
-<%--                        class="btn btn-success radius" type="button" style="padding: 0 70px;">实施复查--%>
-<%--                </button>--%>
+                <%--                <button onClick="location.href = '/company/recheck-add?checkId=${check.id}'"--%>
+                <%--                        class="btn btn-success radius" type="button" style="padding: 0 70px;">实施复查--%>
+                <%--                </button>--%>
             </c:if>
 
             <!-- 已经有复查 -->
@@ -160,37 +160,32 @@
                 <button onClick="show_dialog('复查详情','/company/recheck-detail?checkId=${listM.id }&flag=${flag}&number=${number}')"
                         class="btn btn-success radius" type="button" style="padding: 0 70px;">复查详情
                 </button>
-<%--                <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }&flag=${flag}&number=${number}'"--%>
-<%--                        class="btn btn-success radius" type="button" style="padding: 0 70px;">复查详情--%>
-<%--                </button>--%>
+                <%--                <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }&flag=${flag}&number=${number}'"--%>
+                <%--                        class="btn btn-success radius" type="button" style="padding: 0 70px;">复查详情--%>
+                <%--                </button>--%>
             </c:if>
-
-
-
-
-
 
 
             <%--显示行政检查文书--%>
             <c:if test="${flag==2  }">
 
+                <button onClick="show_dialog('检查文书','/village/check-document?checkId=${check.id }')"
+                        class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书
+                </button>
+                <%--                <button onClick="location.href = '/village/check-document?checkId=${check.id }'"--%>
+                <%--                        class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书--%>
+                <%--                </button>--%>
+            </c:if>
+
+            <%--显示部门抽查检查文书--%>
+            <c:if test="${flag==3 }">
+                <c:if test="${is_re==1}">
                     <button onClick="show_dialog('检查文书','/village/check-document?checkId=${check.id }')"
                             class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书
                     </button>
                     <%--                <button onClick="location.href = '/village/check-document?checkId=${check.id }'"--%>
                     <%--                        class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书--%>
                     <%--                </button>--%>
-            </c:if>
-
-            <%--显示部门抽查检查文书--%>
-            <c:if test="${flag==3 }">
-                <c:if test="${is_re==1}">
-                <button onClick="show_dialog('检查文书','/village/check-document?checkId=${check.id }')"
-                        class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书
-                </button>
-<%--                <button onClick="location.href = '/village/check-document?checkId=${check.id }'"--%>
-<%--                        class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书--%>
-<%--                </button>--%>
                 </c:if>
             </c:if>
 
@@ -231,7 +226,7 @@
                 <th width="3%">检查形式</th>
                 <th width="12%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>
                 <th width="4%">检查结果</th>
-<%--                <th width="15%">隐患内容</th>--%>
+                <%--                <th width="15%">隐患内容</th>--%>
                 <c:if test="${flag == 1}">
                     <th width="7%">隐患等级</th>
                 </c:if>
@@ -275,7 +270,7 @@
                         </c:choose>
                     </td>
 
-<%--                    <td class="text-c">${ch.measures == "" ? "暂无数据" : ch.measures}</td>--%>
+                        <%--                    <td class="text-c">${ch.measures == "" ? "暂无数据" : ch.measures}</td>--%>
                     <td class="text-c">${ch.measures == "" ? "暂无数据" : ch.measures}</td>
                     <td>
                         <c:if test="${ empty ch.status}">没有数据</c:if>
@@ -287,25 +282,30 @@
                             </c:choose>
                         </c:if>
                     </td>
-<%--                    <td>--%>
-<%--                        <c:if test="${ empty ch.factors}">--%>
-<%--                            暂无数据--%>
-<%--                        </c:if>--%>
-<%--                        <c:if test="${ not empty ch.factors}">--%>
-<%--                            ${ch.factors}--%>
-<%--                        </c:if>--%>
-<%--                    </td>--%>
+                        <%--                    <td>--%>
+                        <%--                        <c:if test="${ empty ch.factors}">--%>
+                        <%--                            暂无数据--%>
+                        <%--                        </c:if>--%>
+                        <%--                        <c:if test="${ not empty ch.factors}">--%>
+                        <%--                            ${ch.factors}--%>
+                        <%--                        </c:if>--%>
+                        <%--                    </td>--%>
 
-                        <c:if test="${flag == 1}">
-                    <td>
-                            <c:choose>
-                                <c:when test="${ch.level eq '红色'}"><font class="col-a">${ch.level}</font></c:when>
-                                <c:when test="${ch.level eq '橙色'}"><font class="col-b">${ch.level}</font></c:when>
-                                <c:when test="${ch.level eq '黄色'}"><font class="col-c">${ch.level}</font></c:when>
-                                <c:when test="${ch.level eq '蓝色'}"><font class="col-d">${ch.level}</font></c:when>
-                            </c:choose>
-                    </td>
-                        </c:if>
+                    <c:if test="${flag == 1}">
+                        <td>
+                            <c:if test="${ch.status != 1}">
+                                <c:choose>
+                                    <c:when test="${ch.level eq '红色'}"><font class="col-a">${ch.level}</font></c:when>
+                                    <c:when test="${ch.level eq '橙色'}"><font class="col-b">${ch.level}</font></c:when>
+                                    <c:when test="${ch.level eq '黄色'}"><font class="col-c">${ch.level}</font></c:when>
+                                    <c:when test="${ch.level eq '蓝色'}"><font class="col-d">${ch.level}</font></c:when>
+                                </c:choose>
+                            </c:if>
+                            <c:if test="${ch.status == 1}">
+                                无
+                            </c:if>
+                        </td>
+                    </c:if>
 
                     <td class="text-c">
                         <button class="btn radius btn-danger size-S ml-20" onClick="showpicture('${ch.files}')">
@@ -415,7 +415,7 @@
           </c:forEach> --%>
 
             <tr>
-                <td colspan="3">
+                <td colspan="5">
                     <div style="float: left; width: 100%; position: relative; min-height: 150px;">
                         <c:if test="${check.flag == 3 && check.checkCompany eq '无锡市安泰安全技术服务有限公司'}">
                             <img alt="" src="${ly }/images/zhang.png"
@@ -424,7 +424,7 @@
                         <c:if test="${check.flag > 1}">
                             <div class="div_pleft  mt-10 mb-10">检查部门/单位：</div>
                             <div class="div_pright  mt-10 mb-10">
-                                <input type="text" style="width: 150px" id="checkCompany" value="${check.checkCompany }"
+                                <input type="text" style="width: 200px" id="checkCompany" value="${check.checkCompany }"
                                        class="input-text" maxlength="50"
                                        disabled="disabled"/>
                             </div>
@@ -432,16 +432,16 @@
                         </c:if>
                         <div class="div_pleft  mt-10 mb-10">检查人员签字：</div>
                         <div class="div_pright  mt-10 mb-10">
-                            <input type="text" style="width: 150px" id="cheker" value="${check.cheker }"
+                            <input type="text" style="width: 200px" id="cheker" value="${check.cheker }"
                                    class="input-text" maxlength="50" disabled="disabled"/>
                         </div>
                     </div>
                 </td>
-                <td colspan="3">
+                <td colspan="5">
                     <div style="float: left; width: 100%; min-height: 150px;">
                         <div class="div_pleft  mt-10 mb-10">受检负责人签字：</div>
                         <div class="div_pright  mt-10 mb-10">
-                            <input type="text" style="width: 150px" value="${name}" class="input-text" maxlength="50"
+                            <input type="text" style="width: 200px" value="${name}" class="input-text" maxlength="50"
                                    disabled="disabled"/>
                         </div>
                     </div>

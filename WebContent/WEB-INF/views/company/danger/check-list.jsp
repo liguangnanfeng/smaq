@@ -263,7 +263,7 @@
                         <c:if test="${flag!=1}">
                             <a style="text-decoration:none" onClick="location.href = '/village/check-document?checkId=${be.id}'" href="javascript:;">文书详情</a><br>
                         </c:if>
-                        <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除</a>
+                        <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除记录</a>
                     </td>
                 </tr>
             </c:forEach>

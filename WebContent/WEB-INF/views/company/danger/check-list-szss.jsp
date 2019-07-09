@@ -100,7 +100,7 @@ body .dis-ib{margin-right:15px;}
                     <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">整改详情</a>
                     <br>
 
-                    <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除</a>
+                    <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除记录</a>
 
                 </c:if>
             </td>

@@ -156,8 +156,8 @@
         </p>
         <p class="MsoNormal" style="margin-top:15px;">
             <span style=""><span>检查人员（签名）：</span></span>
-            <u><span style="text-decoration:underline;" contenteditable="true">&nbsp;&nbsp;${check.cheker}&nbsp;&nbsp;&nbsp;</span></u>
-            <u><span style="text-decoration:underline;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
+            <u><span style="text-decoration:underline;" contenteditable="true" id="id1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
+            <u><span style="text-decoration:underline;" contenteditable="true" id="id2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
         </p>
         <p class="MsoNormal" style="text-align:left;margin-top:10px;height:180px;">
             <span style="float:left;margin: 0 8px 0 0;">检查单位（盖章）:</span>
@@ -256,6 +256,19 @@
     var rectificationId = '${rectification.id}';
     var count = ${count };
     var flag = 2, flag2 = 3;
+
+    $(function () {
+            var str = '${check.cheker }';
+            // var x = str.replace(/、/g, ',').split(",");
+            var x = str.replace(/，/ig,',').split(",");
+            $("#id1").html(x[0]);
+            $("#id2").html(x[1]);
+
+        }
+    )
+
+
+
 
     function save1_() {
         if (count == 0) {

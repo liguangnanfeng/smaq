@@ -10,10 +10,11 @@
             <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="coordinate" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="url1" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="photo_color" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-        id, url, user_id, name,coordinate,url1
+        id, url, user_id, name, coordinate, url1, photo_color
     </sql>
 
     <!-- 添加数据信息 -->
@@ -73,6 +74,9 @@
             </if>
             <if test="coordinate != null">
                 coordinate = #{coordinate,jdbcType=VARCHAR},
+            </if>
+            <if test="photo_color != null">
+                photo_color = #{photo_color,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}

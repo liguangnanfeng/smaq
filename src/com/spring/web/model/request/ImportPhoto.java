@@ -16,12 +16,10 @@ public class ImportPhoto {
 
     private Object object;
 
-    public Object getObject() {
-        return object;
-    }
+    private String photo_color;
 
-    public void setObject(Object object) {
-        this.object = object;
+
+    public ImportPhoto() {
     }
 
     public Integer getId() {
@@ -72,6 +70,22 @@ public class ImportPhoto {
         this.coordinate = coordinate;
     }
 
+    public Object getObject() {
+        return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
+    }
+
+    public String getPhoto_color() {
+        return photo_color;
+    }
+
+    public void setPhoto_color(String photo_color) {
+        this.photo_color = photo_color;
+    }
+
     @Override
     public String toString() {
         return "ImportPhoto{" +
@@ -82,6 +96,7 @@ public class ImportPhoto {
                 ", name='" + name + '\'' +
                 ", coordinate='" + coordinate + '\'' +
                 ", object=" + object +
+                ", photo_color='" + photo_color + '\'' +
                 '}';
     }
 }

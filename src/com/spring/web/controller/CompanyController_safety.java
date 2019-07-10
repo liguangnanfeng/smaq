@@ -1865,6 +1865,8 @@ public class CompanyController_safety extends BaseController {
         Result result = new ResultImpl();
         Integer a = 0;
         // 判断该条数据是否存在
+
+
         if (null == importPhoto) {
             result.setStatus("1");
             result.setMess("修改失败，检查要修改的信息是否符合要求。");
@@ -1907,7 +1909,7 @@ public class CompanyController_safety extends BaseController {
      */
     @RequestMapping(value = "control-addCoordinate", method = RequestMethod.POST)
     @ResponseBody
-    public Result selectCoordinate(HttpServletRequest request, Map<String, Object> map, Integer id, String images, String coordinate) throws Exception {
+    public Result selectCoordinate(HttpServletRequest request, Map<String, Object> map, Integer id, String images, String coordinate, String color) throws Exception {
 
         String s ;
 
@@ -1989,6 +1991,7 @@ public class CompanyController_safety extends BaseController {
 
             importPhoto.setUrl(filePath);
             importPhoto.setCoordinate(s);
+            importPhoto.setPhoto_color(color);
             importPhotoMapper.updateByInportPhoto(importPhoto);
 
             result.setMess("编辑成功。");

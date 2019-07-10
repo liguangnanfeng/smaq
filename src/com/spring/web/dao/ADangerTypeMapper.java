@@ -53,4 +53,6 @@ public interface ADangerTypeMapper {
     int updateByPrimaryKey(ADangerType record);
     
     List<String> selectAll();
+
+    List<ADangerType> findAll();
 }

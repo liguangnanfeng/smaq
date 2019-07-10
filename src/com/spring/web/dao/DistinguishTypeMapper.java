@@ -14,5 +14,7 @@ public interface DistinguishTypeMapper {
     boolean updatePoint(DistinguishType distinguishType);
 
     DistinguishType selectNums(@Param("dep_id")Integer dep_id,@Param("flag") Integer flag, @Param("user_id")Integer user_id);
+
+    DistinguishType selectByPrimaryKey(@Param("id")Integer id);
 }
 

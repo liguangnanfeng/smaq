@@ -351,6 +351,20 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+
+
+    <update id="updateType" >
+        update a_company_manual_tbl
+        set
+        type = #{type,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+
+
+
+
     <select id="selectByMaps" resultType="java.util.HashMap">
         select
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,

@@ -7,6 +7,7 @@
         <constructor>
             <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="pid" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="dep_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="danger_point" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="flag" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -17,7 +18,7 @@
     </resultMap>
     <sql id="Base_Column_List">
 
-        id, user_id, dep_id, danger_point, flag, del, ctime, utime
+        id, user_id, pid, dep_id, danger_point, flag, del, ctime, utime
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -53,9 +54,9 @@
 
 
     <insert id="insert" parameterType="com.spring.web.model.DistinguishType">
-        insert into distinguish_type (user_id, dep_id,
+        insert into distinguish_type (user_id, pid, dep_id,
         danger_point, flag, del, ctime, utime)
-        values (#{user_id,jdbcType=INTEGER}, #{dep_id,jdbcType=INTEGER},
+        values (#{user_id,jdbcType=INTEGER},#{pid,jdbcType=INTEGER}, #{dep_id,jdbcType=INTEGER},
         #{danger_point,jdbcType=VARCHAR},#{flag,jdbcType=INTEGER}, #{del,jdbcType=INTEGER},
         #{ctime,jdbcType=TIMESTAMP},#{utime,jdbcType=TIMESTAMP} )
     </insert>

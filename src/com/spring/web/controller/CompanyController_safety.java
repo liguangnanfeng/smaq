@@ -611,9 +611,65 @@ public class CompanyController_safety extends BaseController {
         }
     }
 
-    /*
-    * 风险辨识 ：设置按钮！！！
-    * */
+    /**
+     * create by  : 小明！！！
+     * description: 事故类型编辑框数据展示
+     * create time: 2019/7/9 17:40
+     */
+    @RequestMapping({"save-danger_type"})
+    public String saveDangerType(Model model, HttpServletRequest request,Integer id) {
+        User user = this.getLoginUser(request);
+
+        List<ADangerType> list = aDangerTypeMapper.findAll();
+
+        ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(id);
+
+        model.addAttribute("type",aCompanyManual.getType());
+        model.addAttribute("id",id);
+        model.addAttribute("list",list);
+
+        return "company/safety-system/set-danger";
+    }
+
+
+    /**
+     * create by  : 小明！！！
+     * description: 事故类型数据修改
+     * create time: 2019/7/10 9:23
+     */
+    @RequestMapping({"update-danger_type"})
+    @ResponseBody
+    public Result updateDangerType(Model model, HttpServletRequest request,Integer id,String dangers) {
+        Result result = new ResultImpl();
+
+        Integer a = aCompanyManualMapper.updateType(id,dangers);
+
+        if (a != 0){
+            result.setMess("保存成功");
+            result.setStatus("0");
+        }else {
+            result.setMess("保存有误，请重新添加！！！");
+            result.setStatus("1");
+        }
+
+        return result;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * create by  : 小明！！！
+     * description: 风险辨识编辑按钮
+     * create time: 2019/7/9 14:57
+     */
     @RequestMapping({"risk-set"})
     @ResponseBody
     public Result riskSet(Model model, String dpId, String number1, String number2, String number3, String number4,
@@ -1454,13 +1510,15 @@ public class CompanyController_safety extends BaseController {
             }else if (Integer.parseInt(ac.getType()) == 5){
                 distinguishType.setDanger_point(ac.getGwzy());
             }
+            // 根据 岗位 ID  查询对应的车间信息
+            ZzjgDepartment department = zzjgDepartmentMapper.selectByPrimaryKey(ac.getId());
+
+            distinguishType.setPid(department.getPid());
             distinguishType.setDep_id(ac.getId());
             distinguishType.setUser_id(user.getId());
             distinguishType.setDel(0);
             distinguishType.setFlag(Integer.parseInt(ac.getType()));
-
             int num = distinguishTypeMapper.insert(distinguishType);
-
             if (0 == num){
                 result.setMess("保存失败，请重新添加！！！");
             }else {

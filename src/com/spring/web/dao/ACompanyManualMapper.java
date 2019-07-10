@@ -183,5 +183,6 @@ public interface ACompanyManualMapper {
 
     List<Map<String, Object>> selectRed(@Param("userId")Integer userId);
 
+    Integer updateType(@Param("id")Integer id, @Param("type")String type);
 }
 

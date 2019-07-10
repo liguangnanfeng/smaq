@@ -28,6 +28,15 @@
     from a_danger_type_tbl
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+
+  <select id="findAll" resultType="com.spring.web.model.ADangerType" >
+    select
+    <include refid="Base_Column_List" />
+    from a_danger_type_tbl
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     <!--
       WARNING - @mbggenerated
@@ -92,7 +101,7 @@
   
   <select id="selectAll" resultType="java.lang.String">
     select
-        name 
+        name
     from
         a_danger_type_tbl
   </select>

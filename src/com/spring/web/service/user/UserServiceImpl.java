@@ -13,6 +13,7 @@ import com.spring.web.util.EncryptUtil;
 import com.spring.web.util.ExcelUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -64,6 +67,10 @@ public class UserServiceImpl implements UserService {
     private MequipmentMapper mequipmentMapper;
     @Autowired
     private TradeMapper tradeMapper;
+    @Autowired
+    private LightningProtectionMapper lightningProtectionMapper;
+    @Autowired
+    private SafetyFacilitiesMapper safetyFacilitiesMapper;
 
     @Autowired
     private CgfService cgfService;
@@ -979,6 +986,146 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
             result.setStatus("1");
             result.setMap("message", "系统异常");
+        }
+    }
+
+    /**
+     * 防雷防静电导入
+     * @param result 请求
+     * @param userId   用户ID
+     * @param file  文件
+     * Transactional:使用的是事物, 表示读已提交
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    public void importLightning(Result result, Integer userId, MultipartFile file) {
+        if (null != file) {
+            String fileName = file.getOriginalFilename();
+            // 检查扩展名
+            String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+            if (!"xlsx".equalsIgnoreCase(fileExt)) {
+                result.setStatus("1");
+                result.setMap("message", "上传文件扩展名是不允许的扩展名。只允许xlsx格式。");
+                return;
+            }
+        } else {
+            result.setStatus("1");
+            result.setMap("message", "请选择excel文件。");
+            return;
+        }
+
+        Workbook wb = null;
+        Set<String> set = new LinkedHashSet<String>();
+        try {
+            wb = new XSSFWorkbook(file.getInputStream());
+            Sheet sheet = wb.getSheetAt(0);
+            String title = tos(sheet, 0, 0);
+            if (!"检测项目名称".equals(title)) {
+                result.setStatus("1");
+                result.setMap("message", "此表不是防雷防静电表，请重新选择");
+                return;
+            }
+
+            int totalRows = sheet.getPhysicalNumberOfRows();  //获取excel表格集合
+            for (int i = 1; i < totalRows; i++) {   //循环每一列的内容,
+                Row row = sheet.getRow(i);
+                String project = tos(row, 0);//检测项目名称
+                String lastTestTime = tos(row, 1);//上次检测时间  天数
+                String expirationTime = tos(row, 2);//到期时间 天数
+                String testResults = tos(row, 3);  // 检测结果
+
+                String detectionUnit = tos(row, 4);  // 检测单位
+                String testReportNum = tos(row, 5);  // 检测报告编号
+                String remark = tos(row, 6);  // 备注
+                LightningProtection item = new LightningProtection();
+                item.setUserId(userId); // 公司id
+                item.setProject(project);
+                item.setLastTestTime(HSSFDateUtil.getJavaDate(Integer.parseInt(lastTestTime)) );
+                item.setExpirationTime(HSSFDateUtil.getJavaDate(Integer.parseInt(expirationTime)));
+                item.setTestResults(testResults);
+                item.setDetectionUnit(detectionUnit);
+                item.setTestReportNumber(testReportNum);
+                item.setRemark(remark);
+                lightningProtectionMapper.insertSelective(item);
+            }
+
+            result.setMap("message", StringUtils.join(set, "<br>"));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMap("message", "系统异常");
+            return;
+        }
+    }
+
+    /**
+     * TODO 安全设备登陆台账导入
+     * @param result
+     * @param id
+     * @param file
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    public void uoloadSafetyfacilities(Result result, Integer userId, MultipartFile file) {
+        if (null != file) {
+            String fileName = file.getOriginalFilename();
+            // 检查扩展名
+            String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+            if (!"xlsx".equalsIgnoreCase(fileExt)) {
+                result.setStatus("1");
+                result.setMap("message", "上传文件扩展名是不允许的扩展名。只允许xlsx格式。");
+                return;
+            }
+        } else {
+            result.setStatus("1");
+            result.setMap("message", "请选择excel文件。");
+            return;
+        }
+
+        Workbook wb = null;
+        Set<String> set = new LinkedHashSet<String>();
+        try {
+            wb = new XSSFWorkbook(file.getInputStream());
+            Sheet sheet = wb.getSheetAt(0);
+            String title = tos(sheet, 0, 0);
+            if (!"安全设施生产台账名称".equals(title)) {
+                result.setStatus("1");
+                result.setMap("message", "此表不是安全设施生产台帐表，请重新选择");
+                return;
+            }
+
+            int totalRows = sheet.getPhysicalNumberOfRows();  //获取excel表格集合
+            for (int i = 1; i < totalRows; i++) {   //循环每一列的内容,
+                Row row = sheet.getRow(i);
+                String name = tos(row, 0);//台账名称
+                String size = tos(row, 1);//型号规格
+                String process_parameters = tos(row, 2);//工艺参数
+                String amount = tos(row, 3);  // 数量
+                String remark = tos(row, 4);  // 备注
+                SafetyFacilities item = new SafetyFacilities();
+                item.setUserId(userId); // 公司id
+                item.setName(name);
+                item.setSize(size);
+                item.setProcessParameters(process_parameters);
+                item.setAmount(Integer.parseInt(amount));
+                item.setRemark(remark);
+                safetyFacilitiesMapper.insertSelective(item);
+
+            }
+
+            result.setMap("message", StringUtils.join(set, "<br>"));
+        }catch (ClassCastException e){
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMap("message", "出入正确的数字");
+            return;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMap("message", "系统异常");
+            return;
         }
     }
 

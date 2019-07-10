@@ -896,7 +896,7 @@ public class CompanyController_cd extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "importSequipmentExcel", produces = "text/html;charset=utf-8")
-    public void importSequipmentExcel(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {
+    public void importSequipmentExcel(/*@RequestParam*/ MultipartFile file,Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         userService.importSequipmentExcel(result, user.getId(), file);
@@ -4996,6 +4996,7 @@ public class CompanyController_cd extends BaseController {
         return "company/product/lightning-edit";
     }
 
+
     /**
      * 个人职业健康监护
      */
@@ -5043,6 +5044,41 @@ public class CompanyController_cd extends BaseController {
         Result result = new ResultImpl();
         lightningProtectionMapper.deleteByPrimaryKey(id);
         return result;
+    }
+
+    /**
+     * 防雷防静电文件上传
+     * 获取到名称然后保存到线上,然后将将文件导入到数据库
+     * @param file  文件
+     * @param model  model
+     * @param request 请求
+     * @param response 响应
+     * @return
+     */
+    @RequestMapping(value = "uoloadLightning", produces = "text/html;charset=utf-8")
+    public void uoloadLightning(MultipartFile file,Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Result result = new ResultImpl();
+        User user = getLoginUser(request);
+        userService.importLightning(result, user.getId(), file);
+        System.out.println(result);
+        writeResponse(result, response);//该方法调用如下
+    }
+
+    /**
+     * 安全设备登记台账上传
+     * 获取到名称然后保存到线上,然后将将文件导入到数据库
+     * @param file  文件
+     * @param model  model
+     * @param request 请求
+     * @param response 响应
+     * @return
+     */
+    @RequestMapping(value = "uoloadSafetyfacilities", produces = "text/html;charset=utf-8")
+    public void uoloadSafetyfacilities(MultipartFile file,Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Result result = new ResultImpl();
+        User user = getLoginUser(request);
+        userService.uoloadSafetyfacilities(result, user.getId(), file);
+        writeResponse(result, response);//该方法调用如下
     }
 
     /**
@@ -5113,7 +5149,9 @@ public class CompanyController_cd extends BaseController {
     }
 
     /**
-     * 下载资料
+     * TODO 下载资料
+     * 并转换成为utf-8格式的数据
+     *
      */
     @RequestMapping(value = "download")
     public void hedownload(String filename, String fileurl, HttpServletRequest request, HttpServletResponse response)

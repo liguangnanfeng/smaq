@@ -54,4 +54,22 @@ public interface UserService extends Serializable {
     * 批量导入人员！！！
     * */
     public void importPersonExcel(Result result, Integer userId, MultipartFile file) throws Exception;
+
+    /**
+     * 防雷,防静电导入
+     * @param result
+     * @param id
+     * @param file
+     */
+    void importLightning(Result result, Integer id, MultipartFile file);
+
+
+    /**
+     * 安全设备登记台账上传
+     * @param result
+     * @param id
+     * @param file
+     */
+    void uoloadSafetyfacilities(Result result, Integer id, MultipartFile file);
+
 }

@@ -1029,27 +1029,35 @@ public class UserServiceImpl implements UserService {
             int totalRows = sheet.getPhysicalNumberOfRows();  //获取excel表格集合
             for (int i = 1; i < totalRows; i++) {   //循环每一列的内容,
                 Row row = sheet.getRow(i);
-                String project = tos(row, 0);//检测项目名称
-                String lastTestTime = tos(row, 1);//上次检测时间  天数
-                String expirationTime = tos(row, 2);//到期时间 天数
-                String testResults = tos(row, 3);  // 检测结果
+                if(!isRowEmpty(row)){
+                    String project = tos(row, 0);//检测项目名称
+                    String lastTestTime = tos(row, 1);//上次检测时间  天数
+                    String expirationTime = tos(row, 2);//到期时间 天数
+                    String testResults = tos(row, 3);  // 检测结果
 
-                String detectionUnit = tos(row, 4);  // 检测单位
-                String testReportNum = tos(row, 5);  // 检测报告编号
-                String remark = tos(row, 6);  // 备注
-                LightningProtection item = new LightningProtection();
-                item.setUserId(userId); // 公司id
-                item.setProject(project);
-                item.setLastTestTime(HSSFDateUtil.getJavaDate(Integer.parseInt(lastTestTime)) );
-                item.setExpirationTime(HSSFDateUtil.getJavaDate(Integer.parseInt(expirationTime)));
-                item.setTestResults(testResults);
-                item.setDetectionUnit(detectionUnit);
-                item.setTestReportNumber(testReportNum);
-                item.setRemark(remark);
-                lightningProtectionMapper.insertSelective(item);
+                    String detectionUnit = tos(row, 4);  // 检测单位
+                    String testReportNum = tos(row, 5);  // 检测报告编号
+                    String remark = tos(row, 6);  // 备注
+                    LightningProtection item = new LightningProtection();
+                    item.setUserId(userId); // 公司id
+                    item.setProject(project);
+
+                    item.setLastTestTime(HSSFDateUtil.getJavaDate(Integer.parseInt(lastTestTime)) );
+                    item.setExpirationTime(HSSFDateUtil.getJavaDate(Integer.parseInt(expirationTime)));
+
+                    item.setTestResults(testResults);
+                    item.setDetectionUnit(detectionUnit);
+                    item.setTestReportNumber(testReportNum);
+                    item.setRemark(remark);
+                    lightningProtectionMapper.insertSelective(item);
+                }
             }
-
             result.setMap("message", StringUtils.join(set, "<br>"));
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMap("message", "输入正确的时间格式,如:2019/12/12");
+            return;
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -1062,7 +1070,7 @@ public class UserServiceImpl implements UserService {
     /**
      * TODO 安全设备登陆台账导入
      * @param result
-     * @param id
+     * @param userId
      * @param file
      */
     @Override
@@ -1098,27 +1106,36 @@ public class UserServiceImpl implements UserService {
             int totalRows = sheet.getPhysicalNumberOfRows();  //获取excel表格集合
             for (int i = 1; i < totalRows; i++) {   //循环每一列的内容,
                 Row row = sheet.getRow(i);
-                String name = tos(row, 0);//台账名称
-                String size = tos(row, 1);//型号规格
-                String process_parameters = tos(row, 2);//工艺参数
-                String amount = tos(row, 3);  // 数量
-                String remark = tos(row, 4);  // 备注
-                SafetyFacilities item = new SafetyFacilities();
-                item.setUserId(userId); // 公司id
-                item.setName(name);
-                item.setSize(size);
-                item.setProcessParameters(process_parameters);
-                item.setAmount(Integer.parseInt(amount));
-                item.setRemark(remark);
-                safetyFacilitiesMapper.insertSelective(item);
+                if(!isRowEmpty(row)){
+                    String name = tos(row, 0);//台账名称
+                    String size = tos(row, 1);//型号规格
+                    String process_parameters = tos(row, 2);//工艺参数
+                    String amount = tos(row, 3);  // 数量
+                    String remark = tos(row, 4);  // 备注
+                    SafetyFacilities item = new SafetyFacilities();
+                    item.setUserId(userId); // 公司id
+                    item.setName(name);
+                    item.setSize(size);
+                    item.setProcessParameters(process_parameters);
+                    if(null!=amount&&!"".equals(amount)){
+
+                        item.setAmount(Integer.parseInt(amount));
+                    }
+                    item.setRemark(remark);
+                    safetyFacilitiesMapper.insertSelective(item);
+                }
 
             }
 
             result.setMap("message", StringUtils.join(set, "<br>"));
+        }catch(NumberFormatException e){
+            result.setStatus("1");
+            result.setMap("message", "数组为空,输入完整数据");
+            return;
         }catch (ClassCastException e){
             e.printStackTrace();
             result.setStatus("1");
-            result.setMap("message", "出入正确的数字");
+            result.setMap("message", "输入正确的数字");
             return;
         }
         catch (Exception e) {
@@ -1128,5 +1145,17 @@ public class UserServiceImpl implements UserService {
             return;
         }
     }
+
+    public  boolean isRowEmpty(Row row) {
+        for (int c = row.getFirstCellNum(); c < row.getLastCellNum(); c++) {
+            Cell cell = row.getCell(c);
+            if (cell != null && cell.getCellType() != Cell.CELL_TYPE_BLANK){
+        return false;
+    }
+
+}
+        return true;
+                }
+
 
 }

@@ -418,9 +418,15 @@ public class CompanyController_safety extends BaseController {
      **/
     @RequestMapping({"risk-list"})
     public String riskList(Model model, HttpServletRequest request, Integer type, Integer number,Integer dmid,
-                           Integer flag,String types,String id, String buttons) throws Exception {
+                           Integer flag,String types,String id, String buttons,String count1) throws Exception {
         User user = this.getLoginUser(request);
         Company company = this.companyMapper.selectByPrimaryKey(user.getId());
+
+        if (null == count1 || Integer.parseInt(count1) == 0){
+            count1 = "0";
+        }else if(Integer.parseInt(count1) != 0){
+            count1 = "1";
+        }
 
         if (null == buttons){
             buttons = "2";
@@ -520,6 +526,7 @@ public class CompanyController_safety extends BaseController {
                 }else {
                     parName = "";
                 }
+                model.addAttribute("count1",count1);
                 model.addAttribute("parName",parName);
                 model.addAttribute("buttons",buttons);
                 model.addAttribute("indus",indus);
@@ -587,7 +594,7 @@ public class CompanyController_safety extends BaseController {
                 }else {
                     indus = 2;
                 }
-
+                model.addAttribute("count1",count1);
                 model.addAttribute("parName",zzjgDepartments.get(0).getName());
                 model.addAttribute("indus",indus);
                 model.addAttribute("zzjgDep1", zzjgDepartment);

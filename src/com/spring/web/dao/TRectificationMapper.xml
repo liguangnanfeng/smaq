@@ -204,12 +204,12 @@
     where check_id = #{checkId} 
   </select>
 
-  <select id="selectAlls" parameterType="java.lang.Integer" resultType="com.spring.web.model.TRectification">
+  <select id="selectAlls" parameterType="java.lang.Integer" resultType="java.util.Map">
     select
-    *
+    <include refid="Base_Column_List"/>
     from t_rectification_tbl
     where check_id = #{checkId}
-    order by id
+    order by id desc
     limit 0,1;
   </select>
 

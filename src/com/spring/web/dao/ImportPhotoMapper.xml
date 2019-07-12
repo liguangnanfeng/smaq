@@ -22,7 +22,6 @@
          insert into import_photo (url,user_id,name,url1) values(#{url},#{user_id},#{name},#{url1});
     </insert>
 
-
     <!-- 添加数据信息 -->
     <insert id="saveCoordinate" parameterType="com.spring.web.model.request.TMap" >
         insert into import_photo (coordinate) values(#{coordinate}) where id = #{id};
@@ -53,7 +52,6 @@
         from import_photo where user_id = #{userId} and url = #{url};
     </select>
 
-
     <!-- 修改 数据 -->
     <update id="updatePhoto" parameterType="com.spring.web.model.request.ImportPhoto" >
         update import_photo
@@ -82,15 +80,11 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-
     <!-- 根据 ID 修改数据信息 -->
     <update id="updatePhotoName" parameterType="com.spring.web.model.request.ImportPhoto" >
         update import_photo
         set name = #{name,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
-
-
-
 
 </mapper>

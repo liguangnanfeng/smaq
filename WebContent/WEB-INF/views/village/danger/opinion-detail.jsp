@@ -279,10 +279,10 @@
                     </div>
                     <div class="div_pri mt-10">
                         <font style="float:Left;margin-left:30px;">期限：</font>
-                        <input type="text" id="deadline"
+                        <input type="text" id="deadline" autocomplete="off"
                                value="<fmt:formatDate value="${rectification.deadline }" pattern="yyyy-MM-dd"/>"
                                onfocus="WdatePicker({minDate:'<fmt:formatDate value="${check.realTime }"
-                                                                              pattern="yyyy-MM-dd"/>',dateFmt:'yyyy-MM-dd'})"
+                                                                              pattern="yyyy-MM-dd" />',dateFmt:'yyyy-MM-dd'})"
                                class="input-text Wdate" style="float:Left;width:250px;">
                     </div>
                     <div class="div_pri  mt-10">2、下列隐患属于重大隐患
@@ -303,8 +303,8 @@
                     </div>
                     <div class="div_pri  mb-10  mt-10">
                         <font style="float:Left;">3、整改复查时间：</font>
-                        <input type="text" id="planTime"
-                               value="<fmt:formatDate value="${rectification.planTime }" pattern="yyyy-MM-dd"/>"
+                        <input type="text" id="planTime"  autocomplete="off"
+                               value="<fmt:formatDate value="${rectification.plan_time }" pattern="yyyy-MM-dd"/>"
                                onfocus="WdatePicker({minDate:'#F{$dp.$D(\'deadline\')||$dp.$DV(\'<fmt:formatDate
                                        value="${check.realTime }" pattern="yyyy-MM-dd"/>\');}',dateFmt:'yyyy-MM-dd'})"
                                class="input-text Wdate" style="float:left;width:250px;">
@@ -384,6 +384,9 @@
             </div>
         </div>
     </div>
+</div>
+<div>
+    ${rectification}
 </div>
 </body>
 <script type="text/javascript">

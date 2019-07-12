@@ -1604,8 +1604,9 @@ public class VillageController extends BaseController {
         //log.error("检查表type："+type);
 
         // TODO 这里只保存一条数据,并返回到前端
-        List<TRectification> list = tRectificationMapper.selectAlls(id);
-        if (null != list && list.size() > 0) {
+        //List<TRectification> list = tRectificationMapper.selectAlls(id);
+        List<Map> list = tRectificationMapper.selectAlls(id);
+       /* if (null != list && list.size() > 0) {
             TRectification rectification = new TRectification();
             rectification.setId(list.get(0).getId());
             rectification.setCheckId(list.get(0).getCheckId());
@@ -1619,6 +1620,10 @@ public class VillageController extends BaseController {
             rectification.setCreateTime(list.get(0).getCreateTime());
             rectification.setDel(list.get(0).getDel());
             model.addAttribute("rectification", rectification);
+        }*/
+
+        if((null != list && list.size() > 0)){
+            model.addAttribute("rectification", list.get(0));
         }
 
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);

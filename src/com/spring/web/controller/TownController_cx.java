@@ -121,7 +121,7 @@ public class TownController_cx extends BaseController {
             log.error("镇级账号："+townMapper.selectByPrimaryKey(dto.getTownId()).toString());
             model.addAttribute("movUserId", townMapper.selectByPrimaryKey(dto.getTownId()).getUserId());
         }
-        
+
         if(null != dto.getDistrictId()) {
             model.addAttribute("name", districtMapper.selectByPrimaryKey(dto.getDistrictId()).getName());
 //            if(moveBeforeUser != null){

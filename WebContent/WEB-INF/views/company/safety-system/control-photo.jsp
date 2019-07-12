@@ -118,6 +118,7 @@
         </head>
         <body style="padding:0 15px;">
         <div>
+        <input type="radio" name="co" value="222">
             <p class="contarName">${compangName}车间风险分布图
             <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a></p>
         <div class="row cl mt-15">
@@ -277,8 +278,6 @@
         }
 
         function amend(v, s) {
-            console.log(v)
-            console.log(s)
                 function shuju(arr) {
                 if (arr && arr.length > 0) {
                 var narr = []
@@ -290,7 +289,8 @@
                 'ey':newArr[0][1].split(':')[1],
                 'name':newArr[0][2].split(':')[1],
                 'x':newArr[0][3].split(':')[1],
-                'y':newArr[0][4].split(':')[1]
+                'y':newArr[0][4].split(':')[1],
+                'color':newArr[0][5].split(':')[1]
                 }
                 narr.push(obj)
                 }
@@ -311,6 +311,7 @@
         data: q,
         editPop: !0,
         close: function (t) {
+        console.log(t)
         return t.length, !0
         },
         clickArea: function() {},
@@ -325,7 +326,7 @@
         for (var i = 0; i < arr.length; i++) {
         var str = ''
         str = "'ex':" + arr[i].ex + ",'ey':" + arr[i].ey + ",'name':" + arr[i].name + ",'x':" + arr[i].x + ",'y':" +
-        arr[i].y
+        arr[i].y+",'color':"+arr[i].color
         newA.push(str)
         }
         }

@@ -416,9 +416,24 @@
     </select>
 
 
-    <!--
 
-    -->
+    <select id="findOne" resultType="com.spring.web.model.ACompanyManual">
+        select
+        T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
+        T1.flag,
+        T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
+        from
+        a_company_manual_tbl T1
+        where
+        T1.del = 0 and level3 LIKE CONCAT('%', #{level3},'%')
+        and T1.uid = #{uid}
+        and T1.dmid = #{dmid}
+        order by T1.level1 asc, T1.riskId asc
+    </select>
+
+
+
     <select id="selectByMap" resultType="java.util.HashMap">
         select
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
@@ -620,7 +635,7 @@
         from
         a_company_manual_tbl T1
         where
-        T1.uid = #{uid} and T1.del = 0
+        T1.uid = #{uid} and T1.del = 0 and T1.level != ""
     </select>
 
 

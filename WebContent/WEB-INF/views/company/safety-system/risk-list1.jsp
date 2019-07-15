@@ -252,15 +252,27 @@
                 <h3 class="text-c">${company.name}${parName}高危作业辨识</h3>
             </c:if>
 
+
+            <c:if test="${empty type}" >
+                <c:if test="${number == 3}" >
+                    <span class="r">共有数据：<strong>${fn:length(zzjgDep) }</strong> 条</span>
+                </c:if>
+                <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
+            </c:if>
+            <c:if test="${not empty type}" >
+                <span class="r">共有数据：<strong>${fn:length(zzjg) }</strong> 条</span>
+            </c:if>
+
+
             <c:if test="${empty type}">
 
                 <c:if test="${number == 3}">
                     <%--<button class="btn btn-primary radius isShow" onClick="BaseSet()">部门、对象确定</button>--%>
                     <button class="btn btn-primary radius isShow" onClick="deleteAll()">部门、对象确定</button>
 
-                    <%--<button class="btn btn-primary radius isShow" onClick="deleteAll()">编辑</button>--%>
+                    <button class="btn btn-primary radius isShow" onClick="deleteAll()">编辑</button>
 
-                    <%--<button class="btn btn-primary radius isShow" onClick="saveAll()">确定</button>--%>
+                    <button class="btn btn-primary radius isShow" onClick="saveAll()">确定</button>
                 </c:if>
 
                 <c:if test="${number != 3}">

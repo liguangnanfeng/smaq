@@ -458,6 +458,7 @@ public class CompanyController_safety extends BaseController {
             }
             List<Map<Object, Object>> zzjg = null;
             List<Map<Object, Object>> zzjg1 = null;
+            List<ACompanyManual> list = null;
             List acL = null;
             /*if (type == null) {*/
                 /*if (null == number){ // 设置
@@ -487,7 +488,7 @@ public class CompanyController_safety extends BaseController {
                     String dangerIds = "1";
 
                     zzjg1 = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
-
+                    list = aCompanyManualMapper.findOne("现场管理",user.getId(),id);
                     acL = this.aCompanyManualMapper.selectByAll(m);
                     if (null == id){
                         zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
@@ -497,6 +498,7 @@ public class CompanyController_safety extends BaseController {
                 } else if (number == 2) { // 基础
                     String dangerIds = "2";
                     acL = this.aCompanyManualMapper.selectBase(m);
+                    list = aCompanyManualMapper.findOne("基础管理",user.getId(),id);
                     zzjg1 = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
                     if (null == id){
                         zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
@@ -531,6 +533,7 @@ public class CompanyController_safety extends BaseController {
                 model.addAttribute("buttons",buttons);
                 model.addAttribute("indus",indus);
                 model.addAttribute("ids",id);
+                model.addAttribute("list",list);
                 model.addAttribute("zzjgDep1", zzjg1);
                 model.addAttribute("number", number);
                 model.addAttribute("zzjgDep", zzjg);

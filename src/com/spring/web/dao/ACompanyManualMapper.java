@@ -184,5 +184,7 @@ public interface ACompanyManualMapper {
     List<Map<String, Object>> selectRed(@Param("userId")Integer userId);
 
     Integer updateType(@Param("id")Integer id, @Param("type")String type);
+
+    List<ACompanyManual> findOne(@Param("level3")String level3, @Param("uid")Integer uid, @Param("dmid")String dmid);
 }
 

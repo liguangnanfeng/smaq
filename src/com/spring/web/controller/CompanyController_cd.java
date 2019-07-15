@@ -2923,7 +2923,7 @@ public class CompanyController_cd extends BaseController {
      * @param flag         1. 企业自查  2 部门抽查  3 行政检查
      * @param industryType 1 基础  2 现场
      * @param template     前端传递字符
-     * @return 速度还是没有发生改变呀, 真的好气呀
+     * @return
      */
     @RequestMapping("check-list-szss")
     public String checkListSzss(String dmName, Integer flag, Integer industryType, Integer template, HttpServletRequest request, Model model, Integer status) {

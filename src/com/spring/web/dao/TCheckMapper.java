@@ -38,6 +38,8 @@ public interface TCheckMapper {
 
     List<Map<String, Object>> selectList2(Map<String, Object> m);//首页定期检查——企业自查修改使用
 
+    List<Map<String, Object>> selectList3(Map<String, Object> m);
+
     DynamicParameter<String, Object> selectCompany(@Param("id") Integer id);
 
     int deleteById(@Param("sql") String sql);

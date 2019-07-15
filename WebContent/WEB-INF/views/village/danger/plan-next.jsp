@@ -172,7 +172,15 @@
                         </c:if>
                         <c:set var="split" value="${fn:split(ch.levels,'/') }"/>
                         <%--                        <td class="text-l">${check.depart}</td>--%>
-                        <td class="text-l">${check.depart}&nbsp;&nbsp; ${departName}</td>
+                        <td class="text-l">
+                            <c:if test="${check.depart =='公司级'}">
+                                ${departName}
+                            </c:if>
+                            <c:if test="${check.depart !='公司级'}">
+                                ${check.depart}&nbsp;&nbsp; ${departName}
+                            </c:if>
+
+                        </td>
                         <td class="text-l">
                             <c:if test="${check.industryType==1}">基础检查</c:if>
                             <c:if test="${check.industryType==2}">现场检查</c:if>
@@ -506,8 +514,22 @@
             })
         })
     })
-
+    /*保存检查记录*/
     function article_save_submit() {
+        // 判断合格不合格记录是否为空失敗,只能用来判断在数据库中数据中是否有数据
+        var count11 =0;
+        $('input[type=radio]').each(function(){//获取所有name=choice2的值
+                if(this.checked){
+                    count11++;
+                }
+
+        });
+        console.log("获取的是单选框是否为选中"+count11);
+        console.log("这个详情的长度"+${fn:length(itemL)});
+        if(count11 != ${fn:length(itemL)}){
+            layer.alert("选项不能为空");
+            return false;
+        }
 
         if ($("#cheker").val() == '') {
             layer.alert("检查人不能为空");

@@ -105,12 +105,12 @@ function uploadpicture(obj){
             <input type="hidden" name="memo">
             <div class="radio-box">
               <input type="radio" value="3" name="plan-radio_${be.id }" onClick="uploadpicture(this)">
-              <label>整改</label>
+              <label>合格</label>
             </div>
             <div class="radio-box">
               <%-- <input type="radio" value="2" name="plan-radio_${be.id }" onClick="uploadpicture(this)"> --%>
               <input type="radio" value="2" name="plan-radio_${be.id }" checked="checked">
-              <label>未整改</label>
+              <label>不合格</label>
             </div>
           </td>
         </tr>

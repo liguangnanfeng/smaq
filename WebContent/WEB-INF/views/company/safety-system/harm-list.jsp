@@ -32,9 +32,11 @@ $(function(){
 })
 
 function load() {
-  if($("select").val() !=  null && $("select").val() != '') {
-    $(".div-set").load($("select").val() + " .div-print");
-  } else {
+  if($(".sel_area2").val() !=  null && $(".sel_area2").val() != '') {
+    $(".div-set").load($(".sel_area2").val() + " .div-print");
+  } else if($(".sel_area1").val() !=  null && $(".sel_area1").val() != '') {
+    $(".div-set").load($(".sel_area1").val() + " .div-print");
+  }else {
     $(".div-set").html("<p>没有涉及的物理因素</p>")
   }
 }
@@ -53,8 +55,16 @@ function pr_() {
   <div class="page-container">
     <div class="text-l">
       <div class="dis-ib">
+
+        <span>车间：</span>
+        <select name="" class="sel_area sel_area1">
+          <c:forEach items="${list }" var="bes" varStatus="index">
+            <option >${bes.name }</option>
+          </c:forEach>
+        </select>
+
         <span>物理因素：</span>
-        <select name="" class="sel_area">
+        <select name="" class="sel_area sel_area2">
           <c:forEach items="${wlysL }" var="be" varStatus="index">
           <option value="${be.url}">${be.name }</option>
           </c:forEach>
@@ -72,10 +82,7 @@ function pr_() {
         </div> -->
       </div>
       
-      
-      
-      
-      <%-- <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan">
+      <!--<table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan">
         <thead>
           <tr class="text-c">
             <th style="width:40px">序号</th>
@@ -94,7 +101,7 @@ function pr_() {
           </tr>
           </c:forEach>
         </tbody>
-      </table> --%>
+      </table>-->
     </div>
   </div>
 </body>

@@ -3652,6 +3652,9 @@ public class CompanyController_cd extends BaseController {
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(user.getId());
+
+        List<Map<String, Object>> list1 = hiddenPlanMapper.selectCountAll(user.getId());
+
         model.addAttribute("data",sdf.format(new Date()));
         model.addAttribute("list", list);
         model.addAttribute("flag", flag);
@@ -3660,6 +3663,8 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("xianChangItem", XianChangItem);
         model.addAttribute("companyName", user.getUserName());
         model.addAttribute("plan", plan);
+        model.addAttribute("list1",list1);
+        model.addAttribute("name","合计");
         return "company/danger/model-list-main";
 
     }

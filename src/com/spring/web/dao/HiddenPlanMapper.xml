@@ -60,6 +60,30 @@
     </select>
 
 
+    <select id = "selectCountAll" parameterType="java.lang.Integer" resultType="java.util.Map" >
+        SELECT
+            SUM(syn_month) danger21, SUM(syn_year) danger22,SUM(syn_ratio) danger23,
+
+			SUM(eve_month) danger24, SUM(eve_year) danger25,SUM(eve_ratio) danger26,
+
+			SUM(reg_month) danger27, SUM(reg_year) danger28,SUM(reg_ratio) danger29,
+
+			SUM(sea_month) danger30, SUM(sea_year) danger31,SUM(sea_ratio) danger32,
+
+			SUM(els_month) danger33, SUM(els_year) danger34,SUM(els_ratio) danger35,
+
+			SUM(bas_month) danger36, SUM(bas_year) danger37,SUM(bas_ratio) danger38,
+
+			SUM(total_count) danger39, SUM(total_ratio) danger40
+
+            FROM `hidden_plan`
+
+         WHERE uid = #{uid}
+    </select>
+
+
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 
         delete from hidden_plan

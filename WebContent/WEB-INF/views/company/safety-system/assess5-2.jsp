@@ -86,7 +86,7 @@
 <body>
 <nav class="breadcrumb text-c">
   <a class="btn-page"  data-href="${ly }/company/safety-system/assess7"  data-title="评估操作" onclick="Hui_admin_tab(this)" href="javascript:;">评估操作</a>
-  <a class="btn-page pagexz" href="javascript:;" >重大风险评估</a>
+  <a class="btn-page pagexz" href="javascript:;" data-title="重大风险评估">重大风险评估</a>
   <a class="btn-page" data-href="${ly }/company/safety-system/assess-list"  data-title="较大风险风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">较大风险风险评估</a>
   <a class="btn-page"  data-href="${ly }/company/safety-system/assess6"  data-title="一般和较小风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">一般和较小风险评估</a>
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
@@ -109,8 +109,9 @@
           </c:if>
 		    <a class="btn btn-success-outline radius" href="javascript:void(0)" onclick="show_dialog('作业条件风险程度评价','/company/safety-system/assess2?id=')"><i class="Hui-iconfont" style="font-size:15px;"></i> LEC评测</a>
             <a class="btn btn-success-outline radius" href="javascript:void(0)" onclick="show_dialog('风险矩阵法评价','/company/safety-system/assess3?id=')"><i class="Hui-iconfont" style="font-size:15px;"></i> LS评测</a>
-
         </span>
+
+        <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
   </div>
   <div class="mt-20">
     <table class="table table-border table-bordered table-bg table-hover table-sort tab-ass">
@@ -129,7 +130,7 @@
         <th style="min-width:100px">风险等级</th>
         <th style="min-width:100px">风险因素</th>--%>
         <%--<th style="min-width:100px">风险类型</th>--%>
-        <th style="min-width:265px">评估</th>
+        <th style="min-width:50px">评估</th>
       </tr>
       </thead>
       <tbody>
@@ -141,16 +142,7 @@
 
           <td class="text-c">${ls[0] != null ? ls[0] : "暂无数据" }</td>
 
-          <td class="text-c">${be.level1}</td>
-
-
-            <%--<c:if test="${be.flag == 2}">
-              <td class="text-c">公司</td>
-            </c:if>
-
-            <c:if test="${be.flag != 2}">
-              <td class="text-c">${be.gkzt != null ? be.gkzt : "暂无数据" }</td>
-            </c:if>--%>
+            <td>${be.level1 }</td>
 
           <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
 
@@ -167,10 +159,10 @@
           <td class="text-c">${be.factors }</td>
 
           <td class="text-c">
-            <input class="btn btn-danger-outline size-S radius ml-5" type="button" value="红色" onclick="zpLevel_save_(${be.id},this)"/>
+            <%--<input class="btn btn-danger-outline size-S radius ml-5" type="button" value="红色" onclick="zpLevel_save_(${be.id},this)"/>
             <input class="btn btn-warning-outline size-S radius ml-5" type="button" value="橙色" onclick="zpLevel_save_(${be.id},this)"/>
             <input class="btn btn-warning-outline size-S radius btn-huang ml-5" type="button" value="黄色" onclick="zpLevel_save_(${be.id},this)"/>
-            <input class="btn btn-secondary-outline size-S radius ml-5 mr-5" type="button" value="蓝色" onclick="zpLevel_save_(${be.id},this)"/>
+            <input class="btn btn-secondary-outline size-S radius ml-5 mr-5" type="button" value="蓝色" onclick="zpLevel_save_(${be.id},this)"/>--%>
             <a class="btn-cz" style="text-decoration:none;" onClick="del_(${be.id})" href="javascript:;" title="删除">删除</a>
           </td>
            <%-- <c:set value="${fn:split(be.level3,'/')}" var="ls"></c:set>

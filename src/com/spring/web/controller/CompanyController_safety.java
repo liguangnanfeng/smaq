@@ -458,6 +458,7 @@ public class CompanyController_safety extends BaseController {
             }
             List<Map<Object, Object>> zzjg = null;
             List<Map<Object, Object>> zzjg1 = null;
+            List<ACompanyManual> list = null;
             List acL = null;
             /*if (type == null) {*/
                 /*if (null == number){ // 设置
@@ -487,7 +488,7 @@ public class CompanyController_safety extends BaseController {
                     String dangerIds = "1";
 
                     zzjg1 = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
-
+                    list = aCompanyManualMapper.findOne("现场管理",user.getId(),id);
                     acL = this.aCompanyManualMapper.selectByAll(m);
                     if (null == id){
                         zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
@@ -497,6 +498,7 @@ public class CompanyController_safety extends BaseController {
                 } else if (number == 2) { // 基础
                     String dangerIds = "2";
                     acL = this.aCompanyManualMapper.selectBase(m);
+                    list = aCompanyManualMapper.findOne("基础管理",user.getId(),id);
                     zzjg1 = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
                     if (null == id){
                         zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
@@ -531,6 +533,7 @@ public class CompanyController_safety extends BaseController {
                 model.addAttribute("buttons",buttons);
                 model.addAttribute("indus",indus);
                 model.addAttribute("ids",id);
+                model.addAttribute("list",list);
                 model.addAttribute("zzjgDep1", zzjg1);
                 model.addAttribute("number", number);
                 model.addAttribute("zzjgDep", zzjg);
@@ -3070,66 +3073,103 @@ public class CompanyController_safety extends BaseController {
         // 根据 ID 查询对应的车间名称
         ZzjgDepartment dep = zzjgDepartmentMapper.selectByPrimaryKey(depId);
         String level1 = dep.getName();
-        List<ADangerManual> list = aDangerManualMapper.selectByAllIds(ids);
+        List<ADangerManual> list = null;
+        List<ACompanyManual> list1 = aCompanyManualMapper.findRiskId(user.getId(),depId,"现场管理");
         ACompanyManual aCompanyManual;
-        for (ADangerManual a : list) {
-            aCompanyManual = new ACompanyManual();
-            aCompanyManual.setUid(user.getId());
-            aCompanyManual.setLevel1(level1);
-            aCompanyManual.setLevel2(a.getName());
-            aCompanyManual.setLevel3(a.getLevel1() + "/" + a.getLevel2() + "/" + a.getLevel3());
-            aCompanyManual.setFactors(a.getFactors());
-            aCompanyManual.setReference(a.getReference());
-            aCompanyManual.setCtime(new Date());
-            aCompanyManual.setDel(0);
-            aCompanyManual.setDmid(depId);
-            aCompanyManual.setLevel(a.getLevel());
-            aCompanyManual.setFlag(a.getFlag());
-            aCompanyManual.setType(a.getType());
-            aCompanyManual.setMeasures(a.getMeasures());
-            aCompanyManual.setRiskId(a.getId());
-            String fjgkfzr = null;
-            List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),depId,"负责人",2);
-            if (zzjgDepartment1.size() != 0){
-                // 根据 ID 查询 name
-                List<ZzjgPersonnel> zzjgPersonnel1 = zzjgPersonnelMapper.selectDpidAndDid(zzjgDepartment1.get(0).getId(),depId);
-                if (null != zzjgPersonnel1 && zzjgPersonnel1.size() != 0){
-                    fjgkfzr = zzjgPersonnel1.get(0).getName()+"-"+zzjgPersonnel1.get(0).getMobile();
-                }
+        StringBuffer sb = new StringBuffer();
+        StringBuffer sb1 = new StringBuffer();
+        for (int i = 0; i < list1.size(); i++) {
+            if (i == list1.size()-1){
+                sb.append(list1.get(i).getRiskId());
+            }else {
+                sb.append(list1.get(i).getRiskId()).append(",");
             }
+        }
 
-            // 根据公司 ID  和 车间 ID 查询部门名称为：负责人的名称
-            if (Integer.parseInt(a.getFlag()) == 2 && a.getLevel().equals("红色")){
-                List<Company> companyList = companyMapper.selectByPrimaryKeys(user.getId());
-                aCompanyManual.setFjgkfzr(fjgkfzr+","+companyList.get(0).getCharge()+"-"+companyList.get(0).getChargeContact());
-                aCompanyManual.setGkzt("公司");
-            }else if (null == a.getFlag() || Integer.parseInt(a.getFlag()) != 2){
-                aCompanyManual.setFjgkfzr(fjgkfzr);
-                aCompanyManual.setGkzt(level1);
+
+        for (int i = 0; i < ids.length; i++) {
+            if (sb.toString().contains(String.valueOf(ids[i]))){
+
+            }else {
+                if (i == ids.length-1){
+                    sb1.append(ids[i]);
+                }else {
+                    sb1.append(ids[i]).append(",");
+                }
+
             }
+        }
 
-            aCompanyManualMapper.insert(aCompanyManual);
-            // 给 zzjg_department_tbl 添加数据信息
-            List<ZzjgDepartment> zzjgDepartmentList = zzjgDepartmentMapper.selectCount(depId, a.getName());
-            if (zzjgDepartmentList.size() != 0) {
-                for (int i = 0; i < zzjgDepartmentList.size(); i++) {
-                    zzjgDepartmentMapper.updateAll(new Date(), zzjgDepartmentList.get(i).getId());
+        if (sb1.toString().length() != 0){
+            String[] str = sb1.toString().split(",");
+            if (str.length != 0){
+                Integer[] ints = new Integer[str.length];
+                for(int i=0;i<str.length;i++){
+                    if (" " != str[i]){
+                        ints[i] = Integer.parseInt(str[i]);
+                    }
                 }
-            } else {
-                ZzjgDepartment zzjgDepartment = new ZzjgDepartment();
-                zzjgDepartment.setCtime(new Date());
-                zzjgDepartment.setUtime(new Date());
-                zzjgDepartment.setDel(0);
-                zzjgDepartment.setName(a.getName());
-                for (int i = 0; i < zzjgCompanyList.size(); i++) {
-                    zzjgDepartment.setCid(zzjgCompanyList.get(i).getId());
+               list =  aDangerManualMapper.selectByAllIds(ints);
+            }
+            for (ADangerManual a : list) {
+                aCompanyManual = new ACompanyManual();
+                aCompanyManual.setUid(user.getId());
+                aCompanyManual.setLevel1(level1);
+                aCompanyManual.setLevel2(a.getName());
+                aCompanyManual.setLevel3(a.getLevel1() + "/" + a.getLevel2() + "/" + a.getLevel3());
+                aCompanyManual.setFactors(a.getFactors());
+                aCompanyManual.setReference(a.getReference());
+                aCompanyManual.setCtime(new Date());
+                aCompanyManual.setDel(0);
+                aCompanyManual.setDmid(depId);
+                aCompanyManual.setLevel(a.getLevel());
+                aCompanyManual.setFlag(a.getFlag());
+                aCompanyManual.setType(a.getType());
+                aCompanyManual.setMeasures(a.getMeasures());
+                aCompanyManual.setRiskId(a.getId());
+                String fjgkfzr = null;
+                List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),depId,"负责人",2);
+                if (zzjgDepartment1.size() != 0){
+                    // 根据 ID 查询 name
+                    List<ZzjgPersonnel> zzjgPersonnel1 = zzjgPersonnelMapper.selectDpidAndDid(zzjgDepartment1.get(0).getId(),depId);
+                    if (null != zzjgPersonnel1 && zzjgPersonnel1.size() != 0){
+                        fjgkfzr = zzjgPersonnel1.get(0).getName()+"-"+zzjgPersonnel1.get(0).getMobile();
+                    }
                 }
-                zzjgDepartment.setPid(depId);
-                zzjgDepartment.setLevel(2);
-                zzjgDepartment.setUid(user.getId());
-                zzjgDepartment.setDangerId("1");
-                zzjgDepartment.setFlag(2);
-                zzjgDepartmentMapper.add(zzjgDepartment);
+
+                // 根据公司 ID  和 车间 ID 查询部门名称为：负责人的名称
+                if (Integer.parseInt(a.getFlag()) == 2 && a.getLevel().equals("红色")){
+                    List<Company> companyList = companyMapper.selectByPrimaryKeys(user.getId());
+                    aCompanyManual.setFjgkfzr(fjgkfzr+","+companyList.get(0).getCharge()+"-"+companyList.get(0).getChargeContact());
+                    aCompanyManual.setGkzt("公司");
+                }else if (null == a.getFlag() || Integer.parseInt(a.getFlag()) != 2){
+                    aCompanyManual.setFjgkfzr(fjgkfzr);
+                    aCompanyManual.setGkzt(level1);
+                }
+
+                aCompanyManualMapper.insert(aCompanyManual);
+                // 给 zzjg_department_tbl 添加数据信息
+                List<ZzjgDepartment> zzjgDepartmentList = zzjgDepartmentMapper.selectCount(depId, a.getName());
+                if (zzjgDepartmentList.size() != 0) {
+                    for (int i = 0; i < zzjgDepartmentList.size(); i++) {
+                        zzjgDepartmentMapper.updateAll(new Date(), zzjgDepartmentList.get(i).getId());
+                    }
+                } else {
+                    ZzjgDepartment zzjgDepartment = new ZzjgDepartment();
+                    zzjgDepartment.setCtime(new Date());
+                    zzjgDepartment.setUtime(new Date());
+                    zzjgDepartment.setDel(0);
+                    zzjgDepartment.setName(a.getName());
+                    for (int i = 0; i < zzjgCompanyList.size(); i++) {
+                        zzjgDepartment.setCid(zzjgCompanyList.get(i).getId());
+                    }
+                    zzjgDepartment.setPid(depId);
+                    zzjgDepartment.setLevel(2);
+                    zzjgDepartment.setUid(user.getId());
+                    zzjgDepartment.setDangerId("1");
+                    zzjgDepartment.setFlag(2);
+                    zzjgDepartmentMapper.add(zzjgDepartment);
+                }
             }
         }
         return result;
@@ -3147,76 +3187,112 @@ public class CompanyController_safety extends BaseController {
         // 根据公司 ID 查询对应的 CID 信息
         List<ZzjgCompany> zzjgCompanyList = zzjgCompanyMapper.selectAll(user.getId());
         ZzjgDepartment dep = zzjgDepartmentMapper.selectByPrimaryKey(depId);
+        List<ACompanyManual> list1 = aCompanyManualMapper.findRiskId(user.getId(),depId,"基础管理");
         String level1 = dep.getName();
-        List<TLevel> tLevelList = tLevelMapper.selectAllIds(ids);
+        List<TLevel> tLevelList = null;
         ACompanyManual aCompanyManual;
-        for (TLevel a : tLevelList) {
-            aCompanyManual = new ACompanyManual();
-            aCompanyManual.setReference(a.getReference());
-            aCompanyManual.setUid(user.getId());
-            aCompanyManual.setLevel1(level1);
-            aCompanyManual.setLevel2(a.getName());
-            aCompanyManual.setLevel3(a.getLevel1() + "/" + a.getLevel2() + "/" + a.getLevel3());
-            aCompanyManual.setFactors(a.getFactors());
-            aCompanyManual.setGkzt(level1);
-            aCompanyManual.setCtime(new Date());
-            aCompanyManual.setDel(0);
-            aCompanyManual.setDmid(depId);
-            if (null != a.getFlag()){
-                aCompanyManual.setFlag(Integer.toString(a.getFlag()));
-            }else {
-                aCompanyManual.setFlag("");
-            }
-            if (null != a.getLevel()){
-                aCompanyManual.setLevel(a.getLevel());
-            }else {
-                aCompanyManual.setLevel("");
-            }
-            aCompanyManual.setType(a.getType());
-            aCompanyManual.setMeasures(a.getMeasures());
-            aCompanyManual.setRiskId(a.getId());
+        StringBuffer sb = new StringBuffer();
+        StringBuffer sb1 = new StringBuffer();
 
+        for (int i = 0; i < list1.size(); i++) {
+            if (i == list1.size()-1){
+                sb.append(list1.get(i).getRiskId());
+            }else {
+                sb.append(list1.get(i).getRiskId()).append(",");
+            }
+        }
 
-            String fjgkfzr = null;
-            List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),depId,"负责人",2);
-            if (zzjgDepartment1.size() != 0){
-                // 根据 ID 查询 name
-                List<ZzjgPersonnel> zzjgPersonnel1 = zzjgPersonnelMapper.selectDpidAndDid(zzjgDepartment1.get(0).getId(),depId);
-                if (null != zzjgPersonnel1 && zzjgPersonnel1.size() != 0){
-                    fjgkfzr = zzjgPersonnel1.get(0).getName()+"-"+zzjgPersonnel1.get(0).getMobile();
+        for (int i = 0; i < ids.length; i++) {
+            if (sb.toString().contains(String.valueOf(ids[i]))){
+
+            }else {
+                if (i == ids.length-1){
+                    sb1.append(ids[i]);
+                }else {
+                    sb1.append(ids[i]).append(",");
                 }
+
             }
-            // 根据公司 ID  和 车间 ID 查询部门名称为：负责人的名称
-            if (null == a.getFlag() || a.getFlag() != 2){
-                aCompanyManual.setFjgkfzr(fjgkfzr);
+        }
+        if (sb1.toString().length() != 0) {
+            String[] str = sb1.toString().split(",");
+            if (str.length != 0) {
+                Integer[] ints = new Integer[str.length];
+                for (int i = 0; i < str.length; i++) {
+                    if (" " != str[i]) {
+                        ints[i] = Integer.parseInt(str[i]);
+                    }
+                }
+                tLevelList = tLevelMapper.selectAllIds(ints);
+            }
+            for (TLevel a : tLevelList) {
+                aCompanyManual = new ACompanyManual();
+                aCompanyManual.setReference(a.getReference());
+                aCompanyManual.setUid(user.getId());
+                aCompanyManual.setLevel1(level1);
+                aCompanyManual.setLevel2(a.getName());
+                aCompanyManual.setLevel3(a.getLevel1() + "/" + a.getLevel2() + "/" + a.getLevel3());
+                aCompanyManual.setFactors(a.getFactors());
                 aCompanyManual.setGkzt(level1);
-            }else if (null != a.getFlag() && a.getFlag() == 2 && a.getLevel().equals("红色")){
-                List<Company> companyList = companyMapper.selectByPrimaryKeys(user.getId());
-                aCompanyManual.setFjgkfzr(fjgkfzr+","+companyList.get(0).getCharge()+"-"+companyList.get(0).getChargeContact());
-                aCompanyManual.setGkzt("公司");
-            }
-            aCompanyManualMapper.insertAdd(aCompanyManual);
-            // 给 zzjg_department_tbl 添加数据信息
-            List<ZzjgDepartment> zzjgDepartmentList = zzjgDepartmentMapper.selectCount(depId, a.getName());
-            if (zzjgDepartmentList.size() != 0) {
-                for (int i = 0; i < zzjgDepartmentList.size(); i++) {
-                    zzjgDepartmentMapper.updateAll(new Date(), zzjgDepartmentList.get(i).getId());
+                aCompanyManual.setCtime(new Date());
+                aCompanyManual.setDel(0);
+                aCompanyManual.setDmid(depId);
+                if (null != a.getFlag()){
+                    aCompanyManual.setFlag(Integer.toString(a.getFlag()));
+                }else {
+                    aCompanyManual.setFlag("");
                 }
-            } else {
-                ZzjgDepartment zzjgDepartment = new ZzjgDepartment();
-                zzjgDepartment.setCtime(new Date());
-                zzjgDepartment.setUtime(new Date());
-                zzjgDepartment.setDel(0);
-                zzjgDepartment.setName(a.getName());
-                for (int i = 0; i < zzjgCompanyList.size(); i++) {
-                    zzjgDepartment.setCid(zzjgCompanyList.get(i).getId());
+                if (null != a.getLevel()){
+                    aCompanyManual.setLevel(a.getLevel());
+                }else {
+                    aCompanyManual.setLevel("");
                 }
-                zzjgDepartment.setPid(depId);
-                zzjgDepartment.setLevel(2);
-                zzjgDepartment.setUid(user.getId());
-                zzjgDepartment.setDangerId("2");
-                zzjgDepartment.setFlag(2);
-                zzjgDepartmentMapper.add(zzjgDepartment);
+                aCompanyManual.setType(a.getType());
+                aCompanyManual.setMeasures(a.getMeasures());
+                aCompanyManual.setRiskId(a.getId());
+
+
+                String fjgkfzr = null;
+                List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),depId,"负责人",2);
+                if (zzjgDepartment1.size() != 0){
+                    // 根据 ID 查询 name
+                    List<ZzjgPersonnel> zzjgPersonnel1 = zzjgPersonnelMapper.selectDpidAndDid(zzjgDepartment1.get(0).getId(),depId);
+                    if (null != zzjgPersonnel1 && zzjgPersonnel1.size() != 0){
+                        fjgkfzr = zzjgPersonnel1.get(0).getName()+"-"+zzjgPersonnel1.get(0).getMobile();
+                    }
+                }
+                // 根据公司 ID  和 车间 ID 查询部门名称为：负责人的名称
+                if (null == a.getFlag() || a.getFlag() != 2){
+                    aCompanyManual.setFjgkfzr(fjgkfzr);
+                    aCompanyManual.setGkzt(level1);
+                }else if (null != a.getFlag() && a.getFlag() == 2 && a.getLevel().equals("红色")){
+                    List<Company> companyList = companyMapper.selectByPrimaryKeys(user.getId());
+                    aCompanyManual.setFjgkfzr(fjgkfzr+","+companyList.get(0).getCharge()+"-"+companyList.get(0).getChargeContact());
+                    aCompanyManual.setGkzt("公司");
+                }
+                aCompanyManualMapper.insertAdd(aCompanyManual);
+                // 给 zzjg_department_tbl 添加数据信息
+                List<ZzjgDepartment> zzjgDepartmentList = zzjgDepartmentMapper.selectCount(depId, a.getName());
+                if (zzjgDepartmentList.size() != 0) {
+                    for (int i = 0; i < zzjgDepartmentList.size(); i++) {
+                        zzjgDepartmentMapper.updateAll(new Date(), zzjgDepartmentList.get(i).getId());
+                    }
+                } else {
+                    ZzjgDepartment zzjgDepartment = new ZzjgDepartment();
+                    zzjgDepartment.setCtime(new Date());
+                    zzjgDepartment.setUtime(new Date());
+                    zzjgDepartment.setDel(0);
+                    zzjgDepartment.setName(a.getName());
+                    for (int i = 0; i < zzjgCompanyList.size(); i++) {
+                        zzjgDepartment.setCid(zzjgCompanyList.get(i).getId());
+                    }
+                    zzjgDepartment.setPid(depId);
+                    zzjgDepartment.setLevel(2);
+                    zzjgDepartment.setUid(user.getId());
+                    zzjgDepartment.setDangerId("2");
+                    zzjgDepartment.setFlag(2);
+                    zzjgDepartmentMapper.add(zzjgDepartment);
+                }
             }
         }
         return result;

@@ -524,8 +524,7 @@
                 }
 
         });
-        console.log("获取的是单选框是否为选中"+count11);
-        console.log("这个详情的长度"+${fn:length(itemL)});
+
         if(count11 != ${fn:length(itemL)}){
             layer.alert("选项不能为空");
             return false;

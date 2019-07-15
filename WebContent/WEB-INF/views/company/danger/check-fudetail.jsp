@@ -91,7 +91,17 @@ function showpicture2(src, obj){
   <!-- 循环 -->
   <c:forEach items="${recheckList }" var="p">
   <div class="f-l div_pdetail mt-20">
-    <font>检查${check.flag == 1 ? '部门' : '单位'}：${check.companyName }</font>
+
+    <font>
+      <c:if test="${flag==1}">
+        受检部门:  ${check.depart}
+      </c:if>
+    <c:if test="${flag!=1}">
+      受检单位:  ${company.name}
+    </c:if>
+
+    </font>
+
     <label>检查日期：<fmt:formatDate value="${check.realTime }" pattern="yyyy年MM月dd日"/></label>
   </div>
   <div class="f-l mt-20 mb-10" style="width:100%">

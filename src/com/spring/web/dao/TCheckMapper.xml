@@ -646,7 +646,7 @@
 
     <select id="selectCompany" resultType="com.spring.web.ibatis.DynamicParameter">
         select
-        T1.id,T1.user_id userId, T1.title, T1.depart, T1.model_id modelId, T1.type, T1.industry_id industryId,
+        T1.id,T1.user_id userId, T1.title, T1.depart, T1.model_id modelId, T1.type, T1.industry_id industryId,T1.flag,
         T1.industry_type industryType,
         T1.expect_time expectTime, T1.real_time realTime, T1.cheker, T1.contact, T1.dapart_contact dapartContact,
         T1.status, T1.create_time createTime, T1.flag, T1.check_company checkCompany,

@@ -1601,11 +1601,13 @@ public class VillageController extends BaseController {
      * 但是在查询记录的时候，点击一个整改详情的时候，会
      */
     @RequestMapping(value = "check-rectification")
-    public String checkRectification(Integer id, Model model, Integer flag, Integer number) throws Exception {
+    public String checkRectification(Integer id, Model model, Integer flag, Integer number,HttpServletRequest request) throws Exception {
         //log.error("checkId："+id);
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
         Integer type = tc.getType();
         //log.error("检查表type："+type);
+
+        User user = getLoginUser(request);
 
         // TODO 这里只保存一条数据,并返回到前端
         //List<TRectification> list = tRectificationMapper.selectAlls(id);
@@ -1675,7 +1677,7 @@ public class VillageController extends BaseController {
         model.addAttribute("itemL", iteml);
 
         model.addAttribute("number", number);
-        model.addAttribute("company", companyMapper.selectByPrimaryKey(check.getInteger("userId")));
+        model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
         model.addAttribute("flag", flag);
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
         model.addAttribute("listM", tCheckMapper.selectCompany(id));

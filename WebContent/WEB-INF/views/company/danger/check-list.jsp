@@ -113,7 +113,6 @@
             </button>
         </form>
 
-
         </span>
         </c:if>
         <span class="r">检查总数：<strong>${fn:length(list) }</strong> 条；隐患数量：<strong>${sum}</strong> 条</span>

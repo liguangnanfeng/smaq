@@ -639,6 +639,13 @@
     </select>
 
 
+    <select id="findRiskId" resultType="com.spring.web.model.ACompanyManual">
+        select riskId from `a_company_manual_tbl` where uid = #{uid} and del = 0 and dmid = #{dmid} and level3 LIKE CONCAT('%', #{level3},'%')
+    </select>
+
+
+
+
 
     <select id="selectByMapGroupByLevel1Level2" resultType="java.util.HashMap">
         select

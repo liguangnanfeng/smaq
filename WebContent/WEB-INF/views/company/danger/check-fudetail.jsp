@@ -120,7 +120,7 @@ function showpicture2(src, obj){
           <td class="text-c">${be.memo }</td>
           <td class="text-c"><fmt:formatDate value="${be.deadline }"/></td>
           <td class="text-c">
-            ${be.status == 2 ? '未整改' : '已整改'}
+            ${be.status == 2 ? '不合格' : '合格'}
             <c:if test="${!empty be.files or !empty be.memo}">
             <br><a href="javascript:void(0)" onclick="showpicture('${be.files}', this)">隐患描述</a>
             <div data-name="item-memo" style="display: none;">${be.memo }</div>

@@ -254,20 +254,23 @@
 
                     <td>
                         <c:choose>
-                            <c:when test="${ch.flag == 1}">企业自查</c:when>
-                            <c:when test="${ch.flag == 2}">行政执法</c:when>
-                            <c:when test="${ch.flag == 3}">第三方排查</c:when>
-                        </c:choose>
-                    </td>
-
-                    <td>
-                        <c:choose>
                             <c:when test="${ch.type == 1}">日常</c:when>
                             <c:when test="${ch.type == 2}">定期</c:when>
                             <c:when test="${ch.type == 3}">季节</c:when>
                             <c:when test="${ch.type == 4}">其他</c:when>
                             <c:when test="${ch.type == 5}">综合</c:when>
                         </c:choose>
+
+                    </td>
+
+                    <td>
+
+                        <c:choose>
+                            <c:when test="${ch.flag == 1}">企业自查</c:when>
+                            <c:when test="${ch.flag == 2}">行政执法</c:when>
+                            <c:when test="${ch.flag == 3}">第三方排查</c:when>
+                        </c:choose>
+
                     </td>
 
                         <%--                    <td class="text-c">${ch.measures == "" ? "暂无数据" : ch.measures}</td>--%>

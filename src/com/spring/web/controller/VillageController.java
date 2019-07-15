@@ -1202,13 +1202,13 @@ public class VillageController extends BaseController {
 
     /**
      * 检查历史
-     * TODO 排查治理记录 隐患排查记录(只需要已经检查过的)
+     * TODO 排查治理记录 隐患排查记录(只需要已经检查过的,没有不合格记录的)
      * user. userType : 管理类型  1 超管 2普管 3镇 4 村 5 企业 6区县 7市 8省
      */
     @RequestMapping(value = "check-list")//flag:3 部门抽查
     public String troubleList1(HttpServletRequest request, String title, Integer type, String companyName,
                                Integer townId, Integer villageId,
-                               Integer status, Integer flag, Model model) throws Exception {
+                               Integer status, Integer flag, Model model,String dmName) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
 
@@ -1227,10 +1227,13 @@ public class VillageController extends BaseController {
         m.put("villageId", villageId);  //1
         m.put("companyName", companyName); // null
         m.put("status", status); //状态  null
+        m.put("dmName",dmName);
         // 进行判断
         if (setUserId(user, m)) {
             clearVillageTown(m);
-            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+
+           // List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            List<Map<String, Object>> list = tCheckMapper.selectList3(m);
 
 
             Integer sum = 0;
@@ -1250,6 +1253,7 @@ public class VillageController extends BaseController {
         model.addAttribute("status", status);
         model.addAttribute("townId", townId);
         model.addAttribute("villageId", villageId);
+        model.addAttribute("dmName",dmName);
         Date d = new Date();
         String x = DateFormatUtils.format(d, "yyyy-MM-dd");
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");

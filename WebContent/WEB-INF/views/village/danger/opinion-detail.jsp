@@ -291,6 +291,7 @@
                             <label>全选</label>
                         </div>
                     </div>
+                    <%--使用每一条数据危险等级自动绑定--%>
                     <div class="div_pri">
                         <!-- 循环 -->
                         <c:forEach items="${itemL }" var="be" varStatus="index">

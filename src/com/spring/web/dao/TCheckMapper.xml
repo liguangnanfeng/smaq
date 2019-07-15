@@ -351,6 +351,52 @@
         order by T1.id desc
     </select>
 
+    <!-- 政府端隐患排查记录数据查询只要检查合格的 -->
+    <select id="selectList3" resultType="java.util.Map">
+        select
+        T1.id, T1.title, T1.depart, T1.model_id modelId, T1.type, T1.industry_id industryId, T1.industry_type
+        industryType,
+        T1.expect_time expectTime, T1.real_time realTime, T1.cheker, T1.contact, T1.dapart_contact dapartContact,
+        T1.status, T1.create_time createTime, T1.flag, T1.check_company checkCompany, T2.name companyName,
+        (select count(0) from t_check_item_tbl where check_id = T1.id and status > 1) c,
+        (select count(0) from t_check_item_tbl where check_id = T1.id and status = 2) d,
+        (select count(0) from t_recheck_tbl where check_id = T1.id) c3,
+        (select count(0) from t_rectification_tbl where check_id = T1.id) t
+        from t_check_tbl T1
+        left join company_tbl T2 on T1.user_id = T2.user_id
+        <where>
+            T1.del = 0 and T1.status = 2
+            <if test="title != null and title != ''">
+                and T1.title LIKE CONCAT('%', #{title},'%')
+            </if>
+            <if test="type != null and type != ''">
+                and T1.industry_type = #{type}
+            </if>
+            <if test="status != null">
+                and T1.status = #{status}
+            </if>
+            <if test="flag != null">
+                and T1.flag = #{flag}
+            </if>
+            <if test="dmName != null">
+                and T1.depart = #{dmName}
+            </if>
+            <if test="extime != null">
+                and expect_time is not null and expect_time &lt; #{now1}
+            </if>
+            <if test="userIds != null and userIds != ''">
+                and T2.user_id in (${userIds})
+            </if>
+            <if test="userId != null and userId != ''">
+                and T2.user_id = #{userId}
+            </if>
+        </where>
+        having d=0
+        order by T1.id desc
+    </select>
+
+
+
     <select id="selectListTwo" resultType="java.util.Map">
         select
         T1.id, T1.title, T1.depart, T1.model_id modelId, T1.type, T1.industry_id industryId, T1.industry_type

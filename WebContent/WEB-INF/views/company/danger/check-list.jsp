@@ -25,6 +25,20 @@
         }
     </style>
 </head>
+<script>
+    // 根据部门名称进行查询
+    function  queryButton(){
+        var dmName =  $("[name='dmName']").val();
+        alert(dmName);
+        $.ajax(
+            url "${ly }/village/check-list",
+
+        )
+
+
+    }
+
+</script>
 <body>
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
@@ -55,14 +69,6 @@
                 <span>检查表名称：</span>
                 <input type="text" value="${title }" name="title" class="input-text mb-5 mt-5" style="width:150px;">
             </div>
-            <%--        <div class="dis-ib">--%>
-            <%--          <span>检查状态：</span>--%>
-            <%--          <select class="input-text mb-5 mt-5" name="status" style="width:150px;">--%>
-            <%--            <option value="">请选择</option>--%>
-            <%--            <option value="1" <c:if test="${status == 1}"> selected</c:if>>未检查</option>--%>
-            <%--            <option value="2" <c:if test="${status == 2}"> selected</c:if>>已检查</option>--%>
-            <%--          </select>--%>
-            <%--          </div>--%>
             <button class="btn btn-success" type="submit">
                 <i class="Hui-iconfont">&#xe665;</i> 查询
             </button>
@@ -85,6 +91,31 @@
                onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加线下检查记录</a>
         </c:if>  -->
       </span>
+        <c:if test="${flag == 1}">
+             <span class="l">
+          <%--   <div class="text-c">
+                <div class="dis-ib">
+                    <span>部门名称：</span>
+                    <input type="text" name="dmName" class="input-text mb-5 mt-5" style="width:150px;"
+                           autocomplete="off">
+                </div>
+                <button  onclick="queryButton()" id="queryButton" class="btn btn-success" type="submit">
+                    <i class="Hui-iconfont">&#xe665;</i> 查询
+                </button>
+        </div>--%>
+           <form action="${ly }/village/check-list?flag=${flag}" method="post">
+            <div class="dis-ib">
+                <span>部门名称：</span>
+                <input type="text" value="${dmName}"  name="dmName" class="input-text mb-5 mt-5" style="width:150px;" autocomplete="off" >
+            </div>
+            <button class="btn btn-success" type="submit">
+                <i class="Hui-iconfont">&#xe665;</i> 查询
+            </button>
+        </form>
+
+
+        </span>
+        </c:if>
         <span class="r">检查总数：<strong>${fn:length(list) }</strong> 条；隐患数量：<strong>${sum}</strong> 条</span>
     </div>
     <div class="mt-20">
@@ -261,7 +292,8 @@
                         </c:if>
 
                         <c:if test="${flag!=1}">
-                            <a style="text-decoration:none" onClick="location.href = '/village/check-document?checkId=${be.id}'" href="javascript:;">文书详情</a><br>
+                            <a style="text-decoration:none"
+                               onClick="location.href = '/village/check-document?checkId=${be.id}'" href="javascript:;">文书详情</a><br>
                         </c:if>
                         <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除记录</a>
                     </td>
@@ -274,32 +306,36 @@
 </div>
 <script type="text/javascript">
 
-$(function() {
-    sessionStorage.clear();
-  $('.table-sort').dataTable({
-    "aaSorting": [[0, "asc"]],//默认第几个排序
-    "bStateSave": false,//状态保存
-    "aoColumnDefs": [
-    ]
+    $(function () {
+        sessionStorage.clear();
+        $('.table-sort').dataTable({
+            "aaSorting": [[0, "asc"]],//默认第几个排序
+            "bStateSave": false,//状态保存
+            "aoColumnDefs": []
+        }),
+
+
+            /*删除*/
+            function del_(id) {
+                layer.confirm("要删除该记录？", function (i) {
+                    layer.close(i);
+                    $.post(getRootPath() + "/company/check-del", {
+                        id: id
+                    }, function (reuslt) {
+                        location.reload();
+                    })
+                })
+            },
+
+        var type = '${type}';
+
+        function copy_(id) {
+            show_tab('添加自查记录', getRootPath() + '/company/check-copy?id=' + id);
+        }
+
     });
 
-    /*删除*/
-    function del_(id) {
-        layer.confirm("要删除该记录？", function (i) {
-            layer.close(i);
-            $.post(getRootPath() + "/company/check-del", {
-                id: id
-            }, function (reuslt) {
-                location.reload();
-            })
-        })
-    }
 
-    var type = '${type}';
-
-    function copy_(id) {
-        show_tab('添加自查记录', getRootPath() + '/company/check-copy?id=' + id);
-    }
 </script>
 </body>
 </html>

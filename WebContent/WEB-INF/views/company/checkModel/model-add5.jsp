@@ -541,7 +541,12 @@
                                         </td>
 
                                         <td className="text-c">{levels[2]?levels[2]:'暂无数据'}</td>
-                                        <td className="text-c">{item.level3}</td>
+
+                                        <td className="text-c">
+                                            {levels[2]?levels[2]:'暂无数据'}
+
+                                        </td>
+
                                         <td className="text-c">{item.factors}</td>
 
                                         <td className="text-c">

@@ -1788,6 +1788,11 @@ public class CompanyController_safety extends BaseController {
         if (s.size() > 0) {//物理因素
             model.addAttribute("wlysL", aHxysgzkMapper.selectByIds(StringUtils.join(s, ",")));
         }
+
+        List<ZzjgDepartment> list = zzjgDepartmentMapper.findNameByUid(user.getId());
+
+        model.addAttribute("list",list);
+
         return "company/safety-system/harm-list";
     }
 
@@ -1806,9 +1811,14 @@ public class CompanyController_safety extends BaseController {
                 s.addAll(Arrays.asList(a.getHxys().split(",")));
             }
         }
-        if (s.size() > 0) {//物理因素
+        if (s.size() > 0) {//化学因素
             model.addAttribute("list", aMaterialMapper.selectByIds(StringUtils.join(s, ",")));
         }
+
+        List<ZzjgDepartment> list = zzjgDepartmentMapper.findNameByUid(user.getId());
+
+        model.addAttribute("list",list);
+
         return "company/safety-system/risk-information-list2";
     }
 
@@ -2082,10 +2092,6 @@ public class CompanyController_safety extends BaseController {
     }
 
 
-    /**
-     * @author     ：小明！！！
-     * @description：未辨识风险展示
-     */
     /**
      * 一般和较小判定
      */

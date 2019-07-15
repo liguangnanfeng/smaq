@@ -22,5 +22,7 @@ public interface HiddenPlanMapper {
     Integer updateByPrimaryKey(HiddenPlan hiddenPlan1);
 
     List<HiddenPlan> selectDpid(Integer dpid);
+
+    List<Map<String,Object>> selectCountAll(@Param("uid") Integer uid);
 }
 

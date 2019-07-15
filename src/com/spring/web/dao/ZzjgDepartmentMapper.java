@@ -155,4 +155,6 @@ public interface ZzjgDepartmentMapper {
     List<ZzjgDepartment> selectOneName(@Param("uid")Integer uid, @Param("dangerIds")String dangerIds,@Param("id")Integer id);
 
     List<Map<Object,Object>> selectEmpyDangerIds(@Param("uid")Integer uid);
+
+    List<ZzjgDepartment> findNameByUid(@Param("uid")Integer uid);
 }

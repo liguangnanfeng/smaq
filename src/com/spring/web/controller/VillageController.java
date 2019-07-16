@@ -1638,14 +1638,18 @@ public class VillageController extends BaseController {
 
         List<Map<String, Object>> iteml = tCheckItemMapper.selectDangerByCheckId(id, null);
         // 判断他是什么类型的然后再添加数据
+        Integer industryType = tc.getIndustryType();
         for (int i = 0; i < iteml.size(); i++) {
-            if(flag==1){
-
-            }else if (flag==2){
-
-            }else if(flag==3){
-
-            }
+            Integer levelId = (Integer) iteml.get(i).get("levelId");
+                if(null!=levelId){
+                    String DangerFlag="";
+                    if(flag==1&&!Objects.equals("公司级",tc.getDepart())){
+                        DangerFlag = aCompanyManualMapper.selectByPrimaryKey(levelId).getFlag();
+                    }else{
+                        DangerFlag = queryDangerFlag(levelId, industryType);
+                    }
+                    iteml.get(i).put("dangerFlag",DangerFlag);
+                }
         }
         // 这个是没有用的
         if (type != null && type == 9) {
@@ -1698,6 +1702,25 @@ public class VillageController extends BaseController {
             return "village/danger/opinion-detail";
         }*/
 
+    }
+
+
+    /**
+     *  从id 获取这条记录的风险等级
+     * @param levelId     level_tbl/danger_manual_tbl的id
+     * @param industryType 1/2  基础/现场
+     * @return 风险等级
+     */
+    private  String  queryDangerFlag(int levelId,int industryType){
+        String level = "";
+
+        if(industryType==1){
+            Integer flag = tLevelMapper.selectByPrimaryKey(levelId).getFlag();
+            level=flag+"";
+        }else if(industryType==2) {
+             level = aDangerManualMapper.selectByPrimaryKey(levelId).getFlag();
+        }
+        return level;
     }
 
     /**

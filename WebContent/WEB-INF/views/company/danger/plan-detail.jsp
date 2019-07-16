@@ -206,7 +206,7 @@
             <font>受检公司：${user.userName }</font>
         </c:if>
         <c:if test="${flag==1}">
-            <font>检查部门：${check.depart }</font>
+            <font>受检部门：${check.depart }</font>
         </c:if>
         <label>检查日期：<fmt:formatDate value="${check.realTime }" pattern="yyyy年MM月dd日"/> <c:if
                 test="${empty check.realTime}">&nbsp;&nbsp;年&nbsp;月&nbsp;日</c:if>

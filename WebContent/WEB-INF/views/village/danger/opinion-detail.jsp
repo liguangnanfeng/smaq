@@ -296,7 +296,7 @@
                         <!-- 循环 -->
                         <c:forEach items="${itemL }" var="be" varStatus="index">
                             <div class="check-box">
-                                <input type="checkbox" name="isyan" data-i="${be.id }"/>
+                                <input type="checkbox" name="isyan" data-i="${be.id }" item="${be.dangerFlag}"  />
                                 <label>${index.index + 1}</label>
                             </div>
                         </c:forEach>
@@ -396,6 +396,10 @@
     var flag = ${check.flag};
     var item1 = '${rectification.item1}', item2 = '${rectification.item2}', item3 = '${rectification.item3}';
 
+    $(function(){
+        $("input[item='2']").attr('checked','true');
+
+    });
 
     $(":checkbox").click(function () {
         var name = $(this).attr("name");

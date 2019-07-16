@@ -1822,9 +1822,6 @@ public class CompanyController_safety extends BaseController {
         return "company/safety-system/risk-information-list2";
     }
 
-    /**
-     * 根据公司id查询所有的 车间/岗位风险分布图
-     */
    /* @RequestMapping(value = "control-photo")
     @ResponseBody
     public Result selectPhoto(HttpServletRequest request,Model model ){
@@ -1841,6 +1838,9 @@ public class CompanyController_safety extends BaseController {
 
         return result;
     }*/
+    /**
+     * 根据公司id查询所有的 车间/岗位风险分布图
+     */
     @RequestMapping(value = "control-photo")
     public String selectPhoto(HttpServletRequest request, Model model) {
 
@@ -1885,8 +1885,6 @@ public class CompanyController_safety extends BaseController {
         Result result = new ResultImpl();
         Integer a = 0;
         // 判断该条数据是否存在
-
-
         if (null == importPhoto) {
             result.setStatus("1");
             result.setMess("修改失败，检查要修改的信息是否符合要求。");
@@ -2028,8 +2026,8 @@ public class CompanyController_safety extends BaseController {
      *  TODO 车间/岗位 文件上传！！！
      */
     @RequestMapping(value = "save-photo", method = RequestMethod.POST)
-    public void companyLeadin(@RequestParam MultipartFile file, HttpServletRequest request, HttpServletResponse response,String name) throws Exception {
-        Result result = exportService.photoImport(file, getLoginUser(request).getId(), request,name);
+    public void companyLeadin(@RequestParam MultipartFile file, HttpServletRequest request, HttpServletResponse response,String name,String flag) throws Exception {
+        Result result = exportService.photoImport(file, getLoginUser(request).getId(), request,name,flag);
         OutPrintUtil.OutPrint(response, result);
     }
 
@@ -3133,6 +3131,7 @@ public class CompanyController_safety extends BaseController {
                 aCompanyManual.setType(a.getType());
                 aCompanyManual.setMeasures(a.getMeasures());
                 aCompanyManual.setRiskId(a.getId());
+                aCompanyManual.setCommerce(a.getCommerce());
                 String fjgkfzr = null;
                 List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),depId,"负责人",2);
                 if (zzjgDepartment1.size() != 0){

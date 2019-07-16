@@ -11,15 +11,16 @@
             <arg column="coordinate" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="url1" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="photo_color" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="flag" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-        id, url, user_id, name, coordinate, url1, photo_color
+        id, url, user_id, name, coordinate, url1, photo_color, flag
     </sql>
 
     <!-- 添加数据信息 -->
     <insert id="savePhoto" parameterType="com.spring.web.model.request.TMap" >
-         insert into import_photo (url,user_id,name,url1) values(#{url},#{user_id},#{name},#{url1});
+         insert into import_photo (url,user_id,name,url1,flag) values(#{url},#{user_id},#{name},#{url1},#{flag});
     </insert>
 
     <!-- 添加数据信息 -->
@@ -38,6 +39,15 @@
         <include refid="Base_Column_List"/>
         from import_photo where user_id= #{userId};
     </select>
+
+
+    <!-- 查询数据信息 -->
+    <select id="selectPhotoOne"  resultType="com.spring.web.model.request.ImportPhoto">
+        select
+        <include refid="Base_Column_List"/>
+        from import_photo where user_id= #{userId} and flag = #{flag}
+    </select>
+
 
     <select id="selectAllById" parameterType="Integer" resultType="com.spring.web.model.request.ImportPhoto">
         select

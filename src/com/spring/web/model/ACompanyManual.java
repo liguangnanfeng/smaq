@@ -205,10 +205,12 @@ public class ACompanyManual {
 
     private Integer riskId;
 
+    private String commerce;
+
     public ACompanyManual() {
     }
 
-    public ACompanyManual(Integer id, Integer uid, Integer dmid, String level1, String level2, String level3, String factors, String type, String measures, String reference, String flag, String level, Integer issys, Integer del, Date ctime, String gkcs, String gkzt, String fjgkfzr, String material, String gy, String hxys, String wlbs, String flag2, String gwzy, String lnglat, Integer riskId) {
+    public ACompanyManual(Integer id, Integer uid, Integer dmid, String level1, String level2, String level3, String factors, String type, String measures, String reference, String flag, String level, Integer issys, Integer del, Date ctime, String gkcs, String gkzt, String fjgkfzr, String material, String gy, String hxys, String wlbs, String flag2, String gwzy, String lnglat, Integer riskId, String commerce) {
         this.id = id;
         this.uid = uid;
         this.dmid = dmid;
@@ -235,6 +237,7 @@ public class ACompanyManual {
         this.gwzy = gwzy;
         this.lnglat = lnglat;
         this.riskId = riskId;
+        this.commerce = commerce;
     }
 
     public Integer getId() {
@@ -445,6 +448,13 @@ public class ACompanyManual {
         this.riskId = riskId;
     }
 
+    public String getCommerce() {
+        return commerce;
+    }
+
+    public void setCommerce(String commerce) {
+        this.commerce = commerce;
+    }
 
     @Override
     public String toString() {
@@ -475,6 +485,7 @@ public class ACompanyManual {
                 ", gwzy='" + gwzy + '\'' +
                 ", lnglat='" + lnglat + '\'' +
                 ", riskId=" + riskId +
+                ", commerce='" + commerce + '\'' +
                 '}';
     }
 }

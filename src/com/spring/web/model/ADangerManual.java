@@ -98,14 +98,15 @@ public class ADangerManual {
     private String flag2;
 
 
-
     private String name;
+
+    private String commerce;
 
 
     public ADangerManual() {
     }
 
-    public ADangerManual(Integer id, String industry, String level1, String level2, String level3, String factors, String type, String measures, String reference, String flag, String level, String flag2, String name) {
+    public ADangerManual(Integer id, String industry, String level1, String level2, String level3, String factors, String type, String measures, String reference, String flag, String level, String flag2, String name, String commerce) {
         this.id = id;
         this.industry = industry;
         this.level1 = level1;
@@ -119,6 +120,7 @@ public class ADangerManual {
         this.level = level;
         this.flag2 = flag2;
         this.name = name;
+        this.commerce = commerce;
     }
 
     public Integer getId() {
@@ -223,5 +225,33 @@ public class ADangerManual {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCommerce() {
+        return commerce;
+    }
+
+    public void setCommerce(String commerce) {
+        this.commerce = commerce;
+    }
+
+    @Override
+    public String toString() {
+        return "ADangerManual{" +
+                "id=" + id +
+                ", industry='" + industry + '\'' +
+                ", level1='" + level1 + '\'' +
+                ", level2='" + level2 + '\'' +
+                ", level3='" + level3 + '\'' +
+                ", factors='" + factors + '\'' +
+                ", type='" + type + '\'' +
+                ", measures='" + measures + '\'' +
+                ", reference='" + reference + '\'' +
+                ", flag='" + flag + '\'' +
+                ", level='" + level + '\'' +
+                ", flag2='" + flag2 + '\'' +
+                ", name='" + name + '\'' +
+                ", commerce='" + commerce + '\'' +
+                '}';
     }
 }

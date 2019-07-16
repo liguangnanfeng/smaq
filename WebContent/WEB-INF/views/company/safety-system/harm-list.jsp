@@ -32,10 +32,10 @@ $(function(){
 })
 
 function load() {
+  $('.titleName').html(sessionStorage.getItem("htmlName")+'职业病危害告知牌')
   if($(".sel_area2").val() !=  null && $(".sel_area2").val() != '') {
+    sessionStorage.setItem("htmlName", $(".sel_area1").val());
     $(".div-set").load($(".sel_area2").val() + " .div-print");
-  } else if($(".sel_area1").val() !=  null && $(".sel_area1").val() != '') {
-    $(".div-set").load($(".sel_area1").val() + " .div-print");
   }else {
     $(".div-set").html("<p>没有涉及的物理因素</p>")
   }
@@ -59,7 +59,7 @@ function pr_() {
         <span>车间：</span>
         <select name="" class="sel_area sel_area1">
           <c:forEach items="${list }" var="bes" varStatus="index">
-            <option >${bes.name }</option>
+            <option value="${bes.name}">${bes.name }</option>
           </c:forEach>
         </select>
 

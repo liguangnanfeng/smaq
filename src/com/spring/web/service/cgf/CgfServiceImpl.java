@@ -359,12 +359,12 @@ public class CgfServiceImpl implements CgfService {
 
         Set<String> commerces = new LinkedHashSet<>();
 
-        if(tCheck.getFlag()==1&&!Objects.equals("公司级",tCheck.getDepart())){
+        if (tCheck.getFlag() == 1 && !Objects.equals("公司级", tCheck.getDepart())) {
             List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(t.getId());
             for (TCheckItem tCheckItem : tCheckItems) {
-                if(null!=tCheckItem.getLevelId()){
+                if (null != tCheckItem.getLevelId() && tCheckItem.getStatus() == 2) {
                     ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(tCheckItem.getLevelId());
-                    if(null!=aCompanyManual &&null!=aCompanyManual.getCommerce()&& !"".equals(aCompanyManual.getCommerce())){
+                    if (null != aCompanyManual && null != aCompanyManual.getCommerce() && !"".equals(aCompanyManual.getCommerce())) {
                         // 获取值
                         String commerce = aCompanyManual.getCommerce();
                         commerces.add(commerce);
@@ -373,33 +373,49 @@ public class CgfServiceImpl implements CgfService {
             }
         }
 
-
-        if(commerces.size()>0){
+        if (commerces.size() > 0) {
             ArrayList<String> comms = new ArrayList<String>();
             for (String commerce : commerces) {
                 comms.add(commerce);
             }
             Commerce commerce = commerceMapper.selectComFlag(tCheck.getUserId());
-            if(commerce==null){
+            if (commerce == null) {
                 String item = "";
                 commerce = new Commerce();
                 commerce.setUser_id(tCheck.getUserId());
                 commerce.setCtime(new Date());
                 for (int i = 0; i < comms.size(); i++) {
-                    if(i==commerces.size()-1){
-                        item+=comms.get(i);
-                    }else{
-                        item+=comms.get(i)+",";
+                    if (i == commerces.size() - 1) {
+                        item += comms.get(i);
+                    } else {
+                        item += comms.get(i) + ",";
                     }
                 }
                 commerce.setCom_flag(item);
-            }else{
+                commerceMapper.insert(commerce);
+            } else {
                 // 表示有数据
+                commerce.setUtime(new Date());
+                String com_flag = commerce.getCom_flag();
+                for (int i = 0; i < comms.size(); i++) {
+                    if (i == commerces.size() - 1) {
+                        if (com_flag.indexOf(comms.get(i)) != -1) {
+                            //包含就不管
+                        } else {
+                            com_flag += comms.get(i);
+                        }
+                    } else {
+                        if (com_flag.indexOf(comms.get(i)) != -1) {
+                            //包含就不管
+                        } else {
+                            com_flag += comms.get(i) + ",";
+                        }
+                    }
+                }
+                commerce.setCom_flag(com_flag);
+                commerceMapper.updateByPrimaryKey(commerce);
             }
         }
-
-
-
 
 
     }
@@ -417,14 +433,14 @@ public class CgfServiceImpl implements CgfService {
 
         // 根据checkId进行查询
         List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(tr.getCheckId());
-        if(tCheckItems.size()>0){
+        if (tCheckItems.size() > 0) {
             for (TCheckItem tCheckItem : tCheckItems) {
                 tCheckItem.setDeadline(tr.getDeadline());
                 tCheckItem.setPlanTime(tr.getPlanTime());
                 tCheckItem.setRecheckTime(tr.getPlanTime());
                 tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
                 TRecheckItem tRecheckItem = tRecheckItemMapper.selectByCheckItemId(tCheckItem.getId());
-                if(null!=tRecheckItem){
+                if (null != tRecheckItem) {
                     tRecheckItem.setDeadline(tr.getDeadline());
                     tRecheckItemMapper.updateByPrimaryKeySelective(tRecheckItem);
                 }
@@ -465,20 +481,20 @@ public class CgfServiceImpl implements CgfService {
      * @throws Exception
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
-    public void recheckSave(RecheckSaveReqDTO dto,Date date1) throws Exception {
+    public void recheckSave(RecheckSaveReqDTO dto, Date date1) throws Exception {
         Date date = new Date();
         Integer checkId = dto.getRecheck().getCheckId();
         TCheck c = tCheckMapper.selectByPrimaryKey(checkId);
         // 第一步先根据checkId查询 tRecheck
         List<TRecheck> tRechecks = tRecheckMapper.selectByCheckId(checkId);
-        TRecheck recheck =null;
-        if(tRechecks.size()==0){
+        TRecheck recheck = null;
+        if (tRechecks.size() == 0) {
             //没有就进行保存
-            recheck= dto.getRecheck();
+            recheck = dto.getRecheck();
             recheck.setUserId(c.getUserId());
             recheck.setCreateTime(date);
             tRecheckMapper.insertSelective(recheck);
-        }else{
+        } else {
             //表示有数据
             recheck = tRechecks.get(0);
             recheck.setCreateTime(date);
@@ -491,20 +507,20 @@ public class CgfServiceImpl implements CgfService {
                 if (null != tRecheckItem) {
                     // 设置条件,判断tRecheckItemMapper数据库有没有数据
                     TRecheckItem tRecheckItem1 = tRecheckItemMapper.selectByCheckItemId(tRecheckItem.getCheckItemId());
-                    if(null==tRecheckItem1){
+                    if (null == tRecheckItem1) {
                         tRecheckItem.setRecheckId(recheck.getId());
                         // 表示数据库没有数据
                         tRecheckItem.setDeadline(date1);
                         tRecheckItemMapper.insertSelective(tRecheckItem);
-                    }else{
+                    } else {
                         // 表示数据库有数据 就进行更新
                         tRecheckItem1.setDeadline(date1);
                         tRecheckItem1.setStatus(tRecheckItem.getStatus());
                         tRecheckItem1.setRecheckId(recheck.getId());
-                        if(null!=tRecheckItem.getFile()){
+                        if (null != tRecheckItem.getFile()) {
                             tRecheckItem1.setFile(tRecheckItem.getFile());
                         }
-                        if(null!=tRecheckItem.getMemo()){
+                        if (null != tRecheckItem.getMemo()) {
                             tRecheckItem1.setMemo(tRecheckItem.getMemo());
                         }
                         tRecheckItemMapper.updateByPrimaryKeySelective(tRecheckItem1);
@@ -515,11 +531,12 @@ public class CgfServiceImpl implements CgfService {
         }
 
         // 保存check_Item表中的数据 并对d anger_commerce 中的数据进行修改
-
+        Set<String> set = new LinkedHashSet<String>();
         if (list.size() > 0) {
             for (TRecheckItem tRecheckItem : list) {
                 if (null != tRecheckItem) {
                     TCheckItem tCheckItem = tCheckItemMapper.selectByPrimaryKey(tRecheckItem.getCheckItemId());
+
                     tCheckItem.setStatus(tRecheckItem.getStatus());
                     if (null != tRecheckItem.getFile() && !"".equals(tRecheckItem.getFile())) {
                         tCheckItem.setFiles(tRecheckItem.getFile());
@@ -531,14 +548,42 @@ public class CgfServiceImpl implements CgfService {
                         tCheckItem.setMemo(tRecheckItem.getMemo());
                         tCheckItem.setRecheckMemo(tRecheckItem.getMemo());
                     }
+
                     tCheckItem.setDeadline(date1);
                     tCheckItem.setPlanTime(new Date());
                     tCheckItem.setRecheckTime(new Date());
                     tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
+                    // 对数据做出判断
+                    if(c.getFlag()==1&&!"公司级".equals(c.getDepart())&&tCheckItem.getStatus()==3){
+                        ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(tCheckItem.getLevelId());
+                        if(null!=aCompanyManual&&null!=aCompanyManual.getCommerce()&&!"".equals(aCompanyManual.getCommerce())){
+                            set.add(aCompanyManual.getCommerce());
+                        }
+                    }
                 }
             }
         }
 
+        // 开始对数据进行判断
+        if(set.size()>0){
+            Commerce commerce = commerceMapper.selectComFlag(c.getUserId());
+            if(null!=commerce){
+                List<String> commerces = new ArrayList<String>();
+                for (String s : set) {
+                    commerces.add(s);
+                }
+                 commerce.setUtime(new Date());
+                String com_flag = commerce.getCom_flag();
+
+                for (int i = 0; i < commerces.size(); i++) {
+                        if(com_flag.indexOf(commerces.get(i))!=-1){
+                            com_flag  = com_flag.replace(commerces.get(i), "");
+                        }
+                }
+                commerce.setCom_flag(com_flag);
+                commerceMapper.updateByPrimaryKey(commerce);
+            }
+        }
     }
 
     /**

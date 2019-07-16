@@ -835,11 +835,23 @@ public class CompanyController_safety extends BaseController {
         // 根据公司 user_id  查询数据 将数据返回
         Commerce commerce = commerceMapper.selectComFlag(user.getId());
         Company company = companyMapper.selectByPrimaryKey(user.getId());
+        String[] str = commerce.getCom_flag().split(",");
 
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < str.length; i++) {
+            if (str[i] != null && str[i] != "" && str[i].length() != 0){
+                if (i == str.length-1){
+                    sb.append(str[i]);
+                }else {
+                    sb.append(str[i]).append(",");
+                }
+            }
+        }
         if (null == commerce){
             model.addAttribute("comFlag","");
         }else {
-            model.addAttribute("comFlag",commerce.getCom_flag());
+            model.addAttribute("comFlag",sb.toString());
         }
         model.addAttribute("industry",company.getIndustry());
         return "company/safety-system/danger-table";
@@ -1850,9 +1862,10 @@ public class CompanyController_safety extends BaseController {
        if (user == null) {
            return null;
        }
-       ImportPhoto photo = importPhotoMapper.selectPhotoOne(user.getId(),2);
+       List<ImportPhoto> photo = importPhotoMapper.selectPhotoOne(user.getId(),2);
+
        if (photo != null){
-           return photo.getUrl();
+           return photo.get(0).getUrl();
        }else {
            return "";
        }

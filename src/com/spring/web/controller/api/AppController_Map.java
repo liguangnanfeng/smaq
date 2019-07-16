@@ -161,13 +161,9 @@ public class AppController_Map extends BaseController {
             return null;
         }
         TMap tMap = tMapMapper.selectByUserId(user.getId());
-        //TMap tMap = tMapMapper.selectByUserId(6);
-        ImportPhoto photo = importPhotoMapper.selectPhotoOne(26,2);
 
-
-
-        if (photo != null){
-            return photo.getUrl();
+        if (tMap != null){
+            return tMap.getFiles();
         }else {
             return "";
         }

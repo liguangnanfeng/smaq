@@ -651,7 +651,7 @@
         from
         a_company_manual_tbl T1
         where
-        T1.uid = #{uid} and T1.del = 0 and T1.level != ""
+        T1.uid = #{uid} and T1.del = 0 and T1.level = ""
     </select>
 
 

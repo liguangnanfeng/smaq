@@ -248,7 +248,7 @@
         function upload() {
             if($('#filename').val()!=''){
             $.ajaxFileUpload({
-            url: getRootPath() + '/company/safety-system/save-photo?name='+$('#filename').val(), //用于文件上传的服务器端请求地址
+            url: getRootPath() + '/company/safety-system/save-photo?flag=1&name='+$('#filename').val(), //用于文件上传的服务器端请求地址
             secureuri: false, //一般设置为false
             fileElementId: 'file', //文件上传空间的id属性 <input type="file" id="file" name="file" />
             dataType: 'json', //返回值类型 一般设置为json

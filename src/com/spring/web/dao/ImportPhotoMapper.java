@@ -29,6 +29,6 @@ public interface ImportPhotoMapper {
     Integer updatePhotoName(@Param("name")String name, @Param("id")Integer id);
 
 
-    ImportPhoto selectPhotoOne(@Param("userId")Integer userId, @Param("flag")Integer flag);
+    List<ImportPhoto> selectPhotoOne(@Param("userId")Integer userId, @Param("flag")Integer flag);
 }
 

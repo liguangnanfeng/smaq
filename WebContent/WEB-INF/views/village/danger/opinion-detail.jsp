@@ -287,21 +287,28 @@
                     </div>
                     <div class="div_pri  mt-10">2、下列隐患属于重大隐患
                         <div class="check-box">
-                            <input type="checkbox" name="yz_qx"/>
+                            <input id="yx_qx" type="checkbox" name="yz_qx"/>
                             <label>全选</label>
                         </div>
                     </div>
                     <%--使用每一条数据危险等级自动绑定--%>
+<%--                    wjj--%>
                     <div class="div_pri">
                         <!-- 循环 -->
                         <c:forEach items="${itemL }" var="be" varStatus="index">
                             <div class="check-box">
-                                <input type="checkbox" name="isyan" data-i="${be.id }" item="${be.dangerFlag}"  />
+                                <input type="checkbox" name="isyan" data-i="${be.id }" data-item="${be.dangerFlag}"  />
                                 <label>${index.index + 1}</label>
                             </div>
                         </c:forEach>
                         <!-- 循环结束 -->
                     </div>
+
+<%--script--%>
+
+
+
+ <%--script--%>
                     <div class="div_pri  mb-10  mt-10">
                         <font style="float:Left;">3、整改复查时间：</font>
                         <input type="text" id="planTime"  autocomplete="off"
@@ -387,7 +394,7 @@
     </div>
 </div>
 <div>
-    ${rectification}
+
 </div>
 </body>
 <script type="text/javascript">
@@ -397,20 +404,20 @@
     var item1 = '${rectification.item1}', item2 = '${rectification.item2}', item3 = '${rectification.item3}';
 
     $(function(){
-        $("input[item='2']").attr('checked','true');
+        $("input[data-item='2']").attr('checked','true');
 
     });
 
     $(":checkbox").click(function () {
-        var name = $(this).attr("name");
-        if (name != 'isyan') {
-            var i = $(this).attr("data-i");
-            if ($(this).is(":checked")) {//选中
-                $(":checkbox[data-i='" + i + "'][name='" + (name == 'isxian' ? 'isli' : 'isxian') + "']").removeAttr("checked");
-            } else {
-                $(":checkbox[data-i='" + i + "'][name='" + (name == 'isxian' ? 'isli' : 'isxian') + "']").prop("checked", true);
-            }
-        }
+        // var name = $(this).attr("name");
+        // if (name != 'isyan') {
+        //     var i = $(this).attr("data-i");
+        //     // if ($(this).is(":checked")) {//选中
+        //     //     $(":checkbox[data-i='" + i + "'][name='" + (name == 'isxian' ? 'isli' : 'isxian') + "']").removeAttr("checked");
+        //     // } else {
+        //     //     $(":checkbox[data-i='" + i + "'][name='" + (name == 'isxian' ? 'isli' : 'isxian') + "']").prop("checked", true);
+        //     // }
+        // }
         init_all_box();
     })
     $.each(item2.split(","), function (i, item) {
@@ -449,6 +456,7 @@
     init_all_box();
 
     function save_() {
+        //$("#").prop("checked",true);
         if ($(":checkbox[name='isxian']:checked").length > 0 && $("#deadline").val() == '') {
             layer.alert("请选择限期整改期限");
             return false;
@@ -518,6 +526,25 @@
 
             }
         })
+        //
+        // var b=$("input[name='isyan']").is(':checked');
+        // // if(b){
+        // //     console.log('hi!')
+        // //     $("input[name='isyan']").prop('data-item','2');
+        // // }
+        // if(!b){
+        //     $("input[name='isyan']").prop('checked',false);
+        //     console.log('hello!');
+        // }
+    }
+</script>
+<script>
+
+    var a=$("input[data-item='2']").length;
+    var b=$("input[name='isyan']").length;
+    if (a===b){
+        console.log("全选中");
+        $("#yx_qx").prop('checked','true');
     }
 </script>
 </html>

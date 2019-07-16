@@ -282,6 +282,16 @@
         </table>
     </div>
 
+<%--    <script>--%>
+<%--        var tlength=$("tr.text-c>td:nth-child(3)").text().length;--%>
+<%--        // for (let i=0;i<tlength;i++){--%>
+<%--           console.log($("//tr.text-c>td:nth-child(3)").text());--%>
+<%--        // }--%>
+<%--        // console.log($("tr.text-c").text());--%>
+<%--        $("tr.text-c>td:nth-child(3)").text();--%>
+<%--    </script>--%>
+
+
     <%--     隐藏的下载按钮--%>
     <a href="" download="zhilifangan.pdf" style="display: none" id="xzan"></a>
 

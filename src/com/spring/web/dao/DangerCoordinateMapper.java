@@ -12,6 +12,8 @@ public interface DangerCoordinateMapper {
 
     List<DangerCoordinate> selectOne(@Param("user_id") Integer user_id);
 
+    DangerCoordinate selectOne2(@Param("user_id") Integer user_id);
+
     boolean updateByPrimaryKey(DangerCoordinate dangerCoordinate);
 }
 

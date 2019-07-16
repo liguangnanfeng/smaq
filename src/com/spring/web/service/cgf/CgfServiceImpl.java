@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -97,6 +98,11 @@ public class CgfServiceImpl implements CgfService {
     private FcTemporaryDangerItemMapper fcTemporaryDangerItemMapper;
     @Autowired
     private MonitorMapper monitorMapper;
+    @Autowired
+    private CommerceMapper commerceMapper;
+
+    @Autowired
+    private ACompanyManualMapper aCompanyManualMapper;
 
     protected Gson gson = new GsonBuilder().create();
 
@@ -331,12 +337,11 @@ public class CgfServiceImpl implements CgfService {
     // }
 
     /**
-     * (非 Javadoc) 检查检查保存
+     * TODO (非 Javadoc) 检查检查保存
      *
      * @param t
-     * @param result
+     * @param
      * @throws Exception
-     * @see com.spring.web.service.cgf.CgfService#checkNestSave(com.spring.web.model.TCheck, com.spring.web.result.Result)
      */
     public void checkNestSave(TCheck t) throws Exception {
         t.setStatus(2);
@@ -347,6 +352,56 @@ public class CgfServiceImpl implements CgfService {
         tm.setId(t.getModelId());
         tm.setUseTime(t.getRealTime());
         tModelMapper.updateByPrimaryKeySelective(tm);
+        // 获取到检查记录,然后获取数据
+        // 首先判断是不是企业自查,是不是企业级然后再去获取数据 对d anger_commerce 中的数据进行修改
+        // 先查询有没有数据,然后在进行字符串的拼接
+        TCheck tCheck = tCheckMapper.selectByPrimaryKey(t.getId());
+
+        Set<String> commerces = new LinkedHashSet<>();
+
+        if(tCheck.getFlag()==1&&!Objects.equals("公司级",tCheck.getDepart())){
+            List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(t.getId());
+            for (TCheckItem tCheckItem : tCheckItems) {
+                if(null!=tCheckItem.getLevelId()){
+                    ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(tCheckItem.getLevelId());
+                    if(null!=aCompanyManual &&null!=aCompanyManual.getCommerce()&& !"".equals(aCompanyManual.getCommerce())){
+                        // 获取值
+                        String commerce = aCompanyManual.getCommerce();
+                        commerces.add(commerce);
+                    }
+                }
+            }
+        }
+
+
+        if(commerces.size()>0){
+            ArrayList<String> comms = new ArrayList<String>();
+            for (String commerce : commerces) {
+                comms.add(commerce);
+            }
+            Commerce commerce = commerceMapper.selectComFlag(tCheck.getUserId());
+            if(commerce==null){
+                String item = "";
+                commerce = new Commerce();
+                commerce.setUser_id(tCheck.getUserId());
+                commerce.setCtime(new Date());
+                for (int i = 0; i < comms.size(); i++) {
+                    if(i==commerces.size()-1){
+                        item+=comms.get(i);
+                    }else{
+                        item+=comms.get(i)+",";
+                    }
+                }
+                commerce.setCom_flag(item);
+            }else{
+                // 表示有数据
+            }
+        }
+
+
+
+
+
     }
 
     /**
@@ -458,7 +513,8 @@ public class CgfServiceImpl implements CgfService {
                 }
             }
         }
-        // 保存check_Item表中的数据
+
+        // 保存check_Item表中的数据 并对d anger_commerce 中的数据进行修改
 
         if (list.size() > 0) {
             for (TRecheckItem tRecheckItem : list) {

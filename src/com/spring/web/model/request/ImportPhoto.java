@@ -18,8 +18,21 @@ public class ImportPhoto {
 
     private String photo_color;
 
+    private Integer flag;
 
     public ImportPhoto() {
+    }
+
+    public ImportPhoto(Integer id, String url, String url1, Integer user_id, String name, String coordinate, Object object, String photo_color, Integer flag) {
+        this.id = id;
+        this.url = url;
+        this.url1 = url1;
+        this.user_id = user_id;
+        this.name = name;
+        this.coordinate = coordinate;
+        this.object = object;
+        this.photo_color = photo_color;
+        this.flag = flag;
     }
 
     public Integer getId() {
@@ -86,6 +99,14 @@ public class ImportPhoto {
         this.photo_color = photo_color;
     }
 
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
+
     @Override
     public String toString() {
         return "ImportPhoto{" +
@@ -97,6 +118,7 @@ public class ImportPhoto {
                 ", coordinate='" + coordinate + '\'' +
                 ", object=" + object +
                 ", photo_color='" + photo_color + '\'' +
+                ", flag=" + flag +
                 '}';
     }
 }

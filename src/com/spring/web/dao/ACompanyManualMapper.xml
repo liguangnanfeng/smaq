@@ -35,13 +35,14 @@
             <arg column="gwzy" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="lnglat" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="riskId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="commerce" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
 
         id, uid, dmid, level1, level2, level3, factors, type, measures, reference, flag,
         level, issys, del, ctime, gkcs, gkzt, fjgkfzr, material, gy, hxys, wlbs, flag2, gwzy,
-        lnglat, riskId
+        lnglat, riskId, commerce
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
 
@@ -55,6 +56,8 @@
         delete from a_company_manual_tbl
         where id = #{id,jdbcType=INTEGER}
     </delete>
+
+
     <insert id="insert" parameterType="com.spring.web.model.ACompanyManual">
         insert into a_company_manual_tbl (id, uid, dmid,
         level1, level2, level3,
@@ -64,7 +67,7 @@
         gkcs, gkzt, fjgkfzr,
         material, gy, hxys,
         wlbs, flag2, gwzy,
-        lnglat, riskId)
+        lnglat, riskId, commerce)
         values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{dmid,jdbcType=INTEGER},
         #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},
         #{factors,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{measures,jdbcType=VARCHAR},
@@ -73,8 +76,11 @@
         #{gkcs,jdbcType=VARCHAR}, #{gkzt,jdbcType=VARCHAR}, #{fjgkfzr,jdbcType=VARCHAR},
         #{material,jdbcType=VARCHAR}, #{gy,jdbcType=VARCHAR}, #{hxys,jdbcType=VARCHAR},
         #{wlbs,jdbcType=VARCHAR}, #{flag2,jdbcType=VARCHAR}, #{gwzy,jdbcType=VARCHAR},
-        #{lnglat,jdbcType=VARCHAR}, #{riskId,jdbcType=INTEGER})
+        #{lnglat,jdbcType=VARCHAR}, #{riskId,jdbcType=INTEGER}, #{commerce,jdbcType=VARCHAR})
     </insert>
+
+
+
     <insert id="insertSelective" parameterType="com.spring.web.model.ACompanyManual">
 
         insert into a_company_manual_tbl
@@ -157,6 +163,9 @@
             <if test="riskId != null">
                 riskId,
             </if>
+            <if test="commerce != null">
+                commerce,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -236,6 +245,9 @@
             </if>
             <if test="riskId != null">
                 #{riskId,jdbcType=VARCHAR},
+            </if>
+            <if test="commerce != null">
+                #{commerce,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -317,6 +329,9 @@
             <if test="riskId != null">riskId
                 riskId = #{riskId,jdbcType=VARCHAR},
             </if>
+            <if test="commerce != null">riskId
+                riskId = #{commerce,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -347,7 +362,8 @@
         flag2 = #{flag2,jdbcType=VARCHAR},
         gwzy = #{gwzy,jdbcType=VARCHAR},
         lnglat = #{lnglat,jdbcType=VARCHAR},
-        riskId = #{riskId,jdbcType=VARCHAR}
+        riskId = #{riskId,jdbcType=VARCHAR},
+        commerce = #{commerce,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
 
@@ -370,7 +386,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat , T1.riskId
+        T1.wlbs,T1.gwzy,T1.lnglat , T1.riskId, T1.commerce
         from
         a_company_manual_tbl T1
         where
@@ -383,7 +399,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId, T1.commerce
         from
         a_company_manual_tbl T1
         where
@@ -404,7 +420,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId, T1.commerce
         from
         a_company_manual_tbl T1
         where
@@ -422,7 +438,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId, T1.commerce
         from
         a_company_manual_tbl T1
         where
@@ -439,7 +455,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId, T1.commerce
         from
         a_company_manual_tbl T1
 
@@ -482,7 +498,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId, T1.commerce
         from
         a_company_manual_tbl T1
         where
@@ -498,7 +514,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId, T1.commerce
         from
         a_company_manual_tbl T1
 
@@ -540,7 +556,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId, T1.commerce
         from
         a_company_manual_tbl T1
         where
@@ -582,7 +598,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId, T1.commerce
         from
         a_company_manual_tbl T1
         where
@@ -618,7 +634,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId, T1.commerce
         from
         a_company_manual_tbl T1
         where
@@ -631,7 +647,7 @@
         T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
         T1.flag,
         T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
-        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId, T1.commerce
         from
         a_company_manual_tbl T1
         where
@@ -1179,11 +1195,11 @@
     <!-- 添加数据信息到数据库！！！ -->
         <insert id="insertAdd">
         insert into a_company_manual_tbl (uid,dmid,
-        level1, level2, level3, factors, type, measures, reference, flag, level, del, ctime,gkzt, fjgkfzr, riskId)
+        level1, level2, level3, factors, type, measures, reference, flag, level, del, ctime,gkzt, fjgkfzr, riskId, commerce)
         values (#{uid,jdbcType=INTEGER}, #{dmid,jdbcType=INTEGER},
         #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},#{factors,jdbcType=VARCHAR},
         #{type,jdbcType=VARCHAR}, #{measures,jdbcType=VARCHAR},#{reference,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR},#{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP},
-        #{gkzt,jdbcType=VARCHAR},#{fjgkfzr,jdbcType=VARCHAR}, #{riskId,jdbcType=VARCHAR})
+        #{gkzt,jdbcType=VARCHAR},#{fjgkfzr,jdbcType=VARCHAR}, #{riskId,jdbcType=VARCHAR}, #{commerce,jdbcType=VARCHAR})
     </insert>
 
     <!-- 修改数据信息达到删除的目的 -->

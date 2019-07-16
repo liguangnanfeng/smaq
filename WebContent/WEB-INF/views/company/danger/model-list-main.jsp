@@ -361,27 +361,32 @@
                         </tr>
                         </thead>
                         <tbody>
+    <c:forEach items="${hiddenPlanList}" varStatus="index" var="be">
     <tr class="text-c">
     <td>1</td>
     <td>公司级</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td>1</td>
+        <td onClick="inputC(this,1,'${be.c}',0)">${be.syn_month }</td>
+        <td>${be.syn_year }</td>
+        <td onClick="inputC(this,3,'${be.c}',0)">${be.syn_ratio }</td>
+        <td onClick="inputC(this,4,'${be.c}',0)">${be.eve_month }</td>
+        <td>${be.eve_year }</td>
+        <td onClick="inputC(this,6,'${be.c}',0)">${be.eve_ratio }</td>
+        <td onClick="inputC(this,7,'${be.c}',0)">${be.reg_month }</td>
+        <td>${be.reg_year }</td>
+        <td onClick="inputC(this,9,'${be.c}',0)">${be.reg_ratio }</td>
+        <%--<td onClick="inputC(this,10,'${be.c}',0)">${be.sea_month }</td>--%>
+        <td onClick="inputC(this,11,'${be.c}',0)">${be.sea_year }</td>
+        <td onClick="inputC(this,12,'${be.c}',0)">${be.sea_ratio }</td>
+        <%--<td onClick="inputC(this,13,'${be.c}',0)">${be.els_month }</td>--%>
+        <td onClick="inputC(this,14,'${be.c}',0)">${be.els_year }</td>
+        <td onClick="inputC(this,15,'${be.c}',0)">${be.els_ratio }</td>
+        <%--<td onClick="inputC(this,16,'${be.c}',0)">${be.bas_month }</td>--%>
+        <td onClick="inputC(this,17,'${be.c}',0)">${be.bas_year }</td>
+        <td onClick="inputC(this,18,'${be.c}',0)">${be.bas_ratio }</td>
+        <td onClick="inputC(this,19,'${be.c}',0)">${be.total_count }</td>
+        <td onClick="inputC(this,20,'${be.c}',0)">${be.total_ratio }</td>
     </tr>
+    </c:forEach>
                         <!-- 循环-->
                         <c:forEach items="${list}" varStatus="index" var="be">
                             <tr class="text-c">
@@ -639,6 +644,7 @@
         var idx = '';
         var zzJid = '';
         var vid = '';
+    var sss = 0;
         $('.table-sort').dataTable({
             "aaSorting": [[0, "asc"]],//默认第几个排序
             "bStateSave": false,//状态保存
@@ -663,15 +669,25 @@
     function inputS() {
         var cont = parseInt($('#trInput').val());
         if (cont !== '' || cont !== null || cont !== undefined) {
-            $.post(getRootPath() + "/company/model-list-save", pj(cont, idx, zzJid, vid), function (result, status) {
-                if (result.status == 0) {
-                    var url = "${ly }/company/model-list-main?flag=1&plan=1";
-                    window.location.href=url;
-                    // location.reload();
-                } else {
-                    layer.msg(result.mess);
-                }
-            });
+            if(sss==1){
+                $.post(getRootPath() + "/company/model-list-save", pj(cont, idx, zzJid, vid), function (result, status) {
+                    if (result.status == 0) {
+                        var url = "${ly }/company/model-list-main?flag=1&plan=1";
+                        window.location.href=url;
+                    } else {
+                        layer.msg(result.mess);
+                    }
+                });
+            }else{
+                $.post(getRootPath() + "/company/model-list-save-company", pj(cont, idx, zzJid, vid), function (result, status) {
+                    if (result.status == 0) {
+                        var url = "${ly }/company/model-list-main?flag=1&plan=1";
+                        window.location.href=url;
+                    } else {
+                        layer.msg(result.mess);
+                    }
+                });
+            }
         } else {
             layer.msg('计划不能为空');
         }
@@ -730,6 +746,11 @@
         idx = ind;
         zzJid = zid;
         vid = vvid;
+        if(vvid==0){
+            sss = 0
+        }else{
+            sss = 1
+        }
         $("#modal-plan2").modal("show");
     }
 

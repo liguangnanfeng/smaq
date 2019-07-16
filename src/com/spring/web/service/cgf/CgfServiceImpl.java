@@ -97,6 +97,11 @@ public class CgfServiceImpl implements CgfService {
     private FcTemporaryDangerItemMapper fcTemporaryDangerItemMapper;
     @Autowired
     private MonitorMapper monitorMapper;
+    @Autowired
+    private DangerCoordinateMapper dangerCoordinateMapper;
+
+    @Autowired
+    private ACompanyManualMapper aCompanyManualMapper;
 
     protected Gson gson = new GsonBuilder().create();
 
@@ -331,12 +336,11 @@ public class CgfServiceImpl implements CgfService {
     // }
 
     /**
-     * (非 Javadoc) 检查检查保存
+     * TODO (非 Javadoc) 检查检查保存
      *
      * @param t
-     * @param result
+     * @param
      * @throws Exception
-     * @see com.spring.web.service.cgf.CgfService#checkNestSave(com.spring.web.model.TCheck, com.spring.web.result.Result)
      */
     public void checkNestSave(TCheck t) throws Exception {
         t.setStatus(2);
@@ -347,6 +351,24 @@ public class CgfServiceImpl implements CgfService {
         tm.setId(t.getModelId());
         tm.setUseTime(t.getRealTime());
         tModelMapper.updateByPrimaryKeySelective(tm);
+        // 获取到检查记录,然后获取数据
+        // 首先判断是不是企业自查,是不是企业级然后再去获取数据 对d anger_commerce 中的数据进行修改
+        // 先查询有没有数据,然后在进行字符串的拼接
+        TCheck tCheck = tCheckMapper.selectByPrimaryKey(t.getId());
+        if(tCheck.getFlag()==1&&!Objects.equals("公司级",tCheck.getDepart())){
+            List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(t.getId());
+            for (TCheckItem tCheckItem : tCheckItems) {
+                if(null!=tCheckItem.getLevelId()){
+                    ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(tCheckItem.getLevelId());
+                    if(null!=aCompanyManual && !"".equals(aCompanyManual)){
+                        // 获取值
+                        List<DangerCoordinate> dangerCoordinates = dangerCoordinateMapper.selectOne(tCheck.getUserId());
+
+                    }
+                }
+            }
+        }
+
     }
 
     /**
@@ -458,7 +480,8 @@ public class CgfServiceImpl implements CgfService {
                 }
             }
         }
-        // 保存check_Item表中的数据
+
+        // 保存check_Item表中的数据 并对d anger_commerce 中的数据进行修改
 
         if (list.size() > 0) {
             for (TRecheckItem tRecheckItem : list) {

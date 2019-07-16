@@ -2646,6 +2646,7 @@ public class CompanyController_cd extends BaseController {
     public @ResponseBody
     Result checkSave2(TCheck t) {
         Result result = new ResultImpl();
+
         try {
             cgfService.checkNestSave(t);
         } catch (Exception e) {

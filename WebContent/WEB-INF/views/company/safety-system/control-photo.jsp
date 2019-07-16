@@ -124,19 +124,19 @@
         <div class="row cl mt-15">
         <label class="form-label col-xs-4 col-sm-2" style="width:9%;text-align:right;">资料上传：</label>
         <div class="formControls col-xs-8 col-sm-9" style="width:300px;">
+        <span class="btn-upload form-group">
+        <input class="input-text upload-url" type="text" name="uploadfile-1" id="uploadfile-1" readonly><a
+        href="javascript:void();" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
+        <input type="file" multiple name="file" id="file" class="input-file">
+        </span>
+        </div>
+            <label class="form-label col-xs-4 col-sm-2" style="width:7%;text-align:right;">名称：</label>
+            <div class="formControls col-xs-8 col-sm-9" style="width:200px;">
             <span class="btn-upload form-group">
-            <input class="input-text upload-url" type="text" name="uploadfile-1" id="uploadfile-1" readonly><a
-            href="javascript:void();" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
-            <input type="file" multiple name="file" id="file" class="input-file">
+            <input class="input-text upload-url" type="text" name="filename" id="filename">
             </span>
             </div>
-                <label class="form-label col-xs-4 col-sm-2" style="width:7%;text-align:right;">名称：</label>
-                <div class="formControls col-xs-8 col-sm-9" style="width:200px;">
-                <span class="btn-upload form-group">
-                <input class="input-text upload-url" type="text" name="filename" id="filename">
-                </span>
-                </div>
-            <button class="btn btn-primary" onclick="upload()">确定上传</button>
+        <button class="btn btn-primary" onclick="upload()">确定上传</button>
         </div>
         </div>
 

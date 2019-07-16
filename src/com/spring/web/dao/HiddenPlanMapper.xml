@@ -56,8 +56,17 @@
         select
         <include refid="Base_Column_List"/>
         from hidden_plan
-        where dpid = #{dpid,jdbcType=INTEGER}
+        where dpid = #{dpid,jdbcType=INTEGER} and uid = #{uid}
     </select>
+
+
+    <select id="findDpid" parameterType="java.lang.Integer"  resultType="java.util.Map"  >
+        select
+        <include refid="Base_Column_List"/>
+        from hidden_plan
+        where dpid = #{dpid,jdbcType=INTEGER} and uid = #{uid}
+    </select>
+
 
 
     <select id = "selectCountAll" parameterType="java.lang.Integer" resultType="java.util.Map" >

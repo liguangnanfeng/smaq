@@ -694,7 +694,7 @@ public class ExportServiceImpl implements ExportService {
     * 岗位部门图片上传
     * */
     @Override
-    public Result photoImport(MultipartFile file, Integer userId, HttpServletRequest request,String name) throws Exception {
+    public Result photoImport(MultipartFile file, Integer userId, HttpServletRequest request,String name,String flag) throws Exception {
         Result result = new ResultImpl();
         if (null != file) {
             String fileName = file.getOriginalFilename();
@@ -728,6 +728,7 @@ public class ExportServiceImpl implements ExportService {
             importPhoto.setUrl1(url);
             importPhoto.setUser_id(userId);
             importPhoto.setName(name);
+            importPhoto.setFlag(Integer.parseInt(flag));
             importPhotoMapper.savePhoto(importPhoto);
 
         } catch (Exception ex) {

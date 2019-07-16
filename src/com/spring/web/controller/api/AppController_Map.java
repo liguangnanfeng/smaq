@@ -1,9 +1,11 @@
 package com.spring.web.controller.api;
 
 import com.spring.web.BaseController;
+import com.spring.web.dao.ImportPhotoMapper;
 import com.spring.web.dao.TMapMapper;
 import com.spring.web.model.TCheckItem;
 import com.spring.web.model.User;
+import com.spring.web.model.request.ImportPhoto;
 import com.spring.web.model.request.TMap;
 import com.spring.web.result.AppResult;
 import com.spring.web.result.AppResultImpl;
@@ -44,6 +46,9 @@ public class AppController_Map extends BaseController {
     private TMapMapper tMapMapper;
     /*保存图片的路径*/
     private String pathStr;
+
+    private ImportPhotoMapper importPhotoMapper;
+
 
     /**
      * TODO 保存图片并保存到数据库
@@ -157,10 +162,14 @@ public class AppController_Map extends BaseController {
         }
         TMap tMap = tMapMapper.selectByUserId(user.getId());
         //TMap tMap = tMapMapper.selectByUserId(6);
-        if (tMap == null) {
-            return null;
+        ImportPhoto photo = importPhotoMapper.selectPhotoOne(user.getId(),2);
+
+
+        if (photo != null){
+            return photo.getUrl();
+        }else {
+            return "";
         }
-        return tMap.getFiles();
     }
 
     /**

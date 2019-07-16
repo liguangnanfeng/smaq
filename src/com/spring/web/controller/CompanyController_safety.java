@@ -1862,9 +1862,10 @@ public class CompanyController_safety extends BaseController {
        if (user == null) {
            return null;
        }
-       ImportPhoto photo = importPhotoMapper.selectPhotoOne(user.getId(),2);
+       List<ImportPhoto> photo = importPhotoMapper.selectPhotoOne(user.getId(),2);
+
        if (photo != null){
-           return photo.getUrl();
+           return photo.get(0).getUrl();
        }else {
            return "";
        }

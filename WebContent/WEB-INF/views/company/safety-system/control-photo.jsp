@@ -124,19 +124,19 @@
         <div class="row cl mt-15">
         <label class="form-label col-xs-4 col-sm-2" style="width:9%;text-align:right;">资料上传：</label>
         <div class="formControls col-xs-8 col-sm-9" style="width:300px;">
-        <span class="btn-upload form-group">
-        <input class="input-text upload-url" type="text" name="uploadfile-1" id="uploadfile-1" readonly><a
-        href="javascript:void();" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
-        <input type="file" multiple name="file" id="file" class="input-file">
-        </span>
-        </div>
-            <label class="form-label col-xs-4 col-sm-2" style="width:7%;text-align:right;">名称：</label>
-            <div class="formControls col-xs-8 col-sm-9" style="width:200px;">
             <span class="btn-upload form-group">
-            <input class="input-text upload-url" type="text" name="filename" id="filename">
+            <input class="input-text upload-url" type="text" name="uploadfile-1" id="uploadfile-1" readonly><a
+            href="javascript:void();" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
+            <input type="file" multiple name="file" id="file" class="input-file">
             </span>
             </div>
-        <button class="btn btn-primary" onclick="upload()">确定上传</button>
+                <label class="form-label col-xs-4 col-sm-2" style="width:7%;text-align:right;">名称：</label>
+                <div class="formControls col-xs-8 col-sm-9" style="width:200px;">
+                <span class="btn-upload form-group">
+                <input class="input-text upload-url" type="text" name="filename" id="filename">
+                </span>
+                </div>
+            <button class="btn btn-primary" onclick="upload()">确定上传</button>
         </div>
         </div>
 
@@ -248,7 +248,7 @@
         function upload() {
             if($('#filename').val()!=''){
             $.ajaxFileUpload({
-            url: getRootPath() + '/company/safety-system/save-photo?name='+$('#filename').val(), //用于文件上传的服务器端请求地址
+            url: getRootPath() + '/company/safety-system/save-photo?flag=1&name='+$('#filename').val(), //用于文件上传的服务器端请求地址
             secureuri: false, //一般设置为false
             fileElementId: 'file', //文件上传空间的id属性 <input type="file" id="file" name="file" />
             dataType: 'json', //返回值类型 一般设置为json

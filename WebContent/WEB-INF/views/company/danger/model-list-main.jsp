@@ -361,10 +361,31 @@
                         </tr>
                         </thead>
                         <tbody>
+    <tr class="text-c">
+    <td>1</td>
+    <td>公司级</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>1</td>
+    </tr>
                         <!-- 循环-->
                         <c:forEach items="${list}" varStatus="index" var="be">
                             <tr class="text-c">
-                                <td>${index.index + 1}</td>
+                                <td>${index.index + 2}</td>
                                 <td>${be.name }</td>
                                 <td onClick="inputC(this,1,'${be.c}',${be.id})">${be.syn_month }</td>
                                 <td>${be.syn_year }</td>
@@ -388,6 +409,32 @@
                                 <td onClick="inputC(this,20,'${be.c}',${be.id})">${be.total_ratio }</td>
                             </tr>
                         </c:forEach>
+    <c:forEach items="${list1}" varStatus="index" var="be">
+    <tr class="text-c">
+    <td></td>
+    <td style="font-weight:bold;">合计</td>
+    <td>${be.danger21 }</td>
+    <td>${be.danger22 }</td>
+    <td>${be.danger23 }</td>
+    <td>${be.danger24 }</td>
+    <td>${be.danger25 }</td>
+    <td>${be.danger26 }</td>
+    <td>${be.danger27 }</td>
+    <td>${be.danger28 }</td>
+    <%--<td onClick="inputC(this,29,'${be.c}',${be.id})">${be.sea_month }</td>--%>
+    <td>${be.danger30 }</td>
+    <%--<td onClick="inputC(this,31,'${be.c}',${be.id})">${be.els_month }</td>--%>
+    <td>${be.danger32 }</td>
+    <%--<td onClick="inputC(this,33,'${be.c}',${be.id})">${be.bas_month }</td>--%>
+    <td>${be.danger34 }</td>
+    <td>${be.danger35 }</td>
+    <td>${be.danger36 }</td>
+    <td>${be.danger37 }</td>
+    <td>${be.danger38 }</td>
+    <td>${be.danger39 }</td>
+    <td>${be.danger40 }</td>
+    </tr>
+    </c:forEach>
                         <!-- 循环结束 -->
                         </tbody>
                     </table>

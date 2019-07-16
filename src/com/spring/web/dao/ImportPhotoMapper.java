@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface ImportPhotoMapper {
 
-
     void savePhoto(ImportPhoto importPhoto);
 
     List<ImportPhoto> selectPhoto(@Param("userId") Integer userId);

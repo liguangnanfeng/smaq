@@ -45,7 +45,7 @@
     <select id="selectPhotoOne"  resultType="com.spring.web.model.request.ImportPhoto">
         select
         <include refid="Base_Column_List"/>
-        from import_photo where user_id= #{userId} and flag = #{flag}
+        from import_photo where user_id = #{userId,jdbcType=INTEGER} and flag = #{flag,jdbcType=INTEGER}
     </select>
 
 

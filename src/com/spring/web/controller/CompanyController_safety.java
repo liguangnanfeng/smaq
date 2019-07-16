@@ -1838,6 +1838,29 @@ public class CompanyController_safety extends BaseController {
 
         return result;
     }*/
+   /**
+    * create by  : 小明！！！
+    * description: TODO 厂级获取图片途径
+    * create time: 2019/7/16 15:22
+    */
+   @ResponseBody
+   @RequestMapping(value = "find-photo")
+   public String findMap(HttpServletRequest request) {
+       User user = getLoginUser(request);
+       if (user == null) {
+           return null;
+       }
+       ImportPhoto photo = importPhotoMapper.selectPhotoOne(user.getId(),2);
+       if (photo != null){
+           return photo.getUrl();
+       }else {
+           return "";
+       }
+   }
+
+
+
+
     /**
      * 根据公司id查询所有的 车间/岗位风险分布图
      */

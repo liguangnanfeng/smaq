@@ -125,10 +125,10 @@
         <label>检查日期：<fmt:formatDate value="${now }" pattern="yyyy年MM月dd日"/></label>--%>
         <c:if test="${check.flag==1}">
             <c:if test="${check.depart=='全公司'}">
-                <font>检查单位：${company.name }</font>
+                <font>受检单位：${company.name }</font>
             </c:if>
             <c:if test="${check.depart!='全公司'}">
-                <font>检查单位：${check.depart }</font>
+                <font>受检单位：${check.depart }</font>
             </c:if>
         </c:if>
         <c:if test="${check.flag!=1}">
@@ -193,7 +193,10 @@
                             <c:if test="${check.type==4}">其他检查</c:if>
                             <c:if test="${check.type==5}">综合检查</c:if>
                         </td>
-                        <td class="text-l">${ch.levels}</td>
+                        <td class="text-l">
+                            <c:set var="item" value="${fn:split(ch.levels,'/') }"/>
+                              ${item[2]}
+                        </td>
                         <td class="text-l">${ch.content }</td>
                         <td class="text-c" data-base="${ch.status }">&nbsp;
                             <div class="radio-box">

@@ -512,7 +512,6 @@
                     // location.reload();
                 }
 
-
             }
         })
     }

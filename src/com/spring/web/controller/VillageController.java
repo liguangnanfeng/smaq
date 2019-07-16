@@ -1637,7 +1637,16 @@ public class VillageController extends BaseController {
         //model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(id, null));
 
         List<Map<String, Object>> iteml = tCheckItemMapper.selectDangerByCheckId(id, null);
+        // 判断他是什么类型的然后再添加数据
+        for (int i = 0; i < iteml.size(); i++) {
+            if(flag==1){
 
+            }else if (flag==2){
+
+            }else if(flag==3){
+
+            }
+        }
         // 这个是没有用的
         if (type != null && type == 9) {
             for (Map<String, Object> a : iteml) {

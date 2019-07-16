@@ -78,7 +78,14 @@
         from danger_coordinate
         where user_id = #{user_id,jdbcType=DOUBLE}
     </select>
-
+    <select id="selectOne2" resultType="com.spring.web.model.DangerCoordinate">
+        select
+        *
+        from danger_coordinate
+        where user_id = #{user_id,jdbcType=DOUBLE}
+        order by id desc
+        limit 0,1;
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 

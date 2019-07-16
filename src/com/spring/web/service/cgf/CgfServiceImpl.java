@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -98,7 +99,7 @@ public class CgfServiceImpl implements CgfService {
     @Autowired
     private MonitorMapper monitorMapper;
     @Autowired
-    private DangerCoordinateMapper dangerCoordinateMapper;
+    private CommerceMapper commerceMapper;
 
     @Autowired
     private ACompanyManualMapper aCompanyManualMapper;
@@ -355,19 +356,51 @@ public class CgfServiceImpl implements CgfService {
         // 首先判断是不是企业自查,是不是企业级然后再去获取数据 对d anger_commerce 中的数据进行修改
         // 先查询有没有数据,然后在进行字符串的拼接
         TCheck tCheck = tCheckMapper.selectByPrimaryKey(t.getId());
+
+        Set<String> commerces = new LinkedHashSet<>();
+
         if(tCheck.getFlag()==1&&!Objects.equals("公司级",tCheck.getDepart())){
             List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(t.getId());
             for (TCheckItem tCheckItem : tCheckItems) {
                 if(null!=tCheckItem.getLevelId()){
                     ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(tCheckItem.getLevelId());
-                    if(null!=aCompanyManual && !"".equals(aCompanyManual)){
+                    if(null!=aCompanyManual &&null!=aCompanyManual.getCommerce()&& !"".equals(aCompanyManual.getCommerce())){
                         // 获取值
-                        List<DangerCoordinate> dangerCoordinates = dangerCoordinateMapper.selectOne(tCheck.getUserId());
-
+                        String commerce = aCompanyManual.getCommerce();
+                        commerces.add(commerce);
                     }
                 }
             }
         }
+
+
+        if(commerces.size()>0){
+            ArrayList<String> comms = new ArrayList<String>();
+            for (String commerce : commerces) {
+                comms.add(commerce);
+            }
+            Commerce commerce = commerceMapper.selectComFlag(tCheck.getUserId());
+            if(commerce==null){
+                String item = "";
+                commerce = new Commerce();
+                commerce.setUser_id(tCheck.getUserId());
+                commerce.setCtime(new Date());
+                for (int i = 0; i < comms.size(); i++) {
+                    if(i==commerces.size()-1){
+                        item+=comms.get(i);
+                    }else{
+                        item+=comms.get(i)+",";
+                    }
+                }
+                commerce.setCom_flag(item);
+            }else{
+                // 表示有数据
+            }
+        }
+
+
+
+
 
     }
 

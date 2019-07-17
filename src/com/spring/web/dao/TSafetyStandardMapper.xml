@@ -186,8 +186,13 @@
         from t_safety_standard_tbl where parentId=#{id}  order by  oder asc,id asc;
     </select>
 
-    <select id="deleteTSafetyStandard" parameterType="Integer">
+    <delete id="deleteTSafetyStandard" parameterType="Integer">
         delete from t_safety_standard_tbl where id =#{safetyStandardlistId}  ;
+    </delete>
+    <select id="findAllByUserId" parameterType="Integer" resultType="com.spring.web.model.TSafetyStandard" >
+        select
+        <include refid="Base_Column_List"/>
+        from t_safety_standard_tbl where userId=#{userId} and parentId= #{parentId} order by  oder asc,id asc;
     </select>
 
 </mapper>

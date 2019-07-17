@@ -2920,7 +2920,6 @@ public class CompanyController_cd extends BaseController {
      * TODO 检查设置实施中实施整改按钮中,返回查询记录,可以进行实施复查(2019/7/2 10添加)
      * 现在只显示,只有不合格的,全部合格,和全部是复查合格就不要进行显示了
      *
-     *
      * @param dmName       部门名称
      * @param flag         1. 企业自查  2 部门抽查  3 行政检查
      * @param industryType 1 基础  2 现场
@@ -3920,9 +3919,6 @@ public class CompanyController_cd extends BaseController {
         return result;
     }
 
-
-
-
     /**
      * TODO 隐患排查治理板块 => 检查设置实施中首页表显示车间
      * 是根据conpanyManual这张表中的数据车间数据进行查询
@@ -4512,7 +4508,6 @@ public class CompanyController_cd extends BaseController {
             }
         }
 
-
         //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
         if (type != null && type == 9) {
             for (Map<String, Object> a : iteml) {
@@ -4553,6 +4548,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("flag", tc.getFlag());
         model.addAttribute("itemL", iteml);
         model.addAttribute("user", loginUser);
+
         if(null==number){
             Integer count = tCheckMapper.selectHiddenDangerNumber(id);
             if(null==count){
@@ -4562,10 +4558,12 @@ public class CompanyController_cd extends BaseController {
         }else{
             model.addAttribute("number", number);
         }
+        Integer integer = tCheckMapper.selectHiddenDangerNumber2(id);
 
         if (null == name || "".equals(name)) {
             name = companyMapper.selectByPrimaryKey(loginUser.getId()).getSafety();
         }
+        model.addAttribute("dangerInteger",integer);
         model.addAttribute("name", name);
         // 根据检查记录的id获取详细的信息
         if (null != tc.getLatitude() && null != tc.getLongitude()) {

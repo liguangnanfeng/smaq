@@ -181,7 +181,9 @@
         <button onClick="addNew()"
                 class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">添加
         </button>
-
+        <button onClick="addOld()"
+                class="btn btn-success radius" title="倒序" type="button" style="padding: 0 50px;">一键导入
+        </button>
         <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
 
     </div>
@@ -335,6 +337,31 @@
     function addNew() {
         // $('#trInput4').val(0);
         $("#modal-plan2").modal("show");
+    }
+
+    function addOld() {
+        $.ajax({
+            url: getRootPath() + "/api/safety_Standard/daoru",    //请求的url地址 
+           /* data: JSON.stringify({
+                parentId: parseInt(str),
+                name: $('#trInput').val(),
+                // oder:parseInt($('#trInput4').val())
+
+            }),    //参数值
+            type: "POST",   //请求方式
+            dataType: 'json', //返回值类型 一般设置为json
+            contentType: "application/json",*/
+            success: function (res) {
+
+                if(res.status==0){
+                    layer.msg("成功");
+                }else{
+                    layer.msg("失败");
+                }
+            }
+        });
+
+
     }
 
     function edit(id,name,flag) {

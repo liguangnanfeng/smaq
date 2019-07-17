@@ -147,12 +147,15 @@
                 <button onClick="show_dialog('整改详情','/village/check-rectification?flag=${flag}&id=${listM.id}&number=${number}')"
                         class="btn btn-success radius" type="button" style="padding: 0 70px;margin-right: 20px">整改意见书
                 </button>
-                <button onClick="show_dialog('实施复查','/company/recheck-add?checkId=${check.id}')"
-                        class="btn btn-success radius" type="button" style="padding: 0 70px;">实施复查
-                </button>
+
                 <%--                <button onClick="location.href = '/company/recheck-add?checkId=${check.id}'"--%>
                 <%--                        class="btn btn-success radius" type="button" style="padding: 0 70px;">实施复查--%>
                 <%--                </button>--%>
+            </c:if>
+            <c:if test="${dangerInteger>0}">
+                <button onClick="show_dialog('实施复查','/company/recheck-add?checkId=${check.id}')"
+                        class="btn btn-success radius" type="button" style="padding: 0 70px;">实施复查
+                </button>
             </c:if>
 
             <!-- 已经有复查 -->

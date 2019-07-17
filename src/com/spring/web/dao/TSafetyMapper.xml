@@ -7,12 +7,17 @@
             <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="industryType" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="parentId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="flag" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="files" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="fileAddress" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="del" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="oder" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-        id, name, industryType, parentId, content, del
+        id, name, industryType, parentId, content, del,flag
     </sql>
     <insert id="insertTSafety" parameterType="com.spring.web.model.TSafety">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -38,6 +43,9 @@
             <if test="del != null">
                 del
             </if>
+            <if test="flag != null">
+                flag
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -58,6 +66,9 @@
             <if test="del != null">
                 #{del,jdbcType=INTEGER}
             </if>
+            <if test="flag != null">
+                #{flag,jdbcType=INTEGER}
+            </if>
         </trim>
     </insert>
 
@@ -65,16 +76,19 @@
         update t_safety_tbl
         <set>
             <if test="name != null">
-                name=  #{name,jdbcType=VARCHAR}
+                name= #{name,jdbcType=VARCHAR},
             </if>
             <if test="industryType != null">
-                and industryType=  #{industryType,jdbcType=INTEGER}
+               industryType=  #{industryType,jdbcType=INTEGER}
             </if>
             <if test="content != null">
-              and content=  #{content,jdbcType=VARCHAR}
+              content=  #{content,jdbcType=VARCHAR},
             </if>
             <if test="del != null">
-               and del = #{del,jdbcType=INTEGER}
+                del = #{del,jdbcType=INTEGER},
+            </if>
+            <if test="flag != null">
+                 flag = #{flag,jdbcType=INTEGER}
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}

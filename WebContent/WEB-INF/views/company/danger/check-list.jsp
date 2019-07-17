@@ -27,13 +27,14 @@
 </head>
 <script>
     // 根据部门名称进行查询
-    function  queryButton(){
-        var dmName =  $("[name='dmName']").val();
+    function queryButton() {
+        var dmName = $("[name='dmName']").val();
         alert(dmName);
         $.ajax(
-            url "${ly }/village/check-list",
+            url
+        "${ly }/village/check-list",
 
-        )
+    )
 
 
     }
@@ -93,21 +94,15 @@
       </span>
         <c:if test="${flag == 1}">
              <span class="l">
-          <%--   <div class="text-c">
-                <div class="dis-ib">
-                    <span>部门名称：</span>
-                    <input type="text" name="dmName" class="input-text mb-5 mt-5" style="width:150px;"
-                           autocomplete="off">
-                </div>
-                <button  onclick="queryButton()" id="queryButton" class="btn btn-success" type="submit">
-                    <i class="Hui-iconfont">&#xe665;</i> 查询
-                </button>
-        </div>--%>
-           <form action="${ly }/village/check-list?flag=${flag}" method="post">
-            <div class="dis-ib">
-                <span>部门名称：</span>
-                <input type="text" value="${dmName}"  name="dmName" class="input-text mb-5 mt-5" style="width:150px;" autocomplete="off" >
-            </div>
+
+
+      <form action="${ly }/village/check-list?flag=${flag}" method="post">
+          <select class="sel_area isShow" id="partNamme"  name="dmName"  style="position:relative;top:3px">
+            <option value="">全部</option>
+            <c:forEach items="${set }" var="be">
+                <option value="${be}">${be}</option>
+            </c:forEach>
+     </select>
             <button class="btn btn-success" type="submit">
                 <i class="Hui-iconfont">&#xe665;</i> 查询
             </button>
@@ -294,7 +289,7 @@
                             <a style="text-decoration:none"
                                onClick="location.href = '/village/check-document?checkId=${be.id}'" href="javascript:;">文书详情</a><br>
                         </c:if>
-                        <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除记录</a>
+                        <a style="text-decoration:none"  onClick="del_(${be.id})" href="javascript:;">删除记录</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -305,6 +300,18 @@
 </div>
 <script type="text/javascript">
 
+    /*删除*/
+    function del_(id) {
+        layer.confirm("要删除该记录？", function (i) {
+            layer.close(i);
+            $.post(getRootPath() + "/company/check-del", {
+                id: id
+            }, function (reuslt) {
+                location.reload();
+            })
+        })
+    }
+
     $(function () {
         sessionStorage.clear();
         $('.table-sort').dataTable({
@@ -312,19 +319,6 @@
             "bStateSave": false,//状态保存
             "aoColumnDefs": []
         }),
-
-
-            /*删除*/
-            function del_(id) {
-                layer.confirm("要删除该记录？", function (i) {
-                    layer.close(i);
-                    $.post(getRootPath() + "/company/check-del", {
-                        id: id
-                    }, function (reuslt) {
-                        location.reload();
-                    })
-                })
-            },
 
         var type = '${type}';
 

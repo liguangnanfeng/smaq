@@ -61,6 +61,6 @@ public interface TRectificationMapper {
     
     int updateByCheckId(TRectification record);
 
-    //List<TRectification> selectAlls(@Param("checkId")Integer checkId);
-    List<Map> selectAlls(@Param("checkId")Integer checkId);
+    List<TRectification> selectAlls(@Param("checkId")Integer checkId);
+    //List<Map> selectAlls(@Param("checkId")Integer checkId);
 }

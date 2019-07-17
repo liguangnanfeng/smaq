@@ -459,7 +459,7 @@ public class TSafetyStandardController extends BaseController {
         Result result = new ResultImpl();
 
         try {
-            List<TSafetyStandard> list1 = tSafetyStandardMapper.findAllByUserId(26, 0); //获取原始的a级要素
+            List<TSafetyStandard> list1 = tSafetyStandardMapper.findAllByUserId(789, 0); //获取原始的a级要素
             for (TSafetyStandard tSafetyStandard : list1) {
                 //然后再进行插入
                 TSafety tSafety1 = new TSafety();
@@ -475,7 +475,7 @@ public class TSafetyStandardController extends BaseController {
                 tSafety1.setFlag(tSafetyStandard.getFlag());
                 tSafetyMapper.insertTSafety(tSafety1);
                 Integer id1 = tSafety1.getId(); //获取A级要素id
-                List<TSafetyStandard> list2 = tSafetyStandardMapper.findAllByUserId(26, tSafetyStandard.getId());//获取原始的B级要素
+                List<TSafetyStandard> list2 = tSafetyStandardMapper.findAllByUserId(789, tSafetyStandard.getId());//获取原始的B级要素
                 if (list2.size() > 0) {
                     for (TSafetyStandard safetyStandard : list2) {
                         TSafety tSafety2 = new TSafety();
@@ -491,7 +491,7 @@ public class TSafetyStandardController extends BaseController {
                         tSafety2.setFlag(safetyStandard.getFlag());
                         tSafetyMapper.insertTSafety(tSafety2);
                         Integer id2 = tSafety2.getId(); //获取A级要素id
-                        List<TSafetyStandard> list3 = tSafetyStandardMapper.findAllByUserId(26, safetyStandard.getId());//获取原始的c级要素
+                        List<TSafetyStandard> list3 = tSafetyStandardMapper.findAllByUserId(789, safetyStandard.getId());//获取原始的c级要素
                         if (list3.size() > 0) {
                             for (TSafetyStandard standard : list3) {
                                 TSafety tSafety3 = new TSafety();

@@ -126,7 +126,9 @@ function showpicture2(src, obj){
           <td class="text-c"><c:if test="${!empty be.partImg}">
             <img src="${be.partImg }" class="mr-10" style="height:100px;"/>
             </c:if>${be.partName }</td>
-          <td class="text-c">${be.levels }</td>
+          <c:set var="item" value="${fn:split(be.levels,'/') }"/>
+         <%-- <td class="text-c">${be.levels }</td>--%>
+          <td>${item[2]}</td>
           <td class="text-c">${be.memo }</td>
           <td class="text-c"><fmt:formatDate value="${be.deadline }"/></td>
           <td class="text-c">

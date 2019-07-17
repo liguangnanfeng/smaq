@@ -597,7 +597,9 @@ public class CompanyController_safety extends BaseController {
                     indus = 2;
                 }
                 model.addAttribute("count1",count1);
-                model.addAttribute("parName",zzjgDepartments.get(0).getName());
+                if(zzjgDepartments.size()>0){
+                    model.addAttribute("parName",zzjgDepartments.get(0).getName());
+                }
                 model.addAttribute("indus",indus);
                 model.addAttribute("zzjgDep1", zzjgDepartment);
                 model.addAttribute("zzjg",zzjg);

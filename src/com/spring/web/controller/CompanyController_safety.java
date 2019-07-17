@@ -128,7 +128,7 @@ public class CompanyController_safety extends BaseController {
     /*
      *  重大风险一键导入 2
      * */
-    @RequestMapping(value = "risk-list-add1")
+   /* @RequestMapping(value = "risk-list-add1")
     public @ResponseBody
     Result riskList(HttpServletRequest request) {
         Result result = new ResultImpl();
@@ -299,7 +299,7 @@ public class CompanyController_safety extends BaseController {
         }
 
         return result;
-    }
+    }*/
 
    /* @RequestMapping({"risk-list-adddel"})
     @ResponseBody
@@ -2529,13 +2529,36 @@ public class CompanyController_safety extends BaseController {
         if (StringUtils.isNotBlank(industry)) {
             industry = utf8Str(industry);
         }
+        // 根据公司 ID 查询风险信息
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         model.addAttribute("company", company);
         if (StringUtils.isBlank(industry)) {
             industry = company.getIndustry();
         }
         model.addAttribute("industry", industry);
-        List<ADangerManual> dL = aDangerManualMapper.selectByIndustry(industry);
+
+        StringBuffer sb = new StringBuffer();
+
+        String[] str = company.getDangers().split(",");
+
+        if (null != str &&  str.length != 0){
+
+            for (int i = 0; i < str.length; i++) {
+                if (i == str.length-1){
+                    sb.append("'").append(str[i]).append("'");
+                }else {
+                    sb.append("'").append(str[i]).append("'").append(",");
+                }
+            }
+            if (null != industry && industry != ""){
+                sb.append(",").append("'").append(industry).append("'");
+            }
+        }
+
+        System.out.println(sb.toString());
+
+
+        List<ADangerManual> dL = aDangerManualMapper.selectByIndustryAll(sb.toString());
         Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
         for (ADangerManual ad : dL) {
             String l1 = ad.getLevel1();

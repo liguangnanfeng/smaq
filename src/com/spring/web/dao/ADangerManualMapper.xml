@@ -279,6 +279,19 @@
   </select>
 
 
+  <select id="selectByIndustryAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from a_danger_manual_tbl
+    where
+    industry in (${industrys})
+  </select>
+
+
+
+
+
+
   <!--根据部门显示所有的检查岗位,但是按照顺序显示-->
   <select id="selectByIds" resultType="com.spring.web.model.ACompanyManual">
     select

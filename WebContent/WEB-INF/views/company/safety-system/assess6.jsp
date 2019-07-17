@@ -132,7 +132,7 @@
           })
       })
   </script>
-</head>s
+</head>
 <body>
 <nav class="breadcrumb text-c">
   <a class="btn-page"  data-href="${ly }/company/safety-system/assess7"  data-title="评估操作" onclick="Hui_admin_tab(this)" href="javascript:;">评估操作</a>

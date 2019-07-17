@@ -94,4 +94,5 @@ public interface TCheckMapper {
     Integer selectHiddenDangerNumber(Integer id);
 
 
+    Integer selectHiddenDangerNumber2(Integer id);
 }

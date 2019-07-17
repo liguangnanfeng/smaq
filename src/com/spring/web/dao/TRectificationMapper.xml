@@ -196,7 +196,6 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-
   <select id="selectByCheckId" parameterType="java.lang.Integer" resultType="com.spring.web.model.TRectification">
     select 
     *

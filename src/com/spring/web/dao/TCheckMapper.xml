@@ -698,7 +698,12 @@
 
     <!--获取这一条检查记录是否有不合格项-->
     <select id="selectHiddenDangerNumber" parameterType="Integer" resultType="Integer">
-        select count(0) from t_check_item_tbl where check_id =#{id} and status > 1
+        select count(0) from t_check_item_tbl where check_id =#{id} and status > 1;
+    </select>
+
+    <!--获取这一条检查记录是否有不合格项-->
+    <select id="selectHiddenDangerNumber2" parameterType="Integer" resultType="Integer">
+        select count(0) from t_check_item_tbl where check_id =#{id} and status =2;
     </select>
 
 </mapper>

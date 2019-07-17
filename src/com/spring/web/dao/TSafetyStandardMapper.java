@@ -56,4 +56,7 @@ public interface TSafetyStandardMapper {
      * @param safetyStandardlistId
      */
     void deleteTSafetyStandard(Integer safetyStandardlistId);
+
+    List<TSafetyStandard> findAllByUserId(@Param("userId")Integer id,@Param("parentId") Integer parentId);
+
 }

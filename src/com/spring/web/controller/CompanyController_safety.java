@@ -1851,18 +1851,25 @@ public class CompanyController_safety extends BaseController {
     */
    @ResponseBody
    @RequestMapping(value = "find-photo")
-   public String findMap(HttpServletRequest request) {
+   public ImportPhoto findMap(HttpServletRequest request) {
        User user = getLoginUser(request);
        if (user == null) {
            return null;
        }
        List<ImportPhoto> photo = importPhotoMapper.selectPhotoOne(user.getId(),2);
-
-       if (photo != null){
-           return photo.get(0).getUrl();
-       }else {
-           return "";
+       ImportPhoto importPhoto = new ImportPhoto();
+       if (null != photo && photo.size() != 0){
+           importPhoto.setId(photo.get(0).getId());
+           importPhoto.setUrl(photo.get(0).getUrl());
+           importPhoto.setUser_id(photo.get(0).getUser_id());
+           importPhoto.setName(photo.get(0).getName());
+           importPhoto.setCoordinate(photo.get(0).getCoordinate());
+           importPhoto.setUrl1(photo.get(0).getUrl1());
+           importPhoto.setPhoto_color(photo.get(0).getPhoto_color());
+           importPhoto.setFlag(photo.get(0).getFlag());
        }
+
+       return importPhoto;
    }
 
 

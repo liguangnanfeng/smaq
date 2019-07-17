@@ -270,9 +270,9 @@
                     <%--<button class="btn btn-primary radius isShow" onClick="BaseSet()">部门、对象确定</button>--%>
                     <button class="btn btn-primary radius isShow" onClick="deleteAll()">部门、对象确定</button>
 
-                    <button class="btn btn-primary radius isShow" onClick="deleteAll()">编辑</button>
+                   <%-- <button class="btn btn-primary radius isShow" onClick="deleteAll()">编辑</button>
 
-                    <button class="btn btn-primary radius isShow" onClick="saveAll()">确定</button>
+                    <button class="btn btn-primary radius isShow" onClick="saveAll()">确定</button>--%>
                 </c:if>
 
                 <c:if test="${number != 3}">
@@ -396,12 +396,16 @@
                                                 </p>
                                             </td>
                                             <c:if test="${x==0}">
-                                            <td style="width:10%;" class="text-c"></c:if>
-                                                <c:if test="${x==1}">
-                                            <td style="width:10%;" class="text-c"></c:if>
-                                                <p style="text-align:center;">
-                                                    <script>document.write(arr[2]);</script>
-                                            </td>
+                                                <td>${ac.level2}</td>
+                                            </c:if>
+
+
+                                            <c:if test="${x==1}">
+
+                                                <td>${ac.level2}</td>
+                                            </c:if>
+
+
                                             <c:if test="${x==0}">
                                             <td style="width:10%;" class="text-c">
 

@@ -186,7 +186,7 @@
 
           <td class="text-c">${ls[0] != null ? ls[0] : "暂无数据" }</td>
 
-          <td>${be.level1 }</td>
+          <td class="text-c">${be.level1 }</td>
 
           <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
 

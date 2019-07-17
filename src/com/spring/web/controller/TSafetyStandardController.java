@@ -447,6 +447,7 @@ public class TSafetyStandardController extends BaseController {
         List<TSafety> list = tSafetyMapper.selectBBytSafetyStandardId(parentId);
         model.addAttribute("list",list);
         model.addAttribute("parentId",parentId);
+        model.addAttribute("flag",list.get(0).getFlag());
         return "company/tables/tab-biaozhun-my";
     }
 
@@ -490,6 +491,8 @@ public class TSafetyStandardController extends BaseController {
     Result updateTSafety(@RequestBody TSafety tSafety) {
         Result result = new ResultImpl();
         try {
+            String name = tSafety.getName();
+            tSafety.setName(name);
             tSafetyMapper.updateTSafety(tSafety);
             result.setStatus("0");
             result.setMess("修改成功");

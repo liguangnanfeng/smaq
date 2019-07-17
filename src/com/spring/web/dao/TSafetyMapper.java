@@ -16,14 +16,18 @@ import java.util.List;
 public interface TSafetyMapper {
     /**
      * 插入数据,只能一条的插入,不然会出现无法进行对接的情况
+     *
      * @return
      */
     Integer insertTSafety(TSafety tSafety);
+
     void updateTSafety(TSafety tSafety);
-    List<TSafety> selectAByIndustryType(@Param("industryType") Integer industryType, @Param("parentId")Integer ParentId);
+
+    List<TSafety> selectAByIndustryType(@Param("industryType") Integer industryType, @Param("parentId") Integer ParentId);
 
     /**
      * 根据A级要素id查询所有的B级要素
+     *
      * @return
      */
     List<TSafety> selectBBytSafetyStandardId(Integer id);

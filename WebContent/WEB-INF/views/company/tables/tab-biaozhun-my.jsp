@@ -200,10 +200,10 @@
                         <tr class="text-c">
                             <td>${index.index+1 }</td>
                             <td style="text-align: left;cursor:pointer" onclick="show_dialog('安全标准化','${ly}/api/safety_Standard/tab-biaozhun-my?parentId=${t.id}')">
-                                <h5 >${t.name }</h5>
+                                <h5 >${t.name }</h5> <h4>${t.flag}</h4>
                             </td>
                             <td>
-                                <a style="text-decoration:none;margin-left: 5px" onclick="edit('${t.id}','${t.name }')" href="javascript:;">编辑</a>
+                                <a style="text-decoration:none;margin-left: 5px" onclick="edit('${t.id}','${t.name }','${t.flag}')" href="javascript:;">编辑</a>
                                 <a style="text-decoration:none;margin-left: 5px" onclick="tip('${t.id}')" href="javascript:;">删除</a>
                             </td>
                         </tr>
@@ -289,6 +289,13 @@
                                 <input class="input-text" type="text" name="" id="trInput2"  style="width:300px">
                                <!--  <textarea cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea> -->
                             </div>
+                            <br>
+                            <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>要素等级:
+                                :</label>
+                            <div class="formControls col-xs-5 col-sm-5">
+                                <input class="input-text" type="text" name="" id="trInput3"  style="width:300px">
+                                <!--  <textarea cols="6" rows="4" style="width: 300px;padding:5px" id="trInput2"></textarea> -->
+                            </div>
 
                         </div>
 <%--						  <div class="row cl dq">--%>
@@ -323,7 +330,6 @@
     var str = '${parentId}'
 
 
-
     <%-- 新增 --%>
 
     function addNew() {
@@ -331,10 +337,11 @@
         $("#modal-plan2").modal("show");
     }
 
-    function edit(id,name,oder) {
+    function edit(id,name,flag) {
         p_name = name ;
         p_id = parseInt(id);
         $('#trInput2').val(name);
+        $('#trInput3').val(flag);
 		// $('#trInput3').val(oder);
         $("#modal-plan3").modal("show");
     }
@@ -371,6 +378,7 @@
                 parentId: parseInt(str),
                 id:p_id,
                 name: $('#trInput2').val(),
+                flag:parseInt($('#trInput3').val())
 				// oder:parseInt($('#trInput3').val())
             }),
             type: "POST",   //请求方式

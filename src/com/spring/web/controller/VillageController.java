@@ -1227,25 +1227,40 @@ public class VillageController extends BaseController {
         m.put("villageId", villageId);  //1
         m.put("companyName", companyName); // null
         m.put("status", status); //状态  null
-        m.put("dmName",dmName);
+        Set set = new LinkedHashSet();
+        if(Objects.equals("",dmName)){
+
+        }else{
+            m.put("dmName",dmName);
+        }
+
         // 进行判断
+
         if (setUserId(user, m)) {
             clearVillageTown(m);
 
-           // List<Map<String, Object>> list = tCheckMapper.selectList(m);
-            List<Map<String, Object>> list = tCheckMapper.selectList3(m);
-
+            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            //List<Map<String, Object>> list = tCheckMapper.selectList3(m);
 
             Integer sum = 0;
             for (int i = 0; i < list.size(); i++) {
                 DynamicParameter<String, Object> id = tCheckMapper.selectCompany((Integer) list.get(i).get("id"));
                 list.get(i).put("listM",id);
                 sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
+
             }
             model.addAttribute("sum", sum);
             model.addAttribute("list", list);
-        }
 
+
+            m.put("dmName",null);
+            List<Map<String, Object>> list2 = tCheckMapper.selectList(m);
+            for (int i = 0; i < list2.size(); i++) {
+                set.add(list2.get(i).get("depart"));
+            }
+
+        }
+        model.addAttribute("set",set);
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
         model.addAttribute("companyName", companyName);
@@ -1610,8 +1625,8 @@ public class VillageController extends BaseController {
         User user = getLoginUser(request);
 
         // TODO 这里只保存一条数据,并返回到前端
-        //List<TRectification> list = tRectificationMapper.selectAlls(id);
-        List<Map> list = tRectificationMapper.selectAlls(id);
+        List<TRectification> list = tRectificationMapper.selectAlls(id);
+        //List<Map> list = tRectificationMapper.selectAlls(id);
        /* if (null != list && list.size() > 0) {
             TRectification rectification = new TRectification();
             rectification.setId(list.get(0).getId());
@@ -1625,8 +1640,12 @@ public class VillageController extends BaseController {
             rectification.setCreateUser(list.get(0).getCreateUser());
             rectification.setCreateTime(list.get(0).getCreateTime());
             rectification.setDel(list.get(0).getDel());
-            model.addAttribute("rectification", rectification);
+
         }*/
+
+       if(null != list && list.size() > 0){
+           model.addAttribute("rectification", list.get(0));
+       }
 
         if((null != list && list.size() > 0)){
             model.addAttribute("rectification", list.get(0));
@@ -1694,7 +1713,6 @@ public class VillageController extends BaseController {
         model.addAttribute("flag", flag);
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
-        log.error("check-rectification：" + 6);
         return "village/danger/opinion-detail";
         /*if (type == 9) {
             return "village/danger/opinion-detailrjcb";

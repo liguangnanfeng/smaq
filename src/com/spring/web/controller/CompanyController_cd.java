@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -4174,11 +4175,16 @@ public class CompanyController_cd extends BaseController {
         m.put("title", title);
         m.put("companyName", companyName);
         m.put("status", status);
+
         if (setUserId(user, m)) {
             clearVillageTown(m);
             List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            for (Map<String, Object> stringObjectMap : list) {
+
+            }
             model.addAttribute("list", list);
         }
+
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
         model.addAttribute("companyName", companyName);
@@ -4194,6 +4200,9 @@ public class CompanyController_cd extends BaseController {
         return "village/danger/check-list";
     }
 
+    /**
+     * 不知道什么方法
+     */
     @RequestMapping(value = "model-add")//modify by zhangcl 2018.10.24
     public String modelAdd(Integer type, Integer flag, Integer[] ids, Integer depId,
                            Integer industryId, HttpServletRequest request, Model model)

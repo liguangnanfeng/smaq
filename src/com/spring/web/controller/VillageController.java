@@ -3374,9 +3374,27 @@ public class VillageController extends BaseController {
         model.addAttribute("tableName", tableName);
         model.addAttribute("lxType", lxType);
 
+
+        StringBuffer sb = new StringBuffer();
+
+        String[] str = company.getDangers().split(",");
+
+        if (null != str &&  str.length != 0){
+
+            for (int i = 0; i < str.length; i++) {
+                if (i == str.length-1){
+                    sb.append("'").append(str[i]).append("'");
+                }else {
+                    sb.append("'").append(str[i]).append("'").append(",");
+                }
+            }
+            if (null != industry && industry != ""){
+                sb.append(",").append("'").append(industry).append("'");
+            }
+        }
         // 根据 checkType 查询对应的 level1 信息
         if (-2 == checkType) {
-            List<ADangerManual> dL = aDangerManualMapper.selectByIndustry(industry);
+            List<ADangerManual> dL = aDangerManualMapper.selectByIndustryAll(sb.toString());
             Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
             for (ADangerManual ad : dL) {
                 String l1 = ad.getLevel1();

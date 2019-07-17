@@ -511,7 +511,6 @@ public class CompanyController_safety extends BaseController {
                     }else if (Integer.parseInt(buttons) == 2){
                         zzjg = this.zzjgDepartmentMapper.selectEmpyDangerIds(user.getId());
                     }
-
                 }
 
                 Integer indus = 0;
@@ -664,14 +663,6 @@ public class CompanyController_safety extends BaseController {
 
         return result;
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -835,24 +826,27 @@ public class CompanyController_safety extends BaseController {
         // 根据公司 user_id  查询数据 将数据返回
         Commerce commerce = commerceMapper.selectComFlag(user.getId());
         Company company = companyMapper.selectByPrimaryKey(user.getId());
-        String[] str = commerce.getCom_flag().split(",");
+        if (null != commerce.getCom_flag() && commerce.getCom_flag().length() != 0 && commerce.getCom_flag() != ""){
+            String[] str = commerce.getCom_flag().split(",");
 
-        StringBuffer sb = new StringBuffer();
+            StringBuffer sb = new StringBuffer();
 
-        for (int i = 0; i < str.length; i++) {
-            if (str[i] != null && str[i] != "" && str[i].length() != 0){
-                if (i == str.length-1){
-                    sb.append(str[i]);
-                }else {
-                    sb.append(str[i]).append(",");
+            for (int i = 0; i < str.length; i++) {
+                if (str[i] != null && str[i] != "" && str[i].length() != 0){
+                    if (i == str.length-1){
+                        sb.append(str[i]);
+                    }else {
+                        sb.append(str[i]).append(",");
+                    }
                 }
             }
+            if (null == commerce){
+                model.addAttribute("comFlag","");
+            }else {
+                model.addAttribute("comFlag",sb.toString());
+            }
         }
-        if (null == commerce){
-            model.addAttribute("comFlag","");
-        }else {
-            model.addAttribute("comFlag",sb.toString());
-        }
+
         model.addAttribute("industry",company.getIndustry());
         return "company/safety-system/danger-table";
     }
@@ -2189,12 +2183,10 @@ public class CompanyController_safety extends BaseController {
                 acL_f.add(ac);
             }
         }
-
         if (acL_f.size() == 0) {//没有重大较大隐患
             model.addAttribute("flag", flag);
             return "company/safety-system/risk-information-list_0";
         }
-
         //事故类型列表，用于处理其中的风险
         List<AGwyjSh> shList = aGwyjShMapper.selectAll();
         //List<String> adanerTypeList = aDangerTypeMapper.selectAll();
@@ -2373,7 +2365,6 @@ public class CompanyController_safety extends BaseController {
             be.setDel(0);
             be.setIsedit(0);
             be.setName(name);
-
 
             m.put("uid", user.getId());
             m.put("levels", new String[]{"红色", "橙色"});
@@ -2554,9 +2545,6 @@ public class CompanyController_safety extends BaseController {
                 sb.append(",").append("'").append(industry).append("'");
             }
         }
-
-        System.out.println(sb.toString());
-
 
         List<ADangerManual> dL = aDangerManualMapper.selectByIndustryAll(sb.toString());
         Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();

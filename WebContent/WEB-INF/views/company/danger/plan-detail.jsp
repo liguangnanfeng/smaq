@@ -222,9 +222,9 @@
                 <th width="5%">检查类型</th>
                 <th width="7%">车间/场所</th>
                 <c:if test="${flag == 1}">
-                    <th width="10%">系统</th>
+                    <th width="3%">系统</th>
                 </c:if>
-                <th width="3%">环节/部位</th>
+                <th width="10%">环节/部位</th>
                 <th width="5%">检查方式</th>
                 <th width="3%">检查形式</th>
                 <th width="12%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>
@@ -249,11 +249,12 @@
                         </c:choose>
                     </td>
                     <td class="text-c">${ch.part == "" ? "暂无数据" : ch.part}</td>
-                    <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
                     <c:if test="${flag == 1}">
                         <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
                         <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
                     </c:if>
+                    <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
+
 
                     <td>
                         <c:choose>

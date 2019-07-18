@@ -3532,6 +3532,84 @@ public class CompanyController_safety extends BaseController {
         return result;
     }
 
+
+    /**
+     * 评估操作风险等级修改
+     */
+    @RequestMapping({"zp-save-level"})
+    @ResponseBody
+    public Result zpSaveLevel(Integer id, String level, HttpServletRequest request) throws Exception {
+        Result result = new ResultImpl();
+        User user = getLoginUser(request);
+        ACompanyManual acm = new ACompanyManual();
+        acm.setId(id);
+        acm.setLevel(level);
+
+        ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(id);
+        String fjgkfzr = null;
+        List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),aCompanyManual.getDmid(),"负责人",2);
+        if (null != zzjgDepartment1 && zzjgDepartment1.size() != 0){
+            // 根据 ID 查询 name
+            ZzjgPersonnel zzjgPersonnel1 = zzjgPersonnelMapper.selectNameDid(zzjgDepartment1.get(0).getId());
+
+            if (null != zzjgPersonnel1){
+                fjgkfzr = zzjgPersonnel1.getName()+"-"+zzjgPersonnel1.getMobile();
+            }else {
+                fjgkfzr = "";
+            }
+        }
+
+        if (level != null && level.equals("红色")) {
+            List<Company> companyList = companyMapper.selectByPrimaryKeys(user.getId());
+            if (companyList.size() != 0){
+                acm.setFjgkfzr(fjgkfzr+","+companyList.get(0).getCharge()+"-"+companyList.get(0).getChargeContact());
+            }else{
+                acm.setFjgkfzr("");
+            }
+            acm.setGkzt("公司");
+            acm.setLevel("红色");
+        }
+
+        if (level != null && level.equals("橙色")) {
+            if (zzjgDepartment1.size() != 0){
+                acm.setFjgkfzr(fjgkfzr);
+            }else {
+                acm.setFjgkfzr("");
+            }
+            acm.setGkzt(aCompanyManual.getLevel1());
+            acm.setLevel("橙色");
+        }
+
+        if (level != null && level.equals("黄色")) {
+            if (zzjgDepartment1.size() != 0){
+                acm.setFjgkfzr(fjgkfzr);
+            }else {
+                acm.setFjgkfzr("");
+            }
+            acm.setGkzt(aCompanyManual.getLevel1());
+            acm.setLevel("黄色");
+        }
+
+        if (level != null && level.equals("蓝色")) {
+            if (zzjgDepartment1.size() != 0){
+                acm.setFjgkfzr(fjgkfzr);
+            }else {
+                acm.setFjgkfzr("");
+            }
+            acm.setGkzt(aCompanyManual.getLevel1());
+            acm.setLevel("蓝色");
+        }
+
+        this.aCompanyManualMapper.updateByPrimaryKeySelective(acm);
+        this.aCompanyManualMapper.updateCompanyDlevel(this.getLoginUser(request).getId());
+        return result;
+    }
+
+
+
+
+
+
     /**
      * 告知牌-保存
      */

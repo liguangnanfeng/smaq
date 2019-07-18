@@ -78,6 +78,7 @@ public class TradeController extends BaseController {
         }
         return "trade/main";
     }
+
 //    /**
 //     * 政府首页
 //     */

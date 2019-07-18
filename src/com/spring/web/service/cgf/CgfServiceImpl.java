@@ -554,9 +554,9 @@ public class CgfServiceImpl implements CgfService {
                     tCheckItem.setRecheckTime(new Date());
                     tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
                     // 对数据做出判断
-                    if(c.getFlag()==1&&!"公司级".equals(c.getDepart())&&tCheckItem.getStatus()==3){
+                    if (c.getFlag() == 1 && !"公司级".equals(c.getDepart()) && tCheckItem.getStatus() == 3) {
                         ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(tCheckItem.getLevelId());
-                        if(null!=aCompanyManual&&null!=aCompanyManual.getCommerce()&&!"".equals(aCompanyManual.getCommerce())){
+                        if (null != aCompanyManual && null != aCompanyManual.getCommerce() && !"".equals(aCompanyManual.getCommerce())) {
                             set.add(aCompanyManual.getCommerce());
                         }
                     }
@@ -565,20 +565,22 @@ public class CgfServiceImpl implements CgfService {
         }
 
         // 开始对数据进行判断
-        if(set.size()>0){
+        if (set.size() > 0) {
             Commerce commerce = commerceMapper.selectComFlag(c.getUserId());
-            if(null!=commerce){
+            if (null != commerce) {
                 List<String> commerces = new ArrayList<String>();
                 for (String s : set) {
                     commerces.add(s);
                 }
-                 commerce.setUtime(new Date());
+                commerce.setUtime(new Date());
                 String com_flag = commerce.getCom_flag();
 
                 for (int i = 0; i < commerces.size(); i++) {
-                        if(com_flag.indexOf(commerces.get(i))!=-1){
-                            com_flag  = com_flag.replace(commerces.get(i), "");
-                        }
+                    if (com_flag.indexOf(commerces.get(i) + ",") != -1) {
+                        com_flag = com_flag.replace(commerces.get(i) + ",", "");
+                    } else if (com_flag.indexOf(commerces.get(i)) != -1) {
+                        com_flag = com_flag.replace(commerces.get(i), "");
+                    }
                 }
                 commerce.setCom_flag(com_flag);
                 commerceMapper.updateByPrimaryKey(commerce);

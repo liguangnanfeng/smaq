@@ -255,7 +255,16 @@ public class TSafetyStandardController extends BaseController {
             User user = getLoginUser(request);// 获取公司名称
             Company company = companyMapper.selectByPrimaryKey(user.getId());
 
-            String industry = company.getIndustry();
+            String industry ="";
+            if(null==company){
+                TradeClique tradeClique = tradeCliqueMapper.selectByPrimaryKey(user.getId());
+                if(null==tradeClique){
+                    industry=tradeClique.getIndustry();
+                }
+            }else{
+                industry= company.getIndustry();
+            }
+
             Integer industryType = null;
             if (industry.indexOf("化工") != -1) {
                 industryType = 1; // 危化企业

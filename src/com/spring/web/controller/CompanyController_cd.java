@@ -5451,7 +5451,7 @@ public class CompanyController_cd extends BaseController {
         Result result = new ResultImpl();
         User user = getLoginUser(request);
         userService.importLightning(result, user.getId(), file);
-        System.out.println(result);
+
         writeResponse(result, response);//该方法调用如下
     }
 

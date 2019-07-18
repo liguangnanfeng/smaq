@@ -396,7 +396,7 @@ public class TSafetyStandardController extends BaseController {
     public @ResponseBody
     AppResult uploadFiles(@RequestParam(value = "file", required = false) MultipartFile file, Integer safetyStandardlistId, Integer type, HttpServletRequest request) throws IOException {
         AppResult result = new AppResultImpl();
-        System.out.println("执行文件上传");
+
         request.setCharacterEncoding("UTF-8");
 
         String realPath1 = "/images/upload/";
@@ -428,7 +428,7 @@ public class TSafetyStandardController extends BaseController {
                     TSafetyStandard one = tSafetyStandardMapper.findOne(safetyStandardlistId);
                     one.setType(type);
                     String url = "";
-                    System.out.println(request.getServerPort());
+
                     if (8080 == request.getServerPort()) {
                         url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
                     } else {

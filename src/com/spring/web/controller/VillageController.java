@@ -1625,10 +1625,6 @@ public class VillageController extends BaseController {
         User user = getLoginUser(request);
         // TODO 这里只保存一条数据,并返回到前端
         List<TRectification> list = tRectificationMapper.selectAlls(id);
-        System.out.println("---------------");
-        System.out.println(list);
-        System.out.println(id);
-        System.out.println("---------------");
         //List<Map> list = tRectificationMapper.selectAlls(id);
        /* if (null != list && list.size() > 0) {
             TRectification rectification = new TRectification();

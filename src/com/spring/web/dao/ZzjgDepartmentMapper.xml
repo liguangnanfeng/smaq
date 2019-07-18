@@ -372,10 +372,14 @@
 
     <select id="selectEmpyDangerIds" resultType="java.util.Map">
         select
-        t1.id, t1.name, t1.level,t1.cid, t1.dangerId, t1.flag,
+         t1.id, t1.name, t1.level,t1.cid, t1.dangerId, t1.flag,
         (select name from zzjg_company_tbl where id = t1.cid) companyName,
         (select count(*) from a_company_manual_tbl where dmid = t1.id and del = 0 and uid = t1.uid) count,
-        (select count(*) from distinguish_type where pid = t1.id and del = 0 and user_id = t1.uid) count1
+        (select count(*) from distinguish_type where pid = t1.id and del = 0 and user_id = t1.uid and flag = 1) count1,
+        (select count(*) from distinguish_type where pid = t1.id and del = 0 and user_id = t1.uid and flag = 2) count2,
+        (select count(*) from distinguish_type where pid = t1.id and del = 0 and user_id = t1.uid and flag = 3) count3,
+        (select count(*) from distinguish_type where pid = t1.id and del = 0 and user_id = t1.uid and flag = 4) count4,
+        (select count(*) from distinguish_type where pid = t1.id and del = 0 and user_id = t1.uid and flag = 5) count5
         from zzjg_department_tbl t1
         where
         t1.del = 0 and t1.level = 1

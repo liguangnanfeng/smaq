@@ -76,7 +76,7 @@
         //自评保存
         function zpLevel_save_(id,e,idx,col) {
         var level = $(e).attr("value");
-        $.post(getRootPath() + "/company/safety-system/zp-save", {
+        $.post(getRootPath() + "/company/safety-system/zp-save-level", {
         id : id,
         level : $(e).attr("value")
         },function(result) {

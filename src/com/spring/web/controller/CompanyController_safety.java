@@ -1445,7 +1445,7 @@ public class CompanyController_safety extends BaseController {
     }
 
     /**
-     * 较大风险判定
+     * 较大风险评估页面
      */
     @RequestMapping({"assess-list"})
     public String assessList(Model model, HttpServletRequest request) throws Exception {
@@ -1463,7 +1463,8 @@ public class CompanyController_safety extends BaseController {
             } else {
                 m.put("flag", "1,3,4,5");
             }*/
-            m.put("flag", "1");
+           /* m.put("flag", "1");*/
+            m.put("level", "橙色");
             List<Map<String, Object>> acL = this.aCompanyManualMapper.selectByMap(m);
             Integer indus = 0;
             if (company.getIndustry().contains("化工")){
@@ -2111,9 +2112,10 @@ public class CompanyController_safety extends BaseController {
             return "company/safety-system/type";
         } else {
             model.addAttribute("company", company);
+            String str = "'黄色','蓝色'";
             Map<String, Object> m = new HashMap();
             m.put("uid", user.getId());
-            m.put("flag", "3");
+            m.put("level", str);
             List<Map<String, Object>> acL = this.aCompanyManualMapper.selectByFlag3(m);
             model.addAttribute("list", acL);
             Integer indus = 0;
@@ -2760,7 +2762,7 @@ public class CompanyController_safety extends BaseController {
     }
 
     /**
-     * 重大风险判定
+     * 重大风险评估页面
      */
     @RequestMapping(value = "assess5")
     public String assess5(Model model, HttpServletRequest request, String number) throws Exception {
@@ -2770,7 +2772,7 @@ public class CompanyController_safety extends BaseController {
             model.addAttribute("url", request.getRequestURI());
             return "company/safety-system/type";
         }
-        List<ACompanyManual> aCompanyManualList = aCompanyManualMapper.findALLsss("2", user.getId());
+        List<ACompanyManual> aCompanyManualList = aCompanyManualMapper.findALLsss("红色", user.getId());
         Integer indus = 0;
         if (company.getIndustry().contains("化工")){
             indus = 1;

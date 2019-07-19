@@ -120,7 +120,7 @@ public interface ACompanyManualMapper {
 
     void save(ACompanyManual aCompanyManual1);
 
-    List<ACompanyManual> findALLsss(@Param("flag")String flag, @Param("uid")Integer uid);
+    List<ACompanyManual> findALLsss(@Param("level")String level, @Param("uid")Integer uid);
 
     void updateAllUid(@Param("uid")Integer uid, @Param("level1")String level1, @Param("level2")String level2);
 

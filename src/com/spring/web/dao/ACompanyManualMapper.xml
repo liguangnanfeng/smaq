@@ -638,7 +638,7 @@
         from
         a_company_manual_tbl T1
         where
-        T1.uid = #{uid} and T1.del = 0 and T1.flag != 1 and T1.flag != 2 and T1.level != ""
+        T1.uid = #{uid} and T1.del = 0 and T1.level in  (${level})
     </select>
 
 
@@ -1130,7 +1130,7 @@
 
     <!--根据公司ID，风险等级 查询未删除的数据信息 -->
     <select id="findALLsss" resultType="com.spring.web.model.ACompanyManual">
-        select * from a_company_manual_tbl where del = 0 and flag = #{flag} and uid = #{uid} order by id asc;
+        select * from a_company_manual_tbl where del = 0 and level = #{level} and uid = #{uid} order by id asc;
     </select>
 
 

@@ -182,12 +182,12 @@
                                 <c:forEach items="${be.array}" varStatus="index2" var="item">
                                     <td>
                                         <c:set value="${fn:split(item,'=' )}" var="status"></c:set>
-                                        <c:if test="${be.level1=='公司级' }">
+                                        <c:if test="${be.level1==companyName }">
                                             <a style="text-decoration:none"
                                                onclick="show_dialog('生成检查表','${ly}/village/select-all-level1?flag=${flag}&checkType=-2&lxType=${status[0]}')"
                                                href="javascript:;">设置</a>
                                         </c:if>
-                                        <c:if test="${be.level1!='公司级' }">
+                                        <c:if test="${be.level1!=companyName }">
                                             <a style="text-decoration:none"
                                                onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-2&flag=${flag}')"
                                                href="javascript:;">设置</a>
@@ -262,12 +262,12 @@
                                 <c:forEach items="${be.array}" varStatus="index2" var="item">
                                     <td>
                                         <c:set value="${fn:split(item,'=' )}" var="status"></c:set>
-                                        <c:if test="${be.level1=='公司级' }">
+                                        <c:if test="${be.level1==companyName }">
                                             <a style="text-decoration:none"
                                                onclick="show_dialog('生成检查表','${ly}/village/select-all-level1?flag=${flag}&checkType=-1&lxType=${status[0]}')"
                                                href="javascript:;">设置</a>
                                         </c:if>
-                                        <c:if test="${be.level1!='公司级' }">
+                                        <c:if test="${be.level1!=companyName }">
                                             <a style="text-decoration:none"
                                                onClick="show_dialog('生成检查表', '${ly}/village/model-add4?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-1&flag=${flag}')"
                                                href="javascript:;">设置</a>
@@ -364,7 +364,7 @@
     <c:forEach items="${hiddenPlanList}" varStatus="index" var="be">
     <tr class="text-c">
     <td>1</td>
-    <td>公司级</td>
+    <td>${companyName}</td>
         <td onClick="inputC(this,1,'${be.c}',0)">${be.syn_month }</td>
         <td>${be.syn_year }</td>
         <td onClick="inputC(this,3,'${be.c}',0)">${be.syn_ratio }</td>

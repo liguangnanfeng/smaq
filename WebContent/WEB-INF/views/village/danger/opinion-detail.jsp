@@ -188,7 +188,7 @@
             <thead>
             <tr class="text-c">
                 <th width="3%">序号</th>
-                <th width="15%">检查部位</th>
+                <th width="15%">系统</th>
                 <th width="22%">检查项目</th>
                 <c:if test="${!empty itemL[0].content}">
                     <th width="20%">检查内容</th>
@@ -203,12 +203,22 @@
             <c:forEach items="${itemL }" var="be" varStatus="index">
                 <tr>
                     <td class="text-c">${index.index + 1}</td>
+                    <c:set var="item" value="${fn:split(be.levels,'/') }"/>
+
                     <td class="text-c">
                         <c:if test="${!empty be.partImg}">
                             <img src="${be.partImg }" class="mr-10" style="height:100px;"/>
                         </c:if>
-                            ${be.partName }</td>
-                    <td class="text-c">${be.levels }</td>
+                        <c:if test="${ not empty item[1]}">
+                            ${item[1] }
+                        </c:if>
+                           </td>
+
+                    <td class="text-c">
+
+                            ${item[2] }
+                    </td>
+
                     <c:if test="${!empty itemL[0].content}">
                         <td class="text-c">${be.content }</td>
                     </c:if>

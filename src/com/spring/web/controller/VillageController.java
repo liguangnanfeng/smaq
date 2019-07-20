@@ -1661,7 +1661,7 @@ public class VillageController extends BaseController {
             Integer levelId = (Integer) iteml.get(i).get("levelId");
                 if(null!=levelId){
                     String DangerFlag="";
-                    if(flag==1&&!Objects.equals("公司级",tc.getDepart())){
+                    if(flag==1&&!Objects.equals(user.getUserName(),tc.getDepart())){
                         DangerFlag = aCompanyManualMapper.selectByPrimaryKey(levelId).getFlag();
                     }else{
                         DangerFlag = queryDangerFlag(levelId, industryType);
@@ -3722,7 +3722,7 @@ public class VillageController extends BaseController {
             }
 
             if(flag==1){
-                model.setPart("公司级"); // 被检查的部门
+                model.setPart(user.getUserName()); // 被检查的部门
             }else{
                 model.setPart(user.getUserName()); // 被检查的部门
             }
@@ -3733,7 +3733,7 @@ public class VillageController extends BaseController {
 
             TModelPart modelPart = new TModelPart();
             modelPart.setModelId(model.getId());
-            modelPart.setName("公司级");
+            modelPart.setName(user.getUserName());
             modelPart.setLevels(a);
             tModelPartMapper.insertSelective(modelPart);
 
@@ -3742,7 +3742,7 @@ public class VillageController extends BaseController {
             tCheck.setFlag(flag);                                                   // 1. 企业自查  2 行政检查  3 第三方
 
             if (flag==1){
-                tCheck.setTitle("公司级"+str[type-1]+"检查表");
+                tCheck.setTitle(user.getUserName()+str[type-1]+"检查表");
                 if(null!=cycle){
                     Date d = new Date();
                     long time1 = d.getTime();
@@ -3757,7 +3757,7 @@ public class VillageController extends BaseController {
                 tCheck.setTitle("部门检查表"); // 计划检查名
             }
 
-            tCheck.setDepart("公司级");                                              // 被检查的部门
+            tCheck.setDepart(user.getUserName());                                              // 被检查的部门
             tCheck.setUserId(user.getId());                                         // 企业公司id
             tCheck.setCreateUser(user.getId());                                     // 创建人的id
             tCheck.setModelId(model.getId());                                       // 模版id

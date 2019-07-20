@@ -3932,14 +3932,14 @@ public class CompanyController_cd extends BaseController {
         User user = getLoginUser(request);
 
         Map<String, Object> map1 = new LinkedHashMap<String, Object>();
-        map1.put("level1", "公司级");
+        map1.put("level1",user.getUserName());
 
         List<Map<String, Object>> jiChuItem = new ArrayList<>();
         jiChuItem.add(map1);
         jiChuItem.addAll(aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理"));
 
         Map<String, Object> map2 = new LinkedHashMap<String, Object>();
-        map2.put("level1", "公司级");
+        map2.put("level1", user.getUserName());
         List<Map<String, Object>> XianChangItem = new ArrayList<>();
         XianChangItem.add(map2);
         XianChangItem.addAll(aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理"));
@@ -4481,7 +4481,7 @@ public class CompanyController_cd extends BaseController {
         if (flag == 1) {
             iteml = tCheckMapper.selectLevels(id);
             for (int i = 0; i < iteml.size(); i++) {
-                if ("公司级".equals(iteml.get(i).get("depart"))) {
+                if (loginUser.getUserName().equals(iteml.get(i).get("depart"))) {
                     TCheck tCheck = tCheckMapper.selectByPrimaryKey(id);
                     if (tCheck.getIndustryType() == 1) { // 基础
                         iteml = tCheckMapper.selectAllLevel(id);

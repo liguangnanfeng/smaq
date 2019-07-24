@@ -1375,7 +1375,12 @@ public class CompanyController_cd extends BaseController {
      * @return
      */
     @RequestMapping("danger/danger-chart-px")
-    public String dangerChartPx() {
+    public String dangerChartPx(Model model ,HttpServletRequest request) {
+        User user = getLoginUser(request);
+
+        List<ZzjgDepartment> list = zzjgDepartmentMapper.selectLevel1DangerIds(user.getId());
+
+        model.addAttribute("zzjg",list);
         return "company/danger/danger-chart-px";
     }
 
@@ -1567,7 +1572,7 @@ public class CompanyController_cd extends BaseController {
             d[l] = 0;
         }
 
-        String[] xx = new String[]{"隐患条数", "整改项数"};
+        String[] xx = new String[]{"隐患条数", "已整改项数"};
         List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
         Map<String, Object> m1 = new HashMap<String, Object>();
         Map<String, Object> m2 = new HashMap<String, Object>();
@@ -1600,6 +1605,7 @@ public class CompanyController_cd extends BaseController {
         }
         mm.add(m1);
         mm.add(m2);
+
         result.setMap("categories", monthL);
         result.setMap("series", mm);// List<Data{String name; Integer[] data}> Data
         return result;
@@ -1899,7 +1905,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "zhuChartData5")
     public @ResponseBody
-    Result zhuChartData5(String sT, String eT, HttpServletRequest request, Integer status, Integer flag) throws Exception {
+    Result zhuChartData5(String sT, String eT, HttpServletRequest request, Integer status, Integer flag, Integer flags,Integer depart) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
@@ -1916,6 +1922,8 @@ public class CompanyController_cd extends BaseController {
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
 
+        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectByPrimaryKey(depart);
+
         List<String> monthL = monthC(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
@@ -1923,6 +1931,16 @@ public class CompanyController_cd extends BaseController {
         m.put("del", 0);
         m.put("status", 2);
         m.put("uid", user.getId());
+        if (null == flags){
+            flags = 1;
+        }
+        m.put("flag", flags);
+        if (null != zzjgDepartment){
+            m.put("depart", zzjgDepartment.getName());
+        }else {
+            m.put("depart", null);
+        }
+
         // 根据合格不合格查询出数据.然后进行封装
         List<DynamicParameter<String, Object>> ll = tCheckItemMapper.selectHiddenDangerTypeByMap(m);
 
@@ -1945,6 +1963,7 @@ public class CompanyController_cd extends BaseController {
 
         // 数据表示的是,选中的时间段内
         m1.put("data", d.clone());
+
         m2.put("data", d.clone());
         m3.put("data", d.clone());
         // 这次循环的就是每一天合格的信息
@@ -2093,7 +2112,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "zhuChartData7")
     public @ResponseBody
-    Result zhuChartData7(String sT, String eT, HttpServletRequest request, Integer status, Integer flag) throws Exception {
+    Result zhuChartData7(String sT, String eT, HttpServletRequest request, Integer status, Integer flag, Integer flags,Integer depart) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
@@ -2109,7 +2128,7 @@ public class CompanyController_cd extends BaseController {
             Date d = DateConvertUtil.formateDate(eT, TIME_STR);
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
-
+        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectByPrimaryKey(depart);
         List<String> monthL = monthC(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
@@ -2117,6 +2136,16 @@ public class CompanyController_cd extends BaseController {
         m.put("del", 0);
         m.put("status", 2);
         m.put("uid", user.getId());
+
+        if (null == flags){
+            flags = 1;
+        }
+        m.put("flag", flags);
+        if (null != zzjgDepartment){
+            m.put("depart", zzjgDepartment.getName());
+        }else {
+            m.put("depart", null);
+        }
         //m.put("uid", 37097);
         // 根据合格不合格查询出数据.然后进行封装
         List<DynamicParameter<String, Object>> ll = tCheckItemMapper.selectHiddenLevelTypeByMap(m);

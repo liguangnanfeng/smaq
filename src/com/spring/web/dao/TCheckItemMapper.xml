@@ -1076,6 +1076,12 @@
         left join smaq.t_check_tbl t2 on t1.check_id = t2.id
         where t2.status = #{status}
         and t2.del = #{del}
+        <if test="flag != null">
+            and t2.flag = #{flag}
+        </if>
+        <if test="depart != null">
+            and t2.depart =  #{depart}
+        </if>
         and <![CDATA[DATE_FORMAT(t2.real_time, '%Y-%m-%e') >= #{startTime1} and DATE_FORMAT(t2.real_time, '%Y-%m-%e') <= #{endTime1}]]>
         and t2.user_id=#{uid}) s1
         group by s1.time;
@@ -1113,6 +1119,15 @@
         left join smaq.a_company_manual_tbl c1 on c1.id=t1.level_id
         where t2.status = #{status}
         and t2.del = #{del}
+
+        <if test="flag != null">
+            and t2.flag = #{flag}
+        </if>
+
+        <if test="depart != null">
+            and t2.depart =  #{depart}
+        </if>
+
         and <![CDATA[DATE_FORMAT(t2.real_time, '%Y-%m-%e') >= #{startTime1} and DATE_FORMAT(t2.real_time, '%Y-%m-%e') <= #{endTime1}]]>
         and t2.user_id=#{uid}) s1
         group by s1.time;

@@ -181,6 +181,21 @@
 <div class="panel panel-default" style="width:99%;margin-left:10px;float:left;background:none;">
     <div class="div_tx">
         <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">排查数据分析
+
+            <select class="sel_area isShow" id="partNamme"  onchange="int()" style="position:relative;top:3px">
+                <option value="" >全部</option>
+                <option value="1" >企业自查</option>
+                <option value="2" >行政检查</option>
+                <option value="3" >部门抽查</option>
+            </select>
+
+            <select class="sel_area isShow" id="partNammes"  onchange="int()" style="position:relative;top:3px">
+                <option value="" >全部</option>
+                <c:forEach items="${zzjg }" var="be">
+                    <option value="${be.id}" >${be.name }</option>
+                </c:forEach>
+            </select>
+
             <!-- 判断并提示至少选择3个月 -->
             <div class="search_rq pos-a">
                 <font>查询时间段：</font>
@@ -213,23 +228,31 @@
 
     var categories = [];//日期数组
     var series = {};  //数据数组
-    var flag = 0      //查看类型0:综合数据 1:隐患类型 2:隐患来源 3:隐患等级
+    var flag = 0;      //查看类型0:综合数据 1:隐患类型 2:隐患来源 3:隐患等级
+
+
     function int(f) {
+        var vs = $('#partNammes  option:selected').val();
+        var vs1 = $('#partNamme  option:selected').val();
+    console.log(vs)
+    console.log(vs1)
         var url ='';
         if(f==0){
             url= "/company/zhuChartData3";
         }else if(f==1){
-            url= "/company/zhuChartData5";
+            url= "/company/zhuChartData5?flags="+vs1+"&depart="+vs;
         }else if(f==2){
             url= "/company/zhuChartData6";
         }else{
-            url= "/company/zhuChartData7";
+            url= "/company/zhuChartData7?flags="+vs1+"&depart="+vs;
         }
         $.post(getRootPath() + url, {
             sT: $("#sT").val(),
             eT: $("#eT").val()
         }, function (result) {
-            categories = result.map.categories;
+    <%--console.log(result)--%>
+
+    categories = result.map.categories;
             series = result.map.series;
             var extra = {};
             extra.name =

@@ -188,5 +188,8 @@ public interface ACompanyManualMapper {
     List<ACompanyManual> findOne(@Param("level3")String level3, @Param("uid")Integer uid, @Param("dmid")String dmid);
 
     List<ACompanyManual> findRiskId(@Param("uid")Integer uid, @Param("dmid")Integer dmid,@Param("level3")String level3);
+
+    List<Map<String, Object>> selectByMapLevel3(Map<String, Object> m);
+
 }
 

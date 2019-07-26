@@ -102,11 +102,12 @@ public class ADangerManual {
 
     private String commerce;
 
+    private String control;
 
     public ADangerManual() {
     }
 
-    public ADangerManual(Integer id, String industry, String level1, String level2, String level3, String factors, String type, String measures, String reference, String flag, String level, String flag2, String name, String commerce) {
+    public ADangerManual(Integer id, String industry, String level1, String level2, String level3, String factors, String type, String measures, String reference, String flag, String level, String flag2, String name, String commerce, String control) {
         this.id = id;
         this.industry = industry;
         this.level1 = level1;
@@ -121,6 +122,7 @@ public class ADangerManual {
         this.flag2 = flag2;
         this.name = name;
         this.commerce = commerce;
+        this.control = control;
     }
 
     public Integer getId() {
@@ -235,6 +237,14 @@ public class ADangerManual {
         this.commerce = commerce;
     }
 
+    public String getControl() {
+        return control;
+    }
+
+    public void setControl(String control) {
+        this.control = control;
+    }
+
     @Override
     public String toString() {
         return "ADangerManual{" +
@@ -252,6 +262,7 @@ public class ADangerManual {
                 ", flag2='" + flag2 + '\'' +
                 ", name='" + name + '\'' +
                 ", commerce='" + commerce + '\'' +
+                ", control='" + control + '\'' +
                 '}';
     }
 }

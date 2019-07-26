@@ -202,15 +202,30 @@
                                             <%--
                                                                             href="javascript:;">实施</a>--%>
                                         <c:if test="${status[1]==1}">
-                                            <a style="text-decoration:none"
-                                               onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
-                                               href="javascript:;">实施</a>
+                                            <c:if test="${index2.index==2}">
+                                                <a style="text-decoration:none"
+                                                onClick="szss_list('${be.level1 }',2,'${status[0]+1}','${flag}')"
+                                                href="javascript:;">实施</a>
+                                            </c:if>
+                                            <c:if test="${index2.index!=2}">
+                                                <a style="text-decoration:none"
+                                                onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
+                                                href="javascript:;">实施</a>
+                                            </c:if>
                                         </c:if>
                                         <c:if test="${status[1]==0}">
+
+                                    <c:if test="${index2.index==2}">
                                             <a style="text-decoration:none"
                                                class="used"
-                                               onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
+                                               onClick="szss_list('${be.level1 }',2,'${status[0]+1}','${flag}')"
                                                href="javascript:;">实施</a>
+                                    </c:if>
+                                            <c:if test="${index2.index!=2}">
+                                                <a style="text-decoration:none"
+                                                class="used"
+                                                onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
+                                                href="javascript:;">实施</a></c:if>
                                         </c:if>
                                     </td>
                                 </c:forEach>
@@ -327,8 +342,9 @@
                         <thead>
                         <tr class="text-c">
                             <th width="45px" rowspan="2">序号</th>
-                            <th rowspan="2" class="inline"><span class="title1">部门名称</span><br><span
-                                    class="title2">检查方式</span></th>
+                            <%--<th rowspan="2" class="inline"><span--%>
+    <%--class="title2">检查方式</span><br><span class="title1">部门名称</span></th>--%>
+                            <th colspan="1">检查方式</th>
                             <th colspan="3">综合检查</th>
                             <th colspan="3">日常检查</th>
                             <th colspan="3">定期检查</th>
@@ -337,7 +353,8 @@
                             <th colspan="2">基础检测</th>
                             <th colspan="2">累计</th>
                         </tr>
-                        <tr>
+                        <tr class="text-c">
+                            <th>部门名称</th>
                             <th>月计划</th>
                             <th>年计划</th>
                             <th>同比</th>
@@ -364,7 +381,7 @@
     <c:forEach items="${hiddenPlanList}" varStatus="index" var="be">
     <tr class="text-c">
     <td>1</td>
-    <td>${companyName}</td>
+    <td>公司级</td>
         <td onClick="inputC(this,1,'${be.c}',0)">${be.syn_month }</td>
         <td>${be.syn_year }</td>
         <td onClick="inputC(this,3,'${be.c}',0)">${be.syn_ratio }</td>

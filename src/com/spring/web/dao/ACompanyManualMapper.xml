@@ -36,13 +36,14 @@
             <arg column="lnglat" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="riskId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="commerce" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="control" javaType="java.lang.String" jdbcType="VARCHAR" />
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
 
         id, uid, dmid, level1, level2, level3, factors, type, measures, reference, flag,
         level, issys, del, ctime, gkcs, gkzt, fjgkfzr, material, gy, hxys, wlbs, flag2, gwzy,
-        lnglat, riskId, commerce
+        lnglat, riskId, commerce, control
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
 
@@ -57,7 +58,7 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
-
+    <!-- 高危风险数据添加！！！ -->
     <insert id="insert" parameterType="com.spring.web.model.ACompanyManual">
         insert into a_company_manual_tbl (id, uid, dmid,
         level1, level2, level3,
@@ -67,7 +68,7 @@
         gkcs, gkzt, fjgkfzr,
         material, gy, hxys,
         wlbs, flag2, gwzy,
-        lnglat, riskId, commerce)
+        lnglat, riskId, commerce, control)
         values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{dmid,jdbcType=INTEGER},
         #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},
         #{factors,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{measures,jdbcType=VARCHAR},
@@ -76,7 +77,7 @@
         #{gkcs,jdbcType=VARCHAR}, #{gkzt,jdbcType=VARCHAR}, #{fjgkfzr,jdbcType=VARCHAR},
         #{material,jdbcType=VARCHAR}, #{gy,jdbcType=VARCHAR}, #{hxys,jdbcType=VARCHAR},
         #{wlbs,jdbcType=VARCHAR}, #{flag2,jdbcType=VARCHAR}, #{gwzy,jdbcType=VARCHAR},
-        #{lnglat,jdbcType=VARCHAR}, #{riskId,jdbcType=INTEGER}, #{commerce,jdbcType=VARCHAR})
+        #{lnglat,jdbcType=VARCHAR}, #{riskId,jdbcType=INTEGER}, #{commerce,jdbcType=VARCHAR}, #{control,jdbcType=VARCHAR})
     </insert>
 
 
@@ -491,6 +492,51 @@
             order by T1.id asc
         </if>
     </select>
+
+
+
+    <select id="selectByMapLevel3" resultType="java.util.HashMap">
+        select
+        T1.id, T1.uid, T1.dmid, T1.level1, T1.level2, T1.level3, T1.factors, T1.type, T1.measures, T1.reference,
+        T1.flag,
+        T1.level, T1.issys, T1.del, T1.ctime, T1.level, T1.gkcs, T1.gkzt, T1.fjgkfzr, T1.material, T1.gy, T1.hxys,
+        T1.wlbs,T1.gwzy,T1.lnglat, T1.riskId, T1.commerce
+        from
+        a_company_manual_tbl T1
+
+        where
+        T1.del = 0 and T1.level != "" and T1.level3 like "%现场%"
+        <if test="uid != null">
+            and T1.uid = #{uid}
+        </if>
+        <if test="flag != null">
+            and T1.flag in (${flag})
+        </if>
+        <if test="flag2 != null">
+            and T1.flag2 = #{flag2}
+        </if>
+
+        <if test="level != null and level != ''">
+            and T1.level = #{level}
+        </if>
+        <if test="levels != null">
+            and T1.level in
+            <foreach close=")" collection="levels" item="item" open="(" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="userId != null">
+            and T1.uid = #{userId}
+        </if>
+
+        <if test="order != null">
+            order by find_in_set(T1.level,'红色,橙色,黄色,蓝色')
+        </if>
+        <if test="order == null">
+            order by T1.id asc
+        </if>
+    </select>
+
 
 
     <select id="selectRed" resultType="java.util.HashMap">
@@ -1192,14 +1238,14 @@
         </foreach>
     </insert>
 
-    <!-- 添加数据信息到数据库！！！ -->
+    <!-- 基础风险数据添加 -->
         <insert id="insertAdd">
         insert into a_company_manual_tbl (uid,dmid,
-        level1, level2, level3, factors, type, measures, reference, flag, level, del, ctime,gkzt, fjgkfzr, riskId, commerce)
+        level1, level2, level3, factors, type, measures, reference, flag, level, del, ctime,gkzt, fjgkfzr, riskId, commerce, control)
         values (#{uid,jdbcType=INTEGER}, #{dmid,jdbcType=INTEGER},
         #{level1,jdbcType=VARCHAR}, #{level2,jdbcType=VARCHAR}, #{level3,jdbcType=VARCHAR},#{factors,jdbcType=VARCHAR},
         #{type,jdbcType=VARCHAR}, #{measures,jdbcType=VARCHAR},#{reference,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR},#{del,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP},
-        #{gkzt,jdbcType=VARCHAR},#{fjgkfzr,jdbcType=VARCHAR}, #{riskId,jdbcType=VARCHAR}, #{commerce,jdbcType=VARCHAR})
+        #{gkzt,jdbcType=VARCHAR},#{fjgkfzr,jdbcType=VARCHAR}, #{riskId,jdbcType=VARCHAR}, #{commerce,jdbcType=VARCHAR}, #{control,jdbcType=VARCHAR})
     </insert>
 
     <!-- 修改数据信息达到删除的目的 -->

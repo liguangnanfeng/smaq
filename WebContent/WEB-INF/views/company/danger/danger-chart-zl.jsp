@@ -181,6 +181,15 @@
 <div class="panel panel-default" style="width:99%;margin-left:10px;float:left;background:none;">
     <div class="div_tx">
         <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">治理数据分析
+
+            <select class="sel_area isShow" id="partNammes"  onchange="int()" style="position:relative;top:3px">
+                <option value="" >全部</option>
+                <c:forEach items="${zzjg }" var="be">
+                    <option value="${be.id}" >${be.name }</option>
+                </c:forEach>
+            </select>
+
+
             <!-- 判断并提示至少选择3个月 -->
             <div class="search_rq pos-a">
                 <font>查询时间段：</font>
@@ -197,8 +206,8 @@
         <div class="div_zhe">
                       <div class="change_zhe">
                         <div class="btn-group">
-                            <span class="btn btnyh radius ybyh">重大隐患</span>
                           <span class="btn btnyh btnyhxz radius zdyh">较大隐患</span>
+                          <span class="btn btnyh radius ybyh">重大隐患</span>
                           <span class="btn btnyh radius zdyyh">一般和较小隐患</span>
                         </div>
                           <input style="display: none" value="1" id="my_flag"/>
@@ -216,7 +225,10 @@
 
 
     function int() {
-        $.post(getRootPath() + "/company/zhuChartData4", {
+
+        var vs = $('#partNammes  option:selected').val();
+
+        $.post(getRootPath() + "/company/zhuChartData4?depart="+vs, {
             sT: $("#sT").val(),
             eT: $("#eT").val(),
             flag:parseInt($("#my_flag").val()),
@@ -239,6 +251,26 @@
             },
             xAxis: {categories: categories},
             yAxis: {title: {text: '数量'}, min: 0},
+            tooltip: {
+            formatter: function () {
+                var content ='<table>'
+                for (var i = 0; i < this.points.length; i++) {
+                content += '<tr><td style="padding:0;color: ' + this.points[i].series.color + '">' + this.points[i].series.name + ':</td> <td style="padding:0"><b>' + this.points[i].y + '</b></td></tr>';
+                if(i==1){
+                var jj;
+                if(this.points[0].y==0){
+                jj=100;
+                }else{
+                jj=Highcharts.numberFormat(this.points[1].y/(this.points[0].y+this.points[1].y)*100,2);
+                }
+                content += '<tr><td style="padding:0;color:#333">占比率：</td><td>'+jj +'%</td></tr>';
+                }
+                };
+                return content;
+                },
+                shared: true,
+                useHTML: true
+            },
             plotOptions: {
                 line: {
                     dataLabels: {enabled: true},// 开启数据标签

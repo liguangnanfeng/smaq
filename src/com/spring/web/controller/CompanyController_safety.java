@@ -2185,7 +2185,7 @@ public class CompanyController_safety extends BaseController {
         m.put("uid", user.getId());
         //m.put("flag2", 1);
         m.put("levels", new String[]{"红色", "橙色", "黄色", "蓝色"});
-        List<Map<String, Object>> acL = aCompanyManualMapper.selectByMap(m);
+        List<Map<String, Object>> acL = aCompanyManualMapper.selectByMapLevel3(m);
         //所有重大较大风险
         List<Map<String, Object>> acL_f = new ArrayList<Map<String, Object>>();
         for (Map<String, Object> ac : acL) {
@@ -3190,6 +3190,7 @@ public class CompanyController_safety extends BaseController {
                 aCompanyManual.setMeasures(a.getMeasures());
                 aCompanyManual.setRiskId(a.getId());
                 aCompanyManual.setCommerce(a.getCommerce());
+                aCompanyManual.setControl(a.getControl());
                 String fjgkfzr = null;
                 List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),depId,"负责人",2);
                 if (zzjgDepartment1.size() != 0){
@@ -3300,6 +3301,7 @@ public class CompanyController_safety extends BaseController {
                 aCompanyManual.setCtime(new Date());
                 aCompanyManual.setDel(0);
                 aCompanyManual.setDmid(depId);
+                aCompanyManual.setControl("基础管理");
                 if (null != a.getFlag()){
                     aCompanyManual.setFlag(Integer.toString(a.getFlag()));
                 }else {

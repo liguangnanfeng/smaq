@@ -1390,7 +1390,13 @@ public class CompanyController_cd extends BaseController {
      * @return
      */
     @RequestMapping("danger/danger-chart-zl")
-    public String dangerChartZl() {
+    public String dangerChartZl(Model model ,HttpServletRequest request) {
+        User user = getLoginUser(request);
+
+        List<ZzjgDepartment> list = zzjgDepartmentMapper.selectLevel1DangerIds(user.getId());
+
+        model.addAttribute("zzjg",list);
+
         return "company/danger/danger-chart-zl";
     }
 
@@ -1421,7 +1427,7 @@ public class CompanyController_cd extends BaseController {
             Date d = DateConvertUtil.formateDate(eT, TIME_STR);
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
-        List<String> monthL = monthC(sT, eT);
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
@@ -1493,7 +1499,7 @@ public class CompanyController_cd extends BaseController {
             Date d = DateConvertUtil.formateDate(eT, TIME_STR);
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
-        List<String> monthL = monthC(sT, eT);
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
@@ -1561,7 +1567,7 @@ public class CompanyController_cd extends BaseController {
             Date d = DateConvertUtil.formateDate(eT, PP);
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
-        List<String> monthL = monthC(sT, eT);
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
@@ -1632,7 +1638,7 @@ public class CompanyController_cd extends BaseController {
             Date d = DateConvertUtil.formateDate(eT, TIME_STR);
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
-        List<String> monthL = monthC(sT, eT);
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
@@ -1728,7 +1734,7 @@ public class CompanyController_cd extends BaseController {
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
 
-        List<String> monthL = monthC(sT, eT);
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
@@ -1814,8 +1820,9 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "zhuChartData4")
     public @ResponseBody
-    Result zhuChartData4(String sT, String eT, HttpServletRequest request, Integer status, Integer flag) throws Exception {
-        User user = getLoginUser(request);
+    Result zhuChartData4(String sT, String eT, HttpServletRequest request, Integer status, Integer flag,Integer depart) throws Exception {
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     User user = getLoginUser(request);
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
             Date d = new Date();
@@ -1831,7 +1838,9 @@ public class CompanyController_cd extends BaseController {
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
 
-        List<String> monthL = monthC(sT, eT);
+        ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectByPrimaryKey(depart);
+
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
@@ -1840,6 +1849,12 @@ public class CompanyController_cd extends BaseController {
             m.put("status", 1);
         } else {
             m.put("status", status);
+        }
+
+        if (null != depart && null != zzjgDepartment ){
+            m.put("depart", zzjgDepartment.getName());
+        }else {
+            m.put("depart",null);
         }
 
         m.put("uid", user.getId());
@@ -1852,7 +1867,7 @@ public class CompanyController_cd extends BaseController {
             d[l] = 0;
         }
 
-        String[] xx = new String[]{"复查合格", "复查不合格"};
+        String[] xx = new String[]{"已治理", "未治理"};
         List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
         Map<String, Object> m1 = new HashMap<String, Object>();
         Map<String, Object> m2 = new HashMap<String, Object>();
@@ -1924,7 +1939,7 @@ public class CompanyController_cd extends BaseController {
 
         ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectByPrimaryKey(depart);
 
-        List<String> monthL = monthC(sT, eT);
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
@@ -2015,7 +2030,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "zhuChartData6")
     public @ResponseBody
-    Result zhuChartData6(String sT, String eT, HttpServletRequest request, Integer status, Integer flag) throws Exception {
+    Result zhuChartData6(String sT, String eT, HttpServletRequest request, Integer status, Integer flag, String control) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
         if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
@@ -2032,12 +2047,17 @@ public class CompanyController_cd extends BaseController {
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
 
-        List<String> monthL = monthC(sT, eT);
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);
         m.put("del", 0);
         m.put("status", 2);
+        if (null != control){
+            m.put("control", control);
+        }else {
+            m.put("control", null);
+        }
         m.put("uid", user.getId());
         // 根据合格不合格查询出数据.然后进行封装
         List<DynamicParameter<String, Object>> ll = tCheckItemMapper.selectHiddenSourceTypeByMap(m);
@@ -2129,7 +2149,7 @@ public class CompanyController_cd extends BaseController {
             sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
         }
         ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectByPrimaryKey(depart);
-        List<String> monthL = monthC(sT, eT);
+        List<String> monthL = monthB(sT, eT);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("startTime1", sT);
         m.put("endTime1", eT);

@@ -13,6 +13,8 @@
     <title>安全分级管控 隐患排查治理智能化信息平台</title>
     <meta name="keywords" content="风险分级管控   隐患排查治理智能化平台">
     <meta name="description" content="风险分级管控   隐患排查治理智能化平台">
+    <link rel="stylesheet" type="text/css" media="print"  href="${ly}/js/H-ui.admin_v3.0/static/h-ui/css/H-ui.css" />
+    <link rel="stylesheet" type="text/css" href="${ly}/styles/common.css" media="print"  />
     <style type="text/css">
         .input-text {
             position: relative
@@ -88,6 +90,7 @@
             min-height: 32px;
             line-height: 32px;
         }
+    .div-print{width:95%;margin:auto;padding:20px 0 0 0;}
     </style>
     <script src="${ly }/js/jquery-migrate-1.2.1.min.js"></script>
     <script src="${ly }/js/jquery.jqprint-0.3.js"></script>
@@ -102,7 +105,7 @@
         }
     </script>
 </head>
-<body>
+<body style="border: 1px dashed rgb(255, 255, 255); border-image: none;">
 <div class="page-container">
     <div class="div_pdetail">
         <c:choose>
@@ -147,15 +150,16 @@
                 <button onClick="show_dialog('整改详情','/village/check-rectification?flag=${flag}&id=${listM.id}&number=${number}')"
                         class="btn btn-success radius" type="button" style="padding: 0 70px;margin-right: 20px">整改意见书
                 </button>
+              
 
+				   <c:if test="${dangerInteger>0}">
+                <%--<button onClick="show_dialog('实施复查','/company/recheck-add?checkId=${check.id}')"--%>
+                        <%--class="btn btn-success radius" type="button" style="padding: 0 70px;">实施复查--%>
+                <%--</button>--%>
+            </c:if>
                 <%--                <button onClick="location.href = '/company/recheck-add?checkId=${check.id}'"--%>
                 <%--                        class="btn btn-success radius" type="button" style="padding: 0 70px;">实施复查--%>
                 <%--                </button>--%>
-            </c:if>
-            <c:if test="${dangerInteger>0}">
-                <button onClick="show_dialog('实施复查','/company/recheck-add?checkId=${check.id}')"
-                        class="btn btn-success radius" type="button" style="padding: 0 70px;">实施复查
-                </button>
             </c:if>
 
             <!-- 已经有复查 -->
@@ -203,6 +207,7 @@
     </div>
 </div>
 <div id="div_container">
+    <div class="div-print">
     <h2 class="text-c mb-10">检查详情</h2>
     <div class="f-l div_pdetail mt-10">
         <c:if test="${flag==2 || flag== 3 }">
@@ -215,8 +220,8 @@
                 test="${empty check.realTime}">&nbsp;&nbsp;年&nbsp;月&nbsp;日</c:if>
         </label>
     </div>
-    <div class="f-l mt-20" style="width: 100%">
-        <table class="f-l table table-border table-bordered table-bg table-hover table-sort">
+    <div class="f-l mt-20" style="width: 100%;">
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
             <tr class="text-c">
                 <th width="5%">检查类型</th>
@@ -233,7 +238,7 @@
                 <c:if test="${flag == 1}">
                     <th width="7%">隐患等级</th>
                 </c:if>
-                <th width="9%">查看</th>
+                <th width="9%">隐患图片</th>
             </tr>
             </thead>
             <tbody>
@@ -249,13 +254,13 @@
                         </c:choose>
                     </td>
                     <td class="text-c">${ch.part == "" ? "暂无数据" : ch.part}</td>
-                    <c:if test="${flag == 1}">
+					  <c:if test="${flag == 1}">
                         <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
                         <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
                     </c:if>
+
                     <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
-
-
+                  
                     <td>
                         <c:choose>
                             <c:when test="${ch.type == 1}">日常</c:when>
@@ -456,6 +461,7 @@
             </tr>
             </tbody>
         </table>
+    </div>
     </div>
 </div>
 <!-- 弹窗图片 -->

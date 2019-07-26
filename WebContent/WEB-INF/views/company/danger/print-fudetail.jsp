@@ -59,7 +59,7 @@ function pr_(x) {
           <th width="3%">序号</th>
           <th width="15%">部门/装置</th>
           <th width="25%">检查项目</th>
-          <th width="30%">隐患内容</th>
+          <th width="30%">检查内容</th>
           <th width="15%">整改期限</th>
           <th width="12%">检查结果</th>
         </tr>
@@ -78,7 +78,7 @@ function pr_(x) {
           <td class="text-c">${be.memo }</td>
           <td class="text-c"><fmt:formatDate value="${be.deadline }"/></td>
           <td class="text-c">
-            ${be.status == 2 ? '未整改' : '已整改'}
+            ${be.status == 2 ? '不合格' : '合格'}
           </td>
         </tr>
         </c:if>

@@ -32,9 +32,8 @@ $(function(){
 })
 
 function load() {
-  $('.titleName').html(sessionStorage.getItem("htmlName")+'职业病危害告知牌')
   if($(".sel_area2").val() !=  null && $(".sel_area2").val() != '') {
-    sessionStorage.setItem("htmlName", $(".sel_area1").val());
+  $('.titleName').html($(".sel_area1").val()+'职业病危害告知牌')
     $(".div-set").load($(".sel_area2").val() + " .div-print");
   }else {
     $(".div-set").html("<p>没有涉及的物理因素</p>")
@@ -75,6 +74,7 @@ function pr_() {
       </button>
     </div>
     <div class="mt-20">
+  <h3 class="titleName" style="border: 1px solid;width: 59.8%;margin: 0 auto -30px;border-bottom: none;"></h3>
       <div class="div-set" id="div_container" style="border:0">
         <!-- <div class="top-set">
           <font>职业危害告知牌（物理因素）</font>

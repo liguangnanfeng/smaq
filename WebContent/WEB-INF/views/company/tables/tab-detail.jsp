@@ -142,7 +142,7 @@
         #container {
             width: 99%;
             position: absolute;
-            top: 130px;
+            top: 90px;
             bottom: 10px;
             left: 0px;
         }
@@ -160,7 +160,7 @@
 </head>
 <body>
 <div class="page-container">
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
+    <div class="cl pd-5 bg-1 bk-gray">
         <button onClick="add1()"
                 class="btn btn-success radius" title="编辑富文本" type="button" style="padding: 0 50px;">编辑富文本
         </button>
@@ -274,7 +274,7 @@
 
     function add3(){
         type=3;
-        $('#webInput').val('http://');
+        $('#webInput').val('https://');
         $("#modal-plan2").modal("show");
     }
 

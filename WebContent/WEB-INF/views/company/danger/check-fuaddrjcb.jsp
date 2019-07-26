@@ -39,6 +39,16 @@ function showpicture(src, obj){
   })
   $("#modal-plan2").modal("show")}
 </script>
+  <script src="/js/jquery.jqprint-0.3.js"></script>
+  <script type="text/javascript">
+  function pr_() {
+  $('.btn-primary').css('display','none')
+  $(".page-container").jqprint();
+  setTimeout(function () {
+  $('.btn-primary').css('display','inline-block')
+  },2000)
+  }
+  </script>
 <script type="text/javascript">
 function uploadpicture(obj){
   var td = $(obj).closest("td");
@@ -55,14 +65,20 @@ function uploadpicture(obj){
   
    <c:choose>
     <c:when test="${check.flag == 1}">
-       <button onClick="top.show_tab('复查意见表', '/company/recheck-add-print?checkId=${check.id}')" class="btn btn-success radius" type="button" style="padding: 0 70px;">
-        <i class="Hui-iconfont mr-10">&#xe652;</i><!-- 打印 -->打印预览
+      <button onClick="pr_()" class="btn btn-primary radius" type="button">
+      <i class="Hui-iconfont">&#xe652;</i>打印
       </button>
+       <%--<button onClick="top.show_tab('复查意见表', '/company/recheck-add-print?checkId=${check.id}')" class="btn btn-success radius" type="button" style="padding: 0 70px;">--%>
+        <%--<i class="Hui-iconfont mr-10">&#xe652;</i><!-- 打印 -->打印预览--%>
+      <%--</button>--%>
     </c:when>
-    <c:otherwise>  
-      <button onClick="parent.show_dialog('复查意见书', '/village/check-document?checkId=${check.id}&flag=2')" class="btn btn-success radius" type="button" style="padding: 0 70px;">
-        <i class="Hui-iconfont mr-10">&#xe652;</i><!-- 打印文书 -->打印预览
+    <c:otherwise>
+      <button onClick="pr_()" class="btn btn-primary radius" type="button">
+      <i class="Hui-iconfont">&#xe652;</i>打印
       </button>
+      <%--<button onClick="parent.show_dialog('复查意见书', '/village/check-document?checkId=${check.id}&flag=2')" class="btn btn-success radius" type="button" style="padding: 0 70px;">--%>
+        <%--<i class="Hui-iconfont mr-10">&#xe652;</i><!-- 打印文书 -->打印预览--%>
+      <%--</button>--%>
     </c:otherwise>
     </c:choose>
   </div>
@@ -105,12 +121,12 @@ function uploadpicture(obj){
             <input type="hidden" name="memo">
             <div class="radio-box">
               <input type="radio" value="3" name="plan-radio_${be.id }" onClick="uploadpicture(this)">
-              <label>合格</label>
+              <label>整改</label>
             </div>
             <div class="radio-box">
               <%-- <input type="radio" value="2" name="plan-radio_${be.id }" onClick="uploadpicture(this)"> --%>
               <input type="radio" value="2" name="plan-radio_${be.id }" checked="checked">
-              <label>不合格</label>
+              <label>未整改</label>
             </div>
           </td>
         </tr>

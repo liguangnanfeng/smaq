@@ -59,11 +59,6 @@ function save() {
   <%--<div style="display: none;" id="material">${ac.material}</div>--%>
   <div class="page-container">
     <div class="div-set">
-
-
-
-        \
-
       <div class="div-redit" style="display: block;">
         <div class="all-risk">
           <c:if test="${empty list}">

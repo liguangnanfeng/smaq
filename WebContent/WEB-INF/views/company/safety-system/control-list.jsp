@@ -212,7 +212,12 @@
       }
       function pr_() {
           $(".div-pcz").hide();
-          $("#container").jqprint();
+          $("#container").jqprint({
+                debug: true, //如果是true则可以显示iframe查看效果（iframe默认高和宽都很小，可以再源码中调大），默认是false
+                importCSS: true, //true表示引进原来的页面的css，默认是true。（如果是true，先会找$("link[media=print]")，若没有会去找$("link")中的css文件）
+                printContainer: true, //表示如果原来选择的对象必须被纳入打印（注意：设置为false可能会打破你的CSS规则）。
+                operaSupport: true//表示如果插件也必须支持歌opera浏览器，在这种情况下，它提供了建立一个临时的打印选项卡。默认是true
+           });
           $(".div-pcz").show();
       }
   </script>
@@ -231,8 +236,8 @@
   <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-left:10px;" href="javascript:location.replace(location.href);" title="刷新">
     <i class="Hui-iconfont">&#xe68f;</i>
   </a>
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);"
-    title="返回" onclick="parent.close_tab(function(){})">返回</a>
+    <%--<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);"--%>
+    <%--title="返回" onclick="parent.close_tab(function(){})">返回</a>--%>
 </nav>
 <div class="page-container">
   <div class="row cl" style="margin-top:20px;text-align:center;">
@@ -271,13 +276,7 @@
 
                 <td class="text-c">${ls[0] != null ? ls[0] : "暂无数据" }</td>
 
-                <c:if test="${be.flag == 2}">
-                  <td class="text-c">公司</td>
-                </c:if>
-
-                <c:if test="${be.flag != 2}">
-                  <td class="text-c">${be.gkzt != null ? be.gkzt : "暂无数据" }</td>
-                </c:if>
+                <td class="text-c">${be.level1 == null ? "暂无数据" : be.level1}</td>
 
                 <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
 

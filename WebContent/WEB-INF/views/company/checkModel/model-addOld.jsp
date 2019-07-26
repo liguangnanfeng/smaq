@@ -59,6 +59,7 @@
         var checkType = null;   //-1基础 -2现场
         var level2s = [];   //level数据数组
         function nature(obj) {
+
             var cType = $(obj);
             checkType = parseInt(cType.val());
             if (checkType == 0) {

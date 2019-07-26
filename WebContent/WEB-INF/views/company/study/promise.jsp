@@ -55,7 +55,7 @@ body .check-box label{margin-left:5px;}
 	<nav class="breadcrumb">
 	    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
 	    <span class="c-gray en">&gt;</span> <span>风险研判与承诺公告</span> 
-	    <span class="c-gray en">&gt;</span> <span>承诺公告公示</span> 
+	    <span class="c-gray en">&gt;</span> <span>承诺公告公示</span>
 	    <c:if test="${action1 == 'read1'}"><a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="window.location.href = '${ly }/villageAdd/study/promise-list?uid=${pro.uid }&type=${type }';">返回</a></c:if>
 	</nav>
 <div class="mt-20" id="div_container">

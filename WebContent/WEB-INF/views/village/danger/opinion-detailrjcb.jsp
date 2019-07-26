@@ -101,14 +101,14 @@ function init_all_box() {
     <%-- <button onClick="top.show_tab('排查治理记录', '${ly }/village/check-list?flag=${flag }')" class="btn btn-success radius" type="button" style="padding: 0 15px;margin-right: 20px">
         <i class="Hui-iconfont mr-10">&#xe652;</i>返回排查治理记录列表
     </button> --%>
-    <button onClick="location.href = '/company/check-detail?flag=${flag }&id=${listM.id }&number=${number}'"
+    <button onClick="location.href = '/company/check-detail?flag=${flag }&id=${listM.id }'"
               class="btn btn-success radius" type="button" style="padding: 0 60px;margin-right: 20px">检查详情</button>
       <!-- 判断是否有治理意见表 -->
       <c:if test="${listM.c > 0 && listM.status == 2 }">
        
         <!-- 已经有复查 -->
         <c:if test="${listM.c3 > 0}">
-          <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }&number=${number}'"
+          <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }'"
             class="btn btn-success radius" type="button" style="padding: 0 70px;">复查详情</button>
         </c:if>
       </c:if>
@@ -259,7 +259,7 @@ function init_all_box() {
         </tr>
       </tbody>
     </table>
-
+    
     <c:if test="${empty rectification}">
     <div class="row cl">
       <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
@@ -269,7 +269,7 @@ function init_all_box() {
       </div>
     </div>
     </c:if>
-
+    
   </div>
 </div>
   <!-- 弹窗图片 -->

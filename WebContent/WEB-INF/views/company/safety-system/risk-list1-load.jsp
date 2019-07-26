@@ -34,8 +34,7 @@
   </style>
   <script type="text/javascript">
       $(function() {
-
-        $(".three_danger").each(function(){
+          $(".three_danger").each(function(){
               var s=$(this).find("label").html();
               var h=$(this).prev().find("label").html();
               if (s==h){
@@ -95,17 +94,17 @@
           })
       });
 
-
-
   </script>
 </head>
 <body>
 <div class="page-container">
   <div class="modal-body">
-
-
-
-
+    <!-- 判断化工企业显示 -->
+    <%-- <c:if test="${company.industry eq '化工企业（危险化学品生产、经营、使用）、加油站'}">
+      <div class="radio-lx <c:if test="${industry eq '化工企业（危险化学品生产、经营、使用）'}"> radio-lxxz</c:if>" onclick="location.href='/company/safety-system/risk-list-load?industry=化工企业（危险化学品生产、经营、使用）'" style="margin-left:5%">化工企业</div>
+      <div class="radio-lx <c:if test="${industry eq '加油站'}"> radio-lxxz</c:if>" onclick="location.href='/company/safety-system/risk-list-load?industry=加油站'">加油站</div>
+    </c:if> --%>
+    <!-- 判断结束 -->
     <div class="list_danger l1">
       <!-- 循环一级 -->
       <c:forEach items="${list }" var="be">

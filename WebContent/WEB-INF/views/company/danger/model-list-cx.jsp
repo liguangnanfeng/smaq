@@ -530,6 +530,7 @@
                         <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">实施复查</a>
                         <br>
 
+
                     </c:if>
                 </td>
             </tr>
@@ -695,5 +696,6 @@
         show_tab('添加自查记录', getRootPath() + '/company/check-copy?id=' + id);
     }
 </script>
+
 </body>
 </html>

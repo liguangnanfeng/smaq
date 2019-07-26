@@ -159,5 +159,6 @@ function pr_() {
     </div>
   </div>
 </body>
-<script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset_top3col.js"></script>
+<%--<script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset_top3col.js"></script>--%>
+<script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset.js"></script>
 </html>

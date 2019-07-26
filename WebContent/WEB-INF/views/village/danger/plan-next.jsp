@@ -93,6 +93,7 @@
             float: Left;
         }
     </style>
+    <%--<script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset.js"></script>--%>
     <script type="text/javascript">
         function uploadpicture(obj) {
             window.itemId = $(obj).attr("data-item");
@@ -119,7 +120,18 @@
           <i class="Hui-iconfont mr-10">&#xe652;</i>打印
         </button>
     </div> --%>
-    <h2 class="text-c mt-10">${check.title }</h2>
+    <%--<h2 class="text-c mt-10">${check.title }</h2>--%>
+    <h2 class="text-c mt-10"><c:if test="${check.flag==1}">
+    <c:if test="${check.depart=='全公司'}">
+        <font>${company.name }综合检查表</font>
+    </c:if>
+    <c:if test="${check.depart!='全公司'}">
+        <font>${check.depart }综合检查表</font>
+    </c:if>
+</c:if>
+    <c:if test="${check.flag!=1}">
+        <font>${company.name }综合检查表</font>
+    </c:if></h2>
     <div class="f-l div_pdetail mt-10">
         <%--<font>受检${check.flag == 1 ? '部门' : '单位'}：${check.depart }</font>
         <label>检查日期：<fmt:formatDate value="${now }" pattern="yyyy年MM月dd日"/></label>--%>
@@ -194,9 +206,9 @@
                             <c:if test="${check.type==5}">综合检查</c:if>
                         </td>
                         <td class="text-l">
-                            <c:set var="item" value="${fn:split(ch.levels,'/') }"/>
+						 <c:set var="item" value="${fn:split(ch.levels,'/') }"/>
                               ${item[2]}
-                        </td>
+						</td>
                         <td class="text-l">${ch.content }</td>
                         <td class="text-c" data-base="${ch.status }">&nbsp;
                             <div class="radio-box">
@@ -378,80 +390,80 @@
 </body>
 <script type="text/javascript">
     $(function () {
-        var b = null, l1 = '', c = 1;
-        var b2 = null, l2 = '', c2 = 1;
-        var b3 = null, l3 = '', c3 = 1;
-        $("tbody tr").each(function () {
-            var td = $(this).children("td").eq(0);
-            var td2 = $(this).children("td").eq(1);
-            var td3 = $(this).children("td").eq(2);
-            var l1_ = td.text();
-            var l2_ = td2.text();
-            var l3_ = td3.text();
-            //Same to top level
-            if (l1 == l1_) {
-                td.remove();
-                c = c + 1;
-                if (l2 == l2_) {
-                    td2.remove();
-                    c2 = c2 + 1;
-                    if (l3 == l3_) {
-                        td3.remove();
-                        c3 = c3 + 1;
-                    } else {
-                        l3 = l3_;
-                        if (b3 != null) {
-                            b3.attr("rowspan", c3);
-                            c3 = 1;
-                        }
-                        b3 = td3;
+        <%--var b = null, l1 = '', c = 1;--%>
+        <%--var b2 = null, l2 = '', c2 = 1;--%>
+        <%--var b3 = null, l3 = '', c3 = 1;--%>
+        <%--$("tbody tr").each(function () {--%>
+            <%--var td = $(this).children("td").eq(0);--%>
+            <%--var td2 = $(this).children("td").eq(1);--%>
+            <%--var td3 = $(this).children("td").eq(2);--%>
+            <%--var l1_ = td.text();--%>
+            <%--var l2_ = td2.text();--%>
+            <%--var l3_ = td3.text();--%>
+            <%--//Same to top level--%>
+            <%--if (l1 == l1_) {--%>
+                <%--td.remove();--%>
+                <%--c = c + 1;--%>
+                <%--if (l2 == l2_) {--%>
+                    <%--td2.remove();--%>
+                    <%--c2 = c2 + 1;--%>
+                    <%--if (l3 == l3_) {--%>
+                        <%--td3.remove();--%>
+                        <%--c3 = c3 + 1;--%>
+                    <%--} else {--%>
+                        <%--l3 = l3_;--%>
+                        <%--if (b3 != null) {--%>
+                            <%--b3.attr("rowspan", c3);--%>
+                            <%--c3 = 1;--%>
+                        <%--}--%>
+                        <%--b3 = td3;--%>
 
-                    }
-                } else {
-                    l2 = l2_;
-                    if (b2 != null) {
-                        b2.attr("rowspan", c2);
-                        c2 = 1;
-                    }
-                    b2 = td2;
-                    l3 = l3_;
-                    if (b3 != null) {
-                        b3.attr("rowspan", c3);
-                        c3 = 1;
-                    }
-                    b3 = td3;
-                }
+                    <%--}--%>
+                <%--} else {--%>
+                    <%--l2 = l2_;--%>
+                    <%--if (b2 != null) {--%>
+                        <%--b2.attr("rowspan", c2);--%>
+                        <%--c2 = 1;--%>
+                    <%--}--%>
+                    <%--b2 = td2;--%>
+                    <%--l3 = l3_;--%>
+                    <%--if (b3 != null) {--%>
+                        <%--b3.attr("rowspan", c3);--%>
+                        <%--c3 = 1;--%>
+                    <%--}--%>
+                    <%--b3 = td3;--%>
+                <%--}--%>
 
-            } else {//Diffrent to top level
-                l1 = l1_;
-                if (b != null) {
-                    b.attr("rowspan", c);
-                    c = 1;
-                }
-                b = td;
-                l2 = l2_;
-                if (b2 != null) {
-                    b2.attr("rowspan", c2);
-                    c2 = 1;
-                }
-                b2 = td2;
-                l3 = l3_;
-                if (b3 != null) {
-                    b3.attr("rowspan", c3);
-                    c3 = 1;
-                }
-                b3 = td3;
-            }
-        })
-        if (b != null) {
-            b.attr("rowspan", c);
-        }
-        if (b2 != null) {
-            b2.attr("rowspan", c2);
-        }
-        if (b3 != null) {
-            b3.attr("rowspan", c3);
-        }
+            <%--} else {//Diffrent to top level--%>
+                <%--l1 = l1_;--%>
+                <%--if (b != null) {--%>
+                    <%--b.attr("rowspan", c);--%>
+                    <%--c = 1;--%>
+                <%--}--%>
+                <%--b = td;--%>
+                <%--l2 = l2_;--%>
+                <%--if (b2 != null) {--%>
+                    <%--b2.attr("rowspan", c2);--%>
+                    <%--c2 = 1;--%>
+                <%--}--%>
+                <%--b2 = td2;--%>
+                <%--l3 = l3_;--%>
+                <%--if (b3 != null) {--%>
+                    <%--b3.attr("rowspan", c3);--%>
+                    <%--c3 = 1;--%>
+                <%--}--%>
+                <%--b3 = td3;--%>
+            <%--}--%>
+        <%--})--%>
+        <%--if (b != null) {--%>
+            <%--b.attr("rowspan", c);--%>
+        <%--}--%>
+        <%--if (b2 != null) {--%>
+            <%--b2.attr("rowspan", c2);--%>
+        <%--}--%>
+        <%--if (b3 != null) {--%>
+            <%--b3.attr("rowspan", c3);--%>
+        <%--}--%>
         $('#table').css('display', 'block');
         $('#baocun').css('display', 'block');
     })
@@ -459,6 +471,7 @@
 
 </script>
 
+    <script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset.js"></script>
 <script type="text/javascript">
 
     function checkerChange(obj) {
@@ -570,6 +583,7 @@
                     x = "部门抽查";
                 }
                 if (flag == 1) {//自查
+                        console.log("++++++++++++++++++++");
                     var l_flag = parseInt(sessionStorage.getItem('flag'));
                     var l_dmname =sessionStorage.getItem('dmname').replace(/\s*/g,"");
                     var l_industryType = parseInt(sessionStorage.getItem('industryType'));
@@ -582,6 +596,8 @@
                     }
                 } else {
                     //新版跳转
+                      console.log("---------------------");
+                     console.log(flag);
                     if ($(":radio[value='2']:checked").length > 0) {
                         // top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);
                         top.show_tab("检查详情" + checkId, '/company/check-detail?flag=' + flag + '&id=' + checkId);

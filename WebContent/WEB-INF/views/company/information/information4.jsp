@@ -73,12 +73,11 @@ var placeSearch = new AMap.PlaceSearch(placeSearchOptions);
     zoom:17,
     zooms:[3,20],
     expandZoomRange:true,
-    viewMode:'3D',
+    <%--viewMode:'3D',--%>
     pitch:50,
     layers: [new AMap.TileLayer.Satellite()],
     keyboardEnable: false,
   });
-  
   map.plugin(["AMap.RangingTool"], function() {
     ruler1 = new AMap.RangingTool(map);
     AMap.event.addListener(ruler1, "end", function(e) {

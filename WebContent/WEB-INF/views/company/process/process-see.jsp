@@ -27,7 +27,7 @@
     <i class="Hui-iconfont">&#xe68f;</i>
   </a>
 </nav>
-<p>${list}</p>
+<!-- <p>${list}</p> -->
   <iframe src="${list}" width='100%' height='100%' frameborder='1'>
 
   </iframe>

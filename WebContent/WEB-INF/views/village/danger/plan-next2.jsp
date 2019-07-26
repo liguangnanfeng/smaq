@@ -123,7 +123,9 @@
     <div class="f-l div_pdetail mt-10">
         <%--<font>受检${check.flag == 1 ? '部门' : '单位'}：${check.depart }</font>
         <label>检查日期：<fmt:formatDate value="${now }" pattern="yyyy年MM月dd日"/></label>--%>
-        <font >受检单位：${company.name }</font>
+        
+            <font >受检单位：${company.name }</font>
+      
     </div>
     <div class="f-l mt-20" style="width:100%">
         <table class="f-l table table-border table-bordered table-bg table-hover table-sort" id="table"

@@ -42,12 +42,14 @@
 
         .title {
         text-align: center;
+            margin-top:75px;
         }
 
         .title_img {
-        width: 130px;
+        width: 140px;
         position: absolute;
-        right: 85%;
+        left:14.1%;
+        margin-top: 8px;
         }
 
         .name {
@@ -57,6 +59,7 @@
 
         .footer22 {
         padding-top: 30px;
+        <%--text-align:center;--%>
         }
 
         .footer22 > div {
@@ -109,16 +112,16 @@
         }
 
         .row_right22 {
-        width: 28%;
+        width: 25%;
         height: 55px;
-        margin-top: 15px;
+        margin-top: 12px;
         }
 
         .row_right22 input {
         background: #fff;
         font-size: 16px;
         padding: 8px;
-        height: 50px !important;
+        height: 44px !important;
         border: 0;
         box-shadow: inset 8px 10px 12px #959497;
         width: 100%;
@@ -132,26 +135,51 @@
         .center_container22{
         height: auto;
         }
-        @media screen and (min-width: 1345px) {
+        .name2{
+        color: #1A69DF;margin-bottom: 50px;
+        }
+        .right_yuan{
+        position: absolute;
+        right: 9%;
+        }
+        @media screen and (min-width: 1671px) {
         .center .container22 {
         padding-top:5% !important;
         }
+        .name2{
+        font-size:45px;
         }
-        @media screen and (max-width: 1344px) {
+        .right_yuan{
+        top: 183px;
+        }
+        }
+        @media (min-width: 1367px) and (max-width: 1670px) {
         .center .container22 {
         padding-top:3% !important;
         }
+        .name2{
+        font-size:40px;
         }
-            .yuan{
-            width:25px;height:25px;display:inline-block;border-radius:50%;
-            float: right;
-            margin-left: 10px;
-            }
-            .right_yuan{
-            position: absolute;
-            top: 110px;
-            right: 9%;
-            }
+        .right_yuan{
+        top: 180px;
+        }
+        }
+        @media screen and (max-width: 1366px) {
+        .center .container22 {
+        padding-top:1% !important;
+        }
+        .name2{
+        font-size:37px;
+        }
+        .right_yuan{
+        top: 175px;
+        }
+        }
+        .yuan{
+        width:25px;height:25px;display:inline-block;border-radius:50%;
+        float: right;
+        margin-left: 10px;
+        }
         </style>
         <script type="text/javascript">
         var url = '${url}', un = '${un}';
@@ -160,7 +188,6 @@
         var name = getCookie('user-name');
         var pwd = getCookie('user-pwd');
         if (null != name && '' != name) {
-        console.log(name)
         $("#userName").val(name);
         $(".name").append(name);
         }else{
@@ -229,16 +256,16 @@
         </head>
         <body>
         <div class="container22 title">
-        <img src="${ly }/images/home/logo.png" class="title_img">
         <div>
+        <img src="${ly }/images/home/logo.png" class="title_img">
         <p class="name"></p>
-        <p style="color: #1A69DF;font-size: 45px;margin-bottom: 50px;">风险分级管控 隐患排查治理智能化平台</p>
-            <span class="right_yuan">
-            <span class="yuan" style="background:#00A1E9"></span>
-            <span class="yuan" style="background:#FFFF00"></span>
-            <span class="yuan" style="background:#FF9600"></span>
-            <span class="yuan" style="background:#FF0000"></span>
-            </span>
+        <p class="name2">风险分级管控 隐患排查治理智能化平台</p>
+        <span class="right_yuan">
+        <span class="yuan" style="background:#00A1E9"></span>
+        <span class="yuan" style="background:#FFFF00"></span>
+        <span class="yuan" style="background:#FF9600"></span>
+        <span class="yuan" style="background:#FF0000"></span>
+        </span>
         </div>
         </div>
         <div class="center_container22">
@@ -254,7 +281,7 @@
         </div>
         <div class="row_right22">
         <input id="login_btn" type="button" class="btn btn-success size-L"
-        style="width:100%;background:#00FF00;color:#111;border:0px;height:50px;font-size:24px;box-shadow: none;"
+        style="width:100%;background:#00FF00;color:#111;border:0px;height:50px;font-size:22px;box-shadow: none;"
         value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
         </div>
         <div class="row_right22" style="margin-top:3px;">
@@ -279,10 +306,10 @@
         target="_blank">苏公网安备：32020602000446号</a><span>增值电信业务经营许可证：苏B1-20150079</span></p>
         <p><a href="http://www.miitbeian.gov.cn/" target="_blank">苏ICP备17056652号-1</a></p>
         </div>
-        <div>
-        <img alt="" src="${ly }/images/xcx.jpg" style="width:110px;margin-right: 70px;">
-        <img alt="" src="${ly }/images/ewm.png" style="width:110px;">
-        </div>
+            <div>
+            <img alt="" src="${ly }/images/xcx.jpg" style="width:110px;margin-right: 70px;">
+            <img alt="" src="${ly }/images/ewm.png" style="width:110px;">
+            </div>
         </div>
         </body>
         </html>

@@ -54,9 +54,9 @@
 </head>
 <body>
 <nav class="breadcrumb text-c">
-  <a class="btn-page pagexz" href="javascript:;">重大风险判定</a>
-  <a class="btn-page" data-href="${ly }/company/safety-system/assess-list"  data-title="较大风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">较大风险判定</a>
-  <a class="btn-page"  data-href="${ly }/company/safety-system/assess6"  data-title="一般和较小风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">一般和较小风险判定</a>
+  <a class="btn-page pagexz" href="javascript:;">重大风险评估</a>
+  <a class="btn-page" data-href="${ly }/company/safety-system/assess-list"  data-title="较大风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">较大风险评估</a>
+  <a class="btn-page"  data-href="${ly }/company/safety-system/assess6"  data-title="一般和较小风险判定" onclick="Hui_admin_tab(this)" href="javascript:;">一般和较小风险评估</a>
   <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>
   <%--<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>--%>
 </nav>

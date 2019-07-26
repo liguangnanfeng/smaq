@@ -95,15 +95,15 @@
 
         .item_container {
             width: 20%;
-            height: 10vw;
+            height: 7.5vw;
             padding: 10px;
             box-sizing: border-box;
             position: relative;
         }
 
         .item_content {
-            -moz-box-shadow: 0px 0px 10px #efefef;
-            box-shadow: 0px 0px 10px #efefef;
+            -moz-box-shadow: 0px 0px 9px rgba(52,73,94,0.7);
+            box-shadow: 0px 0px 9px rgba(52,73,94,0.7);
             width: 100%;
             height: 100%;
             padding: 10px;
@@ -138,6 +138,17 @@
         .item_container:hover .my_span {
             display: block;
         }
+    h4{
+    <%--background:#5A98DE;--%>
+    color:#5A98DE;
+    <%--border-radius:3px;--%>
+<%--padding:14px 20px;--%>
+<%--font-size:16px;--%>
+    }
+    .table tbody tr td a{
+    border:none;
+    padding: 3px 9px;
+    }
     </style>
     <script type="text/javascript">
         var id;
@@ -192,34 +203,35 @@
         <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
     </div>
     <div class="mt-20 my_flex f_j_c f_wrap" style="width:100%;">
-        <%--        <table class="table table-border table-bordered table-bg table-hover table-sort">--%>
-        <%--            <thead>--%>
-        <%--            <tr class="text-c">--%>
-        <%--                <th width="5%">序号</th>--%>
-        <%--                <th width="40%">要素名称</th>--%>
-        <%--                <th width="15%">操作</th>--%>
-        <%--            </tr>--%>
-        <%--            </thead>--%>
-        <%--            <tbody>--%>
-        <%--            <!-- 循环-->--%>
-        <%--            <c:forEach items="${list }" varStatus="index" var="t">--%>
-        <%--                <tr class="text-c">--%>
-        <%--                    <td>${index.index+1 }</td>--%>
-        <%--                    <td>${t.name }</td>--%>
-        <%--                    <td>--%>
-        <%--                        详情,删除,修改--%>
-        <%--                    </td>--%>
-        <%--                </tr>--%>
-        <%--            </c:forEach>--%>
-        <%--            <!-- 循环结束 -->--%>
-        <%--            </tbody>--%>
-        <%--        </table>--%>
+                <%--<table class="table table-border table-bordered table-bg table-hover table-sort">--%>
+                    <%--<thead>--%>
+                    <%--<tr class="text-c">--%>
+                        <%--<th width="5%">序号</th>--%>
+                        <%--<th width="40%">要素名称</th>--%>
+                        <%--<th width="15%">操作</th>--%>
+                    <%--</tr>--%>
+                    <%--</thead>--%>
+                    <%--<tbody>--%>
+                    <%--<!-- 循环-->--%>
+                    <%--<c:forEach items="${list }" varStatus="index" var="t">--%>
+                        <%--<tr class="text-c">--%>
+                            <%--<td>${index.index+1 }</td>--%>
+                            <%--<td onClick="jump('${t.fileAddress}','${t.id}')">${t.name }</td>--%>
+                            <%--<td>--%>
+                        <%--<a onclick="edit('${t.id}','${t.name }','${t.oder}','${t.fileAddress}')">操作</a><a--%>
+                        <%--onclick="tip('${t.id}')" style="margin-left:10px;">删除</a>--%>
+                            <%--</td>--%>
+                        <%--</tr>--%>
+                    <%--</c:forEach>--%>
+                    <%--<!-- 循环结束 -->--%>
+                    <%--</tbody>--%>
+                <%--</table>--%>
 
         <c:forEach items="${list }" varStatus="index" var="t">
             <div class="item_container">
                 <div class="item_content my_flex f_r f_j_c f_z_c"
                      onClick="jump('${t.fileAddress}','${t.id}')">
-                    <h5>${t.name }</h5>
+                    <h4>${t.name }</h4>
                 </div>
 
                 <span class="my_span"><a onclick="edit('${t.id}','${t.name }','${t.oder}','${t.fileAddress}')">操作</a><a
@@ -353,26 +365,15 @@
 
     // 跳转
     function jump(url, id) {
-        if (url) {
-            show_dialog('安全标准化', url)
-            <%--$.ajax({--%>
-            <%--    type: "GET",--%>
-            <%--    cache: false,--%>
-            <%--    url: url,--%>
-            <%--    success: function() {--%>
-            <%--        alert(url);--%>
-
-            <%--    },--%>
-            <%--    error: function() {--%>
-            <%--        var p_id = parseInt(id);--%>
-            <%--        show_tab('安全标准化', '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId='+p_id)--%>
-            <%--    }--%>
-            <%--});--%>
+     
+          if (url) {
+            show_tab('安全标准化', url)
         } else {
             var p_id = parseInt(id);
-            show_tab('安全标准化', '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=' + p_id)
-        }
-    }
+            show_tab('安全标准化', '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=' + p_id);
+        } 
+		 
+	}
 
 
     <%-- 新增 --%>

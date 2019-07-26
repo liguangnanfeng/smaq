@@ -244,7 +244,7 @@
         }else if(f==2){
             url= "/company/zhuChartData6";
         }else{
-            url= "/company/zhuChartData7?flags="+vs1+"&depart="+vs;
+            url= "/company/zhuChartData7";
         }
         $.post(getRootPath() + url, {
             sT: $("#sT").val(),
@@ -280,6 +280,33 @@
             },
             xAxis: {categories: categories},
             yAxis: {title: {text: '数量'}, min: 0},
+            tooltip: {
+                formatter: function (res,ret,rep) {
+
+    <%--console.log(res)--%>
+    <%--console.log(ret)--%>
+    <%--console.log(rep)--%>
+    <%--return this.y + '个月 ';--%>
+                    var content ='<table>'
+                    for (var i = 0; i < this.points.length; i++) {
+                    content += '<tr><td style="padding:0;color: ' + this.points[i].series.color + '">' + this.points[i].series.name + ':</td> <td style="padding:0"><b>' + this.points[i].y + '</b></td></tr>';
+
+                    if(i==1){
+                        var jj;
+                        if(this.points[0].y==0){
+                            jj=100;
+                        }else{
+                            jj=Highcharts.numberFormat(this.points[0].y/(this.points[0].y+this.points[1].y+this.points[2].y)*100,2);
+                        }
+                        content += '<tr><td style="padding:0;color:#333">占比率：</td><td>'+jj +'%</td></tr>';
+                        content += '<tr><td style="padding:0;color:#333">占比率：</td><td>'+jj +'%</td></tr>';
+                    }
+                    };
+                    return content;
+                },
+                shared: true,
+                useHTML: true
+            },
             plotOptions: {
                 line: {
                     dataLabels: {enabled: true},// 开启数据标签

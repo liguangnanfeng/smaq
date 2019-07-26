@@ -184,9 +184,9 @@
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
         <i class="Hui-iconfont">&#xe68f;</i>
     </a>
-    <%--<c:if test="${buttons == 3}">--%>
+    <c:if test="${number != 3}">
         <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
-    <%--</c:if>--%>
+    </c:if>
 </nav>
 <div class="page-container">
     <%--<div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">--%>

@@ -233,40 +233,18 @@
                         })
                     }else{   //如果选择的是基础或现场
                         let postData = {"checkType": parseInt(val)};
-                        <%--$.ajax({--%>      //旧版是请求有哪些车间  新版直接请求检查项
-                            <%--type: "POST",--%>
-                            <%--url: `${host}/village/findItemAll`,--%>
-                            <%--data: postData,--%>
-                            <%--async: false,--%>
-                            <%--dataType: "json",--%>
-                            <%--success: function (result) {--%>
-                                <%--if (result.length == 0) {--%>
-                                    <%--alert('没有可检查部门,请先添加风险点')--%>
-                                <%--}--%>
-                                <%--_self.setState({--%>
-                                    <%--bm: result,--%>
-                                    <%--myChecks: [],--%>
-                                <%--})--%>
-                            <%--},--%>
-                            <%--complete: function (XMLHttpRequest, textStatus) {--%>
-                                <%--// layer.close(index);--%>
-                            <%--},--%>
-                            <%--error: function (XMLHttpRequest, textStatus, errorThrown) {--%>
-                                <%--console.log("查询失败");--%>
-                            <%--}--%>
-                        <%--})--%>
                         $.ajax({
                             type: "POST",
-                            url: `${host}/village/selectDep3`,
+                            url: `${host}/village/findItemAll`,
                             data: postData,
                             async: false,
                             dataType: "json",
                             success: function (result) {
                                 if (result.length == 0) {
-                                    alert('没有可检查风险项,请选择自定义添加项')
+                                    alert('没有可检查部门,请先添加风险点')
                                 }
                                 _self.setState({
-                                    list: result,
+                                    bm: result,
                                     myChecks: [],
                                 })
                             },
@@ -278,6 +256,7 @@
                             }
 
                         })
+
                     }
                 })
             }
@@ -593,23 +572,23 @@
             render = () => {
                 const xcjc =      //如果是现场基础检查 渲染这个
                     <div>
-                        <%--<div className="row cl">--%>
-                            <%--<label className="form-label col-xs-4 col-sm-2"><span className="c-red">*</span>请选择检查部位--%>
-                                <%--:</label>--%>
-                            <%--<div className="formControls col-xs-8 col-sm-9">--%>
-                                    <%--<span className="select-box inline">--%>
-                                        <%--<select className="select" style={{width: '200px'}}--%>
-                                                <%--onChange={this.bmSelect} value={this.state.bmId}>--%>
-                                             <%--<option value="0">请选择检查部位</option>--%>
-                                            <%--{this.state.bm.map((item, index) => {--%>
-                                                <%--return (--%>
-                                                    <%--<option value={item.dmid}>{item.level1}</option>--%>
-                                                <%--)--%>
-                                            <%--})}--%>
-                                        <%--</select>--%>
-                                    <%--</span>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
+                        <div className="row cl">
+                            <label className="form-label col-xs-4 col-sm-2"><span className="c-red">*</span>请选择检查部位
+                                :</label>
+                            <div className="formControls col-xs-8 col-sm-9">
+                                    <span className="select-box inline">
+                                        <select className="select" style={{width: '200px'}}
+                                                onChange={this.bmSelect} value={this.state.bmId}>
+                                             <option value="0">请选择检查部位</option>
+                                            {this.state.bm.map((item, index) => {
+                                                return (
+                                                    <option value={item.dmid}>{item.level1}</option>
+                                                )
+                                            })}
+                                        </select>
+                                    </span>
+                            </div>
+                        </div>
                         <%--{this.state.gw.length > 0 ?   //如果岗位长度null--%>
                         <%--    <div className="row cl">--%>
                         <%--        <label className="form-label col-xs-4 col-sm-2"><span className="c-red">*</span>请选择检查岗位--%>
@@ -805,34 +784,34 @@
                     <div>
                         <form className="form form-horizontal" id="form">
                             <div className="page-container">
+                                <%--<div className="row cl">--%>
+                                <%--    <label className="form-label col-xs-4 col-sm-2"><span--%>
+                                <%--        className="c-red">*</span>检查表名称：</label>--%>
+                                <%--    <div className="formControls col-xs-8 col-sm-9">--%>
+                                <%--        <input type="text" onChange={(e) => this.inputChange('tableName', e)}--%>
+                                <%--               style={{width: '350px'}} className="input-text"--%>
+                                <%--               maxLength="50" placeholder="请填写检查表名称(必填)"--%>
+                                <%--               value={this.state.tableName}/>--%>
+                                <%--    </div>--%>
+                                <%--</div>--%>
                                 <div className="row cl">
                                     <label className="form-label col-xs-4 col-sm-2"><span
-                                        className="c-red">*</span>检查表名称：</label>
+                                        className="c-red">*</span>请选择检查方式
+                                        :</label>
                                     <div className="formControls col-xs-8 col-sm-9">
-                                        <input type="text" onChange={(e) => this.inputChange('tableName', e)}
-                                               style={{width: '350px'}} className="input-text"
-                                               maxLength="50" placeholder="请填写检查表名称(必填)"
-                                               value={this.state.tableName}/>
+                                    <span className="select-box inline">
+                                        <select className="select" style={{width: '150px'}}
+                                                onChange={(e) => this.selectChange('checkType', e)}>
+                                        <option value="0">选择检查方式</option>
+                                        <option value="1">日常</option>
+                                        <option value="2">定期</option>
+                                        <option value="3">季节</option>
+                                        <option value="4">其他</option>
+                                        <option value="5">综合</option>
+                                        </select>
+                                    </span>
                                     </div>
                                 </div>
-                                <%--<div className="row cl">--%>
-                                    <%--<label className="form-label col-xs-4 col-sm-2"><span--%>
-                                        <%--className="c-red">*</span>请选择检查方式--%>
-                                        <%--:</label>--%>
-                                    <%--<div className="formControls col-xs-8 col-sm-9">--%>
-                                    <%--<span className="select-box inline">--%>
-                                        <%--<select className="select" style={{width: '150px'}}--%>
-                                                <%--onChange={(e) => this.selectChange('checkType', e)}>--%>
-                                        <%--<option value="0">选择检查方式</option>--%>
-                                        <%--<option value="1">日常</option>--%>
-                                        <%--<option value="2">定期</option>--%>
-                                        <%--<option value="3">季节</option>--%>
-                                        <%--<option value="4">其他</option>--%>
-                                        <%--<option value="5">综合</option>--%>
-                                        <%--</select>--%>
-                                    <%--</span>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
                                 {this.state.checkType == 2 ?
                                     <div className="row cl dq">
                                         <label className="form-label col-xs-4 col-sm-2"><span

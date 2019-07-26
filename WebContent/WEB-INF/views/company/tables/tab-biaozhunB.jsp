@@ -354,7 +354,7 @@
   // 跳转
     function jump(url,id){
         if(url){
-            show_dialog('安全标准化', url)
+            show_tab('安全标准化', url)
             <%--$.ajax({--%>
             <%--    type: "GET",--%>
             <%--    cache: false,--%>

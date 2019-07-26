@@ -34,11 +34,7 @@
   </style>
   <script type="text/javascript">
       $(function() {
-
-
-
-
-        $(".three_danger").each(function(){
+          $(".three_danger").each(function(){
               var s=$(this).find("label").html();
               var h=$(this).prev().find("label").html();
               if (s==h){
@@ -97,7 +93,6 @@
               }
           })
       });
-
 
   </script>
 </head>

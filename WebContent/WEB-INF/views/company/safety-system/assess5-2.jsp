@@ -16,6 +16,8 @@
     body .dis-ib{margin-right:15px;}
     .col-b,.col-a,.col-c,.col-d{margin:0;padding:0 15px;height:25px;line-height:25px;}
   </style>
+
+    <script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset.js"></script>
   <script type="text/javascript">
       $(function() {
       })
@@ -136,7 +138,7 @@
       <tbody>
       <c:forEach items="${list }" var="be" varStatus="index">
         <tr>
-          <td class="text-c"><input type="checkbox" value="${be.id}"/></td>
+          <th class="text-c"><input type="checkbox" value="${be.id}"/></th>
             <%-- <td class="text-c">${be.level3 }</td> --%>
           <c:set value="${fn:split(be.level3,'/')}" var="ls"></c:set>
 

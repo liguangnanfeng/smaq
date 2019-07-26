@@ -501,7 +501,7 @@
                                 <th className="my_td">检查部位</th>
                                 <th className="my_td">检查类型</th>
                                 <th className="my_td">检查方式</th>
-
+                              
                                 <th className="my_td">检查项目</th>
                                 <th className="my_td4">检查内容</th>
                                 <th className="div-pcz my_td3">操作</th>
@@ -540,9 +540,12 @@
                                              </c:if>
                                         </td>
 
-                                        <td className="text-c">{levels[2]?levels[2]:'暂无数据'}</td>
+                   
 
+                                        <td className="text-c">
+                                            {levels[2]?levels[2]:'暂无数据'}
 
+                                        </td>
 
                                         <td className="text-c">{item.factors}</td>
 

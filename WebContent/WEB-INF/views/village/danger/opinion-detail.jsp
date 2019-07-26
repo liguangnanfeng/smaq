@@ -155,12 +155,19 @@
     </script>
 </head>
 <body>
-<div class="page-container">
+<div class="page-container"  style="page-break-after:always">
     <div class="div_pdetail">
-        <button onClick="top.show_tab('治理意见表', '${ly}/village/check-document?checkId=${check.id }&flag=${check.flag == 3 ? 8 : 1}')"
-                class="btn btn-success radius" type="button" style="padding: 0 70px; margin-right: 20px">
-            <i class="Hui-iconfont mr-10">&#xe652;</i>打印预览
-        </button>
+        <%--<button onClick="top.show_tab('治理意见表', '${ly}/village/check-document?checkId=${check.id }&flag=${check.flag == 3 ? 8 : 1}')"--%>
+                <%--class="btn btn-success radius" type="button" style="padding: 0 70px; margin-right: 20px">--%>
+            <%--<i class="Hui-iconfont mr-10">&#xe652;</i>打印预览--%>
+        <%--</button>--%>
+
+    <button onClick="pr_()" class="btn btn-primary radius btn_hid" type="button">
+    <i class="Hui-iconfont">&#xe652;</i>打印预览
+    </button>
+
+    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="${ly }/company/model-list-main?flag=1"
+    title="返回">返回</a>
         <%-- <button onClick="top.show_tab('排查治理记录', '${ly }/village/check-list?flag=${flag }')" class="btn btn-success radius" type="button" style="padding: 0 15px;margin-right: 20px">
             <i class="Hui-iconfont mr-10">&#xe652;</i>返回排查治理记录列表
         </button> --%>
@@ -178,7 +185,14 @@
 <%--            </c:if>--%>
 <%--        </c:if>--%>
     </div>
-    <h2 class="text-c mb-10">隐患整改意见书</h2>
+
+
+    <c:if test="${empty rectification}">
+        <h2 class="text-c mb-10">隐患整改意见表</h2>
+    </c:if>
+    <c:if test="${!empty rectification}">
+        <h2 class="text-c mb-10">隐患整改意见书</h2>
+    </c:if>
     <div class="div_pdetail">
         <font>受检${check.flag == 1 ? '部门' : '单位'}：${check.depart }</font>
         <label>检查日期：<fmt:formatDate value="${check.realTime }" pattern="yyyy年MM月dd日"/></label>
@@ -195,7 +209,7 @@
                 </c:if>
                 <th width="20%">隐患描述</th>
                 <th width="10%">检查结果</th>
-                <th width="10%">操作</th>
+                <th width="10%">隐患图片</th>
                 <!-- <th width="10%">备注</th> -->
             </tr>
             </thead>
@@ -203,22 +217,16 @@
             <c:forEach items="${itemL }" var="be" varStatus="index">
                 <tr>
                     <td class="text-c">${index.index + 1}</td>
-                    <c:set var="item" value="${fn:split(be.levels,'/') }"/>
-
+					<c:set var="item" value="${fn:split(be.levels,'/') }"/>
                     <td class="text-c">
                         <c:if test="${!empty be.partImg}">
                             <img src="${be.partImg }" class="mr-10" style="height:100px;"/>
                         </c:if>
-                        <c:if test="${ not empty item[1]}">
+                             <c:if test="${ not empty item[1]}">
                             ${item[1] }
                         </c:if>
-                           </td>
-
-                    <td class="text-c">
-
-                            ${item[2] }
-                    </td>
-
+							</td>
+                    <td class="text-c"> ${item[2] }</td>
                     <c:if test="${!empty itemL[0].content}">
                         <td class="text-c">${be.content }</td>
                     </c:if>
@@ -376,7 +384,7 @@
         <c:if test="${empty rectification}">
             <div class="row cl">
                 <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
-                    <button onClick="save_()" class="btn btn-primary radius" type="button" style="padding: 0 70px;">
+                    <button onClick="save_()" class="btn btn-primary radius btn_hid" type="button" style="padding: 0 70px;">
                         <i class="Hui-iconfont">&#xe632;</i>保存
                     </button>
                 </div>
@@ -407,6 +415,7 @@
 
 </div>
 </body>
+    <script src="/js/jquery.jqprint-0.3.js"></script>
 <script type="text/javascript">
     var serious_i = ${serList};
     var checkId = ${check.id};
@@ -519,12 +528,13 @@
                     parent.location.reload();
                 } else {
                     if(sessionStorage.getItem('flag')){
-                        var l_flag = parseInt(sessionStorage.getItem('flag'))  ;
-                        var l_dmname =sessionStorage.getItem('dmname').replace(/\s*/g,"");
-                        var l_industryType = parseInt(sessionStorage.getItem('industryType'));
-                        var url = '${ly}/company/check-list-szss?dmName='+l_dmname+'&flag='+l_flag+'&industryType='+l_industryType;
-                        // top.show_tab(x, url)
-                      show_tab(x, url)
+    location.replace(location.href);
+                        <%--var l_flag = parseInt(sessionStorage.getItem('flag'))  ;--%>
+                        <%--var l_dmname =sessionStorage.getItem('dmname').replace(/\s*/g,"");--%>
+                        <%--var l_industryType = parseInt(sessionStorage.getItem('industryType'));--%>
+                        <%--var url = '${ly}/company/check-list-szss?dmName='+l_dmname+'&flag='+l_flag+'&industryType='+l_industryType;--%>
+                        <%--// top.show_tab(x, url)--%>
+                      <%--show_tab(x, url)--%>
                     }else{
                         close_dialog(function () {
                             parent.location.reload();
@@ -547,9 +557,17 @@
         //     console.log('hello!');
         // }
     }
+
 </script>
 <script>
 
+    function pr_() {
+    $('.btn_hid').css('display','none')
+    $(".page-container").jqprint();
+    setTimeout(function () {
+    $('.btn_hid').css('display','inline-block')
+    },2000)
+    }
     var a=$("input[data-item='2']").length;
     var b=$("input[name='isyan']").length;
     if (a===b){

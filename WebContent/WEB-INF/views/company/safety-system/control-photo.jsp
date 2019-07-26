@@ -305,6 +305,7 @@
                 }
         // 图片
         $('#imgform' + v).click(function (t) {
+        console.log(t)
         t.preventDefault();
         window.c = imageLabel({
         img: $("#imgform" + v + " [name=src]").val(),
@@ -349,7 +350,8 @@
         data: {
         id: v,
         images: image,
-        coordinate: JSON.stringify(dataArr(t))
+        coordinate: JSON.stringify(dataArr(t)),
+        flag:1
         },
         success: function (result) { //服务器成功响应处理函数
         window.location.reload()

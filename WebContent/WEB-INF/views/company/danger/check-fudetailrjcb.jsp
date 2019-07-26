@@ -72,7 +72,7 @@ function showpicture2(src, obj){
      <%-- <button onClick="top.show_tab('排查治理记录', '${ly }/village/check-list?flag=${flag }')" class="btn btn-success radius" type="button" style="padding: 0 15px;margin-right: 20px">
         <i class="Hui-iconfont mr-10">&#xe652;</i>返回排查治理记录列表
     </button> --%>
-    <button onClick="location.href = '/company/check-detail?flag=${flag}&id=${check.id }'"
+    <button onClick="location.href = '/company/check-detail?flag=${flag }&id=${check.id }'"
               class="btn btn-success radius" type="button" style="padding: 0 60px;margin-right: 20px">检查详情</button>
       <!-- 判断是否有治理意见表 -->
       <c:if test="${check.c > 0 && check.status == 2 }">

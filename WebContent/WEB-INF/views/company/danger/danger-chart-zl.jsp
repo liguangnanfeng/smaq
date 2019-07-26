@@ -181,15 +181,6 @@
 <div class="panel panel-default" style="width:99%;margin-left:10px;float:left;background:none;">
     <div class="div_tx">
         <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">治理数据分析
-
-            <select class="sel_area isShow" id="partNammes"  onchange="int()" style="position:relative;top:3px">
-                <option value="" >全部</option>
-                <c:forEach items="${zzjg }" var="be">
-                    <option value="${be.id}" >${be.name }</option>
-                </c:forEach>
-            </select>
-
-
             <!-- 判断并提示至少选择3个月 -->
             <div class="search_rq pos-a">
                 <font>查询时间段：</font>
@@ -225,10 +216,7 @@
 
 
     function int() {
-
-        var vs = $('#partNammes  option:selected').val();
-
-        $.post(getRootPath() + "/company/zhuChartData4?depart="+vs, {
+        $.post(getRootPath() + "/company/zhuChartData4", {
             sT: $("#sT").val(),
             eT: $("#eT").val(),
             flag:parseInt($("#my_flag").val()),

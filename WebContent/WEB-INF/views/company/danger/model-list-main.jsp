@@ -218,13 +218,14 @@
                                     <c:if test="${index2.index==2}">
                                             <a style="text-decoration:none"
                                                class="used"
-                                               onClick="szss_list('${be.level1 }',2,'${status[0]+1}','${flag}')"
+                                                onClick="layer.msg('没有要检查的整改项')"
+                                               <%--onClick="szss_list('${be.level1 }',2,'${status[0]+1}','${flag}')"--%>
                                                href="javascript:;">实施</a>
                                     </c:if>
                                             <c:if test="${index2.index!=2}">
                                                 <a style="text-decoration:none"
                                                 class="used"
-                                                onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
+                                                onClick="layer.msg('没有要检查的整改项')"
                                                 href="javascript:;">实施</a></c:if>
                                         </c:if>
                                     </td>

@@ -90,7 +90,7 @@ $(document).ready(function() {
     <div class="menu_dropdown bk_2">
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe643;</i>企业分类数据库
+          <i class="Hui-iconfont">&#xe643;</i>企业信息数据
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -115,7 +115,7 @@ $(document).ready(function() {
       </dl>
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe63c;</i>风险分级与管控
+          <i class="Hui-iconfont">&#xe63c;</i>风险分级管控
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -128,7 +128,7 @@ $(document).ready(function() {
       </dl>
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe687;</i>隐患排查与治理
+          <i class="Hui-iconfont">&#xe687;</i>隐患排查治理
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -161,7 +161,7 @@ $(document).ready(function() {
       </dl>
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe687;</i>风险研判与承诺
+          <i class="Hui-iconfont">&#xe687;</i>风险研判公告
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -185,6 +185,7 @@ $(document).ready(function() {
           </ul>
         </dd>
       </dl>
+
       <dl>
         <dt>
           <i class="Hui-iconfont">&#xe70c;</i>安全监察与监管
@@ -207,7 +208,7 @@ $(document).ready(function() {
       
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe70c;</i>行政与执法档案
+          <i class="Hui-iconfont">&#xe70c;</i>行政执法检查
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -217,20 +218,20 @@ $(document).ready(function() {
           </ul>
         </dd>
       </dl>
-      <dl>
-        <dt>
-          <i class="Hui-iconfont">&#xe653;</i>领导关注点汇总
-          <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-        </dt>
-        <dd>
-          <ul>
-            <li><a data-href="javascript:void(0)" data-title="一周监管动态" href="javascript:void(0)">一周监管动态</a></li>
-            <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=1" data-title="隐患排查治理数据" href="javascript:void(0)">隐患排查治理数据</a></li>
-            <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=2" data-title="重大事故隐患数据" href="javascript:void(0)">重大事故隐患数据</a></li>
-            <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=3" data-title="行政执法数据" href="javascript:void(0)">行政执法数据</a></li>
-          </ul>
-        </dd>
-      </dl>
+      <%--<dl>--%>
+        <%--<dt>--%>
+          <%--<i class="Hui-iconfont">&#xe653;</i>领导关注点汇总--%>
+          <%--<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--%>
+        <%--</dt>--%>
+        <%--<dd>--%>
+          <%--<ul>--%>
+            <%--<li><a data-href="javascript:void(0)" data-title="一周监管动态" href="javascript:void(0)">一周监管动态</a></li>--%>
+            <%--<li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=1" data-title="隐患排查治理数据" href="javascript:void(0)">隐患排查治理数据</a></li>--%>
+            <%--<li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=2" data-title="重大事故隐患数据" href="javascript:void(0)">重大事故隐患数据</a></li>--%>
+            <%--<li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=3" data-title="行政执法数据" href="javascript:void(0)">行政执法数据</a></li>--%>
+          <%--</ul>--%>
+        <%--</dd>--%>
+      <%--</dl>--%>
       <%-- <dl>
         <dt>
           <i class="Hui-iconfont">&#xe70c;</i>隐患统计分析系统
@@ -273,9 +274,9 @@ $(document).ready(function() {
           </ul>
         </dd>
       </dl>
-      <dl>
+      <dl> --%>
         <dt>
-          <i class="Hui-iconfont">&#xe61d;</i>信息推送系统
+          <i class="Hui-iconfont">&#xe61d;</i>信息推送互动
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -286,11 +287,11 @@ $(document).ready(function() {
             <li><a data-href="${ly }/village/groupIndex" data-title="群组设置" href="javascript:void(0)">企业群组设置</a></li>
           </ul>
         </dd>
-      </dl> --%>
+      </dl>
       
       <dl>
         <dt>
-          <i class="Hui-iconfont">&#xe61d;</i>系统及账号设置
+          <i class="Hui-iconfont">&#xe61d;</i>账号设置管理
           <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>

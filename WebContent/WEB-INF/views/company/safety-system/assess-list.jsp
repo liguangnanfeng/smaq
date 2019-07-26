@@ -122,6 +122,7 @@
             })
         })
   </script>
+    <script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset.js"></script>
 </head>
 <body>
 <nav class="breadcrumb text-c">
@@ -180,7 +181,7 @@
       <tbody>
       <c:forEach items="${list }" var="be" varStatus="index">
         <tr>
-          <td class="text-c"><input type="checkbox" value="${be.id}"/></td>
+          <th class="text-c"><input type="checkbox" value="${be.id}"/></th>
             <%-- <td class="text-c">${be.level3 }</td> --%>
           <c:set value="${fn:split(be.level3,'/')}" var="ls"></c:set>
 

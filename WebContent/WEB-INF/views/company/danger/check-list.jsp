@@ -30,13 +30,26 @@
     function queryButton() {
         var dmName = $("[name='dmName']").val();
         alert(dmName);
-        $.ajax(
-            url
-        "${ly }/village/check-list",
+        $.ajax({
 
+    url:"${ly }/village/check-list",
+
+    }
     )
 
 
+    }
+
+    /*删除*/
+    function del_(id) {
+    layer.confirm("要删除该记录？", function (i) {
+    layer.close(i);
+    $.post(getRootPath() + "/company/check-del", {
+    id: id
+    }, function (reuslt) {
+    location.reload();
+    })
+    })
     }
 
 </script>
@@ -299,18 +312,6 @@
     </div>
 </div>
 <script type="text/javascript">
-
-    /*删除*/
-    function del_(id) {
-        layer.confirm("要删除该记录？", function (i) {
-            layer.close(i);
-            $.post(getRootPath() + "/company/check-del", {
-                id: id
-            }, function (reuslt) {
-                location.reload();
-            })
-        })
-    }
 
     $(function () {
         sessionStorage.clear();

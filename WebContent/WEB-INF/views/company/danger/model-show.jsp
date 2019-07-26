@@ -66,7 +66,6 @@ function pr_() {
         </tr>
       </thead>
       <tbody>
-
         <c:forEach items="${partL }" var="part" varStatus="pi">
         <c:set var="x" value="0"/>
         <c:forEach items="${itemL }" var="ch">

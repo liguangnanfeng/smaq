@@ -361,13 +361,15 @@ public class CgfServiceImpl implements CgfService {
 
         if (tCheck.getFlag() == 1 && !Objects.equals("公司级", tCheck.getDepart())) {
             List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(t.getId());
-            for (TCheckItem tCheckItem : tCheckItems) {
-                if (null != tCheckItem.getLevelId() && tCheckItem.getStatus() == 2) {
-                    ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(tCheckItem.getLevelId());
-                    if (null != aCompanyManual && null != aCompanyManual.getCommerce() && !"".equals(aCompanyManual.getCommerce())) {
-                        // 获取值
-                        String commerce = aCompanyManual.getCommerce();
-                        commerces.add(commerce);
+            if (null != tCheckItems){
+                for (TCheckItem tCheckItem : tCheckItems) {
+                    if (null != tCheckItem.getLevelId() && tCheckItem.getStatus() == 2) {
+                        ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(tCheckItem.getLevelId());
+                        if (null != aCompanyManual && null != aCompanyManual.getCommerce() && !"".equals(aCompanyManual.getCommerce())) {
+                            // 获取值
+                            String commerce = aCompanyManual.getCommerce();
+                            commerces.add(commerce);
+                        }
                     }
                 }
             }

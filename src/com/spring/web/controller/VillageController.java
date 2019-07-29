@@ -1501,6 +1501,9 @@ public class VillageController extends BaseController {
         if (null == checkItemByModelId) {
             return "village/danger/plan-next";
         }
+
+        System.out.println(checkItemByModelId.getCheckId());
+
         TCheck tc = tCheckMapper.selectByPrimaryKey(checkItemByModelId.getCheckId());
 
         //log.error("tCheckMapper检查表信息:"+tc.toString());

@@ -2697,12 +2697,16 @@ public class CompanyController_cd extends BaseController {
     Result checkSave2(TCheck t) {
         Result result = new ResultImpl();
 
-        try {
-            cgfService.checkNestSave(t);
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.setStatus("1");
-            result.setMap("message", "保存失败");
+        log.error(t);
+
+        if(null != t){
+            try {
+                cgfService.checkNestSave(t);
+            } catch (Exception e) {
+                e.printStackTrace();
+                result.setStatus("1");
+                result.setMap("message", "保存失败");
+            }
         }
         return result;
     }

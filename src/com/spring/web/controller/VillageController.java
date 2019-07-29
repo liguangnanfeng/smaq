@@ -1510,10 +1510,6 @@ public class VillageController extends BaseController {
         List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(checkItemByModelId.getCheckId());
         //log.error("tCheckPartMapper条目信息:"+partL.toString());
 
-
-
-        //
-
         model.addAttribute("check", tc);
         model.addAttribute("partL", partL);
         //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
@@ -1581,7 +1577,12 @@ public class VillageController extends BaseController {
             departName+=s+"/";
         }*/
         Object[] objects =  set.toArray();
-        String departName = Arrays.toString(objects);
+
+       /* String departName = Arrays.toString(objects);*/
+        String departName = null;
+        for (int i = 0; i < objects.length; i++) {
+            departName = (String) objects[i];
+        }
 
         model.addAttribute("departName",departName);
         model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员

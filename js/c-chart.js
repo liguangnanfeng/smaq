@@ -63,19 +63,35 @@ $(function () {
     },function(result) {
       var categories = result.map.categories;
       var series = result.map.series;
+
+
       $('#container3').highcharts({
         credits: {enabled: false},
           chart: {type: 'line'},
           title: {text: ''},
           xAxis: {categories: categories},
           yAxis: { title: {text: '数量'},min:0,tickAmount: 8},
-          plotOptions: {
-              line: {
-                  dataLabels: {
-                      enabled: true// 开启数据标签
-                  },
-                  enableMouseTracking: false // 关闭鼠标跟踪，对应的提示框、点击事件会失效
+          tooltip: {
+              formatter: function () {
+                  var content ='<table>'
+                  for (var i = 0; i < this.points.length; i++) {
+                      content += '<tr><td style="padding:0;color: ' + this.points[i].series.color + '">' + this.points[i].series.name + ':</td> <td style="padding:0"><b>' + this.points[i].y + '</b></td></tr>';
+                      if(i==1){
+                          var jj;
+                          if(this.points[0].y==0){
+                              jj=100;
+                          }else{
+                              jj=Highcharts.numberFormat(this.points[1].y/this.points[0].y*100,2);
+                          }
+                          content += '<tr><td style="padding:0;color:#333">占比率：</td><td>'+jj +'%</td></tr>';
+                      }
+                  };
+                  return content;
               },
+              shared: true,
+              useHTML: true
+          },
+          plotOptions: {
               series: {
                 events: {
                     legendItemClick: function(e) {
@@ -98,7 +114,22 @@ $(function () {
     },function(result) {
       var categories = result.map.categories;
       var series = result.map.series;
-      $('#container3').highcharts({
+        series[2] = {
+            name:'未整改项数',
+            _colorIndex:2,
+            data: arrF(series[0].data,series[1].data)
+        }
+        function arrF(arr1,arr2){
+            var arr = []
+            for(var i=0;i<arr1.length;i++){
+                console.log(arr1[i]);
+                arr.push(arr1[i]-arr2[i])
+            }
+            return arr
+        }
+
+
+        $('#container3').highcharts({
         credits: {enabled: false},
         chart: { type: 'column'},
         title: { text: '' },
@@ -121,7 +152,7 @@ $(function () {
                   content += '<tr><td style="padding:0;color:#333">整改率：</td><td>'+jj +'%</td></tr>';
                 }
             };
-            return content;
+              return content;
         },
             shared: true,
             useHTML: true

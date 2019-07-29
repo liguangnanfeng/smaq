@@ -2672,9 +2672,17 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "check-item-save")
     public @ResponseBody
-    Result checkItemSave(TCheckItem tci, HttpServletRequest request) throws Exception {
+    Result checkItemSave(Integer id, HttpServletRequest request,Integer status) throws Exception {
         Result result = new ResultImpl();
-        tCheckItemMapper.updateByPrimaryKeySelective(tci);
+        TCheckItem tCheckItem = new TCheckItem();
+
+
+        log.error("id---"+id);
+        log.error("status---"+status);
+
+        tCheckItem.setId(id);
+        tCheckItem.setStatus(status);
+        tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
         return result;
     }
 

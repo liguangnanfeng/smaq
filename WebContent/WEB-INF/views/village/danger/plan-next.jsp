@@ -493,6 +493,7 @@
             return false;
         }
         $(":radio[name='plan-radio-" + itemId + "'][value='2']").attr("data-file", $("#pic3").attr("url"));
+        alert(itemId)
         $("#modal-plan").modal("hide");
         $.post(getRootPath() + "/company/check-item-save", {
             id: itemId,

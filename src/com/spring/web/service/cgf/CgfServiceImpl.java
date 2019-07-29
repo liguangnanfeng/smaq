@@ -108,7 +108,6 @@ public class CgfServiceImpl implements CgfService {
 
     /**
      * @param dto    行政 委托检查表保存
-     * @param result
      * @throws Exception
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
@@ -197,7 +196,6 @@ public class CgfServiceImpl implements CgfService {
 
     /**
      * @param check  检查表保存
-     * @param result
      * @throws Exception
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
@@ -229,7 +227,6 @@ public class CgfServiceImpl implements CgfService {
 
     /**
      * @param check  检查表保存
-     * @param result
      * @throws Exception
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
@@ -273,11 +270,10 @@ public class CgfServiceImpl implements CgfService {
         // t.setUseTime(check.getCreateTime());
         // tModelMapper.updateByPrimaryKeySelective(t);
     }
-
+    
     /**
-     * @param check  检查表自动化设置保存
-     * @param result
-     * @throws Exception
+     * description: 检查表自动化设置保存
+     * create time: 2019/7/29 9:56
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public void modelAuto(TModel model, Result result) throws Exception {
@@ -363,7 +359,12 @@ public class CgfServiceImpl implements CgfService {
             List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(t.getId());
             if (null != tCheckItems){
                 for (TCheckItem tCheckItem : tCheckItems) {
-                    if (null != tCheckItem.getLevelId() && tCheckItem.getStatus() == 2) {
+
+                    log.error(tCheckItem);
+                    log.error(tCheckItem.getStatus());
+                    log.error(tCheckItem.getLevelId());
+
+                    if (null != tCheckItem.getLevelId() && null != tCheckItem.getStatus() && tCheckItem.getStatus() == 2) {
                         ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(tCheckItem.getLevelId());
                         if (null != aCompanyManual && null != aCompanyManual.getCommerce() && !"".equals(aCompanyManual.getCommerce())) {
                             // 获取值
@@ -617,7 +618,8 @@ public class CgfServiceImpl implements CgfService {
     }
 
     /**
-     * @param 保存村
+     * description: 保存村
+     * create time: 2019/7/29 9:48
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public void villageSave(Integer region, Village village, String vName, String vPsw, String jw, Result result)
@@ -664,7 +666,8 @@ public class CgfServiceImpl implements CgfService {
     }
 
     /**
-     * @param 保存镇
+     * description: 保存镇
+     * create time: 2019/7/29 9:48
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public void townSave(Town town, String tName, String tPsw, String jw, String villageids, Result result)
@@ -719,7 +722,8 @@ public class CgfServiceImpl implements CgfService {
     }
 
     /**
-     * @param 保存区县
+     * description: 保存区县
+     * create time: 2019/7/29 9:48
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public void districtSave(District d, String tName, String tPsw, String jw, String villageids, Result result)
@@ -774,7 +778,8 @@ public class CgfServiceImpl implements CgfService {
     }
 
     /**
-     * @param 保存行业
+     * description: 保存行业
+     * create time: 2019/7/29 9:48
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public void tradeSave(Integer userId, String userName, String tradeName, String userPsw, String companyArea,
@@ -834,7 +839,8 @@ public class CgfServiceImpl implements CgfService {
     }
 
     /**
-     * @param 排查治理记录添加
+     * description: 排查治理记录添加
+     * create time: 2019/7/29 9:48
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public void checkListAdd(Integer _userId, TCheck tCheck, String items, AppResult result) throws Exception {
@@ -1095,8 +1101,8 @@ public class CgfServiceImpl implements CgfService {
     }
 
     /**
-     * @param 固有风险研判表保存
-     * @throws Exception
+     * description: 固定有风险研判表添加
+     * create time: 2019/7/29 9:48
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public void naturaldangerSave(NaturaldangerSaveReqDTO dto) throws Exception {
@@ -1128,8 +1134,8 @@ public class CgfServiceImpl implements CgfService {
 
 
     /**
-     * @param 目标履职考核-保存
-     * @throws Exception
+     * description: 目标履职考核-保存
+     * create time: 2019/7/29 9:56
      */
     public void targetAssessmentSave(FcTargetAssessment fcTargetAssessment, User user) throws Exception {
 
@@ -1148,8 +1154,8 @@ public class CgfServiceImpl implements CgfService {
     }
 
     /**
-     * @param 临时风险研判表格填写数目-保存
-     * @throws Exception
+     * description: 临时风险研判表格填写数目-保存
+     * create time: 2019/7/29 9:57
      */
     public void fcTemporaryDangerCensusSave(FcTemporaryDangerCensus fcTemporaryDangerCensus, User user) throws Exception {
 
@@ -1171,8 +1177,8 @@ public class CgfServiceImpl implements CgfService {
     }
 
     /**
-     * @param 重大/较大风险研判表保存
-     * @throws Exception
+     * description: 重大/较大风险研判表保存
+     * create time: 2019/7/29 9:57
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public void greatdangerSave(GreatdangerSaveReqDTO dto) throws Exception {
@@ -1193,8 +1199,8 @@ public class CgfServiceImpl implements CgfService {
     }
 
     /**
-     * @param 临时风险研判表保存
-     * @throws Exception
+     * description: 临时风险研判表保存
+     * create time: 2019/7/29 9:57
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public void temporarydangerSave(TemporaryDangerSaveReqDTO dto) throws Exception {
@@ -1232,9 +1238,10 @@ public class CgfServiceImpl implements CgfService {
 
     }
 
+
     /**
-     * @param 更新视频源
-     * @throws Exception
+     * description: 更新视频源
+     * create time: 2019/7/29 9:57
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public void monitorUpdate(String puids, String ids, String names, Integer userId) throws Exception {

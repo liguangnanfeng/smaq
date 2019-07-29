@@ -186,7 +186,7 @@
                 <option value="" >全部</option>
                 <option value="1" >企业自查</option>
                 <option value="2" >行政检查</option>
-                <option value="3" >部门抽查</option>
+                <option value="3" >第三方检查</option>
             </select>
 
             <select class="sel_area isShow" id="partNammes"  onchange="int()" style="position:relative;top:3px">
@@ -194,6 +194,23 @@
                 <c:forEach items="${zzjg }" var="be">
                     <option value="${be.id}" >${be.name }</option>
                 </c:forEach>
+            </select>
+
+            <select class="sel_area isShow" id="control"  onchange="int()" style="position:relative;top:3px">
+                <option value="生产工艺" >生产工艺</option>
+                <option value="设备设施" >设备设施</option>
+                <option value="特种设备" >特种设备</option>
+                <option value="消防安全" >消防安全</option>
+                <option value="用电安全" >用电安全</option>
+                <option value="行为环境" >行为环境</option>
+                <option value="公辅设备" >公辅设备</option>
+                <option value="危化管理" >危化管理</option>
+                <option value="基础管理" >基础管理</option>
+                <option value="防雷静电" >防雷静电</option>
+                <option value="安全设施" >安全设施</option>
+                <option value="职业卫生" >职业卫生</option>
+                <option value="生产现场" >生产现场</option>
+                <option value="其它" >其它</option>
             </select>
 
             <!-- 判断并提示至少选择3个月 -->
@@ -234,6 +251,7 @@
     function int(f) {
         var vs = $('#partNammes  option:selected').val();
         var vs1 = $('#partNamme  option:selected').val();
+        var vs2 = $('#control  option:selected').val();
     console.log(vs)
     console.log(vs1)
         var url ='';
@@ -242,7 +260,7 @@
         }else if(f==1){
             url= "/company/zhuChartData5?flags="+vs1+"&depart="+vs;
         }else if(f==2){
-            url= "/company/zhuChartData6";
+            url= "/company/zhuChartData6?control="+vs2
         }else{
             url= "/company/zhuChartData7";
         }

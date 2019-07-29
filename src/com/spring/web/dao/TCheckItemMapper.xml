@@ -1116,6 +1116,36 @@
         group by s1.time;
     </select>
 
+
+
+    <select id="selectMapzhuChartData2" resultType="com.spring.web.ibatis.DynamicParameter"
+            parameterType="java.util.Map">
+        select
+        s1.time as useTime,
+        sum(case when s1.flag=1 then 1 else 0 end ) a,
+        sum(case when s1.flag=2 then 1 else 0 end ) b,
+        sum(case when s1.flag=3 then 1 else 0 end ) c,
+        count(s1.id) count
+        from (select
+        t1.id as id ,t2.flag,DATE_FORMAT(t2.real_time, '%Y-%m') time
+        from smaq.t_check_item_tbl t1
+        left join smaq.t_check_tbl t2 on t1.check_id = t2.id
+        left join smaq.a_company_manual_tbl t3 on t1.level_id=t3.id
+        where t2.status = #{status}
+        and t2.del = #{del}
+        and t1.status = 2
+        <if test="control != null">
+            and t3.control = #{control}
+        </if>
+        and <![CDATA[DATE_FORMAT(t2.real_time, '%Y-%m') >= #{startTime1} and DATE_FORMAT(t2.real_time, '%Y-%m') <= #{endTime1}]]>
+        and t2.user_id=#{uid}) s1
+        group by s1.time;
+    </select>
+
+
+
+
+
     <select id="selectHiddenLevelTypeByMap" resultType="com.spring.web.ibatis.DynamicParameter"
             parameterType="java.util.Map">
         select

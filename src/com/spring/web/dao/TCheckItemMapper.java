@@ -245,6 +245,7 @@ public interface TCheckItemMapper {
     List<Integer> selectLevelIdByCheckId(Integer id);
 
 
+    List<DynamicParameter<String,Object>> selectMapzhuChartData2(Map<String,Object> m);
 }
 
 

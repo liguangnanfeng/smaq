@@ -1622,6 +1622,96 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "zhuChartData2")
     public @ResponseBody
+    Result zhuChartData2(String sT, String eT, HttpServletRequest request, Integer status, Integer flag, String control) throws Exception {
+        User user = getLoginUser(request);
+        Result result = new ResultImpl();
+        if (StringUtils.isEmpty(sT) && StringUtils.isEmpty(eT)) {
+            Date d = new Date();
+            eT = DateFormatUtils.format(d, TIME_STR);// 当前时间
+            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+        }
+        if (StringUtils.isNotEmpty(sT) && StringUtils.isEmpty(eT)) {
+            Date d = new Date();
+            eT = DateFormatUtils.format(d, TIME_STR);
+        }
+        if (StringUtils.isEmpty(sT) && StringUtils.isNotEmpty(eT)) {
+            Date d = DateConvertUtil.formateDate(eT, TIME_STR);
+            sT = DateFormatUtils.format(DateConvertUtil.addDays(d, -30), TIME_STR);
+        }
+
+        List<String> monthL = monthB(sT, eT);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("startTime1", sT);
+        m.put("endTime1", eT);
+        m.put("del", 0);
+        m.put("status", 2);
+        if (null != control){
+            m.put("control", control);
+        }else {
+            m.put("control", null);
+        }
+        m.put("uid", user.getId());
+        // 根据合格不合格查询出数据.然后进行封装
+        List<DynamicParameter<String, Object>> ll = tCheckItemMapper.selectMapzhuChartData2(m);
+
+
+        // 进行循环使用一个月的天数
+        Integer[] d = new Integer[monthL.size()];
+        for (int l = 0; l < d.length; l++) {
+            d[l] = 0;
+        }
+
+        String[] xx = new String[]{"企业自查", "行政检查", "部门抽查"};
+        List<Map<String, Object>> mm = new ArrayList<Map<String, Object>>();
+        Map<String, Object> m1 = new HashMap<String, Object>();
+        Map<String, Object> m2 = new HashMap<String, Object>();
+        Map<String, Object> m3 = new HashMap<String, Object>();
+
+        m1.put("name", xx[0]);
+        m2.put("name", xx[1]);
+        m3.put("name", xx[2]);
+
+        // 数据表示的是,选中的时间段内
+        m1.put("data", d.clone());
+        m2.put("data", d.clone());
+        m3.put("data", d.clone());
+        // 这次循环的就是每一天合格的信息
+        Integer counts = 0;
+        for (DynamicParameter<String, Object> dy : ll) {
+            String time = (String) dy.get("useTime"); // 每一天的时间
+            Integer a = dy.getBigDecimalToInteger("a");
+            Integer b = dy.getBigDecimalToInteger("b");
+            Integer c = dy.getBigDecimalToInteger("c");
+            Integer count = dy.getLongToInteger("count");
+            counts += count;
+            for (int i = 0; i < monthL.size(); i++) {
+                if (time.equals(monthL.get(i))) {
+                    // 基础
+                    Integer[] a2 = (Integer[]) m1.get("data");
+                    a2[i] = a;
+                    // 现场
+                    Integer[] b2 = (Integer[]) m2.get("data");
+                    b2[i] = b;
+                    // 高危
+                    Integer[] c2 = (Integer[]) m3.get("data");
+                    c2[i] = c;
+                }
+            }
+        }
+        mm.add(m1);
+        mm.add(m2);
+        mm.add(m3);
+        log.error(m1);
+        log.error(m2);
+
+        result.setMap("categories", monthL);//时间段内所有的天
+        result.setMap("count", counts);//时间段内所有的天
+        result.setMap("series", mm);// List<Data{String name; Integer[] data}> Data
+
+        return result;
+    }
+    /*@RequestMapping(value = "zhuChartData2")
+    public @ResponseBody
     Result zhuChartData2(String sT, String eT, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
@@ -1694,7 +1784,7 @@ public class CompanyController_cd extends BaseController {
         result.setMap("categories", monthL);//时间段内所有的月
         result.setMap("series", mm);// List<Data{String name; Integer[] data}> Data
         return result;
-    }
+    }*/
 
     static final String TIME_STR = "yyyy-MM-dd";
     public Integer count = 0;
@@ -2675,11 +2765,6 @@ public class CompanyController_cd extends BaseController {
     Result checkItemSave(Integer id, HttpServletRequest request,Integer status) throws Exception {
         Result result = new ResultImpl();
         TCheckItem tCheckItem = new TCheckItem();
-
-
-        log.error("id---"+id);
-        log.error("status---"+status);
-
         tCheckItem.setId(id);
         tCheckItem.setStatus(status);
         tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);

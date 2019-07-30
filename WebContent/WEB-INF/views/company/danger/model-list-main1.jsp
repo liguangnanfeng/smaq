@@ -152,11 +152,8 @@
             <tr class="text-c">
                 <th width="45px">序号</th>
                 <th>受检车间/场所</th>
-                <th>综合检查</th>
-                <th>日常检查</th>
-                <th>定期检查</th>
-                <th>其他检查</th>
-                <th>整改复查</th>
+                <th>检查方式</th>
+                <th>检查日期</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -165,13 +162,9 @@
             <!-- 循环-->
                 <c:forEach items="${list}" varStatus="index" var="be">
                     <tr class="text-c">
-
-                        <td>${be.flag }</td>
-                        <td>${be.flag }</td>
-                        <td>${be.flag }</td>
-                        <td>${be.flag }</td>
-                        <td>${be.flag }</td>
-                        <td>${be.flag }</td>
+                        <td>${index.index + 1}</td>
+                        <td>${be.depart }</td>
+                        <td>定期</td>
                         <td>${be.flag }</td>
                         <td><a style="text-decoration:none"
                     onClick="ss('${dmname }','${dmid }','${checkType}','${industryType}','${template}','${flag}')"

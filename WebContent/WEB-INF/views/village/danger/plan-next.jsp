@@ -237,7 +237,7 @@
             <tr>
                 <td colspan="3">
                     <div style="float:left;width:100%;position: relative;min-height:150px;">
-    ${check }
+
                         <%-- <c:if test="${check.flag == 3 && check.checkCompany eq '无锡市安泰安全技术服务有限公司'}">
                              <img alt="" src="${ly }/images/zhang.png"
                                   style="position: absolute;bottom:10px;right:10px;height:130px;"/>

@@ -36,6 +36,21 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
+    <select id="findAllCount"  resultType="java.util.Map" >
+        SELECT
+            z1.id, z1.name,
+            h1.syn_year, h1.eve_year, h1.reg_year, h1.sea_year, h1.els_year, h1.bas_year, h1.total_count
+        FROM
+            zzjg_department_tbl z1
+            LEFT JOIN hidden_plan h1 ON z1.id = h1.dpid
+        WHERE
+	        z1.uid = #{uid} and z1.del = 0 and z1.level = 1 and z1.flag = 1
+    </select>
+
+
+
+
+
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         <!--

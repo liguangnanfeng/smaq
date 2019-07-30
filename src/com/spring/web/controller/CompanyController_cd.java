@@ -4191,6 +4191,153 @@ public class CompanyController_cd extends BaseController {
 
     }
 
+    
+    /**
+     * create by  : 小明！！！
+     * description: 隐患排查绩效分析
+     * create time: 2019/7/30 14:26
+     */
+    @RequestMapping(value = "danger-chart-jx")
+    public String dangerCharJx(HttpServletRequest request, Model model) throws ParseException {
+
+        User user = getLoginUser(request);
+        Map map = new HashMap();
+        List<Map<String,Object>> list = zzjgDepartmentMapper.findAllCount(user.getId());
+
+        List<ZzjgDepartment> zList = zzjgDepartmentMapper.selectLevel1DangerIds(user.getId());
+
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < zList.size(); i++) {
+
+            Integer a = tCheckMapper.findCountAll(zList.get(i).getName(),1,user.getId());
+            sb.append(a).append(",");
+            list.get(i).put("danger1",a);
+
+            Integer b = tCheckMapper.findCountAll(zList.get(i).getName(),2,user.getId());
+            sb.append(b).append(",");
+            list.get(i).put("danger2",b);
+
+            Integer c = tCheckMapper.findCountAll(zList.get(i).getName(),3,user.getId());
+            sb.append(c).append(",");
+            list.get(i).put("danger3",c);
+
+            Integer d = tCheckMapper.findCountAll(zList.get(i).getName(),4,user.getId());
+            sb.append(d).append(",");
+            list.get(i).put("danger4",d);
+
+            Integer e = tCheckMapper.findCountAll(zList.get(i).getName(),5,user.getId());
+            sb.append(e).append(";");
+            list.get(i).put("danger5",e);
+
+            
+        }
+
+        Integer count1 = 0;
+        Integer count2 = 0;
+        Integer count3 = 0;
+        Integer count4 = 0;
+        Integer count5 = 0;
+        Integer number1 = 0;
+        Integer number2 = 0;
+        Integer number3 = 0;
+        Integer number4 = 0;
+        Integer number5 = 0;
+        Integer number6 = 0;
+        Integer sum = 0;
+        StringBuffer sb1 = new StringBuffer();
+        for (int i = 0; i < list.size(); i++) {
+            count1 += (Integer) list.get(i).get("danger1");
+            count2 += (Integer) list.get(i).get("danger2");
+            count3 += (Integer) list.get(i).get("danger3");
+            count4 += (Integer) list.get(i).get("danger4");
+            count5 += (Integer) list.get(i).get("danger5");
+
+            if (null == list.get(i).get("syn_year")){
+                number1 += 0 ;
+            }else {
+                number1 += (Integer)list.get(i).get("syn_year") ;
+            }
+
+            if (null == list.get(i).get("eve_year")){
+                number2 += 0;
+            }else {
+                number2 += (Integer) list.get(i).get("eve_year");
+            }
+
+            if (null == list.get(i).get("reg_year")){
+                number3 += 0;
+            }else {
+                number3 += (Integer) list.get(i).get("reg_year");
+            }
+
+            if (null == list.get(i).get("sea_year")){
+                number4 += 0;
+            }else {
+                number4 += (Integer) list.get(i).get("sea_year");
+            }
+
+            if (null == list.get(i).get("els_year")){
+                number5 += 0;
+            }else {
+                number5 += (Integer) list.get(i).get("els_year");
+            }
+
+            if (null == list.get(i).get("bas_year")){
+                number6 += 0;
+            }else {
+                number6 += (Integer) list.get(i).get("bas_year");
+            }
+
+            /*if (null == (Integer) list.get(i).get("total_count")){
+                sum = (Integer) list.get(i).get("danger1") + (Integer)list.get(i).get("danger2") + (Integer) list.get(i).get("danger3") + (Integer) list.get(i).get("danger4") + (Integer) list.get(i).get("danger5");
+
+            }else if (null != (Integer) list.get(i).get("total_count")){
+                sum = (Integer) list.get(i).get("danger1") + (Integer)list.get(i).get("danger2") + (Integer) list.get(i).get("danger3") + (Integer) list.get(i).get("danger4") + (Integer) list.get(i).get("danger5") + (Integer) list.get(i).get("total_count");
+
+            }
+            if (i == list.size()-1){
+                sb1.append(sum);
+            }else {
+                sb1.append(sum).append(",");
+            }*/
+
+        }
+
+        /*String[] str = sb1.toString().split(",");
+
+        Integer count6 = Integer.parseInt(str[0]);
+        Integer count7 = Integer.parseInt(str[1]);
+        Integer count8 = Integer.parseInt(str[2]);
+        Integer count9 = Integer.parseInt(str[3]);
+        Integer count10 = Integer.parseInt(str[4]);*/
+
+        map.put("count1",count1);
+        map.put("count2",count2);
+        map.put("count3",count3);
+        map.put("count4",count4);
+        map.put("count5",count5);
+        /*map.put("count6",count6);
+        map.put("count7",count7);
+        map.put("count8",count8);
+        map.put("count9",count9);
+        map.put("count10",count10);*/
+        map.put("number1",number1);
+        map.put("number2",number2);
+        map.put("number3",number3);
+        map.put("number4",number4);
+        map.put("number5",number5);
+        map.put("number6",number6);
+
+        list.add(map);
+        model.addAttribute("list",list);
+        return "company/danger/danger-chart-jx";
+
+    }
+
+
+
+
     /**
      * TODO 用户点击检查设置实施=> 实施 =>点击执行的时候获取这个方法的检查模版的最新的一条记录,
      * 没有就显示为null

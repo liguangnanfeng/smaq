@@ -157,4 +157,6 @@ public interface ZzjgDepartmentMapper {
     List<Map<Object,Object>> selectEmpyDangerIds(@Param("uid")Integer uid);
 
     List<ZzjgDepartment> findNameByUid(@Param("uid")Integer uid);
+
+    List<Map<String,Object>> findAllCount(@Param("uid")Integer uid);
 }

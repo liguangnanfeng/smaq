@@ -49,6 +49,16 @@
 
     </select>
 
+    <select id="selectShowAll" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_tbl
+        where depart = #{depart} and del = 0 and user_id = #{user_id} and type = #{type}
+    </select>
+
+
+
+
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from t_check_tbl

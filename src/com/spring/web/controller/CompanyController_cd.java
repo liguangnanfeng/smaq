@@ -4231,6 +4231,29 @@ public class CompanyController_cd extends BaseController {
 
     }
 
+    @RequestMapping(value = "model-list-showAll")
+    public String modelListShow(HttpServletRequest request, Model model, String dmname, Integer dmid, Integer checkType,
+                                 Integer industryType, Integer template, Integer flag,Integer status) {
+
+        User user = getLoginUser(request);
+        // 根据查检类型，检查车间名称查询数据信息
+        List<TCheck> list = tCheckMapper.selectShowAll(dmname,user.getId(),status);
+
+        model.addAttribute("list",list);
+        model.addAttribute("dmname",dmname);
+        model.addAttribute("dmid",dmid);
+        model.addAttribute("checkType",checkType);
+        model.addAttribute("industryType",industryType);
+        model.addAttribute("template",template);
+        model.addAttribute("flag",flag);
+
+        return "company/danger/model-list-main1";
+
+    }
+
+
+
+
     /**
      * TODO 用户点击检查设置实施=> 实施 => 查询对应的model模版
      *

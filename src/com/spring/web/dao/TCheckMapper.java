@@ -95,4 +95,6 @@ public interface TCheckMapper {
 
 
     Integer selectHiddenDangerNumber2(Integer id);
+
+    List<TCheck> selectShowAll(@Param("depart")String depart, @Param("user_id")Integer user_id, @Param("type")Integer type);
 }

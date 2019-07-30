@@ -204,13 +204,16 @@
                                         <c:if test="${status[1]==1}">
                                             <c:if test="${index2.index==2}">
                                                 <a style="text-decoration:none"
-                                                onClick="szss_list('${be.level1 }',2,'${status[0]+1}','${flag}')"
-                                                href="javascript:;">实施</a>
+
+
+                                                   href="${ly}/company/model-list-showAll?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-2&template=${status[0]+1}&flag=${flag}&status=2"
+                                                  <%-- onClick="showAll('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}','2')"--%>
+                                                href="javascript:;">实施1</a>
                                             </c:if>
                                             <c:if test="${index2.index!=2}">
                                                 <a style="text-decoration:none"
                                                 onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
-                                                href="javascript:;">实施</a>
+                                                href="javascript:;">实施2</a>
                                             </c:if>
                                         </c:if>
                                         <c:if test="${status[1]==0}">
@@ -771,6 +774,28 @@
         }
         $("#modal-plan2").modal("show");
     }
+
+    function showAll(dmname, dmid, checkType, industryType, template, flag, status) {   //点击实施方法
+        $.post(getRootPath() + "/company/model-list-showAll", {
+            dmname: dmname, dmid: dmid, checkType: checkType, industryType: industryType, template: template, flag: flag, status : status
+        }, function (result, status) {
+            if (status == 'success') {
+                if (result.status == 0) {
+                    sessionStorage.setItem('flag', flag);
+                    sessionStorage.setItem('dmname', dmname);
+                    sessionStorage.setItem('industryType', industryType);
+                    sessionStorage.setItem('template', template);
+                    var url = '${ly}/village/plan-next?flag=' + result.data.flag + '&id=' + result.data.modelId;
+                    window.location.href = url;
+                } else {
+                    layer.msg('请先设置检查表');
+                }
+            } else {
+                layer.msg('网络错误');
+            }
+        })
+    }
+
 
     function ss(dmname, dmid, checkType, industryType, template, flag) {   //点击实施方法
         $.post(getRootPath() + "/company/model-list-ss", {

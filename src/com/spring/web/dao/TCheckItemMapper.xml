@@ -387,7 +387,7 @@
         T1.id, T1.content, T1.reference, T1.status, T1.memo, T1.files, T1.level_id levelId, T1.part_id partId,
         T1.suggest, T1.deadline, T1.recheck_time recheckTime, T1.recheck_file recheckFile, T1.plan_time planTime,
         T1.levels, (select level1 from t_level_tbl where id = T1.level_id) level1,
-        T3.name partName, T4.depart, T3.part_img partImg
+        T3.name partName, T4.depart, T3.part_img partImg, T4.type, T4.industry_type
         from
         t_check_item_tbl T1
         left join

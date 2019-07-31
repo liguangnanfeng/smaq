@@ -263,13 +263,13 @@ function showping(){
           </div>
         </div>
         <div class="div_hz">
-          <span>部门抽查</span>
+          <span>第三方检查</span>
           <div class="div_hui">
-            <a class="one_huiz" data-title="部门抽查-隐患排查记录" data-href="${ly }/village/danger-index-list?flag=3" onclick="Hui_admin_tab(this)" href="javascript:;">
+            <a class="one_huiz" data-title="第三方检查-隐患排查记录" data-href="${ly }/village/danger-index-list?flag=3" onclick="Hui_admin_tab(this)" href="javascript:;">
               <font>${c3_2 + c3_3}</font>
               <label>全部隐患</label>
             </a>
-            <a class="one_huiz" data-title="部门抽查-隐患排查记录" data-href="${ly }/village/danger-index-list?flag=3" onclick="Hui_admin_tab(this)" href="javascript:;">
+            <a class="one_huiz" data-title="第三方检查-隐患排查记录" data-href="${ly }/village/danger-index-list?flag=3" onclick="Hui_admin_tab(this)" href="javascript:;">
               <font style="color:#FF9345"><fmt:formatNumber value="${(c3_2 + c3_3) == 0 ? 1 : c3_3 / (c3_2 + c3_3) }" pattern="0.0%"/></font>
               <label>整改率</label>
             </a>

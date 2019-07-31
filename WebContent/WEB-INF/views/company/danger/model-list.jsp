@@ -34,12 +34,12 @@ var userId = '${session_user.id}';
 function l_(t) {
   if(t == 1) {
     if(flag_ == 2) { show_tab('行政执法-添加检查表', '/village/check-add?flag=2');}
-    if(flag_ == 3) { show_tab('部门抽查-添加检查表', '/village/check-add?flag=3');}
+    if(flag_ == 3) { show_tab('第三方检查-添加检查表', '/village/check-add?flag=3');}
     if(flag_ == 4) { show_tab('行政检查-添加检查表', '/village/check-add?flag=4');}
   }
   if(t == 2) {
     if(flag_ == 2) { show_tab('行政执法-添加现场检查记录', '/village/danger/opinion-add?flag=8&flag2=2&userId=' + userId);}
-    if(flag_ == 3) { show_tab('部门抽查-添加现场检查记录', '/village/danger/opinion-add?flag=8&flag2=3&userId=' + userId);}
+    if(flag_ == 3) { show_tab('第三方检查-添加现场检查记录', '/village/danger/opinion-add?flag=8&flag2=3&userId=' + userId);}
     if(flag_ == 4) { show_tab('行政检查-添加现场检查记录', '/village/danger/opinion-add?flag=8&flag2=4&userId=' + userId);}
   }
 }
@@ -69,7 +69,7 @@ $(function(){
       <font style="font-size:15px;font-weight:bold;margin-right:30px">选择检查类型</font>
       <input type="button" class="btn radius" onClick="open_jian('.list_zi', 1)" value="企业自查" />
       <input type="button" class="btn radius" onClick="open_jian('.list_oth',4)" value="行政检查" />
-      <input type="button" class="btn radius" onClick="open_jian('.list_oth',3)" value="部门抽查" />
+      <input type="button" class="btn radius" onClick="open_jian('.list_oth',3)" value="第三方检查" />
       <!-- <input type="button" class="btn radius" onClick="open_jian('.list_oth',2)" value="执法检查" /> -->
     </div>
     <!-- 弹窗选择 -->

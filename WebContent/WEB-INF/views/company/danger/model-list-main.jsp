@@ -120,7 +120,7 @@
 
 </head>
 <nav class="breadcrumb">
-    <c:set var="x1" value="${fn:split('企业自查/ /部门抽查/行政检查','/') }"/>
+    <c:set var="x1" value="${fn:split('企业自查/ /第三方检查/行政检查','/') }"/>
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>隐患排查治理系统</span>
     <span class="c-gray en">&gt;</span> <span>${x1[flag-1] }检查设置 </span>
@@ -142,7 +142,7 @@
         <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
            href="${ly }/company/model-list-cx2?flag=2&type=1&template=2">行政检查</a>
         <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
-           href="${ly }/company/model-list-cx2?flag=3&type=1&template=2">部门抽查</a>
+           href="${ly }/company/model-list-cx2?flag=3&type=1&template=2">第三方检查</a>
         <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
     </div>
     <div id="tab-index-cartegory">
@@ -164,7 +164,7 @@
                         <thead>
                         <tr class="text-c">
                             <th width="45px">序号</th>
-                            <th>受检车间/场所</th>
+                            <th>受检单位</th>
                             <th>综合检查</th>
                             <th>日常检查</th>
                             <th>定期检查</th>
@@ -208,12 +208,12 @@
 
                                                    href="${ly}/company/model-list-showAll?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-2&template=${status[0]+1}&flag=${flag}&status=2"
                                                   <%-- onClick="showAll('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}','2')"--%>
-                                                href="javascript:;">实施1</a>
+                                                href="javascript:;">实施</a>
                                             </c:if>
                                             <c:if test="${index2.index!=2}">
                                                 <a style="text-decoration:none"
                                                 onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
-                                                href="javascript:;">实施2</a>
+                                                href="javascript:;">实施</a>
                                             </c:if>
                                         </c:if>
                                         <c:if test="${status[1]==0}">
@@ -263,7 +263,7 @@
                         <thead>
                         <tr class="text-c">
                             <th width="45px">序号</th>
-                            <th>受检车间/场所</th>
+                            <th>受检单位</th>
                             <th>综合检查</th>
                             <th>日常检查</th>
                             <th>定期检查</th>
@@ -477,7 +477,7 @@
     <%--                    <thead>--%>
     <%--                    <tr class="text-c">--%>
     <%--                        <th width="5%">序号</th>--%>
-    <%--                        <th>受检车间/场所</th>--%>
+    <%--                        <th>受检单位</th>--%>
     <%--                        <th>综合检查</th>--%>
     <%--                        <th>日常检查</th>--%>
     <%--                        <th>定期检查</th>--%>
@@ -546,7 +546,7 @@
     <%--                    <thead>--%>
     <%--                    <tr class="text-c">--%>
     <%--                        <th width="5%">序号</th>--%>
-    <%--                        <th>受检车间/场所</th>--%>
+    <%--                        <th>受检单位</th>--%>
     <%--                        <th>综合检查</th>--%>
     <%--                        <th>日常检查</th>--%>
     <%--                        <th>定期检查</th>--%>

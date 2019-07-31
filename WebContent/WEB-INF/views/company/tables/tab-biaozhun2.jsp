@@ -18,32 +18,6 @@
             margin-right: 15px;
         }
 
-        .btn-upload {
-            position: relative;
-            display: inline-block;
-            height: 36px;
-            *display: inline;
-            overflow: hidden;
-            vertical-align: middle;
-            cursor: pointer
-        }
-
-        .upload-url {
-            cursor: pointer
-        }
-
-        .input-file {
-            position: absolute;
-            right: 0;
-            top: 0;
-            cursor: pointer;
-            z-index: 1;
-            font-size: 30em;
-            *font-size: 30px;
-            opacity: 0;
-            filter: alpha(opacity=0)
-        }
-
         .btn-upload .input-text {
             width: auto
         }
@@ -102,8 +76,8 @@
         }
 
         .item_content {
-            -moz-box-shadow: 0px 0px 9px rgba(52,73,94,0.7);
-            box-shadow: 0px 0px 9px rgba(52,73,94,0.7);
+    -moz-box-shadow: 0px 0px 9px rgba(95,145,230,0.5);
+    box-shadow: 0px 0px 9px rgba(95,145,230,0.5);
             width: 100%;
             height: 100%;
             padding: 10px;
@@ -113,6 +87,7 @@
             /*background-color: #0B9EFB;*/
             box-sizing: border-box;
             position: relative;
+    background:#5A98DE;
         }
 
         .item_container > span {
@@ -134,16 +109,15 @@
         .item_container > span a:first-child {
             margin-right: 5px;
         }
-
+    .item_content:hover{
+    background:rgba(95,152,222,0.1);
+    color:rgba(95,152,222,1)
+    }
         .item_container:hover .my_span {
             display: block;
         }
     h4{
-    <%--background:#5A98DE;--%>
-    color:#5A98DE;
-    <%--border-radius:3px;--%>
-<%--padding:14px 20px;--%>
-<%--font-size:16px;--%>
+    color:#fff;
     }
     .table tbody tr td a{
     border:none;

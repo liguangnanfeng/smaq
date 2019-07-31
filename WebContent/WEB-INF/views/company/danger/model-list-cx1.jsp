@@ -34,12 +34,12 @@ var userId = '${session_user.id}';
 function l_(t) {
   if(t == 1) {
     if(flag_ == 2) { show_dialog('行政执法-添加检查表', '/village/check-add?flag=2');}
-    if(flag_ == 3) { show_dialog('部门抽查-添加检查表', '/village/check-add?flag=3');}
+    if(flag_ == 3) { show_dialog('第三方检查-添加检查表', '/village/check-add?flag=3');}
     if(flag_ == 4) { show_dialog('行政检查-添加检查表', '/village/check-add?flag=4');}
   }
   if(t == 2) {
     if(flag_ == 2) { show_dialog('行政执法-添加现场检查记录', '/village/danger/opinion-add?flag=8&flag2=2&userId=' + userId);}
-    if(flag_ == 3) { show_dialog('部门抽查-添加现场检查记录', '/village/danger/opinion-add?flag=8&flag2=3&userId=' + userId);}
+    if(flag_ == 3) { show_dialog('第三方检查-添加现场检查记录', '/village/danger/opinion-add?flag=8&flag2=3&userId=' + userId);}
     if(flag_ == 4) { show_dialog('行政检查-添加现场检查记录', '/village/danger/opinion-add?flag=8&flag2=4&userId=' + userId);}
   }
 }
@@ -57,7 +57,7 @@ $(function(){
 </head>
 <body>
   <nav class="breadcrumb">
-    <c:set var="x1" value="${fn:split('企业自查/ /部门抽查/行政检查','/') }"/>
+    <c:set var="x1" value="${fn:split('企业自查/ /第三方检查/行政检查','/') }"/>
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
     <span class="c-gray en">&gt;</span> <span>隐患排查治理系统</span> 
     <span class="c-gray en">&gt;</span> <span>${x1[flag-1] }-检查表 </span> 
@@ -99,8 +99,8 @@ $(function(){
     </c:if>
     <c:if test="${flag == 3 }">
         <span class="l">
-          <%-- <a class="btn btn-primary radius" data-title="添加" data-href="${ly }/company/model-add?type=${type }&flag=1" onclick="Hui_admin_tab(this)" href="javascript:;"> <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 选择添加-部门抽查</a>--%>
-          <input type="button" class="btn btn-primary radius" onClick="open_jian('.list_oth',3)" value="选择添加-部门抽查" />
+          <%-- <a class="btn btn-primary radius" data-title="添加" data-href="${ly }/company/model-add?type=${type }&flag=1" onclick="Hui_admin_tab(this)" href="javascript:;"> <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 选择添加-第三方检查</a>--%>
+          <input type="button" class="btn btn-primary radius" onClick="open_jian('.list_oth',3)" value="选择添加-第三方检查" />
         </span>
     </c:if>
     <c:if test="${flag == 4 }">

@@ -129,7 +129,7 @@ function pr_() {
   <div class="row cl">
     <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
       <button onClick="pr_()" class="btn btn-success radius ml-20" type="button" style="padding: 0 70px;">
-        <i class="Hui-iconfont mr-10">&#xe652;</i>打印1111
+        <i class="Hui-iconfont mr-10">&#xe652;</i>打印
       </button>
     </div>
   </div>

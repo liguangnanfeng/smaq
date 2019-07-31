@@ -184,7 +184,7 @@
                 <%--                </button>--%>
             </c:if>
 
-            <%--显示部门抽查检查文书--%>
+            <%--显示第三方检查检查文书--%>
             <c:if test="${flag==3 }">
                 <c:if test="${is_re==1}">
                     <button onClick="show_dialog('检查文书','/village/check-document?checkId=${check.id }')"
@@ -232,7 +232,8 @@
                 <th width="10%">环节/部位</th>
                 <th width="5%">检查方式</th>
                 <th width="3%">检查形式</th>
-                <th width="12%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>
+                <%--<th width="12%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>--%>
+                <th width="12%">${!empty check.industryId ? '检查内容' : '检查内容'}</th>
                 <th width="4%">检查结果</th>
                 <%--                <th width="15%">隐患内容</th>--%>
                 <c:if test="${flag == 1}">

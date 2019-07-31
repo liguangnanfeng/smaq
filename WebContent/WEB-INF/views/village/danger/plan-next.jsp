@@ -189,7 +189,7 @@
                                 ${departName}
                             </c:if>
                             <c:if test="${check.depart !='公司级'}">
-                                ${check.depart}&nbsp;&nbsp; ${departName}
+                                &nbsp;&nbsp; ${departName}
                             </c:if>
 
                         </td>
@@ -212,12 +212,12 @@
                         <td class="text-l">${ch.content }</td>
                         <td class="text-c" data-base="${ch.status }">&nbsp;
                             <div class="radio-box">
-                                <input type="radio" name="plan-radio-${ch.id }" data-part="${part.id }"
-                                       data-item="${ch.id }" value="1" <c:if test="${ch.status == 1}">checked</c:if>>
+                                <input type="radio" class="ssss" name="plan-radio-${ch.id }" data-part="${part.id }"
+                                       data-item="${ch.id }" value="1" <c:if test="${ch.status == 1}">checked</c:if>">
                                 <label>合格</label>
                             </div>
                             <div class="radio-box">
-                                <input type="radio" value="2" data-file="" data-part="${part.id }"
+                                <input type="radio" class="ssss" value="2" data-file="" data-part="${part.id }"
                                        name="plan-radio-${ch.id }" data-item="${ch.id }" onClick="uploadpicture(this)"
                                        <c:if test="${ch.status == 2}">checked</c:if>>
                                 <label>不合格</label>
@@ -237,7 +237,6 @@
             <tr>
                 <td colspan="3">
                     <div style="float:left;width:100%;position: relative;min-height:150px;">
-
                         <%-- <c:if test="${check.flag == 3 && check.checkCompany eq '无锡市安泰安全技术服务有限公司'}">
                              <img alt="" src="${ly }/images/zhang.png"
                                   style="position: absolute;bottom:10px;right:10px;height:130px;"/>
@@ -493,12 +492,13 @@
             return false;
         }
         $(":radio[name='plan-radio-" + itemId + "'][value='2']").attr("data-file", $("#pic3").attr("url"));
-        alert(itemId)
         $("#modal-plan").modal("hide");
+    console.log( $("#pic3").attr("url"))
         $.post(getRootPath() + "/company/check-item-save", {
             id: itemId,
             files: $("#pic3").attr("url"),
-            memo: $("#memo").val()
+            memo: $("#memo").val(),
+    status:2
         }, function (result) {
 
         })
@@ -515,7 +515,7 @@
         })
     }
 
-    $(function () {
+    <%--$(function () {--%>
         $(":radio").click(function () {
             var this_ = $(this);
             var base = this_.closest("td").attr("data-base");
@@ -531,7 +531,7 @@
                 this_.closest("td").attr("data-base", status);
             })
         })
-    })
+    <%--})--%>
     /*保存检查记录*/
     function article_save_submit() {
         // 判断合格不合格记录是否为空失敗,只能用来判断在数据库中数据中是否有数据
@@ -563,10 +563,6 @@
             return false;
         }
         var inx = layer.load();
-    console.log(checkId)
-    console.log($("#cheker").val())
-    console.log($("#checkCompany").val())
-    console.log($("#dapartContact").val())
         $.post(getRootPath() + "/company/check-save2", {
             id: checkId,
             cheker: $("#cheker").val(),

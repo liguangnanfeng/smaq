@@ -604,7 +604,7 @@
     -->
     <select id="selectLevels" resultType="java.util.Map">
       SELECT
-      distinct T1.flag, T1.type, T1.industry_type, T6.factors, T2.memo measures, T2.status,T2.files,T6.level3 sys, T3.levels,
+      distinct T1.flag, T1.type, T1.industry_type,T1.check_company, T6.factors, T2.memo measures, T2.status,T2.files,T6.level3 sys, T3.levels,
       T6.level2, T4.part, T6.level,T1.depart
         FROM
         t_check_item_tbl T2
@@ -622,7 +622,7 @@
     <!-- 根据 检查表 ID 查询 a_danger_manual_tbl 表中相对应的数据 现场 -->
     <select id="selectAllDanger" resultType="java.util.Map">
         SELECT
-        distinct T1.flag, T1.type, T1.industry_type, T6.factors, T2.memo measures, T2.status,T2.files,T6.level3 sys, T3.levels,   T6.level2, T4.part
+        distinct T1.flag, T1.type, T1.industry_type, T1.check_company, T6.factors, T2.memo measures, T2.status,T2.files,T6.level3 sys, T3.levels,   T6.level2, T4.part
         FROM
         t_check_item_tbl T2
         LEFT JOIN t_check_tbl T1    ON T1.id=T2.check_id
@@ -639,7 +639,7 @@
     <!-- 根据 检查表 ID 查询 t_level_tbl 表中相对应的数据 基础 -->
     <select id="selectAllLevel" resultType="java.util.Map">
         SELECT
-        distinct T1.flag, T1.type, T1.industry_type, T6.factors, T2.memo measures, T2.status,T2.files,T6.level3 sys, T3.levels,   T6.level2, T4.part
+        distinct T1.flag, T1.type, T1.industry_type, T1.check_company, T6.factors, T2.memo measures, T2.status,T2.files,T6.level3 sys, T3.levels,   T6.level2, T4.part
         FROM
         t_check_item_tbl T2
         LEFT JOIN t_check_tbl T1    ON T1.id=T2.check_id

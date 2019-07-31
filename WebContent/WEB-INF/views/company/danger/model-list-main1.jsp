@@ -98,7 +98,7 @@
 </head>
     <body>
 <nav class="breadcrumb">
-    <c:set var="x1" value="${fn:split('企业自查/ /部门抽查/行政检查','/') }"/>
+    <c:set var="x1" value="${fn:split('企业自查/ /第三检查/行政检查','/') }"/>
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>隐患排查治理系统</span>
     <span class="c-gray en">&gt;</span> <span>${x1[flag-1] }检查设置 </span>
@@ -141,7 +141,7 @@
         <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
            href="${ly }/company/model-list-cx2?flag=2&type=1&template=2">行政检查</a>
         <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
-           href="${ly }/company/model-list-cx2?flag=3&type=1&template=2">部门抽查</a>
+           href="${ly }/company/model-list-cx2?flag=3&type=1&template=2">第三方检查</a>
         <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
     </div>
 </div>
@@ -151,7 +151,7 @@
             <thead>
             <tr class="text-c">
                 <th width="45px">序号</th>
-                <th>受检车间/场所</th>
+                <th>受检单位</th>
                 <th>检查方式</th>
                 <th>检查日期</th>
                 <th>操作</th>
@@ -165,10 +165,10 @@
                         <td>${index.index + 1}</td>
                         <td>${be.depart }</td>
                         <td>定期</td>
-                        <td>${be.flag }</td>
+                        <td><fmt:formatDate value="${be.createTime }"/></td>
                         <td><a style="text-decoration:none"
                     onClick="ss('${dmname }','${dmid }','${checkType}','${industryType}','${template}','${flag}')"
-                    href="javascript:;">查看</a></td>
+                    href="javascript:;">实施</a></td>
                 </c:forEach>
             </tbody>
         </table>

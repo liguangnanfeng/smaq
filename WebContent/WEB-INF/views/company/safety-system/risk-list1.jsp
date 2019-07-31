@@ -255,14 +255,15 @@
 
             <c:if test="${empty type}" >
                 <c:if test="${number == 3}" >
-                    <span class="r">共有数据：<strong>${fn:length(zzjgDep) }</strong> 条</span>
+                   <%-- <span class="r">共有安全风险因素：<strong>${fn:length(zzjgDep) }</strong> 条</span>--%>
+                    <span class="r">共有安全风险因素：<strong>${nowCount}</strong> 条</span>
                 </c:if>
                 <c:if test="${number != 3}" >
-                    <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
+                    <span class="r">共有安全风险因素：<strong>${fn:length(list) }</strong> 条</span>
                 </c:if>
             </c:if>
             <c:if test="${not empty type}" >
-                <span class="r">共有数据：<strong>${fn:length(zzjg) }</strong> 条</span>
+                <span class="r">共有安全风险因素：<strong>${fn:length(zzjg) }</strong> 条</span>
             </c:if>
 
 

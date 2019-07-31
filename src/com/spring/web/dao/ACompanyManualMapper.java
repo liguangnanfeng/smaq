@@ -191,5 +191,6 @@ public interface ACompanyManualMapper {
 
     List<Map<String, Object>> selectByMapLevel3(Map<String, Object> m);
 
+    Integer selectCountNow(@Param("uid")Integer uid,@Param("name")String name);
 }
 

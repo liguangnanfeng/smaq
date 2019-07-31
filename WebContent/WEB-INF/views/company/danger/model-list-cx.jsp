@@ -86,7 +86,7 @@
                     show_dialog('行政执法-添加检查表', '/village/check-add?flag=2');
                 }
                 if (flag_ == 3) {
-                    show_dialog('部门抽查-添加检查表', '/village/check-add?flag=3');
+                    show_dialog('第三方检查-添加检查表', '/village/check-add?flag=3');
                 }
                 if (flag_ == 4) {
                     show_dialog('行政检查-添加检查表', '/village/check-add?flag=4');
@@ -97,7 +97,7 @@
                     show_dialog('行政执法-添加现场检查记录', '/village/danger/opinion-add?flag=8&flag2=2&userId=' + userId);
                 }
                 if (flag_ == 3) {
-                    show_dialog('部门抽查-添加现场检查记录', '/village/danger/opinion-add?flag=8&flag2=3&userId=' + userId);
+                    show_dialog('第三方检查-添加现场检查记录', '/village/danger/opinion-add?flag=8&flag2=3&userId=' + userId);
                 }
                 if (flag_ == 4) {
                     show_dialog('行政检查-添加现场检查记录', '/village/danger/opinion-add?flag=8&flag2=4&userId=' + userId);
@@ -118,7 +118,7 @@
 </head>
 <body>
 <nav class="breadcrumb">
-    <c:set var="x1" value="${fn:split('企业自查/行政检查/部门抽查','/') }"/>
+    <c:set var="x1" value="${fn:split('企业自查/行政检查/第三方检查','/') }"/>
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>隐患排查治理系统</span>
     <span class="c-gray en">&gt;</span> <span>${x1[flag-1] }-检查表 </span>
@@ -156,7 +156,7 @@
         <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
            href="${ly }/company/model-list-cx2?flag=2&type=1&template=2">行政检查</a>
         <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
-           href="${ly }/company/model-list-cx2?flag=3&type=1&template=2">部门抽查</a>
+           href="${ly }/company/model-list-cx2?flag=3&type=1&template=2">第三方检查</a>
         <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -185,8 +185,8 @@
         </c:if>
 <%--        <c:if test="${flag == 3 }">--%>
 <%--        <span class="l">--%>
-<%--          &lt;%&ndash; <a class="btn btn-primary radius" data-title="添加" data-href="${ly }/company/model-add?type=${type }&flag=1" onclick="Hui_admin_tab(this)" href="javascript:;"> <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 选择添加-部门抽查</a>&ndash;%&gt;--%>
-<%--          <input type="button" class="btn btn-primary radius" onClick="open_jian('.list_oth',3)" value="选择添加-部门抽查"/>--%>
+<%--          &lt;%&ndash; <a class="btn btn-primary radius" data-title="添加" data-href="${ly }/company/model-add?type=${type }&flag=1" onclick="Hui_admin_tab(this)" href="javascript:;"> <i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 选择添加-第三方检查</a>&ndash;%&gt;--%>
+<%--          <input type="button" class="btn btn-primary radius" onClick="open_jian('.list_oth',3)" value="选择添加-第三方检查"/>--%>
 <%--        </span>--%>
 <%--        </c:if>--%>
 <%--        <c:if test="${flag == 4 }">--%>

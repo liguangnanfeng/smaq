@@ -250,7 +250,7 @@
                         <c:if test="${!empty be.files or !empty be.memo}">
 
                             <a href="javascript:void(0)" onclick="showpicture('${be.files}', this)">
-                                <img src="${be.files}" align="隐患图片" width="100" height="100">
+                                <img src="${be.recheckFile}" align="隐患图片" width="100" height="100">
                             </a>
                             <%-- <img alt="" src="${be.files }" style="max-height:100px;cursor:pointer;" onClick="showpicture('${be.files}')"/> --%>
                         </c:if>

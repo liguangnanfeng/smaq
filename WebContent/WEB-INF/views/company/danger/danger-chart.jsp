@@ -44,7 +44,7 @@ body .iconxw{transform: rotate(-90deg);float:right;margin-right:-5px;margin-top:
   <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
     <span class="c-gray en">&gt;</span> <span>隐患统计分析系统</span> 
-    <span class="c-gray en">&gt;</span> <span>隐患数据分析</span> 
+    <span class="c-gray en">&gt;</span> <span>隐患数据分析</span>
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>
     </a>
@@ -52,6 +52,22 @@ body .iconxw{transform: rotate(-90deg);float:right;margin-right:-5px;margin-top:
   <div class="panel panel-default" style="width:99%;margin-left:10px;float:left;background:none;">
       <div class="div_tx">
         <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">隐患数据分析
+  <select class="sel_area isShow" id="control"  onchange="reload()" style="position:relative;top:3px">
+  <option value="生产工艺" >生产工艺</option>
+  <option value="设备设施" >设备设施</option>
+  <option value="特种设备" >特种设备</option>
+  <option value="消防安全" >消防安全</option>
+  <option value="用电安全" >用电安全</option>
+  <option value="行为环境" >行为环境</option>
+  <option value="公辅设备" >公辅设备</option>
+  <option value="危化管理" >危化管理</option>
+  <option value="基础管理" >基础管理</option>
+  <option value="防雷静电" >防雷静电</option>
+  <option value="安全设施" >安全设施</option>
+  <option value="职业卫生" >职业卫生</option>
+  <option value="生产现场" >生产现场</option>
+  <option value="其它" >其它</option>
+  </select>
           <!-- 判断并提示至少选择3个月 -->
           <div class="search_rq pos-a">
             <font>查询时间段：</font>

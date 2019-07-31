@@ -21,6 +21,7 @@ import com.spring.web.tobject.cgf.RecheckSaveReqDTO;
 import com.spring.web.tobject.cgf.ThreeSaveReqDTO;
 import com.spring.web.tobject.user.ModifyPwdReqDTO;
 import com.spring.web.util.*;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.net.URLEncoder;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -2762,9 +2764,14 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping(value = "check-item-save")
     public @ResponseBody
-    Result checkItemSave(Integer id, HttpServletRequest request,Integer status) throws Exception {
+    Result checkItemSave(Integer id, HttpServletRequest request,Integer status,String files) throws Exception {
         Result result = new ResultImpl();
+
         TCheckItem tCheckItem = new TCheckItem();
+
+        String file = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + files;
+
+        tCheckItem.setRecheckFile(file);
         tCheckItem.setId(id);
         tCheckItem.setStatus(status);
         tCheckItemMapper.updateByPrimaryKeySelective(tCheckItem);
@@ -4244,7 +4251,7 @@ public class CompanyController_cd extends BaseController {
         Integer number4 = 0;
         Integer number5 = 0;
         Integer number6 = 0;
-        Integer sum = 0;
+        /*Integer sum = 0;*/
         StringBuffer sb1 = new StringBuffer();
         for (int i = 0; i < list.size(); i++) {
             count1 += (Integer) list.get(i).get("danger1");
@@ -4305,12 +4312,49 @@ public class CompanyController_cd extends BaseController {
         }
 
         /*String[] str = sb1.toString().split(",");
-
         Integer count6 = Integer.parseInt(str[0]);
         Integer count7 = Integer.parseInt(str[1]);
         Integer count8 = Integer.parseInt(str[2]);
         Integer count9 = Integer.parseInt(str[3]);
         Integer count10 = Integer.parseInt(str[4]);*/
+        Map map1 = new HashMap();
+        Integer sum = count1 + count2 + count3 + count4 + count5;
+
+        Integer sum1 = number1 + number2 + number3 + number4 + number5 + number6;
+
+
+
+        NumberFormat numberFormat = NumberFormat.getInstance();
+        // 设置精确到小数点后2位
+        numberFormat.setMaximumFractionDigits(2);
+        String result1 = numberFormat.format((float)count1 / (float)sum * 100);
+        String result2 = numberFormat.format((float)count2 / (float)sum * 100);
+        String result3 = numberFormat.format((float)count3 / (float)sum * 100);
+        String result4 = numberFormat.format((float)count4 / (float)sum * 100);
+        String result5 = numberFormat.format((float)count5 / (float)sum * 100);
+
+
+
+        String result11 = numberFormat.format((float)number1 / (float)sum1 * 100);
+        String result22 = numberFormat.format((float)number2 / (float)sum1 * 100);
+        String result33 = numberFormat.format((float)number3 / (float)sum1 * 100);
+        String result44 = numberFormat.format((float)number4 / (float)sum1 * 100);
+        String result55 = numberFormat.format((float)number5 / (float)sum1 * 100);
+        String result66 = numberFormat.format((float)number6 / (float)sum1 * 100);
+
+
+        map1.put("result1",result1+"%");
+        map1.put("result2",result2+"%");
+        map1.put("result3",result3+"%");
+        map1.put("result4",result4+"%");
+        map1.put("result5",result5+"%");
+
+        map1.put("result11",result11+"%");
+        map1.put("result22",result22+"%");
+        map1.put("result33",result33+"%");
+        map1.put("result44",result44+"%");
+        map1.put("result55",result55+"%");
+        map1.put("result66",result66+"%");
 
         map.put("count1",count1);
         map.put("count2",count2);
@@ -4330,6 +4374,7 @@ public class CompanyController_cd extends BaseController {
         map.put("number6",number6);
 
         list.add(map);
+        list.add(map1);
         model.addAttribute("list",list);
         return "company/danger/danger-chart-jx";
 

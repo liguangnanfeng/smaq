@@ -449,7 +449,7 @@
                     title: state.checkType,        //检查方式 1:日常  2:定期  3:临时
                     checkType: state.checkedLeixin, //檢查類型 -1基础 -2现场   其他高危
                     cycle: parseInt(state.days),   //检查周期天数
-                    flag:this.flag,                //1:企业自查2:行政检查3:部门抽查
+                    flag:this.flag,                //1:企业自查2:行政检查3:第三方检查
                     checkLevels: []                 //检查项
                 }
                 let isXc = state.checkedLeixin == -2||state.checkedLeixin == -1 ? true : false;  //是否为现场和基础检查

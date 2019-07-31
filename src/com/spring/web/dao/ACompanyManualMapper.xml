@@ -1318,6 +1318,16 @@
         select id from a_industry_tbl where name =#{name};
     </select>
 
+
+    <select id="selectCountNow" resultType="Integer">
+        select count(*) from a_company_manual_tbl where del = 0 and uid = #{uid} and level3 like CONCAT('%', #{name},'%')
+    </select>
+
+
+
+
+
+
     <!--根据公司id和风险点进行查询-->
     <select id="findJiChuItem" resultType="java.util.Map">
         select dmid,level1

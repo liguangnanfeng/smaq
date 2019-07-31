@@ -91,7 +91,7 @@
 
         </head>
         <nav class="breadcrumb">
-        <c:set var="x1" value="${fn:split('企业自查/ /部门抽查/行政检查','/') }"/>
+        <c:set var="x1" value="${fn:split('企业自查/ /第三方检查/行政检查','/') }"/>
         <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
         <span class="c-gray en">&gt;</span> <span>隐患排查治理系统</span>
         <span class="c-gray en">&gt;</span> <span>${x1[flag-1] }检查设置 </span>
@@ -115,7 +115,6 @@
             </span>
             </div>
         </c:if>
-
         <div class="text-c mt-20">
         <h3>企业自查绩效分析</h3>
         <button onClick="pr_()" class="btn btn-primary radius" type="button">
@@ -165,77 +164,110 @@
         </thead>
         <tbody>
         <!-- 循环-->
-        ${list}
         <c:forEach items="${list}" varStatus="index" var="be">
-            <tr class="text-c">
-            <td>${index.index + 1}</td>
-            <td>${be.name }</td>
+                <c:if test="${index.index<fn:length(list)-2 }">
+                        <tr class="text-c">
+                        <td>${index.index + 1}</td>
+                        <td>${be.name }</td>
 
-            <td>${be.syn_year }</td>
-            <td>${be.danger1 }</td>
-            <td>${be.eve_month }</td>
+                        <td>${be.syn_year }</td>
+                        <td>${be.danger1 }</td>
+                        <td>${be.eve_month }</td>
 
-            <td>${be.eve_year }</td>
-            <td>${be.danger2 }</td>
-            <td>${be.reg_month }</td>
+                        <td>${be.eve_year }</td>
+                        <td>${be.danger2 }</td>
+                        <td>${be.reg_month }</td>
 
-            <td>${be.reg_year }</td>
-            <td>${be.danger3 }</td>
-            <td>${be.sea_month }</td>
+                        <td>${be.reg_year }</td>
+                        <td>${be.danger3 }</td>
+                        <td>${be.sea_month }</td>
 
-            <td>${be.sea_year }</td>
-            <td>${be.danger4 }</td>
-            <td>${be.sea_year }</td>
+                        <td>${be.sea_year }</td>
+                        <td>${be.danger4 }</td>
+                        <td>${be.sea_year }</td>
 
-            <td>${be.els_year }</td>
-            <td>${be.danger5 }</td>
-            <td>${be.sea_year }</td>
+                        <td>${be.els_year }</td>
+                        <td>${be.danger5 }</td>
+                        <td>${be.sea_year }</td>
 
-            <td>${be.bas_year }</td>
-            <td>${be.sea_year }</td>
-            <td>${be.sea_year }</td>
+                        <td>${be.bas_year }</td>
+                        <td>${be.sea_year }</td>
+                        <td>${be.sea_year }</td>
 
-            <td>${be.sea_year }</td>
-            <td>${be.sea_year }</td>
-            <td>${be.sea_year }</td>
-            </tr>
+                        <td>${be.danger1+be.danger2+be.danger3+be.danger4+be.danger5+be.danger6 }</td>
+                        <td><fmt:formatNumber type="number" value="${(be.danger1+be.danger2+be.danger3+be.danger4+be.danger5+be.danger6)/(be.syn_year+be.eve_year+be.reg_year+be.sea_year+be.els_year+be.bas_year) }" pattern="0.00"/> </td>
+                        <td></td>
+                        </tr>
+                </c:if>
+                <c:if test="${index.index==fn:length(list)-2 }">
+                        <tr class="text-c">
+                        <td></td>
+                        <td>合计</td>
+
+                        <td>${be.number1}</td>
+                        <td>${be.count1}</td>
+                        <td></td>
+
+                        <td>${be.number2}</td>
+                        <td>${be.count2}</td>
+                        <td></td>
+
+                        <td>${be.number3}</td>
+                        <td>${be.count3}</td>
+                        <td></td>
+
+                        <td>${be.number4}</td>
+                        <td>${be.count4}</td>
+                        <td></td>
+
+                        <td>${be.number5}</td>
+                        <td>${be.count5}</td>
+                        <td></td>
+
+                        <td>${be.number6}</td>
+                        <td>${be.count6}</td>
+                        <td></td>
+
+                        <td>${be.number1+be.number2+be.number3+be.number4+be.number5+be.number6 }</td>
+                        <td><fmt:formatNumber type="number" value="${(be.count1+be.count2+be.count3+be.count4+be.count5+be.count6)/(be.number1+be.number2+be.number3+be.number4+be.number5+be.number6) }" pattern="0.00"/> </td>
+                        <td></td>
+                        </tr>
+                </c:if>
+                <c:if test="${index.index>fn:length(list)-2 }">
+                        <tr class="text-c">
+                        <td></td>
+                        <td>占比</td>
+
+                        <td>${be.result11}</td>
+                        <td>${be.result1}</td>
+                        <td></td>
+
+                        <td>${be.result22}</td>
+                        <td>${be.result2}</td>
+                        <td></td>
+
+                        <td>${be.result33}</td>
+                        <td>${be.result3}</td>
+                        <td></td>
+
+                        <td>${be.result44}</td>
+                        <td>${be.result4}</td>
+                        <td></td>
+
+                        <td>${be.result55}</td>
+                        <td>${be.result5}</td>
+                        <td></td>
+
+                        <td>${be.result66}</td>
+                        <td>${be.result6}</td>
+                        <td></td>
+
+                        <td>----</td>
+                        <td>----</td>
+                        <td>----</td>
+                        </tr>
+                </c:if>
         </c:forEach>
-        <%--<tr class="text-c">--%>
-        <%--<td></td>--%>
-        <%--<td>合计</td>--%>
-
-        <%--<td>--%>
-        <%--<c:forEach items="${list}" varStatus="index" var="be">--%>
-            <%--${be.syn_year }--%>
-        <%--</c:forEach>--%>
-        <%--</td>--%>
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-        <%--</tr>--%>
         <!-- 循环结束 -->
         </tbody>
         </table>

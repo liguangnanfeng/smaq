@@ -527,6 +527,12 @@ public class CompanyController_safety extends BaseController {
                 }else {
                     parName = "";
                 }
+
+                // 根据公司 ID 查询所有的现场风险信息
+                Integer nowCount = aCompanyManualMapper.selectCountNow(user.getId(),"现场管理");
+
+
+                model.addAttribute("nowCount",nowCount);
                 model.addAttribute("count1",count1);
                 model.addAttribute("parName",parName);
                 model.addAttribute("buttons",buttons);
@@ -2847,6 +2853,8 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
 
         model.addAttribute("departL", zzjgDepartmentMapper.selectLevel1ByUid(user.getId()));//组织架构部门班组
+
+        model.addAttribute("count",list.size());
 
         LlHashMap<Object, Object> llm = getLlMap();
         llm.put("uid", user.getId());

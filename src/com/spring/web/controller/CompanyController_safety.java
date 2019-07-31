@@ -3481,10 +3481,10 @@ public class CompanyController_safety extends BaseController {
         List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),aCompanyManual.getDmid(),"负责人",2);
         if (null != zzjgDepartment1 && zzjgDepartment1.size() != 0){
             // 根据 ID 查询 name
-            ZzjgPersonnel zzjgPersonnel1 = zzjgPersonnelMapper.selectNameDid(zzjgDepartment1.get(0).getId());
+            List<ZzjgPersonnel> zzjgPersonnel1 = zzjgPersonnelMapper.selectNameDid(zzjgDepartment1.get(0).getId(),user.getId());
 
             if (null != zzjgPersonnel1){
-                fjgkfzr = zzjgPersonnel1.getName()+"-"+zzjgPersonnel1.getMobile();
+                fjgkfzr = zzjgPersonnel1.get(0).getName()+"-"+zzjgPersonnel1.get(0).getMobile();
             }else {
                 fjgkfzr = "";
             }
@@ -3551,15 +3551,18 @@ public class CompanyController_safety extends BaseController {
 
         ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(id);
         String fjgkfzr = null;
-        List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),aCompanyManual.getDmid(),"负责人",2);
-        if (null != zzjgDepartment1 && zzjgDepartment1.size() != 0){
-            // 根据 ID 查询 name
-            ZzjgPersonnel zzjgPersonnel1 = zzjgPersonnelMapper.selectNameDid(zzjgDepartment1.get(0).getId());
 
-            if (null != zzjgPersonnel1){
-                fjgkfzr = zzjgPersonnel1.getName()+"-"+zzjgPersonnel1.getMobile();
-            }else {
+        List<ZzjgDepartment> zzjgDepartment1 = zzjgDepartmentMapper.selectNameLevel2(user.getId(),aCompanyManual.getDmid(),"负责人",2);
+
+        if (null != zzjgDepartment1 && zzjgDepartment1.size() != 0){
+
+            // 根据 ID 查询 name
+            List<ZzjgPersonnel> zzjgPersonnel1 = zzjgPersonnelMapper.selectNameDid(zzjgDepartment1.get(0).getId(),user.getId());
+
+            if (null == zzjgPersonnel1){
                 fjgkfzr = "";
+            }else if (null != zzjgPersonnel1){
+                fjgkfzr = zzjgPersonnel1.get(0).getName()+"-"+zzjgPersonnel1.get(0).getMobile();
             }
         }
 

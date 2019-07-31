@@ -315,7 +315,7 @@
 
     <!-- 根据 zzjgDepartment 中 id  查询 对应的数据 !!! -->
     <select id="selectNameDid" resultType="com.spring.web.model.ZzjgPersonnel">
-        select * from zzjg_personnel_tbl T1 where did = #{did} and del = 0
+        select * from zzjg_personnel_tbl T1 where did = #{did} and del = 0 and uid = #{uid}  group by ctime desc
     </select>
 
 

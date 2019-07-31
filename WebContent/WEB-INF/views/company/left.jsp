@@ -105,8 +105,6 @@
         success: function (result) {
         if (result.status==0) {
         // 表示是化工行业
-        console.log("咋回事");
-        console.log(result.mess);
         $("#industryId").show();
         } else {
         $("#industryId").hide();
@@ -278,7 +276,7 @@
         <%--&lt;%&ndash;<li><a data-href="${ly }/company/model-list-cx?flag=1&type=1" data-title="企业自查" href="javascript:void(0)">企业自查</a></li>--%>
         <%--<li><a data-href="${ly }/company/check-list?flag=4&type=3" data-title="行政检查" href="javascript:void(0)">行政检查</a></li>--%>
         <%--<li><a data-href="${ly }/village/trouble-set" data-title="排查内容设置" href="javascript:void(0)">排查内容设置</a></li> &ndash;%&gt;--%>
-        <%--&lt;%&ndash; <li><a data-href="${ly }/company/check-list?flag=3&type=3" data-title="部门抽查" href="javascript:void(0)">部门抽查</a></li> &ndash;%&gt;--%>
+        <%--&lt;%&ndash; <li><a data-href="${ly }/company/check-list?flag=3&type=3" data-title="第三方检查" href="javascript:void(0)">第三方检查</a></li> &ndash;%&gt;--%>
         <%--</ul>--%>
         <%--</div>--%>
         <ul>
@@ -299,6 +297,8 @@
         </li>
 		 <li><a data-href="${ly }/company/danger/danger-chart-px" data-title="排查数据分析"
         href="javascript:void(0)">排查数据分析</a></li>
+		 <li><a data-href="${ly }/company/danger-chart-jx" data-title="排查数据分析"
+        href="javascript:void(0)">排查绩效分析</a></li>
 		 <li><a data-href="${ly }/village/danger-chart" data-title="隐患数据分析"
         href="javascript:void(0)">隐患数据分析</a></li>
         <%--就是复查表的记录,--%>
@@ -360,6 +360,9 @@
         </dt>
         <dd>
         <ul>
+        <li><a target="_blank"
+        data-href="http://jswx.zayxy.com/index.php?user-app-login&mobile=${userName}"
+        data-title="安全培训">安全培训</a></li>
         <li><a data-href="${ly }/company/train/special-list?spFlag=0"
         data-title="持证上岗" href="javascript:void(0)">持证上岗</a></li>
         <li><a data-href="${ly }/company/tables/tab-anlist"
@@ -367,9 +370,6 @@
         <%--<li><a target="_blank"--%>
         <%--data-href="http://exam.dicarl.com/index.php?user-app-login&mobile=${userName}"--%>
         <%--data-title="安全培训">安全培训</a></li>--%>
-        <li><a target="_blank"
-        data-href="http://jswx.zayxy.com/index.php?user-app-login&mobile=${userName}"
-        data-title="安全培训">安全培训</a></li>
         </ul>
         </dd>
         </dl>
@@ -398,11 +398,11 @@
 
         <dl class="list_an">
         <dt>
-        <i class="Hui-iconfont">&#xe639;</i>安全生产标准化
-        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+        <a style="color:#fff;"  data-href="${ly }/api/safety_Standard/findAll?parendId=0&flag=1" data-title="运行操作系统"
+        href="javascript:void(0)"><i class="Hui-iconfont">&#xe639;</i>安全生产标准化</a>
         </dt>
-        <dd>
-        <ul>
+        <%--<dd>--%>
+        <%--<ul>--%>
         <%--<li><a data-href="${ly }/company/threeLeft?leftBasic=8" data-title="安全管理"--%>
         <%--href="javascript:void(0)">安全管理</a>--%>
         <%--</li>--%>
@@ -413,8 +413,8 @@
 
        <!-- 旧版(废弃) <li><a data-href="${ly }/company/tables/tab-biaozhun" data-title="安全标准化"
         href="javascript:void(0)">安全标准化</a></li> -->
-		<li><a data-href="${ly }/api/safety_Standard/findAll?parendId=0&flag=1" data-title="运行操作系统"
-          href="javascript:void(0)">运行操作系统</a></li>
+		<%--<li><a data-href="${ly }/api/safety_Standard/findAll?parendId=0&flag=1" data-title="运行操作系统"--%>
+          <%--href="javascript:void(0)">运行操作系统</a></li>--%>
 
         <%--<li><a data-href="${ly }/company/threeLeft?leftBasic=18" data-title="设备设施管理"--%>
         <%--href="javascript:void(0)">设备设施管理</a></li>--%>
@@ -435,7 +435,7 @@
         href="javascript:void(0)">责任制</a></li>
         <li><a data-href="${ly }/company/threeLeft?leftBasic=9" data-title="管理档案"
         href="javascript:void(0)">管理档案</a></li>--%>
-        </ul>
+        <%--</ul>--%>
 
 
         <%--<div class="div_omenu">--%>
@@ -541,7 +541,7 @@
         </div> --%>
 
 
-        </dd>
+        <%--</dd>--%>
         </dl>
 
         <dl class="list_an">

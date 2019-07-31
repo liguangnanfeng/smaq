@@ -988,7 +988,7 @@
                T2.real_time as realTime ,
                T1.content,
                T1.files,
-               T1.file_address,checkNestSave
+               T1.file_address,
                T1.status,
                T4.name level2,
                T1.money,

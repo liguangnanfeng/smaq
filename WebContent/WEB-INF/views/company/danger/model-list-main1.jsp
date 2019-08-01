@@ -154,6 +154,7 @@
                 <th>受检单位</th>
                 <th>检查方式</th>
                 <th>检查日期</th>
+                <th>检查周期</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -165,7 +166,8 @@
                         <td>${index.index + 1}</td>
                         <td>${be.depart }</td>
                         <td>定期</td>
-                        <td><fmt:formatDate value="${be.createTime }"/></td>
+                        <td><fmt:formatDate value="${be.create_time }"/></td>
+                        <td>${be.cycle }</td>
                         <td><a style="text-decoration:none"
                     onClick="ss('${dmname }','${dmid }','${checkType}','${industryType}','${template}','${flag}')"
                     href="javascript:;">实施</a></td>

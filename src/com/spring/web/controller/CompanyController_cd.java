@@ -4423,13 +4423,18 @@ public class CompanyController_cd extends BaseController {
 
     }
 
+    /**
+     * create by  : 小明！！！
+     * description: TODO 检查设置实施  定期检查数据展示
+     * create time: 2019/8/1 9:24
+     */
     @RequestMapping(value = "model-list-showAll")
     public String modelListShow(HttpServletRequest request, Model model, String dmname, Integer dmid, Integer checkType,
                                  Integer industryType, Integer template, Integer flag,Integer status) {
 
         User user = getLoginUser(request);
         // 根据查检类型，检查车间名称查询数据信息
-        List<TCheck> list = tCheckMapper.selectShowAll(dmname,user.getId(),status);
+        List<Map<String,Object>> list = tCheckMapper.selectShowAll(dmname,user.getId(),status);
 
         model.addAttribute("list",list);
         model.addAttribute("dmname",dmname);

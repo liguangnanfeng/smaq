@@ -49,11 +49,11 @@
 
     </select>
 
-    <select id="selectShowAll" resultMap="BaseResultMap" >
+    <select id="selectShowAll" resultType="java.util.Map" >
         select
-        <include refid="Base_Column_List"/>
-        from t_check_tbl
-        where depart = #{depart} and del = 0 and user_id = #{user_id} and type = #{type}
+        t1.*, t2.cycle
+        from t_check_tbl t1, t_model_tbl t2
+        where t1.depart = #{depart} and t1.del = 0 and t1.user_id = #{user_id} and t1.type = #{type} and t1.status != 1 and t1.status != 2 and t1.model_id = t2.id
     </select>
 
 

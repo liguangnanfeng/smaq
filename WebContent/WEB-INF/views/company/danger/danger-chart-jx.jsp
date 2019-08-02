@@ -170,29 +170,29 @@
                         <td>${index.index + 1}</td>
                         <td>${be.name }</td>
 
-                        <td>${be.syn_year }</td>
-                        <td>${be.danger1 }</td>
-                        <td>${be.eve_month }</td>
+                        <td>${be.syn_year != null ? be.syn_year : 0 }</td>
+                        <td>${be.danger1 != null ? be.danger1 : 0 }</td>
+                        <td><%--${be.eve_month != null ? be.eve_month : 0 }--%></td>
 
-                        <td>${be.eve_year }</td>
-                        <td>${be.danger2 }</td>
-                        <td>${be.reg_month }</td>
+                        <td>${be.eve_year != null ? be.eve_year : 0 }</td>
+                        <td>${be.danger2 != null ? be.danger2 : 0 }</td>
+                        <td><%--${be.reg_month != null ? be.reg_month : 0 }--%></td>
 
-                        <td>${be.reg_year }</td>
-                        <td>${be.danger3 }</td>
-                        <td>${be.sea_month }</td>
+                        <td>${be.reg_year != nul ? be.reg_year : 0 }</td>
+                        <td>${be.danger3 != null ? be.danger3 :0 }</td>
+                        <td><%--${be.sea_month }--%></td>
 
-                        <td>${be.sea_year }</td>
-                        <td>${be.danger4 }</td>
-                        <td>${be.sea_year }</td>
+                        <td>${be.sea_year != null ? be.sea_year : 0 }</td>
+                        <td>${be.danger4 != null ? be.danger4 : 0 }</td>
+                        <td><%--${be.sea_year }--%></td>
 
-                        <td>${be.els_year }</td>
-                        <td>${be.danger5 }</td>
-                        <td>${be.sea_year }</td>
+                        <td>${be.els_year != null ? be.els_year : 0 }</td>
+                        <td>${be.danger5 != null ? be.danger5 : 0 }</td>
+                        <td><%--${be.sea_year }--%></td>
 
-                        <td>${be.bas_year }</td>
-                        <td>${be.sea_year }</td>
-                        <td>${be.sea_year }</td>
+                        <td>${be.bas_year != null ? be.bas_year : 0 }</td>
+                        <td><%--${be.sea_year != null ? be.sea_year : 0 }--%>0</td>
+                        <td><%--${be.sea_year }--%></td>
 
                         <td>${be.danger1+be.danger2+be.danger3+be.danger4+be.danger5+be.danger6 }</td>
                         <td><fmt:formatNumber type="number" value="${(be.danger1+be.danger2+be.danger3+be.danger4+be.danger5+be.danger6)/(be.syn_year+be.eve_year+be.reg_year+be.sea_year+be.els_year+be.bas_year) }" pattern="0.00"/> </td>
@@ -225,7 +225,7 @@
                         <td></td>
 
                         <td>${be.number6}</td>
-                        <td>${be.count6}</td>
+                        <td><%--${be.count6}--%>0</td>
                         <td></td>
 
                         <td>${be.number1+be.number2+be.number3+be.number4+be.number5+be.number6 }</td>
@@ -259,12 +259,12 @@
                         <td></td>
 
                         <td>${be.result66}</td>
-                        <td>${be.result6}</td>
+                        <td><%--${be.result6}--%>0%</td>
                         <td></td>
 
-                        <td>----</td>
-                        <td>----</td>
-                        <td>----</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         </tr>
                 </c:if>
         </c:forEach>

@@ -488,7 +488,7 @@ public class CompanyController_safety extends BaseController {
                     String dangerIds = "1";
 
                     zzjg1 = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
-                    list = aCompanyManualMapper.findOne("现场管理",user.getId(),id);
+                    list = aCompanyManualMapper.findDangerOne(user.getId(),id);
                     acL = this.aCompanyManualMapper.selectByAll(m);
                     if (null == id){
                         zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);

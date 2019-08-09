@@ -44,10 +44,11 @@ public class AppController_Map extends BaseController {
     /*map对象*/
     @Autowired
     private TMapMapper tMapMapper;
+    @Autowired
+    private ImportPhotoMapper importPhotoMapper;
+
     /*保存图片的路径*/
     private String pathStr;
-
-    private ImportPhotoMapper importPhotoMapper;
 
 
     /**
@@ -120,6 +121,21 @@ public class AppController_Map extends BaseController {
                 tMap.setFiles(filePath);
                 tMapMapper.updateMap(tMap);
             }
+
+            ImportPhoto importPhoto = new ImportPhoto();
+
+            importPhoto.setUrl(filePath);
+            importPhoto.setUrl1(filePath);
+            importPhoto.setUser_id(user.getId());
+            importPhoto.setName(user.getUserName());
+            importPhoto.setFlag(2);
+
+            if (null == importPhoto){
+
+            }else {
+                importPhotoMapper.savePhoto(importPhoto);
+            }
+
             return tMapMapper.selectByUserId(user.getId()).getFiles();
             //return tMapMapper.selectByUserId(6).getFiles();
 
@@ -176,6 +192,9 @@ public class AppController_Map extends BaseController {
     public String jietu(HttpServletRequest request) throws Exception {
         return "company/safety-system/jietu";
     }
+
+
+
 
     /**
      * 跳转到地图的截图页面

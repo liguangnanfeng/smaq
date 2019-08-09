@@ -1,0 +1,216 @@
+	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+		<%@ include file="/WEB-INF/views/taglibs.jsp" %>
+		<%@ include file="/WEB-INF/inc/back-header.inc" %>
+	<!DOCTYPE html>
+		<html>
+		<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+
+		table {
+		border-collapse: collapse;
+		}
+
+		table, tr, td {
+		border: 1px solid #ddd;
+		}
+
+		td {
+		text-align: center;
+		height: 38px; /*这里需要自己调整，根据自己的需求调整高度*/
+		position: relative;
+		padding: 0 15px;
+		}
+		td[class=first]{
+		width: 155px;
+		}
+		td[class=first]:before {
+		content: "";
+		position: absolute;
+		width: 1px;
+		height: 201px;
+		top: 0;
+		left: 0;
+		background-color: #ddd;
+		display: block;
+		transform: rotate(-68deg);
+		transform-origin: top;
+		}
+		.title1{
+		position: absolute;
+		top: 11px;
+		right: 7px;
+		}
+		.title2{
+		position: absolute;
+		top: 30px;
+		left: 6px;
+		}
+		.title3{
+		position: absolute;
+		top: 48px;
+		left: 10px;
+		}
+		.center{
+		text-align: center;
+		}
+		.flexcenter{
+		display: flex;
+		justify-content: center;
+		}
+		.flexspa{
+		display: flex;
+		justify-content: space-around;
+		margin: 10px 0;
+		}
+		.containerx{
+		padding:20px;
+		}
+		</style>
+		</head>
+		<body>
+		<div class="containerx">
+		<section class="title">
+		<div class="center">企业自查对象分析</div>
+		<div class="flexspa">
+		<span></span>
+		<span id="time"></span>
+		</div>
+		</section>
+		<table class=".table"  style="margin: auto;"  cellpadding="2">
+		<tr style="background-color: #F5F9FE;">
+		<td rowspan="2">序号</td>
+		<td class="first" rowspan="2" ><span class="title1">对象</span><br><span class="title3">部门</span></td>
+
+		<td>工艺</td>
+		<td>设备设施</td>
+		<td>特种设备</td>
+		<td>消防安全</td>
+		<td>用电安全</td>
+		<td>行为环境</td>
+		<td>公辅设备</td>
+		<td>危化管理</td>
+		<td>基础管理</td>
+		<td>防雷静电</td>
+		<td>安全设施</td>
+		<td>职业卫生</td>
+		<td>生产现场</td>
+		<td >其他</td>
+		<td rowspan="2">合计</td>
+		<td rowspan="2">排名</td>
+		<td rowspan="2">同比%</td>
+		</tr>
+		<tr style="background-color: #F5F9FE;">
+		<td>频次</td>
+		<td>频次</td>
+		<td>频次</td>
+		<td>频次</td>
+		<td>频次</td>
+		<td>频次</td>
+		<td>频次</td>
+		<td>频次</td>
+		<td>频次</td>
+		<td>频次</td>
+		<td>频次</td>
+		<td>频次</td>
+		<td>频次</td>
+		<td>频次</td>
+<script>
+		console.log('${list}');
+          window.a=0;
+		</script>
+		</tr>
+		<c:forEach items="${list}" varStatus="index" var="be">
+			<c:if test="${index.index<fn:length(list)-1 }">
+				<tr>
+				<td>${index.index + 1}</td>
+				<td>${be.name}</td>
+				<td>${be.danger1}</td>
+				<td>${be.danger2}</td>
+				<td>${be.danger3}</td>
+				<td>${be.danger4}</td>
+				<td>${be.danger5}</td>
+				<td>${be.danger6}</td>
+				<td>${be.danger7}</td>
+				<td>${be.danger8}</td>
+				<td>${be.danger9}</td>
+				<td>${be.danger10}</td>
+				<td>${be.danger11}</td>
+				<td>${be.danger12}</td>
+				<td>${be.danger13}</td>
+				<td>${be.danger14}</td>
+				<td>${be.danger15}</td>
+				<td></td>
+				<td></td>
+				<script>
+				   window.a=window.a+'${be.danger15}'*1;
+				</script>
+				</tr>
+			</c:if>
+
+			<c:if test="${index.index>fn:length(list)-2 }">
+				<tr>
+				<td>合计</td>
+				<td>---</td>
+				<td>${be.sum1}</td>
+				<td>${be.sum2}</td>
+				<td>${be.sum3}</td>
+				<td>${be.sum4}</td>
+				<td>${be.sum5}</td>
+				<td>${be.sum6}</td>
+				<td>${be.sum7}</td>
+				<td>${be.sum8}</td>
+				<td>${be.sum9}</td>
+				<td>${be.sum10}</td>
+				<td>${be.sum11}</td>
+				<td>${be.sum12}</td>
+				<td>${be.sum13}</td>
+				<td>${be.sum14}</td>
+				<td class="tdd"></td>
+				<td></td>
+				<td></td>
+				</tr>
+				<script>
+				  $(".tdd").text(window.a);
+				</script>
+			</c:if>
+			<c:if test="${index.index>fn:length(list)-2 }">
+				<tr>
+				<td>占比%</td>
+				<td>---</td>
+				<td>${be.result1}</td>
+				<td>${be.result2}</td>
+				<td>${be.result3}</td>
+				<td>${be.result4}</td>
+				<td>${be.result5}</td>
+				<td>${be.result6}</td>
+				<td>${be.result7}</td>
+				<td>${be.result8}</td>
+				<td>${be.result9}</td>
+				<td>${be.result10}</td>
+				<td>${be.result11}</td>
+				<td>${be.result12}</td>
+				<td>${be.result13}</td>
+				<td>${be.result14}</td>
+				<td>--</td>
+				<td></td>
+				<td></td>
+				</tr>
+			</c:if>
+
+		</c:forEach>
+
+		</table>
+		</div>
+		<script>
+
+		var endTime = new Date(new Date().getTime());
+		console.log(endTime);
+		var myDate = new Date();
+		var mytime=myDate.toLocaleTimeString();     //获取当前时间
+		var a=myDate.toLocaleDateString();
+		$("#time").text('时间：'+a);
+		</script>
+		</body>
+		</html>

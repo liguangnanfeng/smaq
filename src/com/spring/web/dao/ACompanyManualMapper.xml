@@ -1403,7 +1403,7 @@
         and level1 = #{level1}
         and del=0
         and level3 = #{level3}
-        order by level2 asc ;
+        order by level2 desc ;
     </select>
 
 </mapper>

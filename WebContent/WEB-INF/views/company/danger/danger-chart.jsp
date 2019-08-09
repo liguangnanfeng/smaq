@@ -53,6 +53,7 @@ body .iconxw{transform: rotate(-90deg);float:right;margin-right:-5px;margin-top:
       <div class="div_tx">
         <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">隐患数据分析
   <select class="sel_area isShow" id="control"  onchange="reload()" style="position:relative;top:3px">
+  <option value="null" >全部</option>
   <option value="生产工艺" >生产工艺</option>
   <option value="设备设施" >设备设施</option>
   <option value="特种设备" >特种设备</option>

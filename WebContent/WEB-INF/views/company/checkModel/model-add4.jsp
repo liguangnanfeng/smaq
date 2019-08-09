@@ -13,9 +13,12 @@
     <title>风险分级管控 隐患排查治理智能化平台</title>
     <meta name="keywords" content="风险分级管控 隐患排查治理智能化平台">
     <meta name="description" content="风险分级管控 隐患排查治理智能化平台">
-    <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="${ly}/js/react.production.min.js" crossorigin></script>
+    <script src="${ly}/js/react-dom.production.min.js" crossorigin></script>
+    <script src="${ly}/js/babel.min.js"></script>
+    <%--<script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>--%>
+    <%--<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>--%>
+    <%--<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>--%>
     <style type="text/css">
         .input-text {
             position: relative
@@ -78,7 +81,7 @@
         var dmid = "${dmid}";
         var checkType = "${checkType}";
         var industryType = "${industryType}";
-
+    console.log("我是model-add4");
     </script>
 
 

@@ -12,6 +12,7 @@ import com.spring.web.dao.ImportPhotoMapper;
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.*;
 import com.spring.web.model.request.ImportPhoto;
+import com.spring.web.model.request.TMap;
 import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
 import com.spring.web.service.cgf.CgfService;
@@ -1866,6 +1867,7 @@ public class CompanyController_safety extends BaseController {
            return null;
        }
        List<ImportPhoto> photo = importPhotoMapper.selectPhotoOne(user.getId(),2);
+
        ImportPhoto importPhoto = new ImportPhoto();
        if (null != photo && photo.size() != 0){
            importPhoto.setId(photo.get(0).getId());

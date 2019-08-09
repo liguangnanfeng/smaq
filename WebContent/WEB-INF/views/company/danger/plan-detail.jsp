@@ -95,6 +95,7 @@
     <script src="${ly }/js/jquery-migrate-1.2.1.min.js"></script>
     <script src="${ly }/js/jquery.jqprint-0.3.js"></script>
     <script type="text/javascript">
+    console.log("我是plan-detail");
         function showpicture(src) {
             $(".div_imgp img").attr("src", src);
             $("#modal-plan").modal("show")
@@ -164,11 +165,11 @@
 
             <!-- 已经有复查 -->
             <c:if test="${listM.c3 > 0}">
-                <button onClick="show_dialog('复查详情','/company/recheck-detail?checkId=${listM.id }&flag=${flag}&number=${number}')"
-                        class="btn btn-success radius" type="button" style="padding: 0 70px;">复查详情
+                <button onClick="show_dialog('整改复查意见书','/company/recheck-detail?checkId=${listM.id }&flag=${flag}&number=${number}')"
+                        class="btn btn-success radius" type="button" style="padding: 0 70px;">整改复查意见书
                 </button>
                 <%--                <button onClick="location.href = '/company/recheck-detail?checkId=${listM.id }&flag=${flag}&number=${number}'"--%>
-                <%--                        class="btn btn-success radius" type="button" style="padding: 0 70px;">复查详情--%>
+                <%--                        class="btn btn-success radius" type="button" style="padding: 0 70px;">整改复查意见书--%>
                 <%--                </button>--%>
             </c:if>
 
@@ -208,7 +209,13 @@
 </div>
 <div id="div_container">
     <div class="div-print">
+
+    <c:if test="${listM.c3 > 0}">
     <h2 class="text-c mb-10">检查详情</h2>
+    </c:if>
+    <c:if test="${listM.c3 == 0}">
+        <h2 class="text-c mb-10">检查意见书</h2>
+    </c:if>
     <div class="f-l div_pdetail mt-10">
         <c:if test="${flag==2 || flag== 3 }">
             <font>受检公司：${user.userName }</font>
@@ -274,9 +281,11 @@
                     </td>
 
                     <td>
-
                         <c:choose>
-                            <c:when test="${ch.flag == 1}">企业自查</c:when>
+                            <c:when test="${ch.flag == 1}">
+                                <c:if test="${ch.check_company==null}">部门检查</c:if>
+                                <c:if test="${ch.check_company!=null}">公司检查</c:if>
+                                </c:when>
                             <c:when test="${ch.flag == 2}">行政执法</c:when>
                             <c:when test="${ch.flag == 3}">第三方排查</c:when>
                         </c:choose>
@@ -291,7 +300,7 @@
                             <c:choose>
                                 <c:when test="${ch.status == 1}">合格</c:when>
                                 <c:when test="${ch.status == 2}">不合格</c:when>
-                                <c:when test="${ch.status == 3}">已复查</c:when>
+                                <c:when test="${ch.status == 3}">合格</c:when>
                             </c:choose>
                         </c:if>
                     </td>
@@ -327,7 +336,9 @@
                     </td>
                 </tr>
             </c:forEach>
+         <script>
 
+    </script>
             <%--<c:forEach items="${partL }" var="part" varStatus="pi">
               <c:set var="x" value="0" />
               <c:forEach items="${itemL }" var="ch">

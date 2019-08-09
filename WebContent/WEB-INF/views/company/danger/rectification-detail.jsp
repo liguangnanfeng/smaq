@@ -17,6 +17,7 @@ body .dis-ib{margin-right:15px;}
 </style>
 </head>
 <body>
+
   <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
     <span class="c-gray en">&gt;</span> <span>隐患排查治理系统</span> 
@@ -83,6 +84,7 @@ body .dis-ib{margin-right:15px;}
     </div>
   </div>
   <script type="text/javascript">
+   console.log("wjjjjjjjjjjjj")
 function showpicture(src, obj){
   var memo = $(obj).closest("td").find("div[data-name='item-memo']").html();
   $(".modal-body .mt-10").html("隐患描述：" + (memo == '' ? '暂无描述' : memo));

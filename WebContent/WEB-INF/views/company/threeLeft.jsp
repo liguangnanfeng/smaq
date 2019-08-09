@@ -13,49 +13,45 @@
         text-align:center;
         margin:0;
         padding:0;
-        margin-top:12%;
+        margin-top:18%;
+        display:flex;
+        justify-content: center;
+        <%--        background: #efefef;--%>
         }
         ul li{
         display: inline-block;
         list-style-type: none;
+        <%--        border-right: 1px solid #efefef;--%>
         text-align: center;
+        padding: 10px 20px;
 		margin-left: 12px;
-        width: 20%;
-        height: 7.5vw;
-        padding: 10px;
-        box-sizing: border-box;
-        position: relative;
-        -moz-box-shadow: 0px 0px 9px rgba(95,145,230,0.5);
-        box-shadow: 0px 0px 9px rgba(95,145,230,0.5);
-        cursor: pointer;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        border-radius:3px;
-        margin-top:20px;
-        background:rgba(95,152,222,0.1);
-        }
-        ul li a{
+        height: 4.2vw;
+        line-height: 4.2vw;
+        width: 15%;
+        background:#5A98DE;
         color:#fff;
+        border-radius:3px;
+        }
+        ul li:hover{
+        background:#3275BF;
+        }
+        <%--        ul li:last-child{--%>
+        <%--        border:none;--%>
+        <%--        }--%>
+        ul li a{
         text-decoration: none;
         display: block;
         text-align: center;
         width: 100%;
         padding-left: 0 !important;
+        color: #111;
         font-size: 18px;
-        height: 100%;
-        line-height: 6vw;
-        background:#5A98DE;
-        border-radius: 6px;
-        }
-        <%--ul li:hover{--%>
-        <%--background:rgba(95,152,222,0.1);--%>
-        <%--}--%>
-        ul li a:hover{
-        background:rgba(95,152,222,0.1);
-        color:rgba(95,152,222,1)
         }
         ul li a img{
         display:block;
+        }
+        ul li a{
+        color:#fff;
         }
         .children_div{
         display:none;
@@ -123,15 +119,15 @@
         <!--公告警示-->
         <c:if test="${leftBasic == 3}">
             <ul>
-            <li style="width:18%"><a href="${ly }/company/safety-system/risk-information-list?flag=1"
+            <li><a href="${ly }/company/safety-system/risk-information-list?flag=1"
             data-title="公司风险公告牌" href="javascript:void(0)">公司风险公告牌</a></li>
-            <li style="width:18%"><a href="${ly }/company/safety-system/risk-information-list?flag=2"
+            <li><a href="${ly }/company/safety-system/risk-information-list?flag=2"
             data-title="车间风险公告牌" href="javascript:void(0)">车间风险公告牌</a></li>
-            <li style="width:18%"><a href="${ly }/company/safety-system/risk-information-list?flag=3"
+            <li><a href="${ly }/company/safety-system/risk-information-list?flag=3"
             data-title="岗位风险公告牌" href="javascript:void(0)">岗位风险公告牌</a></li>
-            <li style="width:18%"><a href="${ly }/company/safety-system/ying-add" data-title="岗位应急处置卡"
+            <li><a href="${ly }/company/safety-system/ying-add" data-title="岗位应急处置卡"
             href="javascript:void(0)">岗位应急处置卡</a></li>
-            <li style="width:18%"><a href="${ly }/company/safety-system/harm-list" data-title="告知牌"
+            <li><a href="${ly }/company/safety-system/harm-list" data-title="告知牌"
             href="javascript:void(0)">告知牌</a></li>
             </ul>
         </c:if>
@@ -319,29 +315,29 @@
         </c:if>
         <c:if test="${leftBasic == 14}">
             <ul>
-            <li style="width:18%"><a href="${ly }/company/source/equipment?type=1" data-title="设备设施管理"
+            <li><a href="${ly }/company/source/equipment?type=1" data-title="设备设施管理"
             href="javascript:void(0)">设备设施管理</a></li>
-            <li style="width:18%"><a href="${ly }/company/source/staff" data-title="人员管理"
+            <li><a href="${ly }/company/source/staff" data-title="人员管理"
             href="javascript:void(0)">人员管理</a></li>
-            <li style="width:18%"><a href="${ly }/company/threeLeft?leftBasic=12" data-title="在线检测"
+            <li><a href="${ly }/company/threeLeft?leftBasic=12" data-title="在线检测"
             href="javascript:void(0)">在线检测</a></li>
-            <li style="width:18%"><a href="${ly }/company/source/distribution" data-title="风险分布图"
+            <li><a href="${ly }/company/source/distribution" data-title="风险分布图"
             href="javascript:void(0)">风险分布图</a></li>
-            <li style="width:18%"><a href="${ly }/company/source/publicity?flag=1" data-title="公示"
+            <li><a href="${ly }/company/source/publicity?flag=1" data-title="公示"
             href="javascript:void(0)">公示</a></li>
             </ul>
         </c:if>
         <c:if test="${leftBasic == 15}">
             <ul>
-            <li style="width:18%"><a href="${ly }/company/source/specialWork?type=1" data-title="非化工液氨使用企业"
+            <li><a href="${ly }/company/source/specialWork?type=1" data-title="非化工液氨使用企业"
             href="javascript:void(0)">非化工液氨使用企业</a></li>
-            <li style="width:18%"><a href="${ly }/company/source/specialWork?type=2" data-title="粉尘涉爆企业"
+            <li><a href="${ly }/company/source/specialWork?type=2" data-title="粉尘涉爆企业"
             href="javascript:void(0)">粉尘涉爆企业</a></li>
-            <li style="width:18%"><a href="${ly }/company/source/specialWork?type=3" data-title="高温熔融金属现场运输"
+            <li><a href="${ly }/company/source/specialWork?type=3" data-title="高温熔融金属现场运输"
             href="javascript:void(0)">高温熔融金属现场运输</a></li>
-            <li style="width:18%"><a href="${ly }/company/source/specialWork?type=4" data-title="工贸行业有限空间安全作业"
+            <li><a href="${ly }/company/source/specialWork?type=4" data-title="工贸行业有限空间安全作业"
             href="javascript:void(0)">工贸行业有限空间安全作业</a></li>
-            <li style="width:18%"><a href="${ly }/company/source/specialWork?type=5" data-title="冶金企业煤气"
+            <li><a href="${ly }/company/source/specialWork?type=5" data-title="冶金企业煤气"
             href="javascript:void(0)">冶金企业煤气</a></li>
             </ul>
         </c:if>

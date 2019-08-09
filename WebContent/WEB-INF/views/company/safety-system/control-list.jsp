@@ -248,6 +248,8 @@
   </div>
   <div class="mt-20" id="container" style="margin:auto;">
     <h3 class="text-c">${company.name}分级管控表</h3>
+
+    <span class="r">共有：<strong>${fn:length(list) }</strong> 条</span>
     <table id="xxx" class="table table-border table-bordered table-bg table-hover table-sort">
       <thead>
       <tr class="text-c">

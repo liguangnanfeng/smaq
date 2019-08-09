@@ -37,6 +37,7 @@ body .table-bg thead th{background:#ddd;padding:20px 8px}
 function pr_() {
   $("#div_container").jqprint();
 }
+  console.log("18:33");
 </script>
 </head>
 <body>

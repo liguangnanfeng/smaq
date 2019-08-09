@@ -87,7 +87,7 @@
             /*background-color: #0B9EFB;*/
             box-sizing: border-box;
             position: relative;
-    background:#5A98DE;
+            background:#5A98DE;
         }
 
         .item_container > span {
@@ -110,7 +110,7 @@
             margin-right: 5px;
         }
     .item_content:hover{
-    background:rgba(95,152,222,0.1);
+    background:#3275BF;
     color:rgba(95,152,222,1)
     }
         .item_container:hover .my_span {

@@ -13,10 +13,9 @@
     <title>风险分级管控 隐患排查治理智能化平台</title>
     <meta name="keywords" content="风险分级管控 隐患排查治理智能化平台">
     <meta name="description" content="风险分级管控 隐患排查治理智能化平台">
-    <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <style type="text/css">
+    <script src="${ly}/js/react.production.min.js" crossorigin></script>
+    <script src="${ly}/js/react-dom.production.min.js" crossorigin></script>
+    <script src="${ly}/js/babel.min.js"></script><style type="text/css">
         .input-text {
             position: relative
         }
@@ -110,6 +109,7 @@
 
     </style>
     <script>
+    console.log("我是model-add5.jsp");
         var dmname = "${dmname}";
         var dmid = "${dmid}";
         var checkType = "${checkType}";
@@ -119,83 +119,193 @@
     </script>
     <script type="text/javascript">
         function eat() {
-            var b = null, l1 = '', c = 1;
-            var b2 = null, l2 = '', c2 = 1;
-            var b3 = null, l3 = '', c3 = 1;
-            $("tbody tr").each(function () {
-                var td = $(this).children("td").eq(0);
-                var td2 = $(this).children("td").eq(1);
-                var td3 = $(this).children("td").eq(2);
-                var td4 = $(this).children("td").eq(3);
-                var l1_ = td.text();
-                var l2_ = td2.text();
-                var l3_ = td3.text();
-                var l4_ = td4.text();
+    var b = null, l1 = '', c = 1;
+    var b2 = null, l2 = '', c2 = 1;
+    var b3 = null, l3 = '', c3 = 1;
+    var b4 = null, l4 = '', c4 = 1;
+    $("tbody tr").each(function() {
+    var td = $(this).children("td").eq(0);
+    var td2 = $(this).children("td").eq(1);
+    var td3 = $(this).children("td").eq(2);
+    var td4 = $(this).children("td").eq(3);
+    var l1_ = td.text();
+    var l2_ = td2.text();
+    var l3_ = td3.text();
+    var l4_ = td4.text();
 
-                //Same to top level
-                if (l1 == l1_) {
-                    td.remove();
-                    c = c + 1;
-                    if (l2 == l2_) {
-                        td2.remove();
-                        c2 = c2 + 1;
-                        if (l3 == l3_) {
-                            td3.remove();
-                            c3 = c3 + 1;
-                        } else {
-                            l3 = l3_;
-                            if (b3 != null) {
-                                b3.attr("rowspan", c3);
-                                c3 = 1;
-                            }
-                            b3 = td3;
+    //Same to top level
+    if(l1 == l1_) {
+    td.remove();
+    c = c + 1;
+    if(l2 == l2_) {
+    td2.remove();
+    c2 = c2 + 1;
+    if(l3 == l3_) {
+    td3.remove();
+    c3 = c3 + 1;
+    if(l4 == l4_) {
+    td4.remove();
+    c4 = c4 + 1;
+    }else {
+    l4 = l4_;
+    if(b4 != null) {
+    b4.attr("rowspan", c4);
+    c4 = 1;
+    }
+    b4 = td4;
+    }
+    } else {
+    l3 = l3_;
+    if(b3 != null) {
+    b3.attr("rowspan", c3);
+    c3 = 1;
+    }
+    b3 = td3;
+    l4 = l4_;
+    if(b4 != null) {
+    b4.attr("rowspan", c4);
+    c4 = 1;
+    }
+    b4 = td4;
+    }
+    } else {
+    l2 = l2_;
+    if(b2 != null) {
+    b2.attr("rowspan", c2);
+    c2 = 1;
+    }
+    b2 = td2;
+    l3 = l3_;
+    if(b3 != null) {
+    b3.attr("rowspan", c3);
+    c3 = 1;
+    }
+    b3 = td3;
+    l4 = l4_;
+    if(b4 != null) {
+    b4.attr("rowspan", c4);
+    c4 = 1;
+    }
+    b4 = td4;
+    }
 
-                        }
-                    } else {
-                        l2 = l2_;
-                        if (b2 != null) {
-                            b2.attr("rowspan", c2);
-                            c2 = 1;
-                        }
-                        b2 = td2;
-                        l3 = l3_;
-                        if (b3 != null) {
-                            b3.attr("rowspan", c3);
-                            c3 = 1;
-                        }
-                        b3 = td3;
-                    }
+    } else {//Diffrent to top level
+    l1 = l1_;
+    if(b != null) {
+    b.attr("rowspan", c);
+    c = 1;
+    }
+    b = td;
+    l2 = l2_;
+    if(b2 != null) {
+    b2.attr("rowspan", c2);
+    c2 = 1;
+    }
+    b2 = td2;
+    l3 = l3_;
+    if(b3 != null) {
+    b3.attr("rowspan", c3);
+    c3 = 1;
+    }
+    b3 = td3;
+    l4 = l4_;
+    if(b4 != null) {
+    b4.attr("rowspan", c4);
+    c4 = 1;
+    }
+    b4 = td4;
+    }
+    })
+    if(b != null) {
+    b.attr("rowspan", c);
+    }
+    if(b2 != null) {
+    b2.attr("rowspan", c2);
+    }
+    if(b3 != null) {
+    b3.attr("rowspan", c3);
+    }
+    if(b4 != null) {
+    b4.attr("rowspan", c4);
+    }
 
-                } else {//Diffrent to top level
-                    l1 = l1_;
-                    if (b != null) {
-                        b.attr("rowspan", c);
-                        c = 1;
-                    }
-                    b = td;
-                    l2 = l2_;
-                    if (b2 != null) {
-                        b2.attr("rowspan", c2);
-                        c2 = 1;
-                    }
-                    b2 = td2;
-                    l3 = l3_;
-                    if (b3 != null) {
-                        b3.attr("rowspan", c3);
-                        c3 = 1;
-                    }
-                    b3 = td3;
-                }
-            })
-            if (b != null) {
-                b.attr("rowspan", c);
-            }
-            if (b2 != null) {
-                b2.attr("rowspan", c2);
-            }
-            if (b3 != null) {
-                b3.attr("rowspan", c3);
-            }
+    <%--            var b = null, l1 = '', c = 1;--%>
+<%--            var b2 = null, l2 = '', c2 = 1;--%>
+<%--            var b3 = null, l3 = '', c3 = 1;--%>
+<%--            $("tbody tr").each(function () {--%>
+<%--                var td = $(this).children("td").eq(0);--%>
+<%--                var td2 = $(this).children("td").eq(1);--%>
+<%--                var td3 = $(this).children("td").eq(2);--%>
+<%--                var td4 = $(this).children("td").eq(3);--%>
+<%--                var l1_ = td.text();--%>
+<%--                var l2_ = td2.text();--%>
+<%--                var l3_ = td3.text();--%>
+<%--                var l4_ = td4.text();--%>
+
+<%--                //Same to top level--%>
+<%--                if (l1 == l1_) {--%>
+<%--                    td.remove();--%>
+<%--                    c = c + 1;--%>
+<%--                    if (l2 == l2_) {--%>
+<%--                        td2.remove();--%>
+<%--                        c2 = c2 + 1;--%>
+<%--                        if (l3 == l3_) {--%>
+<%--                            td3.remove();--%>
+<%--                            c3 = c3 + 1;--%>
+<%--                        } else {--%>
+<%--                            l3 = l3_;--%>
+<%--                            if (b3 != null) {--%>
+<%--                                b3.attr("rowspan", c3);--%>
+<%--                                c3 = 1;--%>
+<%--                            }--%>
+<%--                            b3 = td3;--%>
+
+<%--                        }--%>
+<%--                    } else {--%>
+<%--                        l2 = l2_;--%>
+<%--                        if (b2 != null) {--%>
+<%--                            b2.attr("rowspan", c2);--%>
+<%--                            c2 = 1;--%>
+<%--                        }--%>
+<%--                        b2 = td2;--%>
+<%--                        l3 = l3_;--%>
+<%--                        if (b3 != null) {--%>
+<%--                            b3.attr("rowspan", c3);--%>
+<%--                            c3 = 1;--%>
+<%--                        }--%>
+<%--                        b3 = td3;--%>
+<%--                    }--%>
+
+<%--                } else {//Diffrent to top level--%>
+<%--                    l1 = l1_;--%>
+<%--                    if (b != null) {--%>
+<%--                        b.attr("rowspan", c);--%>
+<%--                        c = 1;--%>
+<%--                    }--%>
+<%--                    b = td;--%>
+<%--                    l2 = l2_;--%>
+<%--                    if (b2 != null) {--%>
+<%--                        b2.attr("rowspan", c2);--%>
+<%--                        c2 = 1;--%>
+<%--                    }--%>
+<%--                    b2 = td2;--%>
+<%--                    l3 = l3_;--%>
+<%--                    if (b3 != null) {--%>
+<%--                        b3.attr("rowspan", c3);--%>
+<%--                        c3 = 1;--%>
+<%--                    }--%>
+<%--                    b3 = td3;--%>
+<%--                }--%>
+<%--            })--%>
+<%--            if (b != null) {--%>
+<%--                b.attr("rowspan", c);--%>
+<%--            }--%>
+<%--            if (b2 != null) {--%>
+<%--                b2.attr("rowspan", c2);--%>
+<%--            }--%>
+<%--            if (b3 != null) {--%>
+<%--                b3.attr("rowspan", c3);--%>
+<%--            }--%>
         }
     </script>
 
@@ -512,8 +622,7 @@
                                 let levels=item.level3.split('/')
                                 return (
                                     <tr>
-
-                                        <td className="text-c">{dmname}</td>
+                                        <td className="text-c">{levels[1]}</td>
                                         <td className="text-c">
                                             <c:if test="${industryType==-1}">
                                            基础检查

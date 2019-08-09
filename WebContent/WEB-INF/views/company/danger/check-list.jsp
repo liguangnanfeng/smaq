@@ -26,6 +26,7 @@
     </style>
 </head>
 <script>
+    console.log("我是check-list,c");
     // 根据部门名称进行查询
     function queryButton() {
         var dmName = $("[name='dmName']").val();

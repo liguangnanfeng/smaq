@@ -197,6 +197,7 @@
             </select>
 
             <select class="sel_area isShow" id="control"  onchange="int()" style="position:relative;top:3px">
+                <option value="null" >全部</option>
                 <option value="生产工艺" >生产工艺</option>
                 <option value="设备设施" >设备设施</option>
                 <option value="特种设备" >特种设备</option>
@@ -229,10 +230,10 @@
         <div class="div_zhe">
             <div class="change_zhe">
                 <div class="btn-group">
-                    <span class="btn btnyh btnyhxz radius zhtj2">综合统计</span>
-                    <span class="btn btnyh radius yhlx2">隐患类型</span>
-                    <span class="btn btnyh radius yhly2">隐患来源</span>
-                    <span class="btn btnyh radius yhdj2">隐患等级</span>
+                    <span style="display:none" class="btn btnyh  radius zhtj2">综合统计</span>
+                    <span class="btn btnyh radius btnyhxz yhlx2" data-yh="1" >隐患类型</span>
+                    <span class="btn btnyh radius yhly2" data-yh="2" >隐患来源</span>
+                    <span class="btn btnyh radius yhdj2" data-yh="3" >隐患等级</span>
                 </div>
             </div>
             <div id="container3" style="width:100%;height:450px;display: inline-block;margin-top:25px;"></div>
@@ -245,15 +246,14 @@
 
     var categories = [];//日期数组
     var series = {};  //数据数组
-    var flag = 0;      //查看类型0:综合数据 1:隐患类型 2:隐患来源 3:隐患等级
-
-
+    var flag = 1;      //查看类型0:综合数据 1:隐患类型 2:隐患来源 3:隐患等级
     function int(f) {
         var vs = $('#partNammes  option:selected').val();
         var vs1 = $('#partNamme  option:selected').val();
         var vs2 = $('#control  option:selected').val();
-    console.log(vs)
-    console.log(vs1)
+        if(!f){
+           f=yhj;
+        }
         var url ='';
         if(f==0){
             url= "/company/zhuChartData3";
@@ -268,10 +268,11 @@
             sT: $("#sT").val(),
             eT: $("#eT").val()
         }, function (result) {
-    <%--console.log(result)--%>
-
-    categories = result.map.categories;
+          categories = result.map.categories;
             series = result.map.series;
+            //在这里删除的高危
+            series.splice(2,1);
+            console.log('series---',series);
             var extra = {};
             extra.name =
             extra.name = '条目汇总 '+result.map.count+' 条';
@@ -300,28 +301,46 @@
             yAxis: {title: {text: '数量'}, min: 0},
             tooltip: {
                 formatter: function (res,ret,rep) {
-
-    <%--console.log(res)--%>
-    <%--console.log(ret)--%>
-    <%--console.log(rep)--%>
     <%--return this.y + '个月 ';--%>
                     var content ='<table>'
                     for (var i = 0; i < this.points.length; i++) {
-                    content += '<tr><td style="padding:0;color: ' + this.points[i].series.color + '">' + this.points[i].series.name + ':</td> <td style="padding:0"><b>' + this.points[i].y + '</b></td></tr>';
-
-                    if(i==1){
-                        var jj;
+                    content += '<tr ><td style="padding-bottom:1px;color: ' + this.points[i].series.color + '">' + this.points[i].series.name + ':</td> <td style="padding:0px"><b>' + this.points[i].y + '</b></td></tr>';
+                 if(i==0){
+                        let ff;
                         if(this.points[0].y==0){
-                            jj=100;
+                        ff=0;
                         }else{
-                            jj=Highcharts.numberFormat(this.points[0].y/(this.points[0].y+this.points[1].y+this.points[2].y)*100,2);
+                        ff=Highcharts.numberFormat(this.points[0].y/(this.points[0].y+this.points[1].y)*100,2);
+
                         }
-                        content += '<tr><td style="padding:0;color:#333">占比率：</td><td>'+jj +'%</td></tr>';
-                        content += '<tr><td style="padding:0;color:#333">占比率：</td><td>'+jj +'%</td></tr>';
-                    }
+                        content += '<tr ><td style="padding-bottom:2px;color:#333">占比率：</td><td>'+ff +'%</td></tr>';
+                        }
+                if(i==1){
+                            let jj;
+                            if(this.points[1].y==0){
+                                jj=0;
+                            }else{
+                                jj=Highcharts.numberFormat(this.points[1].y/(this.points[0].y+this.points[1].y)*100,2);
+
+                            }
+                            content += '<tr ><td style="padding-bottom:2px;color:#333">占比率：</td><td>'+jj +'%</td></tr>';
+                        }
+
+                        <%--if(i==2){--%>
+                            <%--let hh;--%>
+                            <%--if(this.points[2].y==0){--%>
+                            <%--hh=0;--%>
+                            <%--}else{--%>
+                            <%--hh=Highcharts.numberFormat(this.points[2].y/(this.points[0].y+this.points[1].y+this.points[2].y)*100,2);--%>
+                            <%--}--%>
+                            <%--content += '<tr ><td style="padding-bottom:2px;color:#333">占比率：</td><td>'+hh +'%</td></tr>';--%>
+                            <%--}--%>
                     };
+
+
                     return content;
                 },
+
                 shared: true,
                 useHTML: true
             },
@@ -355,23 +374,21 @@
         }
         int(flag);
     }
-
-    $(".zhtj2").click(function(){
-        $(".btnyh").removeClass("btnyhxz");
-        $(this).addClass("btnyhxz");
-        flag = 0;
-        int(flag);
-    });
-
-
+//这是默认的
+<%--    $(".zhtj2").click(function(){--%>
+<%--        $(".btnyh").removeClass("btnyhxz");--%>
+<%--        $(this).addClass("btnyhxz");--%>
+<%--        flag = 1;--%>
+<%--        int(flag);--%>
+<%--        console.log("我是默认的点击函数");--%>
+<%--    });--%>
     $(".yhlx2").click(function(){
         $(".btnyh").removeClass("btnyhxz");
         $(this).addClass("btnyhxz");
         flag = 1;
         int(flag);
+        yhj=1;
     });
-
-
 
     $(".yhly2").click(function(){
         $(".btnyh").removeClass("btnyhxz");
@@ -379,6 +396,7 @@
         $("#my_flag").val(2);
         flag = 2;
         int(flag);
+        yhj=2;
     });
 
     $(".yhdj2").click(function(){
@@ -387,6 +405,7 @@
         $("#my_flag").val(3);
         flag = 3;
         int(flag);
+         yhj=3;
     });
 
 

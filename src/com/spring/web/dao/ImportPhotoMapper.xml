@@ -19,12 +19,12 @@
     </sql>
 
     <!-- 添加数据信息 -->
-    <insert id="savePhoto" parameterType="com.spring.web.model.request.TMap" >
+    <insert id="savePhoto" parameterType="com.spring.web.model.request.ImportPhoto" >
          insert into import_photo (url,user_id,name,url1,flag) values(#{url},#{user_id},#{name},#{url1},#{flag});
     </insert>
 
     <!-- 添加数据信息 -->
-    <insert id="saveCoordinate" parameterType="com.spring.web.model.request.TMap" >
+    <insert id="saveCoordinate" parameterType="com.spring.web.model.request.ImportPhoto" >
         insert into import_photo (coordinate) values(#{coordinate}) where id = #{id};
     </insert>
 

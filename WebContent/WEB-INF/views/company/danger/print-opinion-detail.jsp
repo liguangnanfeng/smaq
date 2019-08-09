@@ -35,8 +35,10 @@ body .table-bg thead th{background:#ddd;padding:20px 8px}
 <script src="${ly }/js/jquery-migrate-1.2.1.min.js"></script>
 <script src="${ly }/js/jquery.jqprint-0.3.js"></script>
 <script type="text/javascript">
+    alert("18:35");
 function pr_() {
   $("#div_container").jqprint();
+
 }
 </script>
 </head>

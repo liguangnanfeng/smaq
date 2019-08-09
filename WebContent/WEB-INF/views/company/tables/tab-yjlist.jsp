@@ -30,6 +30,7 @@ body div{width:auto;height:auto;}
 function addyan1(){
   $("#yan1").modal("show")
   }
+  console.log("17:15!!!");
 </script>
 </head>
 <body>

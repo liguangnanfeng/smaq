@@ -12,6 +12,8 @@
 <title>风险分级管控   隐患排查治理智能化平台</title>
 <meta name="keywords" content="风险分级管控   隐患排查治理智能化平台">
 <meta name="description" content="风险分级管控   隐患排查治理智能化平台">
+    <link rel="stylesheet" type="text/css" media="print"  href="${ly}/js/H-ui.admin_v3.0/static/h-ui/css/H-ui.css" />
+    <link rel="stylesheet" type="text/css" href="${ly}/styles/common.css" media="print"  />
 <style type="text/css">
 .input-text{position:relative}
 .txtarea_sq{height:100px;width:350px;}
@@ -28,8 +30,15 @@ body .check-box, .radio-box{line-height:30px;}
 .div_pri .Wdate{float:right;}
 body .select{height:32px;line-height:32px;}
 body .radio-box{float:Left;}
+    .center{
+       text-align:center!important;
+    }
 </style>
 <script type="text/javascript">
+    console.log("c/check-fudetail");
+    var a='${itemList}';
+    var result = JSON.stringify(a);
+    console.log(result);
 function showpicture(src, obj){
   var memo = $(obj).closest("td").find("div[data-name='item-memo']").html();
   $(".modal-body .mt-10").html("隐患描述：" + (memo == '' ? '暂无描述' : memo));
@@ -127,12 +136,21 @@ function showpicture2(src, obj){
     <table class="f-l table table-border table-bordered table-bg table-hover table-sort">
       <thead>
         <tr class="text-c">
-          <th width="3%">序号</th>
-          <th width="15%">部门/装置</th>
-          <th width="25%">检查项目</th>
-          <th width="30%">检查内容</th>
-          <th width="15%">整改期限</th>
-          <th width="12%">检查结果</th>
+<%--          <th width="3%">序号</th>--%>
+<%--          <th width="15%">部门/装置</th>--%>
+<%--          <th width="25%">检查项目</th>--%>
+<%--          <th width="30%">检查内容</th>--%>
+<%--          <th width="15%">整改期限</th>--%>
+<%--          <th width="12%">检查结果</th>--%>
+
+      <th width="6%">序号</th>
+      <th width="10%">检查部位</th>
+      <th width="10%">检查类型</th>
+      <th width="10%">检查方式</th>
+      <th width="10%">检查项目</th>
+      <th width="10%">检查结果</th>
+      <th width="20%">隐患内容</th>
+      <th width="15%">隐患图片</th>
         </tr>
       </thead>
       <tbody>
@@ -141,28 +159,68 @@ function showpicture2(src, obj){
         <c:if test="${be.recheckId == p.id}">
         <c:set value="${ind + 1}" var="ind"/>
         <tr>
+<%--           1.序号 --%>
           <td class="text-c">${ind }</td>
+<%--            2.检查部位--%>
           <td class="text-c"><c:if test="${!empty be.partImg}">
             <img src="${be.partImg }" class="mr-10" style="height:100px;"/>
-            </c:if>${be.partName }</td>
+            </c:if>
+            ${be.partName }</td>
 
-         <!--  <td class="text-c">${be.levels}</td> -->
+            <%--3检查类型--%>
+            <td class=" center">
+            <c:if test="${check.industryType==1}">基础检查</c:if>
+            <c:if test="${check.industryType==2}">现场检查</c:if>
+            <c:if test="${check.industryType==3}">高危检查</c:if>
+            </td>
+
+
+            <%--4检查方式--%>
+            <td class=" center">
+            <c:if test="${check.type==1}">日常检查</c:if>
+            <c:if test="${check.type==2}">定期检查</c:if>
+            <c:if test="${check.type==3}">季节检查</c:if>
+            <c:if test="${check.type==4}">其他检查</c:if>
+            <c:if test="${check.type==5}">综合检查</c:if>
+            </td>
 		 <c:set var="item" value="${fn:split(be.levels,'/') }"/>
+<%--     5.检查项目--%>
 		<td>${item[2]}</td>
-          <td class="text-c">${be.memo }</td>
-          <td class="text-c"><fmt:formatDate value="${be.deadline }"/></td>
-          <td class="text-c">
+<%--     6检查结果--%>
+            <td class="text-c">
             ${be.status == 2 ? '不合格' : '合格'}
             <c:if test="${!empty be.files or !empty be.memo}">
 
-            <br>
+                <br>
                 <c:if test="${be.status != 3}"><a href="javascript:void(0)" onclick="showpicture('${be.files}', this)">隐患描述</a></c:if>
-            <div data-name="item-memo" style="display: none;">${be.memo }</div>
+                <div data-name="item-memo" style="display: none;">${be.memo }</div>
             </c:if>
             <c:if test="${!empty be.recheckFile or !empty be.recheckMemo}">
-            <br><a href="javascript:void(0)" onclick="showpicture2('${be.recheckFile}', this)">复查描述</a>
-            <div data-name="item-memo2" style="display: none;">${be.recheckMemo }</div>
+                <br><a href="javascript:void(0)" onclick="showpicture2('${be.recheckFile}', this)">复查描述</a>
+                <div data-name="item-memo2" style="display: none;">${be.recheckMemo }</div>
             </c:if>
+
+            <%--     7隐患内容--%>
+          <td class="text-c">${be.memo }</td>
+
+            <%--8-隐患图片--%>
+            <td class="text-c">
+            <c:if test="${!empty be.files or !empty be.memo}">
+
+                <a href="javascript:void(0)" onclick="showpicture('${be.files}', this)">
+                <img src="${be.recheckFile}" align="隐患图片" width="100" height="100">
+                </a>
+                <%-- <img alt="" src="${be.files }" style="max-height:100px;cursor:pointer;" onClick="showpicture('${be.files}')"/> --%>
+            </c:if>
+            <div data-lid="${be.levelId }" data-name="item-memo" style="display: none;">${be.memo }</div>
+            </td>
+
+
+<%--          <td class="text-c"><fmt:formatDate value="${be.deadline }"/></td>--%>
+
+
+
+
           </td>
         </tr>
         </c:if>
@@ -240,7 +298,7 @@ function showpicture2(src, obj){
             </div>
           </td>
         </tr>
-        
+
       </tbody>
     </table>
   </div>

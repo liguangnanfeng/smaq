@@ -18,6 +18,7 @@
         .r strong {color: red;}
     </style>
     <script type="text/javascript">
+        console.log("我是recheck-list");
         function showpicture(memoImg){
             //memoImg = "";
             if (memoImg.length !== 0) {

@@ -246,6 +246,18 @@ public interface TCheckItemMapper {
 
 
     List<DynamicParameter<String,Object>> selectMapzhuChartData2(Map<String,Object> m);
+
+    int findHiddenSourceTypeByMap(@Param("flag") Integer flag, @Param("depart")String depart, @Param("user_id")Integer user_id, @Param("industry_type")Integer industry_type);
+
+    Integer findHiddenLevelTypeByMap(@Param("depart")String depart, @Param("user_id")Integer user_id, @Param("flag")Integer flag);
+
+    Integer findRecheckFileByMap(@Param("status")Integer status, @Param("user_id")Integer user_id, @Param("flag")Integer flag,@Param("depart")String depart);
+
+    Integer findMapzhuChartData2(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zhuChartData66(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zhuChartData123(@Param("control")String control, @Param("depart")String depart, @Param("user_id")Integer user_id);
 }
 
 

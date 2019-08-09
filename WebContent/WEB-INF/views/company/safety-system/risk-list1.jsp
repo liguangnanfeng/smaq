@@ -255,7 +255,7 @@
 
             <c:if test="${empty type}" >
                 <c:if test="${number == 3}" >
-                   <%-- <span class="r">共有安全风险因素：<strong>${fn:length(zzjgDep) }</strong> 条</span>--%>
+                    <%--<span class="r">共有安全风险因素：<strong>${fn:length(zzjgDep) }</strong> 条</span>--%>
                     <span class="r">共有安全风险因素：<strong>${nowCount}</strong> 条</span>
                 </c:if>
                 <c:if test="${number != 3}" >
@@ -418,7 +418,7 @@
 
                                                 </c:if>
                                                 <c:if test="${empty  ac.type}">
-                                                    <p style="text-align:center;">未识别</p>
+                                                    <p style="text-align:center;" onClick="editDanger('${ac.id}')">未识别</p>
                                                 </c:if>
                                                 <c:if test="${not empty  ac.type}">
                                                     <p style="text-align:center;cursor:pointer" onClick="editDanger('${ac.id}')">${ac.type}</p>

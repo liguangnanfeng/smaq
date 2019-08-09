@@ -16,6 +16,7 @@
         body .dis-ib{margin-right:15px;}
     </style>
     <script type="text/javascript">
+    console.log("我是check-list，v")
         var villageId = '${villageId}';
         $(function() {
             if($("#townId").length > 0) {

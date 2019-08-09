@@ -18,6 +18,7 @@ dt a:hover{text-decoration: none;}
 .Hui-iconfont{font-size:15px;}
 </style>
 <script type="text/javascript">
+  console.log("17:17???");
 	function myrefresh(){
 		window.location.reload();
 	}

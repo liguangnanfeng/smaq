@@ -30,5 +30,6 @@ public interface ImportPhotoMapper {
 
 
     List<ImportPhoto> selectPhotoOne(@Param("userId")Integer userId, @Param("flag")Integer flag);
+
 }
 

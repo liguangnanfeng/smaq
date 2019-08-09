@@ -62,6 +62,7 @@
             }
         </style>
         <script type="text/javascript">
+        console.log("l am left!");
         function load_axfxgkxt() {
         $.post("/company/safety-system/check", {}, function (result) {
         //var c = result.map.c;
@@ -295,12 +296,19 @@
         <li><a data-href="${ly }/village/check-list?flag=1&status=2" data-title="隐患排查记录"
         href="javascript:void(0)">隐患排查记录</a>
         </li>
-		 <li><a data-href="${ly }/company/danger/danger-chart-px" data-title="排查数据分析"
-        href="javascript:void(0)">排查数据分析</a></li>
+        <%--        <li><a data-href="${ly }/company/zhuChartData55" data-title="排查数据分析"--%>
+        <%--        href="javascript:void(0)">排查数据分析</a></li>--%>
+        <li><a data-href="${ly }/company/zhuChartData55" data-title="部门抽查绩效分析"
+        href="javascript:void(0)">部门抽查绩效分析</a></li>
+
 		 <li><a data-href="${ly }/company/danger-chart-jx" data-title="排查数据分析"
         href="javascript:void(0)">排查绩效分析</a></li>
-		 <li><a data-href="${ly }/village/danger-chart" data-title="隐患数据分析"
-        href="javascript:void(0)">隐患数据分析</a></li>
+
+<%--        <li><a data-href="${ly}/company/zhuChartData22" data-title="隐患数据分析"--%>
+<%--        href="javascript:void(0)">隐患数据分析</a></li>--%>
+        <li><a data-href="${ly}/company/zhuChartData22" data-title="企业自查隐患数据分析"
+        href="javascript:void(0)">企业自查隐患数据分析</a></li>
+
         <%--就是复查表的记录,--%>
        <!--  <li><a data-href="${ly }/village/recheck-list?flag=1&status=1" data-title="隐患治理记录"
         href="javascript:void(0)">隐患治理记录</a>
@@ -310,13 +318,22 @@
         </li>
        <!--  <li><a data-href="${ly }/village/danger-index-list?flag=1" data-title="隐患统计汇总"
         href="javascript:void(0)">隐患统计汇总</a></li> -->
-        <li><a data-href="${ly }/company/danger/danger-chart-zl" data-title="治理数据分析"
+        <li><a data-href="${ly }/company/zhuChartData123" data-title="治理数据分析"
         href="javascript:void(0)">治理数据分析</a></li>
+<%--        zhuChartData77        hidden-table  隐患排查绩效分析--%>
+<%--        zhuChartData44        hidden-zl-table  隐患治理数据分析--%>
+<%--        zhuChartData66        hidden-pc-table 企业自查对象分析--%>
+        <li><a data-href="${ly }/company/zhuChartData77" data-title="隐患排查绩效分析"
+        href="javascript:void(0)">隐患排查绩效分析</a></li>
+        <li><a data-href="${ly }/company/zhuChartData44" data-title="隐患治理数据分析"
+        href="javascript:void(0)">隐患治理数据分析</a></li>
+        <li><a data-href="${ly }/company/zhuChartData66" data-title="企业自查对象分析"
+        href="javascript:void(0)">隐患排查对象分析 </a></li>
+<%--        /company/danger/danger-chart-zl--%>
         <%-- <li><a data-href="${ly }/html/about.html" data-title="新手指南" href="javascript:void(0)">新手指南</a></li> --%>
         <%-- <li><a data-href="${ly }/company/tables/tab-list?isType=21" data-title="安全隐患整改通知单" href="javascript:void(0)">安全隐患整改通知单</a></li> --%>
         <%-- <li><a data-href="${ly }/village/trouble-set" data-title="排查内容设置" href="javascript:void(0)">排查内容设置</a></li> --%>
         <%-- <li><a data-href="${ly }/company/danger/tab-plan" data-title="隐患排查计划" href="javascript:void(0)">隐患排查计划</a></li> --%>
-
         <%-- <li><a data-href="${ly }/company/tables/tab-list?isType=20" data-title="安全检查计划" href="javascript:void(0)">安全检查计划</a></li> --%>
         <%-- <li><a data-href="${ly }/company/tables/tab-list2" data-title="各类安全检查表" href="javascript:void(0)">各类安全检查表</a></li> --%>
         </ul>
@@ -355,18 +372,18 @@
         </dl>
         <dl class="list_an">
         <dt>
-        <i class="Hui-iconfont">&#xe687;</i>安全培训中心
-        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+        <a style="color:#fff" data-href="/company/tables/dajiangtang" href="javascript:void(0)" data-title="安全培训中心"><i class="Hui-iconfont">&#xe687;</i>安全培训中心</a>
+
         </dt>
         <dd>
         <ul>
-        <li><a target="_blank"
-        data-href="http://jswx.zayxy.com/index.php?user-app-login&mobile=${userName}"
-        data-title="安全培训">安全培训</a></li>
-        <li><a data-href="${ly }/company/train/special-list?spFlag=0"
-        data-title="持证上岗" href="javascript:void(0)">持证上岗</a></li>
-        <li><a data-href="${ly }/company/tables/tab-anlist"
-        data-title="安全生产教育台账" href="javascript:void(0)">教育台账</a></li>
+<%--        <li><a target="_blank"--%>
+<%--        data-href="http://jswx.zayxy.com/index.php?user-app-login&mobile=${userName}"--%>
+<%--        data-title="安全培训">安全培训</a></li>--%>
+<%--        <li><a data-href="${ly }/company/train/special-list?spFlag=0"--%>
+<%--        data-title="持证上岗" href="javascript:void(0)">持证上岗</a></li>--%>
+<%--        <li><a data-href="${ly }/company/tables/tab-anlist"--%>
+<%--        data-title="安全生产教育台账" href="javascript:void(0)">教育台账</a></li>--%>
         <%--<li><a target="_blank"--%>
         <%--data-href="http://exam.dicarl.com/index.php?user-app-login&mobile=${userName}"--%>
         <%--data-title="安全培训">安全培训</a></li>--%>
@@ -377,19 +394,21 @@
         <dl>
         <dt>
         <%--      应急救援--%>
-        <i class="Hui-iconfont">&#xe6c1;</i>应急管理中心
-        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+<%--        <a style="color:#fff;"  data-href="${ly }/api/safety_Standard/findAll?parendId=0&flag=1" data-title="运行操作系统"--%>
+<%--        href="javascript:void(0)"><i class="Hui-iconfont">&#xe639;</i>安全生产标准化</a>--%>
+
+        <a style="color:#fff;"  data-href="${ly }/company/tables/yjmanage_center"  data-title="应急管理中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急管理中心</a>
         </dt>
-        <dd>
-        <ul>
-        <li><a data-href="${ly }/company/tables/tab-yjlist" data-title="应急预案"
-        href="javascript:void(0)">应急预案</a></li>
-        <li><a data-href="${ly }/company/facilities/facilities-list?flag=1" data-title="消防设备设施"
-        href="javascript:void(0)">消防设备设施</a></li>
-        <li><a data-href="${ly }/company/facilities/facilities-list?flag=2" data-title="应急设备设施"
-        href="javascript:void(0)">应急设备设施</a></li>
-        </ul>
-        </dd>
+<%--        <dd>--%>
+<%--        <ul>--%>
+<%--        <li><a data-href="${ly }/company/tables/tab-yjlist" data-title="应急预案"--%>
+<%--        href="javascript:void(0)">应急预案</a></li>--%>
+<%--        <li><a data-href="${ly }/company/facilities/facilities-list?flag=1" data-title="消防设备设施"--%>
+<%--        href="javascript:void(0)">消防设备设施</a></li>--%>
+<%--        <li><a data-href="${ly }/company/facilities/facilities-list?flag=2" data-title="应急设备设施"--%>
+<%--        href="javascript:void(0)">应急设备设施</a></li>--%>
+<%--        </ul>--%>
+<%--        </dd>--%>
         </dl>
 		<div id="industryId" >
 

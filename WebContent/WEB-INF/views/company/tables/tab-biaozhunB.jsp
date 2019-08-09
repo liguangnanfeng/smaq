@@ -102,18 +102,22 @@
         }
 
         .item_content {
-            -moz-box-shadow: 0px 0px 10px #efefef;
-            box-shadow: 0px 0px 10px #efefef;
-            width: 100%;
-            height: 100%;
-            padding: 10px;
-            cursor: pointer;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            /*background-color: #0B9EFB;*/
-            box-sizing: border-box;
-            position: relative;
+    box-shadow: 0px 0px 9px rgba(95,145,230,0.5);
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #fff;
+    box-sizing: border-box;
+    position: relative;
+    background: #5A98DE;
         }
+    .item_content:hover{
+    background:#3275BF;
+
+    }
 
         .item_container > span {
             position: absolute;

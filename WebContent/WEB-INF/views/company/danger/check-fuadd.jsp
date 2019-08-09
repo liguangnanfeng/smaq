@@ -92,9 +92,12 @@ function uploadpicture(obj){
       <thead>
         <tr class="text-c">
           <th width="3%">序号</th>
-          <th width="15%">部门/装置</th>
-          <th width="25%">检查项目</th>
-          <th width="30%">隐患内容</th>
+          <%--<th width="15%">部门/装置</th>--%>
+          <th width="10%">检查部位</th>
+          <th>检查类型</th>
+          <th>检查方式</th>
+          <th>检查项目</th>
+          <th width="30%">检查内容</th>
           <th width="15%">整改期限</th>
           <th width="12%">检查结果</th>
         </tr>
@@ -106,8 +109,20 @@ function uploadpicture(obj){
           <td class="text-c"><c:if test="${!empty be.partImg}">
             <img src="${be.partImg }" class="mr-10" style="height:100px;"/>
             </c:if>${be.partName }</td>
+            <td class="text-c">
+          <c:if test="${be.industry_type==1}">基础检查</c:if>
+          <c:if test="${be.industry_type==2}">现场检查</c:if>
+          <c:if test="${be.industry_type==3}">高危检查</c:if>
+          </td>
+            <td class="text-c">
+          <c:if test="${be.type==1}">日常检查</c:if>
+          <c:if test="${be.type==2}">定期检查</c:if>
+          <c:if test="${be.type==3}">季节检查</c:if>
+          <c:if test="${be.type==4}">其他检查</c:if>
+          <c:if test="${be.type==5}">综合检查</c:if>
+          </td>
             <td class="text-c">${be.levels }</td>
-          
+
           
           <!--<td class="text-c">zhangcl ${be.id }</td>-->
           

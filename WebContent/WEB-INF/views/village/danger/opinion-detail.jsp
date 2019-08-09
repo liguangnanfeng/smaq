@@ -13,6 +13,8 @@
     <title>风险分级管控 隐患排查治理智能化平台</title>
     <meta name="keywords" content="风险分级管控   隐患排查治理智能化平台">
     <meta name="description" content="风险分级管控   隐患排查治理智能化平台">
+    <link rel="stylesheet" type="text/css" media="print"  href="${ly}/js/H-ui.admin_v3.0/static/h-ui/css/H-ui.css" />
+    <link rel="stylesheet" type="text/css" href="${ly}/styles/common.css" media="print"  />
     <style type="text/css">
         .input-text {
             position: relative
@@ -40,7 +42,7 @@
         }
 
         .div_pdetail label {
-            float: right;
+            float: right!important;
             font-size: 15px;
             margin-right: 15px;
         }
@@ -88,8 +90,13 @@
             height: 32px;
             line-height: 32px;
         }
+      .center{
+      text-align:center!important;
+    }
     </style>
     <script type="text/javascript">
+    console.log("v/opinion-detail");
+    console.log(${itemL});
         function showpicture(src, obj) {
             var memo = $(obj).closest("td").find("div[data-name='item-memo']").html();
             $(".modal-body .mt-10").html("隐患描述：" + (memo == '' ? '暂无描述' : memo));
@@ -153,7 +160,8 @@
             }
         }
     </script>
-</head>
+
+    </head>
 <body>
 <div class="page-container"  style="page-break-after:always">
     <div class="div_pdetail">
@@ -197,55 +205,92 @@
         <font>受检${check.flag == 1 ? '部门' : '单位'}：${check.depart }</font>
         <label>检查日期：<fmt:formatDate value="${check.realTime }" pattern="yyyy年MM月dd日"/></label>
     </div>
+
     <div class="f-l mt-20 mb-20" style="width:100%">
         <table class="f-l table table-border table-bordered table-bg table-hover table-sort">
             <thead>
             <tr class="text-c">
-                <th width="3%">序号</th>
-                <th width="15%">系统</th>
-                <th width="22%">检查项目</th>
-                <c:if test="${!empty itemL[0].content}">
-                    <th width="20%">检查内容</th>
-                </c:if>
-                <th width="20%">隐患描述</th>
+                <th width="6%">序号</th>
+                <th width="10%">检查部位</th>
+                <th width="10%">检查类型</th>
+                <th width="10%">检查方式</th>
+                <th width="10%">检查项目</th>
                 <th width="10%">检查结果</th>
-                <th width="10%">隐患图片</th>
+                <th width="20%">隐患内容</th>
+                <th width="15%">隐患图片</th>
                 <!-- <th width="10%">备注</th> -->
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${itemL }" var="be" varStatus="index">
+
+            <c:forEach items="${itemL }" var="be" >
                 <tr>
+
+                 <%--1序号--%>
                     <td class="text-c">${index.index + 1}</td>
 					<c:set var="item" value="${fn:split(be.levels,'/') }"/>
-                    <td class="text-c">
-                        <c:if test="${!empty be.partImg}">
-                            <img src="${be.partImg }" class="mr-10" style="height:100px;"/>
-                        </c:if>
-                             <c:if test="${ not empty item[1]}">
-                            ${item[1] }
-                        </c:if>
-							</td>
-                    <td class="text-c"> ${item[2] }</td>
-                    <c:if test="${!empty itemL[0].content}">
-                        <td class="text-c">${be.content }</td>
-                    </c:if>
-                    <td class="text-l">${be.memo }</td>
 
+
+                <%--2检查部位--%>
+                <td class=" center" >
+                ${be.partName}
+                </td>
+                <%--3检查类型--%>
+                <td class=" center">
+                <c:if test="${check.industryType==1}">基础检查</c:if>
+                <c:if test="${check.industryType==2}">现场检查</c:if>
+                <c:if test="${check.industryType==3}">高危检查</c:if>
+                </td>
+
+                <%--4检查方式--%>
+                <td class=" center">
+                <c:if test="${check.type==1}">日常检查</c:if>
+                <c:if test="${check.type==2}">定期检查</c:if>
+                <c:if test="${check.type==3}">季节检查</c:if>
+                <c:if test="${check.type==4}">其他检查</c:if>
+                <c:if test="${check.type==5}">综合检查</c:if>
+                </td>
+                <%--&lt;%&ndash;系统&ndash;%&gt;--%>
+                    <%--<td class="text-c">--%>
+                        <%--<c:if test="${!empty be.partImg}">--%>
+                            <%--<img src="${be.partImg }" class="mr-10" style="height:100px;"/>--%>
+                        <%--</c:if>--%>
+                        <%--<c:if test="${ not empty item[1]}">--%>
+                            <%--${item[1] }--%>
+                        <%--</c:if>--%>
+                    <%--</td>--%>
+                <%--&lt;%&ndash;检查内容&ndash;%&gt;--%>
+                    <%--<c:if test="${!empty itemL[0].content}">--%>
+                        <%--<td class="text-c">${be.content }</td>--%>
+                    <%--</c:if>--%>
+
+                <%--5检查项目--%>
+                <td class="text-c"> ${item[2] }</td>
+
+                <%--6-检查结果--%>
                     <c:if test="${ empty be.status}">
-                        <td>没有数据</td>
+                        <td style="text-align: center;">没有数据</td>
                     </c:if>
-
                     <c:if test="${ not empty be.status}">
-                        <td>
+                        <td style="text-align: center;">
                             <c:choose>
                                 <c:when test="${be.status == 1}">合格</c:when>
                                 <c:when test="${be.status == 2}">不合格</c:when>
-                                <c:when test="${be.status == 3}">已复查</c:when>
+                                <c:when test="${be.status == 3}">合格</c:when>
                             </c:choose>
                         </td>
                     </c:if>
 
+
+<%--                &lt;%&ndash;检查内容&ndash;%&gt;--%>
+<%--                <c:if test="${!empty itemL[0].content}">--%>
+<%--                <td class="text-c">${be.content }</td>--%>
+<%--                </c:if>--%>
+                <%--7隐患内容--%>
+                <td class="text-l">${be.memo }</td>
+
+
+                <%--8-隐患图片--%>
                     <td class="text-c">
                         <c:if test="${!empty be.files or !empty be.memo}">
 
@@ -256,7 +301,7 @@
                         </c:if>
                         <div data-lid="${be.levelId }" data-name="item-memo" style="display: none;">${be.memo }</div>
                     </td>
-                    <!-- <td class="text-c"></td> -->
+
                 </tr>
             </c:forEach>
 

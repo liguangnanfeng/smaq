@@ -243,16 +243,27 @@
             formatter: function () {
                 var content ='<table>'
                 for (var i = 0; i < this.points.length; i++) {
-                content += '<tr><td style="padding:0;color: ' + this.points[i].series.color + '">' + this.points[i].series.name + ':</td> <td style="padding:0"><b>' + this.points[i].y + '</b></td></tr>';
-                if(i==1){
-                var jj;
-                if(this.points[0].y==0){
-                jj=100;
-                }else{
-                jj=Highcharts.numberFormat(this.points[1].y/(this.points[0].y+this.points[1].y)*100,2);
-                }
-                content += '<tr><td style="padding:0;color:#333">占比率：</td><td>'+jj +'%</td></tr>';
-                }
+                        content += '<tr ><td style="padding-bottom:1px;color: ' + this.points[i].series.color + '">' + this.points[i].series.name + ':</td> <td style="padding:0px"><b>' + this.points[i].y + '</b></td></tr>';
+                        if(i==0){
+                        let ff;
+                        if(this.points[0].y==0){
+                        ff=0;
+                        }else{
+                        ff=Highcharts.numberFormat(this.points[0].y/(this.points[0].y+this.points[1].y)*100,2);
+
+                        }
+                        content += '<tr ><td style="padding-bottom:2px;color:#333">占比率：</td><td>'+ff +'%</td></tr>';
+                        }
+                        if(i==1){
+                        let jj;
+                        if(this.points[1].y==0){
+                        jj=0;
+                        }else{
+                        jj=Highcharts.numberFormat(this.points[0].y/(this.points[0].y+this.points[1].y)*100,2);
+                        }
+                        content += '<tr ><td style="padding-bottom:2px;color:#333">占比率：</td><td>'+jj +'%</td></tr>';
+                        }
+
                 };
                 return content;
                 },

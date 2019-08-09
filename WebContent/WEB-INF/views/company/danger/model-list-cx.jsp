@@ -476,7 +476,6 @@
             <th width="10%">隐患数量</th>
             <%-- <th width="15%">${flag == 1 ? '受检部门' : '检查单位'}</th>--%>
             <th width="10%">操作</th>
-            <th width="10%">实施</th>
         </tr>
         </thead>
         <tbody>
@@ -522,7 +521,7 @@
                     <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除记录</a>
 
                 </td>
-                <td>
+                <!--<td>
 
                     <c:if test="${be.c!=0}">
                         <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">整改详情</a>
@@ -532,7 +531,7 @@
 
 
                     </c:if>
-                </td>
+                </td>-->
             </tr>
         </c:forEach>
         <!-- 循环结束 -->
@@ -627,7 +626,6 @@
                                    href="javascript:;">查看检查记录</a>
                             </c:if>
                             <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除检查记录</a>
-
                         </td>
                     </tr>
                 </c:forEach>

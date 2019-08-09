@@ -3477,7 +3477,6 @@ public class VillageController extends BaseController {
     public List findStation2(Integer depId, String dpName, Integer checkType, HttpServletRequest request) {
         User user = getLoginUser(request);
         List<String> list = new ArrayList<String>();
-
         if (-2 == checkType) {                                     //现场
             list = aCompanyManualMapper.selectlevel3BydmName(user.getId(), dpName);
         } else if (-1 == checkType) {                                //基础

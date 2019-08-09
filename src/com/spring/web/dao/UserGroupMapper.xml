@@ -161,8 +161,7 @@
 	  AND ct.`village_id` = #{map.villageId}  
 	</if>
   </select>
-  
-  <select id="getVillageNameByUserId" parameterType="java.lang.Integer" resultType="java.util.Map">
+    <select id="getVillageNameByUserId" parameterType="java.lang.Integer" resultType="java.util.Map">
   SELECT 
 	  ut.`id` AS userId,
 	  ut.`user_name` AS userName,
@@ -225,10 +224,32 @@
 		 </if>
 	    <if test="map.companyName!= null">
 	  		AND cv.`name` LIKE CONCAT('%', #{map.companyName},'%')
-		 </if> 
-	  
+		 </if>
 	</where>
   </select>
+    <select id="searchCompanyByConditionPage" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        cv.`user_id` AS userId,
+        cv.name AS companyName,
+        cv.`is_key` AS isKey
+        FROM
+        `company_view` cv
+        <where>
+            <if test="map.villageId != null">
+                AND cv.`village_id` = #{map.villageId}
+            </if>
+            <if test="map.townId != null">
+                AND cv.`town_id` = #{map.townId}
+            </if>
+            <if test="map.districtId != null">
+                AND cv.`district_id` = #{map.districtId}
+            </if>
+            <if test="map.companyName!= null">
+                AND cv.`name` LIKE CONCAT('%', #{map.companyName},'%')
+            </if>
+        </where>
+         limit  #{map.page}, 10
+         </select>
   <select id="searchCompanyByConditionTrade" parameterType="java.util.Map" resultType="java.util.Map">
   	SELECT 
   	  T2.tid AS tradeId,
@@ -243,7 +264,7 @@
 		T1.user_id = #{map.tradeId}
 		<if test="map.companyName!= null">
 	  		AND T3.name LIKE CONCAT('%', #{map.companyName},'%')
-		</if> 
+		</if>
 	</where>
   </select>
     <select id="searchCompanyByConditionCompany" parameterType="java.util.Map" resultType="java.util.Map">
@@ -297,6 +318,5 @@
 	FROM
 	  `company_view` cv 
 	WHERE cv.`user_id` = #{userId}
-	limit 0,1
   </select>
 </mapper>

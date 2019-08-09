@@ -2,12 +2,14 @@ package com.spring.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.spring.web.BaseController;
-import com.spring.web.dao.MessageToUserMapper;
-import com.spring.web.dao.MessagesMapper;
-import com.spring.web.dao.UserGroupListMapper;
-import com.spring.web.dao.UserGroupMapper;
+import com.spring.web.dao.*;
 import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.*;
+import com.spring.web.model.request.CheckItem;
+import com.spring.web.model.request.CheckLevel;
+import com.spring.web.model.response.CheckItemS;
+import com.spring.web.result.AppResult;
+import com.spring.web.result.AppResultImpl;
 import com.spring.web.result.Result;
 import com.spring.web.result.ResultImpl;
 import com.spring.web.service.cgf.CgfService;
@@ -27,9 +29,7 @@ import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +37,7 @@ import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -57,6 +58,8 @@ public class GlobalController extends BaseController {
     private MessageToUserMapper messageToUserMapper;
     @Autowired
     private UserGroupListMapper userGroupListMapper;
+    @Autowired
+    private HiddenPlanMapper hiddenPlanMapper;
     /**
      * 政府端登陆页面
      * @param model
@@ -1620,7 +1623,7 @@ public class GlobalController extends BaseController {
         if (user.getUserType() == 5) {
             return "company/danger/check-list";
         }
-        return "global/danger/check-list-cx";
+        return "global/danger/check-list-cx2";
     }
     /**
      * 高危企业列表
@@ -2584,6 +2587,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("userId", userId);
         model.addAttribute("company", company);
         model.addAttribute("timenow", new Date());
+        System.out.println("global/danger/opinion-add" + flag + flag2);
         return "global/danger/opinion-add" + flag + flag2;
     }
     @RequestMapping(value = "off-add")
@@ -2601,11 +2605,10 @@ public class GlobalController extends BaseController {
     @RequestMapping(value = "off-save")
     public @ResponseBody Result offSave(Officials off, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
-
-        if(off.getPassword().length()<30){ //表示是新密码
+      /*  if(off.getPassword().length()<30){ //表示是新密码
             String encryptedPwd = EncryptUtil.encrypt(off.getPassword());
             off.setPassword(encryptedPwd);
-        }
+        }*/
         if(null == off.getId()) {
             User user = getLoginUser(request);
             off.setDel(0);
@@ -2745,6 +2748,7 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping(value = "trouble-set")
     public String troubleSet(Integer userId, String url, Model model, HttpServletRequest request) throws Exception {
+        System.out.println("userId:"+userId);
         // TODO 获取登陆的用户的信息
         User user = getLoginUser(request);
         // 判断是否为企业
@@ -2864,5 +2868,1203 @@ public class GlobalController extends BaseController {
         model.addAttribute("document", tCheckDocumentMapper.selectByPrimaryKey(id));
         return "global/danger/opinion-detail2";
     }
+
+    /**
+     * 查询公司
+     * @param request
+     * @return
+     */
+    @RequestMapping("/getCompanyByCondition")
+    @ResponseBody
+    public JSONObject getCompanyByCondition(HttpServletRequest request){
+        JSONObject result = new JSONObject();
+        String companyName = request.getParameter("companyName"); //获取公司名称
+        String villageId = request.getParameter("villageId");  //获取村级id
+        String districtId = request.getParameter("districtId"); //获取城市id
+        String townId = request.getParameter("townId"); //获取村级id
+        User user = getLoginUser(request); //用户登陆
+        if(null != user){ //用户不为空
+            Map<String, Object> params = new HashMap<String,Object>();
+            params.put("start", 0);
+            params.put("page", 10);
+            if(!com.alibaba.druid.util.StringUtils.isEmpty(companyName)){ //用户名不为空
+                try {
+                    companyName = URLDecoder.decode(URLDecoder.decode(companyName, "utf-8"),"utf-8"); //对用户名进行utf-8编码
+                } catch (UnsupportedEncodingException e) {
+                    log.error(e.getMessage(),e);
+                }
+                params.put("companyName", companyName);
+            }
+            if(!com.alibaba.druid.util.StringUtils.isEmpty(villageId)){ //村级id不为空
+                params.put("villageId", villageId);
+            }
+            if(!com.alibaba.druid.util.StringUtils.isEmpty(districtId)){ //城市id不为空
+                params.put("districtId", districtId);
+            }
+            if(!com.alibaba.druid.util.StringUtils.isEmpty(townId)){ //城镇id不为空
+                params.put("townId", townId);
+            }
+            if (user.getUserType() == 4) { //
+                params.put("villageId", user.getId());
+            }
+            if (user.getUserType() == 3) {
+                params.put("townId", user.getId());
+            }
+            if (user.getUserType() == 6) {
+                params.put("districtId", user.getId());
+            }
+            //result.put("list", userGroupMapper.searchCompanyByCondition(params));
+            //在行业端添加信息推送功能 wz add190119
+            log.error("params："+params.toString()+"，Type："+ user.getUserType());
+            if (user.getUserType() == 10) { //如果是行业级
+                params.put("tradeId", user.getId()); //存入id
+                result.put("list", userGroupMapper.searchCompanyByConditionTrade(params)); //根据用户ID或者公司名称查询
+                //log.error("行业端下传企业名称list："+userGroupMapper.searchCompanyByConditionTrade(params));
+            }else if(user.getUserType() == 5){ //如果企业端
+                params.put("companyId", user.getId());
+                List<Map<String, Object>> list = userGroupMapper.searchCompanyByConditionCompany(params);
+                List<Map<String, Object>> list1 = userGroupMapper.searchCompanyByConditionCompanyTrade(params);//如果
+                if(list1 != null && list1.size() != 0){
+                    list.addAll(list1);
+                }
+                //log.error("list："+list.toString());
+                result.put("list", list);
+            }else{
+                result.put("list", userGroupMapper.searchCompanyByCondition(params));
+            }
+        }
+        //log.error("result："+result.toString());
+        return result;
+    }
+
+    /**
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping("/getCompanyByConditionPage")
+    @ResponseBody
+    public JSONObject getCompanyNames(HttpServletRequest request) {
+        JSONObject result = new JSONObject();
+        String companyName = request.getParameter("companyName"); //获取公司名称
+        String villageId = request.getParameter("villageId");  //获取村级id
+        String districtId = request.getParameter("districtId"); //获取城市id
+        String townId = request.getParameter("townId"); //获取村级id
+        String page = request.getParameter("page"); //获取村级i
+        System.out.println("Page:"+page);
+        User user = getLoginUser(request); //用户登陆
+        if (null != user) { //用户不为空
+            Map<String, Object> params = new HashMap<String, Object>();
+            if (!com.alibaba.druid.util.StringUtils.isEmpty(companyName)) { //用户名不为空
+                try {
+                    companyName = URLDecoder.decode(URLDecoder.decode(companyName, "utf-8"), "utf-8"); //对用户名进行utf-8编码
+                } catch (UnsupportedEncodingException e) {
+                    log.error(e.getMessage(), e);
+                }
+                params.put("companyName", companyName);
+            }
+            if (!com.alibaba.druid.util.StringUtils.isEmpty(villageId)) { //村级id不为空
+                params.put("villageId", villageId);
+            }
+            if (!com.alibaba.druid.util.StringUtils.isEmpty(districtId)) { //城市id不为空
+                params.put("districtId", districtId);
+            }
+            if (!com.alibaba.druid.util.StringUtils.isEmpty(townId)) { //城镇id不为空
+                params.put("townId", townId);
+            }
+            if (user.getUserType() == 4) { //
+                params.put("villageId", user.getId());
+            }
+            if (user.getUserType() == 3) {
+                params.put("townId", user.getId());
+            }
+            if (user.getUserType() == 6) {
+                params.put("districtId", user.getId());
+            }
+            //result.put("list", userGroupMapper.searchCompanyByCondition(params));
+            //在行业端添加信息推送功能 wz add190119
+            log.error("params："+params.toString()+"，Type："+ user.getUserType());
+            if (user.getUserType() == 10) { //如果是行业级
+                params.put("tradeId", user.getId()); //存入id
+                result.put("list", userGroupMapper.searchCompanyByConditionTrade(params)); //根据用户ID或者公司名称查询
+                //log.error("行业端下传企业名称list："+userGroupMapper.searchCompanyByConditionTrade(params));
+            }else if(user.getUserType() == 5){ //如果企业端
+                params.put("companyId", user.getId());
+                List<Map<String, Object>> list = userGroupMapper.searchCompanyByConditionCompany(params);
+                List<Map<String, Object>> list1 = userGroupMapper.searchCompanyByConditionCompanyTrade(params);//如果
+                if(list1 != null && list1.size() != 0){
+                    list.addAll(list1);
+                }
+                //log.error("list："+list.toString());
+                result.put("list", list);
+            }else{
+                params.put("page", Integer.parseInt(page)*10);
+                result.put("list", userGroupMapper.searchCompanyByConditionPage(params));
+            }
+        }
+        //log.error("result："+result.toString());
+        return result;
+    }
+    /**
+     * TODO 查询检查表数据
+     */
+    @RequestMapping(value = "plan-next2")//生成检查表，modify by zhangcl 2018.10.27
+    public String checkNext2(Integer id, Integer type, Model model, HttpServletRequest request) throws Exception {
+        //log.error("checkNext checkid : "+id);
+        User user = getLoginUser(request);
+
+        TCheck tc = tCheckMapper.selectCheckBymodelIdAndStatus(id, 0);
+
+        //log.error("tCheckMapper检查表信息:"+tc.toString());
+        type = tc.getType();// add wz 190110
+
+        List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(tc.getId());
+        //log.error("tCheckPartMapper条目信息:"+partL.toString());
+        for (TCheckPart a : partL) {
+            String levels = a.getLevels();
+            //log.error("levels:"+levels);
+        }
+
+        model.addAttribute("check", tc);
+        model.addAttribute("partL", partL);
+        //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
+        List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(tc.getId());
+        //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
+
+        if (type != null && type == 9) {
+            for (Map<String, Object> a : iteml) {
+                //log.error("checkNext:"+1);
+                Integer[] ids = new Integer[1];
+                ids[0] = (Integer) a.get("levelId");
+                //log.error("ids:"+ids[0]);
+                //log.error("a:"+a.toString());
+                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
+                String dangertype = "";
+                String factors = "";
+                String measures = "";
+                String level1 = "";
+                String level2 = "";
+                String level3 = "";
+                for (ACompanyManual aa : rets) {
+                    //log.error("checkNext:"+2);
+                    dangertype = aa.getType();
+                    factors = aa.getFactors();
+                    measures = aa.getMeasures();
+                    level1 = aa.getLevel1();
+                    level2 = aa.getLevel2();
+                    level3 = aa.getLevel3();
+                    //log.error("type:"+dangertype);
+                    break;
+                }
+                a.put("dangerType", dangertype);
+                a.put("factors", factors);
+                a.put("measures", measures);
+                a.put("level1", level1);
+                a.put("level2", level2);
+                a.put("level3", level3);
+                log.error("level1/2/3 : " + level1 + "/" + level2 + "/" + level3);
+            }
+        }
+        //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
+        model.addAttribute("itemL", iteml);
+        //log.error("checkNext:"+33);
+        if (tc.getStatus() == 2) {// 已检查
+            return "company/danger/plan-detail";
+        }
+        model.addAttribute("now", new Date());
+        model.addAttribute("company", companyMapper.selectByPrimaryKey(tc.getUserId()));
+
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("userId", user.getId());
+
+        model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
+        return "global/danger/plan-next2";
+    }
+    /**
+     * TODO 整改指令书
+     * 获取到了整改指令书
+     * 都不传递就是 现场检查记录
+     * 1 责令限期整改意见书
+     * 2 整改意见复查书
+     * 8 现场检查记录
+     */
+    @RequestMapping(value = "check-document")
+    public String checkDocument(HttpServletRequest request, Integer checkId, Integer flag, Model model, TRectification tr) throws Exception {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        if (null == flag) {
+            flag = 8;// 现场检查记录
+        }
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("checkId", checkId);
+        m.put("flag", flag);
+        TCheckDocument doc = tCheckDocumentMapper.selectByCheckId(m);
+        TCheck check = tCheckMapper.selectByPrimaryKey(checkId);
+        model.addAttribute("timenow", new Date());
+        int count = tRecheckMapper.selectByCheckId(checkId).size();
+        model.addAttribute("count", count);
+        if (null == doc) {// 第一次
+            /*if(check.getFlag() == 3){
+            cgfService.rectificationSave(tr);
+            }*/
+            tr = tRectificationMapper.selectByCheckId(checkId);
+            model.addAttribute("check", check);
+            model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(checkId, null));
+            model.addAttribute("itemL1", tCheckItemMapper.selectDangerByCheckId(checkId, 1));
+            model.addAttribute("rectification", tr);
+        } else {
+
+            model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(checkId, null));
+            model.addAttribute("itemL1", tCheckItemMapper.selectDangerByCheckId(checkId, 1));
+            model.addAttribute("document", doc);
+            return "global/danger/opinion-detail2";
+        }
+        List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(checkId);
+
+        model.addAttribute("is_fu",0);
+        for (TCheckItem tCheckItem : tCheckItems) {
+            if(tCheckItem.getStatus()==3){
+                model.addAttribute("is_fu",1);
+                break;
+            }else{
+                if(tCheckItem.getRecheckFile()!=null&&!"".equals(tCheckItem.getRecheckFile())){
+                    model.addAttribute("is_fu",1);
+                    break;
+                }
+            }
+        }
+
+        TRectification tRectification = tRectificationMapper.selectByCheckId(checkId);
+        if (null != tRectification) {
+
+        } else {
+            TRectification tRectification1 = new TRectification();
+            tRectification1.setDeadline(new Date());
+            tRectification1.setPlanTime(new Date());
+        }
+        model.addAttribute("flag2", check.getFlag());
+        model.addAttribute("check", check);
+        model.addAttribute("checkId", checkId);
+        model.addAttribute("userId", check.getUserId());
+        model.addAttribute("rectification", tRectification);
+        model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
+        model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
+
+        log.error("checkid:" + checkId + ",flag:" + flag + ",checkflag:" + check.getFlag());
+
+        // 判断是否整改复查过
+        if(null==tRectification){
+            model.addAttribute("is_re",0);
+        }else{
+            model.addAttribute("is_re",1);
+        }
+
+
+        for (TCheckItem tCheckItem : tCheckItems) {
+
+            if (null != tCheckItem.getDeadline()) {
+                model.addAttribute("deadline", simpleDateFormat.format(tCheckItem.getDeadline()).toString());
+            }
+            if (null != tCheckItem.getRecheckTime()) {
+                model.addAttribute("planTime", simpleDateFormat.format(tCheckItem.getRecheckTime()).toString());
+            }
+            break;
+
+        }
+
+
+        if(check.getFlag()==2){
+            // 行政检查
+            return "global/danger/opinion-add" + flag + check.getFlag();
+        }else {
+            // 部门抽查
+            if(flag==8){
+                flag=1;
+            }
+            return "global/danger/opinion-add" + flag + check.getFlag();
+        }
+
+    }
+    /**
+     * TODO 检查表隐患 整改详情,
+     * 保存检查记录的时候，会走这个一下，但是没有进行保存所有没有发送
+     * 但是在查询记录的时候，点击一个整改详情的时候，会
+     */
+    @RequestMapping(value = "check-rectification")
+    public String checkRectification(Integer id, Model model, Integer flag, Integer number,HttpServletRequest request) throws Exception {
+        //log.error("checkId："+id);
+        TCheck tc = tCheckMapper.selectByPrimaryKey(id);
+        Integer type = tc.getType();
+        //log.error("检查表type："+type);
+
+        User user = getLoginUser(request);
+        // TODO 这里只保存一条数据,并返回到前端
+        List<TRectification> list = tRectificationMapper.selectAlls(id);
+        //List<Map> list = tRectificationMapper.selectAlls(id);
+       /* if (null != list && list.size() > 0) {
+            TRectification rectification = new TRectification();
+            rectification.setId(list.get(0).getId());
+            rectification.setCheckId(list.get(0).getCheckId());
+            rectification.setItem1(list.get(0).getItem1());
+            rectification.setItem2(list.get(0).getItem2());
+            rectification.setItem3(list.get(0).getItem3());
+            rectification.setDeadline(list.get(0).getDeadline());
+            rectification.setPlanTime(list.get(0).getPlanTime());
+            rectification.setUserId(list.get(0).getUserId());
+            rectification.setCreateUser(list.get(0).getCreateUser());
+            rectification.setCreateTime(list.get(0).getCreateTime());
+            rectification.setDel(list.get(0).getDel());
+
+        }*/
+
+        if(null != list && list.size() > 0){
+            model.addAttribute("rectification", list.get(0));
+        }
+
+        if((null != list && list.size() > 0)){
+            model.addAttribute("rectification", list.get(0));
+        }
+
+        DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
+        model.addAttribute("check", check);
+        //model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(id, null));
+
+        List<Map<String, Object>> iteml = tCheckItemMapper.selectDangerByCheckId(id, null);
+        // 判断他是什么类型的然后再添加数据
+        Integer industryType = tc.getIndustryType();
+        for (int i = 0; i < iteml.size(); i++) {
+            Integer levelId = (Integer) iteml.get(i).get("levelId");
+            if(null!=levelId){
+                String DangerFlag="";
+                if(flag==1&&!Objects.equals(user.getUserName(),tc.getDepart())){
+                    DangerFlag = aCompanyManualMapper.selectByPrimaryKey(levelId).getFlag();
+                }else{
+                    DangerFlag = queryDangerFlag(levelId, industryType);
+                }
+                iteml.get(i).put("dangerFlag",DangerFlag);
+            }
+        }
+        // 这个是没有用的
+        if (type != null && type == 9) {
+            for (Map<String, Object> a : iteml) {
+                //log.error("checkNext:"+1);
+                Integer[] ids = new Integer[1];
+                ids[0] = (Integer) a.get("levelId");
+                //log.error("ids:"+ids[0]);
+                //log.error("a:"+a.toString());
+                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
+                String dangertype = "";
+                String factors = "";
+                String measures = "";
+                String level1 = "";
+                String level2 = "";
+                String level3 = "";
+                for (ACompanyManual aa : rets) {
+                    //log.error("checkNext:"+2);
+                    dangertype = aa.getType();
+                    factors = aa.getFactors();
+                    measures = aa.getMeasures();
+                    level1 = aa.getLevel1();
+                    level2 = aa.getLevel2();
+                    level3 = aa.getLevel3();
+                    //log.error("type:"+dangertype);
+                    break;
+                }
+                a.put("dangerType", dangertype);
+                a.put("factors", factors);
+                a.put("measures", measures);
+                a.put("level1", level1);
+                a.put("level2", level2);
+                a.put("level3", level3);
+                //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
+            }
+        }
+        //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
+        model.addAttribute("itemL", iteml);
+
+        model.addAttribute("number", number);
+        model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
+        model.addAttribute("flag", flag);
+        model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
+        model.addAttribute("listM", tCheckMapper.selectCompany(id));
+        return "village/danger/opinion-detail";
+        /*if (type == 9) {
+            return "village/danger/opinion-detailrjcb";
+        } else {
+            return "village/danger/opinion-detail";
+        }*/
+
+    }
+    /**
+     *  从id 获取这条记录的风险等级
+     * @param levelId     level_tbl/danger_manual_tbl的id
+     * @param industryType 1/2  基础/现场
+     * @return 风险等级
+     */
+    private  String  queryDangerFlag(int levelId,int industryType){
+        String level = "";
+
+        if(industryType==1){
+            Integer flag = tLevelMapper.selectByPrimaryKey(levelId).getFlag();
+            level=flag+"";
+        }else if(industryType==2) {
+            level = aDangerManualMapper.selectByPrimaryKey(levelId).getFlag();
+        }
+        return level;
+    }
+    /**
+     * 企业统计详情
+     */
+    @RequestMapping(value = "company/company-tab-detail")
+    public String companyTab(Model model, HttpServletRequest request, CompanyListReqDTO dto,
+                             String scale) throws Exception {
+        User user = getLoginUser(request);
+        /*Map<String, Object> m = new HashMap<String, Object>();
+        m.put("districtId", districtId);
+        m.put("townId", townId);
+        m.put("villageId", villageId);
+        setUserId(user, m);
+        if(StringUtils.isNotBlank(industry)) {
+            m.put("industry", utf8Str(industry));
+        }
+        if(StringUtils.isNotBlank(dlevel)) {
+            m.put("dlevel", "'" + utf8Str(dlevel) + "'");
+        }
+        if(StringUtils.isNotBlank(industry2)) {
+            m.put("industry2", utf8Str(industry2));
+        }
+        m.put("scale", scale);
+        List<DynamicParameter<String, Object>> mlist = companyMapper.selectCompanyList(m);
+        model.addAttribute("list", mlist);
+        model.addAttribute("m", m);*/
+        dto.setIndustry2(utf8Str(dto.getIndustry2()));
+        dto.setDlevel(utf8Str(dto.getDlevel()));
+        dto.setIndustry(utf8Str(dto.getIndustry()));
+        cgfService.selectCompanyWithPage(dto, user, model);
+
+        if (user.getUserType().intValue() == 3) {
+            Map<String, Object> m = new HashMap<String, Object>();
+            m.put("townId", dto.getTownId());
+            m.put("districtId", dto.getDistrictId());
+            List<DynamicParameter<String, Object>> villagelist = villageMapper.selectListByTown(m);
+            model.addAttribute("villagelist", villagelist);
+        }
+
+        model.addAttribute("lib", libraryMapper.selectLibraryList(1));
+        model.addAttribute("sk", request.getParameter("sk"));
+
+        return "global/company/company-tab-detail";
+    }
+    @RequestMapping("getCompanyByPageCount")
+    public int getPageCount(HttpServletRequest request){
+
+        return 0;
+    }
+    /**
+     * 添加行政、委托检查表 flag 2 行政执法 3 委托 4 行政检查 userId 企业id
+     * 查询企业
+     */
+    @RequestMapping(value = "check-add2")
+    public String checkAdd2(Integer flag, Integer industryId, Integer userId, Model model, HttpServletRequest request)
+            throws Exception {
+        User user = getLoginUser(request);
+        if (user.getUserType().intValue() == 5) {
+            userId = user.getId();
+        }
+        model.addAttribute("type", 3);// 默认临时检查
+        model.addAttribute("flag", flag);
+        if (null == userId) {// 先选择企业
+            return "global/danger/check-add3";
+        }
+        model.addAttribute("userId", userId);
+        TCompany tc = tCompanyMapper.selectByPrimaryKey(userId);
+        if (null == tc) {
+            return "redirect:/global/trouble-set?userId=" + userId + "&url="
+                    + URLEncoder.encode("/global/check-add2?flag=" + flag + "&userId=" + userId, "utf-8");
+        }
+        model.addAttribute("company", companyMapper.selectByPrimaryKey(userId));
+//        if (null == industryId) {// 确认检查标准
+        model.addAttribute("ind1", tIndustryMapper.selectByPrimaryKey(tc.getIndustry1()));// 基础检查类别
+        if (StringUtils.isNotEmpty(tc.getIndustry2())) {
+            model.addAttribute("ind2L", tIndustryMapper.selectByIds(tc.getIndustry2()));// 现场检查类别
+        }
+        if (StringUtils.isNotBlank(tc.getIndustry3())) {
+            model.addAttribute("ind3L", tIndustryMapper.selectByIds(tc.getIndustry3()));// 高危检查类别
+        }
+//            return "village/danger/check-add1";
+//        }
+        // 确定标题等
+//        Map<String, Object> m = new HashMap<String, Object>();
+//        m.put("userId", user.getId());
+//        model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
+        return "global/checkModel/model-add6";
+    }
+    /**
+     * TODO model-add.jsp 页面跳转 由(model-addOld改写)
+     *
+     * @return
+     */
+    @RequestMapping(value = "getCheckModelBasic")
+    public String getCheckModelBasic(Integer flag,Integer userId, Model model) {
+        model.addAttribute("flag", flag);
+        /* return "company/checkModel/model-add";*/
+        model.addAttribute("list", null);
+        model.addAttribute("dL", null);
+        model.addAttribute("userId", userId);
+        return "global/checkModel/model-add6";
+    }
+
+    /*
+     * TODO 根据 checkType 查询所有的 level2 的信息(废弃)
+     *
+     */
+    @RequestMapping(value = "select-all-level1")
+    public String selectAllLevel1(Integer userId, Integer checkType, String industry,Integer lxType, HttpServletRequest request, Model model, String tableName, Integer flag) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        System.out.println("---------------");
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        if (StringUtils.isNotBlank(industry)) {
+            industry = utf8Str(industry);
+        }
+        if (StringUtils.isBlank(industry)) {
+            industry = company.getIndustry();
+        }
+        model.addAttribute("company", company);
+        model.addAttribute("checkType", checkType);
+        model.addAttribute("industry", industry);
+        model.addAttribute("flag", flag);
+        model.addAttribute("tableName", tableName);
+        model.addAttribute("lxType", lxType);
+        model.addAttribute("userId", userId);
+
+        StringBuffer sb = new StringBuffer();
+
+        String[] str = company.getDangers().split(",");
+
+        if (null != str &&  str.length != 0){
+
+            for (int i = 0; i < str.length; i++) {
+                if (i == str.length-1){
+                    sb.append("'").append(str[i]).append("'");
+                }else {
+                    sb.append("'").append(str[i]).append("'").append(",");
+                }
+            }
+            if (null != industry && industry != ""){
+                sb.append(",").append("'").append(industry).append("'");
+            }
+        }
+        // 根据 checkType 查询对应的 level1 信息
+        if (-2 == checkType) {
+            List<ADangerManual> dL = aDangerManualMapper.selectByIndustryAll(sb.toString());
+            Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
+            for (ADangerManual ad : dL) {
+                String l1 = ad.getLevel1();
+                String l2 = ad.getLevel2();
+                if (null == list.get(l1)) {
+                    list.put(l1, new LinkedHashSet<String>());
+                }
+                Set<String> s = list.get(l1);
+                s.add(l2);
+            }
+            model.addAttribute("list", list);
+            model.addAttribute("dL", dL);
+
+        } else if (-1 == checkType) {
+            List<TLevel> dL = tLevelMapper.selectAll();
+            Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
+            for (TLevel ad : dL) {
+                String l1 = ad.getLevel1();
+                String l2 = ad.getLevel2();
+                if (null == list.get(l1)) {
+                    list.put(l1, new LinkedHashSet<String>());
+                }
+                Set<String> s = list.get(l1);
+                s.add(l2);
+            }
+            model.addAttribute("list", list);
+            model.addAttribute("dL", dL);
+        }
+        return "global/checkModel/model-add6";
+    }
+    /**
+     * TODO PC端行政检查/部门抽查模板保存
+     * 检查类型就是固定的 都是综合检查表
+     *
+     * @return message
+     */
+    @RequestMapping(value = "save-administrative", method = RequestMethod.POST)
+    @ResponseBody
+    public Result saveAdministrative(@RequestBody Map<String, Object> map, HttpServletRequest request) {
+        Result result = new ResultImpl();
+
+        try {
+            // String tableName = (String) map.get("tableName"); //表名
+            Integer flag = (Integer) map.get("flag"); //检查方式
+            Integer checkType = (Integer) map.get("checkType"); //检查类型 -1 现场 -2 就是基础
+            String a = (String) map.get("selectItems");
+            Integer type = (Integer) map.get("lxType");
+            Integer cycle = (Integer) map.get("cycle");
+            Integer userId = (Integer)map.get("userId");
+            String [] str = {"日常","定期","季节","其他","综合"};
+            if (null == a || "".equals(a)) {
+                result.setStatus("1");
+                result.setMess("页面保存数据为空");
+                return result;
+            }
+
+            String[] split = a.split(",");
+
+            List<Map<String, String>> inputItems = (List<Map<String, String>>) map.get("cusCheckItemList");
+
+            User user = userMapper.selectByPrimaryKey(userId);
+            // 保存model表数据
+            TModel model = new TModel();
+            if (flag==1){
+                model.setTitle("全公司"+str[type-1]+"检查表");
+                if(null!=cycle){
+                    Date d = new Date();
+                    long time1 = d.getTime();
+                    int i = cycle * 24 * 60 * 60 * 1000;
+                    long l = time1 + i;
+                    Date t = new Date(l);
+                    model.setCycle(cycle); //定期周期天数
+                    model.setNextTime(t);     // 下次生成的时间
+                    model.setNextCheckTime(t); // 定期检查的时间
+                    model.setOpen(1);          // 定期生成
+                }
+
+            }else if (flag == 2) {
+                model.setTitle("行政检查表"); // 计划检查名
+            } else {
+                model.setTitle("部门检查表"); // 计划检查名
+            }
+            model.setUserId(user.getId());    // 企业id
+            model.setFlag(flag);     //检查方式 1. 企业自查  2 行政检查  3 部门检查
+            if(null!=type){
+                model.setType(type);//  检查类型  日常, 定期, 临时
+            }else{
+                model.setType(5);//  检查类型  日常, 定期, 临时
+            }
+
+            if(flag==1){
+                model.setPart(user.getUserName()); // 被检查的部门
+            }else{
+                model.setPart(user.getUserName()); // 被检查的部门
+            }
+
+            model.setIndustryType(Math.abs(checkType));//基础, 现场, 高危
+            model.setCreateTime(new Date()); //创建时间
+            tModelMapper.insertSelective(model);
+
+            TModelPart modelPart = new TModelPart();
+            modelPart.setModelId(model.getId());
+            modelPart.setName(user.getUserName());
+            modelPart.setLevels(a);
+            tModelPartMapper.insertSelective(modelPart);
+
+            TCheck tCheck = new TCheck();
+
+            tCheck.setFlag(flag);                                                   // 1. 企业自查  2 行政检查  3 第三方
+
+            if (flag==1){
+                tCheck.setTitle(user.getUserName()+str[type-1]+"检查表");
+                if(null!=cycle){
+                    Date d = new Date();
+                    long time1 = d.getTime();
+                    int i = cycle * 24 * 60 * 60 * 1000;
+                    long l = time1 + i;
+                    Date t = new Date(l);
+                    tCheck.setExpectTime(t);
+                }
+            }else if (flag == 2) {
+                tCheck.setTitle("行政检查表"); // 计划检查名
+            } else {
+                tCheck.setTitle("部门检查表"); // 计划检查名
+            }
+
+            tCheck.setDepart(user.getUserName());                                              // 被检查的部门
+            tCheck.setUserId(user.getId());                                         // 企业公司id
+            tCheck.setCreateUser(user.getId());                                     // 创建人的id
+            tCheck.setModelId(model.getId());                                       // 模版id
+            if(null!=type){
+                tCheck.setType(type);//  检查类型  日常, 定期, 临时
+            }else{
+                tCheck.setType(5);                                                      // 1. 日常 ,2. 定期 3 临时 5 综合
+            }
+            tCheck.setIndustryType(Math.abs(checkType));                            //  2. 现场
+            //tCheck.setCheker(user.getUserName());                                   // 检查人 当前的公司名称
+            tCheck.setContact(companyMapper.selectByPrimaryKey(user.getId()).getChargeContact());  // 检查人的联系方式无
+            tCheck.setStatus(0);                                                    // 表示最开始的检查模版
+            tCheck.setCreateTime(new Date());                                       // 创建时间
+            //tCheck.setCheckCompany(user.getUserName());                             // 检查公司
+
+            tCheckMapper.insertSelective(tCheck);
+            Integer tCheckId = tCheck.getId();
+
+            if (-2 == checkType) {
+                // 表示现场
+                for (String id : split) {
+                    if (null != id && !"".equals(id)) {
+                        ADangerManual aDangerManual = aDangerManualMapper.selectByPrimaryKey(Integer.parseInt(id));
+                        TCheckPart tCheckPart = new TCheckPart();
+                        tCheckPart.setCheckId(tCheckId);
+                        if (null != aDangerManual.getName()) {
+                            tCheckPart.setName(aDangerManual.getName());  //岗位/部位信息
+                        }
+                        tCheckPartMapper.insertSelective(tCheckPart);
+                        TCheckItem tCheckItem = new TCheckItem();
+                        tCheckItem.setLevelId(aDangerManual.getId());     // companyManualTbl的id
+                        tCheckItem.setContent(aDangerManual.getFactors()); //检查内容
+                        tCheckItem.setLevels(aDangerManual.getLevel1() + "/" + aDangerManual.getLevel2() + "/" + aDangerManual.getLevel3());   // 场所/环节/部门 三级
+                        tCheckItem.setReference(aDangerManual.getReference()); // 依据
+                        tCheckItem.setMemo(aDangerManual.getFactors());   // 较大危险因素
+                        tCheckItem.setPartId(tCheckPart.getId());
+                        tCheckItem.setCheckId(tCheckId);
+                        tCheckItemMapper.insertSelective(tCheckItem);
+                    }
+                }
+            } else {
+                // 表示是基础
+                for (String id : split) {
+                    if (null != id && !"".equals(id)) {
+                        TLevel tLevel = tLevelMapper.selectByPrimaryKey(Integer.parseInt(id));
+                        TCheckPart tCheckPart = new TCheckPart();
+                        tCheckPart.setCheckId(tCheckId);
+
+                        tCheckPart.setName(tLevel.getName());  //岗位/部位信息
+
+                        tCheckPartMapper.insertSelective(tCheckPart);
+                        TCheckItem tCheckItem = new TCheckItem();
+                        tCheckItem.setLevelId(Integer.parseInt(id));     // companyManualTbl的id
+                        tCheckItem.setContent(tLevel.getFactors()); //检查内容
+                        tCheckItem.setLevels(tLevel.getLevel1() + "/" + tLevel.getLevel2() + "/" + tLevel.getLevel3());   // 场所/环节/部门 三级
+                        tCheckItem.setReference(tLevel.getReference()); // 依据
+                        tCheckItem.setMemo(tLevel.getFactors());   // 较大危险因素
+                        tCheckItem.setPartId(tCheckPart.getId());
+                        tCheckItem.setCheckId(tCheckId);
+                        tCheckItemMapper.insertSelective(tCheckItem);
+                    }
+
+                }
+            }
+
+            if (null != inputItems && inputItems.size() > 0) {
+                // 保存自定义内容
+                for (Map<String, String> mapStr : inputItems) {
+
+                    TCheckPart tCheckPart = new TCheckPart();
+                    tCheckPart.setCheckId(tCheckId);
+                    tCheckPart.setName("全公司");  //岗位/部位信息
+                    tCheckPartMapper.insertSelective(tCheckPart);
+                    TCheckItem tCheckItem = new TCheckItem();
+                    //tCheckItem.setLevelId(aDangerManual.getId());     // companyManualTbl的id
+                    tCheckItem.setContent(mapStr.get("level4")); //检查内容
+                    tCheckItem.setLevels(mapStr.get("level3"));   // 场所/环节/部门 三级
+                    // tCheckItem.setReference(aDangerManual.getReference()); // 依据
+                    //tCheckItem.setMemo();   // 较大危险因素
+                    tCheckItem.setPartId(tCheckPart.getId());
+                    tCheckItem.setCheckId(tCheckId);
+                    tCheckItemMapper.insertSelective(tCheckItem);
+
+                }
+
+            }
+            result.setStatus("0");
+            result.setMess("保存成功");
+            result.setObject(model.getId());
+            return result;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMess("页面保存数据为空");
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMess("保存失败");
+            return result;
+        }
+    }
+
+    private AppResult savemodel(HttpServletRequest request, CheckItem checkItem) {
+        AppResult result = new AppResultImpl();
+        User user = getLoginUser(request); // 主账号登陆
+        ACompanyManual companyManual = aCompanyManualMapper.selectByPrimaryKey(checkItem.getCheckLevels().get(0).getId());
+        try {
+            if (null == checkItem) {
+                result.setStatus("1");
+                return result;
+            }
+            TModel model = new TModel();
+            model.setTitle(checkItem.getTemplate()); // 计划检查名
+            model.setUserId(user.getId());    // 企业id
+            model.setFlag(checkItem.getFlag());     //检查方式 1. 企业自查  2 行政检查  3 部门检查
+            System.out.println(checkItem.getFlag());
+            model.setType(checkItem.getTitle());//  检查类型  日常, 定期, 临时
+            if (-2 == checkItem.getCheckType() || -1 == checkItem.getCheckType()) { //只有现场才会存储部门
+                model.setPart(checkItem.getCheckLevels().get(0).getLevel1()); // 被检查的部门
+            }
+            //基础, 现场, 高危
+            if (-2 == checkItem.getCheckType()) { //现场
+                model.setIndustryType(2);
+            } else if (-1 == checkItem.getCheckType()) {
+                model.setIndustryType(1); // 基础
+            } else {
+                model.setIndustryType(3); // 高危
+            }
+
+            model.setCreateTime(new Date()); //创建时间
+            if (null != checkItem.getCycle()) {  // 保存定期生成时间
+                Date d = new Date();
+                long time1 = d.getTime();
+                int i = checkItem.getCycle() * 24 * 60 * 60 * 1000;
+                long l = time1 + i;
+                Date t = new Date(l);
+                Integer integer = Integer.valueOf(checkItem.getCycle());
+                model.setCycle(integer); //定期周期天数
+                model.setNextTime(t);     // 下次生成的时间
+                model.setNextCheckTime(t); // 定期检查的时间
+                model.setOpen(1);          // 定期生成
+            } else {
+            }
+
+            tModelMapper.insertSelective(model);
+            // 存储part表数据
+
+            if (-2 == checkItem.getCheckType() || -1 == checkItem.getCheckType()) { // 现场和基础
+                List<CheckLevel> checkLevels1 = checkItem.getCheckLevels();
+                Set<String> set = new LinkedHashSet<>();
+                String str = new String();
+                for (int i = 0; i < checkLevels1.size(); i++) {
+                    set.add(checkLevels1.get(i).getLevel2());
+                    if (i < checkLevels1.size() - 1) {
+                        str += checkLevels1.get(i).getId() + ",";
+                    } else {
+                        str += checkLevels1.get(i).getId() + "";
+                    }
+                }
+                for (String s : set) {
+                    TModelPart modelPart = new TModelPart();
+                    modelPart.setModelId(model.getId());
+                    modelPart.setName(s);
+                    modelPart.setLevels(str);
+                    tModelPartMapper.insertSelective(modelPart);
+                }
+            } else {   // 基础和高危
+                TModelPart modelPart = new TModelPart();
+                modelPart.setModelId(model.getId());
+                tModelPartMapper.insertSelective(modelPart);
+            }
+
+            // 保存检查记录总表
+            TCheck tCheck = new TCheck();
+
+            tCheck.setFlag(checkItem.getFlag());                                      // 1. 企业自查  2 行政检查  3 第三方
+            tCheck.setTitle(checkItem.getTemplate());                               // 被检查的标题
+            if (-2 == checkItem.getCheckType() || -1 == checkItem.getCheckType()) { //只有现场才会存储部门
+                tCheck.setDepart(checkItem.getCheckLevels().get(0).getLevel1());        // 被检查的部门
+                //但是会出现现场检查什么都没有的情况.
+                if (null != checkItem.getCheckLevels().get(0).getLevel3() && "".equals(checkItem.getCheckLevels().get(0).getLevel3())) {
+                    tCheck.setDapartContact(companyManual.getDmid() + "");                 // 被检查部门的id
+                }
+            }
+            tCheck.setUserId(user.getId());                                         // 企业公司id
+            tCheck.setCreateUser(user.getId());                                     // 被创建人的id
+            tCheck.setModelId(model.getId());                                       // 模版id
+            tCheck.setType(checkItem.getTitle());                                   // 1. 日常 ,2. 定期 3 临时
+            if (-2 == checkItem.getCheckType()) {
+                tCheck.setIndustryType(2);                                          //  2. 现场
+            } else if (-1 == checkItem.getCheckType()) {
+                tCheck.setIndustryType(1);                                          // 1. 基础
+            } else {
+                tCheck.setIndustryType(3);                                          // 3 高危
+            }
+            tCheck.setExpectTime(new Date());                                      // 预计检查时间
+            //tCheck.setCheker(user.getUserName());                                  // 检查人 当前的公司名称
+            //tCheck.setContact(user.getUserName());                               // 检查人的联系方式无
+
+            tCheck.setStatus(0);                                                   // 最开始的检查模版
+            tCheck.setCreateTime(new Date());                                      // 创建时间
+            tCheck.setCheckCompany(user.getUserName());                            // 检查公司
+
+            tCheckMapper.insertSelective(tCheck);
+            Integer tCheckId = tCheck.getId();
+
+            if (-2 == checkItem.getCheckType() || -1 == checkItem.getCheckType()) {          //表示现场/基础
+                if (null != checkItem.getCheckLevels() && checkItem.getCheckLevels().size() > 0) {
+                    for (CheckLevel checkLevels : checkItem.getCheckLevels()) {
+
+                        TCheckPart tCheckPart = new TCheckPart();
+                        tCheckPart.setCheckId(tCheckId);
+                        tCheckPart.setName(checkLevels.getLevel2());  //岗位/部位信息
+                        tCheckPartMapper.insertSelective(tCheckPart);
+                        TCheckItem tCheckItem = new TCheckItem();
+                        tCheckItem.setLevelId(checkLevels.getId());     // companyManualTbl的id
+                        tCheckItem.setContent(checkLevels.getFactors()); //检查内容
+                        tCheckItem.setLevels(checkLevels.getLevel3());
+                        tCheckItem.setReference(checkLevels.getReference());
+                        tCheckItem.setMemo(checkLevels.getFactors());
+                        tCheckItem.setPartId(tCheckPart.getId());
+                        tCheckItem.setCheckId(tCheckId);
+                        tCheckItemMapper.insertSelective(tCheckItem);
+                    }
+                }
+            } else {
+                // 高危检查  没有部门和岗位
+                if (null != checkItem.getCheckLevels() && checkItem.getCheckLevels().size() > 0) {
+                    for (CheckLevel checkLevels : checkItem.getCheckLevels()) {
+
+                        TCheckPart tCheckPart = new TCheckPart();
+                        tCheckPart.setCheckId(tCheckId);
+                        tCheckPartMapper.insertSelective(tCheckPart);
+                        TCheckItem tCheckItem = new TCheckItem();
+                        tCheckItem.setContent(checkLevels.getLevel1()); //检查内容
+                        tCheckItem.setLevels(checkLevels.getLevel2());
+                        tCheckItem.setPartId(tCheckPart.getId());
+                        tCheckItem.setCheckId(tCheckId);
+                        tCheckItemMapper.insertSelective(tCheckItem);
+                    }
+                }
+            }
+            result.setStatus("0");
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            return result;
+        }
+    }
+    /**
+     * TODO 生成检查表数据
+     *
+     * @param id      model表的id
+     * @param type
+     * @param model
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "plan-next")//生成检查表，modify by zhangcl 2018.10.27
+    public String checkNext(Integer id, Integer type, Model model, HttpServletRequest request, Integer userId) throws Exception {
+        //log.error("checkNext checkid : "+id);
+        User user = getLoginUser(request);
+
+        CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(id);
+        if (null == checkItemByModelId) {
+            return "village/danger/plan-next";
+        }
+        TCheck tc = tCheckMapper.selectByPrimaryKey(checkItemByModelId.getCheckId());
+
+        //log.error("tCheckMapper检查表信息:"+tc.toString());
+        type = tc.getType();// add wz 190110
+
+        List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(checkItemByModelId.getCheckId());
+        //log.error("tCheckPartMapper条目信息:"+partL.toString());
+
+
+
+        //
+        model.addAttribute("userId",userId);
+        model.addAttribute("check", tc);
+        model.addAttribute("partL", partL);
+        //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
+        List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(checkItemByModelId.getCheckId());
+        //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
+
+        if (type != null && type == 9) {
+            for (Map<String, Object> a : iteml) {
+                //log.error("checkNext:"+1);
+                Integer[] ids = new Integer[1];
+                ids[0] = (Integer) a.get("levelId");
+                //log.error("ids:"+ids[0]);
+                //log.error("a:"+a.toString());
+                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
+                String dangertype = "";
+                String factors = "";
+                String measures = "";
+                String level1 = "";
+                String level2 = "";
+                String level3 = "";
+                for (ACompanyManual aa : rets) {
+                    //log.error("checkNext:"+2);
+                    dangertype = aa.getType();
+                    factors = aa.getFactors();
+                    measures = aa.getMeasures();
+                    level1 = aa.getLevel1();
+                    level2 = aa.getLevel2();
+                    level3 = aa.getLevel3();
+                    //log.error("type:"+dangertype);
+                    break;
+                }
+                a.put("dangerType", dangertype);
+                a.put("factors", factors);
+                a.put("measures", measures);
+                a.put("level1", level1);
+                a.put("level2", level2);
+                a.put("level3", level3);
+                log.error("level1/2/3 : " + level1 + "/" + level2 + "/" + level3);
+            }
+        }
+        //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
+        model.addAttribute("itemL", iteml);
+        //log.error("checkNext:"+33);
+        if (tc.getStatus() == 2) {// 已检查
+            return "company/danger/plan-detail";
+        }
+        model.addAttribute("now", new Date());
+        model.addAttribute("company", companyMapper.selectByPrimaryKey(tc.getUserId()));
+
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("userId", user.getId());
+
+        Set<String> set = new LinkedHashSet<String>();
+
+        for (Map<String, Object> stringObjectMap : iteml) {
+
+            String levels = (String) stringObjectMap.get("levels");
+            if(levels.contains("/")){
+                String[] split = levels.split("/");
+                set.add(split[1]);
+            }
+        }
+        //String departName = "";
+        /*for (String s : set) {
+            departName+=s+"/";
+        }*/
+        Object[] objects =  set.toArray();
+        String departName = Arrays.toString(objects);
+
+        model.addAttribute("departName",departName);
+        model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
+        log.error("plan-next：" + 6);
+        if (type == 9) {
+            return "village/danger/plan-next1";
+        } else {
+            return "village/danger/plan-next";
+        }
+
+    }
+
+    @RequestMapping(value = "model-list-main")
+    public String modelListMain(HttpServletRequest request, Integer userId, Model model, Integer flag, Integer status, Integer plan) throws ParseException {
+
+        User user = userMapper.selectByPrimaryKey(userId);
+
+        Map<String, Object> map1 = new LinkedHashMap<String, Object>();
+        map1.put("level1",user.getUserName());
+
+        List<Map<String, Object>> jiChuItem = new ArrayList<>();
+        jiChuItem.add(map1);
+        jiChuItem.addAll(aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理"));
+
+        Map<String, Object> map2 = new LinkedHashMap<String, Object>();
+        map2.put("level1", user.getUserName());
+        List<Map<String, Object>> XianChangItem = new ArrayList<>();
+        XianChangItem.add(map2);
+        XianChangItem.addAll(aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理"));
+
+        for (Map<String, Object> XianChangMap : XianChangItem) {
+            Map<Integer, Integer> Xianmap = new LinkedHashMap<Integer, Integer>();
+            Xianmap.put(5, 0);
+            Xianmap.put(1, 0);
+            Xianmap.put(2, 0);
+            /*Xianmap.put(3, 0);*/
+            Xianmap.put(4, 0);
+            String level1 = (String) XianChangMap.get("level1");
+            List<Integer> Xiantypes = tModelMapper.selecttype(level1, user.getId(), 2, flag);
+            for (Integer integer : Xiantypes) {
+                Xianmap.put(integer, 1);
+            }
+            XianChangMap.put("array", Xianmap);
+            Integer count =  tModelMapper.selectDangerCountByDepartAndUserId(level1, user.getId(),2);
+            if(null==count){
+                XianChangMap.put("count", 0);
+            }else{
+                XianChangMap.put("count", count);
+            }
+
+        }
+
+        for (Map<String, Object> jiChuMap: jiChuItem) {
+            Map<Integer, Integer> Jimap = new LinkedHashMap<Integer, Integer>();
+            Jimap.put(5, 0);
+            Jimap.put(1, 0);
+            Jimap.put(2, 0);
+            /*Jimap.put(3, 0);*/
+            Jimap.put(4, 0);
+            String level1 = (String) jiChuMap.get("level1");
+            List<Integer> Jitypes = tModelMapper.selecttype(level1, user.getId(), 1, flag);
+            for (Integer integer : Jitypes) {
+                Jimap.put(integer, 1);
+            }
+            Integer count =  tModelMapper.selectDangerCountByDepartAndUserId(level1, user.getId(),1);
+            if(null==count){
+                jiChuMap.put("count", 0);
+            }else{
+                jiChuMap.put("count", count);
+            }
+
+            jiChuMap.put("array", Jimap);
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(user.getId());
+
+        List<Map<String, Object>> list1 = hiddenPlanMapper.selectCountAll(user.getId());
+
+        List<Map<String, Object>> hiddenPlanList = hiddenPlanMapper.findDpid(0,user.getId());
+
+        if (hiddenPlanList.size() == 0){
+            HiddenPlan hiddenPlan = new HiddenPlan();
+            hiddenPlan.setUid(user.getId());
+            hiddenPlan.setDpid(0);
+            hiddenPlan.setUpdate_time(new Date());
+            hiddenPlan.setCreate_time(new Date());
+            hiddenPlan.setSyn_month(0);
+            hiddenPlan.setSyn_year(0);
+            hiddenPlan.setSyn_ratio("0:0");
+            hiddenPlan.setEve_month(0);
+            hiddenPlan.setEve_year(0);
+            hiddenPlan.setEve_ratio("0:0");
+            hiddenPlan.setReg_month(0);
+            hiddenPlan.setReg_year(0);
+            hiddenPlan.setReg_ratio("0:0");
+            hiddenPlan.setSea_month(0);
+            hiddenPlan.setSea_year(0);
+            hiddenPlan.setSea_ratio("0:0");
+            hiddenPlan.setEls_month(0);
+            hiddenPlan.setEls_year(0);
+            hiddenPlan.setEls_ratio("0:0");
+            hiddenPlan.setBas_month(0);
+            hiddenPlan.setBas_year(0);
+            hiddenPlan.setBas_ratio("0:0");
+            hiddenPlan.setTotal_count(0);
+            hiddenPlan.setTotal_ratio("0:0");
+
+            Integer a = hiddenPlanMapper.insert(hiddenPlan);
+
+            List<Map<String, Object>> hiddenPlanList1 = hiddenPlanMapper.findDpid(0,user.getId());
+
+            model.addAttribute("hiddenPlanList",hiddenPlanList1);
+        }else {
+
+            model.addAttribute("hiddenPlanList",hiddenPlanList);
+        }
+
+        model.addAttribute("data",sdf.format(new Date()));
+        model.addAttribute("list", list);
+        model.addAttribute("flag", flag);
+        model.addAttribute("status", status);
+        model.addAttribute("jiChuItem", jiChuItem);
+        model.addAttribute("xianChangItem", XianChangItem);
+        model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("plan", plan);
+        model.addAttribute("list1",list1);
+        model.addAttribute("name","合计");
+        return "company/danger/model-list-main";
+
+    }
+
 
 }

@@ -28,6 +28,8 @@ public interface UserGroupMapper {
 
     List<Map<String, Object>> searchCompanyByCondition(@Param("map") Map<String, Object> params);
 
+    List<Map<String, Object>>searchCompanyByConditionPage(@Param("map") Map<String, Object> params);
+
     List<Map<String, Object>> searchCompanyByConditionTrade(@Param("map") Map<String, Object> params); //add wz 190116 行业端向下推送
 
     List<Map<String, Object>> searchCompanyByConditionCompany(@Param("map") Map<String, Object> params); //企业向上 村

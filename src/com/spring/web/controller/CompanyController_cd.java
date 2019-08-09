@@ -5991,7 +5991,6 @@ public class CompanyController_cd extends BaseController {
         Integer type = tc.getType();
         //log.error("检查表type："+type);
         List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(id);
-
         String name = tc.getDapartContact();
 
         //设置名称
@@ -6011,14 +6010,13 @@ public class CompanyController_cd extends BaseController {
                 }
                 if (list.size() == 0) {
                     name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
-                    tc.setCheckCompany(name);
                 } else {
                     name = list.get(0);
                     tc.setCheckCompany(name);
                 }
+                name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
             } else {
                 name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
-                tc.setCheckCompany(name);
             }
 
         }
@@ -6127,9 +6125,7 @@ public class CompanyController_cd extends BaseController {
         }
 
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
-        log.error("整改详情进行显示的条件" + tCheckMapper.selectCompany(id));
 
-        log.error("检查详情：" + jcxq);//首页——定期检查——检查详情显示为未检查
         return "company/danger/plan-detail";
 
     }

@@ -326,7 +326,7 @@
         industryType,
         T1.expect_time expectTime, T1.real_time realTime, T1.cheker, T1.contact, T1.dapart_contact dapartContact,
         T1.status, T1.create_time createTime, T1.flag, T1.check_company checkCompany, T2.name companyName,
-        (select count(0) from t_check_item_tbl where check_id = T1.id and status > 1) c,
+        (select count(0) from t_check_item_tbl where check_id = T1.id and status = 2) c,
         (select count(0) from t_recheck_tbl where check_id = T1.id) c3,
         (select count(0) from t_rectification_tbl where check_id = T1.id) t
         from t_check_tbl T1

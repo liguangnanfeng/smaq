@@ -481,58 +481,59 @@
         <tbody>
         <!-- 循环-->
         <c:forEach items="${list }" varStatus="index" var="be">
-            <tr class="text-c">
-                <td>${index.index + 1 }</td>
-                <td><c:if test="${be.status == 1 and (!empty be.expectTime and be.expectTime.time < t)}"><font color="red">【过期】</font></c:if>${be.title }</td>
-                <c:if test="${flag == 1}">
+            <c:if test="${be.c != 0}">
+                <tr class="text-c">
+                    <td>${index.index + 1 }</td>
+                    <td><c:if test="${be.status == 1 and (!empty be.expectTime and be.expectTime.time < t)}"><font color="red">【过期】</font></c:if>${be.title }</td>
+                    <c:if test="${flag == 1}">
+                        <td>
+                            <c:choose>
+                                <c:when test="${be.type == 1 }">日常</c:when>
+                                <c:when test="${be.type == 2 }">定期</c:when>
+                                <c:when test="${be.type == 3 }">季节</c:when>
+                                <c:when test="${be.type == 4 }">其它</c:when>
+                                <c:when test="${be.type == 5 }">综合</c:when>
+                            </c:choose>
+                        </td>
+                        <td>
+                            <fmt:formatDate value="${be.realTime }" pattern="yyyy-MM-dd"/>
+                        </td>
+                    </c:if>
+
+
+                    <c:if test="${flag != 1}">
+                        <td>
+                            <fmt:formatDate value="${be.realTime }" pattern="yyyy-MM-dd"/>
+                        </td>
+
+                        <td>
+                                ${be.depart}
+                        </td>
+                    </c:if>
                     <td>
-                        <c:choose>
-                            <c:when test="${be.type == 1 }">日常</c:when>
-                            <c:when test="${be.type == 2 }">定期</c:when>
-                            <c:when test="${be.type == 3 }">季节</c:when>
-                            <c:when test="${be.type == 4 }">其它</c:when>
-                            <c:when test="${be.type == 5 }">综合</c:when>
-                        </c:choose>
+                            <%--${be.status == 1 ? '未检查' : '已检查'}--%>
+                            ${be.cheker}
                     </td>
+                    <td>${be.c }</td>
+                        <%--<td>${flag == 1 ? be.depart : be.checkCompany}</td>--%>
                     <td>
-                        <fmt:formatDate value="${be.realTime }" pattern="yyyy-MM-dd"/>
+                        <c:if test="${be.c!=0}">
+                            <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">实施复查</a>
+                            <br>
+                            <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除记录</a>
+                        </c:if>
                     </td>
-                </c:if>
-
-
-                <c:if test="${flag != 1}">
-                    <td>
-                        <fmt:formatDate value="${be.realTime }" pattern="yyyy-MM-dd"/>
-                    </td>
-
-                    <td>
-                            ${be.depart}
-                    </td>
-                </c:if>
-                <td>
-                        <%--${be.status == 1 ? '未检查' : '已检查'}--%>
-                        ${be.cheker}
-                </td>
-                <td>${be.c }</td>
-                    <%--<td>${flag == 1 ? be.depart : be.checkCompany}</td>--%>
-                <td>
-                    <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }&number=${be.c}')" href="javascript:;">查看详情</a>
-                    <br>
-                    <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除记录</a>
-
-                </td>
-                <!--<td>
-
+                    <!--<td>
                     <c:if test="${be.c!=0}">
-                        <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">整改详情</a>
+                        <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">查看详情</a>
                         <br>
                         <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">实施复查</a>
                         <br>
-
-
                     </c:if>
                 </td>-->
-            </tr>
+                </tr>
+            </c:if>
+
         </c:forEach>
         <!-- 循环结束 -->
         </tbody>

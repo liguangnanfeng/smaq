@@ -3501,6 +3501,7 @@ public class VillageController extends BaseController {
                 return o2.getLevel2().length() - o1.getLevel2().length();
             }
         });
+        log.error(linkedList);
         return linkedList;
     }
 
@@ -3572,7 +3573,7 @@ public class VillageController extends BaseController {
         String[] str = {"日常", "定期", "季节", "其他", "综合"};
         if (checkItem.getFlag() == 1) {  //表示企业自查
             if (checkType == 5) {
-                checkItem.setTemplate(user.getUserName() + "综合检查表");
+                checkItem.setTemplate(companyManual.getLevel1() + "综合检查表");
             } else {
                 checkItem.setTemplate(companyManual.getLevel1() + str[checkType - 1] + "检查表");
             }

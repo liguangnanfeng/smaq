@@ -71,7 +71,7 @@
 
 		.flexspa {
 		display: flex;
-		justify-content: space-around;
+		justify-content: space-between;
 		margin: 15px 0;
 		}
 		.container{
@@ -79,20 +79,34 @@
 		}
 		.f{
 		background-color: #F5F9FE;
+		font-weight: bold;
+		}
+		#time{
+		 font-size:15px;
 		}
 		</style>
 
 		</head>
 		<body>
+		<nav class="breadcrumb">
+		<c:set var="x1" value="${fn:split('企业自查/ /第三方检查/行政检查','/') }"/>
+		<i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+		<span class="c-gray en">&gt;</span> <span>隐患排查治理系统</span>
+		<span class="c-gray en">&gt;</span> <span class="zc">隐患等级数据分析 </span>
+		<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
+		href="javascript:location.replace(location.href);" title="刷新">
+		<i class="Hui-iconfont">&#xe68f;</i>
+		</a>
+		</nav>
 		<div class="container">
+		<div class="text-c mt-20 "><h3 class="center">隐患等级数据分析</h3></div>
 		<section class="title">
-		<div class="center">隐患数据分析</div>
 		<div class="flexspa">
 		<span></span>
 		<span id="time"></span>
 		</div>
 		</section>
-		<table class=".table" style="margin: auto;" cellpadding="2">
+		<table class=".table table-hover" style="margin: auto;" cellpadding="2">
 		<tr class="f">
 		<td rowspan="2">序号</td>
 		<td class="first" rowspan="2"><span class="title1">等级</span><br><span class="title3">部门</span></td>

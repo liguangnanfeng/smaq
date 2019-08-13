@@ -300,7 +300,11 @@
 
                                 <c:if test="${be.c3 > 0}">
                                     <c:if test="${be.status != 2 || be.flag == 1}">
-                                        <a style="text-decoration:none" onClick="show_dialog('复查详情_${be.id}', '${ly }/company/recheck-detail?checkId=${be.id }')" href="javascript:;">复查详情</a><br>
+<%--                                        <a style="text-decoration:none" onClick="show_dialog('复查详情_${be.id}', '${ly }/company/recheck-detail?checkId=${be.id }')" href="javascript:;">复查详情</a><br>--%>
+<%--                                    --%>
+                                        <a style="text-decoration:none"
+                                        onClick="location.href = '/company/fuchadetail?checkId=${be.id}&flag=${flag}&number=${be.c }'"
+                                        href="javascript:;">复查详情</a><br>
                                     </c:if>
                                 </c:if>
                                 <%-- <c:if test="${be.c3 == 0}">

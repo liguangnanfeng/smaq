@@ -316,34 +316,40 @@
        <!--  <li><a data-href="${ly }/village/danger-index-list?flag=1" data-title="隐患统计汇总"
         href="javascript:void(0)">隐患统计汇总</a></li> -->
 
+        <li><a data-href="${ly }/company/jx-analysis?flag=1" data-title="排查数据分析"
+        href="javascript:void(0)">排查数据分析</a></li>
 
-        <li><a data-href="${ly }/company/danger-chart-jx" data-title="企业自查绩效分析"
-        href="javascript:void(0)">企业自查绩效分析</a></li>
-        <li><a data-href="${ly }/company/zhuChartData55?flag=2" data-title="行政检查绩效分析"
-        href="javascript:void(0)">行政检查绩效分析</a></li>
-        <li><a data-href="${ly }/company/zhuChartData55?flag=3" data-title="部门抽查绩效分析"
-        href="javascript:void(0)">部门抽查绩效分析</a></li>
-
-        <li><a data-href="${ly }/company/zhuChartData66?flag=1" data-title="企业自查对象分析"
-        href="javascript:void(0)">企业自查对象分析 </a></li>
-        <li><a data-href="${ly }/company/zhuChartData66?flag=2" data-title="行政检查对象分析"
-        href="javascript:void(0)">行政检查对象分析 </a></li>
-        <li><a data-href="${ly }/company/zhuChartData66?flag=3" data-title="部门抽查对象分析"
-        href="javascript:void(0)">部门抽查对象分析 </a></li>
-
-        <li><a data-href="${ly}/company/zhuChartData22?flag=1" data-title="企业自查隐患数据分析"
-        href="javascript:void(0)">企业自查隐患数据分析</a></li>
-        <li><a data-href="${ly}/company/zhuChartData22?flag=2" data-title="行政检查隐患数据分析"
-        href="javascript:void(0)">行政检查隐患数据分析</a></li>
-        <li><a data-href="${ly}/company/zhuChartData22?flag=3" data-title="部门抽查隐患数据分析"
-        href="javascript:void(0)">部门抽查隐患数据分析</a></li>
-
-        <li><a data-href="${ly }/company/zhuChartData77" data-title="隐患数据分析"
+        <li><a data-href="${ly }/company/yh-analysis?flag=2" data-title="隐患数据分析"
         href="javascript:void(0)">隐患数据分析</a></li>
-        <li><a data-href="${ly }/company/zhuChartData123" data-title="隐患治理对象分析"
-        href="javascript:void(0)">隐患治理对象分析</a></li>
-        <li><a data-href="${ly }/company/zhuChartData44" data-title="隐患治理数据分析"
-        href="javascript:void(0)">隐患治理数据分析</a></li>
+        <li><a data-href="${ly }/company/zl-analysis?flag=3" data-title="治理数据分析"
+                href="javascript:void(0)">治理数据分析</a></li>
+
+
+
+
+
+
+
+<%--        <li><a data-href="${ly }/company/zhuChartData66?flag=1" data-title="企业自查对象分析"--%>
+<%--        href="javascript:void(0)">企业自查对象分析 </a></li>--%>
+<%--        <li><a data-href="${ly }/company/zhuChartData66?flag=2" data-title="行政检查对象分析"--%>
+<%--        href="javascript:void(0)">行政检查对象分析 </a></li>--%>
+<%--        <li><a data-href="${ly }/company/zhuChartData66?flag=3" data-title="第三方检查对象分析"--%>
+<%--        href="javascript:void(0)">第三方检查对象分析 </a></li>--%>
+
+<%--        <li><a data-href="${ly}/company/zhuChartData22?flag=1" data-title="企业自查隐患数据分析"--%>
+<%--        href="javascript:void(0)">企业自查隐患数据分析</a></li>--%>
+<%--        <li><a data-href="${ly}/company/zhuChartData22?flag=2" data-title="行政检查隐患数据分析"--%>
+<%--        href="javascript:void(0)">行政检查隐患数据分析</a></li>--%>
+<%--        <li><a data-href="${ly}/company/zhuChartData22?flag=3" data-title="第三方检查隐患数据分析"--%>
+<%--        href="javascript:void(0)">第三方检查隐患数据分析</a></li>--%>
+
+<%--        <li><a data-href="${ly }/company/yhRank-dataAnalysis" data-title="隐患等级数据分析"--%>
+<%--        href="javascript:void(0)">隐患等级数据分析</a></li>--%>
+<%--        <li><a data-href="${ly }/company/zhuChartData123" data-title="隐患治理对象分析"--%>
+<%--        href="javascript:void(0)">隐患治理对象分析</a></li>--%>
+<%--        <li><a data-href="${ly }/company/yhManage-dataAnalysis" data-title="隐患治理等级分析"--%>
+<%--        href="javascript:void(0)">隐患治理等级分析</a></li>--%>
 
 <%--        /company/danger/danger-chart-zl--%>
         <%-- <li><a data-href="${ly }/html/about.html" data-title="新手指南" href="javascript:void(0)">新手指南</a></li> --%>

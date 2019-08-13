@@ -87,6 +87,19 @@
         height: 24px;
         border: none;
         }
+            .flexcenter>span {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+            }
+
+            .flexspa {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 5px;
+            font-size: 15px;
+
+            }
         </style>
 
         </head>
@@ -94,11 +107,13 @@
         <c:set var="x1" value="${fn:split('企业自查/ /第三方检查/行政检查','/') }"/>
         <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
         <span class="c-gray en">&gt;</span> <span>隐患排查治理系统</span>
-        <span class="c-gray en">&gt;</span> <span>${x1[flag-1] }检查设置 </span>
-        <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
-        href="javascript:location.replace(location.href);" title="刷新">
-        <i class="Hui-iconfont">&#xe68f;</i>
-        </a>
+        <span class="c-gray en">&gt;</span> <span>企业自查绩效分析 </span>
+            <a class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
+
+            <%--        <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"--%>
+<%--        href="javascript:location.replace(location.href);" title="刷新">--%>
+<%--        <i class="Hui-iconfont">&#xe68f;</i>--%>
+<%--        </a>--%>
         </nav>
         <script type="text/javascript">
         function pr_() {
@@ -117,10 +132,15 @@
         </c:if>
         <div class="text-c mt-20">
         <h3>企业自查绩效分析</h3>
-        <button onClick="pr_()" class="btn btn-primary radius" type="button">
-        <i class="Hui-iconfont">&#xe652;</i>打印
-        </button>
+<%--        <button onClick="pr_()" class="btn btn-primary radius" type="button">--%>
+<%--        <i class="Hui-iconfont">&#xe652;</i>打印--%>
+<%--        </button>--%>
         </div>
+            <div class="flexspa">
+            <span class=""></span>
+            <span id="time">
+            </span>
+            </div>
         <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover">
         <thead>
@@ -164,11 +184,14 @@
         </thead>
         <tbody>
         <!-- 循环-->
+            <script>
+            console.log(`${list}`);
+            </script>
         <c:forEach items="${list}" varStatus="index" var="be">
                 <c:if test="${index.index<fn:length(list)-2 }">
                         <tr class="text-c">
                         <td>${index.index + 1}</td>
-                        <td>${be.name }</td>
+                        <td>${be.name==null?'公司级':be.name }</td>
 
                         <td>${be.syn_year != null ? be.syn_year : 0 }</td>
                         <td>${be.danger1 != null ? be.danger1 : 0 }</td>
@@ -195,9 +218,17 @@
                         <td><%--${be.sea_year }--%></td>
 
                         <td>${be.danger1+be.danger2+be.danger3+be.danger4+be.danger5+be.danger6 }</td>
-                        <td><fmt:formatNumber type="number" value="${(be.danger1+be.danger2+be.danger3+be.danger4+be.danger5+be.danger6)/(be.syn_year+be.eve_year+be.reg_year+be.sea_year+be.els_year+be.bas_year) }" pattern="0.00"/> </td>
+                        <td class="add"><fmt:formatNumber type="number" value="${(be.danger1+be.danger2+be.danger3+be.danger4+be.danger5+be.danger6)/(be.syn_year+be.eve_year+be.reg_year+be.sea_year+be.els_year+be.bas_year) }" pattern="0.00"/> </td>
+                        <script>
+                        console.log($(".add").text());
+                        if(!$(".add").text()){
+                        console.log($(".add").text());
+                        $(".add").text("");
+                        }
+                        </script>
                         <td></td>
                         </tr>
+
                 </c:if>
                 <c:if test="${index.index==fn:length(list)-2 }">
                         <tr class="text-c">
@@ -347,5 +378,14 @@
 
 
         </script>
+            <script>
+
+            var endTime = new Date(new Date().getTime());
+            console.log(endTime);
+            var myDate = new Date();
+            var mytime=myDate.toLocaleTimeString();     //获取当前时间
+            var a=myDate.toLocaleDateString();
+            $("#time").text('日期：'+a);
+            </script>
         </body>
         </html>

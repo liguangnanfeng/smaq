@@ -84,7 +84,7 @@ function uploadpicture(obj){
     </c:otherwise>
     </c:choose>
   </div>
-  <h2 class="text-c mb-10">隐患整改复查意见表</h2>
+  <h2 class="text-c mb-10">隐患整改复查表</h2>
   <div class="div_pdetail">
     <font>受检${check.flag == 1 ? '部门' : '单位'}：${check.companyName}</font>
     <label>复检日期：<fmt:formatDate value="${now }" pattern="yyyy年MM月dd日"/></label>

@@ -115,7 +115,7 @@ function showpicture2(src, obj){
 <%--        </c:choose>--%>
 <%--      </c:if>--%>
   </div>
-  <h2 class="text-c mb-10">隐患整改复查意见书</h2>
+  <h2 class="text-c mb-10">隐患整改复查书</h2>
   <!-- 循环 -->
   <c:forEach items="${recheckList }" var="p">
   <div class="f-l div_pdetail mt-20">
@@ -226,7 +226,7 @@ function showpicture2(src, obj){
         </c:if>
         </c:forEach>
         <tr>
-          <td colspan="6">
+          <td colspan="8">
             <div class="div_pri  mt-10">针对上次隐患整改要求，经复查，提出如下复查意见：</div>
             <div class="div_pri  mt-10">1、已整改项：基本符合安全要求</div>
             <div class="div_pri">
@@ -266,7 +266,7 @@ function showpicture2(src, obj){
           </td>
         </tr>
         <tr>
-          <td colspan="3">
+          <td colspan="4">
             <div style="float:left;width:100%;position: relative;min-height:150px;">
             <c:if test="${check.flag == 3 && check.checkCompany eq '无锡市安泰安全技术服务有限公司'}">
             <img alt="" src="${ly }/images/zhang.png" style="position: absolute;bottom:10px;right:10px;height:130px;"/>
@@ -286,13 +286,23 @@ function showpicture2(src, obj){
             </div>
             </div>
           </td>
-          <td colspan="3">
+      <style>
+      td{
+      position:relative;
+      }
+      .aaa{
+      position:absolute;
+      bottom:10px;
+      right:10px;
+      }
+      </style>
+          <td colspan="4">
             <div style="float:left;width:100%;min-height:150px;">
             <div class="div_pleft  mt-10 mb-10">受检负责人签字：</div>
             <div class="div_pright  mt-10 mb-10">
               <input type="text" style="width:150px" value="${check.dapartContact }" class="input-text" maxlength="50" disabled="disabled"/>
             </div>
-            <div class="div_pri mt-10">
+            <div class="div_pri mt-10 aaa">
               <font><fmt:formatDate value="${p.createTime }" pattern="yyyy年MM月dd日"/></font>
             </div>
             </div>

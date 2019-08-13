@@ -5883,11 +5883,16 @@ public class CompanyController_cd extends BaseController {
 
     /**
      * create by  : 小明！！！
-     * description: TODO 排查绩效分析  饼状图  1.企业自查; 2.行政检查; 3.第三方检查
+     * description: TODO 排查数据分析页面
      * create time: 2019/8/13 11:02
      */
     @RequestMapping(value = "jx-analysis")
-    public String analysis(HttpServletRequest request,Model model){
+    public String jxAnalysis(HttpServletRequest request,Model model,Integer flag){
+
+        if (null == flag){
+            flag = 1;
+        }
+
         User user = getLoginUser(request);
 
         Integer number1 = tCheckItemMapper.selectHiddenSources(1,user.getId()); // 企业自查
@@ -5896,66 +5901,6 @@ public class CompanyController_cd extends BaseController {
 
         Integer number3 = tCheckItemMapper.selectHiddenSources(3,user.getId()); // 第三方检查
 
-        model.addAttribute("number1",number1);
-        model.addAttribute("number2",number2);
-        model.addAttribute("number3",number3);
-        
-        return "company/danger/jx-analysis";
-    }
-
-    /**
-     * create by  : 小明！！！
-     * description: TODO 隐患数据分析 饼状图
-     * create time: 2019/8/13 11:17
-     */
-    @RequestMapping(value = "yhRank-dataAnalysis")
-    public String dataAnalysis(HttpServletRequest request, Model model){
-
-        User user = getLoginUser(request);
-
-        Integer number3 = tCheckItemMapper.findTypeByMap(user.getId(),3); // 一般隐患
-        Integer number2 = tCheckItemMapper.findTypeByMap(user.getId(),2); // 重大隐患
-        Integer number1 = tCheckItemMapper.findTypeByMap(user.getId(),1); // 较大隐患
-
-        model.addAttribute("number1",number1);
-        model.addAttribute("number2",number2);
-        model.addAttribute("number3",number3);
-
-        return "company/danger/yhRank-dataAnalysis";
-    }
-
-
-    /**
-     * create by  : 小明！！！
-     * description: TODO 隐患治理数据分析 饼状图
-     * create time: 2019/8/13 11:17
-     */
-    @RequestMapping(value = "yhManage-dataAnalysis")
-    public String adassss(HttpServletRequest request, Model model){
-
-        User user = getLoginUser(request);
-
-        Integer number3 = tCheckItemMapper.findFileByMap(user.getId(),3); // 一般隐患
-        Integer number2 = tCheckItemMapper.findFileByMap(user.getId(),2); // 重大隐患
-        Integer number1 = tCheckItemMapper.findFileByMap(user.getId(),1); // 较大隐患
-
-        model.addAttribute("number1",number1);
-        model.addAttribute("number2",number2);
-        model.addAttribute("number3",number3);
-
-        return "company/danger/yhManage-dataAnalysis";
-    }
-
-
-    /**
-     * create by  : 小明！！！
-     * description: TODO  排查对象分析  柱状图
-     * create time: 2019/8/13 11:17
-     */
-    @RequestMapping(value = "adadsss")
-    public String adassaess(HttpServletRequest request, Model model, Integer flag){
-
-        User user = getLoginUser(request);
 
         Integer a = tCheckItemMapper.zhuChartData77("生产工艺",flag,user.getId()); // 生产工艺 隐患数据
         model.addAttribute("a",a);
@@ -6003,149 +5948,154 @@ public class CompanyController_cd extends BaseController {
 
         DecimalFormat df = new DecimalFormat("0.00");
 
-            if (null != count && 0 != count) {
+        if (null != count && 0 != count) {
 
-                if (null != a && 0 != a) {
-                    String str = df.format((float) a / count);
-                    model.addAttribute("a1",str);
+            if (null != a && 0 != a) {
+                String str = df.format((float) a / count);
+                model.addAttribute("a1",str);
 
-                } else {
-                    model.addAttribute("a1","0.00");  // 重大隐患 未治理 占比数据 竖
-                }
-
-                if (null != b && 0 != b) {
-                    String str = df.format((float) b / count);
-                    model.addAttribute("b1",str);
-
-                } else {
-                    model.addAttribute("b1","0.00");  // 重大隐患 未治理 占比数据 竖
-                }
-
-                if (null != c && 0 != c) {
-                    String str = df.format((float) c / count);
-                    model.addAttribute("c1",str);
-
-                } else {
-                    model.addAttribute("c1","0.00"); // 重大隐患 未治理 占比数据 竖
-                }
-
-                if (null != d && 0 != d) {
-                    String str = df.format((float) d / count);
-                    model.addAttribute("d1",str);
-
-                } else {
-                    model.addAttribute("d1","0.00"); // 重大隐患 未治理 占比数据 竖
-                }
-
-                if (null != e && 0 != e) {
-                    String str = df.format((float) e / count);
-                    model.addAttribute("e1",str);
-
-                } else {
-                    model.addAttribute("e1","0.00"); // 重大隐患 未治理 占比数据 竖
-                }
-
-                if (null != f && 0 != f) {
-                    String str = df.format((float) f / count);
-                    model.addAttribute("f1",str);
-
-                } else {
-                    model.addAttribute("f1","0.00"); // 重大隐患 未治理 占比数据 竖
-                }
-
-                if (null != g && 0 != g) {
-                    String str = df.format((float) g / count);
-                    model.addAttribute("g1",str);
-
-                } else {
-                    model.addAttribute("g1","0.00"); // 重大隐患 未治理 占比数据 竖
-                }
-
-                if (null != h && 0 != h) {
-                    String str = df.format((float) h / count);
-                    model.addAttribute("h1",str);
-
-                } else {
-                    model.addAttribute("h1","0.00"); // 重大隐患 未治理 占比数据 竖
-                }
-
-                if (null != i && 0 != i) {
-                    String str = df.format((float) i / count);
-                    model.addAttribute("i1",str);
-
-                } else {
-                    model.addAttribute("i1","0.00"); // 重大隐患 未治理 占比数据 竖
-                }
-
-                if (null != j && 0 != j) {
-                    String str = df.format((float) j / count);
-                    model.addAttribute("j1",str);
-
-                } else {
-                    model.addAttribute("j1","0.00"); // 重大隐患 未治理 占比数据 竖
-                }
-
-                if (null != k && 0 != k) {
-                    String str = df.format((float) k / count);
-                    model.addAttribute("k1",str);
-
-                } else {
-                    model.addAttribute("k1","0.00"); // 重大隐患 未治理 占比数据 竖
-                }
-
-                if (null != l && 0 != l) {
-                    String str = df.format((float) l / count);
-                    model.addAttribute("l1",str);
-
-                } else {
-                    model.addAttribute("l1","0.00"); // 重大隐患 未治理 占比数据 竖
-                }
-
-                if (null != m && 0 != m) {
-                    String str = df.format((float) m / count);
-                    model.addAttribute("m1",str);
-
-                } else {
-                    model.addAttribute("m1","0.00"); // 重大隐患 未治理 占比数据 竖
-                }
-
-                if (null != n && 0 != n) {
-                    String str = df.format((float) n / count);
-                    model.addAttribute("n1",str);
-
-                } else {
-                    model.addAttribute("n1","0.00"); // 重大隐患 未治理 占比数据 竖
-                }
-
-            }else {
-                model.addAttribute("a1","0.00");
-                model.addAttribute("b1","0.00");
-                model.addAttribute("c1","0.00");
-                model.addAttribute("d1","0.00");
-                model.addAttribute("e1","0.00");
-                model.addAttribute("f1","0.00");
-                model.addAttribute("g1","0.00");
-                model.addAttribute("h1","0.00");
-                model.addAttribute("i1","0.00");
-                model.addAttribute("j1","0.00");
-                model.addAttribute("k1","0.00");
-                model.addAttribute("l1","0.00");
-                model.addAttribute("m1","0.00");
-                model.addAttribute("n1","0.00");
-
+            } else {
+                model.addAttribute("a1","0.00");  // 重大隐患 未治理 占比数据 竖
             }
 
-        return "company/danger/zhuChartData66";
+            if (null != b && 0 != b) {
+                String str = df.format((float) b / count);
+                model.addAttribute("b1",str);
+
+            } else {
+                model.addAttribute("b1","0.00");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != c && 0 != c) {
+                String str = df.format((float) c / count);
+                model.addAttribute("c1",str);
+
+            } else {
+                model.addAttribute("c1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != d && 0 != d) {
+                String str = df.format((float) d / count);
+                model.addAttribute("d1",str);
+
+            } else {
+                model.addAttribute("d1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != e && 0 != e) {
+                String str = df.format((float) e / count);
+                model.addAttribute("e1",str);
+
+            } else {
+                model.addAttribute("e1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != f && 0 != f) {
+                String str = df.format((float) f / count);
+                model.addAttribute("f1",str);
+
+            } else {
+                model.addAttribute("f1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != g && 0 != g) {
+                String str = df.format((float) g / count);
+                model.addAttribute("g1",str);
+
+            } else {
+                model.addAttribute("g1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != h && 0 != h) {
+                String str = df.format((float) h / count);
+                model.addAttribute("h1",str);
+
+            } else {
+                model.addAttribute("h1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != i && 0 != i) {
+                String str = df.format((float) i / count);
+                model.addAttribute("i1",str);
+
+            } else {
+                model.addAttribute("i1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != j && 0 != j) {
+                String str = df.format((float) j / count);
+                model.addAttribute("j1",str);
+
+            } else {
+                model.addAttribute("j1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != k && 0 != k) {
+                String str = df.format((float) k / count);
+                model.addAttribute("k1",str);
+
+            } else {
+                model.addAttribute("k1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != l && 0 != l) {
+                String str = df.format((float) l / count);
+                model.addAttribute("l1",str);
+
+            } else {
+                model.addAttribute("l1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != m && 0 != m) {
+                String str = df.format((float) m / count);
+                model.addAttribute("m1",str);
+
+            } else {
+                model.addAttribute("m1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != n && 0 != n) {
+                String str = df.format((float) n / count);
+                model.addAttribute("n1",str);
+
+            } else {
+                model.addAttribute("n1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+        }else {
+            model.addAttribute("a1","0.00");
+            model.addAttribute("b1","0.00");
+            model.addAttribute("c1","0.00");
+            model.addAttribute("d1","0.00");
+            model.addAttribute("e1","0.00");
+            model.addAttribute("f1","0.00");
+            model.addAttribute("g1","0.00");
+            model.addAttribute("h1","0.00");
+            model.addAttribute("i1","0.00");
+            model.addAttribute("j1","0.00");
+            model.addAttribute("k1","0.00");
+            model.addAttribute("l1","0.00");
+            model.addAttribute("m1","0.00");
+            model.addAttribute("n1","0.00");
+
+        }
+
+        model.addAttribute("number1",number1);
+        model.addAttribute("number2",number2);
+        model.addAttribute("number3",number3);
+        
+        return "company/danger/jx-analysis";
     }
+
 
 
     /**
      * create by  : 小明！！！
-     * description: TODO 隐患数据分析 1.企业自查; 2.行政检查; 3.第三方检查
+     * description: TODO 隐患数据分析
      * create time: 2019/8/13 14:34
      */
-    @RequestMapping(value = "adadsss121")
-    public String adas123s(HttpServletRequest request, Model model, Integer flag){
+    @RequestMapping(value = "yh-analysis")
+    public String yhAnalysis(HttpServletRequest request, Model model, Integer flag){
 
         User user = getLoginUser(request);
 
@@ -6327,20 +6277,41 @@ public class CompanyController_cd extends BaseController {
 
         }
 
-        return "company/danger/zhuChartData66";
+        return "company/danger/yh-analysis";
     }
-
 
 
     /**
      * create by  : 小明！！！
      * description: TODO  治理数据分析
-     * create time: 2019/8/13 14:54
+     * create time: 2019/8/13 11:17
      */
-    @RequestMapping(value = "jx-jiaj")
-    public String adas123s(HttpServletRequest request, Model model){
+    @RequestMapping(value = "zl-analysis")
+    public String zlAnalysis(HttpServletRequest request, Model model, Integer flag){
+
+        if (null == flag){
+            flag = 1;
+        }
 
         User user = getLoginUser(request);
+
+        Integer number3 = tCheckItemMapper.findTypeByMap(user.getId(),3); // 一般隐患
+        Integer number2 = tCheckItemMapper.findTypeByMap(user.getId(),2); // 重大隐患
+        Integer number1 = tCheckItemMapper.findTypeByMap(user.getId(),1); // 较大隐患
+
+        model.addAttribute("number1",number1);
+        model.addAttribute("number2",number2);
+        model.addAttribute("number3",number3);
+
+
+        Integer number4 = tCheckItemMapper.findFileByMap(user.getId(),3); // 一般隐患
+        Integer number5 = tCheckItemMapper.findFileByMap(user.getId(),2); // 重大隐患
+        Integer number6 = tCheckItemMapper.findFileByMap(user.getId(),1); // 较大隐患
+
+        model.addAttribute("number4",number4);
+        model.addAttribute("number5",number5);
+        model.addAttribute("number6",number6);
+
 
         Integer a = tCheckItemMapper.zhuChartData124("生产工艺",user.getId()); // 生产工艺 隐患数据
         model.addAttribute("a",a);
@@ -6520,8 +6491,9 @@ public class CompanyController_cd extends BaseController {
 
         }
 
-        return "company/danger/zhuChartData66";
+        return "company/danger/zl-analysis";
     }
+
 
 
     /**

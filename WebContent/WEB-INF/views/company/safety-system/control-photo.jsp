@@ -114,9 +114,16 @@
             .detailBtn:hover{
             cursor: pointer;
             }
+        .imageLabel-imgdrop.imageLabel-drop-edit .imageLabel-imgdrop-font {
+        opacity: 1!important;
+        }
         </style>
         </head>
         <body style="padding:0 15px;">
+        <script>
+          console.log("control-photo!");
+
+        </script>
         <div>
         <input type="radio" name="co" value="222">
             <p class="contarName">${compangName}车间风险分布图
@@ -278,11 +285,13 @@
         }
 
         function amend(v, s) {
+              console.log("amend");
                 function shuju(arr) {
                 if (arr && arr.length > 0) {
-                var narr = []
+                var narr = [];
+                console.log("arr:",arr);
                 for (var i = 0; i < arr.length; i++) {
-                var newArr = []
+                var newArr = [];
                 newArr.push(arr[i].split(','))
                 var obj = {
                 'ex':newArr[0][0].split(':')[1],

@@ -173,7 +173,7 @@
                                     <c:when test="${be.t > 0}"><!-- 已设置整改意见 -->
                                         <%-- <a style="text-decoration:none" onClick="show_dialog('整改意见_${be.id }', '${ly}/village/check-rectification?flag=${flag }&id=${be.id }')" href="javascript:;">整改意见</a><br> --%>
                                         <c:if test="${flag == 1 }">
-                                            <a style="text-decoration:none" onClick="show_dialog('整改意见_${be.id }', '${ly}/village/check-rectification?flag=${flag }&id=${be.id }')" href="javascript:;">整改详情</a><br>
+                                            <a style="text-decoration:none" onClick="show_dialog('整改意见_${be.id }', '${ly}/global/check-rectification?flag=${flag }&id=${be.id }')" href="javascript:;">整改详情</a><br>
                                         </c:if>
                                         <%-- <c:if test="${flag != 1 }">
                                         <a style="text-decoration:none" onClick="show_dialog('整改意见_${be.id }', '/village/check-document?checkId=${be.id}&flag=${flag == 3 ? 8 : 1}')" href="javascript:;">整改意见</a><br>
@@ -237,17 +237,17 @@
                                <a style="text-decoration:none" onClick="show_dialog('检查文书-整改复查意见书_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=2')" href="javascript:;">整改复查意见书</a><br>
                                </c:if> --%>
                             <%-- <c:if test="${flag == 4 || flag == 2}"> --%>
-                        <a style="text-decoration:none" onClick="show_dialog('现场检查记录_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=8')" href="javascript:;">现场检查记录</a><br>
+                        <a style="text-decoration:none" onClick="show_dialog('现场检查记录_${be.id }', '${ly}/global/check-document?checkId=${be.id }&flag=8')" href="javascript:;">现场检查记录</a><br>
                             <%--  </c:if> --%>
                         <c:if test="${be.c > 0}">
                             <%-- <c:if test="${flag == 4 || flag == 2}"> --%>
-                            <a style="text-decoration:none" onClick="show_dialog('整改意见书_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=1')" href="javascript:;">整改意见书</a><br>
+                            <a style="text-decoration:none" onClick="show_dialog('整改意见书_${be.id }', '${ly}/global/check-document?checkId=${be.id }&flag=1')" href="javascript:;">整改意见书</a><br>
                             <%-- </c:if>
                             <c:if test="${flag == 3}">
                                <a style="text-decoration:none" onClick="show_dialog('整改意见书_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=8')" href="javascript:;">整改意见书</a><br>
                             </c:if> --%>
                             <c:if test="${flag != 1}">
-                                <a style="text-decoration:none" onClick="show_dialog('整改复查意见书_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=2')" href="javascript:;">整改复查意见书</a><br>
+                                <a style="text-decoration:none" onClick="show_dialog('整改复查意见书_${be.id }', '${ly}/global/check-document?checkId=${be.id }&flag=2')" href="javascript:;">整改复查意见书</a><br>
                                 <a style="text-decoration:none" onClick="show_dialog('隐患描述与图片_${be.id }', '${ly}/company/danger-detail?flag=${flag }&id=${be.id }')" href="javascript:;">隐患与图片</a><br>
                             </c:if>
                         </c:if>
@@ -286,7 +286,7 @@
                                         <a style="text-decoration:none" onClick="show_dialog('整改意见_${be.id }', '/village/check-document?checkId=${be.id}&flag=${flag == 3 ? 8 : 1}')" href="javascript:;">整改意见</a><br>
                                         </c:if> --%>
                                         <c:if test="${be.status != 2 || be.flag == 1}">
-                                            <a style="text-decoration:none" onClick="show_dialog('整改意见_${be.id }', '${ly}/village/check-rectification?flag=${flag }&id=${be.id }')" href="javascript:;">整改详情</a><br>
+                                            <a style="text-decoration:none" onClick="show_dialog('整改意见_${be.id }', '${ly}/global/check-rectification?flag=${flag }&id=${be.id }')" href="javascript:;">整改详情</a><br>
                                         </c:if>
                                     </c:when>
                                     <%-- <c:when test="${be.flag == 2 || be.flag == 3}">行政执法可编辑可查看

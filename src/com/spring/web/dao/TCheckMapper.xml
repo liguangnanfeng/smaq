@@ -561,6 +561,23 @@
     </select>
 
 
+    <select id="findCheckCompany" resultType="java.util.Map">
+        SELECT
+            check_company AS name
+        FROM
+            `t_check_tbl`
+        WHERE
+            user_id = #{user_id}
+        AND flag = #{flag}
+        AND del = 0
+        AND STATUS = 2
+        AND check_company != ""
+        GROUP BY
+            check_company;
+    </select>
+    
+    
+    
     <!-- 政府端查询检查记录！！！ -->
     <select id="selectAll" resultType="java.util.Map">
         select

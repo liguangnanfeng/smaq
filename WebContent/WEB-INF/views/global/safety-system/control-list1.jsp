@@ -61,7 +61,7 @@ $(function() {
   </nav>
   <div class="page-container">
     <div class="text-c">
-      <form action="${ly }/village/safety-system/control-list?level=${m.level }" method="post">
+      <form action="${ly }/global/safety-system/control-list?level=${m.level }" method="post">
         <c:if test="${session_user.userType == 6}">
             <span>所在镇：</span>
             <select name="townId" id="townId" class="select" style="width:100px;">

@@ -1011,7 +1011,7 @@
           order by T2.real_time desc;
     </select>
 
-    <!-- 排查数据分析 -->
+    <!-- 检查绩效分析 -->
     <select id="findHiddenSourceTypeByMap" resultType="Integer">
         select
         count(t1.id) as count
@@ -1024,6 +1024,35 @@
         and t2.industry_type = #{industry_type}
         and t2.user_id = #{user_id}
     </select>
+
+
+    <!-- 检查绩效分析, 饼状图 -->
+    <select id="selectHiddenSources" resultType="Integer">
+        select
+        count(t1.id) as count
+        from smaq.t_check_item_tbl t1
+        left join smaq.t_check_tbl t2 on t1.check_id = t2.id
+        where t2.status = 2
+        and t2.del = 0
+        and t2.flag = #{flag}
+        and t2.user_id = #{user_id}
+    </select>
+
+
+
+    <select id="lookHiddenSource" resultType="Integer">
+        select
+        count(t1.id) as count
+        from smaq.t_check_item_tbl t1
+        left join smaq.t_check_tbl t2 on t1.check_id = t2.id
+        where t2.status = 2
+        and t2.del = 0
+        and t2.flag = #{flag}
+        and t2.check_company = #{check_company}
+        and t2.industry_type = #{industry_type}
+        and t2.user_id = #{user_id}
+    </select>
+
 
     <!-- 隐患数据分析  1. 较大; 2.重大; 3.一般和较小 -->
     <select id="findHiddenLevelTypeByMap"  resultType="Integer">
@@ -1042,6 +1071,23 @@
     </select>
 
 
+    <!-- 隐患数据分析 饼状图  1. 较大; 2.重大; 3.一般和较小 -->
+    <select id="findTypeByMap"  resultType="Integer">
+        SELECT
+         count(t1.id) as count
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl c1 ON c1.id = t1.level_id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t2.user_id = #{user_id}
+        AND c1.flag = #{flag}
+    </select>
+
+
+    <!-- 隐患治理数据分析 -->
     <select id="findRecheckFileByMap" resultType="Integer">
         SELECT
             count(t1.id)
@@ -1052,12 +1098,35 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
+        AND t1.status = 2
         AND t1. status = #{status}
         AND t2.user_id = #{user_id}
         AND t3.flag = #{flag}
         AND t2.depart = #{depart}
         AND t1.recheck_file != ''
     </select>
+
+
+    <!-- 隐患治理数据分析 饼状图 -->
+    <select id="findFileByMap" resultType="Integer">
+        SELECT
+            count(t1.id)
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t1. status = 2
+        AND t2.user_id = #{user_id}
+        AND t3.flag = #{flag}
+        AND t1.recheck_file != ''
+    </select>
+
+
+
 
     <select id="findMapzhuChartData2" resultType="Integer">
         SELECT
@@ -1093,7 +1162,114 @@
         AND t2.user_id = #{user_id}
     </select>
 
+    <select id="zhuChartData67" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+         AND t1.status = 2
+        AND t3.control = #{control}
+         AND t2.check_company = #{check_company}
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
 
+
+    <!-- 排查对象分析 柱状图 -->
+    <select id="zhuChartData77" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t3.control = #{control}
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
+
+    <!-- 隐患数据分析 柱状图 -->
+    <select id="zhuChartData88" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t3.control = #{control}
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
+
+    <!-- 企业自查隐患数据分析 -->
+    <select id="zhuChartData22" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t3.control = #{control}
+        AND t2.depart = #{depart}
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
+    <!-- 其他自查隐患数据分析 -->
+    <select id="zhuChartData23" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t3.control = #{control}
+        AND t2.check_company = #{check_company}
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
+
+    <!-- 隐患治理数据分析 柱状图 -->
+    <select id="zhuChartData124" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t3.control = #{control}
+        AND t2.user_id = #{user_id}
+    </select>
+
+
+    <!-- 隐患治理对象分析 -->
     <select id="zhuChartData123" resultType="Integer">
         SELECT
             count(t1.id) as counts
@@ -1104,7 +1280,7 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
-         AND t1.status = 1
+        AND t1.status = 2
         AND t3.control = #{control}
         AND t2.depart = #{depart}
         AND t2.user_id = #{user_id}

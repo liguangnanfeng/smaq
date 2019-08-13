@@ -99,4 +99,6 @@ public interface TCheckMapper {
     List<Map<String,Object>> selectShowAll(@Param("depart")String depart, @Param("user_id")Integer user_id, @Param("type")Integer type);
 
     Integer findCountAll(@Param("depart")String depart, @Param("type")Integer type, @Param("user_id")Integer user_id);
+
+    List<Map<String,Object>> findCheckCompany(@Param("user_id")Integer user_id,@Param("flag")Integer flag);
 }

@@ -20,22 +20,22 @@
 		text-align: center;
 		height: 38px; /*这里需要自己调整，根据自己的需求调整高度*/
 		position: relative;
-		padding: 0 15px;
 		}
 		td[class=first]{
 		width: 155px;
 		}
 		td[class=first]:before {
-		content: "";
-		position: absolute;
-		width: 1px;
-		height: 201px;
-		top: 0;
-		left: 0;
-		background-color: #ddd;
-		display: block;
-		transform: rotate(-68deg);
-		transform-origin: top;
+        content: "";
+        position: absolute;
+        width: 1px;
+        height: 172px;
+        top: 0;
+        left: 0;
+        background-color: #ddd;
+        display: block;
+        transform: rotate(-64deg);
+        transform-origin: top;
+
 		}
 		.title1{
 		position: absolute;
@@ -67,9 +67,13 @@
 		.containerx{
 		padding:20px;
 		}
+        .sum{
+        width: 70px;
+        }
 		</style>
 		</head>
 		<body>
+
 		<div class="containerx">
 		<section class="title">
 		<div class="center">企业自查对象分析</div>
@@ -77,6 +81,24 @@
 		<span></span>
 		<span id="time"></span>
 		</div>
+        <script>
+        var searchURL = window.location.search;
+        searchURL = searchURL.substring(1, searchURL.length);
+        var targetPageId = searchURL.split("&")[0].split("=")[1];
+        console.log('targetPageId:',targetPageId);
+        var title="";
+        if(targetPageId==1){
+        title="企业自查对象分析";
+        console.log('title:',title);
+        }
+        if(targetPageId==2){
+        title="行政检查对象分析";   console.log('title:',title);
+        }
+        if(targetPageId==3){
+        title="部门抽查对象分析";   console.log('title:',title);
+        }
+        $(".center").text(title);
+        </script>
 		</section>
 		<table class=".table"  style="margin: auto;"  cellpadding="2">
 		<tr style="background-color: #F5F9FE;">
@@ -97,7 +119,7 @@
 		<td>职业卫生</td>
 		<td>生产现场</td>
 		<td >其他</td>
-		<td rowspan="2">合计</td>
+		<td rowspan="2" class="sum">合计</td>
 		<td rowspan="2">排名</td>
 		<td rowspan="2">同比%</td>
 		</tr>
@@ -125,7 +147,7 @@
 			<c:if test="${index.index<fn:length(list)-1 }">
 				<tr>
 				<td>${index.index + 1}</td>
-				<td>${be.name}</td>
+				<td>${be.name==null?'公司级':be.name}</td>
 				<td>${be.danger1}</td>
 				<td>${be.danger2}</td>
 				<td>${be.danger3}</td>

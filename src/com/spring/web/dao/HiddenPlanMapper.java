@@ -26,5 +26,7 @@ public interface HiddenPlanMapper {
     List<Map<String,Object>> selectCountAll(@Param("uid") Integer uid);
 
     List<Map<String,Object>> findDpid(@Param("dpid")int dpid, @Param("uid")Integer uid);
+
+    List<Map<String,Object>> selectDpids(@Param("uid")Integer uid);
 }
 

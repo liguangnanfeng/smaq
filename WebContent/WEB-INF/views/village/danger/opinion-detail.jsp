@@ -223,10 +223,13 @@
             </thead>
             <tbody>
 
-            <c:forEach items="${itemL }" var="be" >
+            <c:forEach items="${itemL }" var="be" varStatus="index">
                 <tr>
 
                  <%--1序号--%>
+                <script>
+                console.log('${index.index}');
+                </script>
                     <td class="text-c">${index.index + 1}</td>
 					<c:set var="item" value="${fn:split(be.levels,'/') }"/>
 
@@ -306,7 +309,7 @@
             </c:forEach>
 
             <tr>
-                <td colspan="7">
+                <td colspan="8">
                     <div class="div_pri  mt-10">针对上述隐患，根据有关规定，现提出如下整改要求：</div>
                     <div class="div_pri  mt-10" style="display: none;">1、对下列隐患，进行立即整改
                         <div class="check-box">
@@ -383,7 +386,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3">
+                <td colspan="4">
                     <div style="float:left;width:100%;position: relative;min-height:150px;">
                         <c:if test="${check.flag == 3 && check.checkCompany eq '无锡市安泰安全技术服务有限公司'}">
                             <img alt="" src="${ly }/images/zhang.png"
@@ -428,7 +431,7 @@
 
         <c:if test="${empty rectification}">
             <div class="row cl">
-                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20" style="text-align:center;margin-left:0">
                     <button onClick="save_()" class="btn btn-primary radius btn_hid" type="button" style="padding: 0 70px;">
                         <i class="Hui-iconfont">&#xe632;</i>保存
                     </button>

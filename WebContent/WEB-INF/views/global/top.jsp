@@ -2,7 +2,6 @@
 <!DOCTYPE HTML>
 <html>
 <body>
-<!-- 头部 -->
 <header class="navbar-wrapper">
     <div class="navbar navbar-fixed-top">
         <div class="container-fluid cl">

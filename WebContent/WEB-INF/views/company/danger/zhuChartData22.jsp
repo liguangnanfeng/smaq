@@ -23,22 +23,21 @@
 		text-align: center;
 		height: 38px; /*这里需要自己调整，根据自己的需求调整高度*/
 		position: relative;
-		padding: 0px 12px;
 		}
 		td[class=first]{
 		width: 120px;
 		}
 		td[class=first]:before {
-		content: "";
-		position: absolute;
-		width: 1px;
-		height: 162px;
-		top: 0;
-		left: 0;
-		background-color: #ddd;
-		display: block;
-		transform: rotate(-63deg);
-		transform-origin: top;
+        content: "";
+        position: absolute;
+        width: 1px;
+        height: 143px;
+        top: 0;
+        left: 0;
+        background-color: #ddd;
+        display: block;
+        transform: rotate(-58deg);
+        transform-origin: top;
 		}
 		.title{
 		margin-top: 43px;
@@ -76,17 +75,39 @@
 		.containerx{
 		padding: 0 10px;
 		}
+        .sum{
+        width: 70px;
+        }
 		</style>
 		</head>
 		<body>
 		<div class="containerx">
 		<section class="title">
-<%--		<div class="center">隐患数据分析</div>--%>
+		<div class="center"></div>
 		<div class="flexspa">
-		<span>企业自查隐患数据分析</span>
+		<span></span>
 		<span id="time"></span>
 		</div>
-		</section>
+        <script>
+        var searchURL = window.location.search;
+        searchURL = searchURL.substring(1, searchURL.length);
+        var targetPageId = searchURL.split("&")[0].split("=")[1];
+        console.log('targetPageId:',targetPageId);
+        var title="";
+        if(targetPageId==1){
+        title="企业自查隐患数据分析";
+        console.log('title:',title);
+        }
+        if(targetPageId==2){
+        title="行政检查隐患数据分析";   console.log('title:',title);
+        }
+        if(targetPageId==3){
+        title="部门抽查隐患数据分析";   console.log('title:',title);
+        }
+        $(".center").text(title);
+        </script>
+
+        </section>
 		<table class=".table"  style="margin: auto;"  cellpadding="2">
 		<tr class="tit">
 		<td rowspan="2">序号</td>
@@ -108,7 +129,7 @@
 		<td>职业卫生</td>
 		<td>生产现场</td>
 		<td style="width:42px"> 其他 </td>
-		<td rowspan="2">合计</td>
+		<td rowspan="2" class="sum">合计</td>
 		<td rowspan="2">排名</td>
 		<td rowspan="2">同比%</td>
 		</tr>
@@ -135,7 +156,7 @@
 			<c:if test="${index.index<fn:length(list)-1 }">
 				<tr>
 				<td>${index.index + 1}</td>
-				<td>${be.name}</td>
+				<td>${be.name==null?'公司级':be.name}</td>
 				<td>${be.danger1}</td>
 				<td>${be.danger2}</td>
 				<td>${be.danger3}</td>

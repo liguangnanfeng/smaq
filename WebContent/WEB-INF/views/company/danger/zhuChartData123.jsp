@@ -22,23 +22,22 @@
 		text-align: center;
 		height: 38px; /*这里需要自己调整，根据自己的需求调整高度*/
 		position: relative;
-		padding: 0px 14px;
 		}
 		td[class=first]{
 		width: 120px;
 		}
-		td[class=first]:before {
-		content: "";
-		position: absolute;
-		width: 1px;
-		height: 162px;
-		top: 0;
-		left: 0;
-		background-color: #ddd;
-		display: block;
-		transform: rotate(-63deg);
-		transform-origin: top;
-		}
+        td[class=first]:before {
+        content: "";
+        position: absolute;
+        width: 1px;
+        height: 143px;
+        top: 0;
+        left: 0;
+        background-color: #ddd;
+        display: block;
+        transform: rotate(-58deg);
+        transform-origin: top;
+        }
 		.title{
 		margin-top: 43px;
 		}
@@ -79,12 +78,15 @@
 		background: #F5F9FE;
 		font-weight: bold;
 		}
+        .sum{
+        width: 70px;
+        }
 		</style>
 		</head>
 		<body>
 		<div class="containerx">
 		<section class="title">
-		<div class="center">隐患治理数据分析</div>
+		<div class="center">隐患治理对象分析</div>
 		<div class="flexspa">
 		<span style="visibility: hidden;"></span>
 		<span id="time"></span>
@@ -109,7 +111,7 @@
 		<td>职业卫生</td>
 		<td>生产现场</td>
 		<td style="width: 40px;">其他</td>
-		<td rowspan="2">合计</td>
+		<td rowspan="2" class="sum">合计</td>
 		<td rowspan="2">排名</td>
 		<td rowspan="2">同比%</td>
 		<td rowspan="2">排名</td>

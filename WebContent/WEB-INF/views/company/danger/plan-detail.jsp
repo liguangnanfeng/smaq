@@ -210,12 +210,14 @@
 <div id="div_container">
     <div class="div-print">
 
-    <c:if test="${listM.c3 > 0}">
+<%--    <c:if test="${listM.c3 > 0}">--%>
+<%--    <h2 class="text-c mb-10">检查详情</h2>--%>
+<%--    </c:if>--%>
+<%--    <c:if test="${listM.c3 == 0}">--%>
+<%--        //如果是企业自查则是检查详情--%>
+<%--        <h2 class="text-c mb-10">检查意见书</h2>--%>
+<%--    </c:if>--%>
     <h2 class="text-c mb-10">检查详情</h2>
-    </c:if>
-    <c:if test="${listM.c3 == 0}">
-        <h2 class="text-c mb-10">检查意见书</h2>
-    </c:if>
     <div class="f-l div_pdetail mt-10">
         <c:if test="${flag==2 || flag== 3 }">
             <font>受检公司：${user.userName }</font>
@@ -465,6 +467,9 @@
                     <div style="float: left; width: 100%; min-height: 150px;">
                         <div class="div_pleft  mt-10 mb-10">受检负责人签字：</div>
                         <div class="div_pright  mt-10 mb-10">
+                        <script>
+                            console.log("${name}");
+                         </script>
                             <input type="text" style="width: 200px" value="${name}" class="input-text" maxlength="50"
                                    disabled="disabled"/>
                         </div>

@@ -203,7 +203,7 @@ function print_() {
             </td>
             <c:if test="${m.isZhongDa == 1 }">
             <td>
-              <a href="javascript:show_dialog('企业自查' ,'${ly }/village/danger-index-list?flag=1&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }')" class="a_danger">${be[2] + be[3]}</a><br>
+              <a href="javascript:show_dialog('企业自查' ,'${ly }/global/danger-index-list?flag=1&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }')" class="a_danger">${be[2] + be[3]}</a><br>
               <%-- <a href="${ly }/village/danger-index-list?flag=1&cId=${be[0]}&status=3">已整改：${be[3]}</a>
               <a href="${ly }/village/danger-index-list?flag=1&cId=${be[0]}&status=2">未整改：${be[2]}</a><br>
               <a href="${ly }/village/danger-index-list?flag=1&cId=${be[0]}&d=1">重大隐患：${be[4] + be[5]}</a><br>
@@ -211,7 +211,7 @@ function print_() {
               <a href="${ly }/village/danger-index-list?flag=1&cId=${be[0]}&d=1&status=2">未整改：${be[4]}</a> --%>
             </td>
             <td>
-              <a href="javascript:show_dialog('执法检查' ,'${ly }/village/danger-index-list?flag=2&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }')" class="a_danger">${be[6] + be[7]}</a><br>
+              <a href="javascript:show_dialog('执法检查' ,'${ly }/global/danger-index-list?flag=2&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }')" class="a_danger">${be[6] + be[7]}</a><br>
               <%-- <a href="${ly }/village/danger-index-list?flag=2&cId=${be[0]}&status=3">已整改：${be[7]}</a>
               <a href="${ly }/village/danger-index-list?flag=2&cId=${be[0]}&status=2">未整改：${be[6]}</a><br>
               <a href="${ly }/village/danger-index-list?flag=2&cId=${be[0]}&d=1">重大隐患：${be[8] + be[9]}</a><br>
@@ -219,7 +219,7 @@ function print_() {
               <a href="${ly }/village/danger-index-list?flag=2&cId=${be[0]}&d=1&status=2">未整改：${be[8]}</a> --%>
             </td>
             <td>
-              <a href="javascript:show_dialog('部门抽查' ,'${ly }/village/danger-index-list?flag=3&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }')" class="a_danger">${be[10] + be[11]}</a><br>
+              <a href="javascript:show_dialog('部门抽查' ,'${ly }/global/danger-index-list?flag=3&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }')" class="a_danger">${be[10] + be[11]}</a><br>
               <%-- <a href="${ly }/village/danger-index-list?flag=3&cId=${be[0]}&status=3">已整改：${be[11]}</a>
               <a href="${ly }/village/danger-index-list?flag=3&cId=${be[0]}&status=2">未整改：${be[10]}</a><br>
               <a href="${ly }/village/danger-index-list?flag=3&cId=${be[0]}&d=1">重大隐患：${be[12] + be[13]}</a><br>
@@ -227,7 +227,7 @@ function print_() {
               <a href="${ly }/village/danger-index-list?flag=3&cId=${be[0]}&d=1&status=2">未整改：${be[12]}</a> --%>
             </td>
             <td>
-              <a href="javascript:show_dialog('行政检查' ,'${ly }/village/danger-index-list?flag=4&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }')" class="a_danger">${be[14] + be[15]}</a><br>
+              <a href="javascript:show_dialog('行政检查' ,'${ly }/global/danger-index-list?flag=4&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }')" class="a_danger">${be[14] + be[15]}</a><br>
               <%-- <a href="${ly }/village/danger-index-list?flag=4&cId=${be[0]}&status=3">已整改：${be[15]}</a>
               <a href="${ly }/village/danger-index-list?flag=4&cId=${be[0]}&status=2">未整改：${be[14]}</a><br>
               <a href="${ly }/village/danger-index-list?flag=4&cId=${be[0]}&d=1">重大隐患：${be[16] + be[17]}</a><br>
@@ -237,21 +237,21 @@ function print_() {
             </c:if>
             <c:if test="${m.isZhongDa == 2 }">
             <td>
-              <a href="javascript:show_dialog('企业自查' ,'${ly }/village/danger-index-list?flag=1&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }&d=1')" class="a_danger">${be[2] + be[3]}</a><br>
+              <a href="javascript:show_dialog('企业自查' ,'${ly }/global/danger-index-list?flag=1&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }&d=1')" class="a_danger">${be[2] + be[3]}</a><br>
             </td>
             <td>
-              <a href="javascript:show_dialog('执法检查' ,'${ly }/village/danger-index-list?flag=2&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }&d=1')" class="a_danger">${be[6] + be[7]}</a><br>
+              <a href="javascript:show_dialog('执法检查' ,'${ly }/global/danger-index-list?flag=2&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }&d=1')" class="a_danger">${be[6] + be[7]}</a><br>
             </td>
             <td>
-              <a href="javascript:show_dialog('部门抽查' ,'${ly }/village/danger-index-list?flag=3&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }&d=1')" class="a_danger">${be[10] + be[11]}</a><br>
+              <a href="javascript:show_dialog('部门抽查' ,'${ly }/global/danger-index-list?flag=3&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }&d=1')" class="a_danger">${be[10] + be[11]}</a><br>
             </td>
             <td>
-              <a href="javascript:show_dialog('行政检查' ,'${ly }/village/danger-index-list?flag=4&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }&d=1')" class="a_danger">${be[14] + be[15]}</a><br>
+              <a href="javascript:show_dialog('行政检查' ,'${ly }/global/danger-index-list?flag=4&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }&d=1')" class="a_danger">${be[14] + be[15]}</a><br>
             </td>
             </c:if>
             <c:if test="${m.isZhongDa == 3 }">
             <td>
-              <a href="javascript:show_dialog('执法检查' ,'${ly }/village/danger-index-list?flag=2&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }')" class="a_danger">${be[6] + be[7]}</a><br>
+              <a href="javascript:show_dialog('执法检查' ,'${ly }/global/danger-index-list?flag=2&cId=${be[0]}&startTime=${m.startTime }&endTime=${m.endTime }')" class="a_danger">${be[6] + be[7]}</a><br>
             </td>
             </c:if>
           </c:forEach>

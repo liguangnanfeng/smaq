@@ -213,7 +213,9 @@
             </div>
         </c:forEach>
     </div>
-
+<script>
+     console.log('c/tables/tab-biaozhun2.jsp');
+    </script>
 
     <!-- 弹窗输入 -->
     <div id="modal-plan2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

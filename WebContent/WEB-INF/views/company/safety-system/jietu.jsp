@@ -1025,7 +1025,8 @@
                                  alert('截图保存成功')
 
                                 setTimeout(function () {
-                                    window.history.back();
+    window.location.href=${ly}"/api/map/control-list4";
+    <%--                                    window.history.back();--%>
                                 },1000);
 
                             },

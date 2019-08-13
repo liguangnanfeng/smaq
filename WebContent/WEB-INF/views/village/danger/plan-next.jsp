@@ -94,6 +94,7 @@
         }
     </style>
     <script type="text/javascript">
+
         function uploadpicture(obj) {
             window.itemId = $(obj).attr("data-item");
             //var memo = $(this).closest("td").find("div[name='item-memo']").html();
@@ -102,6 +103,8 @@
             $("#pic3").attr("src", file == "" ? "/images/zwtp.jpg" : file).attr("url", file);
             $("#memo").val(memo);
             $("#modal-plan").modal("show");
+            console.log('img初始路径：',$("#pic3").attr("src"));
+            window.imgsrc=$("#pic3").attr("src");
         }
 
         function uploadimg(obj) {
@@ -201,7 +204,7 @@
                                 <label>合格</label>
                             </div>
                             <div class="radio-box">
-                                <input type="radio" value="2" data-file="" data-part="${part.id }"
+                                <input type="radio" id="failed" value="2" data-file="" data-part="${part.id }"
                                        name="plan-radio-${ch.id }" data-item="${ch.id }" onClick="uploadpicture(this)"
                                        <c:if test="${ch.status == 2}">checked</c:if>>
                                 <label>不合格</label>
@@ -462,7 +465,11 @@
         var text = '检查人员 : ' + val;
         $('#my_checker').text(text);
     }
-
+    function esc_(){
+    console.log("你关闭了弹窗！");
+    $('#pic3').attr('src',window.imgsrc);
+    console.log($('#pic3').attr('src'));
+    }
     var checkId = ${check.id};
     var flag = ${check.flag};
 
@@ -474,6 +481,11 @@
             });
             return false;
         }
+       if($("#pic3").attr("src")==window.imgsrc){
+        layer.alert("图片不能为空")
+       return false;
+    }
+         else  console.log("已上传");
         $(":radio[name='plan-radio-" + itemId + "'][value='2']").attr("data-file", $("#pic3").attr("url"));
         $("#modal-plan").modal("hide");
         $.post(getRootPath() + "/company/check-item-save", {
@@ -492,7 +504,6 @@
             id: partId,
             partImg: $("#pic4").attr("url")
         }, function (result) {
-
         })
     }
 
@@ -528,6 +539,13 @@
             layer.alert("选项不能为空");
             return false;
         }
+    var c=$("#failed").prop("checked");
+    console.log(c);
+    if(c&&$("#pic3").attr("src")==window.imgsrc)
+    {
+          layer.alert("不合格图片不能为空");
+          return false;
+    }
 
         if ($("#cheker").val() == '') {
             layer.alert("检查人不能为空");

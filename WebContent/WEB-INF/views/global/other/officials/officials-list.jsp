@@ -65,7 +65,7 @@
 <script type="text/javascript">
 function del_(id) {
   layer.confirm("确定删除么？",function(i) {
-    $.post(getRootPath() + "/district/off-save",{
+    $.post(getRootPath() + "/global/off-save",{
       id : id,
       del : 1
     },function(result) {

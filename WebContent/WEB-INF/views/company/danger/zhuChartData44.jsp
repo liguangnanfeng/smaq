@@ -22,22 +22,21 @@
 		text-align: center;
 		height: 38px; /*这里需要自己调整，根据自己的需求调整高度*/
 		position: relative;
-		padding: 0px 14px;
 		}
 		td[class=first]{
 		width: 120px;
 		}
 		td[class=first]:before {
-		content: "";
-		position: absolute;
-		width: 1px;
-		height: 162px;
-		top: 0;
-		left: 0;
-		background-color: #ddd;
-		display: block;
-		transform: rotate(-63deg);
-		transform-origin: top;
+        content: "";
+        position: absolute;
+        width: 1px;
+        height: 143px;
+        top: 0;
+        left: 0;
+        background-color: #ddd;
+        display: block;
+        transform: rotate(-58deg);
+        transform-origin: top;
 		}
 		.title{
 		margin-top: 43px;

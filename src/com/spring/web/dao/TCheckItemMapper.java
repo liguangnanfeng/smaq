@@ -247,7 +247,7 @@ public interface TCheckItemMapper {
 
     List<DynamicParameter<String,Object>> selectMapzhuChartData2(Map<String,Object> m);
 
-    int findHiddenSourceTypeByMap(@Param("flag") Integer flag, @Param("depart")String depart, @Param("user_id")Integer user_id, @Param("industry_type")Integer industry_type);
+    Integer findHiddenSourceTypeByMap(@Param("flag") Integer flag, @Param("depart")String depart, @Param("user_id")Integer user_id, @Param("industry_type")Integer industry_type);
 
     Integer findHiddenLevelTypeByMap(@Param("depart")String depart, @Param("user_id")Integer user_id, @Param("flag")Integer flag);
 
@@ -258,6 +258,26 @@ public interface TCheckItemMapper {
     Integer zhuChartData66(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
     Integer zhuChartData123(@Param("control")String control, @Param("depart")String depart, @Param("user_id")Integer user_id);
+
+    Integer zhuChartData67(@Param("control")String control, @Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer lookHiddenSource(@Param("flag") Integer flag, @Param("check_company")String check_company, @Param("user_id")Integer user_id, @Param("industry_type")Integer industry_type);
+
+    Integer zhuChartData22(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zhuChartData23(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer selectHiddenSources(@Param("flag") Integer flag, @Param("user_id") Integer user_id);
+
+    Integer findTypeByMap(@Param("user_id") Integer user_id, @Param("flag") Integer flag);
+
+    Integer findFileByMap(@Param("user_id") Integer user_id, @Param("flag") Integer flag);
+
+    Integer zhuChartData77(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zhuChartData88(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zhuChartData124(@Param("control")String control, @Param("user_id")Integer user_id);
 }
 
 

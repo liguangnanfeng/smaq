@@ -338,5 +338,5 @@ function opente(){
     }
     )
 </script>
-<script type="text/javascript" src="${ly }/js/check/opinion8.js"></script>
+<script type="text/javascript" src="${ly }/js/check/opinion84.js"></script>
 </html>

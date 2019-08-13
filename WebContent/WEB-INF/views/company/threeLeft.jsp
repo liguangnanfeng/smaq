@@ -87,6 +87,9 @@
         </style>
         </head>
         <body style="margin:0;padding:0;">
+        <script>
+          console.log("threeleft!");
+        </script>
         <div class="three">
         <!--组织架构-->
         <c:if test="${leftBasic == 1}">

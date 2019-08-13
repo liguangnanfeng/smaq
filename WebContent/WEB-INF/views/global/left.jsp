@@ -30,8 +30,6 @@
         $(this).parent().find(".div_omenu2").removeClass("div_omenu2xz");
       }
     });
-
-
   });
 </script>
 <body>

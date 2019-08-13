@@ -43,7 +43,7 @@ function article_save_submit() {
       } else {
         layer.alert("操作成功",{},function(ind){
           layer.close(ind);
-          top.location.href = getRootPath() + "/villageLogout";
+          top.location.href = getRootPath() + "/global/fore";
         });
       }
     });

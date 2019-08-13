@@ -295,7 +295,7 @@
                            href="javascript:;">检查详情</a><br>
                         <c:if test="${be.listM.c3 > 0}">
                             <a style="text-decoration:none"
-                               onClick="location.href = '/company/recheck-detail?checkId=${be.id}&flag=${flag}&number=${be.c }'"
+                               onClick="location.href = '/company/fuchadetail?checkId=${be.id}&flag=${flag}&number=${be.c }'"
                                href="javascript:;">复查详情</a><br>
                         </c:if>
 

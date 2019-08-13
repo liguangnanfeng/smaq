@@ -30,6 +30,7 @@ body .select{height:32px;line-height:32px;}
 body .radio-box{float:Left;}
 </style>
 <script type="text/javascript">
+  console.log("wjj521");
 function showpicture(src, obj){
   $("#modal-plan2 .div_imgp").html('');
   $.each(src.split(","), function(i, item) {

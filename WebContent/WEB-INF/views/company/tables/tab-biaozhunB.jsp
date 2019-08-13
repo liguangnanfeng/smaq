@@ -95,7 +95,7 @@
 
         .item_container {
             width: 20%;
-            height: 10vw;
+            height: 7.5vw;
             padding: 10px;
             box-sizing: border-box;
             position: relative;
@@ -153,6 +153,9 @@
     </script>
 </head>
 <body>
+    <script>
+    console.log('c/tables/tab-biaozhunB.jsp');
+    </script>
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>安全生产标准化</span>
@@ -221,7 +224,7 @@
                      onClick="jump('${t.fileAddress}','${t.id}')"
 <%--                     onClick=" show_tab('安全标准化', '${ly}/api/safety_Standard/tab-biaozhunC?safetyStandardlistId=${t.id}');"--%>
                 >
-                    <h5>${t.name }</h5>
+                    <h4>${t.name }</h4>
                 </div>
                 <span class="my_span"><a onclick="edit('${t.id}','${t.name }','${t.oder}','${t.fileAddress}')">操作</a><a
                         onclick="tip('${t.id}')">删除</a></span>

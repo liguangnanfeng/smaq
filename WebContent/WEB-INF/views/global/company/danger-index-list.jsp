@@ -37,10 +37,10 @@ function showpicture(memoImg){
   </nav>
   <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
-        <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/village/danger-index-list?flag=1&cId=${cId}">企业自查</a>
-        <a class="btn default ${flag == 4 ? 'btn-primary' : 'radius'}" href="${ly }/village/danger-index-list?flag=4&cId=${cId}">行政检查</a>
-        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/village/danger-index-list?flag=3&cId=${cId}">部门抽查</a>
-        <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/danger-index-list?flag=2&cId=${cId}">执法检查</a>
+        <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/global/danger-index-list?flag=1&cId=${cId}">企业自查</a>
+        <a class="btn default ${flag == 4 ? 'btn-primary' : 'radius'}" href="${ly }/global/danger-index-list?flag=4&cId=${cId}">行政检查</a>
+        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/global/danger-index-list?flag=3&cId=${cId}">部门抽查</a>
+        <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/global/danger-index-list?flag=2&cId=${cId}">执法检查</a>
     </div>
     <div class="text-c">
       <form action="${ly }/village/danger-index-list?flag=${flag}&cId=${cId}" method="post">

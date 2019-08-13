@@ -176,12 +176,12 @@
         <%--</ul>--%>
         <%--</div>--%>
         <ul>
-        <li><a data-href="${ly }/company/product/material-list" data-title="主要原辅材料"
-        href="javascript:void(0)">主要原辅材料</a></li>
-        <li><a data-href="${ly }/company/product/product-list" data-title="主要生产产品"
-        href="javascript:void(0)">主要生产产品</a></li>
-        <li><a data-href="${ly }/company/process/process-list" data-title="生产工艺流程图"
-        href="javascript:void(0)">生产工艺流程图</a></li>
+        <li><a data-href="${ly }/company/product/material-list" data-title="原辅材料"
+        href="javascript:void(0)">原辅材料</a></li>
+        <li><a data-href="${ly }/company/product/product-list" data-title="主要产品"
+        href="javascript:void(0)">主要产品</a></li>
+        <li><a data-href="${ly }/company/process/process-list" data-title="生产工艺"
+        href="javascript:void(0)">生产工艺</a></li>
         <%--    <li><a data-href="${ly }/company/videodebug" data-title="视频调试" href="javascript:void(0)">视频调试</a></li> --%>
         </ul>
         </dd>
@@ -296,18 +296,15 @@
         <li><a data-href="${ly }/village/check-list?flag=1&status=2" data-title="隐患排查记录"
         href="javascript:void(0)">隐患排查记录</a>
         </li>
-        <%--        <li><a data-href="${ly }/company/zhuChartData55" data-title="排查数据分析"--%>
-        <%--        href="javascript:void(0)">排查数据分析</a></li>--%>
-        <li><a data-href="${ly }/company/zhuChartData55" data-title="部门抽查绩效分析"
-        href="javascript:void(0)">部门抽查绩效分析</a></li>
+<%--                <li><a data-href="${ly }/company/zhuChartData55" data-title="排查数据分析"--%>
+<%--                href="javascript:void(0)">排查数据分析</a></li>--%>
 
-		 <li><a data-href="${ly }/company/danger-chart-jx" data-title="排查数据分析"
-        href="javascript:void(0)">排查绩效分析</a></li>
+
+
 
 <%--        <li><a data-href="${ly}/company/zhuChartData22" data-title="隐患数据分析"--%>
 <%--        href="javascript:void(0)">隐患数据分析</a></li>--%>
-        <li><a data-href="${ly}/company/zhuChartData22" data-title="企业自查隐患数据分析"
-        href="javascript:void(0)">企业自查隐患数据分析</a></li>
+
 
         <%--就是复查表的记录,--%>
        <!--  <li><a data-href="${ly }/village/recheck-list?flag=1&status=1" data-title="隐患治理记录"
@@ -318,17 +315,36 @@
         </li>
        <!--  <li><a data-href="${ly }/village/danger-index-list?flag=1" data-title="隐患统计汇总"
         href="javascript:void(0)">隐患统计汇总</a></li> -->
-        <li><a data-href="${ly }/company/zhuChartData123" data-title="治理数据分析"
-        href="javascript:void(0)">治理数据分析</a></li>
-<%--        zhuChartData77        hidden-table  隐患排查绩效分析--%>
-<%--        zhuChartData44        hidden-zl-table  隐患治理数据分析--%>
-<%--        zhuChartData66        hidden-pc-table 企业自查对象分析--%>
-        <li><a data-href="${ly }/company/zhuChartData77" data-title="隐患排查绩效分析"
-        href="javascript:void(0)">隐患排查绩效分析</a></li>
+
+
+        <li><a data-href="${ly }/company/danger-chart-jx" data-title="企业自查绩效分析"
+        href="javascript:void(0)">企业自查绩效分析</a></li>
+        <li><a data-href="${ly }/company/zhuChartData55?flag=2" data-title="行政检查绩效分析"
+        href="javascript:void(0)">行政检查绩效分析</a></li>
+        <li><a data-href="${ly }/company/zhuChartData55?flag=3" data-title="部门抽查绩效分析"
+        href="javascript:void(0)">部门抽查绩效分析</a></li>
+
+        <li><a data-href="${ly }/company/zhuChartData66?flag=1" data-title="企业自查对象分析"
+        href="javascript:void(0)">企业自查对象分析 </a></li>
+        <li><a data-href="${ly }/company/zhuChartData66?flag=2" data-title="行政检查对象分析"
+        href="javascript:void(0)">行政检查对象分析 </a></li>
+        <li><a data-href="${ly }/company/zhuChartData66?flag=3" data-title="部门抽查对象分析"
+        href="javascript:void(0)">部门抽查对象分析 </a></li>
+
+        <li><a data-href="${ly}/company/zhuChartData22?flag=1" data-title="企业自查隐患数据分析"
+        href="javascript:void(0)">企业自查隐患数据分析</a></li>
+        <li><a data-href="${ly}/company/zhuChartData22?flag=2" data-title="行政检查隐患数据分析"
+        href="javascript:void(0)">行政检查隐患数据分析</a></li>
+        <li><a data-href="${ly}/company/zhuChartData22?flag=3" data-title="部门抽查隐患数据分析"
+        href="javascript:void(0)">部门抽查隐患数据分析</a></li>
+
+        <li><a data-href="${ly }/company/zhuChartData77" data-title="隐患数据分析"
+        href="javascript:void(0)">隐患数据分析</a></li>
+        <li><a data-href="${ly }/company/zhuChartData123" data-title="隐患治理对象分析"
+        href="javascript:void(0)">隐患治理对象分析</a></li>
         <li><a data-href="${ly }/company/zhuChartData44" data-title="隐患治理数据分析"
         href="javascript:void(0)">隐患治理数据分析</a></li>
-        <li><a data-href="${ly }/company/zhuChartData66" data-title="企业自查对象分析"
-        href="javascript:void(0)">隐患排查对象分析 </a></li>
+
 <%--        /company/danger/danger-chart-zl--%>
         <%-- <li><a data-href="${ly }/html/about.html" data-title="新手指南" href="javascript:void(0)">新手指南</a></li> --%>
         <%-- <li><a data-href="${ly }/company/tables/tab-list?isType=21" data-title="安全隐患整改通知单" href="javascript:void(0)">安全隐患整改通知单</a></li> --%>
@@ -356,17 +372,233 @@
         <li><a data-href="${ly }/company/threeLeft?leftBasic=7" data-title="运行管理"
         href="javascript:void(0)">运行管理</a>
         </li>
-        <li><a data-href="${ly }/company/study/targetassessment" data-title="目标履职考核"
-        href="javascript:void(0)">目标履职考核</a>
+        <li><a data-href="${ly }/company/study/targetassessment" data-title="履职考核"
+        href="javascript:void(0)">履职考核</a>
         </li>
         </ul>
         <ul>
-        <li><a data-href="${ly }/company/study/promise" data-title="承诺公告"
-        href="javascript:void(0)">承诺公告公示</a></li>
+        <li><a data-href="${ly }/company/study/promise" data-title="承诺公示"
+        href="javascript:void(0)">承诺公示</a></li>
         </ul>
         <ul>
         <li><a data-href="${ly }/company/study/files-select" data-title="档案管理" href="javascript:void(0)">档案管理</a>
         </li>
+        </ul>
+        </dd>
+        </dl>
+
+
+     <%--<dl class="list_an">--%>
+        <%--<dt>--%>
+        <%--<i class="Hui-iconfont">&#xe687;</i>安全生产管理--%>
+        <%--<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--%>
+        <%--</dt>--%>
+        <%--<dd>--%>
+        <%--<ul>--%>
+        <%--<li><a data-href="${ly }/company/product/mequipment-list"--%>
+        <%--data-title="主要设备清单" href="javascript:void(0)">主要设备清单</a></li>--%>
+        <%--<li><a data-href="${ly }/company/sequipment/sequipment-list"--%>
+        <%--data-title="特种设备检测" href="javascript:void(0)">特种设备检测</a></li>--%>
+        <%--<li><a data-href="${ly }/company/product/lightning-list"--%>
+        <%--data-title="防雷防静电" href="javascript:void(0)">防雷防静电</a></li>--%>
+        <%--<li><a data-href="${ly }/company/safety-facilities"--%>
+        <%--data-title="安全设施登记台账" href="javascript:void(0)">安全设施登记台账</a></li>--%>
+        <%--<li><a data-href="${ly }/company/evaluate/evaluation-list?flag=0" data-title="评价评估档案"--%>
+        <%--href="javascript:void(0)">评价评估档案</a></li>--%>
+        <%--<li><a data-href="${ly }/company/evaluate/zheng-list" data-title="各类许可证档案"--%>
+        <%--href="javascript:void(0)">各类许可证档案</a></li>--%>
+        <%--<li><a data-href="${ly }/company/information/information3" data-title="两重点一重大"--%>
+        <%--href="javascript:void(0)">两重点一重大</a></li>--%>
+        <%--&lt;%&ndash; <li><a data-href="${ly }/company/tables/tab-yjlist" data-title="应急预案" href="javascript:void(0)">应急预案</a></li> &ndash;%&gt;--%>
+        <%--<li><a data-href="${ly }/company/tables/tab-weilist" data-title="危险作业证"--%>
+        <%--href="javascript:void(0)">危险作业证</a></li>--%>
+        <%--<li><a data-href="${ly }/company/tables/tab-jianglist" data-title="安全奖惩"--%>
+        <%--href="javascript:void(0)">安全奖惩</a></li>--%>
+        <%--<li><a data-href="${ly }/company/tables/tab-shilist" data-title="事故报告和处理"--%>
+        <%--href="javascript:void(0)">事故报告和处理</a></li>--%>
+        <%--</ul>--%>
+        <%--</dd>--%>
+        <%--</dl>--%>
+
+        <dl>
+        <dt>
+        <i class="Hui-iconfont">&#xe687;</i>职业卫生健康
+        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+        </dt>
+        <dd>
+        <ul>
+        <li><a data-href="${ly }/company/labor/labor-list" data-title="劳保用品配备" href="javascript:void(0)">劳保用品配备</a>
+        </li>
+        <li><a data-href="${ly }/company/threeLeft?leftBasic=10" data-title="管理档案台账" href="javascript:void(0)">管理档案台账</a>
+        </li>
+        <%-- <li><a data-href="${ly }/company/tables/tab-list?isType=29" data-title="职业卫生管理制度" href="javascript:void(0)" style="color:#fff;">管理制度</a></li> --%>
+        </ul>
+        <%--<div class="div_omenu">--%>
+        <%--<div class="div_otop">管理档案<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>--%>
+        <%--<ul>--%>
+        <%--<li><a data-href="${ly }/company/evaluate/detection-list" data-title="职卫检测、体检"--%>
+        <%--href="javascript:void(0)">职卫检测、体检</a></li>--%>
+        <%--&lt;%&ndash; <li><a data-href="${ly }/company/evaluate/health-list" data-title="职业健康体检" href="javascript:void(0)" style="color:#fff;">职业健康体检</a></li> &ndash;%&gt;--%>
+        <%--<li><a data-href="${ly }/company/tables/tab-health/2" data-title="职业卫生管理"--%>
+        <%--href="javascript:void(0)">职业卫生管理</a></li>--%>
+        <%--<li><a data-href="${ly }/company/tables/tab-health/3" data-title="职业卫生宣传培训"--%>
+        <%--href="javascript:void(0)">职业卫生宣传培训</a></li>--%>
+        <%--<li><a data-href="${ly }/company/tables/tab-health/4" data-title="职业病危害因素监测与检测评价"--%>
+        <%--href="javascript:void(0)">职业病危害因素检测评价</a></li>--%>
+        <%--<li><a data-href="${ly }/company/tables/tab-health/5" data-title="用人单位职业健康监护管理"--%>
+        <%--href="javascript:void(0)">职业健康监护管理</a></li>--%>
+        <%--<li><a data-href="${ly }/company/cyryjkjh" data-title="劳动者个人职业健康监护" href="javascript:void(0)">劳动者个人职业健康监护</a>--%>
+        <%--</li>--%>
+        <%--<li><a data-href="${ly }/company/tables/tab-health/7" data-title="其他" href="javascript:void(0)">其他</a>--%>
+        <%--</li>--%>
+        <%--</ul>--%>
+        <%--</div>--%>
+        </dd>
+        </dl>
+        <dl>
+        <dt>
+        <i class="Hui-iconfont">&#xe70c;</i>行政执法检查
+        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+        </dt>
+        <dd>
+        <ul>
+        <%-- <li><a data-href="${ly }/company/check-add-cho" data-title="执法检查" href="javascript:void(0)">执法检查</a></li> --%>
+        <%-- <li><a data-href="${ly }/village/rectification-list?flag=2" data-title="执法复查" href="javascript:void(0)">执法复查</a></li> --%>
+        <%-- <li><a data-href="${ly }/village/check-list?flag=2" data-title="执法记录" href="javascript:void(0)">执法记录</a></li>
+        <li><a data-href="${ly }/village/danger/opinion-list?type=3&flag2=2" data-title="行政处罚" href="javascript:void(0)">行政处罚</a></li> --%>
+        <li><a data-href="${ly }/village/opinion-show?flag2=2" data-title="执法档案" href="javascript:void(0)">执法档案</a>
+        </li>
+        <%-- <li><a data-href="${ly }/village/evaluate/lawDoc-list?flag=2" data-title="上传图片视频资料" href="javascript:void(0)">上传图片视频资料</a></li> --%>
+        </ul>
+        </dd>
+        </dl>
+
+        <%-- <dl>
+          <dt>
+            <i class="Hui-iconfont">&#xe70c;</i>隐患统计分析系统
+            <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+          </dt>
+          <dd>
+            <ul>
+              <li><a data-href="${ly }/village/danger-index-list?flag=1" data-title="隐患统计汇总" href="javascript:void(0)">隐患统计汇总</a></li>
+              <li><a data-href="${ly }/village/danger-chart" data-title="隐患数据分析" href="javascript:void(0)" style="color:#fff;">隐患数据分析</a></li>
+            </ul>
+          </dd>
+        </dl> --%>
+
+        <%-- <dl>
+          <dt>
+            <i class="Hui-iconfont">&#xe70c;</i>评价评估系统
+            <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+          </dt>
+          <dd>
+            <ul>
+              <li><a data-href="${ly }/company/evaluate/evaluation-list?flag=0" data-title="评价评估档案" href="javascript:void(0)">评价评估档案</a></li>
+              <li><a data-href="${ly }/company/evaluate/zheng-list" data-title="各类许可证档案" href="javascript:void(0)">各类许可证档案</a></li>
+            </ul>
+            <div class="div_omenu">
+              <div  class="div_otop">评价评估档案<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
+              <ul>
+                <li><a data-href="${ly }/company/evaluate/evaluation-list?flag=0" data-title="各类评价评估" href="javascript:void(0)">各类评价评估</a></li>
+                <li><a data-href="${ly }/company/evaluate/tab-she" data-title="安全设施“三同时”" href="javascript:void(0)">安全设施“三同时”</a></li>
+                <li><a data-href="${ly }/company/tables/tab-health/1" data-title="职业健康“三同时”" href="javascript:void(0)" style="color:#fff;">职业健康“三同时”</a></li>
+              </ul>
+            </div>
+          </dd>
+        </dl> --%>
+        <%-- <dl>
+          <dt>
+            <i class="Hui-iconfont">&#xe6cd;</i>危险有害因素检索
+            <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+          </dt>
+          <dd>
+            <ul>
+              <li><a data-href="${ly }/html/danger.html" data-title="重大事故隐患判定标准" href="javascript:void(0)">重大事故隐患判定标准</a></li>
+              <li><a data-href="${ly }/fore/notice-show?id=543" data-title="重大火灾隐患判定方法" href="javascript:void(0)">重大火灾隐患判定方法</a></li>
+              <li><a data-href="${ly }/fore/danger/wei-list" data-title="重大危险源辨识目录" href="javascript:void(0)">重大危险源辨识目录</a></li>
+              <li><a data-href="${ly }/company/trouble/trouble-information" data-title="隐患排查治理标准信息库" href="javascript:void(0)">隐患排查治理标准</a></li>
+              <li><a data-href="${ly }/fore/danger/danger-list" data-title="危化品目录" href="javascript:void(0)">危化品目录</a></li>
+              <li><a data-href="${ly }/fore/danger/bao-list" data-title="易制爆危险化学品" href="javascript:void(0)">易制爆危险化学品</a></li>
+              <li><a data-href="${ly }/fore/danger/du-list" data-title="易制毒化学品" href="javascript:void(0)">易制毒化学品</a></li>
+              <li><a data-href="${ly }/fore/danger/zhi-list" data-title="职业病危害因素种类" href="javascript:void(0)">职业病危害因素种类</a></li>
+            </ul>
+          </dd>
+        </dl> --%>
+
+        <dl>
+        <dt>
+        <i class="Hui-iconfont">&#xe61d;</i>信息推送互动
+        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+        </dt>
+        <dd>
+        <ul>
+        <li><a data-href="${ly }/village/reviceMessageList" data-title="接收列表" href="javascript:void(0)">接收列表</a>
+        </li>
+        <%-- add by wz 190117 --%>
+        <li><a data-href="${ly }/village/sendMessageList" data-title="发送列表" href="javascript:void(0)">发送列表</a>
+        </li>
+        <%--  <li><a data-href="${ly }/village/reviceMessageList" data-title="信息接收列表" href="javascript:void(0)">信息接收列表</a></li> --%>
+        <li><a data-href="${ly }/village/addMessages" data-title="推送编辑" href="javascript:void(0)">推送编辑</a>
+        </li>
+        <li><a data-href="${ly }/village/groupIndex" data-title="群组设置" href="javascript:void(0)">群组设置</a>
+        </li>
+        </ul>
+        </dd>
+        </dl>
+        <%-- <dl>
+          <dt>
+            <i class="Hui-iconfont">&#xe61d;</i>实时监控设置
+            <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+          </dt>
+          <dd>
+            <ul>
+              <li><a data-href="${ly }/village/to_monitor-list?page=1" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
+              <li><a data-href="${ly }/village/monitor-list" data-title="实时监控设置" href="javascript:void(0)">实时监控设置</a></li>
+            </ul>
+          </dd>
+        </dl>
+
+        <dl>
+          <dt>
+            <i class="Hui-iconfont">&#xe61d;</i>传感器管理
+            <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+          </dt>
+          <dd>
+            <ul>
+              <li><a data-href="${ly }/village/toSensorList" data-title="传感器列表" href="javascript:void(0)">传感器列表</a></li>
+              <li><a data-href="${ly }/village/toAddSensor" data-title="传感器设置" href="javascript:void(0)">传感器设置</a></li>
+            </ul>
+          </dd>
+        </dl> --%>
+        <dl>
+        <dt>
+        <i class="Hui-iconfont">&#xe61d;</i>系统设置管理
+        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+        </dt>
+        <dd>
+        <%--<div class="div_omenu">--%>
+        <%--<div class="div_otop">在线监测设置<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>--%>
+        <%--<ul>--%>
+        <%--<li><a data-href="${ly }/village/toSensorList" data-title="传感器列表" href="javascript:void(0)">传感器列表</a>--%>
+        <%--</li>--%>
+        <%--<li><a data-href="${ly }/village/toAddSensor" data-title="传感器设置"--%>
+        <%--href="javascript:void(0)">传感器设置</a></li>--%>
+        <%--</ul>--%>
+        <%--</div>--%>
+        <ul>
+        <!--<li><a data-href="${ly }/village/monitor-list" data-title="实时监控设置" href="javascript:void(0)">实时监控设置</a></li>
+        2018.12.15 zhangcl-->
+        <li><a data-href="${ly }/company/threeLeft?leftBasic=11" data-title="在线监测"
+        href="javascript:void(0)">在线监测</a></li>
+        <li><a data-href="${ly }/village/to_monitor-list?flag=1" data-title="实时监控"
+        href="javascript:void(0)">实时监控</a></li>
+        <%--<li><a data-href="${ly }/company/system/show-yhsc" data-title="用户手册"--%>
+        <%--href="javascript:void(0)">用户手册</a></li>--%>
+        <li><a data-href="${ly }/company/system/change-psw" data-title="修改密码"
+        href="javascript:void(0)">修改密码</a></li>
+        <li><a data-href="${ly }/company/system/change-userName" data-title="修改登录"
+        href="javascript:void(0)">修改登录</a></li>
+        <%-- <li><a data-href="${ly }/company/message-list" data-title="推送消息" href="javascript:void(0)">推送消息</a></li> --%>
         </ul>
         </dd>
         </dl>
@@ -377,13 +609,13 @@
         </dt>
         <dd>
         <ul>
-<%--        <li><a target="_blank"--%>
-<%--        data-href="http://jswx.zayxy.com/index.php?user-app-login&mobile=${userName}"--%>
-<%--        data-title="安全培训">安全培训</a></li>--%>
-<%--        <li><a data-href="${ly }/company/train/special-list?spFlag=0"--%>
-<%--        data-title="持证上岗" href="javascript:void(0)">持证上岗</a></li>--%>
-<%--        <li><a data-href="${ly }/company/tables/tab-anlist"--%>
-<%--        data-title="安全生产教育台账" href="javascript:void(0)">教育台账</a></li>--%>
+        <%--        <li><a target="_blank"--%>
+        <%--        data-href="http://jswx.zayxy.com/index.php?user-app-login&mobile=${userName}"--%>
+        <%--        data-title="安全培训">安全培训</a></li>--%>
+        <%--        <li><a data-href="${ly }/company/train/special-list?spFlag=0"--%>
+        <%--        data-title="持证上岗" href="javascript:void(0)">持证上岗</a></li>--%>
+        <%--        <li><a data-href="${ly }/company/tables/tab-anlist"--%>
+        <%--        data-title="安全生产教育台账" href="javascript:void(0)">教育台账</a></li>--%>
         <%--<li><a target="_blank"--%>
         <%--data-href="http://exam.dicarl.com/index.php?user-app-login&mobile=${userName}"--%>
         <%--data-title="安全培训">安全培训</a></li>--%>
@@ -394,32 +626,33 @@
         <dl>
         <dt>
         <%--      应急救援--%>
-<%--        <a style="color:#fff;"  data-href="${ly }/api/safety_Standard/findAll?parendId=0&flag=1" data-title="运行操作系统"--%>
-<%--        href="javascript:void(0)"><i class="Hui-iconfont">&#xe639;</i>安全生产标准化</a>--%>
+        <%--        <a style="color:#fff;"  data-href="${ly }/api/safety_Standard/findAll?parendId=0&flag=1" data-title="运行操作系统"--%>
+        <%--        href="javascript:void(0)"><i class="Hui-iconfont">&#xe639;</i>安全生产标准化</a>--%>
 
         <a style="color:#fff;"  data-href="${ly }/company/tables/yjmanage_center"  data-title="应急管理中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急管理中心</a>
         </dt>
-<%--        <dd>--%>
-<%--        <ul>--%>
-<%--        <li><a data-href="${ly }/company/tables/tab-yjlist" data-title="应急预案"--%>
-<%--        href="javascript:void(0)">应急预案</a></li>--%>
-<%--        <li><a data-href="${ly }/company/facilities/facilities-list?flag=1" data-title="消防设备设施"--%>
-<%--        href="javascript:void(0)">消防设备设施</a></li>--%>
-<%--        <li><a data-href="${ly }/company/facilities/facilities-list?flag=2" data-title="应急设备设施"--%>
-<%--        href="javascript:void(0)">应急设备设施</a></li>--%>
-<%--        </ul>--%>
-<%--        </dd>--%>
+        <%--        <dd>--%>
+        <%--        <ul>--%>
+        <%--        <li><a data-href="${ly }/company/tables/tab-yjlist" data-title="应急预案"--%>
+        <%--        href="javascript:void(0)">应急预案</a></li>--%>
+        <%--        <li><a data-href="${ly }/company/facilities/facilities-list?flag=1" data-title="消防设备设施"--%>
+        <%--        href="javascript:void(0)">消防设备设施</a></li>--%>
+        <%--        <li><a data-href="${ly }/company/facilities/facilities-list?flag=2" data-title="应急设备设施"--%>
+        <%--        href="javascript:void(0)">应急设备设施</a></li>--%>
+        <%--        </ul>--%>
+        <%--        </dd>--%>
         </dl>
-		<div id="industryId" >
+        <div id="industryId" >
 
 
-    </div>
+        </div>
 
         <dl class="list_an">
         <dt>
         <a style="color:#fff;"  data-href="${ly }/api/safety_Standard/findAll?parendId=0&flag=1" data-title="运行操作系统"
         href="javascript:void(0)"><i class="Hui-iconfont">&#xe639;</i>安全生产标准化</a>
         </dt>
+
         <%--<dd>--%>
         <%--<ul>--%>
         <%--<li><a data-href="${ly }/company/threeLeft?leftBasic=8" data-title="安全管理"--%>
@@ -430,10 +663,10 @@
         <%--href="javascript:void(0)">安全台账</a>--%>
         <%--</li>--%>
 
-       <!-- 旧版(废弃) <li><a data-href="${ly }/company/tables/tab-biaozhun" data-title="安全标准化"
+        <!-- 旧版(废弃) <li><a data-href="${ly }/company/tables/tab-biaozhun" data-title="安全标准化"
         href="javascript:void(0)">安全标准化</a></li> -->
-		<%--<li><a data-href="${ly }/api/safety_Standard/findAll?parendId=0&flag=1" data-title="运行操作系统"--%>
-          <%--href="javascript:void(0)">运行操作系统</a></li>--%>
+        <%--<li><a data-href="${ly }/api/safety_Standard/findAll?parendId=0&flag=1" data-title="运行操作系统"--%>
+        <%--href="javascript:void(0)">运行操作系统</a></li>--%>
 
         <%--<li><a data-href="${ly }/company/threeLeft?leftBasic=18" data-title="设备设施管理"--%>
         <%--href="javascript:void(0)">设备设施管理</a></li>--%>
@@ -562,7 +795,6 @@
 
         <%--</dd>--%>
         </dl>
-
         <dl class="list_an">
         <dt>
         <i class="Hui-iconfont">&#xe687;</i>重大危险源长制
@@ -600,8 +832,8 @@
         href="javascript:void(0)">管控机制</a></li>
         <li><a data-href="${ly }/company/threeLeft?leftBasic=14" data-title="管控措施"
         href="javascript:void(0)">管控措施</a></li>
-        <li><a data-href="${ly }/company/source/model-list-cx" data-title="隐患排查治理"
-        href="javascript:void(0)">隐患排查治理</a></li>
+        <li><a data-href="${ly }/company/source/model-list-cx" data-title="隐患排查"
+        href="javascript:void(0)">隐患排查</a></li>
         <li><a data-href="${ly }/company/threeLeft?leftBasic=15" data-title="特殊作业"
         href="javascript:void(0)">特殊作业</a></li>
         <li><a data-href="${ly }/company/threeLeft?leftBasic=16" data-title="应急救援"
@@ -636,220 +868,6 @@
         <ul>
         <li><a data-href="${ly }/company/source/files-select" data-title="档案管理" href="javascript:void(0)">档案管理</a>
         </li>
-        </ul>
-        </dd>
-        </dl>
-        <%--<dl class="list_an">--%>
-        <%--<dt>--%>
-        <%--<i class="Hui-iconfont">&#xe687;</i>安全生产管理--%>
-        <%--<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--%>
-        <%--</dt>--%>
-        <%--<dd>--%>
-        <%--<ul>--%>
-        <%--<li><a data-href="${ly }/company/product/mequipment-list"--%>
-        <%--data-title="主要设备清单" href="javascript:void(0)">主要设备清单</a></li>--%>
-        <%--<li><a data-href="${ly }/company/sequipment/sequipment-list"--%>
-        <%--data-title="特种设备检测" href="javascript:void(0)">特种设备检测</a></li>--%>
-        <%--<li><a data-href="${ly }/company/product/lightning-list"--%>
-        <%--data-title="防雷防静电" href="javascript:void(0)">防雷防静电</a></li>--%>
-        <%--<li><a data-href="${ly }/company/safety-facilities"--%>
-        <%--data-title="安全设施登记台账" href="javascript:void(0)">安全设施登记台账</a></li>--%>
-        <%--<li><a data-href="${ly }/company/evaluate/evaluation-list?flag=0" data-title="评价评估档案"--%>
-        <%--href="javascript:void(0)">评价评估档案</a></li>--%>
-        <%--<li><a data-href="${ly }/company/evaluate/zheng-list" data-title="各类许可证档案"--%>
-        <%--href="javascript:void(0)">各类许可证档案</a></li>--%>
-        <%--<li><a data-href="${ly }/company/information/information3" data-title="两重点一重大"--%>
-        <%--href="javascript:void(0)">两重点一重大</a></li>--%>
-        <%--&lt;%&ndash; <li><a data-href="${ly }/company/tables/tab-yjlist" data-title="应急预案" href="javascript:void(0)">应急预案</a></li> &ndash;%&gt;--%>
-        <%--<li><a data-href="${ly }/company/tables/tab-weilist" data-title="危险作业证"--%>
-        <%--href="javascript:void(0)">危险作业证</a></li>--%>
-        <%--<li><a data-href="${ly }/company/tables/tab-jianglist" data-title="安全奖惩"--%>
-        <%--href="javascript:void(0)">安全奖惩</a></li>--%>
-        <%--<li><a data-href="${ly }/company/tables/tab-shilist" data-title="事故报告和处理"--%>
-        <%--href="javascript:void(0)">事故报告和处理</a></li>--%>
-        <%--</ul>--%>
-        <%--</dd>--%>
-        <%--</dl>--%>
-
-        <dl>
-        <dt>
-        <i class="Hui-iconfont">&#xe687;</i>职业卫生健康
-        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-        </dt>
-        <dd>
-        <ul>
-        <li><a data-href="${ly }/company/labor/labor-list" data-title="劳动防护用品配备" href="javascript:void(0)">劳动防护用品配备</a>
-        </li>
-        <li><a data-href="${ly }/company/threeLeft?leftBasic=10" data-title="管理档案" href="javascript:void(0)">管理档案</a>
-        </li>
-        <%-- <li><a data-href="${ly }/company/tables/tab-list?isType=29" data-title="职业卫生管理制度" href="javascript:void(0)" style="color:#fff;">管理制度</a></li> --%>
-        </ul>
-        <%--<div class="div_omenu">--%>
-        <%--<div class="div_otop">管理档案<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>--%>
-        <%--<ul>--%>
-        <%--<li><a data-href="${ly }/company/evaluate/detection-list" data-title="职卫检测、体检"--%>
-        <%--href="javascript:void(0)">职卫检测、体检</a></li>--%>
-        <%--&lt;%&ndash; <li><a data-href="${ly }/company/evaluate/health-list" data-title="职业健康体检" href="javascript:void(0)" style="color:#fff;">职业健康体检</a></li> &ndash;%&gt;--%>
-        <%--<li><a data-href="${ly }/company/tables/tab-health/2" data-title="职业卫生管理"--%>
-        <%--href="javascript:void(0)">职业卫生管理</a></li>--%>
-        <%--<li><a data-href="${ly }/company/tables/tab-health/3" data-title="职业卫生宣传培训"--%>
-        <%--href="javascript:void(0)">职业卫生宣传培训</a></li>--%>
-        <%--<li><a data-href="${ly }/company/tables/tab-health/4" data-title="职业病危害因素监测与检测评价"--%>
-        <%--href="javascript:void(0)">职业病危害因素检测评价</a></li>--%>
-        <%--<li><a data-href="${ly }/company/tables/tab-health/5" data-title="用人单位职业健康监护管理"--%>
-        <%--href="javascript:void(0)">职业健康监护管理</a></li>--%>
-        <%--<li><a data-href="${ly }/company/cyryjkjh" data-title="劳动者个人职业健康监护" href="javascript:void(0)">劳动者个人职业健康监护</a>--%>
-        <%--</li>--%>
-        <%--<li><a data-href="${ly }/company/tables/tab-health/7" data-title="其他" href="javascript:void(0)">其他</a>--%>
-        <%--</li>--%>
-        <%--</ul>--%>
-        <%--</div>--%>
-        </dd>
-        </dl>
-        <dl>
-        <dt>
-        <i class="Hui-iconfont">&#xe70c;</i>行政执法检查
-        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-        </dt>
-        <dd>
-        <ul>
-        <%-- <li><a data-href="${ly }/company/check-add-cho" data-title="执法检查" href="javascript:void(0)">执法检查</a></li> --%>
-        <%-- <li><a data-href="${ly }/village/rectification-list?flag=2" data-title="执法复查" href="javascript:void(0)">执法复查</a></li> --%>
-        <%-- <li><a data-href="${ly }/village/check-list?flag=2" data-title="执法记录" href="javascript:void(0)">执法记录</a></li>
-        <li><a data-href="${ly }/village/danger/opinion-list?type=3&flag2=2" data-title="行政处罚" href="javascript:void(0)">行政处罚</a></li> --%>
-        <li><a data-href="${ly }/village/opinion-show?flag2=2" data-title="执法档案" href="javascript:void(0)">执法档案</a>
-        </li>
-        <%-- <li><a data-href="${ly }/village/evaluate/lawDoc-list?flag=2" data-title="上传图片视频资料" href="javascript:void(0)">上传图片视频资料</a></li> --%>
-        </ul>
-        </dd>
-        </dl>
-
-        <%-- <dl>
-          <dt>
-            <i class="Hui-iconfont">&#xe70c;</i>隐患统计分析系统
-            <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-          </dt>
-          <dd>
-            <ul>
-              <li><a data-href="${ly }/village/danger-index-list?flag=1" data-title="隐患统计汇总" href="javascript:void(0)">隐患统计汇总</a></li>
-              <li><a data-href="${ly }/village/danger-chart" data-title="隐患数据分析" href="javascript:void(0)" style="color:#fff;">隐患数据分析</a></li>
-            </ul>
-          </dd>
-        </dl> --%>
-
-        <%-- <dl>
-          <dt>
-            <i class="Hui-iconfont">&#xe70c;</i>评价评估系统
-            <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-          </dt>
-          <dd>
-            <ul>
-              <li><a data-href="${ly }/company/evaluate/evaluation-list?flag=0" data-title="评价评估档案" href="javascript:void(0)">评价评估档案</a></li>
-              <li><a data-href="${ly }/company/evaluate/zheng-list" data-title="各类许可证档案" href="javascript:void(0)">各类许可证档案</a></li>
-            </ul>
-            <div class="div_omenu">
-              <div  class="div_otop">评价评估档案<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
-              <ul>
-                <li><a data-href="${ly }/company/evaluate/evaluation-list?flag=0" data-title="各类评价评估" href="javascript:void(0)">各类评价评估</a></li>
-                <li><a data-href="${ly }/company/evaluate/tab-she" data-title="安全设施“三同时”" href="javascript:void(0)">安全设施“三同时”</a></li>
-                <li><a data-href="${ly }/company/tables/tab-health/1" data-title="职业健康“三同时”" href="javascript:void(0)" style="color:#fff;">职业健康“三同时”</a></li>
-              </ul>
-            </div>
-          </dd>
-        </dl> --%>
-        <%-- <dl>
-          <dt>
-            <i class="Hui-iconfont">&#xe6cd;</i>危险有害因素检索
-            <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-          </dt>
-          <dd>
-            <ul>
-              <li><a data-href="${ly }/html/danger.html" data-title="重大事故隐患判定标准" href="javascript:void(0)">重大事故隐患判定标准</a></li>
-              <li><a data-href="${ly }/fore/notice-show?id=543" data-title="重大火灾隐患判定方法" href="javascript:void(0)">重大火灾隐患判定方法</a></li>
-              <li><a data-href="${ly }/fore/danger/wei-list" data-title="重大危险源辨识目录" href="javascript:void(0)">重大危险源辨识目录</a></li>
-              <li><a data-href="${ly }/company/trouble/trouble-information" data-title="隐患排查治理标准信息库" href="javascript:void(0)">隐患排查治理标准</a></li>
-              <li><a data-href="${ly }/fore/danger/danger-list" data-title="危化品目录" href="javascript:void(0)">危化品目录</a></li>
-              <li><a data-href="${ly }/fore/danger/bao-list" data-title="易制爆危险化学品" href="javascript:void(0)">易制爆危险化学品</a></li>
-              <li><a data-href="${ly }/fore/danger/du-list" data-title="易制毒化学品" href="javascript:void(0)">易制毒化学品</a></li>
-              <li><a data-href="${ly }/fore/danger/zhi-list" data-title="职业病危害因素种类" href="javascript:void(0)">职业病危害因素种类</a></li>
-            </ul>
-          </dd>
-        </dl> --%>
-
-        <dl>
-        <dt>
-        <i class="Hui-iconfont">&#xe61d;</i>信息推送互动
-        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-        </dt>
-        <dd>
-        <ul>
-        <li><a data-href="${ly }/village/reviceMessageList" data-title="信息接收列表" href="javascript:void(0)">信息接收列表</a>
-        </li>
-        <%-- add by wz 190117 --%>
-        <li><a data-href="${ly }/village/sendMessageList" data-title="信息发送列表" href="javascript:void(0)">信息发送列表</a>
-        </li>
-        <%--  <li><a data-href="${ly }/village/reviceMessageList" data-title="信息接收列表" href="javascript:void(0)">信息接收列表</a></li> --%>
-        <li><a data-href="${ly }/village/addMessages" data-title="信息推送" href="javascript:void(0)">信息推送</a>
-        </li>
-        <li><a data-href="${ly }/village/groupIndex" data-title="群组设置" href="javascript:void(0)">企业群组设置</a>
-        </li>
-        </ul>
-        </dd>
-        </dl>
-        <%-- <dl>
-          <dt>
-            <i class="Hui-iconfont">&#xe61d;</i>实时监控设置
-            <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-          </dt>
-          <dd>
-            <ul>
-              <li><a data-href="${ly }/village/to_monitor-list?page=1" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
-              <li><a data-href="${ly }/village/monitor-list" data-title="实时监控设置" href="javascript:void(0)">实时监控设置</a></li>
-            </ul>
-          </dd>
-        </dl>
-
-        <dl>
-          <dt>
-            <i class="Hui-iconfont">&#xe61d;</i>传感器管理
-            <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-          </dt>
-          <dd>
-            <ul>
-              <li><a data-href="${ly }/village/toSensorList" data-title="传感器列表" href="javascript:void(0)">传感器列表</a></li>
-              <li><a data-href="${ly }/village/toAddSensor" data-title="传感器设置" href="javascript:void(0)">传感器设置</a></li>
-            </ul>
-          </dd>
-        </dl> --%>
-        <dl>
-        <dt>
-        <i class="Hui-iconfont">&#xe61d;</i>账号设置管理
-        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-        </dt>
-        <dd>
-        <%--<div class="div_omenu">--%>
-        <%--<div class="div_otop">在线监测设置<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>--%>
-        <%--<ul>--%>
-        <%--<li><a data-href="${ly }/village/toSensorList" data-title="传感器列表" href="javascript:void(0)">传感器列表</a>--%>
-        <%--</li>--%>
-        <%--<li><a data-href="${ly }/village/toAddSensor" data-title="传感器设置"--%>
-        <%--href="javascript:void(0)">传感器设置</a></li>--%>
-        <%--</ul>--%>
-        <%--</div>--%>
-        <ul>
-        <!--<li><a data-href="${ly }/village/monitor-list" data-title="实时监控设置" href="javascript:void(0)">实时监控设置</a></li>
-        2018.12.15 zhangcl-->
-        <li><a data-href="${ly }/company/threeLeft?leftBasic=11" data-title="在线监测设置"
-        href="javascript:void(0)">在线监测设置</a></li>
-        <li><a data-href="${ly }/village/to_monitor-list?flag=1" data-title="实时监控设置"
-        href="javascript:void(0)">实时监控设置</a></li>
-        <%--<li><a data-href="${ly }/company/system/show-yhsc" data-title="用户手册"--%>
-        <%--href="javascript:void(0)">用户手册</a></li>--%>
-        <li><a data-href="${ly }/company/system/change-psw" data-title="修改密码"
-        href="javascript:void(0)">修改密码</a></li>
-        <li><a data-href="${ly }/company/system/change-userName" data-title="修改登录名"
-        href="javascript:void(0)">修改登录名</a></li>
-        <%-- <li><a data-href="${ly }/company/message-list" data-title="推送消息" href="javascript:void(0)">推送消息</a></li> --%>
         </ul>
         </dd>
         </dl>

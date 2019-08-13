@@ -200,7 +200,7 @@ body .dis-ib{margin-right:15px;}
 <script type="text/javascript" src="${ly }/js/plugins/websocket/swfobject.js"></script>
 <script type="text/javascript" src="${ly }/js/plugins/websocket/web_socket.js"></script>
 <script type="text/javascript" src="${ly }/js/plugins/juicer/juicer.js"></script>
-<script type="text/javascript" src="${ly }/js/modules/userGroup/messages2.js"></script>
+<script type="text/javascript" src="${ly }/js/modules/userGroup/messages.js"></script>
 <script type="text/javascript">
     var websocket = null;
     var userno="${loginUserId}";

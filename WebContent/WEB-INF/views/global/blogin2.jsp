@@ -198,7 +198,7 @@
         setCookie("name", '');
         setCookie("pwd", '');
         }
-        $("#login_btn").attr("disabled", "disabled");
+        //$("#login_btn").attr("disabled", "disabled");
         $.post(getRootPath() + "/global/glogin", {
         userName : $("#userName").val(),
         password : $("#password").val(),
@@ -216,7 +216,7 @@
         window.location.href = url;
         } else {
         if(result.map.userType == '4'||result.map.userType=='3'||result.map.userType=='6'||result.map.userType=='9'||result.map.userType=='10') {
-        window.location.href = getRootPath() + '/global/main';
+            window.location.href = getRootPath() + '/global/main';
         }
        /* if(result.map.userType == '3') {
         window.location.href = getRootPath() + '/global/main?userType=3';

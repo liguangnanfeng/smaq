@@ -459,7 +459,7 @@ $(function(){
 </script>
 
 <script type="text/javascript" src="/js/fxgk/industry.js?v=180920"></script>
-<script type="text/javascript" src="/js/fxgk/industry2-pie.js"></script>
+<script type="text/javascript" src="/js/fxgk/industry2-pie2.js"></script>
 <script type="text/javascript" src="${ly }/js/plugins/websocket/swfobject.js"></script>
   <script type="text/javascript" src="${ly }/js/plugins/websocket/web_socket.js"></script>
 <script type="text/javascript">

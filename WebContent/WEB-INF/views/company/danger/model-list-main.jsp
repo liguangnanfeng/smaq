@@ -176,6 +176,10 @@
                         <tbody>
                         <!-- 循环-->
                         <c:forEach items="${xianChangItem}" varStatus="index" var="be">
+                            <script>
+                               console.log("${be}");
+                               console.log("${be.count}");
+                            </script>
                             <tr class="text-c">
                                 <td>${index.index + 1}</td>
                                 <td>${be.level1 }</td>
@@ -235,7 +239,7 @@
                                 </c:forEach>
                                 <td>
                                     <c:if test="${be.count==0}">
-                                        <a style="text-decoration:none"
+                                        <a style="text-decoration:none;"
                                            class="used"
                                            onClick="layer.msg('没有要复查整改的项')"
                                            href="javascript:;">实施

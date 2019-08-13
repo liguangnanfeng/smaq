@@ -86,7 +86,7 @@
 		<body>
 		<div class="container">
 		<section class="title">
-		<div class="center">隐患排查绩效分析</div>
+		<div class="center">隐患数据分析</div>
 		<div class="flexspa">
 		<span></span>
 		<span id="time"></span>

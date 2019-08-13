@@ -87,20 +87,30 @@
 
 		</head>
 		<body>
-		<script>
-		console.log('${list}');
-     //获取日期与时间
 
-		</script>
 		<div class="containerx">
+		 <div class="center"></div>
 		<section class="title">
 		<div class="flexspa">
-		<span>部门抽查绩效分析 </span>
+		<span class=""></span>
 		<span id="time">
-
 	</span>
 		</div>
 		</section>
+		<script>
+		var searchURL = window.location.search;
+		searchURL = searchURL.substring(1, searchURL.length);
+		var targetPageId = searchURL.split("&")[0].split("=")[1];
+		console.log('targetPageId:',targetPageId);
+		var title="";
+		if(targetPageId==2){
+		title="行政检查绩效分析";   console.log('title:',title);
+		}
+		if(targetPageId==3){
+		title="部门抽查绩效分析";   console.log('title:',title);
+		}
+		$(".center").text(title);
+		</script>
 		<table class=".table"  style="margin: auto;" cellpadding="2">
 		<tr class="th">
 		<td>序号</td>
@@ -123,7 +133,7 @@
 		<td>${be.danger1}</td>
 		<td>${be.danger2}</td>
 		<td>${be.sum}</td>
-		<td></td>
+		<td ></td>
            <script>
 				window.a=window.a+'${be.sum}'*1;
 				console.log('${be.sum}');
@@ -139,7 +149,9 @@
 		<td>${be.count2}</td>
 		<td class="tdd"></td>
 		<td></td>
-
+            <script>
+			$(".tdd").text(window.a);
+			</script>
 		</tr>
 
 		</c:if>

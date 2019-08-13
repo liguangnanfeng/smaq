@@ -68,6 +68,20 @@
     </select>
 
 
+    <select id="selectDpids" parameterType="java.lang.Integer"  resultType="java.util.Map"  >
+        SELECT
+        h1.id, z1.name, h1.dpid, h1.*
+        FROM
+        `hidden_plan` h1
+        LEFT JOIN zzjg_department_tbl z1 ON h1.dpid = z1.id and z1.del = 0
+        WHERE
+        h1.uid = #{uid} and h1.total_count != 0
+        ORDER BY dpid ASC
+    </select>
+
+
+
+
 
     <select id = "selectCountAll" parameterType="java.lang.Integer" resultType="java.util.Map" >
         SELECT

@@ -30,7 +30,9 @@ body .select{height:32px;line-height:32px;}
 body .radio-box{float:Left;}
 </style>
 <script type="text/javascript">
+  console.log("我是c/check-fuadd");
 function showpicture(src, obj){
+
   $("#modal-plan2 .div_imgp").html('');
   $.each(src.split(","), function(i, item) {
     $(".div_imgp").append('<div class="div_imgp">' + 
@@ -131,6 +133,7 @@ function uploadpicture(obj){
           <c:if test="${!empty be.memo }">${be.memo }</c:if>
           <c:if test="${!empty be.files }"><img alt="" src="${be.files }" style="max-height:100px;cursor:pointer;" onClick="showpicture('${be.files}')"/></c:if>
           </td>
+          </td>
           <td class="text-c"><fmt:formatDate value="${be.deadline }"/></td>
           <td data-n="xxx" class="text-c" data-i="${be.id }" data-file="" data-status="2" data-dead="<fmt:formatDate value="${be.deadline }" pattern="yyyy-MM-dd"/>">&nbsp;
             <input type="hidden" name="memo">
@@ -147,7 +150,7 @@ function uploadpicture(obj){
         </tr>
         </c:forEach>
         <tr>
-          <td colspan="6">
+          <td colspan="8">
             <div class="div_pri  mt-10">针对上次隐患整改要求，经复查，提出如下复查意见：</div>
             <div class="div_pri  mt-10">1、已整改项：基本符合安全要求</div>
             <div class="div_pri">
@@ -179,7 +182,7 @@ function uploadpicture(obj){
           </td>
         </tr>
         <tr>
-          <td colspan="3">
+          <td colspan="5">
             <c:if test="${check.flag > 1}">
             <div class="div_pleft  mt-10 mb-10">检查部门/单位：</div>
             <div class="div_pright  mt-10 mb-10">
@@ -208,7 +211,7 @@ function uploadpicture(obj){
     </table>
   </div>
   <div class="row cl">
-    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20">
+    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2  mt-20" style="text-align:center;margin-left:0">
       <button onClick="article_save_submit()" class="btn btn-primary radius" type="button" style="padding: 0 70px;">
           <i class="Hui-iconfont">&#xe632;</i>保存
       </button>

@@ -87,12 +87,9 @@
 		<nav class="breadcrumb">
 		<c:set var="x1" value="${fn:split('企业自查/ /第三方检查/行政检查','/') }"/>
 		<i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-		<span class="c-gray en">&gt;</span> <span>隐患排查治理系统</span>
+		<span class="c-gray en">&gt;</span> <span>隐患数据分析</span>
 		<span class="c-gray en">&gt;</span> <span class="zc"> </span>
-		<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
-		href="javascript:location.replace(location.href);" title="刷新">
-		<i class="Hui-iconfont">&#xe68f;</i>
-		</a>
+		<a class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
 		</nav>
 		<div class="containerx">
 		<div class="text-c mt-20 "><h3 class="center"></h3></div>
@@ -118,6 +115,7 @@
         title="部门抽查隐患数据分析";   console.log('title:',title);
         }
         $(".center").text(title);
+		$(".zc").text(title);
         </script>
 
         </section>

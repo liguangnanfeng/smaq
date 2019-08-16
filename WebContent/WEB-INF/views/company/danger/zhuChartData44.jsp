@@ -91,12 +91,9 @@
 		<nav class="breadcrumb">
 		<c:set var="x1" value="${fn:split('企业自查/ /第三方检查/行政检查','/') }"/>
 		<i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-		<span class="c-gray en">&gt;</span> <span>隐患排查治理系统</span>
+		<span class="c-gray en">&gt;</span> <span>治理数据分析</span>
 		<span class="c-gray en">&gt;</span> <span class="zc">隐患治理等级分析 </span>
-		<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
-		href="javascript:location.replace(location.href);" title="刷新">
-		<i class="Hui-iconfont">&#xe68f;</i>
-		</a>
+		<a class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
 		</nav>
 		<div class="cx">
 		<div class="text-c mt-20 "><h3 class="center">隐患治理等级分析</h3></div>

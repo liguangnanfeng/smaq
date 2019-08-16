@@ -316,12 +316,12 @@
        <!--  <li><a data-href="${ly }/village/danger-index-list?flag=1" data-title="隐患统计汇总"
         href="javascript:void(0)">隐患统计汇总</a></li> -->
 
-        <li><a data-href="${ly }/company/jx-analysis?flag=1" data-title="排查数据分析"
+        <li><a data-href="${ly }/company/jx-analysis" data-title="排查数据分析"
         href="javascript:void(0)">排查数据分析</a></li>
 
-        <li><a data-href="${ly }/company/yh-analysis?flag=2" data-title="隐患数据分析"
+        <li><a data-href="${ly }/company/yh-analysis" data-title="隐患数据分析"
         href="javascript:void(0)">隐患数据分析</a></li>
-        <li><a data-href="${ly }/company/zl-analysis?flag=3" data-title="治理数据分析"
+        <li><a data-href="${ly }/company/zl-analysis" data-title="治理数据分析"
                 href="javascript:void(0)">治理数据分析</a></li>
 
 
@@ -361,7 +361,16 @@
         </ul>
         </dd>
         </dl>
-
+<%--        <span  title="首页1" data-href="${ly }/company/welcome"></span>--%>
+        <script>
+           console.log('c');
+          console.log('${flag}');
+           console.log('${c}');
+           console.log('${c.industry}');
+           console.log('${c.hazard}');
+<%--        方法可返回某个指定的字符串值在字符串中首次出现的位置。如果要检索的字符串值没有出现，则该方法返回 -1。--%>
+        </script>
+        <c:if test="${flag==1}">
         <dl class="list_an">
         <dt>
         <i class="Hui-iconfont">&#xe687;</i>风险研判公告
@@ -393,7 +402,7 @@
         </dd>
         </dl>
 
-
+        </c:if>
      <%--<dl class="list_an">--%>
         <%--<dt>--%>
         <%--<i class="Hui-iconfont">&#xe687;</i>安全生产管理--%>
@@ -801,6 +810,7 @@
 
         <%--</dd>--%>
         </dl>
+            <c:if test="${c.hazard==1}">
         <dl class="list_an">
         <dt>
         <i class="Hui-iconfont">&#xe687;</i>重大危险源长制
@@ -877,7 +887,7 @@
         </ul>
         </dd>
         </dl>
-
+            </c:if>
         </div>
         </aside>
         <div id="winpop" style="display:none;">

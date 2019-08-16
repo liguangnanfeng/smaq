@@ -18,7 +18,6 @@ dt a:hover{text-decoration: none;}
 .Hui-iconfont{font-size:15px;}
 </style>
 <script type="text/javascript">
-  console.log("17:17???");
 	function myrefresh(){
 		window.location.reload();
 	}
@@ -45,7 +44,14 @@ dt a:hover{text-decoration: none;}
 <body>
   <%@ include file="top.jsp"%>
   <%@ include file="left.jsp"%>
+<%--  <jsp:include page="left.jsp" />--%>
   <!-- 中间主页 -->
+  <script>
+  console.log('我是main');
+  console.log('${c}');
+  console.log('${industry}');
+  console.log('${hazard}');
+  </script>
   <div class="dislpayArrow hidden-xs">
     <a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
   </div>

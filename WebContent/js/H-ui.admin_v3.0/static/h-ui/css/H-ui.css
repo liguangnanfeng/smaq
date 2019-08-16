@@ -1,4 +1,4 @@
-﻿@charset "utf-8";
+@charset "utf-8";
 /* -----------H-ui前端框架-------------
 * H-ui.css v3.0.1
 * http://www.h-ui.net/
@@ -3053,7 +3053,7 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
     .logo{ display:inline-block; text-decoration:none; cursor:pointer; background-repeat: no-repeat; background-position: left center; background-size: auto 100%}
     a.logo:hover{ text-decoration:none}
     .navbar .logo{height: 60px;line-height: 60px;/* height: 44px;line-height: 44px; */margin-right: 10px;float: left}
-    .navbar-logo,.navbar-logo-m{font-size: 16px}
+    .navbar-logo,.navbar-logo-m{font-size: 20px}
     .navbar-slogan{ font-size:12px; cursor: default}
     .navbar .container{ position:relative}
     .navbar-userbar{position:absolute;top:0px; right:15px}
@@ -3071,7 +3071,7 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
         -ms-transition: background-color 0.3s ease 0s;
         transition: background-color 0.3s ease 0s
   }
-  .navbar-nav > ul > li,.navbar-nav > ul > li > a{line-height:60px;/* line-height:44px; */font-size:14px}
+  .navbar-nav > ul > li,.navbar-nav > ul > li > a{line-height:60px;/* line-height:44px; */font-size:16px}
   @media (max-width: 767px) {
     .navbar-wrapper{ height: 45px!important}
     .logo{ margin-right: 0}

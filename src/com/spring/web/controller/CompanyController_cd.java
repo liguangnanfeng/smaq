@@ -119,6 +119,7 @@ public class CompanyController_cd extends BaseController {
     public String welcome(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         Company c = companyMapper.selectByPrimaryKey(user.getId());
+
         model.addAttribute("c", c);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("type", "1");
@@ -176,14 +177,23 @@ public class CompanyController_cd extends BaseController {
     @RequestMapping("main")
     public String main(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
+        Company c = companyMapper.selectByPrimaryKey(user.getId());
 
+        if (c.getIndustry().contains("化工")){
+            model.addAttribute("flag", 1);
+        }else {
+            model.addAttribute("flag", 2);
+        }
+
+        model.addAttribute("c", c);
         model.addAttribute("userName", companyMapper.selectByPrimaryKey(user.getId()).getName());
         model.addAttribute("loginUserId", user.getId());
+
         return "company/main";
     }
 
 
-    
+
     /**
      * 修改风险等级
      *
@@ -4262,14 +4272,14 @@ public class CompanyController_cd extends BaseController {
         for (int i = 0; i < list.size(); i++) {
 
             if (flag == 1){
-                if (null == (String)list.get(i).get("dpid")){
+                if (null == list.get(i).get("dpid")){
                     a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, "公司级",user.getId(),2); // 现场
                     list.get(i).put("danger1",a);
 
                     b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, "公司级",user.getId(),1); // 基础
                     list.get(i).put("danger2",b);
 
-                }else if (null != (String)list.get(i).get("dpid")){
+                }else if (null != list.get(i).get("dpid")){
                     a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),user.getId(),2); // 现场
                     list.get(i).put("danger1",a);
 
@@ -4712,7 +4722,7 @@ public class CompanyController_cd extends BaseController {
 
             if (flag == 1){
 
-                if (null == (String)list.get(i).get("dpid")){
+                if (null == list.get(i).get("dpid")){
 
                     a = tCheckItemMapper.zhuChartData22("生产工艺","公司级",flag,user.getId()); // 生产工艺 隐患数据
                     list.get(i).put("danger1",a);
@@ -4770,7 +4780,7 @@ public class CompanyController_cd extends BaseController {
                     list.get(i).put("danger14",n);
                     sum14 += n;
 
-                }else if (null != (String)list.get(i).get("dpid")){
+                }else if (null != list.get(i).get("dpid")){
 
                     a = tCheckItemMapper.zhuChartData22("生产工艺",(String) list.get(i).get("name"),flag,user.getId()); // 生产工艺 隐患数据
                     list.get(i).put("danger1",a);
@@ -5109,7 +5119,7 @@ public class CompanyController_cd extends BaseController {
 
             if (flag == 1){
 
-                if (null == (String)list.get(i).get("dpid")){
+                if (null == list.get(i).get("dpid")){
 
                     a = tCheckItemMapper.zhuChartData66("生产工艺","公司级",flag,user.getId()); // 生产工艺 隐患数据
                     list.get(i).put("danger1",a);
@@ -5167,7 +5177,7 @@ public class CompanyController_cd extends BaseController {
                     list.get(i).put("danger14",n);
                     sum14 += n;
 
-                }else if (null != (String)list.get(i).get("dpid")){
+                }else if (null != list.get(i).get("dpid")){
 
                     a = tCheckItemMapper.zhuChartData66("生产工艺",(String) list.get(i).get("name"),flag,user.getId()); // 生产工艺 隐患数据
                     list.get(i).put("danger1",a);
@@ -5889,11 +5899,11 @@ public class CompanyController_cd extends BaseController {
     @RequestMapping(value = "jx-analysis")
     public String jxAnalysis(HttpServletRequest request,Model model,Integer flag){
 
+        User user = getLoginUser(request);
+
         if (null == flag){
             flag = 1;
         }
-
-        User user = getLoginUser(request);
 
         Integer number1 = tCheckItemMapper.selectHiddenSources(1,user.getId()); // 企业自查
 
@@ -6083,7 +6093,8 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("number1",number1);
         model.addAttribute("number2",number2);
         model.addAttribute("number3",number3);
-        
+        model.addAttribute("flag",flag);
+
         return "company/danger/jx-analysis";
     }
 
@@ -6098,6 +6109,10 @@ public class CompanyController_cd extends BaseController {
     public String yhAnalysis(HttpServletRequest request, Model model, Integer flag){
 
         User user = getLoginUser(request);
+
+        if (null == flag){
+            flag = 1;
+        }
 
         Integer a = tCheckItemMapper.zhuChartData88("生产工艺",flag,user.getId()); // 生产工艺 隐患数据
         model.addAttribute("a",a);
@@ -6276,7 +6291,7 @@ public class CompanyController_cd extends BaseController {
             model.addAttribute("n1","0.00");
 
         }
-
+        model.addAttribute("flag",flag);
         return "company/danger/yh-analysis";
     }
 
@@ -6289,11 +6304,11 @@ public class CompanyController_cd extends BaseController {
     @RequestMapping(value = "zl-analysis")
     public String zlAnalysis(HttpServletRequest request, Model model, Integer flag){
 
+        User user = getLoginUser(request);
+
         if (null == flag){
             flag = 1;
         }
-
-        User user = getLoginUser(request);
 
         Integer number3 = tCheckItemMapper.findTypeByMap(user.getId(),3); // 一般隐患
         Integer number2 = tCheckItemMapper.findTypeByMap(user.getId(),2); // 重大隐患
@@ -6490,7 +6505,7 @@ public class CompanyController_cd extends BaseController {
             model.addAttribute("n1","0.00");
 
         }
-
+        model.addAttribute("flag",flag);
         return "company/danger/zl-analysis";
     }
 

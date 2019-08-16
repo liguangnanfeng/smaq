@@ -109,10 +109,6 @@ $(function(){
         b4.attr("rowspan", c4);
     }
 
-    var myTable= document.getElementById("myTable");
-    if(myTable){
-        myTable.style.display="";
-    }
-
+    var myTable= document.getElementById("myTable"); myTable.style.display="";
 
 })

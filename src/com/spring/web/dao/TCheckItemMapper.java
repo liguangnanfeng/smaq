@@ -275,9 +275,14 @@ public interface TCheckItemMapper {
 
     Integer zhuChartData77(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
-    Integer zhuChartData88(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+    Integer zhuChartData78(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id, @Param("departs")String departs);
+
+    Integer zhuChartData88(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id, @Param("departs")String departs);
+
+    Integer zhuChartData89(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
     Integer zhuChartData124(@Param("control")String control, @Param("user_id")Integer user_id);
+
 }
 
 

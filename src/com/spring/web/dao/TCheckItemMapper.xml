@@ -1172,15 +1172,31 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
-         AND t1.status = 2
         AND t3.control = #{control}
-         AND t2.check_company = #{check_company}
+        AND t2.check_company = #{check_company}
         AND t2.flag = #{flag}
         AND t2.user_id = #{user_id}
     </select>
 
 
-    <!-- 排查对象分析 柱状图 -->
+    <!-- 排查对象分析 柱状图 flag == 1-->
+    <select id="zhuChartData78" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t3.control = #{control}
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+        AND t2.depart in (${departs})
+    </select>
+
+
     <select id="zhuChartData77" resultType="Integer">
         SELECT
             count(t1.id) as counts
@@ -1197,7 +1213,8 @@
     </select>
 
 
-    <!-- 隐患数据分析 柱状图 -->
+
+    <!-- 隐患数据分析 柱状图 flag = 1-->
     <select id="zhuChartData88" resultType="Integer">
         SELECT
             count(t1.id) as counts
@@ -1212,7 +1229,26 @@
         AND t3.control = #{control}
         AND t2.flag = #{flag}
         AND t2.user_id = #{user_id}
+        AND t2.depart in (${departs})
     </select>
+
+
+    <select id="zhuChartData89" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t3.control = #{control}
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
 
 
     <!-- 企业自查隐患数据分析 -->
@@ -1253,6 +1289,24 @@
 
 
     <!-- 隐患治理数据分析 柱状图 -->
+    <select id="zhuChartData125" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t3.control = #{control}
+        AND t2.user_id = #{user_id}
+        AND t2.depart in (${departs})
+    </select>
+
+
+
     <select id="zhuChartData124" resultType="Integer">
         SELECT
             count(t1.id) as counts

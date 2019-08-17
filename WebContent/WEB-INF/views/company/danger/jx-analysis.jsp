@@ -166,6 +166,7 @@
         var number = ["${a}", "${b}", "${c}", "${d}", "${e}", "${f}", "${g}", "${h}", "${i}", "${j}", "${k}", "${l}", "${m}", "${n}"];
         var firstdata2 = ["${a1}", "${b1}", "${c1}", "${d1}", "${e1}", "${f1}", "${g1}", "${h1}", "${i1}", "${j1}", "${k1}", "${l1}", "${m1}", "${n1}"];
         var x="",fdata=[];
+        console.log(number);
         firstdata2.map((v,i)=>{
            x=v*100;
            fdata.push(x);
@@ -183,7 +184,8 @@
         trigger:'item',
         padding:[20,10,20,10],
         formatter: function (params) {
-          var value=params.value;
+          console.log(params);
+          var value=params.value.toFixed(2);
           var name=params.name;
           var index=params.dataIndex;
           var num=number[index];
@@ -267,6 +269,7 @@
         let firstdata33 = ["${a1}", "${b1}", "${c1}", "${d1}", "${e1}", "${f1}", "${g1}", "${h1}", "${i1}", "${j1}", "${k1}", "${l1}", "${m1}", "${n1}"];
         let x33="",fdata33=[];
         firstdata33.map((v,i)=>{
+
         x33=v*100;
         fdata33.push(x33);
         });

@@ -5906,11 +5906,20 @@ public class CompanyController_cd extends BaseController {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i <list.size() ; i++) {
-            if (null == list.get(i).get("name")){
-                sb.append("'").append("公司级").append("'");
+            if(i == list.size()-1){
+                if (null == list.get(i).get("name")){
+                    sb.append("'").append("公司级").append("'");
+                }else {
+                    sb.append("'").append(list.get(i).get("name")).append("'");
+                }
             }else {
-                sb.append("'").append(list.get(i).get("name")).append("'");
+                if (null == list.get(i).get("name")){
+                    sb.append("'").append("公司级").append("',");
+                }else {
+                    sb.append("'").append(list.get(i).get("name")).append("',");
+                }
             }
+
         }
 
         if (null == flag){
@@ -6015,6 +6024,8 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("n",n);
 
         count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
+
+        model.addAttribute("count",count);
 
         DecimalFormat df = new DecimalFormat("0.00");
 
@@ -6175,11 +6186,20 @@ public class CompanyController_cd extends BaseController {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i <list.size() ; i++) {
-            if (null == list.get(i).get("name")){
-                sb.append("'").append("公司级").append("'");
+            if(i == list.size()-1){
+                if (null == list.get(i).get("name")){
+                    sb.append("'").append("公司级").append("'");
+                }else {
+                    sb.append("'").append(list.get(i).get("name")).append("'");
+                }
             }else {
-                sb.append("'").append(list.get(i).get("name")).append("'");
+                if (null == list.get(i).get("name")){
+                    sb.append("'").append("公司级").append("',");
+                }else {
+                    sb.append("'").append(list.get(i).get("name")).append("',");
+                }
             }
+
         }
 
         if (null == flag){
@@ -6286,6 +6306,9 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("n",n);
 
         count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
+
+        model.addAttribute("count",count);
+
         DecimalFormat df = new DecimalFormat("0.00");
 
         if (null != count && 0 != count) {
@@ -6486,6 +6509,8 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("n",n);
 
         Integer count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
+
+        model.addAttribute("count",count);
 
         DecimalFormat df = new DecimalFormat("0.00");
 

@@ -26,17 +26,21 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.json.simple.JSONArray;
+import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -153,14 +157,14 @@ public class GlobalController extends BaseController {
         model.addAttribute("loginUserId", user.getId());
         model.addAttribute("userType", userType);
         if (userType == 9) {  //地市级
-            model.addAttribute("list", districtMapper.selectDistrict());
-            model.addAttribute("list1", tradeMapper.selectTrade());
-            model.addAttribute("name_", user.getUserName());
+            model.addAttribute("list", districtMapper.selectDistrict());//查询区列表
+            model.addAttribute("list1", tradeMapper.selectTrade());//查询港口账号
+            model.addAttribute("name_", user.getUserName());//用户名称
         }
         if (userType == 6) { //县级市
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("districtId", user.getId());
-            List<Map<String, Object>> list = townMapper.selectListByDistrict(m);
+            List<Map<String, Object>> list = townMapper.selectListByDistrict(m);//设置镇级
             model.addAttribute("list", list);
             model.addAttribute("name_", districtMapper.selectByPrimaryKey(user.getId()).getName());
         }
@@ -205,13 +209,12 @@ public class GlobalController extends BaseController {
 
             CompanyListReqDTO dto = new CompanyListReqDTO();
             List<Integer> count = userService.selectCount(dto, user);
-
             model.addAttribute("number", companyMapper.selectIdsByCompany_view_count(dto));//企业数量
 
             model.addAttribute("dangerC", tCheckItemMapper.selectCount(m));// 隐患情况汇总
             model.addAttribute("dangerC2", tCheckItemMapper.selectZhongCount(m));// 隐患情况汇总
 
-            model.addAttribute("mc", monitorMapper.selectCount(m));
+            model.addAttribute("mc", monitorMapper.selectCount(m));//监控的个数
             model.addAttribute("count", count);
 
             model.addAttribute("loginUserId", user.getId());
@@ -334,6 +337,7 @@ public class GlobalController extends BaseController {
                 return "tradeclique/clique-welcome";
             }
         }
+        model.addAttribute("userType", user.getUserType());
         return "global/welcome";
     }
 
@@ -356,10 +360,10 @@ public class GlobalController extends BaseController {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("townId", dto.getTownId());
             m.put("districtId", dto.getDistrictId());
-            List<DynamicParameter<String, Object>> villagelist = villageMapper.selectListByTown(m);
+            List<DynamicParameter<String, Object>> villagelist = villageMapper.selectListByTown(m);//查询所属下的所有乡村
             model.addAttribute("villagelist", villagelist);
         }
-        model.addAttribute("lib", libraryMapper.selectLibraryList(1));
+        model.addAttribute("lib", libraryMapper.selectLibraryList(1));//查询行业列表
         model.addAttribute("sk", request.getParameter("sk"));
         model.addAttribute("totalzc", totalzc);
         model.addAttribute("totalwyx", totalwyx);
@@ -1775,7 +1779,7 @@ public class GlobalController extends BaseController {
             model.addAttribute("list", list);
         }
 
-        return "global/danger/check-list1";
+        return "global/danger/check-list2";
     }
     /**
      * 政府端隐患治理信息查询 ！！！
@@ -2263,7 +2267,7 @@ public class GlobalController extends BaseController {
             return "company/danger/check-list";
         }
         // TODO 找到这个界面
-        return "global/danger/check-list";
+        return "global/other/check-list";
     }
     /**
      * 重大危险源页面
@@ -4065,6 +4069,2465 @@ public class GlobalController extends BaseController {
         return "company/danger/model-list-main";
 
     }
+    /**
+     * 检查历史
+     * TODO 排查治理记录 隐患排查记录(只需要已经检查过的,没有不合格记录的)
+     * user. userType : 管理类型  1 超管 2普管 3镇 4 村 5 企业 6区县 7市 8省
+     */
+    @RequestMapping(value = "check-list2")//flag:3 部门抽查
+    public String troubleList2(HttpServletRequest request, String title, Integer type, String companyName,
+                               Integer townId, Integer villageId,
+                               Integer status, Integer flag, Model model,String dmName) throws Exception {
+
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
+
+        if (user.getUserType() == 3) {//镇
+            model.addAttribute("villageL", villageMapper.selectListByTown(m));
+        }
+        if (user.getUserType() == 6) {//区
+            model.addAttribute("townL", townMapper.selectListByDistrict(m));
+        }
+
+        // 向map集合进行存储
+        m.put("type", type);  //
+        m.put("flag", flag);  // 1
+        m.put("title", title); // 1
+        m.put("townId", townId);   // null
+        m.put("villageId", villageId);  //1
+        m.put("companyName", companyName); // null
+        m.put("status", status); //状态  null
+        Set set = new LinkedHashSet();
+        if(Objects.equals("",dmName)){
+
+        }else{
+            m.put("dmName",dmName);
+        }
+
+        // 进行判断
+
+        if (setUserId(user, m)) {
+            clearVillageTown(m);
+
+            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            //List<Map<String, Object>> list = tCheckMapper.selectList3(m);
+
+            Integer sum = 0;
+            for (int i = 0; i < list.size(); i++) {
+                DynamicParameter<String, Object> id = tCheckMapper.selectCompany((Integer) list.get(i).get("id"));
+                list.get(i).put("listM",id);
+                sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
+
+            }
+            model.addAttribute("sum", sum);
+            model.addAttribute("list", list);
+
+
+            m.put("dmName",null);
+            List<Map<String, Object>> list2 = tCheckMapper.selectList(m);
+            for (int i = 0; i < list2.size(); i++) {
+                set.add(list2.get(i).get("depart"));
+            }
+
+        }
+        model.addAttribute("set",set);
+        model.addAttribute("type", type);
+        model.addAttribute("flag", flag);
+        model.addAttribute("companyName", companyName);
+        model.addAttribute("title", title);
+        model.addAttribute("status", status);
+        model.addAttribute("townId", townId);
+        model.addAttribute("villageId", villageId);
+        model.addAttribute("dmName",dmName);
+        Date d = new Date();
+        String x = DateFormatUtils.format(d, "yyyy-MM-dd");
+        d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
+        model.addAttribute("t", d.getTime());
+        if (user.getUserType() == 5) {
+            // 表示等于5的话就将页面进行跳转
+            return "company/danger/check-list";
+        }
+        // TODO 找到这个界面
+        return "global/other/check-list";
+    }
+    /**
+     * TODO 隐患治理记录, 整改不合格的 新建立的页面
+     * 有三种情况,企业自查 行政检查  部门抽查
+     *
+     * @param request 请求
+     * @param flag    方式
+     * @param status  状态
+     * @return
+     */
+    @RequestMapping(value = "hidden-danger-list")
+    public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status) {
+        User user = getLoginUser(request);//用户登录
+        model.addAttribute("flag", flag);
+        model.addAttribute("status", status);
+        model.addAttribute("userId", user.getId());
+        int type = user.getUserType();
+        int userId = user.getId();
+        List<Integer> Ids = tCheckItemMapper.selectCompanyId(userId, type);
+        List<Map> list = new ArrayList<>();
+        List<Map> list2 = new ArrayList<>();
+        for(Integer id : Ids){
+            Company company = companyMapper.selectByPrimaryKey(id);
+            if (flag == 1) {
+
+                list = tCheckItemMapper.selectListBystatus(id, flag);
+                System.out.println("list:"+list);
+                for (Map map : list) {
+                    Date realTime = (Date) map.get("realTime");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                    String format = sdf.format(realTime);
+                    String level = (String) map.get("level");
+                    if (null != level && "红色".equals(level)) {
+                        map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
+                    }
+                    map.put("realTimeStr", format);
+
+                    if("全公司".equals(map.get("depart"))){
+                        Integer checkId = (Integer) map.get("checkId");
+                        map.put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
+                        Integer industryType = (Integer) map.get("industryType");
+                        if(null!=industryType&&1==industryType){
+                            map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                        }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                            map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                        }
+                    }
+
+                    if(null==map.get("fjgkfzr")||"".equals(map.get("fjgkfzr"))){
+                        String name = "";
+                        TCheck tc = tCheckMapper.selectByPrimaryKey((Integer) map.get("checkId"));
+                        // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
+                        List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId((Integer)map.get("checkItemId"));
+                        if (null != integers && integers.size() > 0) {
+                            // 这里进行名称的获取,进行全部循环,获取数据的方式,在数据库中进行查询
+                            List<String> list1 = new ArrayList<String>();
+                            for (Integer integer : integers) {
+                                if (null != integer) {
+                                    ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(integer);
+                                    if (null != aCompanyManual && null != aCompanyManual.getFjgkfzr()) {
+                                        list1.add(aCompanyManual.getFjgkfzr());
+                                    }
+                                }
+                            }
+                            if (list1.size() == 0) {
+                                name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                                tc.setCheckCompany(name);
+                            } else {
+                                name = list1.get(0);
+                                tc.setCheckCompany(name);
+                            }
+                        } else {
+                            name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                            tc.setCheckCompany(name);
+                        }
+                        map.put("fjgkfzr", name);
+                    }
+                    list2.add(map);
+                }
+            } else if (flag == 2) {
+                // 表示的是行政检查
+                list = tCheckItemMapper.selectXZListBystatus(id, flag);
+                for (Map map : list) {
+                    Date realTime = (Date) map.get("realTime");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                    String format = sdf.format(realTime);
+                    String levelId ="";
+                    if(null!=map.get("industryType")&&1==map.get("industryType")){
+                        Integer levelId1 = (Integer) map.get("levelId");
+                        if(null!=levelId1){
+                            levelId=  tLevelMapper.selectByPrimaryKey(levelId1).getLevel2();
+                        }
+
+                    }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                        levelId = aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2();
+                    }
+
+                    if(StringUtils.isBlank(levelId)){
+                        map.put("level2",levelId);
+                    }
+
+                    map.put("realTimeStr", format);
+                    map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
+                    // 获取
+                    System.out.println(company.getName());
+                    map.put("companyName", company.getName());
+                    list2.add(map);
+                }
+            } else if (flag == 3) {
+                // 表示的是部门抽查
+                list = tCheckItemMapper.selectBMCCListBystatus(id, flag);
+                for (Map map : list) {
+                    Date realTime = (Date) map.get("realTime");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                    String format = sdf.format(realTime);
+                    //  String level = (String) map.get("level");
+                    if(null!=map.get("industryType")&&1==map.get("industryType")){
+                        map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                    }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                        map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                    }
+                    map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
+                    map.put("realTimeStr", format);
+                    map.put("companyName", company.getName());
+                    list2.add(map);
+                }
+            }
+        }
+        model.addAttribute("list", list2);
+        return "global/other/hidden-danger-list";
+    }
+
+    /**
+     * 排查数据分析
+     * @param request
+     * @param model
+     * @param flag
+     * @return
+     */
+    @RequestMapping(value = "jx-analysis")
+    public String jxAnalysis(HttpServletRequest request,Model model,Integer flag){
+        User user = getLoginUser(request);
+        if (null == flag){
+            flag = 1;
+        }
+        Integer number1 = tCheckItemMapper.selectHiddenSourcesByGvo(1,user.getId(), user.getUserType()); // 企业自查
+
+        Integer number2 = tCheckItemMapper.selectHiddenSourcesByGvo(2,user.getId(), user.getUserType()); // 行政检查
+
+        Integer number3 = tCheckItemMapper.selectHiddenSourcesByGvo(3,user.getId(), user.getUserType()); // 第三方检查
+
+        System.out.println(number1+":"+number2+":"+number3);
+
+        Integer a = tCheckItemMapper.zhuChartData77ByGeo("生产工艺",flag,user.getId(), user.getUserType()); // 生产工艺 隐患数据
+        model.addAttribute("a",a);
+
+        Integer b = tCheckItemMapper.zhuChartData77ByGeo("设备设施",flag,user.getId(),user.getUserType()); // 设备设施 隐患数据
+        model.addAttribute("b",b);
+
+        Integer c = tCheckItemMapper.zhuChartData77ByGeo("特种设备",flag,user.getId(),user.getUserType()); // 特种设备 隐患数据
+        model.addAttribute("c",c);
+
+        Integer d = tCheckItemMapper.zhuChartData77ByGeo("消防安全",flag,user.getId(),user.getUserType()); // 消防安全 隐患数据
+        model.addAttribute("d",d);
+
+        Integer e = tCheckItemMapper.zhuChartData77ByGeo("用电安全",flag,user.getId(),user.getUserType()); // 用电安全 隐患数据
+        model.addAttribute("e",e);
+
+        Integer f = tCheckItemMapper.zhuChartData77ByGeo("行为环境",flag,user.getId(),user.getUserType()); // 行为环境 隐患数据
+        model.addAttribute("f",f);
+
+        Integer g = tCheckItemMapper.zhuChartData77ByGeo("公辅设备",flag,user.getId(),user.getUserType()); // 公辅设备 隐患数据
+        model.addAttribute("g",g);
+
+        Integer h = tCheckItemMapper.zhuChartData77ByGeo("危化管理",flag,user.getId(),user.getUserType()); // 危化管理 隐患数据
+        model.addAttribute("h",h);
+
+        Integer i = tCheckItemMapper.zhuChartData77ByGeo("基础管理",flag,user.getId(),user.getUserType()); // 基础管理 隐患数据
+        model.addAttribute("i",i);
+
+        Integer j = tCheckItemMapper.zhuChartData77ByGeo("防雷静电",flag,user.getId(),user.getUserType()); // 防雷静电 隐患数据
+        model.addAttribute("j",j);
+
+        Integer k = tCheckItemMapper.zhuChartData77ByGeo("安全设施",flag,user.getId(),user.getUserType()); // 安全设施 隐患数据
+        model.addAttribute("k",k);
+
+        Integer l = tCheckItemMapper.zhuChartData77ByGeo("职业卫生",flag,user.getId(),user.getUserType()); // 职业卫生 隐患数据
+        model.addAttribute("l",l);
+
+        Integer m = tCheckItemMapper.zhuChartData77ByGeo("生产现场",flag,user.getId(),user.getUserType()); // 生产现场 隐患数据
+        model.addAttribute("m",m);
+
+        Integer n = tCheckItemMapper.zhuChartData77ByGeo("其他",flag,user.getId(),user.getUserType()); // 其他 隐患数据
+        model.addAttribute("n",n);
+
+        Integer count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if (null != count && 0 != count) {
+
+            if (null != a && 0 != a) {
+                String str = df.format((float) a / count);
+                model.addAttribute("a1",str);
+
+            } else {
+                model.addAttribute("a1","0.00");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != b && 0 != b) {
+                String str = df.format((float) b / count);
+                model.addAttribute("b1",str);
+
+            } else {
+                model.addAttribute("b1","0.00");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != c && 0 != c) {
+                String str = df.format((float) c / count);
+                model.addAttribute("c1",str);
+
+            } else {
+                model.addAttribute("c1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != d && 0 != d) {
+                String str = df.format((float) d / count);
+                model.addAttribute("d1",str);
+
+            } else {
+                model.addAttribute("d1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != e && 0 != e) {
+                String str = df.format((float) e / count);
+                model.addAttribute("e1",str);
+
+            } else {
+                model.addAttribute("e1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != f && 0 != f) {
+                String str = df.format((float) f / count);
+                model.addAttribute("f1",str);
+
+            } else {
+                model.addAttribute("f1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != g && 0 != g) {
+                String str = df.format((float) g / count);
+                model.addAttribute("g1",str);
+
+            } else {
+                model.addAttribute("g1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != h && 0 != h) {
+                String str = df.format((float) h / count);
+                model.addAttribute("h1",str);
+
+            } else {
+                model.addAttribute("h1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != i && 0 != i) {
+                String str = df.format((float) i / count);
+                model.addAttribute("i1",str);
+
+            } else {
+                model.addAttribute("i1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != j && 0 != j) {
+                String str = df.format((float) j / count);
+                model.addAttribute("j1",str);
+
+            } else {
+                model.addAttribute("j1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != k && 0 != k) {
+                String str = df.format((float) k / count);
+                model.addAttribute("k1",str);
+
+            } else {
+                model.addAttribute("k1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != l && 0 != l) {
+                String str = df.format((float) l / count);
+                model.addAttribute("l1",str);
+
+            } else {
+                model.addAttribute("l1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != m && 0 != m) {
+                String str = df.format((float) m / count);
+                model.addAttribute("m1",str);
+
+            } else {
+                model.addAttribute("m1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != n && 0 != n) {
+                String str = df.format((float) n / count);
+                model.addAttribute("n1",str);
+
+            } else {
+                model.addAttribute("n1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+        }else {
+            model.addAttribute("a1","0.00");
+            model.addAttribute("b1","0.00");
+            model.addAttribute("c1","0.00");
+            model.addAttribute("d1","0.00");
+            model.addAttribute("e1","0.00");
+            model.addAttribute("f1","0.00");
+            model.addAttribute("g1","0.00");
+            model.addAttribute("h1","0.00");
+            model.addAttribute("i1","0.00");
+            model.addAttribute("j1","0.00");
+            model.addAttribute("k1","0.00");
+            model.addAttribute("l1","0.00");
+            model.addAttribute("m1","0.00");
+            model.addAttribute("n1","0.00");
+
+        }
+        model.addAttribute("number1",number1);
+        model.addAttribute("number2",number2);
+        model.addAttribute("number3",number3);
+        model.addAttribute("flag",flag);
+        return "global/other/analyse/jx-analysis";
+
+    }
+
+    /**
+     *隐患数据分析
+     * @param request
+     * @param model
+     * @param flag
+     * @return
+     */
+    @RequestMapping(value = "yh-analysis")
+    public String yhAnalysis(HttpServletRequest request, Model model, Integer flag){
+        User user = getLoginUser(request);
+
+        if (null == flag){
+            flag = 1;
+        }
+        Integer a = tCheckItemMapper.zhuChartData88Geo("生产工艺",flag,user.getId(), user.getUserType()); // 生产工艺 隐患数据
+        model.addAttribute("a",a);
+
+        Integer b = tCheckItemMapper.zhuChartData88Geo("设备设施",flag,user.getId(), user.getUserType()); // 设备设施 隐患数据
+        model.addAttribute("b",b);
+
+        Integer c = tCheckItemMapper.zhuChartData88Geo("特种设备",flag,user.getId(), user.getUserType()); // 特种设备 隐患数据
+        model.addAttribute("c",c);
+
+        Integer d = tCheckItemMapper.zhuChartData88Geo("消防安全",flag,user.getId(), user.getUserType()); // 消防安全 隐患数据
+        model.addAttribute("d",d);
+
+        Integer e = tCheckItemMapper.zhuChartData88Geo("用电安全",flag,user.getId(), user.getUserType()); // 用电安全 隐患数据
+        model.addAttribute("e",e);
+
+        Integer f = tCheckItemMapper.zhuChartData88Geo("行为环境",flag,user.getId(), user.getUserType()); // 行为环境 隐患数据
+        model.addAttribute("f",f);
+
+        Integer g = tCheckItemMapper.zhuChartData88Geo("公辅设备",flag,user.getId(), user.getUserType()); // 公辅设备 隐患数据
+        model.addAttribute("g",g);
+
+        Integer h = tCheckItemMapper.zhuChartData88Geo("危化管理",flag,user.getId(), user.getUserType()); // 危化管理 隐患数据
+        model.addAttribute("h",h);
+
+        Integer i = tCheckItemMapper.zhuChartData88Geo("基础管理",flag,user.getId(), user.getUserType()); // 基础管理 隐患数据
+        model.addAttribute("i",i);
+
+        Integer j = tCheckItemMapper.zhuChartData88Geo("防雷静电",flag,user.getId(), user.getUserType()); // 防雷静电 隐患数据
+        model.addAttribute("j",j);
+
+        Integer k = tCheckItemMapper.zhuChartData88Geo("安全设施",flag,user.getId(), user.getUserType()); // 安全设施 隐患数据
+        model.addAttribute("k",k);
+
+        Integer l = tCheckItemMapper.zhuChartData88Geo("职业卫生",flag,user.getId(), user.getUserType()); // 职业卫生 隐患数据
+        model.addAttribute("l",l);
+
+        Integer m = tCheckItemMapper.zhuChartData88Geo("生产现场",flag,user.getId(), user.getUserType()); // 生产现场 隐患数据
+        model.addAttribute("m",m);
+
+        Integer n = tCheckItemMapper.zhuChartData88Geo("其他",flag,user.getId(), user.getUserType()); // 其他 隐患数据
+        model.addAttribute("n",n);
+
+        Integer count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if (null != count && 0 != count) {
+
+            if (null != a && 0 != a) {
+                String str = df.format((float) a / count);
+                model.addAttribute("a1",str);
+
+            } else {
+                model.addAttribute("a1","0.00");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != b && 0 != b) {
+                String str = df.format((float) b / count);
+                model.addAttribute("b1",str);
+
+            } else {
+                model.addAttribute("b1","0.00");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != c && 0 != c) {
+                String str = df.format((float) c / count);
+                model.addAttribute("c1",str);
+
+            } else {
+                model.addAttribute("c1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != d && 0 != d) {
+                String str = df.format((float) d / count);
+                model.addAttribute("d1",str);
+
+            } else {
+                model.addAttribute("d1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != e && 0 != e) {
+                String str = df.format((float) e / count);
+                model.addAttribute("e1",str);
+
+            } else {
+                model.addAttribute("e1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != f && 0 != f) {
+                String str = df.format((float) f / count);
+                model.addAttribute("f1",str);
+
+            } else {
+                model.addAttribute("f1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != g && 0 != g) {
+                String str = df.format((float) g / count);
+                model.addAttribute("g1",str);
+
+            } else {
+                model.addAttribute("g1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != h && 0 != h) {
+                String str = df.format((float) h / count);
+                model.addAttribute("h1",str);
+
+            } else {
+                model.addAttribute("h1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != i && 0 != i) {
+                String str = df.format((float) i / count);
+                model.addAttribute("i1",str);
+
+            } else {
+                model.addAttribute("i1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != j && 0 != j) {
+                String str = df.format((float) j / count);
+                model.addAttribute("j1",str);
+
+            } else {
+                model.addAttribute("j1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != k && 0 != k) {
+                String str = df.format((float) k / count);
+                model.addAttribute("k1",str);
+
+            } else {
+                model.addAttribute("k1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != l && 0 != l) {
+                String str = df.format((float) l / count);
+                model.addAttribute("l1",str);
+
+            } else {
+                model.addAttribute("l1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != m && 0 != m) {
+                String str = df.format((float) m / count);
+                model.addAttribute("m1",str);
+
+            } else {
+                model.addAttribute("m1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != n && 0 != n) {
+                String str = df.format((float) n / count);
+                model.addAttribute("n1",str);
+
+            } else {
+                model.addAttribute("n1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+        }else {
+            model.addAttribute("a1","0.00");
+            model.addAttribute("b1","0.00");
+            model.addAttribute("c1","0.00");
+            model.addAttribute("d1","0.00");
+            model.addAttribute("e1","0.00");
+            model.addAttribute("f1","0.00");
+            model.addAttribute("g1","0.00");
+            model.addAttribute("h1","0.00");
+            model.addAttribute("i1","0.00");
+            model.addAttribute("j1","0.00");
+            model.addAttribute("k1","0.00");
+            model.addAttribute("l1","0.00");
+            model.addAttribute("m1","0.00");
+            model.addAttribute("n1","0.00");
+
+        }
+        model.addAttribute("flag",flag);
+        return "global/other/analyse/yh-analysis";
+    }
+
+    /**
+     * 治理隐患数据分析
+     * @param request
+     * @param model
+     * @param flag
+     * @return
+     */
+    @RequestMapping(value = "zl-analysis")
+    public String zlAnalysis(HttpServletRequest request, Model model, Integer flag){
+        User user = getLoginUser(request);
+
+        if (null == flag){
+            flag = 1;
+        }
+        Integer number3 = tCheckItemMapper.findTypeByGeo(user.getId(), 3, user.getUserType()); // 一般隐患
+        Integer number2 = tCheckItemMapper.findTypeByGeo(user.getId(), 2, user.getUserType()); // 重大隐患
+        Integer number1 = tCheckItemMapper.findTypeByGeo(user.getId(), 1, user.getUserType()); // 较大隐患
+
+        model.addAttribute("number1",number1);
+        model.addAttribute("number2",number2);
+        model.addAttribute("number3",number3);
+
+
+        Integer number4 = tCheckItemMapper.findFileByGeo(user.getId(),3, user.getUserType()); // 一般隐患
+        Integer number5 = tCheckItemMapper.findFileByGeo(user.getId(),2, user.getUserType()); // 重大隐患
+        Integer number6 = tCheckItemMapper.findFileByGeo(user.getId(),1, user.getUserType()); // 较大隐患
+
+        model.addAttribute("number4",number4);
+        model.addAttribute("number5",number5);
+        model.addAttribute("number6",number6);
+
+        Integer a = tCheckItemMapper.zhuChartData124Geo("生产工艺",user.getId(), user.getUserType()); // 生产工艺 隐患数据
+        model.addAttribute("a",a);
+
+        Integer b = tCheckItemMapper.zhuChartData124Geo("设备设施",user.getId(), user.getUserType()); // 设备设施 隐患数据
+        model.addAttribute("b",b);
+
+        Integer c = tCheckItemMapper.zhuChartData124Geo("特种设备",user.getId(), user.getUserType()); // 特种设备 隐患数据
+        model.addAttribute("c",c);
+
+        Integer d = tCheckItemMapper.zhuChartData124Geo("消防安全",user.getId(), user.getUserType()); // 消防安全 隐患数据
+        model.addAttribute("d",d);
+
+        Integer e = tCheckItemMapper.zhuChartData124Geo("用电安全",user.getId(), user.getUserType()); // 用电安全 隐患数据
+        model.addAttribute("e",e);
+
+        Integer f = tCheckItemMapper.zhuChartData124Geo("行为环境",user.getId(), user.getUserType()); // 行为环境 隐患数据
+        model.addAttribute("f",f);
+
+        Integer g = tCheckItemMapper.zhuChartData124Geo("公辅设备",user.getId(), user.getUserType()); // 公辅设备 隐患数据
+        model.addAttribute("g",g);
+
+        Integer h = tCheckItemMapper.zhuChartData124Geo("危化管理",user.getId(), user.getUserType()); // 危化管理 隐患数据
+        model.addAttribute("h",h);
+
+        Integer i = tCheckItemMapper.zhuChartData124Geo("基础管理",user.getId(), user.getUserType()); // 基础管理 隐患数据
+        model.addAttribute("i",i);
+
+        Integer j = tCheckItemMapper.zhuChartData124Geo("防雷静电",user.getId(), user.getUserType()); // 防雷静电 隐患数据
+        model.addAttribute("j",j);
+
+        Integer k = tCheckItemMapper.zhuChartData124Geo("安全设施",user.getId(), user.getUserType()); // 安全设施 隐患数据
+        model.addAttribute("k",k);
+
+        Integer l = tCheckItemMapper.zhuChartData124Geo("职业卫生",user.getId(), user.getUserType()); // 职业卫生 隐患数据
+        model.addAttribute("l",l);
+
+        Integer m = tCheckItemMapper.zhuChartData124Geo("生产现场",user.getId(), user.getUserType()); // 生产现场 隐患数据
+        model.addAttribute("m",m);
+
+        Integer n = tCheckItemMapper.zhuChartData124Geo("其他",user.getId(), user.getUserType()); // 其他 隐患数据
+        model.addAttribute("n",n);
+
+        Integer count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if (null != count && 0 != count) {
+
+            if (null != a && 0 != a) {
+                String str = df.format((float) a / count);
+                model.addAttribute("a1",str);
+
+            } else {
+                model.addAttribute("a1","0.00");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != b && 0 != b) {
+                String str = df.format((float) b / count);
+                model.addAttribute("b1",str);
+
+            } else {
+                model.addAttribute("b1","0.00");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != c && 0 != c) {
+                String str = df.format((float) c / count);
+                model.addAttribute("c1",str);
+
+            } else {
+                model.addAttribute("c1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != d && 0 != d) {
+                String str = df.format((float) d / count);
+                model.addAttribute("d1",str);
+
+            } else {
+                model.addAttribute("d1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != e && 0 != e) {
+                String str = df.format((float) e / count);
+                model.addAttribute("e1",str);
+
+            } else {
+                model.addAttribute("e1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != f && 0 != f) {
+                String str = df.format((float) f / count);
+                model.addAttribute("f1",str);
+
+            } else {
+                model.addAttribute("f1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != g && 0 != g) {
+                String str = df.format((float) g / count);
+                model.addAttribute("g1",str);
+
+            } else {
+                model.addAttribute("g1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != h && 0 != h) {
+                String str = df.format((float) h / count);
+                model.addAttribute("h1",str);
+
+            } else {
+                model.addAttribute("h1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != i && 0 != i) {
+                String str = df.format((float) i / count);
+                model.addAttribute("i1",str);
+
+            } else {
+                model.addAttribute("i1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != j && 0 != j) {
+                String str = df.format((float) j / count);
+                model.addAttribute("j1",str);
+
+            } else {
+                model.addAttribute("j1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != k && 0 != k) {
+                String str = df.format((float) k / count);
+                model.addAttribute("k1",str);
+
+            } else {
+                model.addAttribute("k1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != l && 0 != l) {
+                String str = df.format((float) l / count);
+                model.addAttribute("l1",str);
+
+            } else {
+                model.addAttribute("l1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != m && 0 != m) {
+                String str = df.format((float) m / count);
+                model.addAttribute("m1",str);
+
+            } else {
+                model.addAttribute("m1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != n && 0 != n) {
+                String str = df.format((float) n / count);
+                model.addAttribute("n1",str);
+
+            } else {
+                model.addAttribute("n1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+        }else {
+            model.addAttribute("a1","0.00");
+            model.addAttribute("b1","0.00");
+            model.addAttribute("c1","0.00");
+            model.addAttribute("d1","0.00");
+            model.addAttribute("e1","0.00");
+            model.addAttribute("f1","0.00");
+            model.addAttribute("g1","0.00");
+            model.addAttribute("h1","0.00");
+            model.addAttribute("i1","0.00");
+            model.addAttribute("j1","0.00");
+            model.addAttribute("k1","0.00");
+            model.addAttribute("l1","0.00");
+            model.addAttribute("m1","0.00");
+            model.addAttribute("n1","0.00");
+
+        }
+        model.addAttribute("flag",flag);
+        return "global/other/analyse/zl-analysis";
+    }
+
+    /**
+     * 企业自查对象分析 拄杖图
+     * @param request
+     * @param model
+     * @param flag
+     * @return
+     */
+    @RequestMapping(value = "zhuChartData66")
+    public String zhuChartData66 (HttpServletRequest request, Model model, Integer flag){
+        User user = getLoginUser(request);//用户登录
+        List<Integer> Ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询该账户下公司id
+        System.out.println(Ids);
+        List<Map<String,Object>> list = null;
+        List<Map<String, Object>> list2 = new ArrayList<>();
+        Map<String,Object> map = new HashMap<>();
+
+        Integer sum1 = 0;
+        Integer sum2 = 0;
+        Integer sum3 = 0;
+        Integer sum4 = 0;
+        Integer sum5 = 0;
+        Integer sum6 = 0;
+        Integer sum7 = 0;
+        Integer sum8 = 0;
+        Integer sum9 = 0;
+        Integer sum10 = 0;
+        Integer sum11 = 0;
+        Integer sum12 = 0;
+        Integer sum13 = 0;
+        Integer sum14 = 0;
+        for(Integer id : Ids){
+            if (flag ==1){
+                list = hiddenPlanMapper.selectDpids(id);
+            }else if (flag == 2){
+                list = tCheckMapper.findCheckCompany(id,2);
+            }else if (flag == 3){
+                list = tCheckMapper.findCheckCompany(id,3);
+            }
+            for (int i = 0; i < list.size(); i++) {
+
+                Integer a = 0;
+                Integer b = 0;
+                Integer c = 0;
+                Integer d = 0;
+                Integer e = 0;
+                Integer f = 0;
+                Integer g = 0;
+                Integer h = 0;
+                Integer i1 = 0;
+                Integer j = 0;
+                Integer k = 0;
+                Integer l = 0;
+                Integer m = 0;
+                Integer n = 0;
+
+                if (flag == 1){
+
+                    if (null == list.get(i).get("dpid")){
+
+                        a = tCheckItemMapper.zhuChartData66("生产工艺","公司级",flag,id); // 生产工艺 隐患数据
+                        list.get(i).put("danger1",a);
+                        sum1 += a;
+
+                        b = tCheckItemMapper.zhuChartData66("设备设施","公司级",flag,id); // 设备设施 隐患数据
+                        list.get(i).put("danger2",b);
+                        sum2 += b;
+
+                        c = tCheckItemMapper.zhuChartData66("特种设备","公司级",flag,id); // 特种设备 隐患数据
+                        list.get(i).put("danger3",c);
+                        sum3 += c;
+
+                        d = tCheckItemMapper.zhuChartData66("消防安全","公司级",flag,id); // 消防安全 隐患数据
+                        list.get(i).put("danger4",d);
+                        sum4 += d;
+
+                        e = tCheckItemMapper.zhuChartData66("用电安全","公司级",flag,id); // 用电安全 隐患数据
+                        list.get(i).put("danger5",e);
+                        sum5 += e;
+
+                        f = tCheckItemMapper.zhuChartData66("行为环境","公司级",flag,id); // 行为环境 隐患数据
+                        list.get(i).put("danger6",f);
+                        sum6 += f;
+
+                        g = tCheckItemMapper.zhuChartData66("公辅设备","公司级",flag,id);
+                        sum7 += g;
+
+                        h = tCheckItemMapper.zhuChartData66("危化管理","公司级",flag,id); // 危化管理 隐患数据
+                        list.get(i).put("danger8",h);
+                        sum8 += h;
+
+                        i1 = tCheckItemMapper.zhuChartData66("基础管理","公司级",flag,id); // 基础管理 隐患数据
+                        list.get(i).put("danger9",i1);
+                        sum9 += i1;
+
+                        j = tCheckItemMapper.zhuChartData66("防雷静电","公司级",flag,id); // 防雷静电 隐患数据
+                        list.get(i).put("danger10",j);
+                        sum10 += j;
+
+                        k = tCheckItemMapper.zhuChartData66("安全设施","公司级",flag,id); // 安全设施 隐患数据
+                        list.get(i).put("danger11",k);
+                        sum11 += k;
+
+                        l = tCheckItemMapper.zhuChartData66("职业卫生","公司级",flag,id); // 职业卫生 隐患数据
+                        list.get(i).put("danger12",l);
+                        sum12 += l;
+
+                        m = tCheckItemMapper.zhuChartData66("生产现场","公司级",flag,id); // 生产现场 隐患数据
+                        list.get(i).put("danger13",m);
+                        sum13 += m;
+
+                        n = tCheckItemMapper.zhuChartData66("其他","公司级",flag,id); // 其他 隐患数据
+                        list.get(i).put("danger14",n);
+                        sum14 += n;
+
+                    }else if (null != list.get(i).get("dpid")){
+
+                        a = tCheckItemMapper.zhuChartData66("生产工艺",(String) list.get(i).get("name"),flag,id); // 生产工艺 隐患数据
+                        list.get(i).put("danger1",a);
+                        sum1 += a;
+
+                        b = tCheckItemMapper.zhuChartData66("设备设施",(String) list.get(i).get("name"),flag,id); // 设备设施 隐患数据
+                        list.get(i).put("danger2",b);
+                        sum2 += b;
+
+                        c = tCheckItemMapper.zhuChartData66("特种设备",(String) list.get(i).get("name"),flag,id); // 特种设备 隐患数据
+                        list.get(i).put("danger3",c);
+                        sum3 += c;
+
+                        d = tCheckItemMapper.zhuChartData66("消防安全",(String) list.get(i).get("name"),flag,id); // 消防安全 隐患数据
+                        list.get(i).put("danger4",d);
+                        sum4 += d;
+
+                        e = tCheckItemMapper.zhuChartData66("用电安全",(String) list.get(i).get("name"),flag,id); // 用电安全 隐患数据
+                        list.get(i).put("danger5",e);
+                        sum5 += e;
+
+                        f = tCheckItemMapper.zhuChartData66("行为环境",(String) list.get(i).get("name"),flag,id); // 行为环境 隐患数据
+                        list.get(i).put("danger6",f);
+                        sum6 += f;
+
+                        g = tCheckItemMapper.zhuChartData66("公辅设备",(String) list.get(i).get("name"),flag,id); // 公辅设备 隐患数据
+                        list.get(i).put("danger7",g);
+                        sum7 += g;
+
+                        h = tCheckItemMapper.zhuChartData66("危化管理",(String) list.get(i).get("name"),flag,id); // 危化管理 隐患数据
+                        list.get(i).put("danger8",h);
+                        sum8 += h;
+
+                        i1 = tCheckItemMapper.zhuChartData66("基础管理",(String) list.get(i).get("name"),flag,id); // 基础管理 隐患数据
+                        list.get(i).put("danger9",i1);
+                        sum9 += i1;
+
+                        j = tCheckItemMapper.zhuChartData66("防雷静电",(String) list.get(i).get("name"),flag,id); // 防雷静电 隐患数据
+                        list.get(i).put("danger10",j);
+                        sum10 += j;
+
+                        k = tCheckItemMapper.zhuChartData66("安全设施",(String) list.get(i).get("name"),flag,user.getId()); // 安全设施 隐患数据
+                        list.get(i).put("danger11",k);
+                        sum11 += k;
+
+                        l = tCheckItemMapper.zhuChartData66("职业卫生",(String) list.get(i).get("name"),flag,id); // 职业卫生 隐患数据
+                        list.get(i).put("danger12",l);
+                        sum12 += l;
+
+                        m = tCheckItemMapper.zhuChartData66("生产现场",(String) list.get(i).get("name"),flag,id); // 生产现场 隐患数据
+                        list.get(i).put("danger13",m);
+                        sum13 += m;
+
+                        n = tCheckItemMapper.zhuChartData66("其他",(String) list.get(i).get("name"),flag,id); // 其他 隐患数据
+                        list.get(i).put("danger14",n);
+                        sum14 += n;
+                    }
+                }else {
+                    a = tCheckItemMapper.zhuChartData67("生产工艺",(String) list.get(i).get("name"),flag,id); // 生产工艺 隐患数据
+                    list.get(i).put("danger1",a);
+                    sum1 += a;
+
+                    b = tCheckItemMapper.zhuChartData67("设备设施",(String) list.get(i).get("name"),flag,id); // 设备设施 隐患数据
+                    list.get(i).put("danger2",b);
+                    sum2 += b;
+
+                    c = tCheckItemMapper.zhuChartData67("特种设备",(String) list.get(i).get("name"),flag,user.getId()); // 特种设备 隐患数据
+                    list.get(i).put("danger3",c);
+                    sum3 += c;
+
+                    d = tCheckItemMapper.zhuChartData67("消防安全",(String) list.get(i).get("name"),flag,id); // 消防安全 隐患数据
+                    list.get(i).put("danger4",d);
+                    sum4 += d;
+
+                    e = tCheckItemMapper.zhuChartData67("用电安全",(String) list.get(i).get("name"),flag,id); // 用电安全 隐患数据
+                    list.get(i).put("danger5",e);
+                    sum5 += e;
+
+                    f = tCheckItemMapper.zhuChartData67("行为环境",(String) list.get(i).get("name"),flag,id); // 行为环境 隐患数据
+                    list.get(i).put("danger6",f);
+                    sum6 += f;
+
+                    g = tCheckItemMapper.zhuChartData67("公辅设备",(String) list.get(i).get("name"),flag,id); // 公辅设备 隐患数据
+                    list.get(i).put("danger7",g);
+                    sum7 += g;
+
+                    h = tCheckItemMapper.zhuChartData67("危化管理",(String) list.get(i).get("name"),flag,id); // 危化管理 隐患数据
+                    list.get(i).put("danger8",h);
+                    sum8 += h;
+
+                    i1 = tCheckItemMapper.zhuChartData67("基础管理",(String) list.get(i).get("name"),flag,id); // 基础管理 隐患数据
+                    list.get(i).put("danger9",i1);
+                    sum9 += i1;
+
+                    j = tCheckItemMapper.zhuChartData67("防雷静电",(String) list.get(i).get("name"),flag,id); // 防雷静电 隐患数据
+                    list.get(i).put("danger10",j);
+                    sum10 += j;
+
+                    k = tCheckItemMapper.zhuChartData67("安全设施",(String) list.get(i).get("name"),flag, id); // 安全设施 隐患数据
+                    list.get(i).put("danger11",k);
+                    sum11 += k;
+
+                    l = tCheckItemMapper.zhuChartData67("职业卫生",(String) list.get(i).get("name"),flag, id); // 职业卫生 隐患数据
+                    list.get(i).put("danger12",l);
+                    sum12 += l;
+
+                    m = tCheckItemMapper.zhuChartData67("生产现场",(String) list.get(i).get("name"),flag, id); // 生产现场 隐患数据
+                    list.get(i).put("danger13",m);
+                    sum13 += m;
+
+                    n = tCheckItemMapper.zhuChartData67("其他",(String) list.get(i).get("name"),flag, id); // 其他 隐患数据
+                    list.get(i).put("danger14",n);
+                    sum14 += n;
+                }
+
+                Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n;
+
+                list.get(i).put("danger15",count);  // 某个车间的所有种类隐患的合计
+                list2.addAll(list);
+            }
+
+        }
+        Integer count = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 + sum11 + sum12 + sum13 + sum14;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if (null != count && 0 != count) {
+
+            if (null != sum1 && 0 != sum1) {
+                String str = df.format((float)sum1 / count);
+                map.put("result1",str+"%");
+
+            } else {
+                map.put("result1","0.00%");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum2 && 0 != sum2) {
+                String str = df.format((float)sum2 / count);
+                map.put("result2",str + "%");
+
+            } else {
+                map.put("result2","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum3 && 0 != sum3) {
+                String str = df.format((float)sum3 / count);
+                map.put("result3",str + "%");
+
+            } else {
+                map.put("result3","0.00%");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum4 && 0 != sum4) {
+                String str = df.format((float)sum4 / count);
+                map.put("result4",str + "%");
+
+            } else {
+                map.put("result4","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum5 && 0 != sum5) {
+                String str = df.format((float)sum5 / count);
+                map.put("result5", str + "%");
+
+            } else {
+                map.put("result5","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum6 && 0 != sum6) {
+                String str = df.format((float)sum6 / count);
+                map.put("result6",str + "%");
+
+            } else {
+                map.put("result6","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum7 && 0 != sum7) {
+                String str = df.format((float)sum7 / count);
+                map.put("result7",str + "%");
+
+            } else {
+                map.put("result7","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum8 && 0 != sum8) {
+                String str = df.format((float)sum8 / count);
+                map.put("result8",str + "%");
+
+            } else {
+                map.put("result8","0.00%");// 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum9 && 0 != sum9) {
+                String str = df.format((float)sum9 / count);
+                map.put("result9",str + "%");
+
+            } else {
+                map.put("result9","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum10 && 0 != sum10) {
+                String str = df.format((float)sum10 / count);
+                map.put("result10",str + "%");
+
+            } else {
+                map.put("result10","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum11 && 0 != sum11) {
+                String str = df.format((float)sum11 / count);
+                map.put("result11",str + "%");
+
+            } else {
+                map.put("result11","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum12 && 0 != sum12) {
+                String str = df.format((float)sum12 / count);
+                map.put("result12",str + "%");
+
+            } else {
+                map.put("result12","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum13 && 0 != sum13) {
+                String str = df.format((float)sum13 / count);
+                map.put("result13",str + "%");
+
+            } else {
+                map.put("result13","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum14 && 0 != sum14) {
+                String str = df.format((float)sum14 / count);
+                map.put("result14",str + "%");
+
+            } else {
+                map.put("result14","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+        }else {
+            // 占比 坚
+            map.put("result1", "0.00%");
+            map.put("result2", "0.00%");
+            map.put("result3", "0.00%");
+            map.put("result4", "0.00%");
+            map.put("result5", "0.00%");
+            map.put("result6", "0.00%");
+            map.put("result7", "0.00%");
+            map.put("result8", "0.00%");
+            map.put("result9", "0.00%");
+            map.put("result10", "0.00%");
+            map.put("result11", "0.00%");
+            map.put("result12", "0.00%");
+            map.put("result13", "0.00%");
+            map.put("result14", "0.00%");
+        }
+        // 合计 坚
+        map.put("sum1",sum1);
+        map.put("sum2",sum2);
+        map.put("sum3",sum3);
+        map.put("sum4",sum4);
+        map.put("sum5",sum5);
+        map.put("sum6",sum6);
+        map.put("sum7",sum7);
+        map.put("sum8",sum8);
+        map.put("sum9",sum9);
+        map.put("sum10",sum10);
+        map.put("sum11",sum11);
+        map.put("sum12",sum12);
+        map.put("sum13",sum13);
+        map.put("sum14",sum14);
+
+        list2.add(map);
+        model.addAttribute("data",new Date());
+        model.addAttribute("list",list2);
+
+        return "global/other/analyse/zhuChartData66";
+    }
+
+    /**
+     * 绩效分析
+     * @param request
+     * @param model
+     * @param flag
+     * @return
+     */
+    @RequestMapping(value = "zhuChartData55")
+    public String zhuChartData55 (HttpServletRequest request, Model model,Integer flag){
+        User user = getLoginUser(request);
+        List<Integer> Ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询该账户下公司id
+        List<Map<String,Object>> list = null;
+        List<Map<String, Object>> list2 = new ArrayList<>();
+        Map<String,Object> map = new HashMap<>();
+        Integer count1 = 0;
+        Integer count2 = 0;
+        Integer  a = 0;
+        Integer  b = 0;
+        for(Integer id : Ids){
+            if (flag ==1){
+                list = hiddenPlanMapper.selectDpids(id);
+            }else if (flag == 2){
+                list = tCheckMapper.findCheckCompany(id,2);
+            }else if (flag == 3){
+                list = tCheckMapper.findCheckCompany(id,3);
+            }
+            for (int i = 0; i < list.size(); i++) {
+
+                if (flag == 1){
+                    if (null == list.get(i).get("dpid")){
+                        a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, "公司级", id,2); // 现场
+                        list.get(i).put("danger1",a);
+
+                        b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, "公司级", id,1); // 基础
+                        list.get(i).put("danger2",b);
+
+                    }else if (null != list.get(i).get("dpid")){
+                        a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),id,2); // 现场
+                        list.get(i).put("danger1",a);
+
+                        b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),user.getId(),1); // 基础
+                        list.get(i).put("danger2",b);
+                    }
+                }else {
+                    a = tCheckItemMapper.lookHiddenSource(flag, (String) list.get(i).get("name"), id,2); // 现场
+                    list.get(i).put("danger1",a);
+
+                    b = tCheckItemMapper.lookHiddenSource(flag, (String) list.get(i).get("name"), id,1); // 基础
+                    list.get(i).put("danger2",b);
+                }
+
+                count1 += a;
+                count2 += b;
+
+                Integer sum = a + b;
+
+                list.get(i).put("sum",sum); // 某车间 现场 和 基础 的合计总数
+                list2.addAll(list);
+
+            }
+        }
+        Integer sum   = count1 + count2;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if (null != sum && 0 != sum){
+
+            if (0 != count1){
+                String s = df.format((float)count1 / sum);
+                map.put("result1",s+"%"); // 所有车间 现场风险 占比总数
+            }else {
+                map.put("result1","0.00%"); // 所有车间 现场风险 占比总数
+            }
+
+            if (0 != count2){
+                String s = df.format((float)count2 / sum);
+                map.put("result2",s+"%"); // 所有车间 基础风险 占比总数
+            }else {
+                map.put("result2","0.00%"); // 所有车间 基础风险 占比总数
+            }
+
+        }else {
+            map.put("result1","0.00%"); // 所有车间 现场风险 占比总数
+            map.put("result2","0.00%"); // 所有车间 基础风险 占比总数
+        }
+
+        map.put("count1",count1); // 所有车间 现场风险 合计总数
+        map.put("count2",count2); // 所有车间 基础风险 合计总数
+
+        list2.add(map);
+
+        model.addAttribute("data",new Date());
+        model.addAttribute("list",list2);
+        return "global/other/analyse/zhuChartData55";
+    }
+
+    /**
+     * 排查对象分析
+     * @param request
+     * @param model
+     * @param flag
+     * @return
+     */
+    @RequestMapping(value = "zhuChartData22")
+    public String zhuChartData22 (HttpServletRequest request, Model model, Integer flag){
+        User user = getLoginUser(request);
+        List<Integer> Ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询该账户下公司id
+        List<Map<String,Object>> list = null;
+        List<Map<String, Object>> list2 = new ArrayList<>();
+        Map<String,Object> map = new HashMap<>();
+
+        Integer sum1 = 0;
+        Integer sum2 = 0;
+        Integer sum3 = 0;
+        Integer sum4 = 0;
+        Integer sum5 = 0;
+        Integer sum6 = 0;
+        Integer sum7 = 0;
+        Integer sum8 = 0;
+        Integer sum9 = 0;
+        Integer sum10 = 0;
+        Integer sum11 = 0;
+        Integer sum12 = 0;
+        Integer sum13 = 0;
+        Integer sum14 = 0;
+
+        for(Integer id : Ids){
+            if (flag ==1){
+                list = hiddenPlanMapper.selectDpids(id);//查询各个车间
+            }else if (flag == 2){
+                list = tCheckMapper.findCheckCompany(id,2);//查询检查部门和公司
+            }else if (flag == 3){
+                list = tCheckMapper.findCheckCompany(id,3);//查询检查部门和公司
+            }
+            for (int i = 0; i < list.size(); i++) {
+
+                Integer a = 0;
+                Integer b = 0;
+                Integer c = 0;
+                Integer d = 0;
+                Integer e = 0;
+                Integer f = 0;
+                Integer g = 0;
+                Integer h = 0;
+                Integer i1 = 0;
+                Integer j = 0;
+                Integer k = 0;
+                Integer l = 0;
+                Integer m = 0;
+                Integer n = 0;
+
+                if (flag == 1){ //企业自查
+
+                    if (null == list.get(i).get("dpid")){//当车间id为空时,查询公司级的隐患
+
+                        a = tCheckItemMapper.zhuChartData22("生产工艺","公司级",flag,id); // 生产工艺 隐患数据
+                        list.get(i).put("danger1",a);
+                        sum1 += a;
+
+                        b = tCheckItemMapper.zhuChartData22("设备设施","公司级",flag,id); // 设备设施 隐患数据
+                        list.get(i).put("danger2",b);
+                        sum2 += b;
+
+                        c = tCheckItemMapper.zhuChartData22("特种设备","公司级",flag,id); // 特种设备 隐患数据
+                        list.get(i).put("danger3",c);
+                        sum3 += c;
+
+                        d = tCheckItemMapper.zhuChartData22("消防安全","公司级",flag,id); // 消防安全 隐患数据
+                        list.get(i).put("danger4",d);
+                        sum4 += d;
+
+                        e = tCheckItemMapper.zhuChartData22("用电安全","公司级",flag,id); // 用电安全 隐患数据
+                        list.get(i).put("danger5",e);
+                        sum5 += e;
+
+                        f = tCheckItemMapper.zhuChartData22("行为环境","公司级",flag,id); // 行为环境 隐患数据
+                        list.get(i).put("danger6",f);
+                        sum6 += f;
+
+                        g = tCheckItemMapper.zhuChartData22("公辅设备","公司级",flag,id); // 公辅设备 隐患数据
+                        list.get(i).put("danger7",g);
+                        sum7 += g;
+
+                        h = tCheckItemMapper.zhuChartData22("危化管理","公司级",flag,id); // 危化管理 隐患数据
+                        list.get(i).put("danger8",h);
+                        sum8 += h;
+
+                        i1 = tCheckItemMapper.zhuChartData22("基础管理","公司级",flag,id); // 基础管理 隐患数据
+                        list.get(i).put("danger9",i1);
+                        sum9 += i1;
+
+                        j = tCheckItemMapper.zhuChartData22("防雷静电","公司级",flag,id); // 防雷静电 隐患数据
+                        list.get(i).put("danger10",j);
+                        sum10 += j;
+
+                        k = tCheckItemMapper.zhuChartData22("安全设施","公司级",flag,id); // 安全设施 隐患数据
+                        list.get(i).put("danger11",k);
+                        sum11 += k;
+
+                        l = tCheckItemMapper.zhuChartData22("职业卫生","公司级",flag,id); // 职业卫生 隐患数据
+                        list.get(i).put("danger12",l);
+                        sum12 += l;
+
+                        m = tCheckItemMapper.zhuChartData22("生产现场","公司级",flag,id); // 生产现场 隐患数据
+                        list.get(i).put("danger13",m);
+                        sum13 += m;
+
+                        n = tCheckItemMapper.zhuChartData22("其他","公司级",flag,id); // 其他 隐患数据
+                        list.get(i).put("danger14",n);
+                        sum14 += n;
+
+                    }else if (null != list.get(i).get("dpid")){ //查询车间隐患
+
+                        a = tCheckItemMapper.zhuChartData22("生产工艺",(String) list.get(i).get("name"),flag,id); // 生产工艺 隐患数据
+                        list.get(i).put("danger1",a);
+                        sum1 += a;
+
+                        b = tCheckItemMapper.zhuChartData22("设备设施",(String) list.get(i).get("name"),flag,id); // 设备设施 隐患数据
+                        list.get(i).put("danger2",b);
+                        sum2 += b;
+
+                        c = tCheckItemMapper.zhuChartData22("特种设备",(String) list.get(i).get("name"),flag,id); // 特种设备 隐患数据
+                        list.get(i).put("danger3",c);
+                        sum3 += c;
+
+                        d = tCheckItemMapper.zhuChartData22("消防安全",(String) list.get(i).get("name"),flag,id); // 消防安全 隐患数据
+                        list.get(i).put("danger4",d);
+                        sum4 += d;
+
+                        e = tCheckItemMapper.zhuChartData22("用电安全",(String) list.get(i).get("name"),flag,id); // 用电安全 隐患数据
+                        list.get(i).put("danger5",e);
+                        sum5 += e;
+
+                        f = tCheckItemMapper.zhuChartData22("行为环境",(String) list.get(i).get("name"),flag,id);
+                        sum6 += f;
+
+                        g = tCheckItemMapper.zhuChartData22("公辅设备",(String) list.get(i).get("name"),flag,id); // 公辅设备 隐患数据
+                        list.get(i).put("danger7",g);
+                        sum7 += g;
+
+                        h = tCheckItemMapper.zhuChartData22("危化管理",(String) list.get(i).get("name"),flag,id); // 危化管理 隐患数据
+                        list.get(i).put("danger8",h);
+                        sum8 += h;
+
+                        i1 = tCheckItemMapper.zhuChartData22("基础管理",(String) list.get(i).get("name"),flag,id); // 基础管理 隐患数据
+                        list.get(i).put("danger9",i1);
+                        sum9 += i1;
+
+                        j = tCheckItemMapper.zhuChartData22("防雷静电",(String) list.get(i).get("name"),flag,id); // 防雷静电 隐患数据
+                        list.get(i).put("danger10",j);
+                        sum10 += j;
+
+                        k = tCheckItemMapper.zhuChartData22("安全设施",(String) list.get(i).get("name"),flag,id); // 安全设施 隐患数据
+                        list.get(i).put("danger11",k);
+                        sum11 += k;
+
+                        l = tCheckItemMapper.zhuChartData22("职业卫生",(String) list.get(i).get("name"),flag,id); // 职业卫生 隐患数据
+                        list.get(i).put("danger12",l);
+                        sum12 += l;
+
+                        m = tCheckItemMapper.zhuChartData22("生产现场",(String) list.get(i).get("name"),flag,id); // 生产现场 隐患数据
+                        list.get(i).put("danger13",m);
+                        sum13 += m;
+
+                        n = tCheckItemMapper.zhuChartData22("其他",(String) list.get(i).get("name"),flag,id); // 其他 隐患数据
+                        list.get(i).put("danger14",n);
+                        sum14 += n;
+                    }
+
+                }else { //第三方检查和行政抽查
+                    a = tCheckItemMapper.zhuChartData23("生产工艺",(String) list.get(i).get("name"),flag,id); // 生产工艺 隐患数据
+                    list.get(i).put("danger1",a);
+                    sum1 += a;
+
+                    b = tCheckItemMapper.zhuChartData23("设备设施",(String) list.get(i).get("name"),flag,id); // 设备设施 隐患数据
+                    list.get(i).put("danger2",b);
+                    sum2 += b;
+
+                    c = tCheckItemMapper.zhuChartData23("特种设备",(String) list.get(i).get("name"),flag,id); // 特种设备 隐患数据
+                    list.get(i).put("danger3",c);
+                    sum3 += c;
+
+                    d = tCheckItemMapper.zhuChartData23("消防安全",(String) list.get(i).get("name"),flag,id); // 消防安全 隐患数据
+                    list.get(i).put("danger4",d);
+                    sum4 += d;
+
+                    e = tCheckItemMapper.zhuChartData23("用电安全",(String) list.get(i).get("name"),flag,id); // 用电安全 隐患数据
+                    list.get(i).put("danger5",e);
+                    sum5 += e;
+
+                    f = tCheckItemMapper.zhuChartData23("行为环境",(String) list.get(i).get("name"),flag,id); // 行为环境 隐患数据
+                    list.get(i).put("danger6",f);
+                    sum6 += f;
+
+                    g = tCheckItemMapper.zhuChartData23("公辅设备",(String) list.get(i).get("name"),flag,id); // 公辅设备 隐患数据
+                    list.get(i).put("danger7",g);
+                    sum7 += g;
+
+                    h = tCheckItemMapper.zhuChartData23("危化管理",(String) list.get(i).get("name"),flag,id); // 危化管理 隐患数据
+                    list.get(i).put("danger8",h);
+                    sum8 += h;
+
+                    i1 = tCheckItemMapper.zhuChartData23("基础管理",(String) list.get(i).get("name"),flag,id); // 基础管理 隐患数据
+                    list.get(i).put("danger9",i1);
+                    sum9 += i1;
+
+                    j = tCheckItemMapper.zhuChartData23("防雷静电",(String) list.get(i).get("name"),flag,id); // 防雷静电 隐患数据
+                    list.get(i).put("danger10",j);
+                    sum10 += j;
+
+                    k = tCheckItemMapper.zhuChartData23("安全设施",(String) list.get(i).get("name"),flag,id); // 安全设施 隐患数据
+                    list.get(i).put("danger11",k);
+                    sum11 += k;
+
+                    l = tCheckItemMapper.zhuChartData23("职业卫生",(String) list.get(i).get("name"),flag,id); // 职业卫生 隐患数据
+                    list.get(i).put("danger12",l);
+                    sum12 += l;
+
+                    m = tCheckItemMapper.zhuChartData23("生产现场",(String) list.get(i).get("name"),flag, id); // 生产现场 隐患数据
+                    list.get(i).put("danger13",m);
+                    sum13 += m;
+
+                    n = tCheckItemMapper.zhuChartData23("其他",(String) list.get(i).get("name"),flag, id); // 其他 隐患数据
+                    list.get(i).put("danger14",n);
+                    sum14 += n;
+                }
+
+                Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n;
+
+                list.get(i).put("danger15",count);  // 某个车间的所有种类隐患的合计
+                list2.addAll(list);
+            }
+
+        }
+        Integer count = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 + sum11 + sum12 + sum13 + sum14;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if (null != count && 0 != count) {
+
+            if (null != sum1 && 0 != sum1) {
+                String str = df.format((float)sum1 / count);
+                map.put("result1",str+"%");
+
+            } else {
+                map.put("result1","0.00%");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum2 && 0 != sum2) {
+                String str = df.format((float)sum2 / count);
+                map.put("result2",str + "%");
+
+            } else {
+                map.put("result2","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum3 && 0 != sum3) {
+                String str = df.format((float)sum3 / count);
+                map.put("result3",str + "%");
+
+            } else {
+                map.put("result3","0.00%");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum4 && 0 != sum4) {
+                String str = df.format((float)sum4 / count);
+                map.put("result4",str + "%");
+
+            } else {
+                map.put("result4","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum5 && 0 != sum5) {
+                String str = df.format((float)sum5 / count);
+                map.put("result5", str + "%");
+
+            } else {
+                map.put("result5","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum6 && 0 != sum6) {
+                String str = df.format((float)sum6 / count);
+                map.put("result6",str + "%");
+
+            } else {
+                map.put("result6","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum7 && 0 != sum7) {
+                String str = df.format((float)sum7 / count);
+                map.put("result7",str + "%");
+
+            } else {
+                map.put("result7","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum8 && 0 != sum8) {
+                String str = df.format((float)sum8 / count);
+                map.put("result8",str + "%");
+
+            } else {
+                map.put("result8","0.00%");// 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum9 && 0 != sum9) {
+                String str = df.format((float)sum9 / count);
+                map.put("result9",str + "%");
+
+            } else {
+                map.put("result9","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum10 && 0 != sum10) {
+                String str = df.format((float)sum10 / count);
+                map.put("result10",str + "%");
+
+            } else {
+                map.put("result10","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum11 && 0 != sum11) {
+                String str = df.format((float)sum11 / count);
+                map.put("result11",str + "%");
+
+            } else {
+                map.put("result11","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum12 && 0 != sum12) {
+                String str = df.format((float)sum12 / count);
+                map.put("result12",str + "%");
+
+            } else {
+                map.put("result12","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum13 && 0 != sum13) {
+                String str = df.format((float)sum13 / count);
+                map.put("result13",str + "%");
+
+            } else {
+                map.put("result13","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum14 && 0 != sum14) {
+                String str = df.format((float)sum14 / count);
+                map.put("result14",str + "%");
+
+            } else {
+                map.put("result14","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+        }else {
+            // 占比 坚
+            map.put("result1", "0.00%");
+            map.put("result2", "0.00%");
+            map.put("result3", "0.00%");
+            map.put("result4", "0.00%");
+            map.put("result5", "0.00%");
+            map.put("result6", "0.00%");
+            map.put("result7", "0.00%");
+            map.put("result8", "0.00%");
+            map.put("result9", "0.00%");
+            map.put("result10", "0.00%");
+            map.put("result11", "0.00%");
+            map.put("result12", "0.00%");
+            map.put("result13", "0.00%");
+            map.put("result14", "0.00%");
+        }
+
+        // 合计 坚
+        map.put("sum1",sum1);
+        map.put("sum2",sum2);
+        map.put("sum3",sum3);
+        map.put("sum4",sum4);
+        map.put("sum5",sum5);
+        map.put("sum6",sum6);
+        map.put("sum7",sum7);
+        map.put("sum8",sum8);
+        map.put("sum9",sum9);
+        map.put("sum10",sum10);
+        map.put("sum11",sum11);
+        map.put("sum12",sum12);
+        map.put("sum13",sum13);
+        map.put("sum14",sum14);
+
+        list2.add(map);
+
+        model.addAttribute("data",new Date());
+        model.addAttribute("list",list2);
+
+        return "global/other/analyse/zhuChartData22";
+    }
+
+    /**
+     * 隐患治理等级分析
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "zhuChartData44")
+    public String zhuChartData44 (HttpServletRequest request, Model model){
+        User user = getLoginUser(request);
+        List<Integer> Ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询所有的公司
+        List<Map<String,Object>> list2 = new ArrayList<>();
+        Map<String,Object> map = new HashMap<>();
+        List<Map<String,Object>> list = null;
+        Integer count1 = 0;
+        Integer count2 = 0;
+        Integer count3 = 0;
+
+        // 已治理合计
+        Integer sign1 = 0;
+        Integer sign2 = 0;
+        Integer sign3 = 0;
+        // 未治理合计
+        Integer sign11 = 0;
+        Integer sign22 = 0;
+        Integer sign33 = 0;
+        for(Integer id : Ids){
+            list = zzjgDepartmentMapper.findAllLevel1(id);
+            for (int i = 0; i < list.size(); i++) {
+
+                Integer  a = tCheckItemMapper.findRecheckFileByMap(1, id,3,(String) list.get(i).get("name")); // 一般和较小 合格 已治理
+                list.get(i).put("danger1",a);
+                Integer  a1 = tCheckItemMapper.findRecheckFileByMap(2, id,3,(String) list.get(i).get("name")); // 一般和较小 不合格 未治理
+                list.get(i).put("danger11",a1);
+                count1 = a + a1;
+
+                Integer  b = tCheckItemMapper.findRecheckFileByMap(1, id,1,(String) list.get(i).get("name")); // 较大 合格 已治理
+                list.get(i).put("danger2",b);
+                Integer  b1 = tCheckItemMapper.findRecheckFileByMap(2, id,1,(String) list.get(i).get("name")); // 较大 不合格 未治理
+                list.get(i).put("danger22",b1);
+                count2  = b + b1;
+
+                Integer  c = tCheckItemMapper.findRecheckFileByMap(1, id,2,(String) list.get(i).get("name")); // 重大 合格 已治理
+                list.get(i).put("danger3",c);
+                Integer  c1 = tCheckItemMapper.findRecheckFileByMap(1, id,2,(String) list.get(i).get("name")); // 重大 不合格 未治理
+                list.get(i).put("danger33",c1);
+                count3  = c + c1;
+
+                sign1 += a;
+                sign2 += b;
+                sign3 += c;
+
+                sign11 += a1;
+                sign22 += b1;
+                sign33 += c1;
+
+                DecimalFormat df = new DecimalFormat("0.00");
+
+                Integer sum = count1 + count2 + count3;
+
+                if (null != count1 && count1 != 0){  // 一般和较小 治理率
+                    String str = df.format((float)a/count1);
+                    list.get(i).put("result11",str+"%");
+                }else {
+                    list.get(i).put("result11",0.00);
+                }
+
+                if (null != count2 && count2 != 0){ // 较大 治理率
+                    String str = df.format((float)b/count2);
+                    list.get(i).put("result22",str+"%");
+                }else {
+                    list.get(i).put("result22",0.00);
+                }
+
+                if (null != count3 && count3 != 0){ // 重大 治理率
+                    String str = df.format((float)c/count3);
+                    list.get(i).put("result33",str+"%");
+                }else {
+                    list.get(i).put("result33",0.00);
+                }
+
+
+                Integer number1 = a + b + c; // 已治理 合计
+                list.get(i).put("number1",number1);
+
+                Integer number2 = a1 + b1 + c1;  // 未治理 合计
+                list.get(i).put("number2",number2);
+
+                Integer number = number1 + number2;
+
+                if (null != number && number != 0){
+                    String str = df.format((float)number1/number);
+                    list.get(i).put("number",str+"%");  // 治理率 合计
+                }else {
+                    list.get(i).put("number",0.00);
+                }
+                list2.addAll(list);
+
+            }
+
+        }
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        Integer sum1 = sign1 + sign11;
+        Integer sum2 = sign2 + sign22;
+        Integer sum3 = sign3 + sign33;
+
+        if (null != sum1 && 0 != sum1){
+
+            if (null != sign1 && 0 != sign1){
+                String str = df.format((float)sign1 / sum1);
+                map.put("result1",str+"%"); // 一般隐患的治理率 竖
+
+            }else {
+                map.put("result1","0.00%"); // 一般隐患的治理率 竖
+            }
+        }else {
+            map.put("result1","0.00%"); // 一般隐患的治理率 竖
+        }
+
+        if (null != sum2 && 0 != sum2){
+
+            if (null != sign2 && 0 != sign2){
+                String str = df.format((float)sign2 / sum2);
+                map.put("result2",str+"%"); // 较大隐患的治理率 竖
+
+            }else {
+                map.put("result2","0.00%"); // 较大隐患的治理率 竖
+            }
+
+        }else {
+            map.put("result2","0.00%"); // 一般隐患的治理率 竖
+        }
+
+        if (null != sum3 && 0 != sum3){
+
+            if (null != sign3 && 0 != sign3){
+                String str = df.format((float)sign3/sum3);
+                map.put("result3",str+"%"); // 重大隐患的治理率 竖
+
+            }else {
+                map.put("result3","0.00%"); // 一般隐患的治理率 竖
+            }
+
+        }else {
+            map.put("result3","0.00%"); // 一般隐患的治理率 竖
+        }
+
+        Integer proportion1 = sign1 + sign2 + sign3;
+
+        Integer proportion2 = sign11 + sign22 + sign33;
+
+        if (null != proportion1 && 0 != proportion1){
+
+            if (null != sign1 && 0 != sign1){
+                String str = df.format((float)sign1 / proportion1);
+                map.put("proportion11",str+"%");  // 一般隐患 已治理 占比数据 竖
+            }else {
+                map.put("proportion11","0.00%"); // 一般隐患的治理率 竖
+            }
+
+            if (null != sign2 && 0 != sign2){
+                String str = df.format((float)sign2 / proportion1);
+                map.put("proportion22",str+"%");  // 较大隐患 已治理 占比数据 竖
+            }else {
+                map.put("proportion22","0.00%"); // 较大隐患 已治理 占比数据 竖
+            }
+
+            if (null != sign3 && 0 != sign3){
+                String str = df.format((float)sign3 / proportion1);
+                map.put("proportion33",str+"%");  // 重大隐患 已治理 占比数据 竖
+
+            }else {
+                map.put("proportion33","0.00%"); // 重大隐患 已治理 占比数据 竖
+            }
+
+        }else {
+            map.put("proportion11","0.00%"); // 一般隐患的治理率 竖
+            map.put("proportion22","0.00%"); // 较大隐患 已治理 占比数据 竖
+            map.put("proportion33","0.00%"); // 重大隐患 已治理 占比数据 竖
+        }
+
+        if (null != proportion2 && 0 != proportion2){
+
+            if (null != sign1 && 0 != sign1){
+                String str = df.format((float)sign1 / proportion2);
+                map.put("proportion44",str+"%");  // 一般隐患 未治理 占比数据 竖
+            }else {
+                map.put("proportion44","0.00%"); // 一般隐患 未治理 占比数据 竖
+            }
+
+            if (null != sign2 && 0 != sign2){
+                String str = df.format((float)sign2 / proportion2);
+                map.put("proportion55",str+"%");  // 较大隐患 未治理 占比数据 竖
+            }else {
+                map.put("proportion55","0.00%"); // 较大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sign3 && 0 != sign3){
+                Double sign = Double.valueOf(sign3 / proportion2);
+                String str = df.format((float)sign3/proportion2);
+                map.put("proportion66",str+"%");  // 重大隐患 未治理 占比数据 竖
+
+            }else {
+                map.put("proportion66","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+        }else {
+            map.put("proportion44","0.00%"); // 一般隐患的治理率 竖
+            map.put("proportion55","0.00%"); // 较大隐患 已治理 占比数据 竖
+            map.put("proportion66","0.00%"); // 重大隐患 已治理 占比数据 竖
+        }
+
+        map.put("sign1",sign1); // 一般隐患 已治理 合计 竖
+        map.put("sign2",sign2); // 较大隐患 已治理 合计 竖
+        map.put("sign3",sign3); // 重大隐患 已治理 合计 竖
+        map.put("sign11",sign11); // 一般隐患 未治理 合计 竖
+        map.put("sign22",sign22); // 较大隐患 未治理 合计 竖
+        map.put("sign33",sign33); // 重大隐患 未治理 合计 竖
+
+
+        list2.add(map);
+        System.out.println(map);
+
+        model.addAttribute("data",new Date());
+        model.addAttribute("list",list2);
+        return "global/other/analyse/zhuChartData44";
+    }
+
+    /**
+     * 隐患等级分析
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "zhuChartData123")
+    public String zhuChartData123 (HttpServletRequest request, Model model){
+        User user = getLoginUser(request);
+        List<Integer> Ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询所有的公司
+        List<Map<String,Object>> list2 = new ArrayList<>();
+        Map<String,Object> map = new HashMap<>();
+        List<Map<String,Object>> list = null;
+        Integer sum1 = 0;
+        Integer sum2 = 0;
+        Integer sum3 = 0;
+        Integer sum4 = 0;
+        Integer sum5 = 0;
+        Integer sum6 = 0;
+        Integer sum7 = 0;
+        Integer sum8 = 0;
+        Integer sum9 = 0;
+        Integer sum10 = 0;
+        Integer sum11 = 0;
+        Integer sum12 = 0;
+        Integer sum13 = 0;
+        Integer sum14 = 0;
+        for(Integer id : Ids){
+
+            for (int i = 0; i < list.size(); i++) {
+
+                Integer  a = tCheckItemMapper.zhuChartData123("生产工艺",(String) list.get(i).get("name"), id); // 生产工艺 隐患数据
+                list.get(i).put("danger1",a);
+                sum1 += a;
+
+                Integer  b = tCheckItemMapper.zhuChartData123("设备设施",(String) list.get(i).get("name"),id); // 设备设施 隐患数据
+                list.get(i).put("danger2",b);
+                sum2 += b;
+
+                Integer  c = tCheckItemMapper.zhuChartData123("特种设备",(String) list.get(i).get("name"),id); // 特种设备 隐患数据
+                list.get(i).put("danger3",c);
+                sum3 += c;
+
+                Integer  d = tCheckItemMapper.zhuChartData123("消防安全",(String) list.get(i).get("name"),id); // 消防安全 隐患数据
+                list.get(i).put("danger4",d);
+                sum4 += d;
+
+                Integer  e = tCheckItemMapper.zhuChartData123("用电安全",(String) list.get(i).get("name"),id); // 用电安全 隐患数据
+                list.get(i).put("danger5",e);
+                sum5 += e;
+
+                Integer  f = tCheckItemMapper.zhuChartData123("行为环境",(String) list.get(i).get("name"),id); // 行为环境 隐患数据
+                list.get(i).put("danger6",f);
+                sum6 += f;
+
+                Integer  g = tCheckItemMapper.zhuChartData123("公辅设备",(String) list.get(i).get("name"),id); // 公辅设备 隐患数据
+                list.get(i).put("danger7",g);
+                sum7 += g;
+
+                Integer  h = tCheckItemMapper.zhuChartData123("危化管理",(String) list.get(i).get("name"),id); // 危化管理 隐患数据
+                list.get(i).put("danger8",h);
+                sum8 += h;
+
+                Integer  i1 = tCheckItemMapper.zhuChartData123("基础管理",(String) list.get(i).get("name"),id); // 基础管理 隐患数据
+                list.get(i).put("danger9",i1);
+                sum9 += i1;
+
+                Integer  j = tCheckItemMapper.zhuChartData123("防雷静电",(String) list.get(i).get("name"),id); // 防雷静电 隐患数据
+                list.get(i).put("danger10",j);
+                sum10 += j;
+
+                Integer  k = tCheckItemMapper.zhuChartData123("安全设施",(String) list.get(i).get("name"),id); // 安全设施 隐患数据
+                list.get(i).put("danger11",k);
+                sum11 += k;
+
+                Integer  l = tCheckItemMapper.zhuChartData123("职业卫生",(String) list.get(i).get("name"),id); // 职业卫生 隐患数据
+                list.get(i).put("danger12",l);
+                sum12 += l;
+
+                Integer  m = tCheckItemMapper.zhuChartData123("生产现场",(String) list.get(i).get("name"),id); // 生产现场 隐患数据
+                list.get(i).put("danger13",m);
+                sum13 += m;
+
+                Integer  n = tCheckItemMapper.zhuChartData123("其他",(String) list.get(i).get("name"),id); // 其他 隐患数据
+                list.get(i).put("danger14",n);
+                sum14 += n;
+
+
+                Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n;
+
+                list.get(i).put("danger15",count);  // 某个车间的所有种类隐患的合计
+                list2.addAll(list);
+            }
+        }
+        Integer count = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 + sum11 + sum12 + sum13 + sum14;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if (null != count && 0 != count) {
+
+            if (null != sum1 && 0 != sum1) {
+                String str = df.format((float)sum1 / count);
+                map.put("result1",str+"%");
+
+            } else {
+                map.put("result1","0.00%");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum2 && 0 != sum2) {
+                String str = df.format((float)sum2 / count);
+                map.put("result2",str + "%");
+
+            } else {
+                map.put("result2","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum3 && 0 != sum3) {
+                String str = df.format((float)sum3 / count);
+                map.put("result3",str + "%");
+
+            } else {
+                map.put("result3","0.00%");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum4 && 0 != sum4) {
+                String str = df.format((float)sum4 / count);
+                map.put("result4",str + "%");
+
+            } else {
+                map.put("result4","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum5 && 0 != sum5) {
+                String str = df.format((float)sum5 / count);
+                map.put("result5", str + "%");
+
+            } else {
+                map.put("result5","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum6 && 0 != sum6) {
+                String str = df.format((float)sum6 / count);
+                map.put("result6",str + "%");
+
+            } else {
+                map.put("result6","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum7 && 0 != sum7) {
+                String str = df.format((float)sum7 / count);
+                map.put("result7",str + "%");
+
+            } else {
+                map.put("result7","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum8 && 0 != sum8) {
+                String str = df.format((float)sum8 / count);
+                map.put("result8",str + "%");
+
+            } else {
+                map.put("result8","0.00%");// 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum9 && 0 != sum9) {
+                String str = df.format((float)sum9 / count);
+                map.put("result9",str + "%");
+
+            } else {
+                map.put("result9","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum10 && 0 != sum10) {
+                String str = df.format((float)sum10 / count);
+                map.put("result10",str + "%");
+
+            } else {
+                map.put("result10","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum11 && 0 != sum11) {
+                String str = df.format((float)sum11 / count);
+                map.put("result11",str + "%");
+
+            } else {
+                map.put("result11","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum12 && 0 != sum12) {
+                String str = df.format((float)sum12 / count);
+                map.put("result12",str + "%");
+
+            } else {
+                map.put("result12","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum13 && 0 != sum13) {
+                String str = df.format((float)sum13 / count);
+                map.put("result13",str + "%");
+
+            } else {
+                map.put("result13","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sum14 && 0 != sum14) {
+                String str = df.format((float)sum14 / count);
+                map.put("result14",str + "%");
+
+            } else {
+                map.put("result14","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+        }else {
+            // 占比 坚
+            map.put("result1", "0.00%");
+            map.put("result2", "0.00%");
+            map.put("result3", "0.00%");
+            map.put("result4", "0.00%");
+            map.put("result5", "0.00%");
+            map.put("result6", "0.00%");
+            map.put("result7", "0.00%");
+            map.put("result8", "0.00%");
+            map.put("result9", "0.00%");
+            map.put("result10", "0.00%");
+            map.put("result11", "0.00%");
+            map.put("result12", "0.00%");
+            map.put("result13", "0.00%");
+            map.put("result14", "0.00%");
+        }
+
+        // 合计 坚
+        map.put("sum1",sum1);
+        map.put("sum2",sum2);
+        map.put("sum3",sum3);
+        map.put("sum4",sum4);
+        map.put("sum5",sum5);
+        map.put("sum6",sum6);
+        map.put("sum7",sum7);
+        map.put("sum8",sum8);
+        map.put("sum9",sum9);
+        map.put("sum10",sum10);
+        map.put("sum11",sum11);
+        map.put("sum12",sum12);
+        map.put("sum13",sum13);
+        map.put("sum14",sum14);
+
+        list2.add(map);
+
+        model.addAttribute("data",new Date());
+        model.addAttribute("list",list2);
+        return "global/other/analyse/zhuChartData123";
+    }
+
+    /**
+     * 隐患治理对象分析
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "zhuChartData77")
+    public String zhuChartData77 (HttpServletRequest request, Model model){
+        User user = getLoginUser(request);
+        List<Integer> Ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询所有的公司
+        List<Map<String,Object>> list2 = new ArrayList<>();
+        Map<String,Object> map = new HashMap<>();
+        List<Map<String,Object>> list = null;
+        Integer count1 = 0;
+        Integer count2 = 0;
+        Integer count3 = 0;
+        for(Integer id : Ids){
+            list = zzjgDepartmentMapper.findAllLevel1(id);
+            for (int i = 0; i < list.size(); i++) {
+
+                Integer  a = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),id,3); // 一般
+                list.get(i).put("danger1",a);
+                Integer  b = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"), id,1); // 较大
+                list.get(i).put("danger2",b);
+                Integer  c = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"), id,2); // 重大
+                list.get(i).put("danger3",c);
+
+                count1 += a;
+                count2 += b;
+                count3 += c;
+
+                DecimalFormat df = new DecimalFormat("0.00");
+
+                Integer sum = a + b + c;
+
+                list.get(i).put("sum", sum); // 某个车间所有隐患的 合计
+
+                if (null != sum && sum != 0){
+                    String str = df.format((float)a / sum);// 一般 横占比
+                    list.get(i).put("result11",str+"%");
+
+                    String str1 = df.format((float)b / sum); // 较大 横占比
+
+                    list.get(i).put("result22",str1+"%");
+
+                    String str2 = df.format((float)c / sum); // 重大 横占比
+
+                    list.get(i).put("result33",str2+"%");
+                }else {
+
+                    list.get(i).put("result11", 0.00);
+                    list.get(i).put("result22", 0.00);
+                    list.get(i).put("result33", 0.00);
+                }
+                list2.addAll(list);
+
+            }
+        }
+        Integer sum = count1 + count2 + count3;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if (null != sum && 0 != sum){
+
+            if (null != count1 && 0 != count1){
+                String s = df.format((float)count1/sum);
+                map.put("result1",s+"%"); // 一般 竖占比
+
+            }else {
+                map.put("result1","0.00%"); // 一般 竖占比
+            }
+
+            if (null != count2 && 0 != count2){
+                String s = df.format((float)count2/sum);
+                map.put("result2",s+"%"); // 较大 竖占比
+            }else {
+                map.put("result2","0.00%"); // 较大 竖占比
+            }
+
+            if (null != count3 && 0 != count3){
+                String s = df.format((float)count3/sum);
+                map.put("result3",s+"%"); // 重大 竖占比
+            }else {
+                map.put("result3","0.00%"); // 重大 竖占比
+            }
+
+        }else {
+            map.put("result1","0.00%"); // 一般 竖占比
+            map.put("result2","0.00%"); // 较大 竖占比
+            map.put("result3","0.00%"); // 重大 竖占比
+        }
+
+        map.put("count1",count1); // 所有 一般隐患数据
+        map.put("count2",count2); // 所有 较大隐患数据
+        map.put("count3",count3); // 所有 重大隐患数据
+
+        list2.add(map);
+
+        model.addAttribute("data",new Date());
+        model.addAttribute("list",list2);
+        return "global/other/analyse/zhuChartData77";
+    }
+    @RequestMapping(value = "danger-chart-jx")
+    public String dangerCharJx(HttpServletRequest request, Model model) throws ParseException {
+        User user = getLoginUser(request);
+        List<Integer> Ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询所有的公司
+        List<Map<String,Object>> list2 = new ArrayList<>();
+        Map<String,Object> map = new HashMap<>();
+        List<Map<String,Object>> list = null;
+        Integer count1 = 0;
+        Integer count2 = 0;
+        Integer count3 = 0;
+        Integer count4 = 0;
+        Integer count5 = 0;
+        Integer number1 = 0;
+        Integer number2 = 0;
+        Integer number3 = 0;
+        Integer number4 = 0;
+        Integer number5 = 0;
+        Integer number6 = 0;
+        for(Integer id:Ids){
+            list =  hiddenPlanMapper.selectDpids(id);
+            for (int i = 0; i < list.size(); i++) {
+
+                Integer a = tCheckMapper.findCountAll((String)list.get(i).get("name"),1, id);
+
+                list.get(i).put("danger1",a);
+
+                Integer b = tCheckMapper.findCountAll((String)list.get(i).get("name"),2, id);
+
+                list.get(i).put("danger2",b);
+
+                Integer c = tCheckMapper.findCountAll((String)list.get(i).get("name"),3, id);
+
+                list.get(i).put("danger3",c);
+
+                Integer d = tCheckMapper.findCountAll((String)list.get(i).get("name"),4, id);
+
+                list.get(i).put("danger4",d);
+
+                Integer e = tCheckMapper.findCountAll((String)list.get(i).get("name"),5, id);
+
+                list.get(i).put("danger5",e);
+                count1 += (Integer) list.get(i).get("danger1");
+                count2 += (Integer) list.get(i).get("danger2");
+                count3 += (Integer) list.get(i).get("danger3");
+                count4 += (Integer) list.get(i).get("danger4");
+                count5 += (Integer) list.get(i).get("danger5");
+
+                if (null == list.get(i).get("syn_year")){
+                    number1 += 0 ;
+                }else {
+                    number1 += (Integer)list.get(i).get("syn_year") ;
+                }
+
+                if (null == list.get(i).get("eve_year")){
+                    number2 += 0;
+                }else {
+                    number2 += (Integer) list.get(i).get("eve_year");
+                }
+
+                if (null == list.get(i).get("reg_year")){
+                    number3 += 0;
+                }else {
+                    number3 += (Integer) list.get(i).get("reg_year");
+                }
+
+                if (null == list.get(i).get("sea_year")){
+                    number4 += 0;
+                }else {
+                    number4 += (Integer) list.get(i).get("sea_year");
+                }
+
+                if (null == list.get(i).get("els_year")){
+                    number5 += 0;
+                }else {
+                    number5 += (Integer) list.get(i).get("els_year");
+                }
+
+                if (null == list.get(i).get("bas_year")){
+                    number6 += 0;
+                }else {
+                    number6 += (Integer) list.get(i).get("bas_year");
+                }
+
+            /*if (null == (Integer) list.get(i).get("total_count")){
+                sum = (Integer) list.get(i).get("danger1") + (Integer)list.get(i).get("danger2") + (Integer) list.get(i).get("danger3") + (Integer) list.get(i).get("danger4") + (Integer) list.get(i).get("danger5");
+
+            }else if (null != (Integer) list.get(i).get("total_count")){
+                sum = (Integer) list.get(i).get("danger1") + (Integer)list.get(i).get("danger2") + (Integer) list.get(i).get("danger3") + (Integer) list.get(i).get("danger4") + (Integer) list.get(i).get("danger5") + (Integer) list.get(i).get("total_count");
+
+            }
+            if (i == list.size()-1){
+                sb1.append(sum);
+            }else {
+                sb1.append(sum).append(",");
+            }*/
+
+                list2.addAll(list);
+
+            }
+        }
+        Map map1 = new HashMap();
+        Integer sum = count1 + count2 + count3 + count4 + count5;
+
+        Integer sum1 = number1 + number2 + number3 + number4 + number5 + number6;
+
+
+
+        NumberFormat numberFormat = NumberFormat.getInstance();
+        // 设置精确到小数点后2位
+        numberFormat.setMaximumFractionDigits(2);
+        String result1 = numberFormat.format((float)count1 / (float)sum * 100);
+        String result2 = numberFormat.format((float)count2 / (float)sum * 100);
+        String result3 = numberFormat.format((float)count3 / (float)sum * 100);
+        String result4 = numberFormat.format((float)count4 / (float)sum * 100);
+        String result5 = numberFormat.format((float)count5 / (float)sum * 100);
+
+
+
+        String result11 = numberFormat.format((float)number1 / (float)sum1 * 100);
+        String result22 = numberFormat.format((float)number2 / (float)sum1 * 100);
+        String result33 = numberFormat.format((float)number3 / (float)sum1 * 100);
+        String result44 = numberFormat.format((float)number4 / (float)sum1 * 100);
+        String result55 = numberFormat.format((float)number5 / (float)sum1 * 100);
+        String result66 = numberFormat.format((float)number6 / (float)sum1 * 100);
+
+
+        map1.put("result1",result1+"%");
+        map1.put("result2",result2+"%");
+        map1.put("result3",result3+"%");
+        map1.put("result4",result4+"%");
+        map1.put("result5",result5+"%");
+
+        map1.put("result11",result11+"%");
+        map1.put("result22",result22+"%");
+        map1.put("result33",result33+"%");
+        map1.put("result44",result44+"%");
+        map1.put("result55",result55+"%");
+        map1.put("result66",result66+"%");
+
+        map.put("count1",count1);
+        map.put("count2",count2);
+        map.put("count3",count3);
+        map.put("count4",count4);
+        map.put("count5",count5);
+        /*map.put("count6",count6);
+        map.put("count7",count7);
+        map.put("count8",count8);
+        map.put("count9",count9);
+        map.put("count10",count10);*/
+        map.put("number1",number1);
+        map.put("number2",number2);
+        map.put("number3",number3);
+        map.put("number4",number4);
+        map.put("number5",number5);
+        map.put("number6",number6);
+
+        list2.add(map);
+        list2.add(map1);
+        model.addAttribute("list",list2);
+        return "global/other/analyse/danger-chart-jx";
+    }
+
 
 
 }

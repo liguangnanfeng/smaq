@@ -9,7 +9,7 @@
         <meta content="width=device-width; initial-scale=0; maximum-scale=1.0; user-scalable=yes" name="viewport" />
         <meta content="yes" name="apple-mobile-web-app-capable" />
         <%@ include file="/WEB-INF/inc/back-header.inc" %>
-        <title>风险分级管控 隐患排查治理智能化平台</title>
+        <title>安全生产信息智能化管理平台</title>
         <meta name="keywords" content="风险分级管控 隐患排查治理智能化平台">
         <meta name="description" content="风险分级管控 隐患排查治理智能化平台">
         <style type="text/css">

@@ -161,20 +161,23 @@
         <ul>
            <c:choose>
              <c:when test="${userType==6||userType==9||userType==10}">
-               <li><a data-href="${ly }/global/check-list?flag=4" data-title="排查治理记录" href="javascript:void(0)">排查治理记录</a></li>
+               <li><a data-href="${ly }/global/check-list?flag=1&status=2" data-title="排查治理记录" href="javascript:void(0)">排查治理记录</a></li>
+               <li><a data-href="${ly }/global/hidden-danger-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
              </c:when>
              <c:when test="${userType==4}">
-               <li><a data-href="${ly }/global/check-list3?flag=4" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
-               <li><a data-href="${ly }/global/check-list4?flag=4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
+               <li><a data-href="${ly }/global/check-list?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
+               <li><a data-href="${ly }/global/hidden-danger-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
                <li><a data-href="${ly }/global/off-list" data-title="检查人员信息库" href="javascript:void(0)">检查人员信息库</a></li>
              </c:when>
              <c:when test="${userType==3}">
-               <li><a data-href="${ly }/global/check-list?flag=4" data-title="排查治理记录" href="javascript:void(0)">排查治理记录</a></li>
+               <li><a data-href="${ly }/global/check-list?flag=1&status=2" data-title="排查治理记录" href="javascript:void(0)">排查治理记录</a></li>
+               <li><a data-href="${ly }/global/hidden-danger-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
                <li><a data-href="${ly }/global/off-list" data-title="检查人员信息库" href="javascript:void(0)">检查人员信息库</a></li>
              </c:when>
            </c:choose>
-          <li><a data-href="${ly }/global/danger-collect" data-title="隐患统计汇总" href="javascript:void(0)">隐患统计汇总</a></li>
-          <li><a data-href="${ly }/global/danger-chart" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
+          <li><a data-href="${ly }/global/jx-analysis" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
+          <li><a data-href="${ly }/global/yh-analysis" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
+          <li><a data-href="${ly }/global/zl-analysis" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
         </ul>
       </dd>
     </dl>
@@ -351,7 +354,7 @@
           <li><a data-href="${ly }/global/system/change-psw" data-title="修改密码" href="javascript:void(0)">修改密码</a></li>
           <li><a data-href="${ly }/company/system/change-userName" data-title="修改登录名" href="javascript:void(0)">修改登录名</a></li>
           <c:if test="${userType==4}">
-            <li><a data-href="${ly }/back/test?url=/village/system/tuiSet" data-title="推送设置" href="javascript:void(0)">推送设置</a></li>
+            <li><a data-href="${ly }/back/test?url=/global/system/tuiSet" data-title="推送设置" href="javascript:void(0)">推送设置</a></li>
           </c:if>
         </ul>
       </dd>

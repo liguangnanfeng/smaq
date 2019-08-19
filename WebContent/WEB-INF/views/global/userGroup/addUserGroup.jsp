@@ -88,7 +88,7 @@
                     <div style="margin-left:50px;margin-top:30px;">暂无选择的企业</div>
                 </div>
             </div>
-            <input type="button" value="上一頁"  id="btn1">&nbsp;&nbsp;&nbsp;<input type="button" value="下一頁" id="btn2">
+            <input type="button" value="上一頁"  id="btn1" class="btn btn-primary radius">&nbsp;&nbsp;&nbsp;<input type="button" value="下一頁" id="btn2" class="btn btn-primary radius">
         </div>
         <div class="formControls col-xs-8 col-sm-9" style="text-align:center;">
             <a href="javascript:void(0)" id="savethis" class="btn btn-primary radius" style="width:80px;">保存</a>

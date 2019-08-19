@@ -301,7 +301,22 @@ public interface TCheckItemMapper {
 
     Integer zhuChartData124(@Param("control")String control, @Param("user_id")Integer user_id);
 
-    Integer zhuChartData1241(@Param("user_id")Integer user_id);
+    Integer zhuChartData1241(@Param("user_id")Integer user_id,@Param("depart")String depart);
+
+    List<Integer> selectCompanyId(@Param("userId") Integer userId, @Param("type") Integer type);
+
+    Integer zhuChartData124Geo(@Param("control")String control,@Param("userId") Integer userId, @Param("type") Integer type);
+
+    Integer findFileByGeo(@Param("userId") Integer userId, @Param("flag") Integer flag, @Param("type") Integer type);
+
+    Integer findTypeByGeo(@Param("userId") Integer userId, @Param("flag") Integer flag, @Param("type") Integer type);
+
+    Integer zhuChartData88Geo(@Param("control")String control, @Param("flag")Integer flag, @Param("userId")Integer userId, @Param("type") Integer type);
+
+    Integer zhuChartData77ByGeo(@Param("control")String control, @Param("flag")Integer flag, @Param("userId")Integer userId, @Param("type") Integer type);
+
+    Integer selectHiddenSourcesByGvo(@Param("flag") int flag, @Param("userId") Integer userId, @Param("type") Integer type);
+
 }
 
 

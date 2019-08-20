@@ -4470,20 +4470,26 @@ public class CompanyController_cd extends BaseController {
 
             Integer  a = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),3,(String) list.get(i).get("name")); // 一般和较小 合格 已治理
             list.get(i).put("danger1",a);
+
             Integer  a1 = tCheckItemMapper.findRecheckFileByMap(2,user.getId(),3,(String) list.get(i).get("name")); // 一般和较小 不合格 未治理
             list.get(i).put("danger11",a1);
+
             count1 = a + a1;
 
             Integer  b = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),1,(String) list.get(i).get("name")); // 较大 合格 已治理
             list.get(i).put("danger2",b);
+
             Integer  b1 = tCheckItemMapper.findRecheckFileByMap(2,user.getId(),1,(String) list.get(i).get("name")); // 较大 不合格 未治理
             list.get(i).put("danger22",b1);
+
             count2  = b + b1;
 
             Integer  c = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),2,(String) list.get(i).get("name")); // 重大 合格 已治理
             list.get(i).put("danger3",c);
+
             Integer  c1 = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),2,(String) list.get(i).get("name")); // 重大 不合格 未治理
             list.get(i).put("danger33",c1);
+
             count3  = c + c1;
 
             sign1 += a;
@@ -4619,22 +4625,22 @@ public class CompanyController_cd extends BaseController {
 
         if (null != proportion2 && 0 != proportion2){
 
-            if (null != sign1 && 0 != sign1){
-                String str = df.format((float)sign1 / proportion2);
+            if (null != sign11 && 0 != sign11){
+                String str = df.format((float)sign11 / proportion2);
                 map.put("proportion44",str+"%");  // 一般隐患 未治理 占比数据 竖
             }else {
                 map.put("proportion44","0.00%"); // 一般隐患 未治理 占比数据 竖
             }
 
-            if (null != sign2 && 0 != sign2){
-                String str = df.format((float)sign2 / proportion2);
+            if (null != sign22 && 0 != sign22){
+                String str = df.format((float)sign22 / proportion2);
                 map.put("proportion55",str+"%");  // 较大隐患 未治理 占比数据 竖
             }else {
                 map.put("proportion55","0.00%"); // 较大隐患 未治理 占比数据 竖
             }
 
-            if (null != sign3 && 0 != sign3){
-                Double sign = Double.valueOf(sign3 / proportion2);
+            if (null != sign33 && 0 != sign33){
+                Double sign = Double.valueOf(sign33 / proportion2);
                 String str = df.format((float)sign3/proportion2);
                 map.put("proportion66",str+"%");  // 重大隐患 未治理 占比数据 竖
 

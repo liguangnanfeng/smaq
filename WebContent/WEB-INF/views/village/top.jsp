@@ -6,7 +6,7 @@
   <header class="navbar-wrapper">
     <div class="navbar navbar-fixed-top">
       <div class="container-fluid cl">
-        <a class="logo navbar-logo f-l mr-10 hidden-xs" href="javascript:void(0)">${name_ } 智能应急管理信息系统</a>
+        <a class="logo navbar-logo f-l mr-10 hidden-xs" href="javascript:void(0)">${name_ } 安全生产信息智能化管理平台</a>
         <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:void(0);">&#xe667;</a>
         <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
           <ul class="cl">
@@ -23,5 +23,8 @@
       </div>
     </div>
   </header>
+  <script>
+    alert('122222');
+  </script>
 </body>
 </html>

@@ -4161,123 +4161,120 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping(value = "hidden-danger-list")
     public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status) {
-        User user = getLoginUser(request);//用户登录
+        User user = getLoginUser(request);
+        Company company;
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
         model.addAttribute("userId", user.getId());
-        int type = user.getUserType();
-        int userId = user.getId();
-        List<Integer> Ids = tCheckItemMapper.selectCompanyId(userId, type);
+
         List<Map> list = new ArrayList<>();
-        List<Map> list2 = new ArrayList<>();
-        for(Integer id : Ids){
-            Company company = companyMapper.selectByPrimaryKey(id);
-            if (flag == 1) {
+        if (flag == 1) {
 
-                list = tCheckItemMapper.selectListBystatus(id, flag);
-                System.out.println("list:"+list);
-                for (Map map : list) {
-                    Date realTime = (Date) map.get("realTime");
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-                    String format = sdf.format(realTime);
-                    String level = (String) map.get("level");
-                    if (null != level && "红色".equals(level)) {
-                        map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
-                    }
-                    map.put("realTimeStr", format);
-
-                    if("全公司".equals(map.get("depart"))){
-                        Integer checkId = (Integer) map.get("checkId");
-                        map.put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
-                        Integer industryType = (Integer) map.get("industryType");
-                        if(null!=industryType&&1==industryType){
-                            map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
-                        }else if (null!=map.get("industryType")&&2==map.get("industryType")){
-                            map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
-                        }
-                    }
-
-                    if(null==map.get("fjgkfzr")||"".equals(map.get("fjgkfzr"))){
-                        String name = "";
-                        TCheck tc = tCheckMapper.selectByPrimaryKey((Integer) map.get("checkId"));
-                        // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
-                        List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId((Integer)map.get("checkItemId"));
-                        if (null != integers && integers.size() > 0) {
-                            // 这里进行名称的获取,进行全部循环,获取数据的方式,在数据库中进行查询
-                            List<String> list1 = new ArrayList<String>();
-                            for (Integer integer : integers) {
-                                if (null != integer) {
-                                    ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(integer);
-                                    if (null != aCompanyManual && null != aCompanyManual.getFjgkfzr()) {
-                                        list1.add(aCompanyManual.getFjgkfzr());
-                                    }
-                                }
-                            }
-                            if (list1.size() == 0) {
-                                name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
-                                tc.setCheckCompany(name);
-                            } else {
-                                name = list1.get(0);
-                                tc.setCheckCompany(name);
-                            }
-                        } else {
-                            name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
-                            tc.setCheckCompany(name);
-                        }
-                        map.put("fjgkfzr", name);
-                    }
-                    list2.add(map);
-                }
-            } else if (flag == 2) {
-                // 表示的是行政检查
-                list = tCheckItemMapper.selectXZListBystatus(id, flag);
-                for (Map map : list) {
-                    Date realTime = (Date) map.get("realTime");
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-                    String format = sdf.format(realTime);
-                    String levelId ="";
-                    if(null!=map.get("industryType")&&1==map.get("industryType")){
-                        Integer levelId1 = (Integer) map.get("levelId");
-                        if(null!=levelId1){
-                            levelId=  tLevelMapper.selectByPrimaryKey(levelId1).getLevel2();
-                        }
-
-                    }else if (null!=map.get("industryType")&&2==map.get("industryType")){
-                        levelId = aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2();
-                    }
-
-                    if(StringUtils.isBlank(levelId)){
-                        map.put("level2",levelId);
-                    }
-
-                    map.put("realTimeStr", format);
+            list = tCheckItemMapper.selectListBystatusGeo(user.getId(), flag, user.getUserType());
+            for (Map map : list) {
+                company = companyMapper.selectByPrimaryKey((Integer) map.get("userId"));
+                Date realTime = (Date) map.get("realTime");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                String format = sdf.format(realTime);
+                String level = (String) map.get("level");
+                if (null != level && "红色".equals(level)) {
                     map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
-                    // 获取
-                    System.out.println(company.getName());
-                    map.put("companyName", company.getName());
-                    list2.add(map);
                 }
-            } else if (flag == 3) {
-                // 表示的是部门抽查
-                list = tCheckItemMapper.selectBMCCListBystatus(id, flag);
-                for (Map map : list) {
-                    Date realTime = (Date) map.get("realTime");
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-                    String format = sdf.format(realTime);
-                    //  String level = (String) map.get("level");
-                    if(null!=map.get("industryType")&&1==map.get("industryType")){
+                map.put("realTimeStr", format);
+
+                if("全公司".equals(map.get("depart"))){
+                    Integer checkId = (Integer) map.get("checkId");
+                    map.put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
+                    Integer industryType = (Integer) map.get("industryType");
+                    if(null!=industryType&&1==industryType){
                         map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
                     }else if (null!=map.get("industryType")&&2==map.get("industryType")){
                         map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
                     }
-                    map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
-                    map.put("realTimeStr", format);
-                    map.put("companyName", company.getName());
-                    list2.add(map);
+                }
+
+                if(null==map.get("fjgkfzr")||"".equals(map.get("fjgkfzr"))){
+                    String name = "";
+                    TCheck tc = tCheckMapper.selectByPrimaryKey((Integer) map.get("checkId"));
+                    // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
+                    List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId((Integer)map.get("checkItemId"));
+                    if (null != integers && integers.size() > 0) {
+                        // 这里进行名称的获取,进行全部循环,获取数据的方式,在数据库中进行查询
+                        List<String> list1 = new ArrayList<String>();
+                        for (Integer integer : integers) {
+                            if (null != integer) {
+                                ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(integer);
+                                if (null != aCompanyManual && null != aCompanyManual.getFjgkfzr()) {
+                                    list1.add(aCompanyManual.getFjgkfzr());
+                                }
+                            }
+                        }
+                        if (list1.size() == 0) {
+                            name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                            tc.setCheckCompany(name);
+                        } else {
+                            name = list1.get(0);
+                            tc.setCheckCompany(name);
+                        }
+                    } else {
+                        name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                        tc.setCheckCompany(name);
+                    }
+
+                    map.put("fjgkfzr", name);
                 }
             }
+        } else if (flag == 2) {
+            // 表示的是行政检查
+            list = tCheckItemMapper.selectXZListBystatusGeo(user.getId(), flag, user.getUserType());
+            for (Map map : list) {
+                company = companyMapper.selectByPrimaryKey((Integer) map.get("userId"));
+                Date realTime = (Date) map.get("realTime");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                String format = sdf.format(realTime);
+                String levelId ="";
+                if(null!=map.get("industryType")&&1==map.get("industryType")){
+                    Integer levelId1 = (Integer) map.get("levelId");
+                    if(null!=levelId1){
+                        levelId=  tLevelMapper.selectByPrimaryKey(levelId1).getLevel2();
+                    }
+
+                }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                    levelId = aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2();
+                }
+
+                if(StringUtils.isBlank(levelId)){
+                    map.put("level2",levelId);
+                }
+
+                map.put("realTimeStr", format);
+                map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
+                map.put("companyName", company.getName());
+                // 获取
+            }
+        } else if (flag == 3) {
+            // 表示的是部门抽查
+            list = tCheckItemMapper.selectBMCCListBystatusGeo(user.getId(), flag, user.getUserType());
+            for (Map map : list) {
+                company = companyMapper.selectByPrimaryKey((Integer) map.get("userId"));
+                Date realTime = (Date) map.get("realTime");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                String format = sdf.format(realTime);
+                //  String level = (String) map.get("level");
+                if(null!=map.get("industryType")&&1==map.get("industryType")){
+                    map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                    System.out.println(map.get("levelId"));
+                    map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                }
+                map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
+                map.put("realTimeStr", format);
+            }
         }
-        model.addAttribute("list", list2);
+        String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("host", host);
+        model.addAttribute("list", list);
         return "global/other/hidden-danger-list";
     }
 
@@ -4294,57 +4291,75 @@ public class GlobalController extends BaseController {
         if (null == flag){
             flag = 1;
         }
-        Integer number1 = tCheckItemMapper.selectHiddenSourcesByGvo(1,user.getId(), user.getUserType()); // 企业自查
+        Map<String, Object> map2 = tCheckItemMapper.selectHiddenSourcesByGvo2(user.getId(),user.getUserType());
+        Long number1 = (Long)map2.get("number1");
+        //Integer number1 = tCheckItemMapper.selectHiddenSourcesByGvo(1,user.getId(), user.getUserType()); // 企业自查
+        Long number2 = (Long)map2.get("number2");
+        //Integer number2 = tCheckItemMapper.selectHiddenSourcesByGvo(2,user.getId(), user.getUserType()); // 行政检查
+        Long number3 = (Long)map2.get("number3");
+        //Integer number3 = tCheckItemMapper.selectHiddenSourcesByGvo(3,user.getId(), user.getUserType()); // 第三方检查
 
-        Integer number2 = tCheckItemMapper.selectHiddenSourcesByGvo(2,user.getId(), user.getUserType()); // 行政检查
-
-        Integer number3 = tCheckItemMapper.selectHiddenSourcesByGvo(3,user.getId(), user.getUserType()); // 第三方检查
 
         System.out.println(number1+":"+number2+":"+number3);
+        Map<String, Object> map1 = tCheckItemMapper.selectNumByhangye(user.getId(),1,user.getUserType());
 
-        Integer a = tCheckItemMapper.zhuChartData77ByGeo("生产工艺",flag,user.getId(), user.getUserType()); // 生产工艺 隐患数据
-        model.addAttribute("a",a);
+        //Integer a = tCheckItemMapper.zhuChartData77ByGeo("生产工艺",flag,user.getId(), user.getUserType()); // 生产工艺 隐患数据
+        Long a =   (Long)map1.get("gongyi");
+        model.addAttribute("a", a);
 
-        Integer b = tCheckItemMapper.zhuChartData77ByGeo("设备设施",flag,user.getId(),user.getUserType()); // 设备设施 隐患数据
-        model.addAttribute("b",b);
+        //Integer b = tCheckItemMapper.zhuChartData77ByGeo("设备设施",flag,user.getId(),user.getUserType()); // 设备设施 隐患数据
+        Long b = (Long)map1.get("shebei");
+        model.addAttribute("b",  b);
 
-        Integer c = tCheckItemMapper.zhuChartData77ByGeo("特种设备",flag,user.getId(),user.getUserType()); // 特种设备 隐患数据
-        model.addAttribute("c",c);
+        //Integer c = tCheckItemMapper.zhuChartData77ByGeo("特种设备",flag,user.getId(),user.getUserType()); // 特种设备 隐患数据
+        Long c = (Long)map1.get("teizhong");
+        model.addAttribute("c", c);
 
-        Integer d = tCheckItemMapper.zhuChartData77ByGeo("消防安全",flag,user.getId(),user.getUserType()); // 消防安全 隐患数据
-        model.addAttribute("d",d);
+        //Integer d = tCheckItemMapper.zhuChartData77ByGeo("消防安全",flag,user.getId(),user.getUserType()); // 消防安全 隐患数据
+        Long d = (Long)map1.get("xiaofang");
+        model.addAttribute("d", d);
 
-        Integer e = tCheckItemMapper.zhuChartData77ByGeo("用电安全",flag,user.getId(),user.getUserType()); // 用电安全 隐患数据
-        model.addAttribute("e",e);
+        //Integer e = tCheckItemMapper.zhuChartData77ByGeo("用电安全",flag,user.getId(),user.getUserType()); // 用电安全 隐患数据
+        Long e = (Long)map1.get("yongdian");
+        model.addAttribute("e", e);
 
-        Integer f = tCheckItemMapper.zhuChartData77ByGeo("行为环境",flag,user.getId(),user.getUserType()); // 行为环境 隐患数据
-        model.addAttribute("f",f);
+        //Integer f = tCheckItemMapper.zhuChartData77ByGeo("行为环境",flag,user.getId(),user.getUserType()); // 行为环境 隐患数据
+        Long f = (Long)map1.get("xingwei");
+        model.addAttribute("f", f);
 
-        Integer g = tCheckItemMapper.zhuChartData77ByGeo("公辅设备",flag,user.getId(),user.getUserType()); // 公辅设备 隐患数据
-        model.addAttribute("g",g);
+        //Integer g = tCheckItemMapper.zhuChartData77ByGeo("公辅设备",flag,user.getId(),user.getUserType()); // 公辅设备 隐患数据
+        Long g = (Long)map1.get("gongfu");
+        model.addAttribute("g", g);
 
-        Integer h = tCheckItemMapper.zhuChartData77ByGeo("危化管理",flag,user.getId(),user.getUserType()); // 危化管理 隐患数据
-        model.addAttribute("h",h);
+        //Integer h = tCheckItemMapper.zhuChartData77ByGeo("危化管理",flag,user.getId(),user.getUserType()); // 危化管理 隐患数据
+        Long h = (Long)map1. get("weihua");
+        model.addAttribute("h",  h);
 
-        Integer i = tCheckItemMapper.zhuChartData77ByGeo("基础管理",flag,user.getId(),user.getUserType()); // 基础管理 隐患数据
-        model.addAttribute("i",i);
+        //Integer i = tCheckItemMapper.zhuChartData77ByGeo("基础管理",flag,user.getId(),user.getUserType()); // 基础管理 隐患数据
+        Long i = (Long)map1.get("jichu");
+        model.addAttribute("i", i);
 
-        Integer j = tCheckItemMapper.zhuChartData77ByGeo("防雷静电",flag,user.getId(),user.getUserType()); // 防雷静电 隐患数据
-        model.addAttribute("j",j);
+        //Integer j = tCheckItemMapper.zhuChartData77ByGeo("防雷静电",flag,user.getId(),user.getUserType()); // 防雷静电 隐患数据
+        Long j = (Long)map1. get("fanglei");
+        model.addAttribute("j", j);
 
-        Integer k = tCheckItemMapper.zhuChartData77ByGeo("安全设施",flag,user.getId(),user.getUserType()); // 安全设施 隐患数据
-        model.addAttribute("k",k);
+        //Integer k = tCheckItemMapper.zhuChartData77ByGeo("安全设施",flag,user.getId(),user.getUserType()); // 安全设施 隐患数据
+        Long k = (Long)map1.get("anquan");
+        model.addAttribute("k", k);
 
-        Integer l = tCheckItemMapper.zhuChartData77ByGeo("职业卫生",flag,user.getId(),user.getUserType()); // 职业卫生 隐患数据
-        model.addAttribute("l",l);
+        //Integer l = tCheckItemMapper.zhuChartData77ByGeo("职业卫生",flag,user.getId(),user.getUserType()); // 职业卫生 隐患数据
+        Long l = (Long)map1.get("weisheng");
+        model.addAttribute("l", l);
 
-        Integer m = tCheckItemMapper.zhuChartData77ByGeo("生产现场",flag,user.getId(),user.getUserType()); // 生产现场 隐患数据
-        model.addAttribute("m",m);
+        //Integer m = tCheckItemMapper.zhuChartData77ByGeo("生产现场",flag,user.getId(),user.getUserType()); // 生产现场 隐患数据
+        Long m = (Long)map1.get("xianchang");
+        model.addAttribute("m", m);
 
-        Integer n = tCheckItemMapper.zhuChartData77ByGeo("其他",flag,user.getId(),user.getUserType()); // 其他 隐患数据
-        model.addAttribute("n",n);
+        //Integer n = tCheckItemMapper.zhuChartData77ByGeo("其他",flag,user.getId(),user.getUserType()); // 其他 隐患数据
+        Long n = (Long)map1.get("qita");
+        model.addAttribute("n", n);
 
-        Integer count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
+        Long count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
 
         DecimalFormat df = new DecimalFormat("0.00");
 
@@ -4501,49 +4516,64 @@ public class GlobalController extends BaseController {
         if (null == flag){
             flag = 1;
         }
-        Integer a = tCheckItemMapper.zhuChartData88Geo("生产工艺",flag,user.getId(), user.getUserType()); // 生产工艺 隐患数据
+        Map<String, Object> map1 = tCheckItemMapper.zhuChartData882(user.getId(), flag, user.getUserType());
+        Long a =   (Long)map1.get("gongyi");
+        //Integer a = tCheckItemMapper.zhuChartData88("生产工艺",flag,user.getId(), user.getUserType()); // 生产工艺 隐患数据
         model.addAttribute("a",a);
 
-        Integer b = tCheckItemMapper.zhuChartData88Geo("设备设施",flag,user.getId(), user.getUserType()); // 设备设施 隐患数据
+        //Integer b = tCheckItemMapper.zhuChartData88("设备设施",flag,user.getId(), user.getUserType()); // 设备设施 隐患数据
+        Long b = (Long)map1.get("shebei");
         model.addAttribute("b",b);
 
-        Integer c = tCheckItemMapper.zhuChartData88Geo("特种设备",flag,user.getId(), user.getUserType()); // 特种设备 隐患数据
+        //Integer c = tCheckItemMapper.zhuChartData88("特种设备",flag,user.getId(), user.getUserType()); // 特种设备 隐患数据
+        Long c = (Long)map1.get("teizhong");
         model.addAttribute("c",c);
 
-        Integer d = tCheckItemMapper.zhuChartData88Geo("消防安全",flag,user.getId(), user.getUserType()); // 消防安全 隐患数据
+        //Integer d = tCheckItemMapper.zhuChartData88("消防安全",flag,user.getId(), user.getUserType()); // 消防安全 隐患数据
+        Long d = (Long)map1.get("xiaofang");
         model.addAttribute("d",d);
 
-        Integer e = tCheckItemMapper.zhuChartData88Geo("用电安全",flag,user.getId(), user.getUserType()); // 用电安全 隐患数据
+        //Integer e = tCheckItemMapper.zhuChartData88("用电安全",flag,user.getId(), user.getUserType()); // 用电安全 隐患数据
+        Long e = (Long)map1.get("yongdian");
         model.addAttribute("e",e);
 
-        Integer f = tCheckItemMapper.zhuChartData88Geo("行为环境",flag,user.getId(), user.getUserType()); // 行为环境 隐患数据
+        //Integer f = tCheckItemMapper.zhuChartData88("行为环境",flag,user.getId(), user.getUserType()); // 行为环境 隐患数据
+        Long f = (Long)map1.get("xingwei");
         model.addAttribute("f",f);
 
-        Integer g = tCheckItemMapper.zhuChartData88Geo("公辅设备",flag,user.getId(), user.getUserType()); // 公辅设备 隐患数据
+        //Integer g = tCheckItemMapper.zhuChartData88("公辅设备",flag,user.getId(), user.getUserType()); // 公辅设备 隐患数据
+        Long g = (Long)map1.get("gongfu");
         model.addAttribute("g",g);
 
-        Integer h = tCheckItemMapper.zhuChartData88Geo("危化管理",flag,user.getId(), user.getUserType()); // 危化管理 隐患数据
+        //Integer h = tCheckItemMapper.zhuChartData88("危化管理",flag,user.getId(), user.getUserType()); // 危化管理 隐患数据
+        Long h = (Long)map1. get("weihua");
         model.addAttribute("h",h);
 
-        Integer i = tCheckItemMapper.zhuChartData88Geo("基础管理",flag,user.getId(), user.getUserType()); // 基础管理 隐患数据
+        //Integer i = tCheckItemMapper.zhuChartData88("基础管理",flag,user.getId(), user.getUserType()); // 基础管理 隐患数据
+        Long i = (Long)map1.get("jichu");
         model.addAttribute("i",i);
 
-        Integer j = tCheckItemMapper.zhuChartData88Geo("防雷静电",flag,user.getId(), user.getUserType()); // 防雷静电 隐患数据
+        //Integer j = tCheckItemMapper.zhuChartData88("防雷静电",flag,user.getId(), user.getUserType()); // 防雷静电 隐患数据
+        Long j = (Long)map1. get("fanglei");
         model.addAttribute("j",j);
 
-        Integer k = tCheckItemMapper.zhuChartData88Geo("安全设施",flag,user.getId(), user.getUserType()); // 安全设施 隐患数据
+        //Integer k = tCheckItemMapper.zhuChartData88("安全设施",flag,user.getId(), user.getUserType()); // 安全设施 隐患数据
+        Long k = (Long)map1.get("anquan");
         model.addAttribute("k",k);
 
-        Integer l = tCheckItemMapper.zhuChartData88Geo("职业卫生",flag,user.getId(), user.getUserType()); // 职业卫生 隐患数据
+        //Integer l = tCheckItemMapper.zhuChartData88("职业卫生",flag,user.getId(), user.getUserType()); // 职业卫生 隐患数据
+        Long l = (Long)map1.get("weisheng");
         model.addAttribute("l",l);
 
-        Integer m = tCheckItemMapper.zhuChartData88Geo("生产现场",flag,user.getId(), user.getUserType()); // 生产现场 隐患数据
+        //Integer m = tCheckItemMapper.zhuChartData88("生产现场",flag,user.getId(), user.getUserType()); // 生产现场 隐患数据
+        Long m = (Long)map1.get("xianchang");
         model.addAttribute("m",m);
 
-        Integer n = tCheckItemMapper.zhuChartData88Geo("其他",flag,user.getId(), user.getUserType()); // 其他 隐患数据
+        //Integer n = tCheckItemMapper.zhuChartData88("其他",flag,user.getId(), user.getUserType()); // 其他 隐患数据
+        Long n = (Long)map1.get("qita");
         model.addAttribute("n",n);
 
-        Integer count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
+        Long count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
 
         DecimalFormat df = new DecimalFormat("0.00");
 
@@ -4696,66 +4726,106 @@ public class GlobalController extends BaseController {
         if (null == flag){
             flag = 1;
         }
-        Integer number3 = tCheckItemMapper.findTypeByGeo(user.getId(), 3, user.getUserType()); // 一般隐患
-        Integer number2 = tCheckItemMapper.findTypeByGeo(user.getId(), 2, user.getUserType()); // 重大隐患
-        Integer number1 = tCheckItemMapper.findTypeByGeo(user.getId(), 1, user.getUserType()); // 较大隐患
+        //Integer number3 = tCheckItemMapper.findTypeByGeo(user.getId(), 3, user.getUserType()); // 一般隐患
+        //Integer number2 = tCheckItemMapper.findTypeByGeo(user.getId(), 2, user.getUserType()); // 重大隐患
+        //Integer number1 = tCheckItemMapper.findTypeByGeo(user.getId(), 1, user.getUserType()); // 较大隐患
+        Map<String, Object> map1 = tCheckItemMapper.findTypeByGeo2(user.getId(), user.getUserType());
 
-        model.addAttribute("number1",number1);
-        model.addAttribute("number2",number2);
-        model.addAttribute("number3",number3);
+//        model.addAttribute("number1",number1);
+//        model.addAttribute("number2",number2);
+//        model.addAttribute("number3",number3);
+
+        model.addAttribute("number1",map1.get("number1"));
+        model.addAttribute("number2",map1.get("number2"));
+        model.addAttribute("number3",map1.get("number3"));
 
 
-        Integer number4 = tCheckItemMapper.findFileByGeo(user.getId(),3, user.getUserType()); // 一般隐患
-        Integer number5 = tCheckItemMapper.findFileByGeo(user.getId(),2, user.getUserType()); // 重大隐患
-        Integer number6 = tCheckItemMapper.findFileByGeo(user.getId(),1, user.getUserType()); // 较大隐患
+//        Integer number4 = tCheckItemMapper.findFileByGeo(user.getId(),3, user.getUserType()); // 一般隐患
+//        Integer number5 = tCheckItemMapper.findFileByGeo(user.getId(),2, user.getUserType()); // 重大隐患
+//        Integer number6 = tCheckItemMapper.findFileByGeo(user.getId(),1, user.getUserType()); // 较大隐患
 
-        model.addAttribute("number4",number4);
-        model.addAttribute("number5",number5);
-        model.addAttribute("number6",number6);
+        Map<String, Object> map2 = tCheckItemMapper.findFileByGeo2(user.getId(),user.getUserType());
 
-        Integer a = tCheckItemMapper.zhuChartData124Geo("生产工艺",user.getId(), user.getUserType()); // 生产工艺 隐患数据
+//        model.addAttribute("number4",number4);
+//        model.addAttribute("number5",number5);
+//        model.addAttribute("number6",number6);
+
+        model.addAttribute("number4",map2.get("number4"));
+        model.addAttribute("number5",map2.get("number5"));
+        model.addAttribute("number6",map2.get("number6"));
+
+        Map<String, Object> map3 = tCheckItemMapper.zhuChartData124Geo2(user.getId(), user.getUserType());
+        //Integer a = tCheckItemMapper.zhuChartData124Geo("生产工艺",user.getId(), user.getUserType()); // 生产工艺 隐患数据
+        Long a =   (Long)map3.get("gongyi");
+        // System.out.println(a);
         model.addAttribute("a",a);
 
-        Integer b = tCheckItemMapper.zhuChartData124Geo("设备设施",user.getId(), user.getUserType()); // 设备设施 隐患数据
+        //Integer b = tCheckItemMapper.zhuChartData124Geo("设备设施",user.getId(), user.getUserType()); // 设备设施 隐患数据
+        Long b = (Long)map3.get("shebei");
+        System.out.println(b);
         model.addAttribute("b",b);
 
-        Integer c = tCheckItemMapper.zhuChartData124Geo("特种设备",user.getId(), user.getUserType()); // 特种设备 隐患数据
+        //Integer c = tCheckItemMapper.zhuChartData124Geo("特种设备",user.getId(), user.getUserType()); // 特种设备 隐患数据
+        Long c = (Long)map3.get("teizhong");
+        //System.out.println(c);
         model.addAttribute("c",c);
 
-        Integer d = tCheckItemMapper.zhuChartData124Geo("消防安全",user.getId(), user.getUserType()); // 消防安全 隐患数据
+        //Integer d = tCheckItemMapper.zhuChartData124Geo("消防安全",user.getId(), user.getUserType()); // 消防安全 隐患数据
+        Long d = (Long)map3.get("xiaofang");
+        System.out.println(d);
         model.addAttribute("d",d);
 
-        Integer e = tCheckItemMapper.zhuChartData124Geo("用电安全",user.getId(), user.getUserType()); // 用电安全 隐患数据
+        //Integer e = tCheckItemMapper.zhuChartData124Geo("用电安全",user.getId(), user.getUserType()); // 用电安全 隐患数据
+        Long e = (Long)map3.get("yongdian");
+        //System.out.println(e);
         model.addAttribute("e",e);
 
-        Integer f = tCheckItemMapper.zhuChartData124Geo("行为环境",user.getId(), user.getUserType()); // 行为环境 隐患数据
+        //Integer f = tCheckItemMapper.zhuChartData124Geo("行为环境",user.getId(), user.getUserType()); // 行为环境 隐患数据
+        Long f = (Long)map3.get("xingwei");
+        //System.out.println(f);
         model.addAttribute("f",f);
 
-        Integer g = tCheckItemMapper.zhuChartData124Geo("公辅设备",user.getId(), user.getUserType()); // 公辅设备 隐患数据
+        //Integer g = tCheckItemMapper.zhuChartData124Geo("公辅设备",user.getId(), user.getUserType()); // 公辅设备 隐患数据
+        Long g = (Long)map3.get("gongfu");
+        // System.out.println(g);
         model.addAttribute("g",g);
 
-        Integer h = tCheckItemMapper.zhuChartData124Geo("危化管理",user.getId(), user.getUserType()); // 危化管理 隐患数据
+        //Integer h = tCheckItemMapper.zhuChartData124Geo("危化管理",user.getId(), user.getUserType()); // 危化管理 隐患数据
+        Long h = (Long)map3. get("weihua");
+        //System.out.println(h);
         model.addAttribute("h",h);
 
-        Integer i = tCheckItemMapper.zhuChartData124Geo("基础管理",user.getId(), user.getUserType()); // 基础管理 隐患数据
+        //Integer i = tCheckItemMapper.zhuChartData124Geo("基础管理",user.getId(), user.getUserType()); // 基础管理 隐患数据
+        Long i = (Long)map3.get("jichu");
+        //System.out.println(i);
         model.addAttribute("i",i);
 
-        Integer j = tCheckItemMapper.zhuChartData124Geo("防雷静电",user.getId(), user.getUserType()); // 防雷静电 隐患数据
+        // Integer j = tCheckItemMapper.zhuChartData124Geo("防雷静电",user.getId(), user.getUserType()); // 防雷静电 隐患数据
+        Long j = (Long)map3. get("fanglei");
+        //System.out.println(j);
         model.addAttribute("j",j);
 
-        Integer k = tCheckItemMapper.zhuChartData124Geo("安全设施",user.getId(), user.getUserType()); // 安全设施 隐患数据
+        // Integer k = tCheckItemMapper.zhuChartData124Geo("安全设施",user.getId(), user.getUserType()); // 安全设施 隐患数据
+        Long k = (Long)map3.get("anquan");
+        //System.out.println(k);
         model.addAttribute("k",k);
 
-        Integer l = tCheckItemMapper.zhuChartData124Geo("职业卫生",user.getId(), user.getUserType()); // 职业卫生 隐患数据
+        // Integer l = tCheckItemMapper.zhuChartData124Geo("职业卫生",user.getId(), user.getUserType()); // 职业卫生 隐患数据
+        Long l = (Long)map3.get("weisheng");
+        //System.out.println(l);
         model.addAttribute("l",l);
 
-        Integer m = tCheckItemMapper.zhuChartData124Geo("生产现场",user.getId(), user.getUserType()); // 生产现场 隐患数据
+        //Integer m = tCheckItemMapper.zhuChartData124Geo("生产现场",user.getId(), user.getUserType()); // 生产现场 隐患数据
+        Long m = (Long)map3.get("xianchang");
+        // System.out.println(m);
         model.addAttribute("m",m);
 
-        Integer n = tCheckItemMapper.zhuChartData124Geo("其他",user.getId(), user.getUserType()); // 其他 隐患数据
+        //Integer n = tCheckItemMapper.zhuChartData124Geo("其他",user.getId(), user.getUserType()); // 其他 隐患数据
+        Long n = (Long)map3.get("qita");
+        //System.out.println(n);
         model.addAttribute("n",n);
 
-        Integer count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
+        Long count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
 
         DecimalFormat df = new DecimalFormat("0.00");
 

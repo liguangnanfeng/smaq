@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=1400, initial-scale=1, maximum-scale=1, user-scalable=yes, minimal-ui">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <%@ include file="/WEB-INF/inc/back-header.inc"%>
-<title>风险分级管控   隐患排查治理智能化平台</title>
+<title>安全生产信息智能化管理平台</title>
 <meta name="keywords" content="风险分级管控   隐患排查治理智能化平台">
 <meta name="description" content="风险分级管控   隐患排查治理智能化平台">
 <style type="text/css">

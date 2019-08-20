@@ -40,16 +40,14 @@
         </style>
         </head>
         <body style="height: 100vh;">
+        <div class="select-btn">
+        <a class="sbtn" id="chaBtn1"  href="${ly }/company/yh-analysis?flag=1">企业自查</a>
+        <a class="sbtn" id="chaBtn2" href="${ly }/company/yh-analysis?flag=2">行政检查</a>
+        <a class="sbtn" id="chaBtn3" href="${ly }/company/yh-analysis?flag=3">第三方检查</a>
+        </div>
         <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
         <div id="main2" style="width: 90%;height:400px;margin: 50px auto 0 auto;"></div>
         <%--        <iframe id="colum" src=""></iframe>--%>
-        <div class="select-btn">
-        <a class="sbtn" id="chaBtn1"  href="${ly }/company/yh-analysis?flag=1">企业自查</a>
-        <a class="sbtn" id="chaBtn2" href="${ly }/company/yh-analysis?flag=2">政府抽查</a>
-        <a class="sbtn" id="chaBtn3" href="${ly }/company/yh-analysis?flag=3">第三方检查</a>
-        </div>
-
-
 
         <div id="main3" style="width: 90%;height:70%;margin: auto;"></div>
         <script src="/js/echarts.min.js"></script>
@@ -85,11 +83,24 @@
         // 使用刚指定的配置项和数据显示图表。
         // 指定图表的配置项和数据
         option = {
-        title: {
+        title: [{
         text: '隐患数据分析',
         left: 'center',
 
         },
+        {
+        subtext:'合计：${count}',
+        top:10,
+        right: '15%',
+        subtextStyle:{//副标题内容的样式
+        color:'#333',//绿色
+        <%--        fontStyle:'normal',//主标题文字字体风格，默认normal，有italic(斜体),oblique(斜体)--%>
+        <%--        fontWeight:"lighter",//可选normal(正常)，bold(加粗)，bolder(加粗)，lighter(变细)，100|200|300|400|500...--%>
+        <%--        fontFamily:"san-serif",//主题文字字体，默认微软雅黑--%>
+        <%--        fontSize:12//主题文字字体大小，默认为12px--%>
+        },
+        }
+        ],
         tooltip: {
         trigger:'item',
         padding:[20,10,20,10],

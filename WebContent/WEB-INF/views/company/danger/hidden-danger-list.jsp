@@ -258,8 +258,7 @@
                     </td>
                     <td>
                         <c:choose>
-                            <c:when test="${list.status eq 2}">不合格</c:when>
-                            <c:when test="${list.status eq 3}">复查合格</c:when>
+                            <c:when test="${list.status eq 1}">合格</c:when>
                         </c:choose>
                     </td>
                     <td>${list.fjgkfzr}</td>

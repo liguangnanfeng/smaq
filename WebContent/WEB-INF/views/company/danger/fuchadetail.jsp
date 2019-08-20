@@ -231,47 +231,47 @@
                     </tr>
                 </c:if>
             </c:forEach>
-            <%--            <tr>--%>
-            <%--            <td colspan="8">--%>
-            <%--            <div class="div_pri  mt-10">针对上次隐患整改要求，经复查，提出如下复查意见：</div>--%>
-            <%--            <div class="div_pri  mt-10">1、已整改项：基本符合安全要求</div>--%>
-            <%--            <div class="div_pri">--%>
-            <%--            <!-- 循环 -->--%>
-            <%--            <c:set value="0" var="ind"/>--%>
-            <%--            <c:forEach items="${itemList }" var="be">--%>
-            <%--                <c:if test="${be.recheckId == p.id}">--%>
-            <%--                    <c:set value="${ind + 1}" var="ind"/>--%>
-            <%--                    <div class="check-box">--%>
-            <%--                    <input type="checkbox" name="isli" data-i="" disabled="disabled" <c:if test="${be.status == 3}"> checked</c:if>/>--%>
-            <%--                    <label>${ind }</label>--%>
-            <%--                    </div>--%>
-            <%--                </c:if>--%>
-            <%--            </c:forEach>--%>
-            <%--            <!-- 循环结束 -->--%>
-            <%--            </div>--%>
-            <%--            <div class="div_pri  mt-10">2、未整改项：</div>--%>
-            <%--            <div class="div_pri">--%>
-            <%--            <!-- 循环 -->--%>
-            <%--            <c:set value="0" var="ind"/>--%>
-            <%--            <c:forEach items="${itemList }" var="be">--%>
-            <%--                <c:if test="${be.recheckId == p.id}">--%>
-            <%--                    <c:set value="${ind + 1}" var="ind"/>--%>
-            <%--                    <div class="check-box">--%>
-            <%--                    <input type="checkbox" name="isli" data-i="" disabled="disabled" <c:if test="${be.status == 2}"> checked</c:if>/>--%>
-            <%--                    <label>${ind }</label>--%>
-            <%--                    </div>--%>
-            <%--                </c:if>--%>
-            <%--            </c:forEach>--%>
-            <%--            <!-- 循环结束 -->--%>
-            <%--            </div>--%>
-            <%--            <div class="div_pri  mb-10  mt-10">--%>
-            <%--            <font style="float:Left;">3、对未整改项要求于</font>--%>
-            <%--            <input type="text" id="planTime" value="<fmt:formatDate value="${p.nextTime }" pattern="yyyy-MM-dd"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'%y-%M-%d'})" class="input-text Wdate" style="float:left;width:250px;">--%>
-            <%--            <font style="float:Left;">整改完毕</font>--%>
-            <%--            </div>--%>
-            <%--            </td>--%>
-            <%--            </tr>--%>
-            <%--            <tr>--%>
+<%--                        <tr>--%>
+<%--                        <td colspan="8">--%>
+<%--                        <div class="div_pri  mt-10">针对上次隐患整改要求，经复查，提出如下复查意见：</div>--%>
+<%--                        <div class="div_pri  mt-10">1、已整改项：基本符合安全要求</div>--%>
+<%--                        <div class="div_pri">--%>
+<%--                        <!-- 循环 -->--%>
+<%--                        <c:set value="0" var="ind"/>--%>
+<%--                        <c:forEach items="${itemList }" var="be">--%>
+<%--                            <c:if test="${be.recheckId == p.id}">--%>
+<%--                                <c:set value="${ind + 1}" var="ind"/>--%>
+<%--                                <div class="check-box">--%>
+<%--                                <input type="checkbox" name="isli" data-i="" disabled="disabled" <c:if test="${be.status == 3}"> checked</c:if>/>--%>
+<%--                                <label>${ind }</label>--%>
+<%--                                </div>--%>
+<%--                            </c:if>--%>
+<%--                        </c:forEach>--%>
+<%--                        <!-- 循环结束 -->--%>
+<%--                        </div>--%>
+<%--                        <div class="div_pri  mt-10">2、未整改项：</div>--%>
+<%--                        <div class="div_pri">--%>
+<%--                        <!-- 循环 -->--%>
+<%--                        <c:set value="0" var="ind"/>--%>
+<%--                        <c:forEach items="${itemList }" var="be">--%>
+<%--                            <c:if test="${be.recheckId == p.id}">--%>
+<%--                                <c:set value="${ind + 1}" var="ind"/>--%>
+<%--                                <div class="check-box">--%>
+<%--                                <input type="checkbox" name="isli" data-i="" disabled="disabled" <c:if test="${be.status == 2}"> checked</c:if>/>--%>
+<%--                                <label>${ind }</label>--%>
+<%--                                </div>--%>
+<%--                            </c:if>--%>
+<%--                        </c:forEach>--%>
+<%--                        <!-- 循环结束 -->--%>
+<%--                        </div>--%>
+<%--                        <div class="div_pri  mb-10  mt-10">--%>
+<%--                        <font style="float:Left;">3、对未整改项要求于</font>--%>
+<%--                        <input type="text" id="planTime" value="<fmt:formatDate value="${p.nextTime }" pattern="yyyy-MM-dd"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'%y-%M-%d'})" class="input-text Wdate" style="float:left;width:250px;">--%>
+<%--                        <font style="float:Left;">整改完毕</font>--%>
+<%--                        </div>--%>
+<%--                        </td>--%>
+<%--                        </tr>--%>
+<%--                        <tr>--%>
             <style>
             td{
             position:relative;

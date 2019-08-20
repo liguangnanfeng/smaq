@@ -126,7 +126,7 @@
       <script>
 		console.log('${list}');
 		</script>
-		<td style="width:42px"> 工艺 </td>
+		<td>生产工艺</td>
 		<td>设备设施</td>
 		<td>特种设备</td>
 		<td>消防安全</td>

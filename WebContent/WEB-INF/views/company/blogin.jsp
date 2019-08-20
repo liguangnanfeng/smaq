@@ -53,7 +53,7 @@
         }
 
         .name {
-        font-size: 40px;
+        font-size: 32px;
         color: red;
         }
 
@@ -145,6 +145,7 @@
             .name2 {
             font-size: 48px!important;
             font-weight: 600!important;
+            letter-spacing: 4px
             }
         @media screen and (min-width: 1671px) {
         .center .container22 {

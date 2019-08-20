@@ -302,7 +302,7 @@
                             <c:choose>
                                 <c:when test="${ch.status == 1}">合格</c:when>
                                 <c:when test="${ch.status == 2}">不合格</c:when>
-                                <c:when test="${ch.status == 3}">合格</c:when>
+                                <c:when test="${ch.status == 3}">复查合格</c:when>
                             </c:choose>
                         </c:if>
                     </td>

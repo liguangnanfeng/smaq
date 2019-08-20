@@ -107,7 +107,7 @@
 		<td rowspan="2">序号</td>
 		<td class="first" rowspan="2"><span class="title1">对象</span><br><span class="title3">部门</span></td>
 
-		<td style="width: 40px;">工艺</td>
+		<td>生产工艺</td>
 		<td>设备设施</td>
 		<td>特种设备</td>
 		<td>消防安全</td>

@@ -23,7 +23,7 @@ body,html{background:#EBEEF3;min-width:1200px;}
 .text-overflow:hover a{color:#5889D8;text-decoration: underline;}
 .text-overflow:hover i{background:#5889D8;}
 .text-riqi{float:right;color:#AEAEAE;line-height:25px;}
-.one_tx{margin-top:20px;width:31%;margin-right:2%}
+.one_tx{margin-top:20px;width:30%;margin-right:2%}
 body .div_company2 span{margin-top:10px;}
 .clearfix:after{content:"\20";display:block;height:0;clear:both;visibility:hidden}
 .clearfix{zoom:1}
@@ -58,7 +58,10 @@ function openzl(){
   
 function showping(){
   $("#win-ping").modal("show")}
-</script>
+  function showping2(){
+  $("#win-ping2").modal("show")}
+
+  </script>
 </head>
 <body>
 <c:set var="c1_2" value="0"/>
@@ -139,36 +142,67 @@ function showping(){
       <div class="mt-15 pos-r">
         <div class="div_tx div_yj" style="padding-top:15px;">
           <div class="title_xw pos-r" style="border-bottom:1px solid #F6F6F6;color:#FB0005;"><div class="bt_yuj">预警栏(${count[0] + count[1] + count[2] + count[3] + count[4] + count[5] + count[6] + zdsgyh + count[8] + count[9]})</div></div>
-          <a class="one_tx radius pos-r" data-title="持证上岗" data-href="${ly }/company/train/special-list?spFlag=0&isTime=3" onclick="Hui_admin_tab(this)" href="javascript:;" style="margin-left:1%;background:#46D1E5;">
-                <img alt="" src="${ly }/images/httb1.png"/>
-                <font class="font_tx1 pos-a <c:if test="${count[0] >0}">blink</c:if>">${count[0] }</font>
-                <font class="font_tx2 pos-a">持证上岗</font>
-              </a>
-              <a class="one_tx radius pos-r" data-title="特种设备检测" data-href="${ly }/company/sequipment/sequipment-list?isTime=3" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#60D1FF;">
-                <img alt="" src="${ly }/images/httb2.png"/>
-                <font class="font_tx1 pos-a <c:if test="${count[1] >0}">blink</c:if>">${count[1] }</font>
-                <font class="font_tx2 pos-a">特种设备检测</font>
-              </a>
-              <a class="one_tx radius pos-r" data-title="职卫检测、体检" data-href="${ly }/company/evaluate/detection-list?isTime=3" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#34B5ED;margin-right:0;">
-                <img alt="" src="${ly }/images/httb3.png"/>
-                <font class="font_tx1 pos-a <c:if test="${count[2] + count[3] >0}">blink</c:if>">${count[2] + count[3]}</font>
-                <font class="font_tx2 pos-a">职卫检测、体检</font>
-              </a>
+
+<%--  ①安全许可--%>
+<%--  ②安全培训--%>
+<%--  ③检测检验--%>
+<%--  ④隐患排查--%>
+<%--  ⑤隐患治理--%>
+<%--  ⑥重大隐患--%>
+<%--  --%>
+
+
               <a class="one_tx radius pos-r" onClick="showping()"  href="javascript:;" style="margin-left:1%;background:#FFA160;">
                 <img alt="" src="${ly }/images/httb4.png"/>
                 <font class="font_tx1 pos-a <c:if test="${count[4]+ count[5]+ count[8] >0}">blink</c:if>">${count[4]+ count[5]+ count[8] }</font>
-                <font class="font_tx2 pos-a">评价评估</font>
+                <font class="font_tx2 pos-a">安全许可</font>
               </a>
-              <a class="one_tx radius pos-r" data-title="定期检查" data-href="${ly }/tradeclique/check-list?flag=1&status=1" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#ED6840;">
-                <img alt="" src="${ly }/images/httb5.png"/>
-                <font class="font_tx1 pos-a <c:if test="${count[9] >0}">blink</c:if>">${count[9] }</font>
-                <font class="font_tx2 pos-a">定期检查</font>
-              </a>
-              <a class="one_tx radius pos-r" href="javascript:;" onclick="show_dialog('重大事故隐患', '${ly }/village/check-item3?status=2')"  style="background:#ea4f21;margin-right:0">
-                <img alt="" src="${ly }/images/httb9.png"/>
-                <font class="font_tx1 pos-a <c:if test="${count[7] >0}">blink</c:if>">${count[7]}</font>
-                <font class="font_tx2 pos-a">重大事故隐患</font>
-              </a>
+
+            <a class="one_tx radius pos-r" data-title="安全培训" data-href="${ly }/company/train/special-list?spFlag=0&isTime=3" onclick="Hui_admin_tab(this)" href="javascript:;" style="margin-left:1%;background:#46D1E5;">
+            <img alt="" src="${ly }/images/httb1.png"/>
+            <font class="font_tx1 pos-a <c:if test="${count[0] >0}">blink</c:if>">${count[0] }</font>
+            <font class="font_tx2 pos-a">安全培训</font>
+            </a>
+
+            <a class="one_tx radius pos-r"  onClick="showping2()" href="javascript:;" style="background:#60D1FF;">
+            <img alt="" src="${ly }/images/httb2.png"/>
+            <font class="font_tx1 pos-a <c:if test="${count[1]+count[2]+count[3] >0}">blink</c:if>">${count[1]+count[2]+count[3] }</font>
+            <font class="font_tx2 pos-a">检测检验</font>
+            </a>
+
+
+
+            <a class="one_tx radius pos-r" href="javascript:;"   style="background:#ea4f21;    margin-left: 1%;;margin-right:0">
+            <img alt="" src="${ly }/images/httb9.png"/>
+            <font class="font_tx1 pos-a"></font>
+            <font class="font_tx2 pos-a">隐患排查</font>
+            <%--  onclick="show_dialog('隐患排查', '${ly }/village/check-item3?status=2')"--%>
+            </a>
+
+
+            <a class="one_tx radius pos-r" href="javascript:;"   style="background:#ea4f21;margin-left: 3%;">
+            <img alt="" src="${ly }/images/httb9.png"/>
+            <font class="font_tx1 pos-a "></font>
+            <font class="font_tx2 pos-a">隐患治理</font>
+              <%--  onclick="show_dialog('隐患治理', '${ly }/village/check-item3?status=2')"--%>
+            </a>
+
+            <a class="one_tx radius pos-r" href="javascript:;" onclick="show_dialog('重大隐患', '${ly }/village/check-item3?status=2')"  style="background:#ea4f21;margin-right:0">
+            <img alt="" src="${ly }/images/httb9.png"/>
+            <font class="font_tx1 pos-a <c:if test="${count[7] >0}">blink</c:if>">${count[7]}</font>
+            <font class="font_tx2 pos-a">重大隐患</font>
+            </a>
+
+
+
+
+
+
+  <%--              <a class="one_tx radius pos-r" data-title="定期检查" data-href="${ly }/tradeclique/check-list?flag=1&status=1" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#ED6840;">--%>
+  <%--                <img alt="" src="${ly }/images/httb5.png"/>--%>
+  <%--                <font class="font_tx1 pos-a <c:if test="${count[9] >0}">blink</c:if>">${count[9] }</font>--%>
+  <%--                <font class="font_tx2 pos-a">定期检查</font>--%>
+  <%--              </a>--%>
         </div>
         <div class="div_tx div_yh pos-a" style="height:313px;padding: 13px 20px 0px;">
           <div class="title_xw pos-r" style="border-bottom:1px solid #F6F6F6;color:#FB0005;"><div class="bt_yuj" style="width:180px">在线监测预警.报警</div></div>
@@ -214,37 +248,69 @@ function showping(){
           </div>
         </div>
       </div>
-      <!-- 评价评估弹窗 -->
-      <div id="win-ping" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" style="width:800px">
-            <div class="modal-content radius">
-                <div class="modal-header">
-                    <h3 class="modal-title">评价评估</h3>
-                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
-                </div>
-                <div class="modal-body">
-                  <a class="one_tx radius pos-r" data-dismiss="modal" aria-hidden="true" data-title="各类评价评估" data-href="${ly }/company/evaluate/evaluation-list?flag=0&isTime=6" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#FFA160;">
-                    <img alt="" src="${ly }/images/httb4.png"/>
-                    <font class="font_tx1 pos-a <c:if test="${count[4] >0}">blink</c:if>">${count[4] }</font>
-                    <font class="font_tx2 pos-a">评价评估</font>
-                  </a>
-                  <a class="one_tx radius pos-r" data-dismiss="modal" aria-hidden="true" data-title="各类许可证" data-href="${ly }/company/evaluate/zheng-list?isTime=6" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#FF9346;">
-                    <img alt="" src="${ly }/images/httb6.png"/>
-                    <font class="font_tx1 pos-a <c:if test="${count[5] >0}">blink</c:if>">${count[5] }</font>
-                    <font class="font_tx2 pos-a">各类许可证</font>
-                  </a>
-                  <a class="one_tx radius pos-r" data-dismiss="modal" aria-hidden="true" data-title="应急预案" data-href="${ly }/company/tables/tab-yjlist?isTime=6" onclick="Hui_admin_tab(this)" href="javascript:;" style="margin-right:0;background:#ff8048;">
-                    <img alt="" src="${ly }/images/httb10.png"/>
-                    <font class="font_tx1 pos-a <c:if test="${count[8] >0}">blink</c:if>">${count[8] }</font>
-                    <font class="font_tx2 pos-a">应急预案</font>
-                  </a> 
-                </div>
-            </div>
-        </div>
-    </div>
-      
-      <div class="div_tx mt-15">
-        <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">隐患排查治理汇总</div>
+  <!-- 评价评估弹窗 -->
+
+  <div id="win-ping" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:800px">
+  <div class="modal-content radius">
+  <div class="modal-header">
+  <h3 class="modal-title">评价评估</h3>
+  <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+  </div>
+  <div class="modal-body">
+  <a class="one_tx radius pos-r" data-dismiss="modal" aria-hidden="true" data-title="各类评价评估" data-href="${ly }/company/evaluate/evaluation-list?flag=0&isTime=6" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#FFA160;">
+  <img alt="" src="${ly }/images/httb4.png"/>
+  <font class="font_tx1 pos-a <c:if test="${count[4] >0}">blink</c:if>">${count[4] }</font>
+  <font class="font_tx2 pos-a">评价评估</font>
+  </a>
+  <a class="one_tx radius pos-r" data-dismiss="modal" aria-hidden="true" data-title="各类许可证" data-href="${ly }/company/evaluate/zheng-list?isTime=6" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#FF9346;">
+  <img alt="" src="${ly }/images/httb6.png"/>
+  <font class="font_tx1 pos-a <c:if test="${count[5] >0}">blink</c:if>">${count[5] }</font>
+  <font class="font_tx2 pos-a">各类许可证</font>
+  </a>
+  <a class="one_tx radius pos-r" data-dismiss="modal" aria-hidden="true" data-title="应急预案" data-href="${ly }/company/tables/tab-yjlist?isTime=6" onclick="Hui_admin_tab(this)" href="javascript:;" style="margin-right:0;background:#ff8048;">
+  <img alt="" src="${ly }/images/httb10.png"/>
+  <font class="font_tx1 pos-a <c:if test="${count[8] >0}">blink</c:if>">${count[8] }</font>
+  <font class="font_tx2 pos-a">应急预案</font>
+  </a>
+  <a class="one_tx radius pos-r" data-dismiss="modal" aria-hidden="true" data-title="各类评价评估" href="javascript:;" style="background:#FFA160;">
+  <img alt="" src="${ly }/images/httb4.png"/>
+  <%--  data-href="" onclick="Hui_admin_tab(this)"--%>
+  <font class="font_tx1 pos-a <c:if test="${count[4] >0}">blink</c:if>">${count[4] }</font>
+  <font class="font_tx2 pos-a">备案块</font>
+  </a>
+  </div>
+  </div>
+  </div>
+  </div>
+
+  <!-- 检验检测弹窗 -->
+  <div id="win-ping2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:800px">
+  <div class="modal-content radius">
+  <div class="modal-header">
+  <h3 class="modal-title">评价评估</h3>
+  <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+  </div>
+  <div class="modal-body">
+                <a class="one_tx radius pos-r" data-title="特种设备检测" data-href="${ly }/company/sequipment/sequipment-list?isTime=3" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#60D1FF;">
+                  <img alt="" src="${ly }/images/httb2.png"/>
+                  <font class="font_tx1 pos-a <c:if test="${count[1] >0}">blink</c:if>">${count[1] }</font>
+                  <font class="font_tx2 pos-a">特种设备检测</font>
+                </a>
+                <a class="one_tx radius pos-r" data-title="职卫检测、体检" data-href="${ly }/company/evaluate/detection-list?isTime=3" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#34B5ED;margin-right:0;">
+                  <img alt="" src="${ly }/images/httb3.png"/>
+                  <font class="font_tx1 pos-a <c:if test="${count[2] + count[3] >0}">blink</c:if>">${count[2] + count[3]}</font>
+                  <font class="font_tx2 pos-a">职卫检测、体检</font>
+                </a>
+  </div>
+  </div>
+  </div>
+  </div>
+
+
+  <div class="div_tx mt-15">
+        <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">隐患治理数据</div>
         <div class="div_hz">
           <span>企业自查</span>
           <div class="div_hui">
@@ -347,57 +413,58 @@ function showping(){
           </div>
         </div>
       </div>
-      <div class="div_tx mt-15">
-        <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">排查治理统计分析
-          <!-- 判断并提示至少选择3个月 -->
-          <div class="search_rq pos-a">
-            <font>查询时间段：</font>
-            <input type="text" class="Wdate input-text" id="sT" style="width:150px;" onfocus="WdatePicker({dateFmt:'yyyy-MM',maxDate:'#F{$dp.$D(\'eT\',{M:-3}) || \'%y-{%M-3}\'}'})"/>
-            <font>-</font>
-            <input type="text" class="Wdate input-text" id="eT" style="width:150px;" onfocus="WdatePicker({dateFmt:'yyyy-MM',minDate:'#F{$dp.$D(\'sT\',{M:+3})}', maxDate : '%y-%M'})"/>
-            <button class="btn btn-success" type="button" onclick="reload()">
-              <i class="Hui-iconfont">&#xe665;</i> 查询
-            </button>
-          </div>
-        </div>
-        <div class="div_zhe">
-          <div class="change_zhe">
-            <div class="btn-group">
-              <span class="btn btnyh btnyhxz radius yhlx">隐患类型</span>
-              <span class="btn btnyh radius yhdj">隐患等级</span>
-              <span class="btn btnyh radius yhzg">整改率</span>
-              <span class="btn btnyh radius yhly">隐患来源</span>
-            </div>
-          </div>
-          <div id="container3" style="width:100%;height:450px;display: inline-block;margin-top:25px;"></div>
-        </div>
-        <div id="upload-zl" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content radius">
-            <div class="modal-header">
-                <h3 class="modal-title">风险等级</h3>
-                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
-            </div>
-            <div class="modal-body">
-              <div class="row cl">
-                <div class="formControls col-xs-8 col-sm-9" style="width:70%;">
-                  <select id="b"  name="isTab" class="select" style="height:31px;">
-                    <c:forEach items="${lib }" varStatus="index" var="l">
-					<option <c:if test="${c.dlevel == l.name}"> selected</c:if>>${l.name }</option>
-			 		 </c:forEach>
-                  </select>
-                </div> 
-              </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" onclick="change($('#b').val())" >确定</button>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-            </div>
-        </div>
-    </div>
-</div>
-      </div>
-    </div>
+<%--      <div class="div_tx mt-15">--%>
+<%--        <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">排查治理统计分析--%>
+<%--          <!-- 判断并提示至少选择3个月 -->--%>
+<%--          <div class="search_rq pos-a">--%>
+<%--            <font>查询时间段：</font>--%>
+<%--            <input type="text" class="Wdate input-text" id="sT" style="width:150px;" onfocus="WdatePicker({dateFmt:'yyyy-MM',maxDate:'#F{$dp.$D(\'eT\',{M:-3}) || \'%y-{%M-3}\'}'})"/>--%>
+<%--            <font>-</font>--%>
+<%--            <input type="text" class="Wdate input-text" id="eT" style="width:150px;" onfocus="WdatePicker({dateFmt:'yyyy-MM',minDate:'#F{$dp.$D(\'sT\',{M:+3})}', maxDate : '%y-%M'})"/>--%>
+<%--            <button class="btn btn-success" type="button" onclick="reload()">--%>
+<%--              <i class="Hui-iconfont">&#xe665;</i> 查询--%>
+<%--            </button>--%>
+<%--          </div>--%>
+<%--        </div>--%>
+<%--        <div class="div_zhe">--%>
+<%--          <div class="change_zhe">--%>
+<%--            <div class="btn-group">--%>
+<%--              <span class="btn btnyh btnyhxz radius yhlx">隐患类型</span>--%>
+<%--              <span class="btn btnyh radius yhdj">隐患等级</span>--%>
+<%--              <span class="btn btnyh radius yhzg">整改率</span>--%>
+<%--              <span class="btn btnyh radius yhly">隐患来源</span>--%>
+<%--            </div>--%>
+<%--          </div>--%>
+<%--          <div id="container3" style="width:100%;height:450px;display: inline-block;margin-top:25px;"></div>--%>
+<%--        </div>--%>
+<%--        <div id="upload-zl" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">--%>
+<%--        <div class="modal-dialog">--%>
+<%--        <div class="modal-content radius">--%>
+<%--            <div class="modal-header">--%>
+<%--                <h3 class="modal-title">风险等级</h3>--%>
+<%--                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>--%>
+<%--            </div>--%>
+<%--            <div class="modal-body">--%>
+<%--              <div class="row cl">--%>
+<%--                <div class="formControls col-xs-8 col-sm-9" style="width:70%;">--%>
+<%--                  <select id="b"  name="isTab" class="select" style="height:31px;">--%>
+<%--                    <c:forEach items="${lib }" varStatus="index" var="l">--%>
+<%--					<option <c:if test="${c.dlevel == l.name}"> selected</c:if>>${l.name }</option>--%>
+<%--			 		 </c:forEach>--%>
+<%--                  </select>--%>
+<%--                </div> --%>
+<%--              </div>--%>
+<%--            </div>--%>
+<%--            <div class="modal-footer">--%>
+<%--                <button class="btn btn-primary" onclick="change($('#b').val())" >确定</button>--%>
+<%--                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
+<%--      </div>--%>
+<%--    --%>
+  </div>
   </div>
   <div style="position: fixed;right:10px;top:0px;width:15%">
   <div class="panel panel-default" style="width:100%;margin-right:10px;float:right;margin-top:15px;">

@@ -317,6 +317,25 @@ public interface TCheckItemMapper {
 
     Integer selectHiddenSourcesByGvo(@Param("flag") int flag, @Param("userId") Integer userId, @Param("type") Integer type);
 
+    //新增:
+    List<Map> selectListBystatusGeo(@Param("userId") Integer userId,@Param("flag") Integer flag, @Param("type") Integer type);
+
+    List<Map> selectXZListBystatusGeo(@Param("userId") Integer userId,@Param("flag") Integer flag,  @Param("type") Integer type);
+
+    List<Map> selectBMCCListBystatusGeo(@Param("userId") Integer userId,@Param("flag") Integer flag, @Param("type") Integer type);
+
+    Map<String, Object> selectNumByhangye(@Param("userId") Integer userId,@Param("flag") Integer flag, @Param("type") Integer type);
+
+    Map<String, Object> selectHiddenSourcesByGvo2(@Param("userId") Integer userId, @Param("type") Integer type);
+
+    Map<String, Object> zhuChartData882(@Param("userId") Integer userId,@Param("flag") Integer flag, @Param("type") Integer type);
+
+    Map<String, Object> findTypeByGeo2(@Param("userId") Integer userId, @Param("type") Integer type);
+
+    Map<String, Object> findFileByGeo2(@Param("userId") Integer userId, @Param("type") Integer type);
+
+    Map<String, Object> zhuChartData124Geo2(@Param("userId") Integer userId, @Param("type") Integer type);
+
 }
 
 

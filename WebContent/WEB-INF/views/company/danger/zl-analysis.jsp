@@ -17,8 +17,9 @@
         console.log('a2:',a2);
         </script>
         <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-        <div id="main" style="width: 90%;height:70%;margin: 50px  auto 0 auto;"></div>
         <div id="main2" style="width: 90%;height:60%;margin: 30px auto 30px auto;"></div>
+
+        <div id="main" style="width: 90%;height:70%;margin: 50px  auto 0 auto;"></div>
 
         <script src="/js/echarts.min.js"></script>
         <script type="text/javascript">
@@ -115,11 +116,23 @@
             fdata.push(x);
             });
             option2 = {
-            title: {
+            title: [{
             text: '隐患治理对象分析',
             left: 'center',
 
             },
+        {
+        subtext:'合计：${count}',
+        top:10,
+        right: '15%',
+        subtextStyle:{//副标题内容的样式
+        color:'#333',//绿色
+        <%--        fontStyle:'normal',//主标题文字字体风格，默认normal，有italic(斜体),oblique(斜体)--%>
+        <%--        fontWeight:"lighter",//可选normal(正常)，bold(加粗)，bolder(加粗)，lighter(变细)，100|200|300|400|500...--%>
+        <%--        fontFamily:"san-serif",//主题文字字体，默认微软雅黑--%>
+        <%--        fontSize:12//主题文字字体大小，默认为12px--%>
+        }
+        } ],
             tooltip: {
             trigger:'item',
             padding:[20,10,20,10],

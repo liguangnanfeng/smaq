@@ -1991,7 +1991,7 @@
         count(if(control='安全设施', 'Y', null)) as anquan,
         count(if(control='职业卫生', 'Y', null)) as weisheng,
         count(if(control='生产现场', 'Y', null)) as xianchang,
-        count(if(control='其他', 'Y', null)) as qita
+        count(if(control= null, 'Y', null)) as qita
         FROM
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -2060,7 +2060,7 @@
         count(if(t3.control='安全设施', 'Y', null)) as anquan,
         count(if(t3.control='职业卫生', 'Y', null)) as weisheng,
         count(if(t3.control='生产现场', 'Y', null)) as xianchang,
-        count(if(t3.control='其他', 'Y', null)) as qita
+        count(if(t3.control= null, 'Y', null)) as qita
         FROM
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -2166,7 +2166,7 @@
         count(if(t3.control='安全设施', 'Y', null)) as anquan,
         count(if(t3.control='职业卫生', 'Y', null)) as weisheng,
         count(if(t3.control='生产现场', 'Y', null)) as xianchang,
-        count(if(t3.control='其他', 'Y', null)) as qita
+        count(if(t3.control= null, 'Y', null)) as qita
         FROM
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id

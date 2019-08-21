@@ -4254,11 +4254,11 @@ public class CompanyController_cd extends BaseController {
         List<Map<String,Object>> list = null;
 
         if (flag ==1){
-            list = hiddenPlanMapper.selectDpids(user.getId());
+            list = hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
         }else if (flag == 2){
-            list = tCheckMapper.findCheckCompany(user.getId(),2);
+            list = tCheckMapper.findCheckCompany(String.valueOf(user.getId()),2);
         }else if (flag == 3){
-            list = tCheckMapper.findCheckCompany(user.getId(),3);
+            list = tCheckMapper.findCheckCompany(String.valueOf(user.getId()),3);
         }
 
 
@@ -4272,25 +4272,25 @@ public class CompanyController_cd extends BaseController {
         for (int i = 0; i < list.size(); i++) {
 
             if (flag == 1){
-                if (null == list.get(i).get("dpid")){
-                    a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, company.getName(),user.getId(),2); // 现场
+                if (null == list.get(i).get("dpid") || list.get(i).get("dpid") == 0){
+                    a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, company.getName(),String.valueOf(user.getId()),2); // 现场
                     list.get(i).put("danger1",a);
 
-                    b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, company.getName(),user.getId(),1); // 基础
+                    b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, company.getName(),String.valueOf(user.getId()),1); // 基础
                     list.get(i).put("danger2",b);
 
-                }else if (null != list.get(i).get("dpid")){
-                    a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),user.getId(),2); // 现场
+                }else if (null != list.get(i).get("dpid") && list.get(i).get("dpid") == 0){
+                    a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),String.valueOf(user.getId()),2); // 现场
                     list.get(i).put("danger1",a);
 
-                    b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),user.getId(),1); // 基础
+                    b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),String.valueOf(user.getId()),1); // 基础
                     list.get(i).put("danger2",b);
                 }
             }else {
-                a = tCheckItemMapper.lookHiddenSource(flag, (String) list.get(i).get("name"),user.getId(),2); // 现场
+                a = tCheckItemMapper.lookHiddenSource(flag, (String) list.get(i).get("name"),String.valueOf(user.getId()),2); // 现场
                 list.get(i).put("danger1",a);
 
-                b = tCheckItemMapper.lookHiddenSource(flag, (String) list.get(i).get("name"),user.getId(),1); // 基础
+                b = tCheckItemMapper.lookHiddenSource(flag, (String) list.get(i).get("name"),String.valueOf(user.getId()),1); // 基础
                 list.get(i).put("danger2",b);
             }
 
@@ -4684,11 +4684,11 @@ public class CompanyController_cd extends BaseController {
         List<Map<String,Object>> list = null;
 
         if (flag ==1){
-            list = hiddenPlanMapper.selectDpids(user.getId());
+            list = hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
         }else if (flag == 2){
-            list = tCheckMapper.findCheckCompany(user.getId(),2);
+            list = tCheckMapper.findCheckCompany(String.valueOf(user.getId()),2);
         }else if (flag == 3){
-            list = tCheckMapper.findCheckCompany(user.getId(),3);
+            list = tCheckMapper.findCheckCompany(String.valueOf(user.getId()),3);
         }
 
         Map<String,Object> map = new HashMap<>();
@@ -4728,7 +4728,7 @@ public class CompanyController_cd extends BaseController {
 
             if (flag == 1){
 
-                if (null == list.get(i).get("dpid")){
+                if (null == list.get(i).get("dpid") || list.get(i).get("dpid") == 0){
 
                     a = tCheckItemMapper.zhuChartData22("生产工艺",company.getName(),flag,user.getId()); // 生产工艺 隐患数据
                     list.get(i).put("danger1",a);
@@ -4786,7 +4786,7 @@ public class CompanyController_cd extends BaseController {
                     list.get(i).put("danger14",n);
                     sum14 += n;
 
-                }else if (null != list.get(i).get("dpid")){
+                }else if (null != list.get(i).get("dpid") && list.get(i).get("dpid") != 0){
 
                     a = tCheckItemMapper.zhuChartData22("生产工艺",(String) list.get(i).get("name"),flag,user.getId()); // 生产工艺 隐患数据
                     list.get(i).put("danger1",a);
@@ -4846,6 +4846,7 @@ public class CompanyController_cd extends BaseController {
                 }
 
             }else {
+
                 a = tCheckItemMapper.zhuChartData23("生产工艺",(String) list.get(i).get("name"),flag,user.getId()); // 生产工艺 隐患数据
                 list.get(i).put("danger1",a);
                 sum1 += a;
@@ -5082,11 +5083,11 @@ public class CompanyController_cd extends BaseController {
         List<Map<String,Object>> list = null;
 
         if (flag ==1){
-            list = hiddenPlanMapper.selectDpids(user.getId());
+            list = hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
         }else if (flag == 2){
-            list = tCheckMapper.findCheckCompany(user.getId(),2);
+            list = tCheckMapper.findCheckCompany(String.valueOf(user.getId()),2);
         }else if (flag == 3){
-            list = tCheckMapper.findCheckCompany(user.getId(),3);
+            list = tCheckMapper.findCheckCompany(String.valueOf(user.getId()),3);
         }
 
         Map<String,Object> map = new HashMap<>();
@@ -5125,7 +5126,7 @@ public class CompanyController_cd extends BaseController {
 
             if (flag == 1){
 
-                if (null == list.get(i).get("dpid")){
+                if (null == list.get(i).get("dpid") || list.get(i).get("dpid") == 0){
 
                     a = tCheckItemMapper.zhuChartData66("生产工艺",company.getName(),flag,user.getId()); // 生产工艺 隐患数据
                     list.get(i).put("danger1",a);
@@ -5183,7 +5184,7 @@ public class CompanyController_cd extends BaseController {
                     list.get(i).put("danger14",n);
                     sum14 += n;
 
-                }else if (null != list.get(i).get("dpid")){
+                }else if (null != list.get(i).get("dpid") && list.get(i).get("dpid") != 0){
 
                     a = tCheckItemMapper.zhuChartData66("生产工艺",(String) list.get(i).get("name"),flag,user.getId()); // 生产工艺 隐患数据
                     list.get(i).put("danger1",a);
@@ -5728,7 +5729,7 @@ public class CompanyController_cd extends BaseController {
 
         User user = getLoginUser(request);
         Map map = new HashMap();
-        List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(user.getId());
+        List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
 
         /*List<ZzjgDepartment> zList = zzjgDepartmentMapper.selectLevel1DangerIds(user.getId());*/
 
@@ -5907,7 +5908,7 @@ public class CompanyController_cd extends BaseController {
 
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
-        List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(user.getId());
+        List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
 
         StringBuilder sb = new StringBuilder();
 
@@ -6187,7 +6188,7 @@ public class CompanyController_cd extends BaseController {
 
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
-        List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(user.getId());
+        List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
 
         StringBuilder sb = new StringBuilder();
 

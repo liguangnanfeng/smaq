@@ -3426,7 +3426,7 @@ public class GlobalController extends BaseController {
     @RequestMapping(value = "select-all-level1")
     public String selectAllLevel1(Integer userId, Integer checkType, String industry,Integer lxType, HttpServletRequest request, Model model, String tableName, Integer flag) {
         User user = userMapper.selectByPrimaryKey(userId);
-        System.out.println("---------------");
+
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         if (StringUtils.isNotBlank(industry)) {
             industry = utf8Str(industry);
@@ -3443,53 +3443,57 @@ public class GlobalController extends BaseController {
         model.addAttribute("userId", userId);
 
         StringBuffer sb = new StringBuffer();
+        if (null != company.getDangers()){
+            String[] str = company.getDangers().split(",");
 
-        String[] str = company.getDangers().split(",");
 
-        if (null != str &&  str.length != 0){
+            if (null != str &&  str.length != 0){
 
-            for (int i = 0; i < str.length; i++) {
-                if (i == str.length-1){
-                    sb.append("'").append(str[i]).append("'");
-                }else {
-                    sb.append("'").append(str[i]).append("'").append(",");
+                for (int i = 0; i < str.length; i++) {
+                    if (i == str.length-1){
+                        sb.append("'").append(str[i]).append("'");
+                    }else {
+                        sb.append("'").append(str[i]).append("'").append(",");
+                    }
+                }
+                if (null != industry && industry != ""){
+                    sb.append(",").append("'").append(industry).append("'");
                 }
             }
-            if (null != industry && industry != ""){
-                sb.append(",").append("'").append(industry).append("'");
+
+            // 根据 checkType 查询对应的 level1 信息
+            if (-2 == checkType) {
+                List<ADangerManual> dL = aDangerManualMapper.selectByIndustryAll(sb.toString());
+                Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
+                for (ADangerManual ad : dL) {
+                    String l1 = ad.getLevel1();
+                    String l2 = ad.getLevel2();
+                    if (null == list.get(l1)) {
+                        list.put(l1, new LinkedHashSet<String>());
+                    }
+                    Set<String> s = list.get(l1);
+                    s.add(l2);
+                }
+                model.addAttribute("list", list);
+                model.addAttribute("dL", dL);
+
+            } else if (-1 == checkType) {
+                List<TLevel> dL = tLevelMapper.selectAll();
+                Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
+                for (TLevel ad : dL) {
+                    String l1 = ad.getLevel1();
+                    String l2 = ad.getLevel2();
+                    if (null == list.get(l1)) {
+                        list.put(l1, new LinkedHashSet<String>());
+                    }
+                    Set<String> s = list.get(l1);
+                    s.add(l2);
+                }
+                model.addAttribute("list", list);
+                model.addAttribute("dL", dL);
             }
         }
-        // 根据 checkType 查询对应的 level1 信息
-        if (-2 == checkType) {
-            List<ADangerManual> dL = aDangerManualMapper.selectByIndustryAll(sb.toString());
-            Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
-            for (ADangerManual ad : dL) {
-                String l1 = ad.getLevel1();
-                String l2 = ad.getLevel2();
-                if (null == list.get(l1)) {
-                    list.put(l1, new LinkedHashSet<String>());
-                }
-                Set<String> s = list.get(l1);
-                s.add(l2);
-            }
-            model.addAttribute("list", list);
-            model.addAttribute("dL", dL);
 
-        } else if (-1 == checkType) {
-            List<TLevel> dL = tLevelMapper.selectAll();
-            Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
-            for (TLevel ad : dL) {
-                String l1 = ad.getLevel1();
-                String l2 = ad.getLevel2();
-                if (null == list.get(l1)) {
-                    list.put(l1, new LinkedHashSet<String>());
-                }
-                Set<String> s = list.get(l1);
-                s.add(l2);
-            }
-            model.addAttribute("list", list);
-            model.addAttribute("dL", dL);
-        }
         return "global/checkModel/model-add6";
     }
     /**
@@ -4239,7 +4243,7 @@ public class GlobalController extends BaseController {
                         levelId=  tLevelMapper.selectByPrimaryKey(levelId1).getLevel2();
                     }
 
-                }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                }else if (null != map.get("industryType") && 2==map.get("industryType")){
                     levelId = aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2();
                 }
 
@@ -4291,6 +4295,7 @@ public class GlobalController extends BaseController {
         if (null == flag){
             flag = 1;
         }
+
         Map<String, Object> map2 = tCheckItemMapper.selectHiddenSourcesByGvo2(user.getId(),user.getUserType());
         Long number1 = (Long)map2.get("number1");
         //Integer number1 = tCheckItemMapper.selectHiddenSourcesByGvo(1,user.getId(), user.getUserType()); // 企业自查
@@ -4300,7 +4305,6 @@ public class GlobalController extends BaseController {
         //Integer number3 = tCheckItemMapper.selectHiddenSourcesByGvo(3,user.getId(), user.getUserType()); // 第三方检查
 
 
-        System.out.println(number1+":"+number2+":"+number3);
         Map<String, Object> map1 = tCheckItemMapper.selectNumByhangye(user.getId(),1,user.getUserType());
 
         //Integer a = tCheckItemMapper.zhuChartData77ByGeo("生产工艺",flag,user.getId(), user.getUserType()); // 生产工艺 隐患数据
@@ -4360,7 +4364,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("n", n);
 
         Long count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
-
+        model.addAttribute("count", count);
         DecimalFormat df = new DecimalFormat("0.00");
 
         if (null != count && 0 != count) {
@@ -4517,6 +4521,15 @@ public class GlobalController extends BaseController {
             flag = 1;
         }
         Map<String, Object> map1 = tCheckItemMapper.zhuChartData882(user.getId(), flag, user.getUserType());
+        Map<String, Object> map2 = tCheckItemMapper.findFileByGeo2(user.getId(),user.getUserType());
+
+//        model.addAttribute("number4",number4);
+//        model.addAttribute("number5",number5);
+//        model.addAttribute("number6",number6);
+
+        model.addAttribute("number1",map2.get("number4"));
+        model.addAttribute("number2",map2.get("number5"));
+        model.addAttribute("number3",map2.get("number6"));
         Long a =   (Long)map1.get("gongyi");
         //Integer a = tCheckItemMapper.zhuChartData88("生产工艺",flag,user.getId(), user.getUserType()); // 生产工艺 隐患数据
         model.addAttribute("a",a);
@@ -4574,7 +4587,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("n",n);
 
         Long count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
-
+        model.addAttribute("count", count);
         DecimalFormat df = new DecimalFormat("0.00");
 
         if (null != count && 0 != count) {
@@ -4706,6 +4719,7 @@ public class GlobalController extends BaseController {
             model.addAttribute("l1","0.00");
             model.addAttribute("m1","0.00");
             model.addAttribute("n1","0.00");
+            model.addAttribute("count","0.00");
 
         }
         model.addAttribute("flag",flag);
@@ -4826,6 +4840,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("n",n);
 
         Long count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
+        model.addAttribute("count", count);
 
         DecimalFormat df = new DecimalFormat("0.00");
 
@@ -4975,7 +4990,6 @@ public class GlobalController extends BaseController {
     public String zhuChartData66 (HttpServletRequest request, Model model, Integer flag){
         User user = getLoginUser(request);//用户登录
         List<Integer> Ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询该账户下公司id
-        System.out.println(Ids);
         List<Map<String,Object>> list = null;
         List<Map<String, Object>> list2 = new ArrayList<>();
         Map<String,Object> map = new HashMap<>();
@@ -4996,11 +5010,11 @@ public class GlobalController extends BaseController {
         Integer sum14 = 0;
         for(Integer id : Ids){
             if (flag ==1){
-                list = hiddenPlanMapper.selectDpids(id);
+                list = hiddenPlanMapper.selectDpids(String.valueOf(id));
             }else if (flag == 2){
-                list = tCheckMapper.findCheckCompany(id,2);
+                list = tCheckMapper.findCheckCompany(String.valueOf(id),2);
             }else if (flag == 3){
-                list = tCheckMapper.findCheckCompany(id,3);
+                list = tCheckMapper.findCheckCompany(String.valueOf(id),3);
             }
             for (int i = 0; i < list.size(); i++) {
 
@@ -5021,7 +5035,7 @@ public class GlobalController extends BaseController {
 
                 if (flag == 1){
 
-                    if (null == list.get(i).get("dpid")){
+                    if (null == list.get(i).get("dpid")|| list.get(i).get("dpid")==0){
 
                         a = tCheckItemMapper.zhuChartData66("生产工艺","公司级",flag,id); // 生产工艺 隐患数据
                         list.get(i).put("danger1",a);
@@ -5377,36 +5391,48 @@ public class GlobalController extends BaseController {
         Integer count2 = 0;
         Integer  a = 0;
         Integer  b = 0;
-        for(Integer id : Ids){
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < Ids.size(); i++) {
+            if (i == Ids.size()-1){
+                sb.append("'").append(Ids.get(i)).append("'");
+            }else {
+                sb.append("'").append(Ids.get(i)).append("',");
+            }
+        }
+
+
+        System.out.println(sb.toString());
+
             if (flag ==1){
-                list = hiddenPlanMapper.selectDpids(id);
+                list = hiddenPlanMapper.selectDpids(sb.toString());
             }else if (flag == 2){
-                list = tCheckMapper.findCheckCompany(id,2);
+                list = tCheckMapper.findCheckCompany(sb.toString(),2);
             }else if (flag == 3){
-                list = tCheckMapper.findCheckCompany(id,3);
+                list = tCheckMapper.findCheckCompany(sb.toString(),3);
             }
             for (int i = 0; i < list.size(); i++) {
 
                 if (flag == 1){
-                    if (null == list.get(i).get("dpid")){
-                        a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, "公司级", id,2); // 现场
+                    if (null == list.get(i).get("dpid")|| list.get(i).get("dpid")==0){
+                        a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, "公司级", sb.toString(),2); // 现场
                         list.get(i).put("danger1",a);
 
-                        b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, "公司级", id,1); // 基础
+                        b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, "公司级", sb.toString(),1); // 基础
                         list.get(i).put("danger2",b);
 
                     }else if (null != list.get(i).get("dpid")){
-                        a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),id,2); // 现场
+                        a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),sb.toString(),2); // 现场
                         list.get(i).put("danger1",a);
 
-                        b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),user.getId(),1); // 基础
+                        b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),sb.toString(),1); // 基础
                         list.get(i).put("danger2",b);
                     }
                 }else {
-                    a = tCheckItemMapper.lookHiddenSource(flag, (String) list.get(i).get("name"), id,2); // 现场
+                    a = tCheckItemMapper.lookHiddenSource(flag, (String) list.get(i).get("name"), sb.toString(),2); // 现场
                     list.get(i).put("danger1",a);
 
-                    b = tCheckItemMapper.lookHiddenSource(flag, (String) list.get(i).get("name"), id,1); // 基础
+                    b = tCheckItemMapper.lookHiddenSource(flag, (String) list.get(i).get("name"), sb.toString(),1); // 基础
                     list.get(i).put("danger2",b);
                 }
 
@@ -5419,7 +5445,7 @@ public class GlobalController extends BaseController {
                 list2.addAll(list);
 
             }
-        }
+
         Integer sum   = count1 + count2;
 
         DecimalFormat df = new DecimalFormat("0.00");
@@ -5487,11 +5513,11 @@ public class GlobalController extends BaseController {
 
         for(Integer id : Ids){
             if (flag ==1){
-                list = hiddenPlanMapper.selectDpids(id);//查询各个车间
+                list = hiddenPlanMapper.selectDpids(String.valueOf(id));//查询各个车间
             }else if (flag == 2){
-                list = tCheckMapper.findCheckCompany(id,2);//查询检查部门和公司
+                list = tCheckMapper.findCheckCompany(String.valueOf(id),2);//查询检查部门和公司
             }else if (flag == 3){
-                list = tCheckMapper.findCheckCompany(id,3);//查询检查部门和公司
+                list = tCheckMapper.findCheckCompany(String.valueOf(id),3);//查询检查部门和公司
             }
             for (int i = 0; i < list.size(); i++) {
 
@@ -5512,7 +5538,7 @@ public class GlobalController extends BaseController {
 
                 if (flag == 1){ //企业自查
 
-                    if (null == list.get(i).get("dpid")){//当车间id为空时,查询公司级的隐患
+                    if (null == list.get(i).get("dpid")|| list.get(i).get("dpid")==0){//当车间id为空时,查询公司级的隐患
 
                         a = tCheckItemMapper.zhuChartData22("生产工艺","公司级",flag,id); // 生产工艺 隐患数据
                         list.get(i).put("danger1",a);
@@ -6109,7 +6135,7 @@ public class GlobalController extends BaseController {
         Integer sum13 = 0;
         Integer sum14 = 0;
         for(Integer id : Ids){
-
+             list = zzjgDepartmentMapper.findAllLevel1(id);
             for (int i = 0; i < list.size(); i++) {
 
                 Integer  a = tCheckItemMapper.zhuChartData123("生产工艺",(String) list.get(i).get("name"), id); // 生产工艺 隐患数据
@@ -6455,7 +6481,7 @@ public class GlobalController extends BaseController {
         Integer number5 = 0;
         Integer number6 = 0;
         for(Integer id:Ids){
-            list =  hiddenPlanMapper.selectDpids(id);
+            list =  hiddenPlanMapper.selectDpids(String.valueOf(id));
             for (int i = 0; i < list.size(); i++) {
 
                 Integer a = tCheckMapper.findCountAll((String)list.get(i).get("name"),1, id);

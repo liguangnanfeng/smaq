@@ -247,7 +247,7 @@ public interface TCheckItemMapper {
 
     List<DynamicParameter<String,Object>> selectMapzhuChartData2(Map<String,Object> m);
 
-    Integer findHiddenSourceTypeByMap(@Param("flag") Integer flag, @Param("depart")String depart, @Param("user_id")Integer user_id, @Param("industry_type")Integer industry_type);
+    Integer findHiddenSourceTypeByMap(@Param("flag") Integer flag, @Param("depart")String depart, @Param("userIds")String userIds, @Param("industry_type")Integer industry_type);
 
     Integer findHiddenLevelTypeByMap(@Param("depart")String depart, @Param("user_id")Integer user_id, @Param("flag")Integer flag);
 
@@ -267,15 +267,15 @@ public interface TCheckItemMapper {
 
     Integer zhuChartData671(@Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
-    Integer lookHiddenSource(@Param("flag") Integer flag, @Param("check_company")String check_company, @Param("user_id")Integer user_id, @Param("industry_type")Integer industry_type);
+    Integer lookHiddenSource(@Param("flag") Integer flag, @Param("check_company")String check_company, @Param("userIds")String userIds, @Param("industry_type")Integer industry_type);
 
     Integer zhuChartData22(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
     Integer zhuChartData221(@Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
-    Integer zhuChartData23(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+    Integer zhuChartData23(@Param("control")String control, @Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
-    Integer zhuChartData231(@Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+    Integer zhuChartData231(@Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
     Integer selectHiddenSources(@Param("flag") Integer flag, @Param("user_id") Integer user_id);
 

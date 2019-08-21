@@ -1022,7 +1022,7 @@
         and t2.flag = #{flag}
         and t2.depart = #{depart}
         and t2.industry_type = #{industry_type}
-        and t2.user_id = #{user_id}
+        and t2.user_id in (${userIds})
     </select>
 
 
@@ -1050,7 +1050,7 @@
         and t2.flag = #{flag}
         and t2.check_company = #{check_company}
         and t2.industry_type = #{industry_type}
-        and t2.user_id = #{user_id}
+        and t2.user_id in (${userIds})
     </select>
 
 
@@ -1828,25 +1828,23 @@
     </select>
 
     <select id="selectCompanyId" parameterType="Integer" resultType="Integer">
-        select user_id from company_view
-        <if test="type!=9">
-            <where>
-                <if test="type==6">
-                    district_id = #{userId}
-                </if>
-                <if test="type==3">
-                    town_id = #{userId}
-                </if>
-                <if test="type==4">
-                    village_id = #{userId}
-                </if>
-                <if test="type==10">
-                    user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
-                    #{userId}
-                    )
-                </if>
-            </where>
-        </if>
+        SELECT user_id FROM company_view
+        <where>
+            <if test="type==6">
+                district_id = #{userId}
+            </if>
+            <if test="type==3">
+                town_id = #{userId}
+            </if>
+            <if test="type==4">
+                village_id = #{userId}
+            </if>
+            <if test="type==10">
+                user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
+                #{userId}
+                )
+            </if>
+        </where>
     </select>
 
     <select id="findTypeByGeo" resultType="Integer">
@@ -2028,22 +2026,21 @@
         left join company_view t3 on t2.user_id = t3.user_id
         where t2.status = 2
         and t2.del = 0
-        <if test="type!=9">
-            <if test="type==6">
-                and t3.district_id = #{userId}
-            </if>
-            <if test="type==3">
-                and t3.town_id = #{userId}
-            </if>
-            <if test="type==4">
-                and t3.village_id = #{userId}
-            </if>
-            <if test="type==10">
-                and t3.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
-                #{userId}
-                )
-            </if>
+
+        <if test="type==6">
+            and t3.district_id = #{userId}
         </if>
+        <if test="type==3">
+            and t3.town_id = #{userId}
+        </if>
+        <if test="type==4">
+            and t3.village_id = #{userId}
+        </if>
+        <if test="type==10">
+            and t3.user_id  ( select uid from trade_company_tbl where tid =
+            #{userId})
+        </if>
+
     </select>
     <select id="zhuChartData882" resultType="java.util.Map" parameterType="INTEGER">
         SELECT
@@ -2071,48 +2068,48 @@
         AND t2.del = 0
         AND t1.status = 2
         AND t2.flag = #{flag}
-        <if test="type!=9">
-            <if test="type==6">
-                and t4.district_id = #{userId}
-            </if>
-            <if test="type==3">
-                and t4.town_id = #{userId}
-            </if>
-            <if test="type==4">
-                and t4.village_id = #{userId}
-            </if>
-            <if test="type==10">
-                and t4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
-                #{userId}
-                )
-            </if>
+
+        <if test="type==6">
+            and t4.district_id = #{userId}
         </if>
+        <if test="type==3">
+            and t4.town_id = #{userId}
+        </if>
+        <if test="type==4">
+            and t4.village_id = #{userId}
+        </if>
+        <if test="type==10">
+            and t4.user_id in ( select uid from trade_company_tbl where tid =
+            #{userId}
+            )
+        </if>
+
     </select>
     <select id="findTypeByGeo2" resultType="java.util.Map" parameterType="INTEGER">
         SELECT
-        count(if(c1.flag=3,'1', null)) as number1,
-        count(if(c1.flag=2,'1', null)) as number2,
-        count(if(c1.flag=1,'1', null)) as number3
+        COUNT(if(c1.flag=3,'1', null)) AS number1,
+        COUNT(if(c1.flag=2,'1', null)) AS number2,
+        COUNT(if(c1.flag=1,'1', null)) AS number3
         FROM
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl c1 ON c1.id = t1.level_id
-        left join smaq.company_view c2 on t2.user_id = c2.user_id
+        LEFT JOIN smaq.company_view c2 ON t2.user_id = c2.user_id
         WHERE
         t2. status = 2
         AND t2.del = 0
         <if test="type!=9">
             <if test="type==6">
-                and c2.district_id = #{userId}
+                AND c2.district_id = #{userId}
             </if>
             <if test="type==3">
-                and c2.town_id = #{userId}
+                AND c2.town_id = #{userId}
             </if>
             <if test="type==4">
-                and c2.village_id = #{userId}
+                AND c2.village_id = #{userId}
             </if>
             <if test="type==10">
-                and c2.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
+                AND c2.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
                 #{userId}
                 )
             </if>
@@ -2120,9 +2117,9 @@
     </select>
     <select id="findFileByGeo2" resultType="java.util.Map" parameterType="INTEGER">
         SELECT
-        count(if(t3.flag=3,'1',null)) as number4,
-        count(if(t3.flag=2,'1',null)) as number5,
-        count(if(t3.flag=1,'1',null)) as number6
+        COUNT(if(t3.flag=3,'1',null)) AS number4,
+        COUNT(if(t3.flag=2,'1',null)) AS number5,
+        COUNT(if(t3.flag=1,'1',null)) AS number6
         FROM
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -2134,39 +2131,37 @@
         AND t1.status = 2
         AND t1. status = 2
         AND t1.recheck_file != ''
-        <if test="type!=9">
-            <if test="type==6">
-                and t4.district_id = #{userId}
-            </if>
-            <if test="type==3">
-                and t4.town_id = #{userId}
-            </if>
-            <if test="type==4">
-                and t4.village_id = #{userId}
-            </if>
-            <if test="type==10">
-                and t4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
-                #{userId}
-                )
-            </if>
+        <if test="type==6">
+            AND t4.district_id = #{userId}
+        </if>
+        <if test="type==3">
+            AND t4.town_id = #{userId}
+        </if>
+        <if test="type==4">
+            AND t4.village_id = #{userId}
+        </if>
+        <if test="type==10">
+            AND t4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
+            #{userId}
+            )
         </if>
     </select>
     <select id="zhuChartData124Geo2" resultType="java.util.Map" parameterType="INTEGER">
         select
-        count(if(t3.control='生产工艺', 'Y', null)) as gongyi,
-        count(if(t3.control='设备设施', 'Y', null)) as shebei,
-        count(if(t3.control='特种设备', 'Y', null)) as teizhong,
-        count(if(t3.control='消防安全', 'Y', null)) as xiaofang,
-        count(if(t3.control='用电安全', 'Y', null)) as yongdian,
-        count(if(t3.control='行为环境', 'Y', null)) as xingwei,
-        count(if(t3.control='公辅设备', 'Y', null)) as gongfu,
-        count(if(t3.control='危化管理', 'Y', null)) as weihua,
-        count(if(t3.control='基础管理', 'Y', null)) as jichu,
-        count(if(t3.control='防雷静电', 'Y', null)) as fanglei,
-        count(if(t3.control='安全设施', 'Y', null)) as anquan,
-        count(if(t3.control='职业卫生', 'Y', null)) as weisheng,
-        count(if(t3.control='生产现场', 'Y', null)) as xianchang,
-        count(if(t3.control= null, 'Y', null)) as qita
+        COUNT(if(t3.control='生产工艺', 'Y', null)) AS gongyi,
+        COUNT(if(t3.control='设备设施', 'Y', null)) AS shebei,
+        COUNT(if(t3.control='特种设备', 'Y', null)) AS teizhong,
+        COUNT(if(t3.control='消防安全', 'Y', null)) AS xiaofang,
+        COUNT(if(t3.control='用电安全', 'Y', null)) AS yongdian,
+        COUNT(if(t3.control='行为环境', 'Y', null)) AS xingwei,
+        COUNT(if(t3.control='公辅设备', 'Y', null)) AS gongfu,
+        COUNT(if(t3.control='危化管理', 'Y', null)) AS weihua,
+        COUNT(if(t3.control='基础管理', 'Y', null)) AS jichu,
+        COUNT(if(t3.control='防雷静电', 'Y', null)) AS fanglei,
+        COUNT(if(t3.control='安全设施', 'Y', null)) AS anquan,
+        COUNT(if(t3.control='职业卫生', 'Y', null)) AS weisheng,
+        COUNT(if(t3.control='生产现场', 'Y', null)) AS xianchang,
+        COUNT(if(t3.control= null, 'Y', null)) AS qita
         FROM
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -2176,21 +2171,19 @@
         t2. status = 2
         AND t2.del = 0
         AND t1.status = 2
-        <if test="type!=9">
-            <if test="type==6">
-                and t4.district_id = #{userId}
-            </if>
-            <if test="type==3">
-                and t4.town_id = #{userId}
-            </if>
-            <if test="type==4">
-                and t4.village_id = #{userId}
-            </if>
-            <if test="type==10">
-                and t4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
-                #{userId}
-                )
-            </if>
+        <if test="type==6">
+            AND t4.district_id = #{userId}
+        </if>
+        <if test="type==3">
+            AND t4.town_id = #{userId}
+        </if>
+        <if test="type==4">
+            AND t4.village_id = #{userId}
+        </if>
+        <if test="type==10">
+            AND t4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
+            #{userId}
+            )
         </if>
     </select>
 
@@ -2228,22 +2221,22 @@
         and T2.del= 0
         and T2.flag=#{flag}
         and T1.recheck_file is not null
-        <if test="type!=9">
-            <if test="type==6">
-                and T5.district_id = #{userId}
-            </if>
-            <if test="type==3">
-                and T5.town_id = #{userId}
-            </if>
-            <if test="type==4">
-                and T5.village_id = #{userId}
-            </if>
-            <if test="type==10">
-                and T5.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
-                #{userId}
-                )
-            </if>
+
+        <if test="type==6">
+            and T5.district_id = #{userId}
         </if>
+        <if test="type==3">
+            and T5.town_id = #{userId}
+        </if>
+        <if test="type==4">
+            and T5.village_id = #{userId}
+        </if>
+        <if test="type==10">
+            and T5.user_id in ( select uid from trade_company_tbl where tid =
+            #{userId}
+            )
+        </if>
+
         order by T2.real_time desc;
     </select>
 

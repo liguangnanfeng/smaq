@@ -51,6 +51,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         /newUpload/** = anon
         /download/**=anon
 
+
         /companyLogin = anon
         /fore/** = anon
         /login = anon
@@ -59,6 +60,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         /back/test = anon
         /village = anon
         /global/fore = anon
+        /steel/fore = anon
         /gang = anon
         /village/test = anon
         /websocket = anon
@@ -100,6 +102,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         /district/** = roleOrFilter["role_3", "role_4", "role_5", "role_6", "role_7", "role_8", "role_9", "role_10"]
         /trade/** = roleOrFilter["role_3", "role_4", "role_5", "role_6", "role_7", "role_8", "role_9", "role_10"]
         /global/** = roleOrFilter["role_3", "role_4", "role_5", "role_6", "role_7", "role_8", "role_9", "role_10"]
+        /steel/** = roleOrFilter["role_3", "role_4", "role_5", "role_6", "role_7", "role_8", "role_9", "role_10"]
         /village/websocket/** = anon
         /village/syncWarnMsg/** =anon
         /** = authc

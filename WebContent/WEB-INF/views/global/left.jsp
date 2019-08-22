@@ -297,6 +297,11 @@
         </ul>
       </dd>
     </dl>
+    <dl>
+      <dt>
+        <a style="color:#fff" data-href="/global/Standard" href="javascript:void(0)" data-title="安全生产标准化"><i class="Hui-iconfont">&#xe687;</i>安全生产标准化</a>
+      </dt>
+    </dl>
     <c:if test="${userType==6||userType==3}">
       <!-------------信息推送及接受------------------------->
       <dl>

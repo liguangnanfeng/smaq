@@ -567,7 +567,7 @@
         FROM
             `t_check_tbl`
         WHERE
-            user_id = #{user_id}
+            user_id in (${userIds})
         AND flag = #{flag}
         AND del = 0
         AND STATUS = 2

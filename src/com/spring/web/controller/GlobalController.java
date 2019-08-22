@@ -2193,7 +2193,7 @@ public class GlobalController extends BaseController {
     * description: TODO 查询该范围内所有的公司信息
     * create time: 2019/8/22 16:56
     */
-    @RequestMapping(value = "check-list")//flag:3 部门抽查
+    @RequestMapping(value = "1231")//flag:3 部门抽查
     public String troubleList1(HttpServletRequest request, Model model) throws Exception {
 
         User user = getLoginUser(request);

@@ -2291,6 +2291,5 @@
             #{userId}
             )
         </if>
-        limit #{start}, 20
     </select>
 </mapper>

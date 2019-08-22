@@ -6480,6 +6480,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("list",list2);
         return "global/other/analyse/zhuChartData77";
     }
+
     @RequestMapping(value = "danger-chart-jx")
     public String dangerCharJx(HttpServletRequest request, Model model) throws ParseException {
         User user = getLoginUser(request);
@@ -6660,7 +6661,7 @@ public class GlobalController extends BaseController {
     @RequestMapping(value = "Standard")
     public String Standard(HttpServletRequest request, Model model, Integer page){
         User user = getLoginUser(request);
-        List<Map<String,Object>> list2 = tCheckItemMapper.selectBasicMessage(user.getId(), user.getUserType(), page*20);
+        List<Map<String,Object>> list2 = tCheckItemMapper.selectBasicMessage(user.getId(), user.getUserType(), 20);
         model.addAttribute("list", list2);
         return "global/other/standard-list";
     }

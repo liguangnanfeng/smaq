@@ -919,6 +919,7 @@
                T2.real_time as realTime ,
                T1.content,
                T1.files,
+               T1.recheck_file,
                T1.file_address,
                T1.status,
                T4.level,
@@ -954,6 +955,7 @@
                T2.real_time as realTime ,
                T1.content,
                T1.files,
+               T1.recheck_file,
                T1.file_address,
                T1.status,
                T4.level,
@@ -988,6 +990,7 @@
                T2.real_time as realTime ,
                T1.content,
                T1.files,
+               T1.recheck_file,
                T1.file_address,
                T1.status,
                T4.name level2,
@@ -1035,7 +1038,7 @@
         where t2.status = 2
         and t2.del = 0
         and t2.flag = #{flag}
-        and t2.user_id = #{user_id}
+        and t2.user_id in (${userIds})
     </select>
 
 
@@ -1082,7 +1085,7 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
         AND c1.flag = #{flag}
     </select>
 
@@ -1159,7 +1162,7 @@
         AND t3.control = #{control}
         AND t2.depart = #{depart}
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
     </select>
 
     <select id="zhuChartData661" resultType="Integer">
@@ -1175,7 +1178,7 @@
         AND t3.control is null
         AND t2.depart = #{depart}
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
     </select>
 
 
@@ -1192,7 +1195,7 @@
         AND t3.control = #{control}
         AND t2.check_company = #{check_company}
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
     </select>
 
     <select id="zhuChartData671" resultType="Integer">
@@ -1208,7 +1211,7 @@
         AND t3.control is null
         AND t2.check_company = #{check_company}
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
     </select>
 
 
@@ -1225,7 +1228,7 @@
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
         AND t2.depart in (${departs})
     </select>
 
@@ -1242,7 +1245,7 @@
         AND t2.del = 0
         AND t3.control is null
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
         AND t2.depart in (${departs})
     </select>
 
@@ -1260,7 +1263,7 @@
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
     </select>
 
     <select id="zhuChartData771" resultType="Integer">
@@ -1275,7 +1278,7 @@
         AND t2.del = 0
         AND t3.control is null
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
     </select>
 
 
@@ -1294,7 +1297,7 @@
         AND t1.status = 2
         AND t3.control = #{control}
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
         AND t2.depart in (${departs})
     </select>
 
@@ -1311,7 +1314,7 @@
         AND t1.status = 2
         AND t3.control is null
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
         AND t2.depart in (${departs})
     </select>
 
@@ -1328,7 +1331,7 @@
         AND t1.status = 2
         AND t3.control = #{control}
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
     </select>
 
     <select id="zhuChartData891" resultType="Integer">
@@ -1344,7 +1347,7 @@
         AND t1.status = 2
         AND t3.control is null
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
     </select>
 
 
@@ -1847,6 +1850,32 @@
         </where>
     </select>
 
+
+    <select id="findALL" parameterType="Integer" resultType="java.util.Map">
+        SELECT * FROM company_view
+        <where>
+            <if test="type==6">
+                district_id = #{userId}
+            </if>
+            <if test="type==3">
+                town_id = #{userId}
+            </if>
+            <if test="type==4">
+                village_id = #{userId}
+            </if>
+            <if test="type==10">
+                user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
+                #{userId}
+                )
+            </if>
+        </where>
+    </select>
+
+
+
+
+
+
     <select id="findTypeByGeo" resultType="Integer">
         SELECT
         count(t1.id) as count
@@ -1885,6 +1914,7 @@
         T2.real_time as realTime ,
         T1.content,
         T1.files,
+        T1.recheck_file,
         T1.file_address,
         T1.status,
         T4.level,
@@ -2197,6 +2227,7 @@
         T2.real_time as realTime ,
         T1.content,
         T1.files,
+        T1.recheck_file,
         T1.file_address,
         T1.status,
         T4.level,

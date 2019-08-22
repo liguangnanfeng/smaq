@@ -734,11 +734,8 @@
     </select>
 
 
-
-
-    <!--获取这一条检查记录是否有不合格项-->
     <select id="findCountAll" parameterType="Integer" resultType="Integer">
-        select count(*) from t_check_tbl where del = 0 and flag = 1 and depart = #{depart} and user_id = #{user_id} and type = #{type}
+        select count(*) from t_check_tbl where del = 0 and flag = 1 and depart = #{depart} and user_id in (${user_ids}) and type = #{type}
     </select>
 
 

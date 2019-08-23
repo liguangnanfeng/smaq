@@ -231,8 +231,13 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping("/tables/yjmanage_center")
     public String yjmanage_center(Model model, HttpServletRequest request) throws Exception {
-        User user = getLoginUser(request);
 
+        User user = getLoginUser(request);
+        Company c = companyMapper.selectByPrimaryKey(user.getId());
+        List<Integer> count = userService.selectCount(new CompanyListReqDTO(), user);
+
+        model.addAttribute("count", count);
+        model.addAttribute("c", c);
         model.addAttribute("userName", companyMapper.selectByPrimaryKey(user.getId()).getName());
 
         return "company/tables/yjmanage_center";

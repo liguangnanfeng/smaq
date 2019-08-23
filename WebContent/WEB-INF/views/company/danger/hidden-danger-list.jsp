@@ -210,7 +210,11 @@
                         <%--                    <td>${item[1]+item[2] }</td>--%>
                     <td>${list.realTimeStr}</td>
                     <td>${list.content }</td>
-                    <td><c:if test="${list.files!=null}">
+                    <td>
+                <script>
+                  console.log('14:32:','${list}');
+                </script>
+                    <c:if test="${list.files!=null}">
                         <button class="btn radius btn-danger size-S ml-20"
                                 onClick="showpicture(getRootPath()+'${list.files }')">
                             <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 隐患图片
@@ -441,6 +445,7 @@
         $(".div_imgp img").attr("src", src);
         $("#modal-plan").modal("show")
     }
+    console.log("14:25")
 </script>
 </body>
 </html>

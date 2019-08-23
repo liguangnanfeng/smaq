@@ -125,7 +125,6 @@
 
         </script>
         <div>
-        <input type="radio" name="co" value="222">
             <p class="contarName">${compangName}车间风险分布图
             <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a></p>
         <div class="row cl mt-15">

@@ -2209,8 +2209,9 @@ public class GlobalController extends BaseController {
         model.addAttribute("townId",townId);
         model.addAttribute("status",status);
         model.addAttribute("flag",flag);
+        model.addAttribute("dmName",dmName);
 
-        return "global/other/check-company";
+        return "global/company/danger/check-company";
     }
 
     /**
@@ -2252,7 +2253,6 @@ public class GlobalController extends BaseController {
         }
 
         // 进行判断
-
         if (setUserId(user, m)) {
             clearVillageTown(m);
 
@@ -2292,10 +2292,10 @@ public class GlobalController extends BaseController {
         model.addAttribute("t", d.getTime());
         if (user.getUserType() == 5) {
             // 表示等于5的话就将页面进行跳转
-            return "company/danger/check-list";
+            return "global/other/analyse/check-list";
         }
         // TODO 找到这个界面
-        return "village/danger/check-list";
+        return "global/other/check-list";
     }
 
 
@@ -4190,7 +4190,7 @@ public class GlobalController extends BaseController {
      * description: TODO 隐患治理记录页面 : 查询该组织下的所有公司信息
      * create time: 2019/8/23 9:20
      */
-    @RequestMapping(value = "check-all-company")//flag:3 部门抽查
+    @RequestMapping(value = "hidden-company-list")//flag:3 部门抽查
     public String allCompany(HttpServletRequest request,Model model,Integer flag, Integer status) throws Exception {
 
         User user = getLoginUser(request);
@@ -4203,7 +4203,7 @@ public class GlobalController extends BaseController {
 
         model.addAttribute("status",status);
 
-        return "global/other/check-all-company";
+        return "global/company/danger/hidden-company-list";
     }
 
 
@@ -4222,18 +4222,18 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping(value = "hidden-danger-list")
     public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status, Integer uid) {
+
         User user = userMapper.selectByPrimaryKey(uid);
-        Company company;
+
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
         model.addAttribute("userId", user.getId());
 
         List<Map> list = new ArrayList<>();
         if (flag == 1) {
-
-            list = tCheckItemMapper.selectListBystatusGeo(user.getId(), flag, user.getUserType());
+            list = tCheckItemMapper.selectListBystatus(user.getId(), flag);
             for (Map map : list) {
-                company = companyMapper.selectByPrimaryKey((Integer) map.get("userId"));
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String format = sdf.format(realTime);
@@ -4281,15 +4281,13 @@ public class GlobalController extends BaseController {
                         name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
                         tc.setCheckCompany(name);
                     }
-
                     map.put("fjgkfzr", name);
                 }
             }
         } else if (flag == 2) {
             // 表示的是行政检查
-            list = tCheckItemMapper.selectXZListBystatusGeo(user.getId(), flag, user.getUserType());
+            list = tCheckItemMapper.selectXZListBystatus(user.getId(), flag);
             for (Map map : list) {
-                company = companyMapper.selectByPrimaryKey((Integer) map.get("userId"));
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String format = sdf.format(realTime);
@@ -4300,7 +4298,7 @@ public class GlobalController extends BaseController {
                         levelId=  tLevelMapper.selectByPrimaryKey(levelId1).getLevel2();
                     }
 
-                }else if (null != map.get("industryType") && 2==map.get("industryType")){
+                }else if (null!=map.get("industryType")&&2==map.get("industryType")){
                     levelId = aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2();
                 }
 
@@ -4310,14 +4308,12 @@ public class GlobalController extends BaseController {
 
                 map.put("realTimeStr", format);
                 map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
-                map.put("companyName", company.getName());
                 // 获取
             }
         } else if (flag == 3) {
             // 表示的是部门抽查
-            list = tCheckItemMapper.selectBMCCListBystatusGeo(user.getId(), flag, user.getUserType());
+            list = tCheckItemMapper.selectBMCCListBystatus(user.getId(), flag);
             for (Map map : list) {
-                company = companyMapper.selectByPrimaryKey((Integer) map.get("userId"));
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String format = sdf.format(realTime);
@@ -4325,7 +4321,6 @@ public class GlobalController extends BaseController {
                 if(null!=map.get("industryType")&&1==map.get("industryType")){
                     map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
                 }else if (null!=map.get("industryType")&&2==map.get("industryType")){
-                    System.out.println(map.get("levelId"));
                     map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
                 }
                 map.put("fjgkfzr", company.getCharge() + company.getChargeContact());

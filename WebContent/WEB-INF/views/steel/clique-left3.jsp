@@ -113,7 +113,7 @@
          </dt>
           <dd>
               <ul>
-                  <li><a data-href="${ly }/html/editor/plan-list2.html" data-title="管理手册" href="javascript:void(0)">管理手册</a></li>
+                  <li><a data-href="${ly }/html/editor/plan-list.html" data-title="管理手册" href="javascript:void(0)">管理手册</a></li>
                   <li><a data-href="${ly }/steel/risk-list" data-title="风险辨识" href="javascript:void(0)">风险辨识</a></li>
                   <li><a data-href="${ly }/company/threeLeft?leftBasic=2" data-title="风险评估" href="javascript:void(0)">风险评估</a></li>
                   <li><a data-href="${ly }/company/safety-system/control-list" data-title="分级管控" href="javascript:void(0)">分级管控</a></li>
@@ -147,7 +147,7 @@
         <dd>
             <ul>
 			    <li><a data-href="${ly }/company/threeLeft?leftBasic=6" data-title="流程管理" href="javascript:void(0)">流程管理</a></li>
-				<li><a data-href="${ly }/company/threeLeft?leftBasic=7" data-title="流程管理" href="javascript:void(0)">运行管理</a></li>
+				<li><a data-href="${ly }/company/threeLeft?leftBasic=7" data-title="运行管理" href="javascript:void(0)">运行管理</a></li>
 				<li><a data-href="${ly }/company/study/targetassessment" data-title="履职考核" href="javascript:void(0)">履职考核</a></li>
 				<li><a data-href="${ly }/company/study/promise" data-title="承诺公示" href="javascript:void(0)">承诺公示</a></li>
             </ul>

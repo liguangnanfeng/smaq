@@ -621,6 +621,46 @@ public class CompanyController_cd extends BaseController {
         return "company/product/material-list";
     }
 
+
+
+    /**
+     * 下载资料
+     */
+    @RequestMapping(value = "downloadall")
+    public void hedownloadll(String filename, String fileurl, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        File realPath = new File(request.getServletContext().getRealPath("/"), fileurl.replace("/smaq", ""));
+        if (!realPath.exists()) {
+            response.setHeader("Content-type", "text/html;charset=UTF-8");
+            response.setContentType("text/html;charset=utf-8");
+            PrintWriter out = response.getWriter();
+            out.println("该文件不存在");
+            out.flush();
+            out.close();
+            return;
+        }
+
+        filename = URLEncoder.encode(new String(filename.getBytes("ISO-8859-1"), "UTF-8"), "UTF-8");
+        response.setContentType(request.getServletContext().getMimeType(filename));
+        response.setHeader("Content-Disposition", "attachment;filename=" + filename);
+
+        InputStream in = new FileInputStream(realPath);
+        OutputStream out = response.getOutputStream();
+        try {
+            int b;
+            while ((b = in.read()) != -1) {
+                out.write(b);
+            }
+        } finally {
+            in.close();
+            out.close();
+        }
+    }
+
+
+
+
+
     /**
      * 材料编辑
      */
@@ -950,6 +990,36 @@ public class CompanyController_cd extends BaseController {
         userService.importSequipmentExcel(result, user.getId(), file);
         writeResponse(result, response);//该方法调用如下
     }
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO 批量导入原辅材料
+     * create time: 2019/8/23 15:53
+     */
+    @RequestMapping(value = "materialsExcel", produces = "text/html;charset=utf-8")
+    public void materialsExcel(/*@RequestParam*/ MultipartFile file,Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Result result = new ResultImpl();
+        User user = getLoginUser(request);
+        userService.importMaterialsExcel(result, user.getId(), file);
+        writeResponse(result, response);//该方法调用如下
+    }
+    
+    /**
+     * create by  : 小明！！！
+     * description: TODO  批量导入主要产品
+     * create time: 2019/8/23 16:17
+     */
+    @RequestMapping(value = "mainProductExcel", produces = "text/html;charset=utf-8")
+    public void mainProductExcel(/*@RequestParam*/ MultipartFile file,Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Result result = new ResultImpl();
+        User user = getLoginUser(request);
+        userService.importMainProductExcel(result, user.getId(), file);
+        writeResponse(result, response);//该方法调用如下
+    }
+    
+    
+
+
 
     /**
      * TODO 批量导入主要设备

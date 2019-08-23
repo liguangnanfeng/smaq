@@ -44,6 +44,21 @@ public interface UserService extends Serializable {
      * (非 Javadoc) 批量导入特种设备
      */
     public void importSequipmentExcel(Result result, Integer userId, MultipartFile file) throws Exception;
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO 批量导入 原辅材料
+     * create time: 2019/8/23 15:59
+     */
+    public void importMaterialsExcel(Result result, Integer userId, MultipartFile file) throws Exception;
+
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO 批量导入主要产品
+     * create time: 2019/8/23 16:18
+     */
+    public void importMainProductExcel(Result result, Integer userId, MultipartFile file) throws Exception;
     
     /**
      * (非 Javadoc) 批量导入主要设备

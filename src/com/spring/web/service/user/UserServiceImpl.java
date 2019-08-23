@@ -71,7 +71,10 @@ public class UserServiceImpl implements UserService {
     private LightningProtectionMapper lightningProtectionMapper;
     @Autowired
     private SafetyFacilitiesMapper safetyFacilitiesMapper;
-
+    @Autowired
+    private ProductMapper productMapper;
+    @Autowired
+    private MaterialMapper materialMapper;
     @Autowired
     private CgfService cgfService;
     /** (非 Javadoc) 
@@ -862,6 +865,147 @@ public class UserServiceImpl implements UserService {
             result.setMap("message", "系统异常");
         }
     }
+
+
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO 批量导入 原辅材料
+     * create time: 2019/8/23 15:55
+     */
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    public void importMaterialsExcel(Result result, Integer userId, MultipartFile file) throws Exception {
+        if (null != file) {
+            String fileName = file.getOriginalFilename();
+            // 检查扩展名
+            String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+            if (!"xlsx".equalsIgnoreCase(fileExt)) {
+                result.setStatus("1");
+                result.setMap("message", "上传文件扩展名是不允许的扩展名。只允许xlsx格式。");
+                return;
+            }
+        } else {
+            result.setStatus("1");
+            result.setMap("message", "请选择excel文件。");
+            return;
+        }
+
+        Workbook wb = null;
+        Set<String> set = new LinkedHashSet<String>();
+        try {
+            wb = new XSSFWorkbook(file.getInputStream());
+            Sheet sheet = wb.getSheetAt(0);
+            String title = tos(sheet, 0, 0);
+            if (!"原辅材料名称".equals(title)) {
+                result.setStatus("1");
+                result.setMap("message", "此表不是原辅材料表，请重新选择");
+                return;
+            }
+
+            int totalRows = sheet.getPhysicalNumberOfRows();
+            for (int i = 1; i < totalRows; i++) {
+                Row row = sheet.getRow(i);
+                String material = tos(row, 0);//原辅材料名称
+                String annual_consumption = tos(row, 1);//年用量
+                String maximum_storage = tos(row, 2);//最大储存量
+                String state = tos(row, 3);// 物态
+                String storage_location = tos(row, 4);// 储存地点
+                String storage_method = tos(row, 5);// 储存方式
+                String remark = tos(row, 6);// 备注
+
+
+                Material item = new Material();
+
+                item.setUserId(userId);
+                item.setMaterial(material);
+                item.setAnnualConsumption(annual_consumption);
+                item.setMaximumStorage(maximum_storage);
+                item.setState(state);
+                item.setStorageLocation(storage_location);
+                item.setStorageMethod(storage_method);
+                item.setRemark(remark);
+
+                materialMapper.insert(item);
+            }
+
+            result.setMap("message", StringUtils.join(set, "<br>"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMap("message", "系统异常");
+        }
+    }
+
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO 批量导入主要产品
+     * create time: 2019/8/23 16:19
+     */
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    public void importMainProductExcel(Result result, Integer userId, MultipartFile file) throws Exception {
+        if (null != file) {
+            String fileName = file.getOriginalFilename();
+            // 检查扩展名
+            String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+            if (!"xlsx".equalsIgnoreCase(fileExt)) {
+                result.setStatus("1");
+                result.setMap("message", "上传文件扩展名是不允许的扩展名。只允许xlsx格式。");
+                return;
+            }
+        } else {
+            result.setStatus("1");
+            result.setMap("message", "请选择excel文件。");
+            return;
+        }
+
+        Workbook wb = null;
+        Set<String> set = new LinkedHashSet<String>();
+        try {
+            wb = new XSSFWorkbook(file.getInputStream());
+            Sheet sheet = wb.getSheetAt(0);
+            String title = tos(sheet, 0, 0);
+            if (!"产品名称".equals(title)) {
+                result.setStatus("1");
+                result.setMap("message", "此表不是主要产品表，请重新选择");
+                return;
+            }
+
+            int totalRows = sheet.getPhysicalNumberOfRows();
+            for (int i = 1; i < totalRows; i++) {
+                Row row = sheet.getRow(i);
+                String product_name = tos(row, 0);// 产品名称
+                String efficiency = tos(row, 1);// 生产能力
+                String lastyear_production = tos(row, 2);// 上年度产量
+                String maximum_storage = tos(row, 3);// 最大储存量
+                String storage_location = tos(row, 4);// 储存地点
+                String remark = tos(row, 5);// 备注
+
+                Product item = new Product();
+
+                item.setUserId(userId);
+                item.setProductName(product_name);
+                item.setEfficiency(efficiency);
+                item.setLastyearProduction(lastyear_production);
+                item.setMaximumStorage(maximum_storage);
+                item.setStorageLocation(storage_location);
+                item.setRemark(remark);
+
+                productMapper.insert(item);
+            }
+
+            result.setMap("message", StringUtils.join(set, "<br>"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMap("message", "系统异常");
+        }
+    }
+
+
+
+
+
 
     /**
      * (非 Javadoc) 批量导入主要设备

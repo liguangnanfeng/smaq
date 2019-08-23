@@ -2190,18 +2190,27 @@ public class GlobalController extends BaseController {
 
    /**
     * create by  : 小明！！！
-    * description: TODO 查询该范围内所有的公司信息
+    * description: TODO 隐患排查记录页面 ：查询该范围内所有的公司信息
     * create time: 2019/8/22 16:56
     */
-    @RequestMapping(value = "1231")//flag:3 部门抽查
-    public String troubleList1(HttpServletRequest request, Model model) throws Exception {
+    @RequestMapping(value = "check-company")//flag:3 部门抽查
+    public String troubleList12(HttpServletRequest request, String title, Integer type,
+                               Integer townId, Integer villageId,
+                               Integer status, Integer flag, Model model,String dmName) throws Exception {
 
         User user = getLoginUser(request);
 
         List<Map<String,Object>> map = tCheckItemMapper.findALL(user.getId(), user.getUserType());
-        model.addAttribute("map",map);
 
-        return "global/other/check-listss";
+        model.addAttribute("map",map);
+        model.addAttribute("title",title);
+        model.addAttribute("type",type);
+        model.addAttribute("villageId",villageId);
+        model.addAttribute("townId",townId);
+        model.addAttribute("status",status);
+        model.addAttribute("flag",flag);
+
+        return "global/other/check-company";
     }
 
     /**
@@ -2212,10 +2221,12 @@ public class GlobalController extends BaseController {
      */
 
     @RequestMapping(value = "check-list")//flag:3 部门抽查
-    public String troubleList1(HttpServletRequest request, String title, Integer type, String companyName,
+    public String troubleList1(HttpServletRequest request, String title, Integer type,
                                Integer townId, Integer villageId,
-                               Integer status, Integer flag, Model model,String dmName) throws Exception {
-        User user = getLoginUser(request);
+                               Integer status, Integer flag, Model model,String dmName,Integer uid) throws Exception {
+
+        User user = userMapper.selectByPrimaryKey(uid);
+
         Map<String, Object> m = new HashMap<String, Object>();
 
         if (user.getUserType() == 3) {//镇
@@ -2231,7 +2242,7 @@ public class GlobalController extends BaseController {
         m.put("title", title); // 1
         m.put("townId", townId);   // null
         m.put("villageId", villageId);  //1
-        m.put("companyName", companyName); // null
+        m.put("companyName", user.getUserName()); // null
         m.put("status", status); //状态  null
         Set set = new LinkedHashSet();
         if(Objects.equals("",dmName)){
@@ -2269,7 +2280,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("set",set);
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
-        model.addAttribute("companyName", companyName);
+        model.addAttribute("companyName", user.getUserName());
         model.addAttribute("title", title);
         model.addAttribute("status", status);
         model.addAttribute("townId", townId);
@@ -4173,6 +4184,33 @@ public class GlobalController extends BaseController {
         // TODO 找到这个界面
         return "global/other/check-list";
     }
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO 隐患治理记录页面 : 查询该组织下的所有公司信息
+     * create time: 2019/8/23 9:20
+     */
+    @RequestMapping(value = "check-all-company")//flag:3 部门抽查
+    public String allCompany(HttpServletRequest request,Model model,Integer flag, Integer status) throws Exception {
+
+        User user = getLoginUser(request);
+
+        List<Map<String,Object>> map = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+
+        model.addAttribute("map",map);
+
+        model.addAttribute("flag",flag);
+
+        model.addAttribute("status",status);
+
+        return "global/other/check-all-company";
+    }
+
+
+
+
+
+
     /**
      * TODO 隐患治理记录, 整改不合格的 新建立的页面
      * 有三种情况,企业自查 行政检查  部门抽查
@@ -4183,8 +4221,8 @@ public class GlobalController extends BaseController {
      * @return
      */
     @RequestMapping(value = "hidden-danger-list")
-    public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status) {
-        User user = getLoginUser(request);
+    public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status, Integer uid) {
+        User user = userMapper.selectByPrimaryKey(uid);
         Company company;
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);

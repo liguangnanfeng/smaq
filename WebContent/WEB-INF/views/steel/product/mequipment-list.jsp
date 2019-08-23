@@ -55,6 +55,8 @@ function pr_() {
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <span class="l">
         <a class="btn btn-primary radius" data-title="添加主要设备" data-href="${ly }/tradeclique/product/mequipment-add" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加主要设备</a>
+          <a class="btn btn-primary radius" href="${ly}/village/download?filename=主要设备设施.xlsx&fileurl=${ly}/upload/主要设备设施.xlsx">批量导入主要设备设施下载</a>
+          <button class="btn btn-primary radius" type="button" onclick="comapnyImportBoxShow()">导入主要设备</button>
         <a class="btn btn-success radius ml-10" onclick="pr_()"><i class="Hui-iconfont" style="font-size:15px;">&#xe652;</i> 打印</a>
     	<!--<button class="btn btn-success radius ml-10" type="button" onclick="majorequipmentImportBoxShow()">批量导入主要设备</button>
         <a class="btn btn-success radius ml-10" href="${ly}/company/download?filename=主要设备模板.xlsx&fileurl=${ly}/upload/majorequipment.xlsx">主要设备模板下载</a>
@@ -127,34 +129,34 @@ function pr_() {
       </table>
     </div>
   </div>
-  
-  <div id="majorequipmentImportBox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-       <div class="modal-dialog">
-           <div class="modal-content radius">
-           
-               <div class="modal-header">
-                   <h3 class="modal-title">导入主要设备</h3>
-                   <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
-               </div>
+
+  <div id="comapnyImportBox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content radius">
+
+              <div class="modal-header">
+                  <h3 class="modal-title">导入主要设备</h3>
+                  <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+              </div>
 
 
-        <div class="modal-body" id="importBox">
-                   <div class="one_txt cl">
-                       <div class="text-left" style="float: left;width: 70px;">导入文件：</div>
-                       <div class="text-right formControls">
+              <div class="modal-body" id="importBox">
+                  <div class="one_txt cl">
+                      <div class="text-left" style="float: left;width: 70px;">导入文件：</div>
+                      <div class="text-right formControls">
                            <span class="btn-upload form-group">
                                <input type="file" id="file" name="file">
                            </span>
-                       </div>
-                   </div>
-               </div>
-               <div class="modal-footer">
-                   <button class="btn btn-primary" onclick="majorequipmentImportSave()">保存</button>
-                   <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-               </div>
-           </div>
-       </div>
-   </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-primary" onclick="comapnyImportSave()">保存</button>
+                  <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+              </div>
+          </div>
+      </div>
+  </div>
 <script type="text/javascript">
 $(function() {
   $('.table-sort').dataTable({
@@ -164,6 +166,11 @@ $(function() {
     ]
     });
 });
+/*批量导入*/
+function comapnyImportBoxShow() {
+
+    $("#comapnyImportBox").modal("show");
+}
 /*删除*/
 function del(id){
   $.post(getRootPath()+"/tradeclique/product/deleteEquipment",{
@@ -177,34 +184,36 @@ function majorequipmentImportBoxShow() {
   $("#majorequipmentImportBox").modal("show");
 }
 
-function majorequipmentImportSave() {
-  var index = layer.load();
-  $.ajaxFileUpload({
-      url: getRootPath() + '/company/importMajorequipmentExcel',
-      secureuri: false, //一般设置为false
-      fileElementId: 'file',
-      dataType: 'json',
-      async: false,
-      success: function (data, status) {
-          layer.close(index);
-          var status = data.status;
-          if (status != '1') {
-            layer.alert("导入成功", {}, function (ind) {
-                layer.close(ind);
-                window.location.reload();
-            });
-          }else {
-            layer.alert(data.map.message ,{}, function (ind) {
-              layer.close(ind);
-              window.location.reload();
-             });
-          }
-      },
-      error: function (data, status, e) {
-          layer.close(index);
-          alert("导入失败！请检查数据");
-      }
-  })
+
+function comapnyImportBoxShow(flag) {
+
+    $("#comapnyImportBox").modal("show");
+}
+
+
+function comapnyImportSave() {
+    var index = layer.load();
+    $.ajaxFileUpload({
+        url: getRootPath() + '/steel/importMequipmentExcel',
+        secureuri: false, //一般设置为false
+        fileElementId: 'file',
+        dataType: 'json',
+        async: false,
+        success: function (data, status) {
+            layer.close(index);
+            var status = data.status;
+            if (status == '0') {
+                layer.alert("导入成功");
+                $("#comapnyImportBox").modal("hide");
+            }else {
+                layer.alert(data.map.message);
+            }
+        },
+        error: function (data, status, e) {
+            layer.close(index);
+            alert("导入失败！请检查数据");
+        }
+    })
 }
 
 function print_() {

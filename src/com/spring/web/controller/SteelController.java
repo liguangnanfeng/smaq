@@ -49,13 +49,6 @@ public class SteelController extends BaseController {
     @Autowired
     private HiddenPlanMapper hiddenPlanMapper;
     /**
-     *   特岗登陆首页
-     */
-    @RequestMapping("/fore")
-    public  String blogin(){
-        return "steel/blogin2";
-    }
-    /**
      * 特岗登录验证
      * @param dto
      * @param request
@@ -658,9 +651,10 @@ public class SteelController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "importMequipmentExcel", produces = "text/html;charset=utf-8")
-    public void importMequipmentExcel(Model model, HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {
+    public void importMequipmentExcel(Model model, HttpServletResponse response, @RequestParam MultipartFile file, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
-        System.out.println("123");
+        User user = getLoginUser(request);
+        exportService.ImportMequipmentSave(result, user.getId(), file);
         writeResponse(result, response);//该方法调用如下
     }
 
@@ -671,12 +665,12 @@ public class SteelController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "importProductExcel", produces = "text/html;charset=utf-8")
-    public void importtProductExcel(Model model, HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {
+    public void importtProductExcel(Model model, HttpServletResponse response, @RequestParam MultipartFile file,HttpServletRequest request) throws Exception {
+        User user = getLoginUser(request);
         Result result = new ResultImpl();
-        System.out.println("456");
+        exportService.ImportProductSave(result,user.getId(),file);
         writeResponse(result, response);//该方法调用如下
     }
-
     /**
      * 原辅材料
      *
@@ -685,9 +679,10 @@ public class SteelController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "importMarerialExcel", produces = "text/html;charset=utf-8")
-    public void importMarerialExcel(Model model, HttpServletResponse response, @RequestParam MultipartFile file, Integer userId) throws Exception {
+    public void importMarerialExcel(Model model, HttpServletResponse response, @RequestParam MultipartFile file, HttpServletRequest request) throws Exception {
+        User user = getLoginUser(request);
         Result result = new ResultImpl();
-        System.out.println("999");
+        exportService.ImportMaterialSave(result, user.getId(), file);
         writeResponse(result, response);//该方法调用如下
     }
 

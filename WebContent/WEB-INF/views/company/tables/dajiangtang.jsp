@@ -22,7 +22,8 @@
 			}
 
 			main {
-				height: 465px;
+				width:100%;
+				height: 100vw;
 				background: url(/images/companyImg/newimg/safe.jpg) no-repeat center;
 				background-size: 100% 100%;
 				position: relative;
@@ -147,6 +148,12 @@
 					<div class="com"><span class="time2">${userName}</span></div>
 			
 		</main>
+		<script>
+		var w=$('main').height();
+		$('main').height(w*0.4015625)
+
+		</script>
+
 
 		<iframe src="http://jswx.zayxy.com/index.php?user-app-login&mobile=${userName}" width="100%" height="100%" sandbox="allow-scripts" frameborder="0"  allowtransparency="true"></iframe>
 		<footer>

@@ -56,7 +56,8 @@
             position: relative;
             top: 10%;
         } main{
-            height: 477px;
+            width:100%;
+            height: 100vw;
             background: url(/images/companyImg/newimg/yj.jpg) no-repeat center;
             background-size: 100% 100%;
 <%--            margin-top: 22px;--%>
@@ -119,6 +120,11 @@
             <div class="com"><span class="time2" style="color:#64FFFF">${userName}</span></div>
 
             </main>
+            <script>
+                var w=$('main').height();
+                $('main').height(w*0.4015625)
+
+            </script>
             <div class="func">
                 <section><a href="/company/threeLeft?leftBasic=16">应急响应</a></section>
                 <section><a href="javascript:volid(0)">指挥中心</a></section>

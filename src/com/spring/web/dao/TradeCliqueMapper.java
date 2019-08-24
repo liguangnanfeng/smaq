@@ -5,6 +5,9 @@ import java.util.Map;
 
 import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.TradeClique;
+import org.apache.ibatis.annotations.Param;
+
+import javax.persistence.criteria.CriteriaBuilder;
 
 public interface TradeCliqueMapper {
     /**
@@ -56,4 +59,6 @@ public interface TradeCliqueMapper {
     int updateByPrimaryKey(TradeClique record);
     
     DynamicParameter<String, Object> selectForCliqueByUserId(Map<String, Object> m);
+
+    List<Map<String, Object>> selectCompanyByCqlib(@Param("tid") Integer tid);
 }

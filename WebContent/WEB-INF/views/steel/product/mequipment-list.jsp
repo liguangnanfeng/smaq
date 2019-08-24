@@ -12,7 +12,8 @@
 <%@ include file="/WEB-INF/inc/print.inc"%>
 <script src="${ly }/js/jquery-migrate-1.2.1.min.js"></script>
 <script src="${ly }/js/jquery.jqprint-0.3.js"></script>
-<script type="text/javascript" src="${ly}/js/H-ui.admin_v3.0/lib/layer/2.4/layer.js"></script> 
+<script type="text/javascript" src="${ly}/js/H-ui.admin_v3.0/lib/layer/2.4/layer.js"></script>
+  <script src="${ly}/js/ajaxfileupload.js"></script>
 <title>风险分级管控   隐患排查治理智能化平台</title>
 <meta name="keywords" content="风险分级管控   隐患排查治理智能化平台">
 <meta name="description" content="风险分级管控   隐患排查治理智能化平台">
@@ -42,7 +43,7 @@ function pr_() {
   </nav>
   <div class="page-container">
     <div class="text-c">
-      <form action="${ly }/tradeclique/product/mequipment-list" method="post">
+      <form action="${ly }/steel/product/mequipment-list" method="post">
         <div class="dis-ib">
           <span>名称：</span>
           <input type="text" value="${equipmentName }" name="equipmentName" class="input-text mb-5 mt-5" style="width:150px;">

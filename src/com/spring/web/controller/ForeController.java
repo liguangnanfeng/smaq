@@ -59,7 +59,81 @@ public class ForeController extends BaseController {
     public String safety(Model model, HttpServletRequest request) throws Exception {
         return "village/blogin2";
     }
+	
+	@RequestMapping("/global")
+    public String safety2(Model model, HttpServletRequest request) throws Exception {
+        return "global/blogin2";
+    }
 
+    /**
+     *   特岗登陆首页
+     */
+    @RequestMapping("/steel")
+    public  String blogin(){
+        return "steel/blogin2";
+    }
+
+	@RequestMapping("/glogin")
+    public @ResponseBody
+    Result login3(LoginReqDTO dto, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        String username = dto.getUserName();
+        String password = dto.getPassword();
+        Result result = new ResultImpl();
+        //基本验证
+        if (StringUtils.isBlank(username)) {
+            result.setStatus("1");
+            result.setMap("message", "账号不能为空。");
+            return result;
+        }
+        if (StringUtils.isBlank(password)) {
+            result.setStatus("1");
+            result.setMap("message", "密码不能为空。");
+            return result;
+        }
+
+        try {
+            User user = userMapper.selectUserByUserName(username);
+            // 判断账号是否存在
+            if (user == null) {
+                result.setStatus("1");
+                result.setMap("message", "该账号不存在。");
+                return result;
+            }
+            // 判断账号是否被冻结
+            if (!"0".equals(user.getIsFreeze())) {
+                result.setStatus("1");
+                result.setMap("message", "该账号被冻结。");
+                return result;
+            }
+
+            //处理惠山区港口的特殊账号
+            if (!user.getUserName().equals("惠山区港口")) {
+                // 判断当用户类型不是10时,提示错误
+                if (user.getUserType() == 1 || user.getUserType() == 2 || user.getUserType() == 5) {
+                    result.setStatus("1");
+                    result.setMap("message", "请用政府账号登录。");
+                    return result;
+                }
+            }
+            //使用shiro进行登录
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            token.setRememberMe(true);
+            Subject currentUser = SecurityUtils.getSubject();
+            currentUser.login(token);
+            SessionUtil.setUser(request, user);
+            result.setMap("userType", user.getUserType());
+        } catch (Exception uae) {
+            uae.printStackTrace();
+            log.info("对用户[" + username + "]进行登录验证..验证未通过,未知账户");
+            result.setStatus("1");
+            result.setMap("message", "用户名或密码不正确。");
+            return result;
+        }
+        String msg = "用户登录日志:";
+        log.debug(msg + "[" + username + "]" + "登录成功");
+        return result;
+    }
     /**
      * 登录页面
      */

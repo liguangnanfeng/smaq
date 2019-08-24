@@ -1,6 +1,8 @@
 package com.spring.web.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.spring.web.BaseController;
+import com.spring.web.dao.HiddenPlanMapper;
 import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.*;
@@ -10,8 +12,10 @@ import com.spring.web.service.cgf.CgfService;
 import com.spring.web.service.user.UserService;
 import com.spring.web.tobject.cgf.CompanyListReqDTO;
 import com.spring.web.tobject.user.LoginReqDTO;
+import com.spring.web.util.DateConvertUtil;
 import com.spring.web.util.SessionUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -21,13 +25,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/steel")
@@ -40,7 +46,8 @@ public class SteelController extends BaseController {
     private UserService userService;
     @Autowired
     private CgfService cgfService;
-
+    @Autowired
+    private HiddenPlanMapper hiddenPlanMapper;
     /**
      *   特岗登陆首页
      */
@@ -621,6 +628,1330 @@ public class SteelController extends BaseController {
                 return "company/safety-system/risk-list1";
             }
         }
+    }
+    /**
+     * 行业端——集团企业——主要设备设施——页面
+     */
+    @RequestMapping("product/mequipment-list")
+    public String mainEquipmentList(Model model, HttpServletRequest request, String equipmentName) throws Exception {
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
+        //setUserId(user, m);
+        m.put("tradeId", user.getId());
+        List<Integer> userId = null;
+        userId = companyMapper.selectByCompany_trade(m);
+        userId.add(user.getId());
+        m.put("userIds", StringUtils.join(userId, ","));
+        //log.error(m.toString());
+
+        m.put("equipmentName", equipmentName);
+        model.addAttribute("list", mequipmentMapper.selectByUserIdClique(m));
+        model.addAttribute("equipmentName", equipmentName);
+        return "steel/product/mequipment-list";
+    }
+
+    /**
+     *主要设备
+     *
+     * @param file
+     * @param
+     * @throws Exception
+     */
+    @RequestMapping(value = "importMequipmentExcel", produces = "text/html;charset=utf-8")
+    public void importMequipmentExcel(Model model, HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {
+        Result result = new ResultImpl();
+        System.out.println("123");
+        writeResponse(result, response);//该方法调用如下
+    }
+
+    /**
+     * 产品
+     * @param file
+     * @param
+     * @throws Exception
+     */
+    @RequestMapping(value = "importProductExcel", produces = "text/html;charset=utf-8")
+    public void importtProductExcel(Model model, HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {
+        Result result = new ResultImpl();
+        System.out.println("456");
+        writeResponse(result, response);//该方法调用如下
+    }
+
+    /**
+     * 原辅材料
+     *
+     * @param file
+     * @param
+     * @throws Exception
+     */
+    @RequestMapping(value = "importMarerialExcel", produces = "text/html;charset=utf-8")
+    public void importMarerialExcel(Model model, HttpServletResponse response, @RequestParam MultipartFile file, Integer userId) throws Exception {
+        Result result = new ResultImpl();
+        System.out.println("999");
+        writeResponse(result, response);//该方法调用如下
+    }
+
+    /**
+     * 为response提供Json格式的返回数据
+     */
+    public void writeResponse(Object obj, HttpServletResponse response) {
+        try {
+            response.setContentType("text/html;charset=utf-8");//设置编码
+            String str = JSON.toJSONString(obj);
+            PrintWriter writer = response.getWriter();
+            writer.write(str);
+            writer.flush();
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 安全生产标准化
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping("company-list1")
+    public String selectCompanyByCqlib1(Model model, HttpServletRequest request){
+        User user = getLoginUser(request);
+        List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
+        model.addAttribute("list", list1);
+        return "steel/other/company-list1";
+    }
+
+    /**
+     * 检查设置设施
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping("company-list2")
+    public String selectCompanyByCqlib2(Model model, HttpServletRequest request){
+        User user = getLoginUser(request);
+        List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
+        model.addAttribute("list", list1);
+        return "steel/other/company-list2";
+    }
+
+    /**
+     *隐患排查记录
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping("company-list3")
+    public String selectCompanyByCqlib3(Model model, HttpServletRequest request){
+        User user = getLoginUser(request);
+        List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
+        model.addAttribute("list", list1);
+        return "steel/other/company-list3";
+    }
+
+    /**
+     *隐患治理记录
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping("company-list4")
+    public String selectCompanyByCqlib4(Model model, HttpServletRequest request){
+        User user = getLoginUser(request);
+        List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
+        model.addAttribute("list", list1);
+        return "steel/other/company-list4";
+    }
+
+    /**
+     *排查数据分析
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping("company-list5")
+    public String selectCompanyByCqlib5(Model model, HttpServletRequest request){
+        User user = getLoginUser(request);
+        List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
+        model.addAttribute("list", list1);
+        return "steel/other/company-list5";
+    }
+
+    /**
+     *隐患数据分析
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping("company-list6")
+    public String selectCompanyByCqlib6(Model model, HttpServletRequest request){
+        User user = getLoginUser(request);
+        List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
+        model.addAttribute("list", list1);
+        return "steel/other/company-list6";
+    }
+
+    /**
+     *治理数据分析
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping("company-list7")
+    public String selectCompanyByCqlib7(Model model, HttpServletRequest request){
+        User user = getLoginUser(request);
+        List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
+        model.addAttribute("list", list1);
+        return "steel/other/company-list7";
+    }
+
+    /***
+     * 查询具体企业的标准化
+     * @param parentId
+     * @param flag
+     * @param request
+     * @param model
+     * @param sort
+     * @return
+     */
+    @RequestMapping(value = "/findAll")
+    public String findAll(Integer parentId, Integer flag, HttpServletRequest request, Model model, Integer sort, Integer userId) {
+        User user = getLoginUser(request);
+        if (null == sort) {
+            sort = 1;
+        }
+        HashMap<String, Object> map = new HashMap<>();
+
+        map.put("userId", user.getId());
+        map.put("parentId", parentId);
+        map.put("flag", flag);
+
+        List<TSafetyStandard> TSafetyStandardlist = tSafetyStandardMapper.findAll(map);
+
+        // 判断是否有顺序,有书序就按照顺序来,没有就是倒序
+        model.addAttribute("sort", sort);
+        model.addAttribute("companyName", companyMapper.selectByPrimaryKey(userId).getName());
+        model.addAttribute("list", TSafetyStandardlist);
+        return "company/tables/tab-biaozhun2";
+    }
+    /**
+     * TODO 隐患排查治理板块 => 检查设置实施中首页表显示车间
+     * 是根据conpanyManual这张表中的数据车间数据进行查询
+     * 跳转到新一轮的页面进行修改
+     *
+     * @param request 请求
+     * @param model   存储域
+     * @param flag    检查方式 1. 企业自查  2 行政检查 3 部门抽查
+     * @param status
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping(value = "model-list-main")
+    public String modelListMain(HttpServletRequest request, Model model, Integer flag, Integer status, Integer plan, Integer userId) throws ParseException {
+        Company company = companyMapper.selectByPrimaryKey(userId);
+
+        Map<String, Object> map1 = new LinkedHashMap<String, Object>();
+        map1.put("level1",company.getName());
+
+        List<Map<String, Object>> jiChuItem = new ArrayList<>();
+        jiChuItem.add(map1);
+        jiChuItem.addAll(aCompanyManualMapper.findJiChuItem(company.getUserId(), "基础管理"));
+
+        Map<String, Object> map2 = new LinkedHashMap<String, Object>();
+        map2.put("level1", company.getName());
+        List<Map<String, Object>> XianChangItem = new ArrayList<>();
+        XianChangItem.add(map2);
+        XianChangItem.addAll(aCompanyManualMapper.findJiChuItem(company.getUserId(), "现场管理"));
+
+        for (Map<String, Object> XianChangMap : XianChangItem) {
+            Map<Integer, Integer> Xianmap = new LinkedHashMap<Integer, Integer>();
+            Xianmap.put(5, 0);
+            Xianmap.put(1, 0);
+            Xianmap.put(2, 0);
+            /*Xianmap.put(3, 0);*/
+            Xianmap.put(4, 0);
+            String level1 = (String) XianChangMap.get("level1");
+            List<Integer> Xiantypes = tModelMapper.selecttype(level1, company.getUserId(), 2, flag);
+            for (Integer integer : Xiantypes) {
+                Xianmap.put(integer, 1);
+            }
+            XianChangMap.put("array", Xianmap);
+            Integer count =  tModelMapper.selectDangerCountByDepartAndUserId(level1, company.getUserId(),2);
+            if(null==count){
+                XianChangMap.put("count", 0);
+            }else{
+                XianChangMap.put("count", count);
+            }
+
+        }
+
+        for (Map<String, Object> jiChuMap: jiChuItem) {
+            Map<Integer, Integer> Jimap = new LinkedHashMap<Integer, Integer>();
+            Jimap.put(5, 0);
+            Jimap.put(1, 0);
+            Jimap.put(2, 0);
+            /*Jimap.put(3, 0);*/
+            Jimap.put(4, 0);
+            String level1 = (String) jiChuMap.get("level1");
+            List<Integer> Jitypes = tModelMapper.selecttype(level1, company.getUserId(), 1, flag);
+            for (Integer integer : Jitypes) {
+                Jimap.put(integer, 1);
+            }
+            Integer count =  tModelMapper.selectDangerCountByDepartAndUserId(level1, company.getUserId(),1);
+            if(null==count){
+                jiChuMap.put("count", 0);
+            }else{
+                jiChuMap.put("count", count);
+            }
+
+            jiChuMap.put("array", Jimap);
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(company.getUserId());
+
+        List<Map<String, Object>> list1 = hiddenPlanMapper.selectCountAll(company.getUserId());
+
+        List<Map<String, Object>> hiddenPlanList = hiddenPlanMapper.findDpid(0,company.getUserId());
+
+        if (hiddenPlanList.size() == 0){
+            HiddenPlan hiddenPlan = new HiddenPlan();
+            hiddenPlan.setUid(company.getUserId());
+            hiddenPlan.setDpid(0);
+            hiddenPlan.setUpdate_time(new Date());
+            hiddenPlan.setCreate_time(new Date());
+            hiddenPlan.setSyn_month(0);
+            hiddenPlan.setSyn_year(0);
+            hiddenPlan.setSyn_ratio("0:0");
+            hiddenPlan.setEve_month(0);
+            hiddenPlan.setEve_year(0);
+            hiddenPlan.setEve_ratio("0:0");
+            hiddenPlan.setReg_month(0);
+            hiddenPlan.setReg_year(0);
+            hiddenPlan.setReg_ratio("0:0");
+            hiddenPlan.setSea_month(0);
+            hiddenPlan.setSea_year(0);
+            hiddenPlan.setSea_ratio("0:0");
+            hiddenPlan.setEls_month(0);
+            hiddenPlan.setEls_year(0);
+            hiddenPlan.setEls_ratio("0:0");
+            hiddenPlan.setBas_month(0);
+            hiddenPlan.setBas_year(0);
+            hiddenPlan.setBas_ratio("0:0");
+            hiddenPlan.setTotal_count(0);
+            hiddenPlan.setTotal_ratio("0:0");
+
+            Integer a = hiddenPlanMapper.insert(hiddenPlan);
+
+            List<Map<String, Object>> hiddenPlanList1 = hiddenPlanMapper.findDpid(0,company.getUserId());
+
+            model.addAttribute("hiddenPlanList",hiddenPlanList1);
+        }else {
+
+            model.addAttribute("hiddenPlanList",hiddenPlanList);
+        }
+
+        model.addAttribute("data",sdf.format(new Date()));
+        model.addAttribute("list", list);
+        model.addAttribute("flag", flag);
+        model.addAttribute("status", status);
+        model.addAttribute("jiChuItem", jiChuItem);
+        model.addAttribute("xianChangItem", XianChangItem);
+        model.addAttribute("companyName", company.getName());
+        model.addAttribute("plan", plan);
+        model.addAttribute("list1",list1);
+        model.addAttribute("name","合计");
+        model.addAttribute("userId", userId);
+        return "steel/check/model-list-main";
+
+    }
+    /**
+     * TODO 检查设置与实施中行政检查/部门抽查 显示检查记录(2019/7/5)
+     *
+     * @return
+     */
+    @RequestMapping(value = "model-list-cx2")
+    public String modelListCX2(Integer flag, Integer type, Integer template, HttpServletRequest request, Model model, Integer status, Integer userId) {
+
+        User user = userMapper.selectByPrimaryKey(userId);
+        model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("flag", flag);
+        model.addAttribute("template", template);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("flag", flag);
+
+        status = status == null ? 2 : status;
+        m.put("status", status);
+        if (setUserId(user, m)) {
+            clearVillageTown(m);
+            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+
+            model.addAttribute("list", list);
+
+            Integer sum = 0;
+            for (int i = 0; i < list.size(); i++) {
+                sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
+            }
+            model.addAttribute("sum", sum);
+        }
+        model.addAttribute("userId", userId);
+        return "steel/check/model-list-cx";
+    }
+    /**
+     * 检查历史
+     * TODO 排查治理记录 隐患排查记录(只需要已经检查过的,没有不合格记录的)
+     * user. userType : 管理类型  1 超管 2普管 3镇 4 村 5 企业 6区县 7市 8省
+     */
+    @RequestMapping(value = "check-list")//flag:3 部门抽查
+    public String troubleList1(HttpServletRequest request, String title, Integer type, String companyName,
+                               Integer townId, Integer villageId,
+                               Integer status, Integer flag, Model model,String dmName, Integer userId) throws Exception {
+        User user = userMapper.selectByPrimaryKey(userId);
+        Map<String, Object> m = new HashMap<String, Object>();
+
+        if (user.getUserType() == 3) {//镇
+            model.addAttribute("villageL", villageMapper.selectListByTown(m));
+        }
+        if (user.getUserType() == 6) {//区
+            model.addAttribute("townL", townMapper.selectListByDistrict(m));
+        }
+
+        // 向map集合进行存储
+        m.put("type", type);  //
+        m.put("flag", flag);  // 1
+        m.put("title", title); // 1
+        m.put("townId", townId);   // null
+        m.put("villageId", villageId);  //1
+        m.put("companyName", companyName); // null
+        m.put("status", status); //状态  null
+        Set set = new LinkedHashSet();
+        if(Objects.equals("",dmName)){
+
+        }else{
+            m.put("dmName",dmName);
+        }
+
+        // 进行判断
+
+        if (setUserId(user, m)) {
+            clearVillageTown(m);
+
+            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            //List<Map<String, Object>> list = tCheckMapper.selectList3(m);
+
+            Integer sum = 0;
+            for (int i = 0; i < list.size(); i++) {
+                DynamicParameter<String, Object> id = tCheckMapper.selectCompany((Integer) list.get(i).get("id"));
+                list.get(i).put("listM",id);
+                sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
+
+            }
+            model.addAttribute("sum", sum);
+            model.addAttribute("list", list);
+
+
+            m.put("dmName",null);
+            List<Map<String, Object>> list2 = tCheckMapper.selectList(m);
+            for (int i = 0; i < list2.size(); i++) {
+                set.add(list2.get(i).get("depart"));
+            }
+
+        }
+        model.addAttribute("set",set);
+        model.addAttribute("type", type);
+        model.addAttribute("flag", flag);
+        model.addAttribute("companyName", companyName);
+        model.addAttribute("title", title);
+        model.addAttribute("status", status);
+        model.addAttribute("townId", townId);
+        model.addAttribute("villageId", villageId);
+        model.addAttribute("dmName",dmName);
+        Date d = new Date();
+        String x = DateFormatUtils.format(d, "yyyy-MM-dd");
+        d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
+        model.addAttribute("t", d.getTime());
+        model.addAttribute("userId", userId);
+        if (user.getUserType() == 5) {
+            // 表示等于5的话就将页面进行跳转
+            return "steel/check/check-list";
+        }
+        // TODO 找到这个界面
+        return "village/danger/check-list";
+    }
+    /**
+     * TODO 隐患治理记录, 整改不合格的 新建立的页面
+     * 有三种情况,企业自查 行政检查  部门抽查
+     *
+     * @param request 请求
+     * @param flag    方式
+     * @param status  状态
+     * @return
+     */
+    @RequestMapping(value = "hidden-danger-list")
+    public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status, Integer userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        Company company = companyMapper.selectByPrimaryKey(userId);
+        model.addAttribute("flag", flag);
+        model.addAttribute("status", status);
+        model.addAttribute("userId", user.getId());
+
+        List<Map> list = new ArrayList<>();
+        if (flag == 1) {
+
+            list = tCheckItemMapper.selectListBystatus(user.getId(), flag);
+
+            for (Map map : list) {
+                Date realTime = (Date) map.get("realTime");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                String format = sdf.format(realTime);
+                String level = (String) map.get("level");
+                if (null != level && "红色".equals(level)) {
+                    map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
+                }
+                map.put("realTimeStr", format);
+
+                if("全公司".equals(map.get("depart"))){
+                    Integer checkId = (Integer) map.get("checkId");
+                    map.put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
+                    Integer industryType = (Integer) map.get("industryType");
+                    if(null!=industryType&&1==industryType){
+                        map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                    }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                        map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                    }
+                }
+
+                if(null==map.get("fjgkfzr")||"".equals(map.get("fjgkfzr"))){
+                    String name = "";
+                    TCheck tc = tCheckMapper.selectByPrimaryKey((Integer) map.get("checkId"));
+                    // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
+                    List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId((Integer)map.get("checkItemId"));
+                    if (null != integers && integers.size() > 0) {
+                        // 这里进行名称的获取,进行全部循环,获取数据的方式,在数据库中进行查询
+                        List<String> list1 = new ArrayList<String>();
+                        for (Integer integer : integers) {
+                            if (null != integer) {
+                                ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(integer);
+                                if (null != aCompanyManual && null != aCompanyManual.getFjgkfzr()) {
+                                    list1.add(aCompanyManual.getFjgkfzr());
+                                }
+                            }
+                        }
+                        if (list1.size() == 0) {
+                            name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                            tc.setCheckCompany(name);
+                        } else {
+                            name = list1.get(0);
+                            tc.setCheckCompany(name);
+                        }
+                    } else {
+                        name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                        tc.setCheckCompany(name);
+                    }
+                    map.put("fjgkfzr", name);
+                }
+            }
+        } else if (flag == 2) {
+            // 表示的是行政检查
+            list = tCheckItemMapper.selectXZListBystatus(user.getId(), flag);
+            for (Map map : list) {
+                Date realTime = (Date) map.get("realTime");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                String format = sdf.format(realTime);
+                String levelId ="";
+                if(null!=map.get("industryType")&&1==map.get("industryType")){
+                    Integer levelId1 = (Integer) map.get("levelId");
+                    if(null!=levelId1){
+                        levelId=  tLevelMapper.selectByPrimaryKey(levelId1).getLevel2();
+                    }
+
+                }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                    levelId = aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2();
+                }
+
+                if(StringUtils.isBlank(levelId)){
+                    map.put("level2",levelId);
+                }
+
+                map.put("realTimeStr", format);
+                map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
+                // 获取
+            }
+        } else if (flag == 3) {
+            // 表示的是部门抽查
+            list = tCheckItemMapper.selectBMCCListBystatus(user.getId(), flag);
+            for (Map map : list) {
+                Date realTime = (Date) map.get("realTime");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                String format = sdf.format(realTime);
+                //  String level = (String) map.get("level");
+                if(null!=map.get("industryType")&&1==map.get("industryType")){
+                    map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                    map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                }
+                map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
+                map.put("realTimeStr", format);
+            }
+        }
+        String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("host", host);
+        model.addAttribute("list", list);
+        model.addAttribute("userId", user.getId());
+        return "steel/check/hidden-danger-list";
+    }
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO 排查数据分析页面
+     * create time: 2019/8/13 11:02
+     */
+    @RequestMapping(value = "jx-analysis")
+    public String jxAnalysis(HttpServletRequest request,Model model,Integer flag, Integer userId){
+
+        User user = userMapper.selectByPrimaryKey(userId);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i <list.size() ; i++) {
+            if(i == list.size()-1){
+                if (null == list.get(i).get("name")){
+                    sb.append("'").append(company.getName()).append("'");
+                }else {
+                    sb.append("'").append(list.get(i).get("name")).append("'");
+                }
+            }else {
+                if (null == list.get(i).get("name")){
+                    sb.append("'").append(company.getName()).append("',");
+                }else {
+                    sb.append("'").append(list.get(i).get("name")).append("',");
+                }
+            }
+
+        }
+
+        if (null == flag){
+            flag = 1;
+        }
+
+        Integer number1 = tCheckItemMapper.selectHiddenSources(1,String.valueOf(user.getId())); // 企业自查
+
+        Integer number2 = tCheckItemMapper.selectHiddenSources(2,String.valueOf(user.getId())); // 行政检查
+
+        Integer number3 = tCheckItemMapper.selectHiddenSources(3,String.valueOf(user.getId())); // 第三方检查
+
+        Integer count = 0;
+        Integer a = 0;
+        Integer b = 0;
+        Integer c = 0;
+        Integer d = 0;
+        Integer e = 0;
+        Integer f = 0;
+        Integer g = 0;
+        Integer h = 0;
+        Integer i = 0;
+        Integer j = 0;
+        Integer k = 0;
+        Integer l = 0;
+        Integer m = 0;
+        Integer n = 0;
+
+        if (flag == 1){
+            a = tCheckItemMapper.zhuChartData78("生产工艺",flag,String.valueOf(user.getId()),sb.toString()); // 生产工艺 隐患数据
+
+            b = tCheckItemMapper.zhuChartData78("设备设施",flag,String.valueOf(user.getId()),sb.toString()); // 设备设施 隐患数据
+
+            c = tCheckItemMapper.zhuChartData78("特种设备",flag,String.valueOf(user.getId()),sb.toString()); // 特种设备 隐患数据
+
+            d = tCheckItemMapper.zhuChartData78("消防安全",flag,String.valueOf(user.getId()),sb.toString()); // 消防安全 隐患数据
+
+            e = tCheckItemMapper.zhuChartData78("用电安全",flag,String.valueOf(user.getId()),sb.toString()); // 用电安全 隐患数据
+
+            f = tCheckItemMapper.zhuChartData78("行为环境",flag,String.valueOf(user.getId()),sb.toString()); // 行为环境 隐患数据
+
+            g = tCheckItemMapper.zhuChartData78("公辅设备",flag,String.valueOf(user.getId()),sb.toString()); // 公辅设备 隐患数据
+
+            h = tCheckItemMapper.zhuChartData78("危化管理",flag,String.valueOf(user.getId()),sb.toString()); // 危化管理 隐患数据
+
+            i = tCheckItemMapper.zhuChartData78("基础管理",flag,String.valueOf(user.getId()),sb.toString()); // 基础管理 隐患数据
+
+            j = tCheckItemMapper.zhuChartData78("防雷静电",flag,String.valueOf(user.getId()),sb.toString()); // 防雷静电 隐患数据
+
+            k = tCheckItemMapper.zhuChartData78("安全设施",flag,String.valueOf(user.getId()),sb.toString()); // 安全设施 隐患数据
+
+            l = tCheckItemMapper.zhuChartData78("职业卫生",flag,String.valueOf(user.getId()),sb.toString()); // 职业卫生 隐患数据
+
+            m = tCheckItemMapper.zhuChartData78("生产现场",flag,String.valueOf(user.getId()),sb.toString()); // 生产现场 隐患数据
+
+            n = tCheckItemMapper.zhuChartData781(flag,String.valueOf(user.getId()),sb.toString()); // 其他 隐患数据
+
+        }else {
+
+            a = tCheckItemMapper.zhuChartData77("生产工艺",flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
+
+            b = tCheckItemMapper.zhuChartData77("设备设施",flag,String.valueOf(user.getId())); // 设备设施 隐患数据
+
+            c = tCheckItemMapper.zhuChartData77("特种设备",flag,String.valueOf(user.getId())); // 特种设备 隐患数据
+
+            d = tCheckItemMapper.zhuChartData77("消防安全",flag,String.valueOf(user.getId())); // 消防安全 隐患数据
+
+            e = tCheckItemMapper.zhuChartData77("用电安全",flag,String.valueOf(user.getId())); // 用电安全 隐患数据
+
+            f = tCheckItemMapper.zhuChartData77("行为环境",flag,String.valueOf(user.getId())); // 行为环境 隐患数据
+
+            g = tCheckItemMapper.zhuChartData77("公辅设备",flag,String.valueOf(user.getId())); // 公辅设备 隐患数据
+
+            h = tCheckItemMapper.zhuChartData77("危化管理",flag,String.valueOf(user.getId())); // 危化管理 隐患数据
+
+            i = tCheckItemMapper.zhuChartData77("基础管理",flag,String.valueOf(user.getId())); // 基础管理 隐患数据
+
+            j = tCheckItemMapper.zhuChartData77("防雷静电",flag,String.valueOf(user.getId())); // 防雷静电 隐患数据
+
+            k = tCheckItemMapper.zhuChartData77("安全设施",flag,String.valueOf(user.getId())); // 安全设施 隐患数据
+
+            l = tCheckItemMapper.zhuChartData77("职业卫生",flag,String.valueOf(user.getId())); // 职业卫生 隐患数据
+
+            m = tCheckItemMapper.zhuChartData77("生产现场",flag,String.valueOf(user.getId())); // 生产现场 隐患数据
+
+            n = tCheckItemMapper.zhuChartData771(flag,String.valueOf(user.getId())); // 其他 隐患数据
+        }
+
+        model.addAttribute("a",a);
+        model.addAttribute("b",b);
+        model.addAttribute("c",c);
+        model.addAttribute("d",d);
+        model.addAttribute("e",e);
+        model.addAttribute("f",f);
+        model.addAttribute("g",g);
+        model.addAttribute("h",h);
+        model.addAttribute("i",i);
+        model.addAttribute("j",j);
+        model.addAttribute("k",k);
+        model.addAttribute("l",l);
+        model.addAttribute("m",m);
+        model.addAttribute("n",n);
+
+        count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
+
+        model.addAttribute("count",count);
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if (null != count && 0 != count) {
+
+            if (null != a && 0 != a) {
+                String str = df.format((float) a / count);
+                model.addAttribute("a1",str);
+
+            } else {
+                model.addAttribute("a1","0.00");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != b && 0 != b) {
+                String str = df.format((float) b / count);
+                model.addAttribute("b1",str);
+
+            } else {
+                model.addAttribute("b1","0.00");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != c && 0 != c) {
+                String str = df.format((float) c / count);
+                model.addAttribute("c1",str);
+
+            } else {
+                model.addAttribute("c1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != d && 0 != d) {
+                String str = df.format((float) d / count);
+                model.addAttribute("d1",str);
+
+            } else {
+                model.addAttribute("d1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != e && 0 != e) {
+                String str = df.format((float) e / count);
+                model.addAttribute("e1",str);
+
+            } else {
+                model.addAttribute("e1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != f && 0 != f) {
+                String str = df.format((float) f / count);
+                model.addAttribute("f1",str);
+
+            } else {
+                model.addAttribute("f1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != g && 0 != g) {
+                String str = df.format((float) g / count);
+                model.addAttribute("g1",str);
+
+            } else {
+                model.addAttribute("g1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != h && 0 != h) {
+                String str = df.format((float) h / count);
+                model.addAttribute("h1",str);
+
+            } else {
+                model.addAttribute("h1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != i && 0 != i) {
+                String str = df.format((float) i / count);
+                model.addAttribute("i1",str);
+
+            } else {
+                model.addAttribute("i1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != j && 0 != j) {
+                String str = df.format((float) j / count);
+                model.addAttribute("j1",str);
+
+            } else {
+                model.addAttribute("j1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != k && 0 != k) {
+                String str = df.format((float) k / count);
+                model.addAttribute("k1",str);
+
+            } else {
+                model.addAttribute("k1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != l && 0 != l) {
+                String str = df.format((float) l / count);
+                model.addAttribute("l1",str);
+
+            } else {
+                model.addAttribute("l1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != m && 0 != m) {
+                String str = df.format((float) m / count);
+                model.addAttribute("m1",str);
+
+            } else {
+                model.addAttribute("m1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != n && 0 != n) {
+                String str = df.format((float) n / count);
+                model.addAttribute("n1",str);
+
+            } else {
+                model.addAttribute("n1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+        }else {
+            model.addAttribute("a1","0.00");
+            model.addAttribute("b1","0.00");
+            model.addAttribute("c1","0.00");
+            model.addAttribute("d1","0.00");
+            model.addAttribute("e1","0.00");
+            model.addAttribute("f1","0.00");
+            model.addAttribute("g1","0.00");
+            model.addAttribute("h1","0.00");
+            model.addAttribute("i1","0.00");
+            model.addAttribute("j1","0.00");
+            model.addAttribute("k1","0.00");
+            model.addAttribute("l1","0.00");
+            model.addAttribute("m1","0.00");
+            model.addAttribute("n1","0.00");
+
+        }
+
+        model.addAttribute("number1",number1);
+        model.addAttribute("number2",number2);
+        model.addAttribute("number3",number3);
+        model.addAttribute("flag",flag);
+
+        return "company/danger/jx-analysis";
+    }
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO 隐患数据分析
+     * create time: 2019/8/13 14:34
+     */
+    @RequestMapping(value = "yh-analysis")
+    public String yhAnalysis(HttpServletRequest request, Model model, Integer flag, Integer userId){
+
+        User user = userMapper.selectByPrimaryKey(userId);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i <list.size() ; i++) {
+            if(i == list.size()-1){
+                if (null == list.get(i).get("name")){
+                    sb.append("'").append(company.getName()).append("'");
+                }else {
+                    sb.append("'").append(list.get(i).get("name")).append("'");
+                }
+            }else {
+                if (null == list.get(i).get("name")){
+                    sb.append("'").append(company.getName()).append("',");
+                }else {
+                    sb.append("'").append(list.get(i).get("name")).append("',");
+                }
+            }
+
+        }
+
+        if (null == flag){
+            flag = 1;
+        }
+
+        Integer number3 = tCheckItemMapper.findTypeByMap(String.valueOf(user.getId()),3); // 一般隐患
+        Integer number2 = tCheckItemMapper.findTypeByMap(String.valueOf(user.getId()),2); // 重大隐患
+        Integer number1 = tCheckItemMapper.findTypeByMap(String.valueOf(user.getId()),1); // 较大隐患
+
+        model.addAttribute("number1",number1);
+        model.addAttribute("number2",number2);
+        model.addAttribute("number3",number3);
+
+        Integer count = 0;
+        Integer a = 0;
+        Integer b = 0;
+        Integer c = 0;
+        Integer d = 0;
+        Integer e = 0;
+        Integer f = 0;
+        Integer g = 0;
+        Integer h = 0;
+        Integer i = 0;
+        Integer j = 0;
+        Integer k = 0;
+        Integer l = 0;
+        Integer m = 0;
+        Integer n = 0;
+        if (flag == 1){
+
+            a = tCheckItemMapper.zhuChartData88("生产工艺",flag,String.valueOf(user.getId()),sb.toString()); // 生产工艺 隐患数据
+
+            b = tCheckItemMapper.zhuChartData88("设备设施",flag,String.valueOf(user.getId()),sb.toString()); // 设备设施 隐患数据
+
+            c = tCheckItemMapper.zhuChartData88("特种设备",flag,String.valueOf(user.getId()),sb.toString()); // 特种设备 隐患数据
+
+            d = tCheckItemMapper.zhuChartData88("消防安全",flag,String.valueOf(user.getId()),sb.toString()); // 消防安全 隐患数据
+
+            e = tCheckItemMapper.zhuChartData88("用电安全",flag,String.valueOf(user.getId()),sb.toString()); // 用电安全 隐患数据
+
+            f = tCheckItemMapper.zhuChartData88("行为环境",flag,String.valueOf(user.getId()),sb.toString()); // 行为环境 隐患数据
+
+            g = tCheckItemMapper.zhuChartData88("公辅设备",flag,String.valueOf(user.getId()),sb.toString()); // 公辅设备 隐患数据
+
+            h = tCheckItemMapper.zhuChartData88("危化管理",flag,String.valueOf(user.getId()),sb.toString()); // 危化管理 隐患数据
+
+            i = tCheckItemMapper.zhuChartData88("基础管理",flag,String.valueOf(user.getId()),sb.toString()); // 基础管理 隐患数据
+
+            j = tCheckItemMapper.zhuChartData88("防雷静电",flag,String.valueOf(user.getId()),sb.toString()); // 防雷静电 隐患数据
+
+            k = tCheckItemMapper.zhuChartData88("安全设施",flag,String.valueOf(user.getId()),sb.toString()); // 安全设施 隐患数据
+
+            l = tCheckItemMapper.zhuChartData88("职业卫生",flag,String.valueOf(user.getId()),sb.toString()); // 职业卫生 隐患数据
+
+            m = tCheckItemMapper.zhuChartData88("生产现场",flag,String.valueOf(user.getId()),sb.toString()); // 生产现场 隐患数据
+
+            n = tCheckItemMapper.zhuChartData881(flag,String.valueOf(user.getId()),sb.toString()); // 其他 隐患数据
+
+        }else {
+
+            a = tCheckItemMapper.zhuChartData89("生产工艺",flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
+
+            b = tCheckItemMapper.zhuChartData89("设备设施",flag,String.valueOf(user.getId())); // 设备设施 隐患数据
+
+            c = tCheckItemMapper.zhuChartData89("特种设备",flag,String.valueOf(user.getId())); // 特种设备 隐患数据
+
+            d = tCheckItemMapper.zhuChartData89("消防安全",flag,String.valueOf(user.getId())); // 消防安全 隐患数据
+
+            e = tCheckItemMapper.zhuChartData89("用电安全",flag,String.valueOf(user.getId())); // 用电安全 隐患数据
+
+            f = tCheckItemMapper.zhuChartData89("行为环境",flag,String.valueOf(user.getId())); // 行为环境 隐患数据
+
+            g = tCheckItemMapper.zhuChartData89("公辅设备",flag,String.valueOf(user.getId())); // 公辅设备 隐患数据
+
+            h = tCheckItemMapper.zhuChartData89("危化管理",flag,String.valueOf(user.getId())); // 危化管理 隐患数据
+
+            i = tCheckItemMapper.zhuChartData89("基础管理",flag,String.valueOf(user.getId())); // 基础管理 隐患数据
+
+            j = tCheckItemMapper.zhuChartData89("防雷静电",flag,String.valueOf(user.getId())); // 防雷静电 隐患数据
+
+            k = tCheckItemMapper.zhuChartData89("安全设施",flag,String.valueOf(user.getId())); // 安全设施 隐患数据
+
+            l = tCheckItemMapper.zhuChartData89("职业卫生",flag,String.valueOf(user.getId())); // 职业卫生 隐患数据
+
+            m = tCheckItemMapper.zhuChartData89("生产现场",flag,String.valueOf(user.getId())); // 生产现场 隐患数据
+
+            n = tCheckItemMapper.zhuChartData891(flag,String.valueOf(user.getId())); // 其他 隐患数据
+        }
+
+        model.addAttribute("a",a);
+        model.addAttribute("b",b);
+        model.addAttribute("c",c);
+        model.addAttribute("d",d);
+        model.addAttribute("e",e);
+        model.addAttribute("f",f);
+        model.addAttribute("g",g);
+        model.addAttribute("h",h);
+        model.addAttribute("i",i);
+        model.addAttribute("j",j);
+        model.addAttribute("k",k);
+        model.addAttribute("l",l);
+        model.addAttribute("m",m);
+        model.addAttribute("n",n);
+
+        count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
+
+        model.addAttribute("count",count);
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if (null != count && 0 != count) {
+
+            if (null != a && 0 != a) {
+                String str = df.format((float) a / count);
+                model.addAttribute("a1",str);
+
+            } else {
+                model.addAttribute("a1","0.00");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != b && 0 != b) {
+                String str = df.format((float) b / count);
+                model.addAttribute("b1",str);
+
+            } else {
+                model.addAttribute("b1","0.00");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != c && 0 != c) {
+                String str = df.format((float) c / count);
+                model.addAttribute("c1",str);
+
+            } else {
+                model.addAttribute("c1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != d && 0 != d) {
+                String str = df.format((float) d / count);
+                model.addAttribute("d1",str);
+
+            } else {
+                model.addAttribute("d1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != e && 0 != e) {
+                String str = df.format((float) e / count);
+                model.addAttribute("e1",str);
+
+            } else {
+                model.addAttribute("e1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != f && 0 != f) {
+                String str = df.format((float) f / count);
+                model.addAttribute("f1",str);
+
+            } else {
+                model.addAttribute("f1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != g && 0 != g) {
+                String str = df.format((float) g / count);
+                model.addAttribute("g1",str);
+
+            } else {
+                model.addAttribute("g1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != h && 0 != h) {
+                String str = df.format((float) h / count);
+                model.addAttribute("h1",str);
+
+            } else {
+                model.addAttribute("h1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != i && 0 != i) {
+                String str = df.format((float) i / count);
+                model.addAttribute("i1",str);
+
+            } else {
+                model.addAttribute("i1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != j && 0 != j) {
+                String str = df.format((float) j / count);
+                model.addAttribute("j1",str);
+
+            } else {
+                model.addAttribute("j1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != k && 0 != k) {
+                String str = df.format((float) k / count);
+                model.addAttribute("k1",str);
+
+            } else {
+                model.addAttribute("k1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != l && 0 != l) {
+                String str = df.format((float) l / count);
+                model.addAttribute("l1",str);
+
+            } else {
+                model.addAttribute("l1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != m && 0 != m) {
+                String str = df.format((float) m / count);
+                model.addAttribute("m1",str);
+
+            } else {
+                model.addAttribute("m1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != n && 0 != n) {
+                String str = df.format((float) n / count);
+                model.addAttribute("n1",str);
+
+            } else {
+                model.addAttribute("n1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+        }else {
+            model.addAttribute("a1","0.00");
+            model.addAttribute("b1","0.00");
+            model.addAttribute("c1","0.00");
+            model.addAttribute("d1","0.00");
+            model.addAttribute("e1","0.00");
+            model.addAttribute("f1","0.00");
+            model.addAttribute("g1","0.00");
+            model.addAttribute("h1","0.00");
+            model.addAttribute("i1","0.00");
+            model.addAttribute("j1","0.00");
+            model.addAttribute("k1","0.00");
+            model.addAttribute("l1","0.00");
+            model.addAttribute("m1","0.00");
+            model.addAttribute("n1","0.00");
+
+        }
+        model.addAttribute("flag",flag);
+        return "company/danger/yh-analysis";
+    }
+    /**
+     * create by  : 小明！！！
+     * description: TODO  治理数据分析
+     * create time: 2019/8/13 11:17
+     */
+    @RequestMapping(value = "zl-analysis")
+    public String zlAnalysis(HttpServletRequest request, Model model, Integer userId){
+
+        User user = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        Integer number4 = tCheckItemMapper.findFileByMap(user.getId(),3); // 一般隐患
+        Integer number5 = tCheckItemMapper.findFileByMap(user.getId(),2); // 重大隐患
+        Integer number6 = tCheckItemMapper.findFileByMap(user.getId(),1); // 较大隐患
+
+        model.addAttribute("number4",number4);
+        model.addAttribute("number5",number5);
+        model.addAttribute("number6",number6);
+
+
+        Integer a = tCheckItemMapper.zhuChartData124("生产工艺",user.getId()); // 生产工艺 隐患数据
+        model.addAttribute("a",a);
+
+        Integer b = tCheckItemMapper.zhuChartData124("设备设施",user.getId()); // 设备设施 隐患数据
+        model.addAttribute("b",b);
+
+        Integer c = tCheckItemMapper.zhuChartData124("特种设备",user.getId()); // 特种设备 隐患数据
+        model.addAttribute("c",c);
+
+        Integer d = tCheckItemMapper.zhuChartData124("消防安全",user.getId()); // 消防安全 隐患数据
+        model.addAttribute("d",d);
+
+        Integer e = tCheckItemMapper.zhuChartData124("用电安全",user.getId()); // 用电安全 隐患数据
+        model.addAttribute("e",e);
+
+        Integer f = tCheckItemMapper.zhuChartData124("行为环境",user.getId()); // 行为环境 隐患数据
+        model.addAttribute("f",f);
+
+        Integer g = tCheckItemMapper.zhuChartData124("公辅设备",user.getId()); // 公辅设备 隐患数据
+        model.addAttribute("g",g);
+
+        Integer h = tCheckItemMapper.zhuChartData124("危化管理",user.getId()); // 危化管理 隐患数据
+        model.addAttribute("h",h);
+
+        Integer i = tCheckItemMapper.zhuChartData124("基础管理",user.getId()); // 基础管理 隐患数据
+        model.addAttribute("i",i);
+
+        Integer j = tCheckItemMapper.zhuChartData124("防雷静电",user.getId()); // 防雷静电 隐患数据
+        model.addAttribute("j",j);
+
+        Integer k = tCheckItemMapper.zhuChartData124("安全设施",user.getId()); // 安全设施 隐患数据
+        model.addAttribute("k",k);
+
+        Integer l = tCheckItemMapper.zhuChartData124("职业卫生",user.getId()); // 职业卫生 隐患数据
+        model.addAttribute("l",l);
+
+        Integer m = tCheckItemMapper.zhuChartData124("生产现场",user.getId()); // 生产现场 隐患数据
+        model.addAttribute("m",m);
+
+        Integer n = tCheckItemMapper.zhuChartData1241(user.getId(),company.getName()); // 其他 隐患数据
+        model.addAttribute("n",n);
+
+        Integer count = a + b + c + d + e + f + g + h + i + j + k + l + m + n;
+
+        model.addAttribute("count",count);
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if (null != count && 0 != count) {
+
+            if (null != a && 0 != a) {
+                String str = df.format((float) a / count);
+                model.addAttribute("a1",str);
+
+            } else {
+                model.addAttribute("a1","0.00");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != b && 0 != b) {
+                String str = df.format((float) b / count);
+                model.addAttribute("b1",str);
+
+            } else {
+                model.addAttribute("b1","0.00");  // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != c && 0 != c) {
+                String str = df.format((float) c / count);
+                model.addAttribute("c1",str);
+
+            } else {
+                model.addAttribute("c1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != d && 0 != d) {
+                String str = df.format((float) d / count);
+                model.addAttribute("d1",str);
+
+            } else {
+                model.addAttribute("d1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != e && 0 != e) {
+                String str = df.format((float) e / count);
+                model.addAttribute("e1",str);
+
+            } else {
+                model.addAttribute("e1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != f && 0 != f) {
+                String str = df.format((float) f / count);
+                model.addAttribute("f1",str);
+
+            } else {
+                model.addAttribute("f1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != g && 0 != g) {
+                String str = df.format((float) g / count);
+                model.addAttribute("g1",str);
+
+            } else {
+                model.addAttribute("g1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != h && 0 != h) {
+                String str = df.format((float) h / count);
+                model.addAttribute("h1",str);
+
+            } else {
+                model.addAttribute("h1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != i && 0 != i) {
+                String str = df.format((float) i / count);
+                model.addAttribute("i1",str);
+
+            } else {
+                model.addAttribute("i1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != j && 0 != j) {
+                String str = df.format((float) j / count);
+                model.addAttribute("j1",str);
+
+            } else {
+                model.addAttribute("j1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != k && 0 != k) {
+                String str = df.format((float) k / count);
+                model.addAttribute("k1",str);
+
+            } else {
+                model.addAttribute("k1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != l && 0 != l) {
+                String str = df.format((float) l / count);
+                model.addAttribute("l1",str);
+
+            } else {
+                model.addAttribute("l1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != m && 0 != m) {
+                String str = df.format((float) m / count);
+                model.addAttribute("m1",str);
+
+            } else {
+                model.addAttribute("m1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+            if (null != n && 0 != n) {
+                String str = df.format((float) n / count);
+                model.addAttribute("n1",str);
+
+            } else {
+                model.addAttribute("n1","0.00"); // 重大隐患 未治理 占比数据 竖
+            }
+
+        }else {
+            model.addAttribute("a1","0.00");
+            model.addAttribute("b1","0.00");
+            model.addAttribute("c1","0.00");
+            model.addAttribute("d1","0.00");
+            model.addAttribute("e1","0.00");
+            model.addAttribute("f1","0.00");
+            model.addAttribute("g1","0.00");
+            model.addAttribute("h1","0.00");
+            model.addAttribute("i1","0.00");
+            model.addAttribute("j1","0.00");
+            model.addAttribute("k1","0.00");
+            model.addAttribute("l1","0.00");
+            model.addAttribute("m1","0.00");
+            model.addAttribute("n1","0.00");
+
+        }
+        return "company/danger/zl-analysis";
     }
 
 }

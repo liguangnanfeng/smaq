@@ -40,6 +40,8 @@ body .dis-ib{margin-right:15px;}
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <span class="l">
         <a class="btn btn-primary radius" href="javascript:show_dialog('添加主要原辅材料','${ly }/steel/product/material-add')"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加主要原辅材料</a>
+        <a class="btn btn-primary radius" href="${ly}/village/download?filename=原辅材料.xlsx&fileurl=${ly}/upload/原辅材料.xlsx">原辅材料批量模版</a>
+         <button class="btn btn-primary radius" type="button" onclick="comapnyImportBoxShow()">导入原辅材料</button>
       </span>
       <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span> 
     </div>
@@ -81,6 +83,33 @@ body .dis-ib{margin-right:15px;}
       </table>
     </div>
   </div>
+  <div id="comapnyImportBox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content radius">
+
+        <div class="modal-header">
+          <h3 class="modal-title">导入原辅材料</h3>
+          <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+        </div>
+
+
+        <div class="modal-body" id="importBox">
+          <div class="one_txt cl">
+            <div class="text-left" style="float: left;width: 70px;">导入文件：</div>
+            <div class="text-right formControls">
+                           <span class="btn-upload form-group">
+                               <input type="file" id="file" name="file">
+                           </span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" onclick="comapnyImportSave()">保存</button>
+          <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
 <script type="text/javascript">
 $(function() {
   $('.table-sort').dataTable({
@@ -92,6 +121,11 @@ $(function() {
     ]
     });
 });
+/*批量导入*/
+function comapnyImportBoxShow() {
+
+  $("#comapnyImportBox").modal("show");
+}
 /*编辑*/
 function admin_edit(id){
   show_tab("编辑主要原辅材料", getRootPath() + "/steel/product/material-edit?id=" + id);
@@ -103,6 +137,46 @@ function del(id){
     id:id,
   },function(reuslt){
     location.reload()
+  })
+}
+
+function comapnyImportBoxShow(flag) {
+  window.sperson_flag = flag;
+  if(flag == 1) {
+    $("#comapnyImportBox .modal-title").text("导入安全管理人员");
+  }
+  if(flag == 2) {
+    $("#comapnyImportBox .modal-title").text("导入危险化学品安全管理人员");
+  }
+  if(flag == 3) {
+    $("#comapnyImportBox .modal-title").text("导入持证上岗人员");
+  }
+  $("#comapnyImportBox").modal("show");
+}
+
+
+function comapnyImportSave() {
+  var index = layer.load();
+  $.ajaxFileUpload({
+    url: getRootPath() + '/steel/importMarerialExcel',
+    secureuri: false, //一般设置为false
+    fileElementId: 'file',
+    dataType: 'json',
+    async: false,
+    success: function (data, status) {
+      layer.close(index);
+      var status = data.status;
+      if (status == '0') {
+        layer.alert("导入成功");
+        $("#comapnyImportBox").modal("hide");
+      }else {
+        layer.alert(data.map.message);
+      }
+    },
+    error: function (data, status, e) {
+      layer.close(index);
+      alert("导入失败！请检查数据");
+    }
   })
 }
 // /*查询*/

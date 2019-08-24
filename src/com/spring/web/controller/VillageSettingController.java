@@ -350,7 +350,7 @@ public class VillageSettingController extends BaseController{
     @RequestMapping("/toAddSensor")
     public String toAddSensor(HttpServletRequest request,Model model){
         User user = getLoginUser(request);
-        if(null != user && user.getUserType().equals(5)){
+        if(null != user && (user.getUserType().equals(5)||user.getUserType().equals(10))){
             model.addAttribute("device", tSensorsMapper.getCompanyDevice(user.getId()));
             String sensorId = request.getParameter("sensorId");
             model.addAttribute("sensorTypes", tSensorsMapper.getSensorType());

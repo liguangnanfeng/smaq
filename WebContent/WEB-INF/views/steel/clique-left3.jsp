@@ -99,6 +99,7 @@
               <ul>
                   <li><a data-href="${ly }/steel/clique/basic-information" data-title="基本信息" href="javascript:void(0)">基本信息</a></li>
                   <li><a data-href="${ly }/steel/threeLeft?leftBasic=1" data-title="组织架构" href="javascript:void(0)">组织架构</a></li>
+                  <li><a data-href="${ly }/steel/product/mequipment-list" data-title="主要设备设施" href="javascript:void(0)">主要设备设施</a></li>
                   <li><a data-href="${ly }/steel/product/material-list" data-title="原辅材料" href="javascript:void(0)">原辅材料</a></li>
                   <li><a data-href="${ly }/steel/product/product-list" data-title="主要产品" href="javascript:void(0)">主要产品</a></li>
                   <li><a data-href="${ly }/steel/process/process-list" data-title="生产工艺" href="javascript:void(0)">生产工艺</a></li>
@@ -129,12 +130,12 @@
            </dt>
            <dd>
                 <ul>
-                    <li><a data-href="${ly }/company/model-list-main?flag=1" data-title="检查设置实施" href="javascript:void(0)">检查设置实施</a></li>
-                    <li><a data-href="${ly }/village/check-list?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
-                    <li><a data-href="${ly }/village/hidden-danger-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
-                    <li><a data-href="${ly }/company/jx-analysis" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
-                    <li><a data-href="${ly }/company/yh-analysis" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
-                    <li><a data-href="${ly }/company/zl-analysis" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
+                    <li><a data-href="${ly }/steel/company-list2" data-title="检查设置实施" href="javascript:void(0)">检查设置实施</a></li>
+                    <li><a data-href="${ly }/steel/company-list3" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
+                    <li><a data-href="${ly }/steel/company-list4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
+                    <li><a data-href="${ly }/steel/company-list5" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
+                    <li><a data-href="${ly }/steel/company-list6" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
+                    <li><a data-href="${ly }/steel/company-list7" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
                </ul>
          </dd>
       </dl>
@@ -168,7 +169,7 @@
 		 <!------------------------------------------------------------------------------------------------------------------------------------------->
         <dl>
             <dt>
-                <a style="color:#fff;"  data-href="${ly }/api/safety_Standard/findAll?parendId=0&flag=1" data-title="运行操作系统"
+                <a style="color:#fff;"  data-href="${ly }/steel/company-list1" data-title="运行操作系统"
                    href="javascript:void(0)"><i class="Hui-iconfont">&#xe639;</i>安全生产标准化</a>
             </dt>
         </dl>
@@ -184,6 +185,7 @@
            <li><a data-href="${ly }/company/source/model-list-cx" data-title="隐患排查" href="javascript:void(0)">排查治理</a></li>
            <li><a data-href="${ly }/company/threeLeft?leftBasic=15" data-title="特殊作业" href="javascript:void(0)">特殊作业</a></li>
            <li><a data-href="${ly }/company/threeLeft?leftBasic=16" data-title="应急救援" href="javascript:void(0)">应急救援</a></li>
+       </ul>
      </dd>
     </dl>
         <!---------------------------------------职业卫生健康--------------------------------------------------------------------------->

@@ -59,12 +59,12 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         /back = anon
         /back/test = anon
         /village = anon
-        /global/fore = anon
         /steel/fore = anon
         /gang = anon
         /village/test = anon
         /websocket = anon
-
+        /global/glogin = anon
+        /steel/glogin = anon
         /back/modify-pwd = roleOrFilter["role_1", "role_2", "role_3", "role_4", "role_5", "role_6", "role_7", "role_8", "role_9", "role_10"]
         /back/** = roleOrFilter["role_1,role_2"]
         /company/safety-system/assess-bei = anon

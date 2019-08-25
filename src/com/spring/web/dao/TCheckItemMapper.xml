@@ -1229,7 +1229,9 @@
         AND t3.control = #{control}
         AND t2.flag = #{flag}
         AND t2.user_id in (${user_ids})
+        <if test='departs != "" '>
         AND t2.depart in (${departs})
+        </if>
     </select>
 
 
@@ -1246,7 +1248,9 @@
         AND t3.control is null
         AND t2.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t2.depart in (${departs})
+        <if test='departs != "" '>
+            AND t2.depart in (${departs})
+        </if>
     </select>
 
 
@@ -1298,7 +1302,9 @@
         AND t3.control = #{control}
         AND t2.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t2.depart in (${departs})
+        <if test='departs != "" '>
+            AND t2.depart in (${departs})
+        </if>
     </select>
 
     <select id="zhuChartData881" resultType="Integer">
@@ -1315,7 +1321,9 @@
         AND t3.control is null
         AND t2.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t2.depart in (${departs})
+        <if test='departs != "" '>
+            AND t2.depart in (${departs})
+        </if>
     </select>
 
     <select id="zhuChartData89" resultType="Integer">

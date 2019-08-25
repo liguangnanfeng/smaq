@@ -1948,5 +1948,15 @@ public class SteelController extends BaseController {
         }
         return "company/danger/zl-analysis";
     }
+    @RequestMapping("/villageLogout")
+    public String villageLogout(HttpServletRequest request) throws Exception {
+        Subject currentUser = SecurityUtils.getSubject();
+        currentUser.logout();
+        String y = request.getServerName();
+        if(y.indexOf("kfq") > -1) {
+            return "redirect:/fore/steel";
+        }
+        return "redirect:/fore/steel";
+    }
 
 }

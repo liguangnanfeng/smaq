@@ -907,9 +907,11 @@ public class ExportServiceImpl implements ExportService {
                     mequipment.setEquipmentName(row.getCell(0).toString().trim());
                     mequipment.setSize(row.getCell(1).toString().trim());
                     mequipment.setProcessParameters(row.getCell(2).toString().trim());
-                    mequipment.setAmount(Integer.parseInt(row.getCell(3).toString().trim()));
+                    String str = row.getCell(3).toString().trim();
+                    str = str.substring(0, str.length()-2);
+                    mequipment.setAmount(Integer.parseInt(str));
                     mequipment.setRemark(row.getCell(4).toString().trim());
-                    mequipmentMapper.insertSelective(mequipment);
+                    mequipmentMapper.insert(mequipment);
                 }else {
                     messages += "第" + i + "行\t" + "主要产品不存在、" + "\r\n";
                 }

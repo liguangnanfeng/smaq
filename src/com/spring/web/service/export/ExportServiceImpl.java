@@ -738,4 +738,189 @@ public class ExportServiceImpl implements ExportService {
         }
         return result;
     }
+
+    @Override
+    public void ImportMaterialSave(Result result, Integer userId, MultipartFile file) {
+        if (null != file) {
+            String fileName = file.getOriginalFilename();
+            // 检查扩展名
+            String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+            if (!"xlsx".equalsIgnoreCase(fileExt)) {
+                result.setStatus("1");
+                result.setMap("message", "上传文件扩展名是不允许的扩展名。只允许xlsx格式。");
+                return;
+            }
+        } else {
+            result.setStatus("1");
+            result.setMap("message", "请选择excel文件。");
+            return;
+        }
+        Workbook wb = null;
+        String messages = "";
+        try {
+            wb = new XSSFWorkbook(file.getInputStream());
+            Sheet sheet = wb.getSheetAt(0);//获取excel的第一张博
+            String title = tos(sheet, 0, 0);
+
+            if (!"原辅材料名称".equals(title)) {
+                result.setStatus("1");
+                result.setMap("message", "此表不是原辅材料表，请重新选择");
+                return;
+            }
+            int totalRows = sheet.getPhysicalNumberOfRows();
+            for (int i = 1; i < totalRows; i++) {
+                Row row = sheet.getRow(i); //获取一行
+                String material = row.getCell(0).toString().trim(); //获取辅材的名称
+                Map<String, Object> map = new HashMap<String, Object>();
+                if(null != material && !"".equals(material)){
+                    String annualConsumption = row.getCell(1).toString().trim(); //获取年用量
+                    String maxStroger = row.getCell(2).toString().trim();//最大存储量
+                    String wutai = row.getCell(3).toString().trim();//物态
+                    String didian = row.getCell(4).toString().trim();//地点
+                    String fangfa = row.getCell(5).toString().trim();//方式
+                    String beizhu = row.getCell(6).toString().trim();//备注
+                     Material material1 = new Material();
+                     material1.setUserId(userId);
+                     material1.setMaterial(material);
+                     material1.setAnnualConsumption(annualConsumption);
+                     material1.setMaximumStorage(maxStroger);
+                     material1.setState(wutai);
+                     material1.setStorageLocation(didian);
+                     material1.setStorageMethod(fangfa);
+                     material1.setRemark(beizhu);
+                    materialMapper.insert(material1);
+                }else {
+                    messages += "第" + i + "行\t" + "原辅材料不存在、" + "\r\n";
+                }
+            }
+
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(messages.length() > 3){
+            messages = messages.substring(0,messages.length() - 3);
+        }
+        result.setStatus("0");
+        result.setMess(messages);
+    }
+
+    /**
+     * 导入主要产品
+     * @param result
+     * @param userId
+     * @param file
+     */
+    @Override
+    public void ImportProductSave(Result result, Integer userId, MultipartFile file) {
+        if (null != file) {
+            String fileName = file.getOriginalFilename();
+            // 检查扩展名
+            String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+            if (!"xlsx".equalsIgnoreCase(fileExt)) {
+                result.setStatus("1");
+                result.setMap("message", "上传文件扩展名是不允许的扩展名。只允许xlsx格式。");
+                return;
+            }
+        } else {
+            result.setStatus("1");
+            result.setMap("message", "请选择excel文件。");
+            return;
+        }
+        Workbook wb = null;
+        String messages = "";
+        try {
+            wb = new XSSFWorkbook(file.getInputStream());
+            Sheet sheet = wb.getSheetAt(0);//获取excel的第一张博
+            String title = tos(sheet, 0, 0);
+            if (!"产品名称".equals(title)) {
+                result.setStatus("1");
+                result.setMap("message", "此表不是主要产品表，请重新选择");
+                return;
+            }
+            int totalRows = sheet.getPhysicalNumberOfRows();
+            List<Material> list = new ArrayList<>();
+            for (int i = 1; i < totalRows; i++) {
+                Row row = sheet.getRow(i); //获取一行
+                String productName = row.getCell(0).toString().trim(); //获取产品名称
+                Map<String, Object> map = new HashMap<String, Object>();
+                if(null != productName && !"".equals(productName)){
+                    Product product = new Product();
+                    product.setUserId(userId);
+                    product.setProductName(row.getCell(0).toString().trim());
+                    product.setEfficiency(row.getCell(1).toString().trim());
+                    product.setLastyearProduction(row.getCell(2).toString().trim());
+                    product.setMaximumStorage(row.getCell(3).toString().trim());
+                    product.setStorageLocation(row.getCell(4).toString().trim());
+                    product.setRemark(row.getCell(5).toString().trim());
+                    productMapper.insert(product);
+                }else {
+                    messages += "第" + i + "行\t" + "主要产品不存在、" + "\r\n";
+                }
+            }
+        }catch (Exception e) {
+
+        }
+        if(messages.length() > 3){
+            messages = messages.substring(0,messages.length() - 3);
+        }
+        result.setStatus("0");
+        result.setMess(messages);
+    }
+
+    @Override
+    public void ImportMequipmentSave(Result result, Integer userId, MultipartFile file) {
+        if (null != file) {
+            String fileName = file.getOriginalFilename();
+            // 检查扩展名
+            String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+            if (!"xlsx".equalsIgnoreCase(fileExt)) {
+                result.setStatus("1");
+                result.setMap("message", "上传文件扩展名是不允许的扩展名。只允许xlsx格式。");
+                return;
+            }
+        } else {
+            result.setStatus("1");
+            result.setMap("message", "请选择excel文件。");
+            return;
+        }
+        Workbook wb = null;
+        String messages = "";
+        try {
+            wb = new XSSFWorkbook(file.getInputStream());
+            Sheet sheet = wb.getSheetAt(0);//获取excel的第一张博
+            String title = tos(sheet, 0, 0);
+            if (!"名称".equals(title)) {
+                result.setStatus("1");
+                result.setMap("message", "此表不是主要设备表，请重新选择");
+                return;
+            }
+            int totalRows = sheet.getPhysicalNumberOfRows();
+            List<Material> list = new ArrayList<>();
+            for (int i = 1; i < totalRows; i++) {
+                Row row = sheet.getRow(i); //获取一行
+                String productName = row.getCell(0).toString().trim(); //获取产品名称
+                Map<String, Object> map = new HashMap<String, Object>();
+                if(null != productName && !"".equals(productName)){
+                    Mequipment mequipment = new Mequipment();
+                    mequipment.setUserId(userId);
+                    mequipment.setEquipmentName(row.getCell(0).toString().trim());
+                    mequipment.setSize(row.getCell(1).toString().trim());
+                    mequipment.setProcessParameters(row.getCell(2).toString().trim());
+                    mequipment.setAmount(Integer.parseInt(row.getCell(3).toString().trim()));
+                    mequipment.setRemark(row.getCell(4).toString().trim());
+                    mequipmentMapper.insertSelective(mequipment);
+                }else {
+                    messages += "第" + i + "行\t" + "主要产品不存在、" + "\r\n";
+                }
+            }
+        }catch (Exception e) {
+
+        }
+        if(messages.length() > 3){
+            messages = messages.substring(0,messages.length() - 3);
+        }
+        result.setStatus("0");
+        result.setMess(messages);
+    }
 }

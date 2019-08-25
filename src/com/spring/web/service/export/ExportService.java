@@ -25,7 +25,15 @@ public interface ExportService extends Serializable {
     * @param request
     * @param response 
     */
-   public Result companyImport(MultipartFile file, Integer villageId, HttpServletRequest request) throws Exception;
+    public Result companyImport(MultipartFile file, Integer villageId, HttpServletRequest request) throws Exception;
+
+
+    public void ImportMaterialSave(Result result, Integer userId, MultipartFile file);
+
+
+    public void ImportProductSave(Result result, Integer userId, MultipartFile file);
+
+    public void ImportMequipmentSave(Result result, Integer userId, MultipartFile file);
 
     /** 
     * @param file

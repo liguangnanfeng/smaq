@@ -83,12 +83,6 @@ public interface TCheckMapper {
 
     List<Map<String,Object>> selectAllDanger(@Param("id")Integer id);
 
-    /**
-     * 根据模版id查询最开始模版记录详情
-     * @param id
-     * @param i
-     * @return
-     */
     TCheck selectCheckBymodelIdAndStatus(@Param("modelId")Integer id, @Param("status")int i);
 
     Integer selectHiddenDangerNumber(Integer id);
@@ -101,4 +95,8 @@ public interface TCheckMapper {
     Integer findCountAll(@Param("depart")String depart, @Param("type")Integer type, @Param("user_ids")String user_ids);
 
     List<Map<String,Object>> findCheckCompany(@Param("userIds")String userIds,@Param("flag")Integer flag);
+
+    Integer zfPerformanceCount(@Param("flag")Integer flag, @Param("industry")String industry, @Param("user_id")Integer user_id);
+
+    Integer zfPerformanceCount11(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
 }

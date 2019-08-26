@@ -1165,6 +1165,39 @@
         AND t2.user_id in (${user_ids})
     </select>
 
+    <!-- 政府端 隐患排查对象分析数据 -->
+    <select id="zfHiddenTrouble" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t3.control = #{control}
+        AND t2.flag = #{flag}
+        AND t2.user_id = {user_id}
+    </select>
+
+    <!-- 政府端 隐患排查对象分析数据 -->
+    <select id="zfHiddenTrouble11" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t3.control is null
+        AND t2.flag = #{flag}
+        AND t2.user_id = {user_id}
+    </select>
+
+
     <select id="zhuChartData661" resultType="Integer">
         SELECT
             count(t1.id) as counts
@@ -1309,6 +1342,44 @@
 
     <select id="zhuChartData881" resultType="Integer">
         SELECT
+        count(t1.id) as counts
+        FROM
+        smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+        t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t3.control is null
+        AND t2.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+        <if test='departs != "" '>
+            AND t2.depart in (${departs})
+        </if>
+    </select>
+
+
+    <!-- 政府端 隐患数据分析 柱状图 flag = 1-->
+    <select id="zhengFuChartData88" resultType="Integer">
+        SELECT
+        count(t1.id) as counts
+        FROM
+        smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+        t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t3.control = #{control}
+        AND t2.flag = #{flag}
+        AND t2.user_id = {user_id}
+    </select>
+
+    <!-- 政府端 隐患数据分析 风险 flag = 1-->
+    <select id="zhengFuChartData881" resultType="Integer">
+         SELECT
             count(t1.id) as counts
         FROM
             smaq.t_check_item_tbl t1
@@ -1320,11 +1391,49 @@
         AND t1.status = 2
         AND t3.control is null
         AND t2.flag = #{flag}
-        AND t2.user_id in (${user_ids})
-        <if test='departs != "" '>
-            AND t2.depart in (${departs})
-        </if>
+        AND t2.user_id = #{user_id}
     </select>
+
+
+    <!-- 政府端 隐患数据分析 行业 flag = 1-->
+    <select id="zhengFuChartDataDanger" resultType="Integer">
+         SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t2.flag = #{flag}
+        AND c1.industry  like  CONCAT('%', #{industry},'%')
+        AND t2.user_id = #{user_id}
+    </select>
+
+
+    <!-- 政府端 隐患数据分析 行业 flag = 1-->
+    <select id="zhengFuChartDataDanger11" resultType="Integer">
+         SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND c1.industry  is null
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
+
+
 
     <select id="zhuChartData89" resultType="Integer">
         SELECT
@@ -1719,7 +1828,7 @@
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
-        left join company_view t4 on t2.user_id = t4.user_id
+        LEFT join company_view t4 ON t2.user_id = t4.user_id
         WHERE
         t2. status = 2
         AND t2.del = 0
@@ -1727,16 +1836,16 @@
         AND t2.flag = #{flag}
         <if test="type!=9">
             <if test="type==6">
-                and t4.district_id = #{userId}
+                AND t4.district_id = #{userId}
             </if>
             <if test="type==3">
-                and t4.town_id = #{userId}
+                AND t4.town_id = #{userId}
             </if>
             <if test="type==4">
-                and t4.village_id = #{userId}
+                AND t4.village_id = #{userId}
             </if>
             <if test="type==10">
-                and t4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
+                AND t4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
                 #{userId}
                 )
             </if>
@@ -1759,16 +1868,16 @@
         AND t2.flag = #{flag}
         <if test="type!=9">
             <if test="type==6">
-                and t4.district_id = #{userId}
+                AND t4.district_id = #{userId}
             </if>
             <if test="type==3">
-                and t4.town_id = #{userId}
+                AND t4.town_id = #{userId}
             </if>
             <if test="type==4">
-                and t4.village_id = #{userId}
+                AND t4.village_id = #{userId}
             </if>
             <if test="type==10">
-                and t4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
+                AND t4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
                 #{userId}
                 )
             </if>
@@ -1781,7 +1890,7 @@
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
-        left join smaq.company_view  t4 on t2.user_id = t4.user_id
+        LEFT JOIN smaq.company_view  t4 ON t2.user_id = t4.user_id
         WHERE
         t2. status = 2
         AND t2.del = 0
@@ -1791,16 +1900,16 @@
         AND t1.recheck_file != ''
         <if test="type!=9">
             <if test="type==6">
-                and t4.district_id = #{userId}
+                AND t4.district_id = #{userId}
             </if>
             <if test="type==3">
-                and t4.town_id = #{userId}
+                AND t4.town_id = #{userId}
             </if>
             <if test="type==4">
-                and t4.village_id = #{userId}
+                AND t4.village_id = #{userId}
             </if>
             <if test="type==10">
-                and t4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
+                AND t4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
                 #{userId}
                 )
             </if>
@@ -1814,7 +1923,7 @@
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
-        left join smaq.company_view t4 on t2.user_id = t4.user_id
+        LEFT JOIN smaq.company_view t4 ON t2.user_id = t4.user_id
         WHERE
         t2. status = 2
         AND t2.del = 0
@@ -1822,16 +1931,16 @@
         AND t3.control = #{control}
         <if test="type!=9">
             <if test="type==6">
-                and t4.district_id = #{userId}
+                AND t4.district_id = #{userId}
             </if>
             <if test="type==3">
-                and t4.town_id = #{userId}
+                AND t4.town_id = #{userId}
             </if>
             <if test="type==4">
-                and t4.village_id = #{userId}
+                AND t4.village_id = #{userId}
             </if>
             <if test="type==10">
-                and t4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
+                AND t4.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
                 #{userId}
                 )
             </if>

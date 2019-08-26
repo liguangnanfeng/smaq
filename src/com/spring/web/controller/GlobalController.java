@@ -6630,6 +6630,242 @@ public class GlobalController extends BaseController {
     }
 
 
+    /**
+     * create by  : 小明！！！
+     * description: TODO    隐患治理数据分析 企业
+     * create time: 2019/8/26 15:10
+     */
+    @RequestMapping(value = "manage-hidden-company")
+    public String manegeHiddenConpany(HttpServletRequest request, Model model, Integer flag){
+
+        User user = getLoginUser(request);
+        List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());
+
+        Map<String,Object> map = new HashMap<>();
+
+        Integer count1 = 0;
+        Integer count2 = 0;
+        Integer count3 = 0;
+
+        // 已治理合计
+        Integer sign1 = 0;
+        Integer sign2 = 0;
+        Integer sign3 = 0;
+        // 未治理合计
+        Integer sign11 = 0;
+        Integer sign22 = 0;
+        Integer sign33 = 0;
+
+        for (int i = 0; i < list.size(); i++) {
+
+            Integer  a = tCheckItemMapper.manageHiddenCompany(1,(Integer)list.get(i).get("user_id"),3); // 一般和较小 合格 已治理
+            list.get(i).put("danger1",a);
+
+            Integer  a1 = tCheckItemMapper.manageHiddenCompany(2,(Integer)list.get(i).get("user_id"),3); // 一般和较小 不合格 未治理
+            list.get(i).put("danger11",a1);
+
+            count1 = a + a1;
+
+            Integer  b = tCheckItemMapper.manageHiddenCompany(1,(Integer)list.get(i).get("user_id"),1); // 较大 合格 已治理
+            list.get(i).put("danger2",b);
+
+            Integer  b1 = tCheckItemMapper.manageHiddenCompany(2,(Integer)list.get(i).get("user_id"),1); // 较大 不合格 未治理
+            list.get(i).put("danger22",b1);
+
+            count2  = b + b1;
+
+            Integer  c = tCheckItemMapper.manageHiddenCompany(1,(Integer)list.get(i).get("user_id"),2); // 重大 合格 已治理
+            list.get(i).put("danger3",c);
+
+            Integer  c1 = tCheckItemMapper.manageHiddenCompany(1,(Integer)list.get(i).get("user_id"),2); // 重大 不合格 未治理
+            list.get(i).put("danger33",c1);
+
+            count3  = c + c1;
+
+            sign1 += a;
+            sign2 += b;
+            sign3 += c;
+
+            sign11 += a1;
+            sign22 += b1;
+            sign33 += c1;
+
+            DecimalFormat df = new DecimalFormat("0.00");
+
+            Integer sum = count1 + count2 + count3;
+
+            if (null != count1 && count1 != 0){  // 一般和较小 治理率
+                String str = df.format((float)a/count1);
+                list.get(i).put("result11",str+"%");
+            }else {
+                list.get(i).put("result11",0.00);
+            }
+
+            if (null != count2 && count2 != 0){ // 较大 治理率
+                String str = df.format((float)b/count2);
+                list.get(i).put("result22",str+"%");
+            }else {
+                list.get(i).put("result22",0.00);
+            }
+
+            if (null != count3 && count3 != 0){ // 重大 治理率
+                String str = df.format((float)c/count3);
+                list.get(i).put("result33",str+"%");
+            }else {
+                list.get(i).put("result33",0.00);
+            }
+
+
+            Integer number1 = a + b + c; // 已治理 合计
+            list.get(i).put("number1",number1);
+
+            Integer number2 = a1 + b1 + c1;  // 未治理 合计
+            list.get(i).put("number2",number2);
+
+            Integer number = number1 + number2;
+
+            if (null != number && number != 0){
+                String str = df.format((float)number1/number);
+                list.get(i).put("number",str+"%");  // 治理率 合计
+            }else {
+                list.get(i).put("number",0.00);
+            }
+
+        }
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        Integer sum1 = sign1 + sign11;
+        Integer sum2 = sign2 + sign22;
+        Integer sum3 = sign3 + sign33;
+
+        if (null != sum1 && 0 != sum1){
+
+            if (null != sign1 && 0 != sign1){
+                String str = df.format((float)sign1 / sum1);
+                map.put("result1",str+"%"); // 一般隐患的治理率 竖
+
+            }else {
+                map.put("result1","0.00%"); // 一般隐患的治理率 竖
+            }
+        }else {
+            map.put("result1","0.00%"); // 一般隐患的治理率 竖
+        }
+
+        if (null != sum2 && 0 != sum2){
+
+            if (null != sign2 && 0 != sign2){
+                String str = df.format((float)sign2 / sum2);
+                map.put("result2",str+"%"); // 较大隐患的治理率 竖
+
+            }else {
+                map.put("result2","0.00%"); // 较大隐患的治理率 竖
+            }
+
+        }else {
+            map.put("result2","0.00%"); // 一般隐患的治理率 竖
+        }
+
+        if (null != sum3 && 0 != sum3){
+
+            if (null != sign3 && 0 != sign3){
+                String str = df.format((float)sign3/sum3);
+                map.put("result3",str+"%"); // 重大隐患的治理率 竖
+
+            }else {
+                map.put("result3","0.00%"); // 一般隐患的治理率 竖
+            }
+
+        }else {
+            map.put("result3","0.00%"); // 一般隐患的治理率 竖
+        }
+
+        Integer proportion1 = sign1 + sign2 + sign3;
+
+        Integer proportion2 = sign11 + sign22 + sign33;
+
+        if (null != proportion1 && 0 != proportion1){
+
+            if (null != sign1 && 0 != sign1){
+                String str = df.format((float)sign1 / proportion1);
+                map.put("proportion11",str+"%");  // 一般隐患 已治理 占比数据 竖
+            }else {
+                map.put("proportion11","0.00%"); // 一般隐患的治理率 竖
+            }
+
+            if (null != sign2 && 0 != sign2){
+                String str = df.format((float)sign2 / proportion1);
+                map.put("proportion22",str+"%");  // 较大隐患 已治理 占比数据 竖
+            }else {
+                map.put("proportion22","0.00%"); // 较大隐患 已治理 占比数据 竖
+            }
+
+            if (null != sign3 && 0 != sign3){
+                String str = df.format((float)sign3 / proportion1);
+                map.put("proportion33",str+"%");  // 重大隐患 已治理 占比数据 竖
+
+            }else {
+                map.put("proportion33","0.00%"); // 重大隐患 已治理 占比数据 竖
+            }
+
+        }else {
+            map.put("proportion11","0.00%"); // 一般隐患的治理率 竖
+            map.put("proportion22","0.00%"); // 较大隐患 已治理 占比数据 竖
+            map.put("proportion33","0.00%"); // 重大隐患 已治理 占比数据 竖
+        }
+
+        if (null != proportion2 && 0 != proportion2){
+
+            if (null != sign11 && 0 != sign11){
+                String str = df.format((float)sign11 / proportion2);
+                map.put("proportion44",str+"%");  // 一般隐患 未治理 占比数据 竖
+            }else {
+                map.put("proportion44","0.00%"); // 一般隐患 未治理 占比数据 竖
+            }
+
+            if (null != sign22 && 0 != sign22){
+                String str = df.format((float)sign22 / proportion2);
+                map.put("proportion55",str+"%");  // 较大隐患 未治理 占比数据 竖
+            }else {
+                map.put("proportion55","0.00%"); // 较大隐患 未治理 占比数据 竖
+            }
+
+            if (null != sign33 && 0 != sign33){
+                Double sign = Double.valueOf(sign33 / proportion2);
+                String str = df.format((float)sign3/proportion2);
+                map.put("proportion66",str+"%");  // 重大隐患 未治理 占比数据 竖
+
+            }else {
+                map.put("proportion66","0.00%"); // 重大隐患 未治理 占比数据 竖
+            }
+
+        }else {
+            map.put("proportion44","0.00%"); // 一般隐患的治理率 竖
+            map.put("proportion55","0.00%"); // 较大隐患 已治理 占比数据 竖
+            map.put("proportion66","0.00%"); // 重大隐患 已治理 占比数据 竖
+        }
+
+        map.put("sign1",sign1); // 一般隐患 已治理 合计 竖
+        map.put("sign2",sign2); // 较大隐患 已治理 合计 竖
+        map.put("sign3",sign3); // 重大隐患 已治理 合计 竖
+        map.put("sign11",sign11); // 一般隐患 未治理 合计 竖
+        map.put("sign22",sign22); // 较大隐患 未治理 合计 竖
+        map.put("sign33",sign33); // 重大隐患 未治理 合计 竖
+
+
+        list.add(map);
+
+        model.addAttribute("data",new Date());
+        model.addAttribute("list",list);
+
+        return "manage-hidden-company";
+    }
+
+
+
+
+
+
+
 
 
     /**
@@ -7837,13 +8073,27 @@ public class GlobalController extends BaseController {
 
     }
 
-
+    /**
+     * create by  : 小明！！！
+     * description: TODO
+     * create time: 2019/8/26 15:56
+     */
     @RequestMapping(value = "company-allcompany")
     public String companyAllcompany(HttpServletRequest request, Model model){
 
         return "/global/company/allcompany";
     }
+    
+    /**
+     * create by  : 小明！！！
+     * description: TODO
+     * create time: 2019/8/26 15:56
+     */
+    @RequestMapping(value = "allcompany-district")
+    public String allcompanyDistrict(HttpServletRequest request, Model model){
 
+        return "/global/company/allcompany-district";
+    }
 
 
 }

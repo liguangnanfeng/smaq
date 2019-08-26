@@ -173,21 +173,21 @@
                    href="javascript:void(0)"><i class="Hui-iconfont">&#xe639;</i>安全生产标准化</a>
             </dt>
         </dl>
-		    <dl>
+        <dl>
             <dt>
-             <i class="Hui-iconfont">&#xe687;</i>重大危险源长制
-             <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-           </dt>
-       <dd>
-       <ul>
-           <li><a data-href="${ly }/company/threeLeft?leftBasic=13" data-title="管控机制" href="javascript:void(0)">管控机制</a></li>
-           <li><a data-href="${ly }/company/threeLeft?leftBasic=14" data-title="管控措施" href="javascript:void(0)">管控措施</a></li>
-           <li><a data-href="${ly }/company/source/model-list-cx" data-title="隐患排查" href="javascript:void(0)">排查治理</a></li>
-           <li><a data-href="${ly }/company/threeLeft?leftBasic=15" data-title="特殊作业" href="javascript:void(0)">特殊作业</a></li>
-           <li><a data-href="${ly }/company/threeLeft?leftBasic=16" data-title="应急救援" href="javascript:void(0)">应急救援</a></li>
-       </ul>
-     </dd>
-    </dl>
+                <i class="Hui-iconfont">&#xe687;</i>重大危险源长制
+                <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+            </dt>
+            <dd>
+                <ul>
+                    <li><a data-href="${ly }/villageAdd/source/company-list" data-title="全部企业" href="javascript:void(0)">全部企业</a></li>
+                    <li><a data-href="${ly }/villageAdd/source/video" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
+                    <li><a data-href="${ly }/villageAdd/source/company-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
+                    <li><a data-href="${ly }/villageAdd/source/danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>
+                    <li><a data-href="${ly }/villageAdd/source/danger-chart" data-title="分类统计" href="javascript:void(0)">分类统计</a></li>
+                </ul>
+            </dd>
+        </dl>
         <!---------------------------------------职业卫生健康--------------------------------------------------------------------------->
         <dl>
             <dt>

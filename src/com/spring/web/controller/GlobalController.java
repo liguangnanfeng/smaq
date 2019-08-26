@@ -5541,11 +5541,11 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping(value = "zf-performance-industry")
     public String performance(HttpServletRequest request, Model model, Integer flag){
+
+        User user = getLoginUser(request);
         if (null == flag){
             flag = 1;
         }
-
-        User user = getLoginUser(request);
         List<Map<String,Object>> list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
 
         Integer sum1 = 0;
@@ -5558,7 +5558,6 @@ public class GlobalController extends BaseController {
         Integer sum8 = 0;
         Integer sum9 = 0;
         Integer sum10 = 0;
-
 
         for (int i = 0; i < list.size(); i++) {
 
@@ -5724,6 +5723,7 @@ public class GlobalController extends BaseController {
 
         list.add(map);
 
+        model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
         return "zf-performance-industry";
@@ -6386,8 +6386,6 @@ public class GlobalController extends BaseController {
                 map.put("result15","0.00%"); // 其他 占比数据 竖
             }
 
-
-
         }else {
             // 占比 坚
             map.put("result1", "0.00%");
@@ -6427,7 +6425,6 @@ public class GlobalController extends BaseController {
 
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
-
 
         return "zf-hidden-trouble";
     }
@@ -6623,8 +6620,8 @@ public class GlobalController extends BaseController {
 
         list.add(map);
 
+        model.addAttribute("data",new Date());
         model.addAttribute("list",list);
-
 
         return "zf-hidden-industry";
     }
@@ -6632,14 +6629,14 @@ public class GlobalController extends BaseController {
 
     /**
      * create by  : 小明！！！
-     * description: TODO    隐患治理数据分析 企业
+     * description: TODO    隐患治理数据分析  风险
      * create time: 2019/8/26 15:10
      */
     @RequestMapping(value = "manage-hidden-company")
     public String manegeHiddenConpany(HttpServletRequest request, Model model, Integer flag){
 
         User user = getLoginUser(request);
-        List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());
+        List<Map<String,Object>> list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
 
         Map<String,Object> map = new HashMap<>();
 
@@ -6861,7 +6858,151 @@ public class GlobalController extends BaseController {
     }
 
 
+    /**
+     * create by  : 小明！！！
+     * description: TODO    隐患治理数据分析 风险
+     * create time: 2019/8/26 15:10
+     */
+    @RequestMapping(value = "manage-hidden-danger")
+    public String manegeHiddenDanger(HttpServletRequest request, Model model, Integer flag){
 
+        User user = getLoginUser(request);
+        List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
+
+        String string = "基础管理,生产工艺,设备设施,公用工程,特种设备,生产现场,行为环境,危化管理,消防安全,用电安全,安全设施,防雷静电,职业卫生,专项行业,其他";
+
+        String[] list1 = string.split(",");
+
+        Map<String,Object> map = new HashMap<>();
+
+        for (int i = 0; i < list1.length; i++) {
+
+            Map<String,Object> map1 = new HashMap<>();
+            map1.put("danger",list1[i]);
+
+            list.add(map1);
+        }
+
+        System.out.println(list.size());
+        Integer count1 = 0;
+        Integer count2 = 0;
+        Integer count3 = 0;
+
+        // 已治理合计
+        Integer sign1 = 0;
+        Integer sign2 = 0;
+        Integer sign3 = 0;
+        // 未治理合计
+        Integer sign11 = 0;
+        Integer sign22 = 0;
+        Integer sign33 = 0;
+
+        for (int i = 0; i < list.size(); i++) {
+
+            Integer  a = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),3); // 一般和较小 合格 已治理
+            list.get(i).put("danger1",a);
+
+            Integer  a1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),3); // 一般和较小 不合格 未治理
+            list.get(i).put("danger11",a1);
+
+            count1 = a + a1;
+
+            Integer  b = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),1); // 较大 合格 已治理
+            list.get(i).put("danger2",b);
+
+            Integer  b1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),1); // 较大 不合格 未治理
+            list.get(i).put("danger22",b1);
+
+            count2  = b + b1;
+
+            Integer  c = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2); // 重大 合格 已治理
+            list.get(i).put("danger3",c);
+
+            Integer  c1 = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2); // 重大 不合格 未治理
+            list.get(i).put("danger33",c1);
+
+            count3  = c + c1;
+
+            sign1 += a;
+            sign2 += b;
+            sign3 += c;
+
+            sign11 += a1;
+            sign22 += b1;
+            sign33 += c1;
+
+            DecimalFormat df = new DecimalFormat("0.00");
+
+            Integer sum = count1 + count2 + count3; // 单个风险所包含的所有隐患
+
+            if (null != count1 && count1 != 0){  // 一般和较小 治理率
+                String str = df.format((float)a/count1);
+                list.get(i).put("result11",str+"%");
+            }else {
+                list.get(i).put("result11",0.00);
+            }
+
+            if (null != count2 && count2 != 0){ // 较大 治理率
+                String str = df.format((float)b/count2);
+                list.get(i).put("result22",str+"%");
+            }else {
+                list.get(i).put("result22",0.00);
+            }
+
+            if (null != count3 && count3 != 0){ // 重大 治理率
+                String str = df.format((float)c/count3);
+                list.get(i).put("result33",str+"%");
+            }else {
+                list.get(i).put("result33",0.00);
+            }
+
+        }
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        Integer sum1 = sign1 + sign11;  // 所有风险  一般隐患的总和
+
+        Integer sum2 = sign2 + sign22;  // 所有风险  较大隐患的总和
+
+        Integer sum3 = sign3 + sign33;  // 所有风险  重大隐患的总和
+
+        if (null != sum1 && sum1 != 0){  // 一般和较小 治理率
+            String str = df.format((float)sign1/sum1);
+            map.put("resust11",str+"%");
+        }else {
+            map.put("resust11",0.00);
+        }
+
+        if (null != sum2 && sum2 != 0){ // 较大 治理率
+            String str = df.format((float)sign2/sum2);
+            map.put("result22",str+"%");
+        }else {
+            map.put("result22",0.00);
+        }
+
+        if (null != sum3 && sum3 != 0){ // 重大 治理率
+            String str = df.format((float)sign3/sum3);
+            map.put("result33",str+"%");
+        }else {
+            map.put("result33",0.00);
+        }
+
+        map.put("sign1",sign1);
+        map.put("sign2",sign2);
+        map.put("sign3",sign3);
+        map.put("sign11",sign11);
+        map.put("sign22",sign22);
+        map.put("sign33",sign33);
+        map.put("resust11",sign11);
+        map.put("result22",sign22);
+        map.put("result33",sign33);
+
+
+        model.addAttribute("data",new Date());
+        model.addAttribute("list",list);
+
+        return "manage-hidden-danger";
+    }
 
 
 

@@ -354,6 +354,8 @@ public interface TCheckItemMapper {
     Integer zhengFuChartDataDanger11(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
     Integer manageHiddenCompany(@Param("status")Integer status, @Param("user_id")Integer user_id, @Param("flag")Integer flag);
+
+    Integer manageHiddenDanger(@Param("status")Integer status, @Param("control")String control, @Param("flag")Integer flag);
 }
 
 

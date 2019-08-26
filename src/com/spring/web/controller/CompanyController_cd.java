@@ -2885,7 +2885,12 @@ public class CompanyController_cd extends BaseController {
 
         TCheckItem tCheckItem = new TCheckItem();
 
-        String file = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + files;
+        String file = null;
+        if (null == files){
+            file = null;
+        }else {
+            file = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + files;
+        }
 
         tCheckItem.setRecheckFile(file);
         tCheckItem.setId(id);

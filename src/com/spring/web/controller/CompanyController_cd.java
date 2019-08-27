@@ -346,7 +346,7 @@ public class CompanyController_cd extends BaseController {
     /**
      * 获取基本信息页面
      */
-    @RequestMapping("getBasicInformation-qcc")
+    @RequestMapping(value = "getBasicInformation-qcc", method = RequestMethod.POST)
     public @ResponseBody
     Result getBasicInformationQcc(Model model, HttpServletRequest request, String companyName)
             throws Exception {
@@ -357,17 +357,24 @@ public class CompanyController_cd extends BaseController {
             result.setMap("item", qccData.getData());
             return result;
         }
-        /*String url = "http://i.yjapi.com/ECIV4/GetDetailsByName";*/
-        String url = "http://api.qichacha.com/ECIV4/Search";
-        String key = "30871bb9213d45489680e4e7ec48c52e";
-        String queryString = "key=" + key + "&keyword=" + companyName;
-        String data = WeixinUtil.doGet(url, queryString, "UTF-8", false);
+        String url = "http://api.qichacha.com/ECIV4/GetDetailsByName";
+        String key = "8539cb3a475a485ca5e19a51dcc54420";
+        String secretKey = "6F8E5EBC97EB2D950B68D760A3C3FFC8";
+        String timestamp = String.valueOf((System.currentTimeMillis()/1000));//精确到秒的Unix时间戳
+        Map<String, String> map = new HashMap<>();
+        map.put("Timespan", timestamp);
+        map.put("Token", WeixinUtil.MD5(key + timestamp + secretKey));
+        Map<String, String> map1 = new HashMap<>();
+        map1.put("key","8539cb3a475a485ca5e19a51dcc54420");
+        map1.put("keyword", companyName);
+        String data = HttpClientUtils.doGet(url, map, map1).getContent();
         qccData = new QccData();
         qccData.setCompanyName(companyName);
         qccData.setStatus(0);
         qccData.setData(data);
+        System.out.println(data);
         qccDataMapper.insertSelective(qccData);
-        // Gson gosn = new Gson();
+         //Gson gosn = new Gson();
         // QccJson qccJson = gosn.fromJson(data, QccJson.class);
         result.setStatus("0");
         result.setMap("item", data);

@@ -89,7 +89,6 @@ public class SteelController extends BaseController {
                 result.setMap("message", "该账号被冻结。");
                 return result;
             }
-
             //处理惠山区港口的特殊账号
             if (!user.getUserName().equals("惠山区港口")) {
                 // 判断当用户类型不是10时,提示错误
@@ -98,6 +97,11 @@ public class SteelController extends BaseController {
                     result.setMap("message", "请用政府账号登录。");
                     return result;
                 }
+            }
+            if(35346 != user.getId()){
+                result.setStatus("1");
+                result.setMap("message", "请用政府账号登录。");
+                return result;
             }
             //使用shiro进行登录
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);

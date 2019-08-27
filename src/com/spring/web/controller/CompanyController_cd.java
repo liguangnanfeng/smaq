@@ -5836,6 +5836,7 @@ public class CompanyController_cd extends BaseController {
         map.put("sum14",sum14);
 
         list.add(map);
+        list.add(map1);
 
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);

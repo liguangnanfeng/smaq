@@ -6899,28 +6899,56 @@ public class GlobalController extends BaseController {
 
         for (int i = 0; i < list.size(); i++) {
 
-            Integer  a = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),3); // 一般和较小 合格 已治理
-            list.get(i).put("danger1",a);
+            Integer a = 0;
+            Integer a1 = 0;
+            Integer b = 0;
+            Integer b1 = 0;
+            Integer c = 0;
+            Integer c1 = 0;
 
-            Integer  a1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),3); // 一般和较小 不合格 未治理
-            list.get(i).put("danger11",a1);
+            if(null != (String)list.get(i).get("danger") && list.get(i).get("danger").equals("其他")){
+
+                a = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),3); // 一般和较小 合格 已治理
+                list.get(i).put("danger1",a);
+
+                a1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),3); // 一般和较小 不合格 未治理
+                list.get(i).put("danger11",a1);
+
+                b = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),1); // 较大 合格 已治理
+                list.get(i).put("danger2",b);
+
+                b1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),1); // 较大 不合格 未治理
+                list.get(i).put("danger22",b1);
+
+                c = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2); // 重大 合格 已治理
+                list.get(i).put("danger3",c);
+
+                c1 = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2); // 重大 不合格 未治理
+                list.get(i).put("danger33",c1);
+
+            }else if (null != (String)list.get(i).get("danger")){
+
+                a = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),3); // 一般和较小 合格 已治理
+                list.get(i).put("danger1",a);
+
+                a1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),3); // 一般和较小 不合格 未治理
+                list.get(i).put("danger11",a1);
+
+                b = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),1); // 较大 合格 已治理
+                list.get(i).put("danger2",b);
+
+                b1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),1); // 较大 不合格 未治理
+                list.get(i).put("danger22",b1);
+
+                c = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2); // 重大 合格 已治理
+                list.get(i).put("danger3",c);
+
+                c1 = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2); // 重大 不合格 未治理
+                list.get(i).put("danger33",c1);
+            }
 
             count1 = a + a1;
-
-            Integer  b = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),1); // 较大 合格 已治理
-            list.get(i).put("danger2",b);
-
-            Integer  b1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),1); // 较大 不合格 未治理
-            list.get(i).put("danger22",b1);
-
             count2  = b + b1;
-
-            Integer  c = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2); // 重大 合格 已治理
-            list.get(i).put("danger3",c);
-
-            Integer  c1 = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2); // 重大 不合格 未治理
-            list.get(i).put("danger33",c1);
-
             count3  = c + c1;
 
             sign1 += a;

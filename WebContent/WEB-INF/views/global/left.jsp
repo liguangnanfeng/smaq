@@ -176,7 +176,7 @@
                 <li><a data-href="${ly }/global/off-list" data-title="检查人员信息库" href="javascript:void(0)">检查人员信息库</a></li>
             </c:when>
         </c:choose>
-        <li><a data-href="${ly }/global/zf-performance" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
+        <li><a data-href="${ly }/global/manage-hidden-danger" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
         <li><a data-href="${ly }/global/yh-analysis" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
         <li><a data-href="${ly }/global/zl-analysis" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
         </ul>

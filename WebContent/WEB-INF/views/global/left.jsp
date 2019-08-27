@@ -39,17 +39,22 @@
         <div class="menu_dropdown bk_2">
         <dl>
         <dt>
-        <i class="Hui-iconfont">&#xe643;</i>企业分类数据库
+        <i class="Hui-iconfont">&#xe643;</i>企业信息数据
         <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
         <ul>
+        <script>
+         console.log("${list}");
+        console.log("${userType}");
+        </script>
         <li><a data-href="${ly }/global/company/company-list" data-title="全部企业" href="javascript:void(0)">全部企业</a></li>
         <li><a data-href="${ly }/global/company/company-tab" data-title="企业分类" href="javascript:void(0)">企业分类</a></li>
         <c:if test="${userType==9}">
             <!--地级市-->
             <div class="div_omenu">
-            <div  class="div_otop">各地企业<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
+            <div  class="div_otop" data-href="${ly }/global/company-allcompany">各地企业</div>
+            <i class="Hui-iconfont top-iconfont">&#xe6d5;</i>
             <ul>
             <!-- 循环开始 -->
             <c:forEach items="${list }" varStatus="index" var="list">
@@ -62,9 +67,9 @@
             <div  class="div_otop">部门、人员管理<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
             <ul>
             <!-- 循环开始 -->
-            <c:forEach items="${list1 }" varStatus="index" var="list1">
-                <li><a data-href="${ly }/global/welcometrade?tradeId=${list1.code }" data-title="${list1.name}" href="javascript:void(0)">${list1.name}</a></li>
-            </c:forEach>
+            <%--<c:forEach items="${list1 }" varStatus="index" var="list1">--%>
+                <%--<li><a data-href="${ly }/global/welcometrade?tradeId=${list1.code }" data-title="${list1.name}" href="javascript:void(0)">${list1.name}</a></li>--%>
+            <%--</c:forEach>--%>
             <!-- 循环结束 -->
             </ul>
             </div>
@@ -131,7 +136,7 @@
         </dl>
         <dl>
         <dt>
-        <i class="Hui-iconfont">&#xe63c;</i>风险分级与管控
+        <i class="Hui-iconfont">&#xe63c;</i>风险分级管控
         <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -144,7 +149,7 @@
         </dl>
         <dl>
         <dt>
-        <i class="Hui-iconfont">&#xe687;</i>隐患排查与治理
+        <i class="Hui-iconfont">&#xe687;</i>隐患排查治理
         <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -176,7 +181,7 @@
                 <li><a data-href="${ly }/global/off-list" data-title="检查人员信息库" href="javascript:void(0)">检查人员信息库</a></li>
             </c:when>
         </c:choose>
-        <li><a data-href="${ly }/global/zf-performance" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
+        <li><a data-href="${ly }/global/jx-analysis" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
         <li><a data-href="${ly }/global/yh-analysis" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
         <li><a data-href="${ly }/global/zl-analysis" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
         </ul>
@@ -184,12 +189,24 @@
         </dl>
         <dl>
         <dt>
-        <i class="Hui-iconfont">&#xe687;</i>风险研判与承诺
+        <i class="Hui-iconfont">&#xe687;</i>风险研判公告
         <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
         <ul>
-        <li><a data-href="${ly }/global/study/promise-collect" data-title="安全承诺公告" href="javascript:void(0)">承诺公告公示汇总</a></li>
+        <li><a data-href="${ly }/company/threeLeft?leftBasic=6" data-title="流程管理"
+        href="javascript:void(0)">流程管理</a>
+        </li>
+        <li><a data-href="${ly }/company/threeLeft?leftBasic=7" data-title="运行管理"
+        href="javascript:void(0)">运行管理</a>
+        </li>
+        <li><a data-href="${ly }/company/study/targetassessment" data-title="履职考核"
+        href="javascript:void(0)">履职考核</a>
+        </li>
+        </ul>
+        <ul>
+        <li><a data-href="${ly }/company/study/promise" data-title="承诺公示"
+        href="javascript:void(0)">承诺公示</a></li>
         </ul>
         </dd>
         </dl>
@@ -203,7 +220,7 @@
         <li><a data-href="${ly }/global/source/company-list" data-title="全部企业" onclick="javascript:void(0)">全部企业</a></li>
         <li><a data-href="${ly }/global/source/video" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
         <li><a data-href="${ly }/global/source/company-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
-        <li><a data-href="${ly }/global/source/danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查治理</a></li>
+        <li><a data-href="${ly }/global/source/danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>
         <li><a data-href="${ly }/global/source/danger-chart" data-title="分类统计" href="javascript:void(0)">分类统计</a></li>
         </ul>
         </dd>
@@ -231,7 +248,7 @@
 
         <dl>
         <dt>
-        <i class="Hui-iconfont">&#xe70c;</i>行政与执法档案
+        <i class="Hui-iconfont">&#xe70c;</i>行政执法检查
         <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -303,11 +320,11 @@
         <a style="color:#fff" data-href="/global/Standard" href="javascript:void(0)" data-title="安全生产标准化"><i class="Hui-iconfont">&#xe687;</i>安全生产标准化</a>
         </dt>
         </dl>
-            <dl>
-                <dt>
-                    <a style="color:#fff" data-href="/global/selectBranch" href="javascript:void(0)" data-title="各地企业"><i class="Hui-iconfont">&#xe687;</i>各地企业</a>
-                </dt>
-            </dl>
+        <dl>
+        <dt>
+        <a style="color:#fff;"  data-href="${ly }/company/tables/yjmanage_center"  data-title="应急指挥中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急指挥中心</a>
+        </dt>
+        </dl>
         <c:if test="${userType==6||userType==3}">
             <!-------------信息推送及接受------------------------->
             <dl>
@@ -318,11 +335,11 @@
             <dd>
             <ul>
             <c:if test="${userType==3}">
-                <li><a data-href="${ly }/global/reviceMessageList" data-title="信息接收列表" href="javascript:void(0)">信息接收列表</a></li>
+                <li><a data-href="${ly }/global/reviceMessageList" data-title="信息接收列表" href="javascript:void(0)">接收列表</a></li>
             </c:if>
-            <li><a data-href="${ly }/global/sendMessageList" data-title="信息发送列表" href="javascript:void(0)">信息发送列表</a></li>
-            <li><a data-href="${ly }/global/addMessages" data-title="信息推送" href="javascript:void(0)">信息推送</a></li>
-            <li><a data-href="${ly }/global/groupIndex" data-title="群组设置" href="javascript:void(0)">企业群组设置</a></li>
+            <li><a data-href="${ly }/global/sendMessageList" data-title="信息发送列表" href="javascript:void(0)">发送列表</a></li>
+            <li><a data-href="${ly }/global/addMessages" data-title="信息推送" href="javascript:void(0)">推送编辑</a></li>
+            <li><a data-href="${ly }/global/groupIndex" data-title="群组设置" href="javascript:void(0)">群组设置</a></li>
             </ul>
             </dd>
             </dl>
@@ -337,18 +354,20 @@
             <div class="div_omenu">
             <div  class="div_otop">信息推送<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
             <ul>
-            <li><a data-href="${ly }/global/sendMessageList" data-title="信息发送列表" href="javascript:void(0)">信息发送列表</a></li>
-            <li><a data-href="${ly }/global/reviceMessageList" data-title="信息接收列表" href="javascript:void(0)">信息接收列表</a></li>
-            <li><a data-href="${ly }/global/addMessages" data-title="信息推送" href="javascript:void(0)">信息推送</a></li>
-            <li><a data-href="${ly }/global/groupIndex" data-title="群组设置" href="javascript:void(0)">企业群组设置</a></li>
+            <li><a data-href="${ly }/global/sendMessageList" data-title="信息发送列表" href="javascript:void(0)">发送列表</a></li>
+            <li><a data-href="${ly }/global/reviceMessageList" data-title="信息接收列表" href="javascript:void(0)">接收列表</a></li>
+            <li><a data-href="${ly }/global/addMessages" data-title="信息推送" href="javascript:void(0)">推送编辑</a></li>
+            <li><a data-href="${ly }/global/groupIndex" data-title="群组设置" href="javascript:void(0)">群组设置</a></li>
             </ul>
             </div>
         </c:if>
         <c:if test="${userType==6||userType==4||userType==3}">
             <div class="div_omenu">
-            <div  class="div_otop">环境监测参数设置<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
+            <div  class="div_otop">在线监测<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
             <ul>
             <li><a data-href="${ly }/global/system/toUpdateWaterParams" data-title="水质五参数设置" href="javascript:void(0)">水质五参数设置</a></li>
+            <li><a data-href="${ly }/village/to_monitor-list?flag=1" data-title="实时监控"
+            href="javascript:void(0)">实时监控</a></li>
             </ul>
             </div>
         </c:if>

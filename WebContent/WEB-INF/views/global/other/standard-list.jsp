@@ -29,6 +29,7 @@ body .dis-ib{margin-right:15px;}
   <div class="page-container">
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <span class="l">
+        <a class="btn btn-primary radius" href="javascript:show_dialog('添加主要生产产品','${ly }/steel/product/product-add')"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加主要生产产品</a>
       </span>
       <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span> 
     </div>
@@ -60,10 +61,10 @@ body .dis-ib{margin-right:15px;}
           </tr>
           </c:forEach>
           <!-- 循环结束 -->
+          <input type="button" onclick="sub()" value="上一页">&nbsp;&nbsp;
+          <input type="button" onclick="add()" value="下一页">
         </tbody>
       </table>
-      <input type="button" onclick="sub()" value="上一页">&nbsp;&nbsp;
-      <input type="button" onclick="add()" value="下一页">
     </div>
   </div>
 <script type="text/javascript">
@@ -80,15 +81,25 @@ $(function() {
   //请求page为0的数据
 });
 
-  function sub(){
-    //上一页
-    //先取出id为currentpage的值, 判断id是否小于等于0,如果是则什么也不做
-    //如果不是,将id减一,然后请求id为currentpage的值.
-1  }
+  function sub(){ //上一页
+
+  }
   function add(){ //下一页
 
   }
 /*编辑*/
+function admin_edit(id){
+  show_tab("编辑主要生产产品", getRootPath() + "/steel/product/product-edit?id=" + id);
+}
+
+/*删除*/
+function del(id){
+  $.post(getRootPath()+"/steel/product/deleteProduct",{
+    id:id,
+  },function(reuslt){
+    location.reload()
+  })
+}
 </script> 
 </body>
 </html>

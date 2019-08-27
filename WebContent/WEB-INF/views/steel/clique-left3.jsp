@@ -155,40 +155,7 @@
             </ul>
         </dd>
         </dl>
-		 <!---------------------------------------------------------------------安全培训中心------------------------------------------------->
-        <dl>
-            <dt>
-                <a style="color:#fff" data-href="/company/tables/dajiangtang" href="javascript:void(0)" data-title="安全培训中心"><i class="Hui-iconfont">&#xe687;</i>安全培训中心</a>
-            </dt>
-        </dl>
-		  <!---------------------------------------------------------------------应急管理中心---------------------------------------------------------->
-        <dl>
-            <dt>
-                <a style="color:#fff;"  data-href="${ly }/company/tables/yjmanage_center"  data-title="应急管理中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急管理中心</a>
-            </dt>
-        </dl>
-		 <!------------------------------------------------------------------------------------------------------------------------------------------->
-        <dl>
-            <dt>
-                <a style="color:#fff;"  data-href="${ly }/steel/company-list1" data-title="运行操作系统"
-                   href="javascript:void(0)"><i class="Hui-iconfont">&#xe639;</i>安全生产标准化</a>
-            </dt>
-        </dl>
-        <dl>
-            <dt>
-                <i class="Hui-iconfont">&#xe687;</i>重大危险源长制
-                <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-            </dt>
-            <dd>
-                <ul>
-                    <li><a data-href="${ly }/villageAdd/source/company-list" data-title="全部企业" href="javascript:void(0)">全部企业</a></li>
-                    <li><a data-href="${ly }/villageAdd/source/video" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
-                    <li><a data-href="${ly }/villageAdd/source/company-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
-                    <li><a data-href="${ly }/villageAdd/source/danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>
-                    <li><a data-href="${ly }/villageAdd/source/danger-chart" data-title="分类统计" href="javascript:void(0)">分类统计</a></li>
-                </ul>
-            </dd>
-        </dl>
+
         <!---------------------------------------职业卫生健康--------------------------------------------------------------------------->
         <dl>
             <dt>
@@ -250,15 +217,49 @@
       <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
        </dt>
             <dd>
-                <ul>
-                  <li><a data-href="${ly }/global/notice-list" data-title="一周监管动态" href="javascript:void(0)">一周监管动态</a></li>
-                  <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=1" data-title="隐患排查治理数据" href="javascript:void(0)">排查治理数据</a></li>
-                  <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=2" data-title="重大事故隐患数据" href="javascript:void(0)">重大隐患数据</a></li>
-                  <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=3" data-title="行政执法数据" href="javascript:void(0)">行政执法数据</a></li>
-             </ul>
+           <ul>
+      <li><a data-href="${ly }/global/notice-list" data-title="一周监管动态" href="javascript:void(0)">一周监管动态</a></li>
+      <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=1" data-title="隐患排查治理数据" href="javascript:void(0)">排查治理数据</a></li>
+      <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=2" data-title="重大事故隐患数据" href="javascript:void(0)">重大隐患数据</a></li>
+      <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=3" data-title="行政执法数据" href="javascript:void(0)">行政执法数据</a></li>
+      </ul>
       </dd>
       </dl>
-       
+      <!---------------------------------------------------------------------安全培训中心------------------------------------------------->
+      <dl>
+      <dt>
+      <a style="color:#fff" data-href="/company/tables/dajiangtang" href="javascript:void(0)" data-title="安全培训中心"><i class="Hui-iconfont">&#xe687;</i>安全培训中心</a>
+      </dt>
+      </dl>
+      <!---------------------------------------------------------------------应急管理中心---------------------------------------------------------->
+      <dl>
+      <dt>
+      <a style="color:#fff;"  data-href="${ly }/company/tables/yjmanage_center"  data-title="应急管理中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急管理中心</a>
+      </dt>
+      </dl>
+      <!------------------------------------------------------------------------------------------------------------------------------------------->
+      <dl>
+      <dt>
+      <%--data-href="${ly }/steel/company-list1"--%>
+      <a style="color:#fff;"  data-href="${ly }/api/safety_Standard/findAll?parendId=0&flag=1" data-title="运行操作系统"
+      href="javascript:void(0)"><i class="Hui-iconfont">&#xe639;</i>安全生产标准化</a>
+      </dt>
+      </dl>
+      <dl>
+      <dt>
+      <i class="Hui-iconfont">&#xe687;</i>重大危险源长制
+      <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+      </dt>
+      <dd>
+      <ul>
+      <li><a data-href="${ly }/villageAdd/source/company-list" data-title="全部企业" href="javascript:void(0)">全部企业</a></li>
+      <li><a data-href="${ly }/villageAdd/source/video" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
+      <li><a data-href="${ly }/villageAdd/source/company-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
+      <li><a data-href="${ly }/villageAdd/source/danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>
+      <li><a data-href="${ly }/villageAdd/source/danger-chart" data-title="分类统计" href="javascript:void(0)">分类统计</a></li>
+      </ul>
+      </dd>
+      </dl>
     
     </div>
     </aside>

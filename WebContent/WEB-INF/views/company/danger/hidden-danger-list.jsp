@@ -143,8 +143,12 @@
             <tbody>
             <!-- 循环开始 -->
             <c:set var="x" value="${fn:split('基础检查/现场检查/高危检查','/') }"/>
+
             <c:forEach items="${list }" varStatus="index" var="list">
                 <tr class="text-c">
+                <script>
+                console.log('14:32:','${list}');
+                </script>
                     <%--<c:choose>--%>
                         <%--<c:when test="${list.type == 1}">--%>
                             <%--<td>日常</td>--%>
@@ -210,17 +214,29 @@
                         <%--                    <td>${item[1]+item[2] }</td>--%>
                     <td>${list.realTimeStr}</td>
                     <td>${list.content }</td>
-                    <td>
-                <script>
-                  console.log('14:32:','${list}');
-                </script>
-                    <c:if test="${list.files!=null}">
-                        <button class="btn radius btn-danger size-S ml-20"
-                                onClick="showpicture(getRootPath()+'${list.files }')">
+                    <td >
+
+                    <c:if test="${list.recheck_file!=null}">
+                        <button  class="wjj${index.index} btn radius btn-danger size-S ml-20"
+                                onClick="showpicture(getRootPath()+'${list.recheck_file }')">
                             <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 隐患图片
                         </button>
                     </c:if>
                     </td>
+
+                <script>
+                <%--var wjj ="${list.recheck_file }";--%>
+
+                <%--if(wjj.indexOf("null") > 0 )--%>
+                <%--{--%>
+
+                <%--$(".wjj${index.index}").hide();--%>
+                <%--//console.log('.wjj${index.index}有字符串');--%>
+                <%--}--%>
+                <%--console.log('${list.recheck_file }','${index.index}')--%>
+
+                </script>
+
                     <c:if test="${flag==1}">
                         <td>
                             <c:choose>
@@ -262,7 +278,7 @@
                     </td>
                     <td>
                         <c:choose>
-                            <c:when test="${list.status eq 1}">合格</c:when>
+                            <c:when test="${list.status eq 1}">复查合格</c:when>
                         </c:choose>
                     </td>
                     <td>${list.fjgkfzr}</td>

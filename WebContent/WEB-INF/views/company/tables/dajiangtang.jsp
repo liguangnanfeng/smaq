@@ -148,33 +148,35 @@
 					<div class="com"><span class="time2">${userName}</span></div>
 			
 		</main>
+		<footer>
+
+		<%--		1、三级教育；--%>
+		<%--		2、四新教育；--%>
+		<%--		3、负责人、安管员培训；--%>
+		<%--		4、特种作业培训；--%>
+		<%--		5、全员培训；--%>
+		<%--		6、职业资格培训；--%>
+		<div class="func">
+		<section ><a href="javascript:volid(0)">三级教育</a></section>
+		<section ><a href="javascript:volid(0)">四新教育</a></section>
+		<section ><a href="javascript:volid(0)">负责人、安管员培训</a></section>
+		<section ><a href="javascript:volid(0)">特种作业培训</a></section>
+		<section ><a href="javascript:volid(0)">全员培训</a></section>
+		<section ><a href="jswx.zayxy.com/index.php?user-app-login&mobile=${userName}" target="_blank">职业资格培训</a></section>
+		</div>
+		</footer>
 		<script>
-		var w=$('main').height();
-		$('main').height(w*0.4015625)
 
 		</script>
 
 
 		<iframe src="http://jswx.zayxy.com/index.php?user-app-login&mobile=${userName}" width="100%" height="100%" sandbox="allow-scripts" frameborder="0"  allowtransparency="true"></iframe>
-		<footer>
 
-<%--		1、三级教育；--%>
-<%--		2、四新教育；--%>
-<%--		3、负责人、安管员培训；--%>
-<%--		4、特种作业培训；--%>
-<%--		5、全员培训；--%>
-<%--		6、职业资格培训；--%>
-				<div class="func">
-				<section ><a href="javascript:volid(0)">三级教育</a></section>
-				<section ><a href="javascript:volid(0)">四新教育</a></section>
-				<section ><a href="javascript:volid(0)">负责人、安管员培训</a></section>
-				<section ><a href="javascript:volid(0)">特种作业培训</a></section>
-				<section ><a href="javascript:volid(0)">全员培训</a></section>
-				<section ><a href="jswx.zayxy.com/index.php?user-app-login&mobile=${userName}" target="_blank">职业资格培训</a></section>
-			</div>
-		</footer>
 		<script>
-			var H=window.innerWidth;
+		var w=$('main').height();
+		$('main').height(w*0.4015625)
+
+		var H=window.innerWidth;
 			if(H<=1080){
 				console.log("缩小字体");
 				var h=document.querySelector(".time2");

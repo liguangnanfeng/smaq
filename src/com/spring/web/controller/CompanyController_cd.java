@@ -4530,7 +4530,7 @@ public class CompanyController_cd extends BaseController {
     public String zhuChartData44 (HttpServletRequest request, Model model){
         User user = getLoginUser(request);
         List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());
-
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
         Map<String,Object> map = new HashMap<>();
 
         Integer count1 = 0;
@@ -4546,6 +4546,70 @@ public class CompanyController_cd extends BaseController {
         Integer sign22 = 0;
         Integer sign33 = 0;
 
+        Integer numbers1 = 0;
+        Integer numbers11 = 0;
+        Integer numbers2 = 0;
+        Integer numbers22 = 0;
+        Integer numbers3 = 0;
+        Integer numbers33 = 0;
+
+        Map<String,Object> map1 = new HashMap<>();
+
+
+        numbers1 = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),3,company.getName()); // 一般和较小 合格 已治理
+        model.addAttribute("numbers1",numbers1);
+        sign1 = numbers1;
+
+        numbers11 = tCheckItemMapper.findRecheckFileByMap(2,user.getId(),3,company.getName()); // 一般和较小 不合格 未治理
+        model.addAttribute("numbers11",numbers11);
+        sign11 = numbers11;
+
+        Integer add1 = numbers1 + numbers11;
+
+        numbers2 = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),1,company.getName()); // 较大 合格 已治理
+        model.addAttribute("numbers2",numbers2);
+        sign2 = numbers2;
+
+        numbers22 = tCheckItemMapper.findRecheckFileByMap(2,user.getId(),1,company.getName()); // 较大 不合格 未治理
+        model.addAttribute("numbers22",numbers22);
+        sign22 = numbers22;
+
+        Integer add2 = numbers2 + numbers22;
+
+        numbers3 = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),2,company.getName()); // 重大 合格 已治理
+        model.addAttribute("numbers3",numbers3);
+        sign3 = numbers3;
+
+        numbers33 = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),2,company.getName()); // 重大 不合格 未治理
+        model.addAttribute("numbers33",numbers33);
+        sign33 = numbers33;
+
+        Integer add3 = numbers3 + numbers33;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if (null != add1 && add1 != 0){  // 一般和较小 治理率
+            String str = df.format((float)numbers1/add1);
+            model.addAttribute("rate1",str);
+        }else {
+            model.addAttribute("rate1",0.00);
+        }
+
+        if (null != add2 && add2 != 0){ // 较大 治理率
+            String str = df.format((float)numbers2/add2);
+            model.addAttribute("rate2",str);
+        }else {
+            model.addAttribute("rate2",0.00);
+        }
+
+        if (null != add3 && add3 != 0){ // 重大 治理率
+            String str = df.format((float)numbers3/add3);
+            model.addAttribute("rate3",str);
+        }else {
+            model.addAttribute("rate3",0.00);
+        }
+
+
         for (int i = 0; i < list.size(); i++) {
 
             Integer  a = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),3,(String) list.get(i).get("name")); // 一般和较小 合格 已治理
@@ -4554,7 +4618,7 @@ public class CompanyController_cd extends BaseController {
             Integer  a1 = tCheckItemMapper.findRecheckFileByMap(2,user.getId(),3,(String) list.get(i).get("name")); // 一般和较小 不合格 未治理
             list.get(i).put("danger11",a1);
 
-            count1 = a + a1;
+            count1 = a + a1 ;
 
             Integer  b = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),1,(String) list.get(i).get("name")); // 较大 合格 已治理
             list.get(i).put("danger2",b);
@@ -4579,8 +4643,6 @@ public class CompanyController_cd extends BaseController {
             sign11 += a1;
             sign22 += b1;
             sign33 += c1;
-
-            DecimalFormat df = new DecimalFormat("0.00");
 
             Integer sum = count1 + count2 + count3;
 
@@ -4622,7 +4684,6 @@ public class CompanyController_cd extends BaseController {
             }
 
         }
-        DecimalFormat df = new DecimalFormat("0.00");
 
         Integer sum1 = sign1 + sign11;
         Integer sum2 = sign2 + sign22;
@@ -5571,53 +5632,69 @@ public class CompanyController_cd extends BaseController {
         Integer sum12 = 0;
         Integer sum13 = 0;
         Integer sum14 = 0;
+        Integer aa = 0;
+        Integer bb = 0;
+        Integer cc = 0;
+        Integer dd = 0;
+        Integer ee = 0;
+        Integer ff = 0;
+        Integer gg = 0;
+        Integer hh = 0;
+        Integer ii = 0;
+        Integer jj = 0;
+        Integer kk = 0;
+        Integer ll = 0;
+        Integer mm = 0;
+        Integer nn = 0;
+        Integer count1 = 0;
 
         Map<String,Object> map1 = new HashMap<>();
 
-        Integer aa = tCheckItemMapper.zhuChartData123("生产工艺",company.getName(),user.getId()); // 生产工艺 隐患数据
-        map1.put("danger1",aa);
+        aa = tCheckItemMapper.zhuChartData123("生产工艺",company.getName(),user.getId()); // 生产工艺 隐患数据
+        model.addAttribute("aa",aa);
 
-        Integer bb = tCheckItemMapper.zhuChartData123("设备设施",company.getName(),user.getId()); // 设备设施 隐患数据
-        map1.put("danger2",bb);
+        bb = tCheckItemMapper.zhuChartData123("设备设施",company.getName(),user.getId()); // 设备设施 隐患数据
+        model.addAttribute("bb",bb);
 
-        Integer cc = tCheckItemMapper.zhuChartData123("特种设备",company.getName(),user.getId()); // 特种设备 隐患数据
-        map1.put("danger3",cc);
+        cc = tCheckItemMapper.zhuChartData123("特种设备",company.getName(),user.getId()); // 特种设备 隐患数据
+        model.addAttribute("cc",cc);
 
-        Integer dd = tCheckItemMapper.zhuChartData123("消防安全",company.getName(),user.getId()); // 消防安全 隐患数据
-        map1.put("danger4",dd);
+        dd = tCheckItemMapper.zhuChartData123("消防安全",company.getName(),user.getId()); // 消防安全 隐患数据
+        model.addAttribute("dd",dd);
 
-        Integer ee = tCheckItemMapper.zhuChartData123("用电安全",company.getName(),user.getId()); // 用电安全 隐患数据
-        map1.put("danger5",ee);
+        ee = tCheckItemMapper.zhuChartData123("用电安全",company.getName(),user.getId()); // 用电安全 隐患数据
+        model.addAttribute("ee",ee);
 
-        Integer ff = tCheckItemMapper.zhuChartData123("行为环境",company.getName(),user.getId()); // 行为环境 隐患数据
-        map1.put("danger6",ff);
+        ff = tCheckItemMapper.zhuChartData123("行为环境",company.getName(),user.getId()); // 行为环境 隐患数据
+        model.addAttribute("ff",ff);
 
-        Integer gg = tCheckItemMapper.zhuChartData123("公辅设备",company.getName(),user.getId()); // 公辅设备 隐患数据
-        map1.put("danger7",gg);
+        gg = tCheckItemMapper.zhuChartData123("公辅设备",company.getName(),user.getId()); // 公辅设备 隐患数据
+        model.addAttribute("gg",gg);
 
-        Integer hh = tCheckItemMapper.zhuChartData123("危化管理",company.getName(),user.getId()); // 危化管理 隐患数据
-        map1.put("danger8",hh);
+        hh = tCheckItemMapper.zhuChartData123("危化管理",company.getName(),user.getId()); // 危化管理 隐患数据
+        model.addAttribute("hh",hh);
 
-        Integer ii = tCheckItemMapper.zhuChartData123("基础管理",company.getName(),user.getId()); // 基础管理 隐患数据
-        map1.put("danger9",ii);
+        ii = tCheckItemMapper.zhuChartData123("基础管理",company.getName(),user.getId()); // 基础管理 隐患数据
+        model.addAttribute("ii",ii);
 
-        Integer jj = tCheckItemMapper.zhuChartData123("防雷静电",company.getName(),user.getId()); // 防雷静电 隐患数据
-        map1.put("danger10",jj);
+        jj = tCheckItemMapper.zhuChartData123("防雷静电",company.getName(),user.getId()); // 防雷静电 隐患数据
+        model.addAttribute("jj",jj);
 
-        Integer kk = tCheckItemMapper.zhuChartData123("安全设施",company.getName(),user.getId()); // 安全设施 隐患数据
-        map1.put("danger11",kk);
+        kk = tCheckItemMapper.zhuChartData123("安全设施",company.getName(),user.getId()); // 安全设施 隐患数据
+        model.addAttribute("kk",kk);
 
-        Integer ll = tCheckItemMapper.zhuChartData123("职业卫生",company.getName(),user.getId()); // 职业卫生 隐患数据
-        map1.put("danger12",ll);
+        ll = tCheckItemMapper.zhuChartData123("职业卫生",company.getName(),user.getId()); // 职业卫生 隐患数据
+        model.addAttribute("ll",ll);
 
-        Integer mm = tCheckItemMapper.zhuChartData123("生产现场",company.getName(),user.getId()); // 生产现场 隐患数据
-        map1.put("danger13",mm);
+        mm = tCheckItemMapper.zhuChartData123("生产现场",company.getName(),user.getId()); // 生产现场 隐患数据
+        model.addAttribute("mm",mm);
 
-        Integer nn = tCheckItemMapper.zhuChartData1231(company.getName(),user.getId()); // 其他 隐患数据
-        map1.put("danger14",nn);
+        nn = tCheckItemMapper.zhuChartData1231(company.getName(),user.getId()); // 其他 隐患数据
+        model.addAttribute("nn",nn);
 
-        Integer count1 = aa + bb + cc + dd + ee + ff + gg + hh + ii + jj + kk + ll + mm + nn;
+        count1 = aa + bb + cc + dd + ee + ff + gg + hh + ii + jj + kk + ll + mm + nn;
 
+        model.addAttribute("count1",count1);
 
         for (int i = 0; i < list.size(); i++) {
 
@@ -5677,13 +5754,27 @@ public class CompanyController_cd extends BaseController {
             list.get(i).put("danger14",n);
             sum14 += n;
 
-
             Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + count1;
 
             list.get(i).put("danger15",count);  // 某个车间的所有种类隐患的合计
         }
 
-        Integer count = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 + sum11 + sum12 + sum13 + sum14;
+        sum1 = sum1 + aa;
+        sum2 = sum2 + bb;
+        sum3 = sum3 + cc;
+        sum4 = sum4 + dd;
+        sum5 = sum5 + ee;
+        sum6 = sum6 + ff;
+        sum7 = sum7 + gg;
+        sum8 = sum8 + hh;
+        sum9 = sum9 + ii;
+        sum10 = sum10 + jj;
+        sum11 = sum11 + kk;
+        sum12 = sum12 + ll;
+        sum13 = sum13 + mm;
+        sum14 = sum14 + nn;
+
+        Integer count = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 + sum11 + sum12 + sum13 + sum14 + count1;
 
         DecimalFormat df = new DecimalFormat("0.00");
 

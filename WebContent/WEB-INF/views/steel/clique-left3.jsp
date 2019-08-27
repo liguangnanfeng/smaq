@@ -103,6 +103,7 @@
                   <li><a data-href="${ly }/steel/product/material-list" data-title="原辅材料" href="javascript:void(0)">原辅材料</a></li>
                   <li><a data-href="${ly }/steel/product/product-list" data-title="主要产品" href="javascript:void(0)">主要产品</a></li>
                   <li><a data-href="${ly }/steel/process/process-list" data-title="生产工艺" href="javascript:void(0)">生产工艺</a></li>
+                  <li><a data-href="${ly }/steel/company/company-list" data-title="所属企业" href="javascript:void(0)">所属企业</a></li>
               </ul>
           </dd>
       </dl>
@@ -249,12 +250,12 @@
       <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
        </dt>
             <dd>
-           <ul>
-      <li><a data-href="${ly }/global/notice-list" data-title="一周监管动态" href="javascript:void(0)">一周监管动态</a></li>
-      <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=1" data-title="隐患排查治理数据" href="javascript:void(0)">排查治理数据</a></li>
-      <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=2" data-title="重大事故隐患数据" href="javascript:void(0)">重大隐患数据</a></li>
-      <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=3" data-title="行政执法数据" href="javascript:void(0)">行政执法数据</a></li>
-      </ul>
+                <ul>
+                  <li><a data-href="${ly }/global/notice-list" data-title="一周监管动态" href="javascript:void(0)">一周监管动态</a></li>
+                  <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=1" data-title="隐患排查治理数据" href="javascript:void(0)">排查治理数据</a></li>
+                  <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=2" data-title="重大事故隐患数据" href="javascript:void(0)">重大隐患数据</a></li>
+                  <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=3" data-title="行政执法数据" href="javascript:void(0)">行政执法数据</a></li>
+             </ul>
       </dd>
       </dl>
        

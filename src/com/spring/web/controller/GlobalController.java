@@ -6908,22 +6908,22 @@ public class GlobalController extends BaseController {
 
             if(null != (String)list.get(i).get("danger") && list.get(i).get("danger").equals("其他")){
 
-                a = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),3); // 一般和较小 合格 已治理
+                a = tCheckItemMapper.manageHiddenDanger11(1,3); // 一般和较小 合格 已治理
                 list.get(i).put("danger1",a);
 
-                a1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),3); // 一般和较小 不合格 未治理
+                a1 = tCheckItemMapper.manageHiddenDanger11(2,3); // 一般和较小 不合格 未治理
                 list.get(i).put("danger11",a1);
 
-                b = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),1); // 较大 合格 已治理
+                b = tCheckItemMapper.manageHiddenDanger11(1,1); // 较大 合格 已治理
                 list.get(i).put("danger2",b);
 
-                b1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),1); // 较大 不合格 未治理
+                b1 = tCheckItemMapper.manageHiddenDanger11(2,1); // 较大 不合格 未治理
                 list.get(i).put("danger22",b1);
 
-                c = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2); // 重大 合格 已治理
+                c = tCheckItemMapper.manageHiddenDanger11(1,2); // 重大 合格 已治理
                 list.get(i).put("danger3",c);
 
-                c1 = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2); // 重大 不合格 未治理
+                c1 = tCheckItemMapper.manageHiddenDanger11(1,2); // 重大 不合格 未治理
                 list.get(i).put("danger33",c1);
 
             }else if (null != (String)list.get(i).get("danger")){
@@ -7032,8 +7032,180 @@ public class GlobalController extends BaseController {
         return "manage-hidden-danger";
     }
 
+    
+    /**
+     * create by  : 小明！！！
+     * description: TODO 隐患治理数据分析  行业
+     * create time: 2019/8/27 9:04
+     */
+    @RequestMapping(value = "manage-hidden-industry")
+    public String manegeHiddenIndustry(HttpServletRequest request, Model model, Integer flag){
+
+        User user = getLoginUser(request);
+        List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
+
+        String string = "化工,冶金,有色,建材,机械,轻工,纺织,商贸,烟花,其他";
+
+        String[] list1 = string.split(",");
+
+        Map<String,Object> map = new HashMap<>();
+
+        for (int i = 0; i < list1.length; i++) {
+
+            Map<String,Object> map1 = new HashMap<>();
+            map1.put("industry",list1[i]);
+
+            list.add(map1);
+        }
+
+        System.out.println(list.size());
+        Integer count1 = 0;
+        Integer count2 = 0;
+        Integer count3 = 0;
+
+        // 已治理合计
+        Integer sign1 = 0;
+        Integer sign2 = 0;
+        Integer sign3 = 0;
+        // 未治理合计
+        Integer sign11 = 0;
+        Integer sign22 = 0;
+        Integer sign33 = 0;
+
+        for (int i = 0; i < list.size(); i++) {
+
+            Integer a = 0;
+            Integer a1 = 0;
+            Integer b = 0;
+            Integer b1 = 0;
+            Integer c = 0;
+            Integer c1 = 0;
+
+            if(null != (String)list.get(i).get("industry") && list.get(i).get("industry").equals("其他")){
+
+                a = tCheckItemMapper.manageHiddenIndustry11(1,3); // 一般和较小 合格 已治理
+                list.get(i).put("industry1",a);
+
+                a1 = tCheckItemMapper.manageHiddenIndustry11(2,3); // 一般和较小 不合格 未治理
+                list.get(i).put("industry11",a1);
+
+                b = tCheckItemMapper.manageHiddenIndustry11(1,1); // 较大 合格 已治理
+                list.get(i).put("industry2",b);
+
+                b1 = tCheckItemMapper.manageHiddenIndustry11(2,1); // 较大 不合格 未治理
+                list.get(i).put("industry22",b1);
+
+                c = tCheckItemMapper.manageHiddenIndustry11(1,2); // 重大 合格 已治理
+                list.get(i).put("industry3",c);
+
+                c1 = tCheckItemMapper.manageHiddenIndustry11(1,2); // 重大 不合格 未治理
+                list.get(i).put("industry33",c1);
+
+            }else if (null != (String)list.get(i).get("industry")){
+
+                a = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),3); // 一般和较小 合格 已治理
+                list.get(i).put("industry1",a);
+
+                a1 = tCheckItemMapper.manageHiddenIndustry(2,(String)list.get(i).get("industry"),3); // 一般和较小 不合格 未治理
+                list.get(i).put("industry11",a1);
+
+                b = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),1); // 较大 合格 已治理
+                list.get(i).put("industry2",b);
+
+                b1 = tCheckItemMapper.manageHiddenIndustry(2,(String)list.get(i).get("industry"),1); // 较大 不合格 未治理
+                list.get(i).put("industry22",b1);
+
+                c = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),2); // 重大 合格 已治理
+                list.get(i).put("industry3",c);
+
+                c1 = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),2); // 重大 不合格 未治理
+                list.get(i).put("industry33",c1);
+            }
+
+            count1 = a + a1;
+            count2  = b + b1;
+            count3  = c + c1;
+
+            sign1 += a;
+            sign2 += b;
+            sign3 += c;
+
+            sign11 += a1;
+            sign22 += b1;
+            sign33 += c1;
+
+            DecimalFormat df = new DecimalFormat("0.00");
+
+            Integer sum = count1 + count2 + count3; // 单个风险所包含的所有隐患
+
+            if (null != count1 && count1 != 0){  // 一般和较小 治理率
+                String str = df.format((float)a/count1);
+                list.get(i).put("result11",str+"%");
+            }else {
+                list.get(i).put("result11",0.00);
+            }
+
+            if (null != count2 && count2 != 0){ // 较大 治理率
+                String str = df.format((float)b/count2);
+                list.get(i).put("result22",str+"%");
+            }else {
+                list.get(i).put("result22",0.00);
+            }
+
+            if (null != count3 && count3 != 0){ // 重大 治理率
+                String str = df.format((float)c/count3);
+                list.get(i).put("result33",str+"%");
+            }else {
+                list.get(i).put("result33",0.00);
+            }
+
+        }
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        Integer sum1 = sign1 + sign11;  // 所有风险  一般隐患的总和
+
+        Integer sum2 = sign2 + sign22;  // 所有风险  较大隐患的总和
+
+        Integer sum3 = sign3 + sign33;  // 所有风险  重大隐患的总和
+
+        if (null != sum1 && sum1 != 0){  // 一般和较小 治理率
+            String str = df.format((float)sign1/sum1);
+            map.put("resust11",str+"%");
+        }else {
+            map.put("resust11",0.00);
+        }
+
+        if (null != sum2 && sum2 != 0){ // 较大 治理率
+            String str = df.format((float)sign2/sum2);
+            map.put("result22",str+"%");
+        }else {
+            map.put("result22",0.00);
+        }
+
+        if (null != sum3 && sum3 != 0){ // 重大 治理率
+            String str = df.format((float)sign3/sum3);
+            map.put("result33",str+"%");
+        }else {
+            map.put("result33",0.00);
+        }
+
+        map.put("sign1",sign1);
+        map.put("sign2",sign2);
+        map.put("sign3",sign3);
+        map.put("sign11",sign11);
+        map.put("sign22",sign22);
+        map.put("sign33",sign33);
+        map.put("resust11",sign11);
+        map.put("result22",sign22);
+        map.put("result33",sign33);
 
 
+        model.addAttribute("data",new Date());
+        model.addAttribute("list",list);
+
+        return "manage-hidden-industry";
+    }
 
 
 

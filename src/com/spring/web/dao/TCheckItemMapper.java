@@ -356,6 +356,13 @@ public interface TCheckItemMapper {
     Integer manageHiddenCompany(@Param("status")Integer status, @Param("user_id")Integer user_id, @Param("flag")Integer flag);
 
     Integer manageHiddenDanger(@Param("status")Integer status, @Param("control")String control, @Param("flag")Integer flag);
+
+    Integer manageHiddenDanger11(@Param("status")Integer status, @Param("flag")Integer flag);
+
+    Integer manageHiddenIndustry11(@Param("status")Integer status, @Param("flag")Integer flag);
+
+    Integer manageHiddenIndustry(@Param("status")Integer status, @Param("industry")String industry, @Param("flag")Integer flag);
+
 }
 
 

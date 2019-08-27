@@ -243,7 +243,7 @@
             <img src="${ly }/images/home/logo.png" class="title_img">
             <div>
             <p class="name"></p>
-            <p style="color: #1A69DF;font-size: 45px;margin-bottom:50px;">智能应急管理信息系统
+            <p style="color: #1A69DF;font-size: 45px;margin-bottom:50px;">安全生产信息智能化管理平台
             </p>
             <span class="right_yuan">
             <span class="yuan" style="background:#00A1E9"></span>

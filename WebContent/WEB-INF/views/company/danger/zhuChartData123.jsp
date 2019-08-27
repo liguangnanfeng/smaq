@@ -104,76 +104,101 @@
 		</section>
 		<table class=".table table-hover" style="margin: auto;" cellpadding="2">
 		<tr class="f">
-		<td rowspan="2">序号</td>
-		<td class="first" rowspan="2"><span class="title1">对象</span><br><span class="title3">部门</span></td>
+			<td rowspan="2">序号</td>
+			<td class="first" rowspan="2"><span class="title1">对象</span><br><span class="title3">部门</span></td>
 
-		<td>生产工艺</td>
-		<td>设备设施</td>
-		<td>特种设备</td>
-		<td>消防安全</td>
-		<td>用电安全</td>
-		<td>行为环境</td>
-		<td>公辅设备</td>
-		<td>危化管理</td>
-		<td>基础管理</td>
-		<td>防雷静电</td>
-		<td>安全设施</td>
-		<td>职业卫生</td>
-		<td>生产现场</td>
-		<td style="width: 40px;">其他</td>
-		<td rowspan="2" class="sum">合计</td>
-		<td rowspan="2">排名</td>
-		<td rowspan="2">同比%</td>
-		<td rowspan="2">排名</td>
+			<td>生产工艺</td>
+			<td>设备设施</td>
+			<td>特种设备</td>
+			<td>消防安全</td>
+			<td>用电安全</td>
+			<td>行为环境</td>
+			<td>公辅设备</td>
+			<td>危化管理</td>
+			<td>基础管理</td>
+			<td>防雷静电</td>
+			<td>安全设施</td>
+			<td>职业卫生</td>
+			<td>生产现场</td>
+			<td style="width: 40px;">其他</td>
+			<td rowspan="2" class="sum">合计</td>
+			<td rowspan="2">排名</td>
+			<td rowspan="2">同比%</td>
+			<td rowspan="2">排名</td>
 		</tr>
 		<tr class="f">
-		<td>数量</td>
-		<td>数量</td>
-		<td>数量</td>
-		<td>数量</td>
-		<td>数量</td>
-		<td>数量</td>
-		<td>数量</td>
-		<td>数量</td>
-		<td>数量</td>
-		<td>数量</td>
-		<td>数量</td>
-		<td>数量</td>
-		<td>数量</td>
-		<td>数量</td>
-		<script>
-		window.a=0;
-		</script>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<script>
+			window.a=0;
+			console.log('${list}');
+			</script>
 
 		</tr>
+		<tr>
+			<td>1</td>
+			<td>公司级</td>
+			<td>${aa}</td>
+			<td>${bb}</td>
+			<td>${cc}</td>
+			<td>${dd}</td>
+			<td>${ee}</td>
+			<td>${ff}</td>
+			<td>${gg}</td>
+			<td>${hh}</td>
+			<td>${ii}</td>
+			<td>${jj}</td>
+			<td>${kk}</td>
+			<td>${ll}</td>
+			<td>${mm}</td>
+			<td>${nn}</td>
+			<td>${count1}</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+
 		<c:forEach items="${list}" varStatus="index" var="be">
 			<c:if test="${index.index<fn:length(list)-1 }">
 				<tr>
-				<td>${index.index + 1}</td>
-				<td>${be.name}</td>
-				<td>${be.danger1}</td>
-				<td>${be.danger2}</td>
-				<td>${be.danger3}</td>
-				<td>${be.danger4}</td>
-				<td>${be.danger5}</td>
-				<td>${be.danger6}</td>
-				<td>${be.danger7}</td>
-				<td>${be.danger8}</td>
-				<td>${be.danger9}</td>
-				<td>${be.danger10}</td>
-				<td>${be.danger11}</td>
-				<td>${be.danger12}</td>
-				<td>${be.danger13}</td>
-				<td>${be.danger14}</td>
-				<td>${be.danger15}</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				</tr>
+					<td>${index.index + 2}</td>
+					<td>${be.name}</td>
+					<td>${be.danger1}</td>
+					<td>${be.danger2}</td>
+					<td>${be.danger3}</td>
+					<td>${be.danger4}</td>
+					<td>${be.danger5}</td>
+					<td>${be.danger6}</td>
+					<td>${be.danger7}</td>
+					<td>${be.danger8}</td>
+					<td>${be.danger9}</td>
+					<td>${be.danger10}</td>
+					<td>${be.danger11}</td>
+					<td>${be.danger12}</td>
+					<td>${be.danger13}</td>
+					<td>${be.danger14}</td>
+					<td>${be.danger15}</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					</tr>
+				</c:if>
 				<script>
 				 window.a=window.a+'${be.danger15}'*1;
 				</script>
-			</c:if>
+
 
 			<c:if test="${index.index>fn:length(list)-2 }">
 				<tr>

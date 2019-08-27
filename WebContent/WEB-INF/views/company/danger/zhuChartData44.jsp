@@ -132,10 +132,34 @@
 		<td>治理率%</td>
 		<td>同比%</td>
 		</tr>
+		<tr>
+			<td>1</td>
+			<td>公司级</td>
+			<td>${numbers1}</td>
+			<td>${numbers11}</td>
+			<td>${rate1}</td>
+			<td></td>
+
+			<td>${numbers2}</td>
+			<td>${numbers22}</td>
+			<td>${rate2}</td>
+			<td></td>
+
+			<td>${numbers3}</td>
+			<td>${numbers33}</td>
+			<td>${rate3}</td>
+			<td></td>
+
+			<td>${flag1}</td>
+			<td>${flag2}</td>
+			<td>${number66}</td>
+			<td></td>
+			<td></td>
+		</tr>
 		<c:forEach items="${list}" varStatus="index" var="be">
 			<c:if test="${index.index<fn:length(list)-1 }">
 				<tr>
-				<td>${index.index + 1}</td>
+				<td>${index.index + 2}</td>
 				<td>${be.name}</td>
 				<td>${be.danger1}</td>
 				<td>${be.danger11}</td>

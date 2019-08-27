@@ -23,8 +23,6 @@
       </div>
     </div>
   </header>
-  <script>
-    alert('122222');
-  </script>
+
 </body>
 </html>

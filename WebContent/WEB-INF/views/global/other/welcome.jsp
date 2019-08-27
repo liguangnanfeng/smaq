@@ -36,6 +36,7 @@ body .lianj_com img{margin-right:6px;margin-left:6px;}
 body .iconxw{transform: rotate(-90deg);float:right;margin-right:-5px;margin-top: -3px;}
 </style>
 <script type="text/javascript">
+  console.log("我是global")
 var chart = null;
 $(function () {
   $(".title_danger").on("click",function(){

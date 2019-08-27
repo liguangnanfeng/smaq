@@ -4609,6 +4609,22 @@ public class CompanyController_cd extends BaseController {
             model.addAttribute("rate3",0.00);
         }
 
+        Integer flag1 = numbers1 + numbers2 + numbers3; // 已治理 合计
+        model.addAttribute("flag1",flag1);
+
+        Integer flag2 = numbers11 + numbers22 + numbers33;  // 未治理 合计
+        model.addAttribute("flag2",flag2);
+
+        Integer flag = flag1 + flag2;
+
+        if (null != flag && flag != 0){
+            String str = df.format((float)flag1/flag);
+            model.addAttribute("number66",str+"%");  // 治理率 合计
+        }else {
+            model.addAttribute("number66",0.00);
+        }
+
+
 
         for (int i = 0; i < list.size(); i++) {
 

@@ -521,15 +521,16 @@
     return false;
     }
 
-    <%--if($("#pic3").attr("src")==window.imgsrc){--%>
-
-
-    <%--&lt;%&ndash;layer.alert("图片不能为空")&ndash;%&gt;--%>
-    <%--&lt;%&ndash;return false;&ndash;%&gt;--%>
-    <%--}--%>
-    else console.log("已上传");
+    if($("#pic3").attr("src")==window.imgsrc){
+    console.log("图片为空!")
     $("#pic3").attr("url","/images/zwtp.jpg");
     console.log($("#pic3").attr("url"));
+    <%--layer.alert("图片不能为空")--%>
+    <%--return false;--%>
+    }
+    else console.log("已上传");
+
+
     $(":radio[name='plan-radio-" + itemId + "'][value='2']").attr("data-file", $("#pic3").attr("url"));
     $("#modal-plan").modal("hide");
     $.post(getRootPath() + "/company/check-item-save", {

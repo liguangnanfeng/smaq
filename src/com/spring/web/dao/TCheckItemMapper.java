@@ -341,6 +341,28 @@ public interface TCheckItemMapper {
     List<Map<String,Object>> findALL(@Param("userId")Integer userId, @Param("type")Integer type);
     List<Map<String, Object>> selectBasicMessage(@Param("userId") Integer userId, @Param("type") Integer type, @Param("start") Integer start);
 
+    Integer zfHiddenTrouble(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zfHiddenTrouble11(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zhengFuChartData88(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zhengFuChartData881(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zhengFuChartDataDanger(@Param("flag")Integer flag, @Param("industry")String industry, @Param("user_id")Integer user_id);
+
+    Integer zhengFuChartDataDanger11(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer manageHiddenCompany(@Param("status")Integer status, @Param("user_id")Integer user_id, @Param("flag")Integer flag);
+
+    Integer manageHiddenDanger(@Param("status")Integer status, @Param("control")String control, @Param("flag")Integer flag);
+
+    Integer manageHiddenDanger11(@Param("status")Integer status, @Param("flag")Integer flag);
+
+    Integer manageHiddenIndustry11(@Param("status")Integer status, @Param("flag")Integer flag);
+
+    Integer manageHiddenIndustry(@Param("status")Integer status, @Param("industry")String industry, @Param("flag")Integer flag);
+
 }
 
 

@@ -285,7 +285,7 @@
     <include refid="Base_Column_List" />
     from a_danger_manual_tbl
     where
-    industry in in (${industrys})
+    industry in (${industrys})
   </select>
 
 

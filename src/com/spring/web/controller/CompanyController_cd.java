@@ -2885,7 +2885,12 @@ public class CompanyController_cd extends BaseController {
 
         TCheckItem tCheckItem = new TCheckItem();
 
-        String file = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + files;
+        String file = null;
+        if (null == files){
+            file = null;
+        }else {
+            file = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + files;
+        }
 
         tCheckItem.setRecheckFile(file);
         tCheckItem.setId(id);
@@ -5549,7 +5554,7 @@ public class CompanyController_cd extends BaseController {
     public String zhuChartData123 (HttpServletRequest request, Model model){
         User user = getLoginUser(request);
         List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());
-
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
         Map<String,Object> map = new HashMap<>();
 
         Integer sum1 = 0;
@@ -5566,6 +5571,53 @@ public class CompanyController_cd extends BaseController {
         Integer sum12 = 0;
         Integer sum13 = 0;
         Integer sum14 = 0;
+
+        Map<String,Object> map1 = new HashMap<>();
+
+        Integer aa = tCheckItemMapper.zhuChartData123("生产工艺",company.getName(),user.getId()); // 生产工艺 隐患数据
+        map1.put("danger1",aa);
+
+        Integer bb = tCheckItemMapper.zhuChartData123("设备设施",company.getName(),user.getId()); // 设备设施 隐患数据
+        map1.put("danger2",bb);
+
+        Integer cc = tCheckItemMapper.zhuChartData123("特种设备",company.getName(),user.getId()); // 特种设备 隐患数据
+        map1.put("danger3",cc);
+
+        Integer dd = tCheckItemMapper.zhuChartData123("消防安全",company.getName(),user.getId()); // 消防安全 隐患数据
+        map1.put("danger4",dd);
+
+        Integer ee = tCheckItemMapper.zhuChartData123("用电安全",company.getName(),user.getId()); // 用电安全 隐患数据
+        map1.put("danger5",ee);
+
+        Integer ff = tCheckItemMapper.zhuChartData123("行为环境",company.getName(),user.getId()); // 行为环境 隐患数据
+        map1.put("danger6",ff);
+
+        Integer gg = tCheckItemMapper.zhuChartData123("公辅设备",company.getName(),user.getId()); // 公辅设备 隐患数据
+        map1.put("danger7",gg);
+
+        Integer hh = tCheckItemMapper.zhuChartData123("危化管理",company.getName(),user.getId()); // 危化管理 隐患数据
+        map1.put("danger8",hh);
+
+        Integer ii = tCheckItemMapper.zhuChartData123("基础管理",company.getName(),user.getId()); // 基础管理 隐患数据
+        map1.put("danger9",ii);
+
+        Integer jj = tCheckItemMapper.zhuChartData123("防雷静电",company.getName(),user.getId()); // 防雷静电 隐患数据
+        map1.put("danger10",jj);
+
+        Integer kk = tCheckItemMapper.zhuChartData123("安全设施",company.getName(),user.getId()); // 安全设施 隐患数据
+        map1.put("danger11",kk);
+
+        Integer ll = tCheckItemMapper.zhuChartData123("职业卫生",company.getName(),user.getId()); // 职业卫生 隐患数据
+        map1.put("danger12",ll);
+
+        Integer mm = tCheckItemMapper.zhuChartData123("生产现场",company.getName(),user.getId()); // 生产现场 隐患数据
+        map1.put("danger13",mm);
+
+        Integer nn = tCheckItemMapper.zhuChartData1231(company.getName(),user.getId()); // 其他 隐患数据
+        map1.put("danger14",nn);
+
+        Integer count1 = aa + bb + cc + dd + ee + ff + gg + hh + ii + jj + kk + ll + mm + nn;
+
 
         for (int i = 0; i < list.size(); i++) {
 
@@ -5626,7 +5678,7 @@ public class CompanyController_cd extends BaseController {
             sum14 += n;
 
 
-            Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n;
+            Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + count1;
 
             list.get(i).put("danger15",count);  // 某个车间的所有种类隐患的合计
         }
@@ -5784,6 +5836,7 @@ public class CompanyController_cd extends BaseController {
         map.put("sum14",sum14);
 
         list.add(map);
+        list.add(map1);
 
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);

@@ -110,6 +110,12 @@ public class GlobalController extends BaseController {
                 result.setMap("message", "该账号不存在。");
                 return result;
             }
+            // 判断账号是否新三州账号
+            if(35346==user.getId()){
+                result.setStatus("1");
+                result.setMap("message", "该账号为特钢集团, 请用特钢登陆页登录");
+                return result;
+            }
             // 判断账号是否被冻结
             if (!"0".equals(user.getIsFreeze())) {
                 result.setStatus("1");
@@ -196,7 +202,52 @@ public class GlobalController extends BaseController {
         }
         return "global/main";
     }
+    @RequestMapping("selectBranch")
+    public String selectBranch(HttpServletRequest request, Model model){
+        User user = getLoginUser(request);
+        Integer userType = user.getUserType(); //获取用户类型
+        model.addAttribute("loginUserId", user.getId());
+        model.addAttribute("userType", userType);
+        if (userType == 9) {  //地市级
+            model.addAttribute("list", districtMapper.selectDistrict());//查询区列表
+            model.addAttribute("list1", tradeMapper.selectTrade());//查询港口账号
+            model.addAttribute("name_", user.getUserName());//用户名称
+        }
+        if (userType == 6) { //县级市
+            Map<String, Object> m = new HashMap<String, Object>();
+            m.put("districtId", user.getId());
+            List<Map<String, Object>> list = townMapper.selectListByDistrict(m);//设置镇级
+            model.addAttribute("list", list);
+            model.addAttribute("name_", districtMapper.selectByPrimaryKey(user.getId()).getName());
+        }
+        if (userType == 3) { //镇级
+            Map<String, Object> m = new HashMap<String, Object>();
+            m.put("townId", user.getId());
+            List<DynamicParameter<String, Object>> list = villageMapper.selectListByTown(m);
+            model.addAttribute("list", list);
+            model.addAttribute("name_", townMapper.selectByPrimaryKey(user.getId()).getName());
+        }
+        if (userType == 4) { //村级
+            model.addAttribute("name_", villageMapper.selectByPrimaryKey(user.getId()).getName());
+            if (user.getUserName().equals("港口")) {//港口特殊账号
+                return "gang/main";
+            }
+        }
+        if (userType == 10) { //行业级
+            Trade trade = tradeMapper.selectByPrimaryKey(user.getId());
+            //log.error(trade.toString());
+            model.addAttribute("userType", userType);
+            model.addAttribute("name_", trade.getName());
+            model.addAttribute("userId", trade.getUserId());
+            if (trade.getIsClique() == 1) { //跳转到总部企业
+                //model.addAttribute("list", tradeMapper.selectTradeCompany(user.getId()));//行业端所属企业
+                //log.error("TradeComopany："+tradeMapper.selectTradeCompany(user.getId()));
+                return "tradeclique/clique-main";
+            }
 
+        }
+        return "global/other/tab-biaozhun2";
+    }
     /**
      * 政府首页-欢迎页
      */
@@ -417,6 +468,7 @@ public class GlobalController extends BaseController {
         return "global/company/company-add-trade";
     }
     /**
+     *
      * to企业行业添加页面
      */
     @RequestMapping(value = "vilage-list")
@@ -2190,28 +2242,18 @@ public class GlobalController extends BaseController {
 
    /**
     * create by  : 小明！！！
-    * description: TODO 隐患排查记录页面 ：查询该范围内所有的公司信息
+    * description: TODO 查询该范围内所有的公司信息
     * create time: 2019/8/22 16:56
     */
-    @RequestMapping(value = "check-company")//flag:3 部门抽查
-    public String troubleList12(HttpServletRequest request, String title, Integer type,
-                               Integer townId, Integer villageId,
-                               Integer status, Integer flag, Model model,String dmName) throws Exception {
+    @RequestMapping(value = "check-list")//flag:3 部门抽查
+    public String troubleList1(HttpServletRequest request, Model model) throws Exception {
 
         User user = getLoginUser(request);
 
         List<Map<String,Object>> map = tCheckItemMapper.findALL(user.getId(), user.getUserType());
-
         model.addAttribute("map",map);
-        model.addAttribute("title",title);
-        model.addAttribute("type",type);
-        model.addAttribute("villageId",villageId);
-        model.addAttribute("townId",townId);
-        model.addAttribute("status",status);
-        model.addAttribute("flag",flag);
-        model.addAttribute("dmName",dmName);
 
-        return "global/company/danger/check-company";
+        return "global/other/check-listss";
     }
 
     /**
@@ -2221,13 +2263,11 @@ public class GlobalController extends BaseController {
      * create time: 2019/8/22 16:55
      */
 
-    @RequestMapping(value = "check-list")//flag:3 部门抽查
-    public String troubleList1(HttpServletRequest request, String title, Integer type,
+    @RequestMapping(value = "check-list5")//flag:3 部门抽查
+    public String troubleList1(HttpServletRequest request, String title, Integer type, String companyName,
                                Integer townId, Integer villageId,
-                               Integer status, Integer flag, Model model,String dmName,Integer uid) throws Exception {
-
-        User user = userMapper.selectByPrimaryKey(uid);
-
+                               Integer status, Integer flag, Model model,String dmName) throws Exception {
+        User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
 
         if (user.getUserType() == 3) {//镇
@@ -2243,7 +2283,7 @@ public class GlobalController extends BaseController {
         m.put("title", title); // 1
         m.put("townId", townId);   // null
         m.put("villageId", villageId);  //1
-        m.put("companyName", user.getUserName()); // null
+        m.put("companyName", companyName); // null
         m.put("status", status); //状态  null
         Set set = new LinkedHashSet();
         if(Objects.equals("",dmName)){
@@ -2253,6 +2293,7 @@ public class GlobalController extends BaseController {
         }
 
         // 进行判断
+
         if (setUserId(user, m)) {
             clearVillageTown(m);
 
@@ -2280,7 +2321,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("set",set);
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
-        model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("companyName", companyName);
         model.addAttribute("title", title);
         model.addAttribute("status", status);
         model.addAttribute("townId", townId);
@@ -2292,10 +2333,10 @@ public class GlobalController extends BaseController {
         model.addAttribute("t", d.getTime());
         if (user.getUserType() == 5) {
             // 表示等于5的话就将页面进行跳转
-            return "global/other/analyse/check-list";
+            return "company/danger/check-list";
         }
         // TODO 找到这个界面
-        return "global/other/check-list";
+        return "village/danger/check-list";
     }
 
 
@@ -2678,13 +2719,16 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping("/villageLogout")
     public String villageLogout(HttpServletRequest request) throws Exception {
+        System.out.println("******************************");
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.logout();
         String y = request.getServerName();
+        System.out.println("1.******************************");
         if(y.indexOf("kfq") > -1) {
             return "redirect:/fore/login-smaq";
         }
-        return "redirect:/global/fore";
+        System.out.println("2.******************************");
+        return "redirect:/fore/global";
     }
     /**
      * 安全风险管控
@@ -3448,7 +3492,6 @@ public class GlobalController extends BaseController {
         model.addAttribute("userId", userId);
         return "global/checkModel/model-add6";
     }
-
     /*
      * TODO 根据 checkType 查询所有的 level2 的信息(废弃)
      *
@@ -4184,33 +4227,6 @@ public class GlobalController extends BaseController {
         // TODO 找到这个界面
         return "global/other/check-list";
     }
-
-    /**
-     * create by  : 小明！！！
-     * description: TODO 隐患治理记录页面 : 查询该组织下的所有公司信息
-     * create time: 2019/8/23 9:20
-     */
-    @RequestMapping(value = "hidden-company-list")//flag:3 部门抽查
-    public String allCompany(HttpServletRequest request,Model model,Integer flag, Integer status) throws Exception {
-
-        User user = getLoginUser(request);
-
-        List<Map<String,Object>> map = tCheckItemMapper.findALL(user.getId(), user.getUserType());
-
-        model.addAttribute("map",map);
-
-        model.addAttribute("flag",flag);
-
-        model.addAttribute("status",status);
-
-        return "global/company/danger/hidden-company-list";
-    }
-
-
-
-
-
-
     /**
      * TODO 隐患治理记录, 整改不合格的 新建立的页面
      * 有三种情况,企业自查 行政检查  部门抽查
@@ -4221,19 +4237,19 @@ public class GlobalController extends BaseController {
      * @return
      */
     @RequestMapping(value = "hidden-danger-list")
-    public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status, Integer uid) {
-
-        User user = userMapper.selectByPrimaryKey(uid);
-
-        Company company = companyMapper.selectByPrimaryKey(user.getId());
+    public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status) {
+        User user = getLoginUser(request);
+        Company company;
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
         model.addAttribute("userId", user.getId());
 
         List<Map> list = new ArrayList<>();
         if (flag == 1) {
-            list = tCheckItemMapper.selectListBystatus(user.getId(), flag);
+
+            list = tCheckItemMapper.selectListBystatusGeo(user.getId(), flag, user.getUserType());
             for (Map map : list) {
+                company = companyMapper.selectByPrimaryKey((Integer) map.get("userId"));
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String format = sdf.format(realTime);
@@ -4281,13 +4297,15 @@ public class GlobalController extends BaseController {
                         name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
                         tc.setCheckCompany(name);
                     }
+
                     map.put("fjgkfzr", name);
                 }
             }
         } else if (flag == 2) {
             // 表示的是行政检查
-            list = tCheckItemMapper.selectXZListBystatus(user.getId(), flag);
+            list = tCheckItemMapper.selectXZListBystatusGeo(user.getId(), flag, user.getUserType());
             for (Map map : list) {
+                company = companyMapper.selectByPrimaryKey((Integer) map.get("userId"));
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String format = sdf.format(realTime);
@@ -4298,7 +4316,7 @@ public class GlobalController extends BaseController {
                         levelId=  tLevelMapper.selectByPrimaryKey(levelId1).getLevel2();
                     }
 
-                }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                }else if (null != map.get("industryType") && 2==map.get("industryType")){
                     levelId = aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2();
                 }
 
@@ -4308,12 +4326,14 @@ public class GlobalController extends BaseController {
 
                 map.put("realTimeStr", format);
                 map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
+                map.put("companyName", company.getName());
                 // 获取
             }
         } else if (flag == 3) {
             // 表示的是部门抽查
-            list = tCheckItemMapper.selectBMCCListBystatus(user.getId(), flag);
+            list = tCheckItemMapper.selectBMCCListBystatusGeo(user.getId(), flag, user.getUserType());
             for (Map map : list) {
+                company = companyMapper.selectByPrimaryKey((Integer) map.get("userId"));
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String format = sdf.format(realTime);
@@ -4321,6 +4341,7 @@ public class GlobalController extends BaseController {
                 if(null!=map.get("industryType")&&1==map.get("industryType")){
                     map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
                 }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                    System.out.println(map.get("levelId"));
                     map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
                 }
                 map.put("fjgkfzr", company.getCharge() + company.getChargeContact());

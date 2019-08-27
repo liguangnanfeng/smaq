@@ -741,7 +741,7 @@ public class CompanyController_study extends BaseController {
      */
     @RequestMapping(value = "temporaryrisk-list")
     public String temporaryriskList(Model model, HttpServletRequest request) throws Exception {
-    	 User user = getLoginUser(request); 
+    	 User user = getLoginUser(request);
     	 model.addAttribute("uid", user.getId());
          Company company = companyMapper.selectByPrimaryKey(user.getId());
          model.addAttribute("company", company);
@@ -757,7 +757,7 @@ public class CompanyController_study extends BaseController {
          }
          //动火作业证
          if(tdc.getTslc1Dh()>0){
-        	 listZyz.add("动火作业证");    	 
+        	 listZyz.add("动火作业证");
          }
          //受限空间安全作业证
          if(tdc.getTslc2Sx()>0){
@@ -765,11 +765,11 @@ public class CompanyController_study extends BaseController {
          }
          //盲板抽堵安全作业证
          if(tdc.getTslc3Mb()>0){
-        	 listZyz.add("盲板抽堵安全作业证"); 	 
+        	 listZyz.add("盲板抽堵安全作业证");
          }
          //高处安全作业证
          if(tdc.getTslc4Gc()>0){
-        	 listZyz.add("高处安全作业证");	 
+        	 listZyz.add("高处安全作业证");
          }
          //吊装安全作业证
          if(tdc.getTslc5Dz()>0){
@@ -777,7 +777,7 @@ public class CompanyController_study extends BaseController {
          }
          //临时用电安全作业证
          if(tdc.getTslc6Yd()>0){
-        	 listZyz.add("临时用电安全作业证"); 
+        	 listZyz.add("临时用电安全作业证");
          }
          //动土安全作业证
          if(tdc.getTslc7Dt()>0){
@@ -803,8 +803,8 @@ public class CompanyController_study extends BaseController {
          List<Map<String, Object>> list = fcTemporaryDangerMapper.selectByForeachMap(m);
          //log.error("list："+list.toString());
          model.addAttribute("list", list);
-         
-         Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>(); 
+
+         Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
          for(Map<String, Object> m1 : list) {
              String sslcmc = null == m1.get("sslcmc") ? "" : m1.get("sslcmc").toString();
              String zyzmc = null == m1.get("zyzmc") ? "" : m1.get("zyzmc").toString();
@@ -816,8 +816,8 @@ public class CompanyController_study extends BaseController {
              l2s.add(zyzmc);
          }
          log.error("treeMap："+levmap.toString());
-         model.addAttribute("treeMap", levmap);  
-         
+         model.addAttribute("treeMap", levmap);
+
          return "company/study/temporaryrisk-list";
     }
     /**

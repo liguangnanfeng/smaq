@@ -16,7 +16,7 @@
         <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
           <ul class="cl">
             <li class="dropDown dropDown_hover">
-              <a href="javascript:void(0)" class="dropDown_A">政府管理员<i class="Hui-iconfont">&#xe6d5;</i>
+              <a href="javascript:void(0)" class="dropDown_A">管理员<i class="Hui-iconfont">&#xe6d5;</i>
               </a>
               <ul class="dropDown-menu menu radius box-shadow">
                 <li><a href="${ly }/steel/villageLogout">退出</a></li>

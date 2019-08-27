@@ -571,8 +571,8 @@ public class TradeCliqueController extends BaseController {
      */
     @RequestMapping(value = "move/company")
     public String move(HttpServletRequest request, Model model,Integer uid) throws Exception {
-        User user = getLoginUser(request);
-        if(user.getUserType()!=5){
+        User user = getLoginUser(request); //用户登录
+        if(user.getUserType()!=5){ //当用户不是企业类型时
             HttpSession session = request.getSession();
             //log.error("moveBefore："+user.toString());
             session.setAttribute("govUser",user); //跳转前user保存

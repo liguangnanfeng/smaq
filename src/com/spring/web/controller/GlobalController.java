@@ -202,6 +202,13 @@ public class GlobalController extends BaseController {
         }
         return "global/main";
     }
+
+    /**
+     * 查询
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("selectBranch")
     public String selectBranch(HttpServletRequest request, Model model){
         User user = getLoginUser(request);
@@ -217,6 +224,7 @@ public class GlobalController extends BaseController {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("districtId", user.getId());
             List<Map<String, Object>> list = townMapper.selectListByDistrict(m);//设置镇级
+            System.out.println("list:"+list);
             model.addAttribute("list", list);
             model.addAttribute("name_", districtMapper.selectByPrimaryKey(user.getId()).getName());
         }
@@ -248,6 +256,7 @@ public class GlobalController extends BaseController {
         }
         return "global/other/tab-biaozhun2";
     }
+
     /**
      * 政府首页-欢迎页
      */
@@ -2719,15 +2728,12 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping("/villageLogout")
     public String villageLogout(HttpServletRequest request) throws Exception {
-        System.out.println("******************************");
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.logout();
         String y = request.getServerName();
-        System.out.println("1.******************************");
         if(y.indexOf("kfq") > -1) {
             return "redirect:/fore/login-smaq";
         }
-        System.out.println("2.******************************");
         return "redirect:/fore/global";
     }
     /**
@@ -8399,15 +8405,26 @@ public class GlobalController extends BaseController {
     /**
      * 获取公司信息数据
      */
-    @RequestMapping("/n")
-    public String getData(){
-        return null;
+    @RequestMapping("/getData")
+    public @ResponseBody  Result getData(HttpServletRequest request, Model model, Integer page){
+        User user = getLoginUser(request);
+        Result result = new ResultImpl();
+        Integer start = page *20;
+        List<Map<String, Object>> list = tCheckItemMapper.getData(user.getId(), user.getUserType(), start);
+        result.setMap("list", list);
+        result.setStatus("0");
+        return result;
     }
     /**
-     * 获取显示公司的总页数
+     *获取当前账号下所有公司的分页
      */
-    public Integer getTotalPage(){
-        return null;
+    @RequestMapping("/getTotalPage")
+    @ResponseBody
+    public Integer getTotalPage(HttpServletRequest request, Model model){
+        User user = getLoginUser(request);
+        Integer total = tCheckItemMapper.getTotalPage(user.getId(), user.getUserType());
+        Integer totalPage = total/20+1;
+        return totalPage;
     }
     /**
      * 根据条件查询安全生产标准化数据

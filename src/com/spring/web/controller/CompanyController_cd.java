@@ -4632,7 +4632,6 @@ public class CompanyController_cd extends BaseController {
         }
 
 
-
         for (int i = 0; i < list.size(); i++) {
 
             Integer  a = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),3,(String) list.get(i).get("name")); // 一般和较小 合格 已治理
@@ -5950,7 +5949,6 @@ public class CompanyController_cd extends BaseController {
         map.put("sum14",sum14);
 
         list.add(map);
-        list.add(map1);
 
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);

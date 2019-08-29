@@ -118,4 +118,6 @@ public interface VillageMapper {
      * @return
      */
     Map selectParticularByUid(Integer id);
+
+    List<Village> findUserID(@Param("town_id") Integer town_id);
 }

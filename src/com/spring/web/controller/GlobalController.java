@@ -5557,17 +5557,19 @@ public class GlobalController extends BaseController {
 
     /**
      * create by  : 小明！！！
-     * description: TODO 政府端 绩效分析表格数据 行业
+     * description: TODO 政府端 绩效分析表格数据 行业  1 超管 2普管 3镇 4 村 5 企业 6区县 7市 8省
      * create time: 2019/8/26 9:25
      */
     @RequestMapping(value = "zf-performance-industry")
     public String performance(HttpServletRequest request, Model model, Integer flag){
 
         User user = getLoginUser(request);
+        StringBuilder sb = new StringBuilder();
         if (null == flag){
             flag = 1;
         }
-        List<Map<String,Object>> list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+        List<Map<String,Object>> list = null;
+        List<Integer> ids = null;
 
         Integer sum1 = 0;
         Integer sum2 = 0;
@@ -5579,6 +5581,23 @@ public class GlobalController extends BaseController {
         Integer sum8 = 0;
         Integer sum9 = 0;
         Integer sum10 = 0;
+
+
+        if (user.getUserType() == 4){ // 如何登录的账户是村级账号并且是企业自查
+
+            list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+
+        }else if (user.getUserType() == 3){  // 如何登录的账户是镇级账号并且是企业自查
+            // 查询镇下面的所有村
+            List<Village> lists = villageMapper.findUserID(user.getId());
+            for (int i = 0; i < lists.size(); i++) {
+                ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 3);
+            }
+
+        }else if (user.getUserType() == 6){  // 如何登录的账户是区级账号并且是企业自查
+
+            list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+        }
 
         for (int i = 0; i < list.size(); i++) {
 
@@ -5627,6 +5646,7 @@ public class GlobalController extends BaseController {
             list.get(i).put("danger11",count);  // 某个公司的所有行业合计
 
         }
+
 
         Map<String,Object> map = new HashMap<>();
 
@@ -6447,7 +6467,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "global/company/evaluate/villageDown/zf-hidden-trouble-charts3-1";
+        return "global/company/evaluate/villageDown/zf-hidden-trouble-charts3-2";
     }
 
 
@@ -6644,7 +6664,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "global/company/evaluate/villageDown/zf-hidden-industry-charts3-2";
+        return "global/company/evaluate/villageDown/zf-hidden-industry-charts3-1";
     }
 
 
@@ -6733,22 +6753,6 @@ public class GlobalController extends BaseController {
                 list.get(i).put("result33",0.00);
             }
 
-
-            Integer number1 = a + b + c; // 已治理 合计
-            list.get(i).put("number1",number1);
-
-            Integer number2 = a1 + b1 + c1;  // 未治理 合计
-            list.get(i).put("number2",number2);
-
-            Integer number = number1 + number2;
-
-            if (null != number && number != 0){
-                String str = df.format((float)number1/number);
-                list.get(i).put("number",str+"%");  // 治理率 合计
-            }else {
-                list.get(i).put("number",0.00);
-            }
-
         }
         DecimalFormat df = new DecimalFormat("0.00");
 
@@ -6780,7 +6784,7 @@ public class GlobalController extends BaseController {
             }
 
         }else {
-            map.put("result2","0.00%"); // 一般隐患的治理率 竖
+            map.put("result2","0.00%"); // 较大隐患的治理率 竖
         }
 
         if (null != sum3 && 0 != sum3){
@@ -6790,76 +6794,11 @@ public class GlobalController extends BaseController {
                 map.put("result3",str+"%"); // 重大隐患的治理率 竖
 
             }else {
-                map.put("result3","0.00%"); // 一般隐患的治理率 竖
+                map.put("result3","0.00%"); // 重大隐患的治理率 竖
             }
 
         }else {
-            map.put("result3","0.00%"); // 一般隐患的治理率 竖
-        }
-
-        Integer proportion1 = sign1 + sign2 + sign3;
-
-        Integer proportion2 = sign11 + sign22 + sign33;
-
-        if (null != proportion1 && 0 != proportion1){
-
-            if (null != sign1 && 0 != sign1){
-                String str = df.format((float)sign1 / proportion1);
-                map.put("proportion11",str+"%");  // 一般隐患 已治理 占比数据 竖
-            }else {
-                map.put("proportion11","0.00%"); // 一般隐患的治理率 竖
-            }
-
-            if (null != sign2 && 0 != sign2){
-                String str = df.format((float)sign2 / proportion1);
-                map.put("proportion22",str+"%");  // 较大隐患 已治理 占比数据 竖
-            }else {
-                map.put("proportion22","0.00%"); // 较大隐患 已治理 占比数据 竖
-            }
-
-            if (null != sign3 && 0 != sign3){
-                String str = df.format((float)sign3 / proportion1);
-                map.put("proportion33",str+"%");  // 重大隐患 已治理 占比数据 竖
-
-            }else {
-                map.put("proportion33","0.00%"); // 重大隐患 已治理 占比数据 竖
-            }
-
-        }else {
-            map.put("proportion11","0.00%"); // 一般隐患的治理率 竖
-            map.put("proportion22","0.00%"); // 较大隐患 已治理 占比数据 竖
-            map.put("proportion33","0.00%"); // 重大隐患 已治理 占比数据 竖
-        }
-
-        if (null != proportion2 && 0 != proportion2){
-
-            if (null != sign11 && 0 != sign11){
-                String str = df.format((float)sign11 / proportion2);
-                map.put("proportion44",str+"%");  // 一般隐患 未治理 占比数据 竖
-            }else {
-                map.put("proportion44","0.00%"); // 一般隐患 未治理 占比数据 竖
-            }
-
-            if (null != sign22 && 0 != sign22){
-                String str = df.format((float)sign22 / proportion2);
-                map.put("proportion55",str+"%");  // 较大隐患 未治理 占比数据 竖
-            }else {
-                map.put("proportion55","0.00%"); // 较大隐患 未治理 占比数据 竖
-            }
-
-            if (null != sign33 && 0 != sign33){
-                Double sign = Double.valueOf(sign33 / proportion2);
-                String str = df.format((float)sign3/proportion2);
-                map.put("proportion66",str+"%");  // 重大隐患 未治理 占比数据 竖
-
-            }else {
-                map.put("proportion66","0.00%"); // 重大隐患 未治理 占比数据 竖
-            }
-
-        }else {
-            map.put("proportion44","0.00%"); // 一般隐患的治理率 竖
-            map.put("proportion55","0.00%"); // 较大隐患 已治理 占比数据 竖
-            map.put("proportion66","0.00%"); // 重大隐患 已治理 占比数据 竖
+            map.put("result3","0.00%"); // 重大隐患的治理率 竖
         }
 
         map.put("sign1",sign1); // 一般隐患 已治理 合计 竖
@@ -7024,16 +6963,16 @@ public class GlobalController extends BaseController {
 
         if (null != sum2 && sum2 != 0){ // 较大 治理率
             String str = df.format((float)sign2/sum2);
-            map.put("result22",str+"%");
+            map.put("resust22",str+"%");
         }else {
-            map.put("result22",0.00);
+            map.put("resust22",0.00);
         }
 
         if (null != sum3 && sum3 != 0){ // 重大 治理率
             String str = df.format((float)sign3/sum3);
-            map.put("result33",str+"%");
+            map.put("resust33",str+"%");
         }else {
-            map.put("result33",0.00);
+            map.put("resust33",0.00);
         }
 
         map.put("sign1",sign1);
@@ -7043,8 +6982,8 @@ public class GlobalController extends BaseController {
         map.put("sign22",sign22);
         map.put("sign33",sign33);
         map.put("resust11",sign11);
-        map.put("result22",sign22);
-        map.put("result33",sign33);
+        map.put("resust22",sign22);
+        map.put("resust33",sign33);
 
 
         model.addAttribute("data",new Date());
@@ -7199,16 +7138,16 @@ public class GlobalController extends BaseController {
 
         if (null != sum2 && sum2 != 0){ // 较大 治理率
             String str = df.format((float)sign2/sum2);
-            map.put("result22",str+"%");
+            map.put("resust22",str+"%");
         }else {
-            map.put("result22",0.00);
+            map.put("resust22",0.00);
         }
 
         if (null != sum3 && sum3 != 0){ // 重大 治理率
             String str = df.format((float)sign3/sum3);
-            map.put("result33",str+"%");
+            map.put("resust33",str+"%");
         }else {
-            map.put("result33",0.00);
+            map.put("resust33",0.00);
         }
 
         map.put("sign1",sign1);
@@ -7218,8 +7157,8 @@ public class GlobalController extends BaseController {
         map.put("sign22",sign22);
         map.put("sign33",sign33);
         map.put("resust11",sign11);
-        map.put("result22",sign22);
-        map.put("result33",sign33);
+        map.put("resust22",sign22);
+        map.put("resust33",sign33);
 
 
         model.addAttribute("data",new Date());

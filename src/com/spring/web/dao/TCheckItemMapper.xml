@@ -1175,12 +1175,13 @@
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        LEFT JOIN smaq.company_view c1 ON c1.user_id = t3.uid
         WHERE
             t2. status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t1. status = #{status}
-        AND t3.industry like CONCAT('%', #{industry},'%')
+        AND c1.industry like CONCAT('%',#{industry},'%')
         AND t3.flag = #{flag}
         AND t1.recheck_file != ''
     </select>
@@ -1193,12 +1194,13 @@
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        LEFT JOIN smaq.company_view c1 ON c1.user_id = t3.uid
         WHERE
             t2. status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t1. status = #{status}
-        AND t3.industry is null
+        AND c1.industry is null
         AND t3.flag = #{flag}
         AND t1.recheck_file != ''
     </select>
@@ -1274,7 +1276,7 @@
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.flag = #{flag}
-        AND t2.user_id = {user_id}
+        AND t2.user_id = #{user_id}
     </select>
 
     <!-- 政府端 隐患排查对象分析数据 -->
@@ -1290,7 +1292,7 @@
         AND t2.del = 0
         AND t3.control is null
         AND t2.flag = #{flag}
-        AND t2.user_id = {user_id}
+        AND t2.user_id = #{user_id}
     </select>
 
 
@@ -1470,7 +1472,7 @@
         AND t1.status = 2
         AND t3.control = #{control}
         AND t2.flag = #{flag}
-        AND t2.user_id = {user_id}
+        AND t2.user_id = #{user_id}
     </select>
 
     <!-- 政府端 隐患数据分析 风险 flag = 1-->
@@ -2083,9 +2085,6 @@
             </if>
         </where>
     </select>
-
-
-
 
 
 

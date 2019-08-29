@@ -147,31 +147,31 @@
 			</script>
 
 		</tr>
-		<tr>
-			<td>1</td>
-			<td>公司级</td>
-			<td>${aa}</td>
-			<td>${bb}</td>
-			<td>${cc}</td>
-			<td>${dd}</td>
-			<td>${ee}</td>
-			<td>${ff}</td>
-			<td>${gg}</td>
-			<td>${hh}</td>
-			<td>${ii}</td>
-			<td>${jj}</td>
-			<td>${kk}</td>
-			<td>${ll}</td>
-			<td>${mm}</td>
-			<td>${nn}</td>
-			<td>${count1}</td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
+			<tr>
+				<td>1</td>
+				<td>公司级</td>
+				<td>${aa}</td>
+				<td>${bb}</td>
+				<td>${cc}</td>
+				<td>${dd}</td>
+				<td>${ee}</td>
+				<td>${ff}</td>
+				<td>${gg}</td>
+				<td>${hh}</td>
+				<td>${ii}</td>
+				<td>${jj}</td>
+				<td>${kk}</td>
+				<td>${ll}</td>
+				<td>${mm}</td>
+				<td>${nn}</td>
+				<td>${count1}</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
 
 		<c:forEach items="${list}" varStatus="index" var="be">
-			<c:if test="${index.index<fn:length(list)-1 }">
+			<c:if test="${index.index<fn:length(list)-2 }">
 				<tr>
 					<td>${index.index + 2}</td>
 					<td>${be.name}</td>
@@ -226,6 +226,8 @@
 				<script>
 				console.log('wjj:',window.a);
 				$(".tdd").text(window.a);
+				console.log('${index.index}')
+				console.log('${fn:length(list)-2}')
 				</script>
 			</c:if>
 			<c:if test="${index.index>fn:length(list)-2 }">

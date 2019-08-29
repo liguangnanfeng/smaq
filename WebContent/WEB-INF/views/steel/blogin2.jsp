@@ -13,146 +13,182 @@
         <meta name="keywords" content="风险分级管控 隐患排查治理智能化平台">
         <meta name="description" content="风险分级管控 隐患排查治理智能化平台">
         <style type="text/css">
-            body {
-            margin: 0;
-            padding: 0;
-            }
+        body {
+        margin: 0;
+        padding: 0;
+        }
 
-            .input-text::-webkit-input-placeholder {
-            color: #333;
-            }
+        .input-text::-webkit-input-placeholder {
+        color: #333;
+        }
 
-            .input-text:-moz-placeholder {
-            color: #333;
-            }
+        .input-text:-moz-placeholder {
+        color: #333;
+        }
 
-            .input-text::-moz-placeholder {
-            color: #333;
-            }
+        .input-text::-moz-placeholder {
+        color: #333;
+        }
 
-            .input-text:-ms-input-placeholder {
-            color: #333;
-            }
+        .input-text:-ms-input-placeholder {
+        color: #333;
+        }
 
-            /* css样式 */
-            .container22 {
-            width: 70%;
-            margin: 0 auto;
-            }
+        /* css样式 */
+        .container22 {
+        width: 70%;
+        margin: 0 auto;
+        }
 
-            .title {
-            text-align: center;
-            }
+        .title {
+        text-align: center;
+        margin-top:75px;
+        }
 
-            .title_img {
-            width: 130px;
-            position: absolute;
-            right: 85%;
-            }
+        .title_img {
+        width: 140px;
+        position: absolute;
+        left:14.1%;
+        margin-top: 8px;
+        }
 
-            .name {
-            font-size: 40px;
-            color: red;
-            }
+        .name {
+        font-size: 32px;
+        color: red;
+        }
 
-            .footer22 {
-            padding-top: 30px;
-            }
+        .footer22 {
+        padding-top: 30px;
+        <%--text-align:center;--%>
+        }
 
-            .footer22 > div {
-            display: inline-block;
-            }
+        .footer22 > div {
+        display: inline-block;
+        }
 
-            .footer22 > div:last-child {
-            float: right;
-            }
-            .footer22 a{
-            color: #000;
-            text-decoration: none;
-            }
-            .footer22 > div:first-child p:first-child {
-            padding-top: 0;
-            margin: 0;
-            padding-bottom: 10px;
-            }
+        .footer22 > div:last-child {
+        float: right;
+        }
+        .footer22 a{
+        color: #000;
+        text-decoration: none;
+        }
+        .footer22 > div:first-child p:first-child {
+        padding-top: 0;
+        margin: 0;
+        padding-bottom: 10px;
+        }
 
-            .footer22 > div:first-child p:first-child a {
-            text-decoration: none;
-            color: #111;
-            font-weight: 600;
-            padding: 0 13px;
-            font-size: 17px;
-            }
+        .footer22 > div:first-child p:first-child a {
+        text-decoration: none;
+        color: #111;
+        font-weight: 600;
+        padding: 0 13px;
+        font-size: 17px;
+        }
 
-            .footer22 > div:first-child p:first-child a:first-child {
-            padding-left: 0;
-            }
+        .footer22 > div:first-child p:first-child a:first-child {
+        padding-left: 0;
+        }
 
-            .footer22 span {
-            margin-left: 30px;
-            }
+        .footer22 span {
+        margin-left: 30px;
+        }
 
-            .center {
-            position: relative;
-            }
+        .center {
+        position: relative;
+        }
 
-            .center > img {
-            width: 100%;
-            }
+        .center > img {
+        width: 100%;
+        }
 
-            .center .container22 {
-            position: absolute;
-            top: 0;
-            left: 15%;
-            width: 80%;
-            padding-top: 5%;
-            }
+        .center .container22 {
+        position: absolute;
+        top: 0;
+        left: 15%;
+        width: 80%;
+        padding-top: 5%;
+        }
 
-            .row_right22 {
-            width: 28%;
-            height: 55px;
-            margin-top: 15px;
-            }
+        .row_right22 {
+        width: 25%;
+        height: 55px;
+        margin-top: 12px;
+        }
 
-            .row_right22 input {
-            background: #fff;
-            font-size: 16px;
-            padding: 8px;
-            height: 50px !important;
-            border: 0;
-            box-shadow: inset 8px 10px 12px #959497;
-            width: 100%;
-            }
-            input[type="checkbox"]{
-            height: 15px;
-            box-shadow:none;
-            width: 15px;
-            vertical-align: middle;
-            }
-            .center_container22{
-            height: auto;
-            }
-            @media screen and (min-width: 1345px) {
-            .center .container22 {
-            padding-top:5% !important;
-            }
-            }
-            @media screen and (max-width: 1344px) {
-            .center .container22 {
-            padding-top:3% !important;
-            }
-            }
-            .yuan{
-            width:25px;height:25px;display:inline-block;border-radius:50%;
-            float: right;
-            margin-left: 10px;
-            }
-            .right_yuan{
-            position: absolute;
-            top: 110px;
-            right: 9%;
-            }
+        .row_right22 input {
+        background: #fff;
+        font-size: 16px;
+        padding: 8px;
+        height: 44px !important;
+        border: 0;
+        box-shadow: inset 8px 10px 12px #959497;
+        width: 100%;
+        }
+        input[type="checkbox"]{
+        height: 15px;
+        box-shadow:none;
+        width: 15px;
+        vertical-align: middle;
+        }
+        .center_container22{
+        height: auto;
+        }
+        .name2{
+        color: #1A69DF;margin-bottom: 50px;
+        }
+        .right_yuan{
+        position: absolute;
+        right: 9%;
+        }
+        .name2 {
+        font-size: 48px!important;
+        font-weight: 600!important;
+        letter-spacing: 4px
+        }
+        @media screen and (min-width: 1671px) {
+        .center .container22 {
+        padding-top:5% !important;
+        }
+        .name2{
+        font-size:45px;
+        }
+        .right_yuan{
+        top: 183px;
+        }
+        }
+        @media (min-width: 1367px) and (max-width: 1670px) {
+        .center .container22 {
+        padding-top:3% !important;
+        }
+        .name2{
+        font-size:40px;
+        }
+        .right_yuan{
+        top: 180px;
+        }
+        }
+        @media screen and (max-width: 1366px) {
+        .center .container22 {
+        padding-top:1% !important;
+        }
+        .name2{
+        font-size:37px;
+        }
+        .right_yuan{
+        top: 175px;
+        }
+        }
+        .yuan{
+        width:25px;height:25px;display:inline-block;border-radius:50%;
+        float: right;
+        margin-left: 10px;
+        }
         </style>
+
+
+
         <script type="text/javascript">
         var url = '${url}';
         $(function() {
@@ -239,18 +275,20 @@
         $('#code_img').attr('src', getRootPath() + '/imageServlet?time=' + new Date().getTime());
         }
         </script>
-        </head> <div class="container22 title">
+        </head>
+        <div class="container22 title">
+        <div>
             <img src="${ly }/images/home/logo.png" class="title_img">
             <div>
             <p class="name"></p>
-            <p style="color: #1A69DF;font-size: 45px;margin-bottom:50px;">智能应急管理信息系统
-            </p>
+            <p class="name2">安全生产信息智能化管理平台 </p>
             <span class="right_yuan">
             <span class="yuan" style="background:#00A1E9"></span>
             <span class="yuan" style="background:#FFFF00"></span>
             <span class="yuan" style="background:#FF9600"></span>
             <span class="yuan" style="background:#FF0000"></span></span>
             </div>
+        </div>
             </div>
             <div class="center_container22">
             <div class="center">

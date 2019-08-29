@@ -33,6 +33,20 @@
         from village_tbl
         where user_id = #{userId,jdbcType=INTEGER}
     </select>
+
+
+    <select id="findUserID" parameterType="java.lang.Integer" resultType="com.spring.web.model.Village">
+        SELECT
+            user_id
+        FROM
+            village_tbl
+        WHERE
+            town_id = #{town_id}
+    </select>
+
+
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         <!--
           WARNING - @mbggenerated
@@ -212,37 +226,31 @@
 
     <select id="selectYuCount" resultType="java.lang.Integer">
     <![CDATA[
+        select count(0) from sperson_tbl where review_time <= #{time} and review_time >= #{now} and user_id in (${userIds})
+        union all
+        select count(0) from sequipment_tbl where expiration_time <= #{time} and expiration_time >= #{now} and user_id in (${userIds})
+        union all
+        select count(0) from detection_tbl where expiration_time <= #{time} and expiration_time >= #{now} and user_id in (${userIds})
+        union all
+        select count(0) from examination_tbl where end_time <= #{time} and end_time >= #{now} and user_id in (${userIds})
 
+        union all
+        select count(0) from evaluation_tbl where expiration_time <= #{time3} and expiration_time >= #{now1} and user_id in (${userIds})
 
+        union all
+        select count(0) from standard_tbl where time_exp <= #{time2} and time_exp >= #{now} and user_id in (${userIds})
 
-                            select count(0) from sperson_tbl where review_time <= #{time} and review_time >= #{now} and user_id in (${userIds})
-                            union all
-                            select count(0) from sequipment_tbl where expiration_time <= #{time} and expiration_time >= #{now} and user_id in (${userIds})
-                            union all
-                            select count(0) from detection_tbl where expiration_time <= #{time} and expiration_time >= #{now} and user_id in (${userIds})
-                            union all
-                            select count(0) from examination_tbl where end_time <= #{time} and end_time >= #{now} and user_id in (${userIds})
+        union all
+        select count(0) from recheck_yj_view where c = 0 and user_id in (${userIds})
 
-                            union all
-                            select count(0) from evaluation_tbl where expiration_time <= #{time3} and expiration_time >= #{now1} and user_id in (${userIds})
+        union all
+        select count(0) from t_check_item_view2 where d = 1 and user_id in (${userIds}) and status = 2
 
-                            union all
-                            select count(0) from standard_tbl where time_exp <= #{time2} and time_exp >= #{now} and user_id in (${userIds})
+        union all
+        select count(0) from t_contingency_plan_tbl where active_time <= #{time3} and active_time >= #{now1} and user_id in (${userIds})
 
-                            union all
-                            select count(0) from recheck_yj_view where c = 0 and user_id in (${userIds})
-
-                            union all
-                            select count(0) from t_check_item_view2 where d = 1 and user_id in (${userIds}) and status = 2
-
-                            union all
-                            select count(0) from t_contingency_plan_tbl where active_time <= #{time3} and active_time >= #{now1} and user_id in (${userIds})
-
-                            union all
-                            select count(0) from t_check_tbl where del = 0 and user_id in (${userIds}) and status = 1 and flag = 1
-
-
-
+        union all
+        select count(0) from t_check_tbl where del = 0 and user_id in (${userIds}) and status = 1 and flag = 1
         ]]>
   </select>
 

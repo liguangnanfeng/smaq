@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -705,77 +706,6 @@ public class SteelController extends BaseController {
             e.printStackTrace();
         }
     }
-
-    /**
-     * 安全生产标准化
-     * @param model
-     * @param request
-     * @return
-     */
-    @RequestMapping("company-list1")
-    public String selectCompanyByCqlib1(Model model, HttpServletRequest request){
-        User user = getLoginUser(request);
-        List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
-        model.addAttribute("list", list1);
-        return "steel/other/company-list1";
-    }
-
-    /**
-     * 检查设置设施
-     * @param model
-     * @param request
-     * @return
-     */
-    @RequestMapping("company-list2")
-    public String selectCompanyByCqlib2(Model model, HttpServletRequest request){
-        User user = getLoginUser(request);
-        List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
-        model.addAttribute("list", list1);
-        return "steel/other/company-list2";
-    }
-
-    /**
-     *隐患排查记录
-     * @param model
-     * @param request
-     * @return
-     */
-    @RequestMapping("company-list3")
-    public String selectCompanyByCqlib3(Model model, HttpServletRequest request){
-        User user = getLoginUser(request);
-        List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
-        model.addAttribute("list", list1);
-        return "steel/other/company-list3";
-    }
-
-    /**
-     *隐患治理记录
-     * @param model
-     * @param request
-     * @return
-     */
-    @RequestMapping("company-list4")
-    public String selectCompanyByCqlib4(Model model, HttpServletRequest request){
-        User user = getLoginUser(request);
-        List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
-        model.addAttribute("list", list1);
-        return "steel/other/company-list4";
-    }
-
-    /**
-     *排查数据分析
-     * @param model
-     * @param request
-     * @return
-     */
-    @RequestMapping("company-list5")
-    public String selectCompanyByCqlib5(Model model, HttpServletRequest request){
-        User user = getLoginUser(request);
-        List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
-        model.addAttribute("list", list1);
-        return "steel/other/company-list5";
-    }
-
     /**
      *隐患数据分析
      * @param model
@@ -802,6 +732,15 @@ public class SteelController extends BaseController {
         List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
         model.addAttribute("list", list1);
         return "steel/other/company-list7";
+    }
+
+    @RequestMapping(value = "company-list8", method = RequestMethod.GET)
+    public  @ResponseBody Result selectCompanyByCqlib8(Model model, HttpServletRequest request){
+        Result result = new ResultImpl();
+        User user = getLoginUser(request);
+        List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
+        result.setMap("list", list1);
+        return result;
     }
 
     /***
@@ -1006,7 +945,6 @@ public class SteelController extends BaseController {
                                Integer status, Integer flag, Model model,String dmName, Integer userId) throws Exception {
         User user = userMapper.selectByPrimaryKey(userId);
         Map<String, Object> m = new HashMap<String, Object>();
-
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
         }
@@ -1469,13 +1407,14 @@ public class SteelController extends BaseController {
             model.addAttribute("n1","0.00");
 
         }
-
+        model.addAttribute("flag", flag);
+        model.addAttribute("userId", userId);
         model.addAttribute("number1",number1);
         model.addAttribute("number2",number2);
         model.addAttribute("number3",number3);
         model.addAttribute("flag",flag);
 
-        return "company/danger/jx-analysis";
+        return "steel/other/jx-analysis";
     }
 
     /**
@@ -1517,6 +1456,8 @@ public class SteelController extends BaseController {
         Integer number2 = tCheckItemMapper.findTypeByMap(String.valueOf(user.getId()),2); // 重大隐患
         Integer number1 = tCheckItemMapper.findTypeByMap(String.valueOf(user.getId()),1); // 较大隐患
 
+        model.addAttribute("flag", flag);
+        model.addAttribute("userId", userId);
         model.addAttribute("number1",number1);
         model.addAttribute("number2",number2);
         model.addAttribute("number3",number3);
@@ -1750,7 +1691,7 @@ public class SteelController extends BaseController {
 
         }
         model.addAttribute("flag",flag);
-        return "company/danger/yh-analysis";
+        return "steel/other/yh-analysis";
     }
     /**
      * create by  : 小明！！！
@@ -1766,6 +1707,8 @@ public class SteelController extends BaseController {
         Integer number5 = tCheckItemMapper.findFileByMap(user.getId(),2); // 重大隐患
         Integer number6 = tCheckItemMapper.findFileByMap(user.getId(),1); // 较大隐患
 
+
+        model.addAttribute("userId", userId);
         model.addAttribute("number4",number4);
         model.addAttribute("number5",number5);
         model.addAttribute("number6",number6);
@@ -1950,7 +1893,7 @@ public class SteelController extends BaseController {
             model.addAttribute("n1","0.00");
 
         }
-        return "company/danger/zl-analysis";
+        return "steel/other/zl-analysis";
     }
     @RequestMapping("/villageLogout")
     public String villageLogout(HttpServletRequest request) throws Exception {

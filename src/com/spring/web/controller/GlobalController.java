@@ -8125,6 +8125,26 @@ public class GlobalController extends BaseController {
     }
 
     /**
+     *
+     * @param model
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/tables/yjmanage_center")
+    public String yjmanage_center(Model model, HttpServletRequest request) throws Exception {
+
+        User user = getLoginUser(request);
+        Company c = companyMapper.selectByPrimaryKey(user.getId());
+        List<Integer> count = userService.selectCount(new CompanyListReqDTO(), user);
+
+        model.addAttribute("count", count);
+        model.addAttribute("c", c);
+        model.addAttribute("userName", userMapper.selectByPrimaryKey(user.getId()).getUserName());
+        return "company/tables/yjmanage_center";
+    }
+
+    /**
      * 隐患治理对象分析
      * @param request
      * @param model
@@ -8405,20 +8425,23 @@ public class GlobalController extends BaseController {
      * @return
      */
     @RequestMapping(value = "Standard")
-    public String Standard(HttpServletRequest request, Model model, Integer page){
-        User user = getLoginUser(request);
-        List<Map<String,Object>> list2 = tCheckItemMapper.selectBasicMessage(user.getId(), user.getUserType(), 20);
-        model.addAttribute("list", list2);
+    public String Standard(HttpServletRequest request, Model model){
+          User user = getLoginUser(request);
+//        List<Map<String,Object>> list2 = tCheckItemMapper.selectBasicMessage(user.getId(), user.getUserType(), 20);
+//        //List<Map<String, Object>> list2 = tCheckItemMapper.getData(user.getId(), user.getUserType(), 0);
+//        model.addAttribute("list", list2);
+         Integer total = tCheckItemMapper.getTotalPage(user.getId(), user.getUserType());
+         model.addAttribute("total", total);
         return "global/other/standard-list";
     }
     /**
      * 获取公司信息数据
      */
-    @RequestMapping("/getData")
+    @RequestMapping(value="/getData", method = RequestMethod.POST)
     public @ResponseBody  Result getData(HttpServletRequest request, Model model, Integer page){
         User user = getLoginUser(request);
         Result result = new ResultImpl();
-        Integer start = page *20;
+        Integer start = page *10;
         List<Map<String, Object>> list = tCheckItemMapper.getData(user.getId(), user.getUserType(), start);
         result.setMap("list", list);
         result.setStatus("0");
@@ -8432,7 +8455,7 @@ public class GlobalController extends BaseController {
     public Integer getTotalPage(HttpServletRequest request, Model model){
         User user = getLoginUser(request);
         Integer total = tCheckItemMapper.getTotalPage(user.getId(), user.getUserType());
-        Integer totalPage = total/20+1;
+        Integer totalPage = total/10+1;
         return totalPage;
     }
     /**

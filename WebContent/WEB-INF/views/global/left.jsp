@@ -184,6 +184,27 @@
         <li><a data-href="${ly }/global/jx-analysis" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
         <li><a data-href="${ly }/global/yh-analysis" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
         <li><a data-href="${ly }/global/zl-analysis" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
+
+        <li><a data-href="${ly }/global/zf-performance-industry?flag=1" data-title="chart1" href="javascript:void(0)">chart1</a></li>
+        <li><a data-href="${ly }/global/zf-performance-industry?flag=2" data-title="chart1-2" href="javascript:void(0)">chart1-2</a></li>
+        <li><a data-href="${ly }/global/zf-performance-industry?flag=3" data-title="chart1-3" href="javascript:void(0)">chart1-3</a></li>
+        <li><a data-href="${ly }/global/zf-check-hidden-trouble?flag=1" data-title="chart2" href="javascript:void(0)">chart2-1</a></li>
+        <li><a data-href="${ly }/global/zf-check-hidden-trouble?flag=2" data-title="chart2" href="javascript:void(0)">chart2-2</a></li>
+        <li><a data-href="${ly }/global/zf-check-hidden-trouble?flag=3" data-title="chart2" href="javascript:void(0)">chart2-3</a></li>
+        <li><a data-href="${ly }/global/zf-hidden-industry?flag=1" data-title="charts3-1-1" href="javascript:void(0)">chart3-1-1</a></li>
+        <li><a data-href="${ly }/global/zf-hidden-industry?flag=2" data-title="charts3-1-2" href="javascript:void(0)">chart3-1-2</a></li>
+        <li><a data-href="${ly }/global/zf-hidden-industry?flag=3" data-title="charts3-1-3" href="javascript:void(0)">chart3-1-3</a></li>
+        <li><a data-href="${ly }/global/zf-hidden-trouble?flag=1" data-title="charts3-2-1" href="javascript:void(0)">chart3-2-1</a></li>
+        <li><a data-href="${ly }/global/zf-hidden-trouble?flag=2" data-title="charts3-2-2" href="javascript:void(0)">chart3-2-2</a></li>
+        <li><a data-href="${ly }/global/zf-hidden-trouble?flag=3" data-title="charts3-2-3" href="javascript:void(0)">chart3-2-3</a></li>
+
+        <li><a data-href="${ly }/global/manage-hidden-company" data-title="charts4-1" href="javascript:void(0)">chart4-1</a></li>
+        <li><a data-href="${ly }/global/manage-hidden-danger" data-title="charts4-2" href="javascript:void(0)">chart4-2</a></li>
+        <li><a data-href="${ly }/global/manage-hidden-industry" data-title="charts4-3" href="javascript:void(0)">chart4-3</a></li>
+
+
+
+
         </ul>
         </dd>
         </dl>

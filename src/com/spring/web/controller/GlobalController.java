@@ -5563,23 +5563,19 @@ public class GlobalController extends BaseController {
 
     /**
      * create by  : 小明！！！
-     * description: TODO 政府端 绩效分析表格数据 行业
+     * description: TODO 政府端 绩效分析表格数据 行业  1 超管 2普管 3镇 4 村 5 企业 6区县 7市 8省
      * create time: 2019/8/26 9:25
      */
     @RequestMapping(value = "zf-performance-industry")
     public String performance(HttpServletRequest request, Model model, Integer flag){
 
         User user = getLoginUser(request);
+        StringBuilder sb = new StringBuilder();
         if (null == flag){
             flag = 1;
         }
         List<Map<String,Object>> list = null;
-        // 如何登录账户 是村级账户
-        if (flag == 1 && user.getUserType() == 1){
-            list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
-        }else {
-
-        }
+        List<Integer> ids = null;
 
         Integer sum1 = 0;
         Integer sum2 = 0;
@@ -5591,6 +5587,23 @@ public class GlobalController extends BaseController {
         Integer sum8 = 0;
         Integer sum9 = 0;
         Integer sum10 = 0;
+
+
+        if (user.getUserType() == 4){ // 如何登录的账户是村级账号并且是企业自查
+
+            list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+
+        }else if (user.getUserType() == 3){  // 如何登录的账户是镇级账号并且是企业自查
+            // 查询镇下面的所有村
+            List<Village> lists = villageMapper.findUserID(user.getId());
+            for (int i = 0; i < lists.size(); i++) {
+                ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 3);
+            }
+
+        }else if (user.getUserType() == 6){  // 如何登录的账户是区级账号并且是企业自查
+
+            list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+        }
 
         for (int i = 0; i < list.size(); i++) {
 
@@ -5639,6 +5652,7 @@ public class GlobalController extends BaseController {
             list.get(i).put("danger11",count);  // 某个公司的所有行业合计
 
         }
+
 
         Map<String,Object> map = new HashMap<>();
 
@@ -5759,7 +5773,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "company/evaluate/villageDown/zf-performance-industry-charts1";
+        return "global/company/evaluate/villageDown/zf-performance-industry-charts1";
     }
 
 
@@ -6111,204 +6125,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "company/evaluate/villageDown/zf-check-hidden-trouble-charts2";
-    }
-
-
-    /**
-     * create by  : 小明！！！
-     * description: TODO 隐患数据分析 行业
-     * create time: 2019/8/26 14:18
-     */
-    @RequestMapping(value = "zf-hidden-industry")
-    public String hiddenIndustry(HttpServletRequest request, Model model, Integer flag){
-        User user = getLoginUser(request);
-        if (null == flag){
-            flag = 1;
-        }
-
-        List<Map<String,Object>> list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
-
-        Integer sum1 = 0;
-        Integer sum2 = 0;
-        Integer sum3 = 0;
-        Integer sum4 = 0;
-        Integer sum5 = 0;
-        Integer sum6 = 0;
-        Integer sum7 = 0;
-        Integer sum8 = 0;
-        Integer sum9 = 0;
-        Integer sum10 = 0;
-
-
-        for (int i = 0; i < list.size(); i++) {
-
-            Integer a = tCheckItemMapper.zhengFuChartDataDanger(flag,"化工",(Integer) list.get(i).get("user_id")); // 化工行业 数据
-            list.get(i).put("danger1",a);
-            sum1 += a;
-
-            Integer  b = tCheckItemMapper.zhengFuChartDataDanger(flag,"冶金",(Integer) list.get(i).get("user_id")); // 冶金行业 数据
-            list.get(i).put("danger2",b);
-            sum2 += b;
-
-            Integer  c = tCheckItemMapper.zhengFuChartDataDanger(flag,"有色",(Integer) list.get(i).get("user_id")); // 有色行业 数据
-            list.get(i).put("danger3",c);
-            sum3 += c;
-
-            Integer  d = tCheckItemMapper.zhengFuChartDataDanger(flag,"建材",(Integer) list.get(i).get("user_id")); // 建材行业 数据
-            list.get(i).put("danger4",d);
-            sum4 += d;
-
-            Integer  e = tCheckItemMapper.zhengFuChartDataDanger(flag,"机械",(Integer) list.get(i).get("user_id")); // 机械行业 数据
-            list.get(i).put("danger5",e);
-            sum5 += e;
-
-            Integer  f = tCheckItemMapper.zhengFuChartDataDanger(flag,"轻工",(Integer) list.get(i).get("user_id")); // 轻工行业 数据
-            list.get(i).put("danger6",f);
-            sum6 += f;
-
-            Integer  g = tCheckItemMapper.zhengFuChartDataDanger(flag,"纺织",(Integer) list.get(i).get("user_id")); // 纺织行业 数据
-            list.get(i).put("danger7",g);
-            sum7 += g;
-
-            Integer  h = tCheckItemMapper.zhengFuChartDataDanger(flag,"商贸",(Integer) list.get(i).get("user_id")); // 商贸行业 数据
-            list.get(i).put("danger8",h);
-            sum8 += h;
-
-            Integer  i1 = tCheckItemMapper.zhengFuChartDataDanger(flag,"烟花",(Integer) list.get(i).get("user_id")); // 烟花行业 数据
-            list.get(i).put("danger9",i1);
-            sum9 += i1;
-
-            Integer  j = tCheckItemMapper.zhengFuChartDataDanger11(flag,(Integer) list.get(i).get("user_id")); // 其他行业 数据
-            list.get(i).put("danger10",j);
-            sum10 += j;
-
-            Integer count = a + b + c + d + e + f + g + h + i1 + j;
-
-            list.get(i).put("danger11",count);  // 某个公司的所有行业合计
-
-        }
-
-        Map<String,Object> map = new HashMap<>();
-
-        Integer count = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 ;
-
-        DecimalFormat df = new DecimalFormat("0.00");
-
-        if (null != count && 0 != count) {
-
-            if (null != sum1 && 0 != sum1) {
-                String str = df.format((float)sum1 / count);
-                map.put("result1",str+"%");
-
-            } else {
-                map.put("result1","0.00%");  // 化工 占比数据
-            }
-
-            if (null != sum2 && 0 != sum2) {
-                String str = df.format((float)sum2 / count);
-                map.put("result2",str + "%");
-
-            } else {
-                map.put("result2","0.00%"); // 冶金 占比数据
-            }
-
-            if (null != sum3 && 0 != sum3) {
-                String str = df.format((float)sum3 / count);
-                map.put("result3",str + "%");
-
-            } else {
-                map.put("result3","0.00%");  // 有色 占比数据 竖
-            }
-
-            if (null != sum4 && 0 != sum4) {
-                String str = df.format((float)sum4 / count);
-                map.put("result4",str + "%");
-
-            } else {
-                map.put("result4","0.00%"); // 建材 占比数据
-            }
-
-            if (null != sum5 && 0 != sum5) {
-                String str = df.format((float)sum5 / count);
-                map.put("result5", str + "%");
-
-            } else {
-                map.put("result5","0.00%"); // 机械 占比数据
-            }
-
-            if (null != sum6 && 0 != sum6) {
-                String str = df.format((float)sum6 / count);
-                map.put("result6",str + "%");
-
-            } else {
-                map.put("result6","0.00%"); // 轻工 占比数据
-            }
-
-            if (null != sum7 && 0 != sum7) {
-                String str = df.format((float)sum7 / count);
-                map.put("result7",str + "%");
-
-            } else {
-                map.put("result7","0.00%"); // 纺织 占比数据
-            }
-
-            if (null != sum8 && 0 != sum8) {
-                String str = df.format((float)sum8 / count);
-                map.put("result8",str + "%");
-
-            } else {
-                map.put("result8","0.00%");// 商贸 占比数据
-            }
-
-            if (null != sum9 && 0 != sum9) {
-                String str = df.format((float)sum9 / count);
-                map.put("result9",str + "%");
-
-            } else {
-                map.put("result9","0.00%"); // 烟花 占比数据
-            }
-
-            if (null != sum10 && 0 != sum10) {
-                String str = df.format((float)sum10 / count);
-                map.put("result10",str + "%");
-
-            } else {
-                map.put("result10","0.00%"); // 其他 占比数据
-            }
-
-        }else {
-            // 占比 坚
-            map.put("result1", "0.00%");
-            map.put("result2", "0.00%");
-            map.put("result3", "0.00%");
-            map.put("result4", "0.00%");
-            map.put("result5", "0.00%");
-            map.put("result6", "0.00%");
-            map.put("result7", "0.00%");
-            map.put("result8", "0.00%");
-            map.put("result9", "0.00%");
-            map.put("result10", "0.00%");
-        }
-
-        // 合计 坚
-        map.put("sum1",sum1);
-        map.put("sum2",sum2);
-        map.put("sum3",sum3);
-        map.put("sum4",sum4);
-        map.put("sum5",sum5);
-        map.put("sum6",sum6);
-        map.put("sum7",sum7);
-        map.put("sum8",sum8);
-        map.put("sum9",sum9);
-        map.put("sum10",sum10);
-
-        list.add(map);
-
-        model.addAttribute("data",new Date());
-        model.addAttribute("list",list);
-
-        return "company/evaluate/villageDown/zf-hidden-industry-charts3-1";
+        return "global/company/evaluate/villageDown/zf-check-hidden-trouble-charts2";
     }
 
 
@@ -6656,11 +6473,205 @@ public class GlobalController extends BaseController {
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "company/evaluate/villageDown/zf-hidden-trouble-charts3-2";
+        return "global/company/evaluate/villageDown/zf-hidden-trouble-charts3-2";
     }
 
 
+    /**
+     * create by  : 小明！！！
+     * description: TODO 隐患数据分析 行业
+     * create time: 2019/8/26 14:18
+     */
+    @RequestMapping(value = "zf-hidden-industry")
+    public String hiddenIndustry(HttpServletRequest request, Model model, Integer flag){
+        User user = getLoginUser(request);
+        if (null == flag){
+            flag = 1;
+        }
 
+        List<Map<String,Object>> list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+
+        Integer sum1 = 0;
+        Integer sum2 = 0;
+        Integer sum3 = 0;
+        Integer sum4 = 0;
+        Integer sum5 = 0;
+        Integer sum6 = 0;
+        Integer sum7 = 0;
+        Integer sum8 = 0;
+        Integer sum9 = 0;
+        Integer sum10 = 0;
+
+
+        for (int i = 0; i < list.size(); i++) {
+
+            Integer a = tCheckItemMapper.zhengFuChartDataDanger(flag,"化工",(Integer) list.get(i).get("user_id")); // 化工行业 数据
+            list.get(i).put("danger1",a);
+            sum1 += a;
+
+            Integer  b = tCheckItemMapper.zhengFuChartDataDanger(flag,"冶金",(Integer) list.get(i).get("user_id")); // 冶金行业 数据
+            list.get(i).put("danger2",b);
+            sum2 += b;
+
+            Integer  c = tCheckItemMapper.zhengFuChartDataDanger(flag,"有色",(Integer) list.get(i).get("user_id")); // 有色行业 数据
+            list.get(i).put("danger3",c);
+            sum3 += c;
+
+            Integer  d = tCheckItemMapper.zhengFuChartDataDanger(flag,"建材",(Integer) list.get(i).get("user_id")); // 建材行业 数据
+            list.get(i).put("danger4",d);
+            sum4 += d;
+
+            Integer  e = tCheckItemMapper.zhengFuChartDataDanger(flag,"机械",(Integer) list.get(i).get("user_id")); // 机械行业 数据
+            list.get(i).put("danger5",e);
+            sum5 += e;
+
+            Integer  f = tCheckItemMapper.zhengFuChartDataDanger(flag,"轻工",(Integer) list.get(i).get("user_id")); // 轻工行业 数据
+            list.get(i).put("danger6",f);
+            sum6 += f;
+
+            Integer  g = tCheckItemMapper.zhengFuChartDataDanger(flag,"纺织",(Integer) list.get(i).get("user_id")); // 纺织行业 数据
+            list.get(i).put("danger7",g);
+            sum7 += g;
+
+            Integer  h = tCheckItemMapper.zhengFuChartDataDanger(flag,"商贸",(Integer) list.get(i).get("user_id")); // 商贸行业 数据
+            list.get(i).put("danger8",h);
+            sum8 += h;
+
+            Integer  i1 = tCheckItemMapper.zhengFuChartDataDanger(flag,"烟花",(Integer) list.get(i).get("user_id")); // 烟花行业 数据
+            list.get(i).put("danger9",i1);
+            sum9 += i1;
+
+            Integer  j = tCheckItemMapper.zhengFuChartDataDanger11(flag,(Integer) list.get(i).get("user_id")); // 其他行业 数据
+            list.get(i).put("danger10",j);
+            sum10 += j;
+
+            Integer count = a + b + c + d + e + f + g + h + i1 + j;
+
+            list.get(i).put("danger11",count);  // 某个公司的所有行业合计
+
+        }
+
+        Map<String,Object> map = new HashMap<>();
+
+        Integer count = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 ;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if (null != count && 0 != count) {
+
+            if (null != sum1 && 0 != sum1) {
+                String str = df.format((float)sum1 / count);
+                map.put("result1",str+"%");
+
+            } else {
+                map.put("result1","0.00%");  // 化工 占比数据
+            }
+
+            if (null != sum2 && 0 != sum2) {
+                String str = df.format((float)sum2 / count);
+                map.put("result2",str + "%");
+
+            } else {
+                map.put("result2","0.00%"); // 冶金 占比数据
+            }
+
+            if (null != sum3 && 0 != sum3) {
+                String str = df.format((float)sum3 / count);
+                map.put("result3",str + "%");
+
+            } else {
+                map.put("result3","0.00%");  // 有色 占比数据 竖
+            }
+
+            if (null != sum4 && 0 != sum4) {
+                String str = df.format((float)sum4 / count);
+                map.put("result4",str + "%");
+
+            } else {
+                map.put("result4","0.00%"); // 建材 占比数据
+            }
+
+            if (null != sum5 && 0 != sum5) {
+                String str = df.format((float)sum5 / count);
+                map.put("result5", str + "%");
+
+            } else {
+                map.put("result5","0.00%"); // 机械 占比数据
+            }
+
+            if (null != sum6 && 0 != sum6) {
+                String str = df.format((float)sum6 / count);
+                map.put("result6",str + "%");
+
+            } else {
+                map.put("result6","0.00%"); // 轻工 占比数据
+            }
+
+            if (null != sum7 && 0 != sum7) {
+                String str = df.format((float)sum7 / count);
+                map.put("result7",str + "%");
+
+            } else {
+                map.put("result7","0.00%"); // 纺织 占比数据
+            }
+
+            if (null != sum8 && 0 != sum8) {
+                String str = df.format((float)sum8 / count);
+                map.put("result8",str + "%");
+
+            } else {
+                map.put("result8","0.00%");// 商贸 占比数据
+            }
+
+            if (null != sum9 && 0 != sum9) {
+                String str = df.format((float)sum9 / count);
+                map.put("result9",str + "%");
+
+            } else {
+                map.put("result9","0.00%"); // 烟花 占比数据
+            }
+
+            if (null != sum10 && 0 != sum10) {
+                String str = df.format((float)sum10 / count);
+                map.put("result10",str + "%");
+
+            } else {
+                map.put("result10","0.00%"); // 其他 占比数据
+            }
+
+        }else {
+            // 占比 坚
+            map.put("result1", "0.00%");
+            map.put("result2", "0.00%");
+            map.put("result3", "0.00%");
+            map.put("result4", "0.00%");
+            map.put("result5", "0.00%");
+            map.put("result6", "0.00%");
+            map.put("result7", "0.00%");
+            map.put("result8", "0.00%");
+            map.put("result9", "0.00%");
+            map.put("result10", "0.00%");
+        }
+
+        // 合计 坚
+        map.put("sum1",sum1);
+        map.put("sum2",sum2);
+        map.put("sum3",sum3);
+        map.put("sum4",sum4);
+        map.put("sum5",sum5);
+        map.put("sum6",sum6);
+        map.put("sum7",sum7);
+        map.put("sum8",sum8);
+        map.put("sum9",sum9);
+        map.put("sum10",sum10);
+
+        list.add(map);
+
+        model.addAttribute("data",new Date());
+        model.addAttribute("list",list);
+
+        return "global/company/evaluate/villageDown/zf-hidden-industry-charts3-1";
+    }
 
 
     /**
@@ -6748,22 +6759,6 @@ public class GlobalController extends BaseController {
                 list.get(i).put("result33",0.00);
             }
 
-
-            Integer number1 = a + b + c; // 已治理 合计
-            list.get(i).put("number1",number1);
-
-            Integer number2 = a1 + b1 + c1;  // 未治理 合计
-            list.get(i).put("number2",number2);
-
-            Integer number = number1 + number2;
-
-            if (null != number && number != 0){
-                String str = df.format((float)number1/number);
-                list.get(i).put("number",str+"%");  // 治理率 合计
-            }else {
-                list.get(i).put("number",0.00);
-            }
-
         }
         DecimalFormat df = new DecimalFormat("0.00");
 
@@ -6795,7 +6790,7 @@ public class GlobalController extends BaseController {
             }
 
         }else {
-            map.put("result2","0.00%"); // 一般隐患的治理率 竖
+            map.put("result2","0.00%"); // 较大隐患的治理率 竖
         }
 
         if (null != sum3 && 0 != sum3){
@@ -6805,76 +6800,11 @@ public class GlobalController extends BaseController {
                 map.put("result3",str+"%"); // 重大隐患的治理率 竖
 
             }else {
-                map.put("result3","0.00%"); // 一般隐患的治理率 竖
+                map.put("result3","0.00%"); // 重大隐患的治理率 竖
             }
 
         }else {
-            map.put("result3","0.00%"); // 一般隐患的治理率 竖
-        }
-
-        Integer proportion1 = sign1 + sign2 + sign3;
-
-        Integer proportion2 = sign11 + sign22 + sign33;
-
-        if (null != proportion1 && 0 != proportion1){
-
-            if (null != sign1 && 0 != sign1){
-                String str = df.format((float)sign1 / proportion1);
-                map.put("proportion11",str+"%");  // 一般隐患 已治理 占比数据 竖
-            }else {
-                map.put("proportion11","0.00%"); // 一般隐患的治理率 竖
-            }
-
-            if (null != sign2 && 0 != sign2){
-                String str = df.format((float)sign2 / proportion1);
-                map.put("proportion22",str+"%");  // 较大隐患 已治理 占比数据 竖
-            }else {
-                map.put("proportion22","0.00%"); // 较大隐患 已治理 占比数据 竖
-            }
-
-            if (null != sign3 && 0 != sign3){
-                String str = df.format((float)sign3 / proportion1);
-                map.put("proportion33",str+"%");  // 重大隐患 已治理 占比数据 竖
-
-            }else {
-                map.put("proportion33","0.00%"); // 重大隐患 已治理 占比数据 竖
-            }
-
-        }else {
-            map.put("proportion11","0.00%"); // 一般隐患的治理率 竖
-            map.put("proportion22","0.00%"); // 较大隐患 已治理 占比数据 竖
-            map.put("proportion33","0.00%"); // 重大隐患 已治理 占比数据 竖
-        }
-
-        if (null != proportion2 && 0 != proportion2){
-
-            if (null != sign11 && 0 != sign11){
-                String str = df.format((float)sign11 / proportion2);
-                map.put("proportion44",str+"%");  // 一般隐患 未治理 占比数据 竖
-            }else {
-                map.put("proportion44","0.00%"); // 一般隐患 未治理 占比数据 竖
-            }
-
-            if (null != sign22 && 0 != sign22){
-                String str = df.format((float)sign22 / proportion2);
-                map.put("proportion55",str+"%");  // 较大隐患 未治理 占比数据 竖
-            }else {
-                map.put("proportion55","0.00%"); // 较大隐患 未治理 占比数据 竖
-            }
-
-            if (null != sign33 && 0 != sign33){
-                Double sign = Double.valueOf(sign33 / proportion2);
-                String str = df.format((float)sign3/proportion2);
-                map.put("proportion66",str+"%");  // 重大隐患 未治理 占比数据 竖
-
-            }else {
-                map.put("proportion66","0.00%"); // 重大隐患 未治理 占比数据 竖
-            }
-
-        }else {
-            map.put("proportion44","0.00%"); // 一般隐患的治理率 竖
-            map.put("proportion55","0.00%"); // 较大隐患 已治理 占比数据 竖
-            map.put("proportion66","0.00%"); // 重大隐患 已治理 占比数据 竖
+            map.put("result3","0.00%"); // 重大隐患的治理率 竖
         }
 
         map.put("sign1",sign1); // 一般隐患 已治理 合计 竖
@@ -6890,7 +6820,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "company/evaluate/villageDown/manage-hidden-company-charts4-1";
+        return "global/company/evaluate/villageDown/manage-hidden-company-charts4-1";
     }
 
 
@@ -6942,7 +6872,7 @@ public class GlobalController extends BaseController {
             Integer c = 0;
             Integer c1 = 0;
 
-            if(null != (String)list.get(i).get("danger") && list.get(i).get("danger").equals("其他")){
+            if(null != list.get(i).get("danger") && list.get(i).get("danger").equals("其他")){
 
                 a = tCheckItemMapper.manageHiddenDanger11(1,3); // 一般和较小 合格 已治理
                 list.get(i).put("danger1",a);
@@ -6962,7 +6892,7 @@ public class GlobalController extends BaseController {
                 c1 = tCheckItemMapper.manageHiddenDanger11(1,2); // 重大 不合格 未治理
                 list.get(i).put("danger33",c1);
 
-            }else if (null != (String)list.get(i).get("danger")){
+            }else if (null != list.get(i).get("danger")){
 
                 a = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),3); // 一般和较小 合格 已治理
                 list.get(i).put("danger1",a);
@@ -7039,16 +6969,16 @@ public class GlobalController extends BaseController {
 
         if (null != sum2 && sum2 != 0){ // 较大 治理率
             String str = df.format((float)sign2/sum2);
-            map.put("result22",str+"%");
+            map.put("resust22",str+"%");
         }else {
-            map.put("result22",0.00);
+            map.put("resust22",0.00);
         }
 
         if (null != sum3 && sum3 != 0){ // 重大 治理率
             String str = df.format((float)sign3/sum3);
-            map.put("result33",str+"%");
+            map.put("resust33",str+"%");
         }else {
-            map.put("result33",0.00);
+            map.put("resust33",0.00);
         }
 
         map.put("sign1",sign1);
@@ -7058,14 +6988,14 @@ public class GlobalController extends BaseController {
         map.put("sign22",sign22);
         map.put("sign33",sign33);
         map.put("resust11",sign11);
-        map.put("result22",sign22);
-        map.put("result33",sign33);
+        map.put("resust22",sign22);
+        map.put("resust33",sign33);
 
 
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "company/evaluate/villageDown/manage-hidden-danger-charts4-2";
+        return "global/company/evaluate/villageDown/manage-hidden-danger-charts4-2";
     }
 
     
@@ -7117,7 +7047,7 @@ public class GlobalController extends BaseController {
             Integer c = 0;
             Integer c1 = 0;
 
-            if(null != (String)list.get(i).get("industry") && list.get(i).get("industry").equals("其他")){
+            if(null != list.get(i).get("industry") && list.get(i).get("industry").equals("其他")){
 
                 a = tCheckItemMapper.manageHiddenIndustry11(1,3); // 一般和较小 合格 已治理
                 list.get(i).put("industry1",a);
@@ -7137,7 +7067,7 @@ public class GlobalController extends BaseController {
                 c1 = tCheckItemMapper.manageHiddenIndustry11(1,2); // 重大 不合格 未治理
                 list.get(i).put("industry33",c1);
 
-            }else if (null != (String)list.get(i).get("industry")){
+            }else if (null != list.get(i).get("industry")){
 
                 a = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),3); // 一般和较小 合格 已治理
                 list.get(i).put("industry1",a);
@@ -7214,16 +7144,16 @@ public class GlobalController extends BaseController {
 
         if (null != sum2 && sum2 != 0){ // 较大 治理率
             String str = df.format((float)sign2/sum2);
-            map.put("result22",str+"%");
+            map.put("resust22",str+"%");
         }else {
-            map.put("result22",0.00);
+            map.put("resust22",0.00);
         }
 
         if (null != sum3 && sum3 != 0){ // 重大 治理率
             String str = df.format((float)sign3/sum3);
-            map.put("result33",str+"%");
+            map.put("resust33",str+"%");
         }else {
-            map.put("result33",0.00);
+            map.put("resust33",0.00);
         }
 
         map.put("sign1",sign1);
@@ -7233,14 +7163,14 @@ public class GlobalController extends BaseController {
         map.put("sign22",sign22);
         map.put("sign33",sign33);
         map.put("resust11",sign11);
-        map.put("result22",sign22);
-        map.put("result33",sign33);
+        map.put("resust22",sign22);
+        map.put("resust33",sign33);
 
 
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "company/evaluate/villageDown/manage-hidden-industry-charts4-3";
+        return "global/company/evaluate/villageDown/manage-hidden-industry-charts4-3";
     }
 
 

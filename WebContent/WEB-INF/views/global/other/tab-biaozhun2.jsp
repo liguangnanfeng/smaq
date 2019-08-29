@@ -174,175 +174,29 @@
 
         <c:forEach items="${list }" varStatus="index" var="t">
             <div class="item_container">
-                <div class="item_content my_flex f_r f_j_c f_z_c"
-                     onClick="jump('${t.fileAddress}','${t.id}')">
-                    <h4>${t.name }</h4>
+                <div class="item_content my_flex f_r f_j_c f_z_c">
+                    <c:if test="${userType==9}">
+                         <a href="${ly }/global/wel?districtId=${t.code }"><h4>${t.name }</h4></a>
+                    </c:if>
+                    <c:if test="${userType==6}">
+                         <c:if test="${moveD != 1 }">
+                             <a href="${ly }/global/move/next?uid=${t.userId }"><h4>${t.name }</h4></a>
+                         </c:if>
+                        <c:if test="${moveD == 1 }">
+                             <a href="${ly }/global/wel?townId=${t.userId }"><h4>${t.name }</h4></a>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${userType==3}">
+                        <a href="${ly }/global/wel?villageId=${t.userId }"><h4>${t.name }</h4></a>
+                    </c:if>
                 </div>
             </div>
         </c:forEach>
     </div>
 </div>
 <script type="text/javascript">
-    <%--  显示  --%>
-    var p_id = '';   //要传递的id字段
-    var p_name = ''   //要传递的name字段
-    var str = 0
 
 
-    // 跳转
-    function jump(url, id) {
-     
-          if (url) {
-            show_tab('安全标准化', url)
-        } else {
-            var p_id = parseInt(id);
-            show_tab('安全标准化', '${ly}/api/safety_Standard/findByParentId?safetyStandardlistId=' + p_id);
-        } 
-		 
-	}
-
-
-    <%-- 新增 --%>
-
-
-    function addNew() {
-        $('#trInput3').val(0);
-        $('#trInput5').val('');
-        $("#modal-plan2").modal("show");
-    }
-
-    function edit(id, name, oder, url) {
-        p_name = name;
-        p_id = parseInt(id);
-        $('#trInput2').val(name);
-        $('#trInput4').val(oder);
-        $('#trInput6').val(url);
-        $("#modal-plan3").modal("show");
-    }
-
-    <%--  添加保存  --%>
-
-    function queren() {
-        $.ajax({
-            url: getRootPath() + "/api/safety_Standard/save",    //请求的url地址 
-            data: JSON.stringify({
-                parentId: str,
-                name: $('#trInput').val(),
-                oder: parseInt($('#trInput3').val()),
-                fileAddress: $('#trInput5').val(),
-            }),    //参数值
-            type: "POST",   //请求方式
-            dataType: 'json', //返回值类型 一般设置为json
-            contentType: "application/json",
-            success: function (res) {
-                layer.msg(res.mess);
-                if (res.status == 0) {
-                    setInterval(function () {
-                        location.reload();
-                    }, 1000)
-                }
-            }
-        });
-    }
-
-    function queren2() {
-        $.ajax({
-            url: getRootPath() + "/api/safety_Standard/update-tSafetyStandard",    //请求的url地址 
-            data: JSON.stringify({          //参数值
-                parentId: str,
-                id: p_id,
-                name: $('#trInput2').val(),
-                oder: parseInt($('#trInput4').val()),
-                fileAddress: $('#trInput6').val(),
-            }),
-            type: "POST",   //请求方式
-            dataType: 'json', //返回值类型 一般设置为json
-            contentType: "application/json",
-            success: function (res) {
-                layer.msg(res.mess);
-                if (res.status == 0) {
-                    setInterval(function () {
-                        location.reload();
-                    }, 1000)
-                }
-
-            }
-        });
-    }
-
-    function daoru() {
-        layer.msg('导入数据花费时间较长,请耐心等待');
-        $.ajax({
-            url: getRootPath() + "/api/safety_Standard/Automatic-import",    //请求的url地址 
-            type: "POST",   //请求方式
-            dataType: 'json', //返回值类型 一般设置为json
-            success: function (res) {
-
-                layer.msg(res.mess);
-                location.reload();
-            }
-        });
-    }
-
-    //提示删除
-    function tip(id) {
-        layer.confirm('删除后将无法恢复,确认删除？', {
-            btn: ['确定', '取消'] //按钮
-        }, function () {
-            del(id)
-        }, function () {
-            return
-        });
-    }
-
-
-    /*删除*/
-    function del(id) {
-        $.ajax({
-            url: getRootPath() + "/api/safety_Standard/delete-tSafetyStandard",    //请求的url地址 
-            data: {
-                'safetyStandardlistId': parseInt(id)
-            },    //参数值
-            type: "POST",   //请求方式
-            success: function (res) {
-                layer.msg(res.mess)
-                if (res.status == 0) {
-                    setInterval(function () {
-                        location.reload();
-                    }, 1000)
-                }
-            }
-        });
-    }
-
-    /*上传*/
-    function upload(isType) {
-        $.ajaxFileUpload({
-            url: getRootPath() + '/company/tables/tab-leadin?isType=' + isType + "&id=" + id, //用于文件上传的服务器端请求地址
-            secureuri: false, //一般设置为false
-            fileElementId: 'file', //文件上传空间的id属性  <input type="file" id="file" name="file" />
-            dataType: 'json', //返回值类型 一般设置为json
-            async: false,
-            success: function (result) { //服务器成功响应处理函数
-                $(".upload-url").val("");
-                if (result.status == '0') {
-                    layer.alert("导入成功", "", function () {
-                        location.reload();
-                    })
-                } else {
-                    if (null != result.map.message) {
-                        layer.alert(result.map.message);
-                    } else {
-                        var list = result.map.list;
-                        layer.alert(list.join("<br>"));
-                    }
-                }
-            },
-            error: function (data, status, e) {//服务器响应失败处理函数
-                alert("文件上传失败");
-            }
-        })
-    }
 </script>
 </body>
 </html>

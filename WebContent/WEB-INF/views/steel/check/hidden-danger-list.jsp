@@ -38,6 +38,19 @@
         .div_imgp img {
             max-width: 100%
         }
+        #selectBranch{
+            position: absolute;
+            top: 142px;
+            right: 286px;
+            width: 100px;
+            height: 32px;
+            padding: 4px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            box-shadow: 5px 5px 5px #fff;
+            color: black;
+            border-radius: 5px;
+        }
     </style>
     <script type="text/javascript">
         console.log('${host}');
@@ -111,6 +124,8 @@
         <%--<strong>第${page+1}页/共${count}页</strong>--%>
         <%--<a href="${ly }/village/recheck-list?flag=${flag}&page=${page+1}">下一页 &gt;</a>--%>
         <%--</p>--%>
+            <select id="selectBranch">
+            </select>
     </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -274,6 +289,7 @@
             <!-- 循环结束 -->
             </tbody>
         </table>
+        <!--企业列表-->
     </div>
 
     <%--     隐藏的下载按钮--%>
@@ -430,6 +446,38 @@
     }
 
     $(function () {
+        //展示特钢的各个分厂
+        $.ajax({
+            url:"${ly}/steel/company-list8",
+            type:"get",
+            success:function (data) {
+                var html="";
+                for(var i=0; i<data.map.list.length; i++){
+                    if(data.map.list[i]["id"]==${userId}){
+                        html += '<option value="'+data.map.list[i]["id"]+'" selected="selected">'+data.map.list[i]["name"]+'</option>';
+                    }else{
+                        html += '<option value="'+data.map.list[i]["id"]+'">'+data.map.list[i]["name"]+'</option>';
+                    }
+
+                }
+                $("#selectBranch").html(html);
+            },
+            error:function(){
+                alert("error");
+            }
+        });
+        $("#selectBranch").change(function () {
+            var flag = ${flag};
+            if(flag==1)
+            {
+                window.location.href="${ly }/steel/hidden-danger-list?flag=${flag}&status=1&userId="+$(this).val();
+            }
+            else
+            {
+                window.location.href="${ly }/steel/hidden-danger-list?flag=${flag}&userId="+$(this).val();
+            }
+            //window.location.href="${ly }/steel/model-list-main?flag=${flag}&userId="+$(this).val();
+        })
         $('.table-sort').dataTable({
             "aaSorting": [[4, "desc"]],//默认第几个排序
             "bStateSave": false,//状态保存

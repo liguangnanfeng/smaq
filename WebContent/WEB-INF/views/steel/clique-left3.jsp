@@ -108,20 +108,18 @@
           </dd>
       </dl>
         <!----------------------风险分级管控----------------------->
-      <dl>
-          <dt>
-              <i class="Hui-iconfont">&#xe63c;</i>风险分级管控
-              <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-         </dt>
-          <dd>
-              <ul>
-                  <li><a data-href="${ly }/html/editor/plan-list.html" data-title="管理手册" href="javascript:void(0)">管理手册</a></li>
-                  <li><a data-href="${ly }/steel/risk-list" data-title="风险辨识" href="javascript:void(0)">风险辨识</a></li>
-                  <li><a data-href="${ly }/company/threeLeft?leftBasic=2" data-title="风险评估" href="javascript:void(0)">风险评估</a></li>
-                  <li><a data-href="${ly }/company/safety-system/control-list" data-title="分级管控" href="javascript:void(0)">分级管控</a></li>
-                  <li><a data-href="${ly }/company/threeLeft?leftBasic=3" data-title="公告警示" href="javascript:void(0)">公告警示</a></li>
-              </ul>
-          </dd>
+        <dl>
+            <dt>
+                <i class="Hui-iconfont">&#xe63c;</i>风险分级管控
+                <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+            </dt>
+            <dd>
+                <ul>
+                    <li><a data-href="${ly }/village/safety-system/control-listmenu?level=红色" data-title="重大风险汇总" href="javascript:void(0)">重大风险汇总</a></li>
+                    <li><a data-href="${ly }/village/safety-system/control-listmenu?level=橙色" data-title="较大风险汇总" href="javascript:void(0)">较大风险汇总</a></li>
+                    <li><a data-href="${ly }/village/safety-system/statistics-list" data-title="数据分析" href="javascript:void(0)">数据分析</a></li>
+                </ul>
+            </dd>
         </dl>
         <!-------------------------------------------隐患排查治理-------------------------------------------------->
         <dl>
@@ -131,12 +129,12 @@
            </dt>
            <dd>
                 <ul>
-                    <li><a data-href="${ly }/steel/company-list2" data-title="检查设置实施" href="javascript:void(0)">检查设置实施</a></li>
-                    <li><a data-href="${ly }/steel/company-list3" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
-                    <li><a data-href="${ly }/steel/company-list4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
-                    <li><a data-href="${ly }/steel/company-list5" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
-                    <li><a data-href="${ly }/steel/company-list6" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
-                    <li><a data-href="${ly }/steel/company-list7" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
+                    <li><a data-href="${ly }/steel/model-list-main?flag=1&userId=789" data-title="检查设置实施" href="javascript:void(0)">检查设置实施</a></li>
+                    <li><a data-href="${ly }/steel/check-list?flag=1&status=2&userId=789" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
+                    <li><a data-href="${ly }/steel/hidden-danger-list?flag=1&status=1&userId=789" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
+                    <li><a data-href="${ly }/steel/jx-analysis?flag=1&userId=789" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
+                    <li><a data-href="${ly }/steel/yh-analysis?flag=1&userId=789" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
+                    <li><a data-href="${ly }/steel/zl-analysis?userId=789" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
                </ul>
          </dd>
       </dl>

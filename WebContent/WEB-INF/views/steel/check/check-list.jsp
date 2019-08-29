@@ -23,6 +23,19 @@
             line-height: 34px;
             padding: 0 25px;
         }
+        #selectBranch{
+            position: absolute;
+            top: 127px;
+            right: 31px;
+            width: 100px;
+            height: 32px;
+            padding: 4px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            box-shadow: 5px 5px 5px #fff;
+            color: black;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <script>
@@ -79,7 +92,7 @@
     </div>
 
     <div class="text-c">
-        <form action="${ly }/village/check-list?flag=${flag}" method="post">
+        <form action="${ly }/steel/check-list?flag=${flag}&userId=${userId}" method="post">
             <div class="dis-ib">
                 <span>检查表名称：</span>
                 <input type="text" value="${title }" name="title" class="input-text mb-5 mt-5" style="width:150px;">
@@ -110,7 +123,7 @@
              <span class="l">
 
 
-      <form action="${ly }/village/check-list?flag=${flag}" method="post">
+      <form action="${ly }/steel/check-list?flag=${flag}&userId=${userId}" method="post">
           <select class="sel_area isShow" id="partNamme"  name="dmName"  style="position:relative;top:3px">
             <option value="">全部</option>
             <c:forEach items="${set }" var="be">
@@ -310,11 +323,39 @@
             <!-- 循环结束 -->
             </tbody>
         </table>
+        <!--企业列表-->
+        <select id="selectBranch">
+        </select>
     </div>
 </div>
 <script type="text/javascript">
 
     $(function () {
+        //展示特钢的各个分厂
+        //alert("aaa")
+        $.ajax({
+            url:"${ly}/steel/company-list8",
+            type:"get",
+            success:function (data) {
+                var html="";
+                for(var i=0; i<data.map.list.length; i++){
+                    if(data.map.list[i]["id"]==${userId}){
+                        html += '<option value="'+data.map.list[i]["id"]+'" selected="selected">'+data.map.list[i]["name"]+'</option>';
+                    }else{
+                        html += '<option value="'+data.map.list[i]["id"]+'">'+data.map.list[i]["name"]+'</option>';
+                    }
+
+                }
+                $("#selectBranch").html(html);
+            },
+            error:function(){
+                alert("error");
+            }
+        });
+        $("#selectBranch").change(function () {
+
+            window.location.href="${ly }/steel/check-list?flag=${flag}&status=2&userId="+$(this).val();
+        })
         sessionStorage.clear();
         $('.table-sort').dataTable({
             "aaSorting": [[0, "asc"]],//默认第几个排序
@@ -322,7 +363,7 @@
             "aoColumnDefs": []
         }),
 
-        var type = '${type}';
+       // var type = '${type}';
 
         function copy_(id) {
             show_tab('添加自查记录', getRootPath() + '/company/check-copy?id=' + id);

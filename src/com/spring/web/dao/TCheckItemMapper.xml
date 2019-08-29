@@ -1101,7 +1101,6 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
-        AND t1.status = 2
         AND t1. status = #{status}
         AND t2.user_id = #{user_id}
         AND t3.flag = #{flag}
@@ -1120,7 +1119,6 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
-        AND t1.status = 2
         AND t1. status = #{status}
         AND t2.user_id = #{user_id}
         AND t3.flag = #{flag}
@@ -1139,7 +1137,6 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
-        AND t1.status = 2
         AND t1. status = #{status}
         AND t3.control = #{control}
         AND t3.flag = #{flag}
@@ -1159,9 +1156,8 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
-        AND t1.status = 2
-        AND t1. status = #{status}
         AND t3.control is null
+        AND t1. status = #{status}
         AND t3.flag = #{flag}
         AND t1.recheck_file != ''
     </select>
@@ -1179,7 +1175,6 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
-        AND t1.status = 2
         AND t1. status = #{status}
         AND c1.industry like CONCAT('%',#{industry},'%')
         AND t3.flag = #{flag}
@@ -1198,7 +1193,6 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
-        AND t1.status = 2
         AND t1. status = #{status}
         AND c1.industry is null
         AND t3.flag = #{flag}
@@ -1219,7 +1213,6 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
-        AND t1.status = 2
         AND t1. status = 2
         AND t2.user_id = #{user_id}
         AND t3.flag = #{flag}

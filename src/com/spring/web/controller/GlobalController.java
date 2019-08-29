@@ -6866,7 +6866,7 @@ public class GlobalController extends BaseController {
             Integer c = 0;
             Integer c1 = 0;
 
-            if(null != (String)list.get(i).get("danger") && list.get(i).get("danger").equals("其他")){
+            if(null != list.get(i).get("danger") && list.get(i).get("danger").equals("其他")){
 
                 a = tCheckItemMapper.manageHiddenDanger11(1,3); // 一般和较小 合格 已治理
                 list.get(i).put("danger1",a);
@@ -6886,7 +6886,7 @@ public class GlobalController extends BaseController {
                 c1 = tCheckItemMapper.manageHiddenDanger11(1,2); // 重大 不合格 未治理
                 list.get(i).put("danger33",c1);
 
-            }else if (null != (String)list.get(i).get("danger")){
+            }else if (null != list.get(i).get("danger")){
 
                 a = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),3); // 一般和较小 合格 已治理
                 list.get(i).put("danger1",a);
@@ -7041,7 +7041,7 @@ public class GlobalController extends BaseController {
             Integer c = 0;
             Integer c1 = 0;
 
-            if(null != (String)list.get(i).get("industry") && list.get(i).get("industry").equals("其他")){
+            if(null != list.get(i).get("industry") && list.get(i).get("industry").equals("其他")){
 
                 a = tCheckItemMapper.manageHiddenIndustry11(1,3); // 一般和较小 合格 已治理
                 list.get(i).put("industry1",a);
@@ -7061,7 +7061,7 @@ public class GlobalController extends BaseController {
                 c1 = tCheckItemMapper.manageHiddenIndustry11(1,2); // 重大 不合格 未治理
                 list.get(i).put("industry33",c1);
 
-            }else if (null != (String)list.get(i).get("industry")){
+            }else if (null != list.get(i).get("industry")){
 
                 a = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),3); // 一般和较小 合格 已治理
                 list.get(i).put("industry1",a);

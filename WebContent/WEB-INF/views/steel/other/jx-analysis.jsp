@@ -49,6 +49,7 @@
             box-shadow: 5px 5px 5px #fff;
             color: black;
             border-radius: 5px;
+            z-index: 100000000000000000000000;
         }
         </style>
         </head>
@@ -60,6 +61,8 @@
             3:'${number3}'
         }
         </script>
+        <select id="selectBranch">
+        </select>
         <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
         <div class="select-btn">
         <a class="sbtn" id="chaBtn1"  href="${ly }/steel/jx-analysis?flag=1&userId=${userId}">企业自查</a>
@@ -67,8 +70,7 @@
         <a class="sbtn" id="chaBtn3" href="${ly }/steel/jx-analysis?flag=3&userId=${userId}">第三方检查</a>
         </div>
         <!--企业列表-->
-        <select id="selectBranch">
-        </select>
+
         <div id="main2" style="width: 90%;height:400px;margin: 50px auto 0 auto;"></div>
 <%--        <iframe id="colum" src=""></iframe>--%>
 
@@ -104,9 +106,9 @@
         <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         window.onload = function() {
-        var u1 = '${ly }/company/danger-chart-jx';
-        var u2 = '${ly }/company/zhuChartData55?flag=2';
-        var u3 = '${ly }/company/zhuChartData55?flag=3';
+        var u1 = '${ly }/steel/danger-chart-jx?userId=${userId}';
+        var u2 = '${ly }/steel/zhuChartData55?flag=2&userId=${userId}';
+        var u3 = '${ly }/steel/zhuChartData55?flag=3&userId=${userId}';
         var option = {
         title:{
         text:'排查绩效分析',
@@ -187,24 +189,24 @@
 
 
 
-<%--        柱状图--%>
+        <%--        柱状图--%>
         <script>
          console.log("flag:","${flag}");
         var url='';
         if('${flag}'==1){
         $("#chaBtn1").addClass('btn-default');
-         url='${ly }/company/zhuChartData66?flag=1';
+         url='${ly }/steel/zhuChartData66?flag=1&userId=${userId}';
         }
         if('${flag}'==2){
         $("#chaBtn2").addClass('btn-default');
-         url='${ly }/company/zhuChartData66?flag=2';
+         url='${ly }/steel/zhuChartData66?flag=2&userId=${userId}';
         }
         if('${flag}'==3){
         $("#chaBtn3").addClass('btn-default');
-         url='${ly }/company/zhuChartData66?flag=3';
+         url='${ly }/steel/zhuChartData66?flag=3&userId=${userId}';
         }
             function addgjs() {
-                show_dialog(" ", "/company/jx-analysis?flag=1");
+                show_dialog(" ", "/steel/jx-analysis?flag=1&userId=${userId}");
             }
         // 基于准备好的dom，初始化echarts实例
         var number = ["${a}", "${b}", "${c}", "${d}", "${e}", "${f}", "${g}", "${h}", "${i}", "${j}", "${k}", "${l}", "${m}", "${n}"];
@@ -330,7 +332,6 @@
         fdata33.push(x33);
         });
         });
-
        myChart.on('click', function(p) {
         window.location.href =url;
         })

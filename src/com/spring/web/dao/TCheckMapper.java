@@ -96,7 +96,7 @@ public interface TCheckMapper {
 
     List<Map<String,Object>> findCheckCompany(@Param("userIds")String userIds,@Param("flag")Integer flag);
 
-    Integer zfPerformanceCount(@Param("flag")Integer flag, @Param("industry")String industry, @Param("user_id")Integer user_id);
+    Integer zfPerformanceCount(@Param("flag")Integer flag, @Param("industry")String industry, @Param("user_ids")String user_ids);
 
-    Integer zfPerformanceCount11(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
+    Integer zfPerformanceCount11(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
 }

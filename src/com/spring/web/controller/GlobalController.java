@@ -8055,7 +8055,7 @@ public class GlobalController extends BaseController {
     }
 
     /**
-     *
+     * 应急管理中心
      * @param model
      * @param request
      * @return
@@ -8071,7 +8071,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("count", count);
         model.addAttribute("c", c);
         model.addAttribute("userName", userMapper.selectByPrimaryKey(user.getId()).getUserName());
-        return "company/tables/yjmanage_center";
+        return "global/rescue/yjmanage_center";
     }
 
     /**
@@ -8431,10 +8431,234 @@ public class GlobalController extends BaseController {
      * create time: 2019/8/26 15:56
      */
     @RequestMapping(value = "allcompany-district")
-    public String allcompanyDistrict(HttpServletRequest request, Model model){
+    public String allcompanyDistrict(HttpServletRequest request, Model model) {
 
         return "/global/company/allcompany-district";
     }
 
+    /**
+     * 企业搜索页
+     * @return
+     */
+    @RequestMapping("searchPage")
+    public String searchPage(HttpServletRequest request, Model model){
 
+        return "global/other/company-search";
+    }
+    /**
+     * 企业应急管理中心
+     */
+    @RequestMapping("/conManager")
+    public String conManager(HttpServletRequest request, Model model,Integer userId){
+        model.addAttribute("userId", userId);
+        return "global/rescue/threeLeft1";
+    }
+    /**
+     * 企业应急管理中心
+     */
+    @RequestMapping("/conrespond")
+    public String conManager1(HttpServletRequest request, Model model,Integer userId){
+        model.addAttribute("userId", userId);
+        return "global/rescue/threeLeft2";
+    }
+    /**企业基本信息
+     * TODO 基本信息页面
+     */
+    @RequestMapping("basic-information")
+    public String basicInformation(Model model, HttpServletRequest request, Integer userId) throws Exception {
+        User user = userMapper.selectByPrimaryKey(userId);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        Regulation regulationComp = regulationGet(user.getId());
+        if (company.getHazard() == null) {
+            if (regulationComp.getCisDanger() != null) {
+                company.setHazard(regulationComp.getCisDanger());
+                companyMapper.updateByPrimaryKey(company);
+            }
+        } else {
+            if (regulationComp.getCisDanger() == null) {
+                company.setHazard(0);
+            } else {
+                company.setHazard(regulationComp.getCisDanger());
+            }
+            companyMapper.updateByPrimaryKey(company);
+        }
+
+        if (null != company.getRegionId()) {
+            model.addAttribute("regionName", globalRegionMapper.selectRegionName(company.getRegionId()));
+        }
+
+        model.addAttribute("c", company);
+        Regulation r = regulationGet(user.getId());
+        model.addAttribute("r", r);
+        return "global/other/information1";
+    }
+
+    /**
+     * 企业定位
+     * @param model
+     * @param request
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("information/information4")
+    public String information4(Model model, HttpServletRequest request, Integer userId) throws Exception {
+        User user = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(null == userId ? user.getId() : userId);
+        if (null != company.getRegionId()) {
+            model.addAttribute("regionName", globalRegionMapper.selectRegionName(company.getRegionId()));
+        }
+        model.addAttribute("company", company);
+        model.addAttribute("user", userMapper.selectByPrimaryKey(company.getUserId()));
+        model.addAttribute("v", userMapper.selectByPrimaryKey(company.getVillageId()));
+        return "company/information/information4";
+    }
+    /**
+     * TODO 四色图
+     * @param model
+     * @param request
+     * @param flag
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "control-list2")//zhangcl 2018.10.13
+    public String controlList2(Model model, HttpServletRequest request, String flag, Integer userId) throws Exception {
+        User user = userMapper.selectByPrimaryKey(userId);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("uid", user.getId());
+        m.put("order", 1);
+        Map<String, Object> m2 = new HashMap<String, Object>();
+        m.put("uid", user.getId());
+        model.addAttribute("company", company);
+        model.addAttribute("user", userMapper.selectByPrimaryKey(company.getUserId()));
+        model.addAttribute("v", userMapper.selectByPrimaryKey(company.getVillageId()));
+
+
+
+        /* List<Map<String, Object>> list = aCompanyManualMapper.selectRed(m2);*/
+        List<Map<String, Object>> list2 = aCompanyManualMapper.selectByMapTwo(m);
+        List<Map<String, Object>> list = aCompanyManualMapper.selectRed(user.getId());
+
+
+        model.addAttribute("list", list);
+        model.addAttribute("list2", list2);
+
+        Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
+        for (Map<String, Object> m1 : list) {
+            String level1 = null == m1.get("level1") ? "" : m1.get("level1").toString();
+            //log.error("level1：-----------start------------"+level1);
+            String level2 = null == m1.get("level2") ? "" : m1.get("level2").toString();
+            //log.error("level2："+level2);
+            LinkedHashSet<String> l2s = levmap.get(level1);
+            if (null == l2s) {
+                l2s = new LinkedHashSet<String>();
+                //log.error("level1："+level1);
+                levmap.put(level1, l2s);
+                //log.error("levmap："+levmap.toString());
+            }
+            l2s.add(level2);
+            //log.error("l2s：------------end-----------"+l2s.toString());
+        }
+        //log.error("levmap："+levmap.toString());
+        model.addAttribute("treeMap", levmap);
+        model.addAttribute("flag", flag);
+
+        /*
+         * 添加根据风险等级查询，查询结果可能会受到其他修改风险等级功能的影响	wz_20181116
+         */
+        m.put("level", "红色");
+        List<Map<String, Object>> list11 = aCompanyManualMapper.selectByMap(m);
+        model.addAttribute("list11", list11);
+
+        m.put("level", "橙色");
+        List<Map<String, Object>> list22 = aCompanyManualMapper.selectByMap(m);
+        model.addAttribute("list22", list22);
+
+
+        m.put("level", "黄色");
+        List<Map<String, Object>> list33 = aCompanyManualMapper.selectByMap(m);
+        model.addAttribute("list33", list33);
+
+        m.put("level", "蓝色");
+        List<Map<String, Object>> list44 = aCompanyManualMapper.selectByMap(m);
+        model.addAttribute("list44", list44);
+
+        m.put("level", "");
+        List<Map<String, Object>> list55 = aCompanyManualMapper.selectNum(m);
+        model.addAttribute("list55", list55);
+
+        Integer number = list11.size() + list22.size() +  list33.size() + list44.size() + list55.size();
+
+
+        model.addAttribute("number", number);
+        if (flag.equals("2")) {
+            //log.error("zhangcl 2018.10.18 controlList3,area_range="+company.getAreaRange());
+            return "company/safety-system/control-list3";
+        } else {
+            return "company/safety-system/control-list2";
+        }
+
+    }
+
+    @RequestMapping(value = "tables/tab-yjlist")
+    public String yjjyList(HttpServletRequest request, Model model, String companyName, String name, Integer isTime, Integer c, Integer userId) throws Exception {
+        User user = userMapper.selectByPrimaryKey(userId);
+        Map<String, Object> m = new HashMap<String, Object>();
+        if (null != c && c.compareTo(1) == 0) {
+            m.put("ownerId", user.getId());
+        } else {
+            setUserId(user, m);
+        }
+        m.put("name", name);
+        m.put("companyName", companyName);
+        if (null != isTime) {
+            if (isTime > 0) {
+                m.put("now", DateFormatUtils.format(new Date(), "yyyy-MM-dd"));
+            }
+            m.put("isTime", DateFormatUtils.format(DateConvertUtil.addMonths(new Date(), isTime), "yyyy-MM-dd"));
+        }
+        model.addAttribute("list", tContingencyPlanMapper.selectTable(m));
+        model.addAttribute("name", name);
+        model.addAttribute("isTime", isTime);
+        model.addAttribute("companyName", companyName);
+        model.addAttribute("c", c);
+        return "company/tables/tab-yjlist";
+    }
+    /**
+     * 前台首页
+     *
+     * @throws Exception
+     */
+    @RequestMapping("threeLeft")
+    public String threeLeft(Model model, HttpServletRequest request, String leftBasic) throws Exception {
+        User user = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+
+//        // TODO 判断该公司的行业是否为化工行业,为化工行业就显示内容
+//        if (company.getIndustry().contains("化工")) {
+//            model.addAttribute("industry", 5);
+//        }
+
+        model.addAttribute("leftBasic", leftBasic);
+        model.addAttribute("userName", user.getUserName());
+
+        return "company/threeLeft";
+    }
+    @RequestMapping("command")
+    public String command(Model model, HttpServletRequest request){
+        return "global/rescue/threeLeft3";
+    }
+
+    /**
+     * 企业搜索页
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("searchPage2")
+    public String searchPage2(HttpServletRequest request, Model model){
+
+        return "global/other/company-search2";
+    }
 }

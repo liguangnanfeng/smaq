@@ -15,7 +15,6 @@
 <style type="text/css">
 body .dis-ib{margin-right:15px;}
 </style>
-<script src="js/jquery-3.2.1.min.js"></script>
 </head>
 <body>
   <nav class="breadcrumb">
@@ -30,162 +29,77 @@ body .dis-ib{margin-right:15px;}
   <div class="page-container">
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <span class="l">
+        <a class="btn btn-primary radius" href="javascript:show_dialog('添加主要生产产品','${ly }/steel/product/product-add')"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加主要生产产品</a>
       </span>
-      <span class="r">共有数据：<strong>${total}</strong> 条</span>
+      <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span> 
     </div>
     <div class="mt-20">
-      <table class="table table-border table-bordered table-bg table-hover table-sort" id="dataTables">
+      <table class="table table-border table-bordered table-bg table-hover table-sort">
+        <thead>
+          <tr class="text-c">
+            <th width="5%">序号</th>
+            <th width="20%">企业名称</th>
+            <th width="10%">行业</th>
+            <th width="10%">标准化等级</th>
+            <th width="10%">最近操作时间</th>
+            <th width="15%">查看详情</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- 循环-->
+          <c:forEach items="${list }" varStatus="index" var="pro">
+          <tr class="text-c">
+            <td>${index.index+1 }</td>
+            <td>${pro.name }</td>
+            <td>${pro.industry }</td>
+            <td>${pro.dlevel }</td>
+            <td>0</td>
+            <td>
+              <a style="text-decoration:none"  href="${ly }/global/findAll?parendId=0&flag=1&userId=${pro.userId}" title="查看详情">查看详情</a>
+            </td>
+          </tr>
+          </c:forEach>
+          <!-- 循环结束 -->
+          <input type="button" onclick="sub()" value="上一页">&nbsp;&nbsp;
+          <input type="button" onclick="add()" value="下一页">
+        </tbody>
       </table>
-      <div style="width:auto;float: right;    margin: 10px 0;">
-        <input type="button" value="上一页" id="lastPage" class="btn btn-primary">
-        <input type="button" value="下一页" id="nextPage" class="btn btn-primary">
-      </div>
     </div>
   </div>
 <script type="text/javascript">
+
 $(function() {
-  // $('.table-sort').dataTable({
-  //   "aaSorting": [[0, "asc"]],//默认第几个排序
-  //   "bStateSave": false,//状态保存
-  //   searching: false,
-  //   ordering: false,
-  //   "aoColumnDefs": []
-  // });
-  $.ajax({
-    type:"GET",
-     url:"${ly}/global/getTotalPage",
-     success:function(data){
-       $("#totalpage").val(data);
-     },
-    error:function () {
-      alert("发生错误");
-    }
+  $('.table-sort').dataTable({
+    "aaSorting": [[0, "asc"]],//默认第几个排序
+    "bStateSave": false,//状态保存
+    searching: false,
+    ordering: false,
+    "aoColumnDefs": []
   });
-  //请求起始数据
-  $.ajax({
-     type:"POST",
-     url:"${ly}/global/getData?page=0",
-     success:function (data) {
-          var list = data.map.list; //获取数据元素
-           var html='<thead>\n' +
-                   '          <tr class="text-c">\n' +
-                   '            <th width="5%">序号</th>\n' +
-                   '            <th width="20%">企业名称</th>\n' +
-                   '            <th width="10%">行业</th>\n' +
-                   '            <th width="10%">标准化等级</th>\n' +
-                   '            <th width="10%">最近操作时间</th>\n' +
-                   '            <th width="15%">查看详情</th>\n' +
-                   '          </tr>\n' +
-                   '        </thead>\n' +
-                   '        <tbody>';
-          //alert(data.map.list[0]["name"])
-          for(var i=0; i<list.length; i++){
-            html += ' <tr class="text-c">';
-            html += '<td>'+(i+1)+'</td>';//序号
-            html += "<td>"+list[i]['name']+"</td>";//企业名称
-            html += "<td>"+list[i]['industry']+"</td>";//行业
-            html += "<td>"+list[i]['dlevel']+"</td>";//标准化等级
-            html += "<td>"+0+"</td>"; //操作时间
-            html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
-            html += '</tr>';
-          }
-          html += ' </tbody>\n' +
-                  '      </table>';
-          $("#dataTables").html(html);
-          $("#currentpage").val(0);
-     },
-    error:function () {
-      alert("发生错误");
-    }
-  })
-  //上一页
-  $("#lastPage").click(function () {
-      //获取当前的页码
-      var currentPage = parseInt($("#currentpage").val());
-      if(currentPage>0){
-        currentPage--;
-        $.ajax({
-          type:"POST",
-          url:"${ly}/global/getData?page="+currentPage,
-          success:function (data) {
-            var list = data.map.list; //获取数据元素
-            var html='<thead>\n' +
-                    '          <tr class="text-c">\n' +
-                    '            <th width="5%">序号</th>\n' +
-                    '            <th width="20%">企业名称</th>\n' +
-                    '            <th width="10%">行业</th>\n' +
-                    '            <th width="10%">标准化等级</th>\n' +
-                    '            <th width="10%">最近操作时间</th>\n' +
-                    '            <th width="15%">查看详情</th>\n' +
-                    '          </tr>\n' +
-                    '        </thead>\n' +
-                    '        <tbody>';
-            for(var i=0; i<list.length; i++){
-              html += ' <tr class="text-c">';
-              html += '<td>'+parseInt(10*currentPage+i+1)+'</td>';//序号
-              html += "<td>"+list[i]['name']+"</td>";//企业名称
-              html += "<td>"+list[i]['industry']+"</td>";//行业
-              html += "<td>"+list[i]['dlevel']+"</td>";//标准化等级
-              html += "<td>"+0+"</td>"; //操作时间
-              html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
-              html += '</tr>';
-            }
-            html += ' </tbody>\n' +
-                    '      </table>';
-            $("#dataTables").html(html);
-            $("#currentpage").val(currentPage);
-          },
-          error:function () {
-            alert("发生错误");
-          }
-        })
-      }
-  });
-  //下一页
-  $("#nextPage").click(function () {
-    var currentPage = parseInt($("#currentpage").val());
-    var totalPage = parseInt($("#totalpage").val());
-    if(currentPage<totalPage-1){
-      currentPage = currentPage + 1;
-      $.ajax({
-        type:"POST",
-        url:"${ly}/global/getData?page="+currentPage,
-        success:function (data) {
-          var list = data.map.list; //获取数据元素
-          var html='<thead>\n' +
-                  '          <tr class="text-c">\n' +
-                  '            <th width="5%">序号</th>\n' +
-                  '            <th width="20%">企业名称</th>\n' +
-                  '            <th width="10%">行业</th>\n' +
-                  '            <th width="10%">标准化等级</th>\n' +
-                  '            <th width="10%">最近操作时间</th>\n' +
-                  '            <th width="15%">查看详情</th>\n' +
-                  '          </tr>\n' +
-                  '        </thead>\n' +
-                  '        <tbody>';
-          for(var i=0; i<list.length; i++){
-            html += ' <tr class="text-c">';
-            html += '<td>'+parseInt(10*currentPage+i+1)+'</td>';//序号
-            html += "<td>"+list[i]['name']+"</td>";//企业名称
-            html += "<td>"+list[i]['industry']+"</td>";//行业
-            html += "<td>"+list[i]['dlevel']+"</td>";//标准化等级
-            html += "<td>"+0+"</td>"; //操作时间
-            html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
-            html += '</tr>';
-          }
-          html += ' </tbody>\n' +
-                  '      </table>';
-          $("#dataTables").html(html);
-          $("#currentpage").val(currentPage);
-        },
-        error:function () {
-          alert("发生错误");
-        }
-      })
-    }
-  });
+  //页面初始化的工作就是获取总页数,存放在id为totalpage中input当中
+  //请求page为0的数据
 });
 
+  function sub(){ //上一页
+
+  }
+  function add(){ //下一页
+
+  }
+/*编辑*/
+function admin_edit(id){
+  show_tab("编辑主要生产产品", getRootPath() + "/steel/product/product-edit?id=" + id);
+}
+
+/*删除*/
+function del(id){
+  $.post(getRootPath()+"/steel/product/deleteProduct",{
+    id:id,
+  },function(reuslt){
+    location.reload()
+  })
+}
 </script> 
 </body>
 </html>

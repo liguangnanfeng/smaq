@@ -7,12 +7,27 @@
         <meta charset="utf-8" />
         <title></title>
             <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-
+            <link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/lib/Hui-iconfont/1.0.8/iconfont.css" />
+            <link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/static/h-ui.admin/css/H-ui.admin.css" />
+            <link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/static/h-ui/css/H-ui.css" />
             <style>
-        table {
-        border-collapse: collapse;
-        }
-
+            nav.breadcrumb>span {
+            padding: 0;
+            font-size: 12px;
+            }
+            .breadcrumb{
+            height: 39px;
+            line-height: 39px;
+            overflow: hidden;
+            }
+            </style>
+            <style>
+            table {
+            width:100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            color: #333;
+            }
         table,
         tr,
         td {
@@ -24,6 +39,7 @@
         height: 38px;
         /*这里需要自己调整，根据自己的需求调整高度*/
         position: relative;
+            padding: 5px;
         }
 
         td[class=first] {
@@ -62,9 +78,10 @@
         left: 10px;
         }
 
-        .center {
-        text-align: center;
-        }
+            .center {
+            text-align: center;
+            font-weight: 500;
+            }
 
         .flexcenter {
         display: flex;
@@ -88,9 +105,7 @@
         #time {
         font-size: 15px;
         }
-        .trf>td{
-             padding:5px;
-        }
+
         .tcontent>td:nth-child(2){
             padding: 3px;
         }
@@ -98,14 +113,15 @@
         </head>
 
         <body>
-        <%--<nav class="breadcrumb">--%>
-        <%--<i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>--%>
-        <%--<span class="c-gray en">&gt;</span> <span>排查数据分析 </span>--%>
-        <%--<span class="c-gray en">&gt;</span> <span class="aaa"> </span>--%>
-        <%--<a class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;"--%>
-        <%--href="javascript:history.back(-1)" title="返回">返回</a>--%>
-        <%--</nav>--%>
-        <div class="containerx">
+            <nav class="breadcrumb">
+            <i class="Hui-iconfont"></i>
+            <span>首页</span>
+            <span class="c-gray en">&gt;</span> <span>排查数据分析</span>
+            <span class="c-gray en">&gt;</span> <span class="aaa"> </span>
+            <a class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
+            </nav>
+
+            <div class="containerx">
         <div class="text-c mt-20 ">
         <h3 class="center"></h3>
         </div>

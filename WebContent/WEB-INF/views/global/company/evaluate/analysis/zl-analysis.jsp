@@ -31,8 +31,8 @@
         </script>
         <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
         <div id="main" style="width: 90%;height:70%;margin: 50px  auto 0 auto;"></div>
-        <div id="main2" style="width: 90%;height:60%;margin: 30px auto 30px auto;"></div>
-        <div id="main3" style="width: 90%;height:60%;margin: 30px auto 30px auto;"></div>
+        <div id="main2" style="width: 90%;height:70%;margin: 30px auto 30px auto;"></div>
+        <div id="main3" style="width: 90%;height:70%;margin: 30px auto 30px auto;"></div>
 
         <%--饼状图1--%>
         <script type="text/javascript">
@@ -57,18 +57,18 @@
         type: 'pie',
         center: ['50%', '50%'],
         data: [
-        {
-        name: '一般隐患',
-        value: '${result11}',
-        },
-        {
-        name: '较大隐患',
-        value: '${result22}',
-        },
-        {
-        name: '重大隐患',
-        value: '${result33}',
-        }
+            {
+            name: '一般隐患',
+            value: '${result11!=null?result11:0}',
+            },
+            {
+            name: '较大隐患',
+            value:'${result22!=null?result22:0}',
+            },
+            {
+            name: '重大隐患',
+            value: '${result33!=null?result33:0}',
+            }
         ],
         itemStyle: {
         // emphasis：英文意思是 强调;着重;（轮廓、图形等的）鲜明;突出，重读
@@ -148,15 +148,15 @@
         data: [
         {
         name: '一般隐患',
-        value: '${result1}',
+        value: '${result1!=null?result1:0}',
         },
         {
         name: '较大隐患',
-        value: '${result2}',
+        value:'${result2!=null?result2:0}',
         },
         {
         name: '重大隐患',
-        value: '${result3}',
+        value: '${result3!=null?result3:0}',
         }
         ],
         itemStyle: {
@@ -236,18 +236,18 @@
         type: 'pie',
         center: ['50%', '50%'],
         data: [
-        {
-        name: '一般隐患',
-        value: '${result4}',
-        },
-        {
-        name: '较大隐患',
-        value: '${result5}',
-        },
-        {
-        name: '重大隐患',
-        value: '${result6}',
-        }
+            {
+            name: '一般隐患',
+            value: '${result4!=null?result4:"0"}',
+            },
+            {
+            name: '较大隐患',
+            value:'${result5!=null?result5:"0"}',
+            },
+            {
+            name: '重大隐患',
+            value: '${result6!=null?result6:"0"}',
+            }
         ],
         itemStyle: {
         // emphasis：英文意思是 强调;着重;（轮廓、图形等的）鲜明;突出，重读
@@ -283,7 +283,7 @@
         },
         color: ['#4F81BD','#C0504D','#9BBB59'],
         }
-        var myChart = echarts.init(document.getElementById('main3'));
+        var myChart3 = echarts.init(document.getElementById('main3'));
         myChart3.setOption(option3);
         var url3 = '${ly }/global/manage-hidden-industry';
         myChart3.on('click', function(params) {

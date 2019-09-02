@@ -5565,342 +5565,350 @@ public class GlobalController extends BaseController {
             sign = 1;
         }
 
-        for (int i = 0; i < ids.size() ; i++) {
+        if (null == ids || ids.size() == 0){
 
-            if (i == ids.size()-1){
-                sb.append("'").append(ids.get(i)).append("'");
+            return "global/evaluate/globalError";
+
+        }else if (null != ids && ids.size() != 0){
+
+            for (int i = 0; i < ids.size() ; i++) {
+
+                if (i == ids.size()-1){
+                    sb.append("'").append(ids.get(i)).append("'");
+                }else {
+                    sb.append("'").append(ids.get(i)).append("',");
+                }
+
+            }
+
+            System.out.println(sb.toString());
+
+            Integer a = tCheckMapper.zfPerformanceCount(flag,"化工",sb.toString()); // 化工行业 数据
+            model.addAttribute("danger1",a);
+
+            Integer  b = tCheckMapper.zfPerformanceCount(flag,"冶金",sb.toString()); // 冶金行业 数据
+            model.addAttribute("danger2",b);
+
+            Integer  c = tCheckMapper.zfPerformanceCount(flag,"有色",sb.toString()); // 有色行业 数据
+            model.addAttribute("danger3",c);
+
+            Integer  d = tCheckMapper.zfPerformanceCount(flag,"建材",sb.toString()); // 建材行业 数据
+            model.addAttribute("danger4",d);
+
+            Integer  e = tCheckMapper.zfPerformanceCount(flag,"机械",sb.toString()); // 机械行业 数据
+            model.addAttribute("danger5",e);
+
+            Integer  f = tCheckMapper.zfPerformanceCount(flag,"轻工",sb.toString()); // 轻工行业 数据
+            model.addAttribute("danger6",f);
+
+            Integer  g = tCheckMapper.zfPerformanceCount(flag,"纺织",sb.toString()); // 纺织行业 数据
+            model.addAttribute("danger7",g);
+
+            Integer  h = tCheckMapper.zfPerformanceCount(flag,"商贸",sb.toString()); // 商贸行业 数据
+            model.addAttribute("danger8",h);
+
+            Integer  i1 = tCheckMapper.zfPerformanceCount(flag,"烟花",sb.toString()); // 烟花行业 数据
+            model.addAttribute("danger9",i1);
+
+            Integer  j = tCheckMapper.zfPerformanceCount11(flag,sb.toString()); // 其他行业 数据
+            model.addAttribute("danger10",j);
+
+            Integer count = a + b + c + d + e + f + g + h + i1 + j ;
+
+            model.addAttribute("count",count);
+
+            if (null != count && 0 != count) {
+
+                if (null != a && 0 != a) {
+                    String str = df.format((float)a / count);
+                    model.addAttribute("result1",str);
+
+                } else {
+                    model.addAttribute("result1","0.00");  // 化工 占比数据
+                }
+
+                if (null != b && 0 != b) {
+                    String str = df.format((float)b / count);
+                    model.addAttribute("result2",str);
+
+                } else {
+                    model.addAttribute("result2","0.00"); // 冶金 占比数据
+                }
+
+                if (null != c && 0 != c) {
+                    String str = df.format((float)c / count);
+                    model.addAttribute("result3",str);
+
+                } else {
+                    model.addAttribute("result3","0.00");  // 有色 占比数据 竖
+                }
+
+                if (null != d && 0 != d) {
+                    String str = df.format((float)d / count);
+                    model.addAttribute("result4",str);
+
+                } else {
+                    model.addAttribute("result4","0.00"); // 建材 占比数据
+                }
+
+                if (null != e && 0 != e) {
+                    String str = df.format((float)e / count);
+                    model.addAttribute("result5", str);
+
+                } else {
+                    model.addAttribute("result5","0.00"); // 机械 占比数据
+                }
+
+                if (null != f && 0 != f) {
+                    String str = df.format((float)f / count);
+                    model.addAttribute("result6",str);
+
+                } else {
+                    model.addAttribute("result6","0.00"); // 轻工 占比数据
+                }
+
+                if (null != g && 0 != g) {
+                    String str = df.format((float)g / count);
+                    model.addAttribute("result7",str);
+
+                } else {
+                    model.addAttribute("result7","0.00"); // 纺织 占比数据
+                }
+
+                if (null != h && 0 != h) {
+                    String str = df.format((float)h / count);
+                    model.addAttribute("result8",str);
+
+                } else {
+                    model.addAttribute("result8","0.00");// 商贸 占比数据
+                }
+
+                if (null != i1 && 0 != i1) {
+                    String str = df.format((float)i1 / count);
+                    model.addAttribute("result9",str);
+
+                } else {
+                    model.addAttribute("result9","0.00"); // 烟花 占比数据
+                }
+
+                if (null != j && 0 != j) {
+                    String str = df.format((float)j / count);
+                    model.addAttribute("result10",str);
+
+                } else {
+                    model.addAttribute("result10","0.00"); // 其他 占比数据
+                }
+
             }else {
-                sb.append("'").append(ids.get(i)).append("',");
+                // 占比 坚
+                model.addAttribute("result1", "0.00");
+                model.addAttribute("result2", "0.00");
+                model.addAttribute("result3", "0.00");
+                model.addAttribute("result4", "0.00");
+                model.addAttribute("result5", "0.00");
+                model.addAttribute("result6", "0.00");
+                model.addAttribute("result7", "0.00");
+                model.addAttribute("result8", "0.00");
+                model.addAttribute("result9", "0.00");
+                model.addAttribute("result10", "0.00");
             }
+
+            Integer number1 = tCheckItemMapper.zfHiddenTrouble("基础管理",sign,sb.toString()); // 基础管理 隐患数据
+            model.addAttribute("number1",number1);
+
+            Integer number2 = tCheckItemMapper.zfHiddenTrouble("生产工艺",sign,sb.toString()); // 生产工艺 隐患数据
+            model.addAttribute("number2",number2);
+
+            Integer number3 = tCheckItemMapper.zfHiddenTrouble("设备设施",sign,sb.toString()); // 设备设施 隐患数据
+            model.addAttribute("number3",number3);
+
+            Integer number4 = tCheckItemMapper.zfHiddenTrouble("公用工程",sign,sb.toString()); // 公用工程 隐患数据
+            model.addAttribute("number4",number4);
+
+            Integer number5 = tCheckItemMapper.zfHiddenTrouble("特种设备",sign,sb.toString()); // 特种设备 隐患数据
+            model.addAttribute("number5",number5);
+
+            Integer number6 = tCheckItemMapper.zfHiddenTrouble("生产现场",sign,sb.toString()); // 生产现场 隐患数据
+            model.addAttribute("number6",number6);
+
+            Integer number7 = tCheckItemMapper.zfHiddenTrouble("行为环境",sign,sb.toString()); // 行为环境 隐患数据
+            model.addAttribute("number7",number7);
+
+            Integer number8 = tCheckItemMapper.zfHiddenTrouble("危化管理",sign,sb.toString()); // 危化管理 隐患数据
+            model.addAttribute("number8",number8);
+
+            Integer number9 = tCheckItemMapper.zfHiddenTrouble("消防安全",sign,sb.toString()); // 消防安全 隐患数据
+            model.addAttribute("number9",number9);
+
+            Integer number10 = tCheckItemMapper.zfHiddenTrouble("用电安全",sign,sb.toString()); // 用电安全 隐患数据
+            model.addAttribute("number10",number10);
+
+            Integer number11 = tCheckItemMapper.zfHiddenTrouble("安全设施",sign,sb.toString()); // 安全设施 隐患数据
+            model.addAttribute("number11",number11);
+
+            Integer number12 = tCheckItemMapper.zfHiddenTrouble("防雷静电",sign,sb.toString()); // 防雷静电 隐患数据
+            model.addAttribute("number12",number12);
+
+            Integer number13 = tCheckItemMapper.zfHiddenTrouble("职业卫生",sign,sb.toString()); // 职业卫生 隐患数据
+            model.addAttribute("number13",number13);
+
+            Integer number14 = tCheckItemMapper.zfHiddenTrouble("职业卫生",sign,sb.toString()); // 职业卫生 隐患数据
+            model.addAttribute("number14",number14);
+
+            Integer number15 = tCheckItemMapper.zfHiddenTrouble11(sign,sb.toString()); // 其他 隐患数据
+
+            model.addAttribute("number15",number15);
+
+
+            Integer count1 = number1 + number2 + number3 + number4 + number5 + number6 + number7 + number8 + number9 + number10 + number11 + number12 + number13 + number14 + number15;
+
+            model.addAttribute("count1",count1);
+
+            if (null != count1 && 0 != count1) {
+
+                if (null != number1 && 0 != number1) {
+                    String str = df.format((float)number1 / count1);
+                    model.addAttribute("double1",str);
+
+                } else {
+                    model.addAttribute("double1","0.00");  // 化工 占比数据
+                }
+
+                if (null != number2 && 0 != number2) {
+                    String str = df.format((float)number2 / count1);
+                    model.addAttribute("double2",str);
+
+                } else {
+                    model.addAttribute("double2","0.00"); // 冶金 占比数据
+                }
+
+                if (null != number3 && 0 != number3) {
+                    String str = df.format((float)number3 / count1);
+                    model.addAttribute("double3",str);
+
+                } else {
+                    model.addAttribute("double3","0.00");  // 有色 占比数据 竖
+                }
+
+                if (null != number4 && 0 != number4) {
+                    String str = df.format((float)number4 / count1);
+                    model.addAttribute("double4",str);
+
+                } else {
+                    model.addAttribute("double4","0.00"); // 建材 占比数据
+                }
+
+                if (null != number5 && 0 != number5) {
+                    String str = df.format((float)number5 / count1);
+                    model.addAttribute("double5", str);
+
+                } else {
+                    model.addAttribute("double5","0.00"); // 机械 占比数据
+                }
+
+                if (null != number6 && 0 != number6) {
+                    String str = df.format((float)number6 / count1);
+                    model.addAttribute("double6",str);
+
+                } else {
+                    model.addAttribute("double6","0.00"); // 轻工 占比数据
+                }
+
+                if (null != number7 && 0 != number7) {
+                    String str = df.format((float)number7 / count1);
+                    model.addAttribute("double7",str);
+
+                } else {
+                    model.addAttribute("double7","0.00"); // 纺织 占比数据
+                }
+
+                if (null != number8 && 0 != number8) {
+                    String str = df.format((float)number8 / count1);
+                    model.addAttribute("double8",str);
+
+                } else {
+                    model.addAttribute("double8","0.00");// 商贸 占比数据
+                }
+
+                if (null != number9 && 0 != number9) {
+                    String str = df.format((float)number9 / count1);
+                    model.addAttribute("double9",str);
+
+                } else {
+                    model.addAttribute("double9","0.00"); // 烟花 占比数据
+                }
+
+                if (null != number10 && 0 != number10) {
+                    String str = df.format((float)number10 / count1);
+                    model.addAttribute("double10",str);
+
+                } else {
+                    model.addAttribute("double10","0.00"); // 其他 占比数据
+                }
+
+                if (null != number11 && 0 != number11) {
+                    String str = df.format((float)number11 / count1);
+                    model.addAttribute("double11",str);
+
+                } else {
+                    model.addAttribute("double11","0.00"); // 其他 占比数据
+                }
+
+                if (null != number12 && 0 != number12) {
+                    String str = df.format((float)number12 / count1);
+                    model.addAttribute("double12",str);
+
+                } else {
+                    model.addAttribute("double12","0.00"); // 其他 占比数据
+                }
+
+                if (null != number13 && 0 != number13) {
+                    String str = df.format((float)number13 / count1);
+                    model.addAttribute("double13",str);
+
+                } else {
+                    model.addAttribute("double13","0.00"); // 其他 占比数据
+                }
+
+                if (null != number14 && 0 != number14) {
+                    String str = df.format((float)number14 / count1);
+                    model.addAttribute("double14",str);
+
+                } else {
+                    model.addAttribute("double14","0.00"); // 其他 占比数据
+                }
+
+                if (null != number15 && 0 != number15) {
+                    String str = df.format((float)number15 / count1);
+                    model.addAttribute("double15",str);
+
+                } else {
+                    model.addAttribute("double15","0.00"); // 其他 占比数据
+                }
+
+            }else {
+                // 占比 坚
+                model.addAttribute("double1", "0.00");
+                model.addAttribute("double2", "0.00");
+                model.addAttribute("double3", "0.00");
+                model.addAttribute("double4", "0.00");
+                model.addAttribute("double5", "0.00");
+                model.addAttribute("double6", "0.00");
+                model.addAttribute("double7", "0.00");
+                model.addAttribute("double8", "0.00");
+                model.addAttribute("double9", "0.00");
+                model.addAttribute("double10", "0.00");
+                model.addAttribute("double11", "0.00");
+                model.addAttribute("double12", "0.00");
+                model.addAttribute("double13", "0.00");
+                model.addAttribute("double14", "0.00");
+                model.addAttribute("double15", "0.00");
+            }
+
+            model.addAttribute("sign",sign);
+            model.addAttribute("flag",flag);
 
         }
-
-        Integer a = tCheckMapper.zfPerformanceCount(flag,"化工",sb.toString()); // 化工行业 数据
-        model.addAttribute("danger1",a);
-
-        Integer  b = tCheckMapper.zfPerformanceCount(flag,"冶金",sb.toString()); // 冶金行业 数据
-        model.addAttribute("danger2",b);
-
-        Integer  c = tCheckMapper.zfPerformanceCount(flag,"有色",sb.toString()); // 有色行业 数据
-        model.addAttribute("danger3",c);
-
-        Integer  d = tCheckMapper.zfPerformanceCount(flag,"建材",sb.toString()); // 建材行业 数据
-        model.addAttribute("danger4",d);
-
-        Integer  e = tCheckMapper.zfPerformanceCount(flag,"机械",sb.toString()); // 机械行业 数据
-        model.addAttribute("danger5",e);
-
-        Integer  f = tCheckMapper.zfPerformanceCount(flag,"轻工",sb.toString()); // 轻工行业 数据
-        model.addAttribute("danger6",f);
-
-        Integer  g = tCheckMapper.zfPerformanceCount(flag,"纺织",sb.toString()); // 纺织行业 数据
-        model.addAttribute("danger7",g);
-
-        Integer  h = tCheckMapper.zfPerformanceCount(flag,"商贸",sb.toString()); // 商贸行业 数据
-        model.addAttribute("danger8",h);
-
-        Integer  i1 = tCheckMapper.zfPerformanceCount(flag,"烟花",sb.toString()); // 烟花行业 数据
-        model.addAttribute("danger9",i1);
-
-        Integer  j = tCheckMapper.zfPerformanceCount11(flag,sb.toString()); // 其他行业 数据
-        model.addAttribute("danger10",j);
-
-        Integer count = a + b + c + d + e + f + g + h + i1 + j ;
-
-        model.addAttribute("count",count);
-
-        if (null != count && 0 != count) {
-
-            if (null != a && 0 != a) {
-                String str = df.format((float)a / count);
-                model.addAttribute("result1",str);
-
-            } else {
-                model.addAttribute("result1","0.00");  // 化工 占比数据
-            }
-
-            if (null != b && 0 != b) {
-                String str = df.format((float)b / count);
-                model.addAttribute("result2",str);
-
-            } else {
-                model.addAttribute("result2","0.00"); // 冶金 占比数据
-            }
-
-            if (null != c && 0 != c) {
-                String str = df.format((float)c / count);
-                model.addAttribute("result3",str);
-
-            } else {
-                model.addAttribute("result3","0.00");  // 有色 占比数据 竖
-            }
-
-            if (null != d && 0 != d) {
-                String str = df.format((float)d / count);
-                model.addAttribute("result4",str);
-
-            } else {
-                model.addAttribute("result4","0.00"); // 建材 占比数据
-            }
-
-            if (null != e && 0 != e) {
-                String str = df.format((float)e / count);
-                model.addAttribute("result5", str);
-
-            } else {
-                model.addAttribute("result5","0.00"); // 机械 占比数据
-            }
-
-            if (null != f && 0 != f) {
-                String str = df.format((float)f / count);
-                model.addAttribute("result6",str);
-
-            } else {
-                model.addAttribute("result6","0.00"); // 轻工 占比数据
-            }
-
-            if (null != g && 0 != g) {
-                String str = df.format((float)g / count);
-                model.addAttribute("result7",str);
-
-            } else {
-                model.addAttribute("result7","0.00"); // 纺织 占比数据
-            }
-
-            if (null != h && 0 != h) {
-                String str = df.format((float)h / count);
-                model.addAttribute("result8",str);
-
-            } else {
-                model.addAttribute("result8","0.00");// 商贸 占比数据
-            }
-
-            if (null != i1 && 0 != i1) {
-                String str = df.format((float)i1 / count);
-                model.addAttribute("result9",str);
-
-            } else {
-                model.addAttribute("result9","0.00"); // 烟花 占比数据
-            }
-
-            if (null != j && 0 != j) {
-                String str = df.format((float)j / count);
-                model.addAttribute("result10",str);
-
-            } else {
-                model.addAttribute("result10","0.00"); // 其他 占比数据
-            }
-
-        }else {
-            // 占比 坚
-            model.addAttribute("result1", "0.00");
-            model.addAttribute("result2", "0.00");
-            model.addAttribute("result3", "0.00");
-            model.addAttribute("result4", "0.00");
-            model.addAttribute("result5", "0.00");
-            model.addAttribute("result6", "0.00");
-            model.addAttribute("result7", "0.00");
-            model.addAttribute("result8", "0.00");
-            model.addAttribute("result9", "0.00");
-            model.addAttribute("result10", "0.00");
-        }
-
-
-        Integer number1 = tCheckItemMapper.zfHiddenTrouble("基础管理",sign,sb.toString()); // 基础管理 隐患数据
-        model.addAttribute("number1",number1);
-
-        Integer number2 = tCheckItemMapper.zfHiddenTrouble("生产工艺",sign,sb.toString()); // 生产工艺 隐患数据
-        model.addAttribute("number2",number2);
-
-        Integer number3 = tCheckItemMapper.zfHiddenTrouble("设备设施",sign,sb.toString()); // 设备设施 隐患数据
-        model.addAttribute("number3",number3);
-
-        Integer number4 = tCheckItemMapper.zfHiddenTrouble("公用工程",sign,sb.toString()); // 公用工程 隐患数据
-        model.addAttribute("number4",number4);
-
-        Integer number5 = tCheckItemMapper.zfHiddenTrouble("特种设备",sign,sb.toString()); // 特种设备 隐患数据
-        model.addAttribute("number5",number5);
-
-        Integer number6 = tCheckItemMapper.zfHiddenTrouble("生产现场",sign,sb.toString()); // 生产现场 隐患数据
-        model.addAttribute("number6",number6);
-
-        Integer number7 = tCheckItemMapper.zfHiddenTrouble("行为环境",sign,sb.toString()); // 行为环境 隐患数据
-        model.addAttribute("number7",number7);
-
-        Integer number8 = tCheckItemMapper.zfHiddenTrouble("危化管理",sign,sb.toString()); // 危化管理 隐患数据
-        model.addAttribute("number8",number8);
-
-        Integer number9 = tCheckItemMapper.zfHiddenTrouble("消防安全",sign,sb.toString()); // 消防安全 隐患数据
-        model.addAttribute("number9",number9);
-
-        Integer number10 = tCheckItemMapper.zfHiddenTrouble("用电安全",sign,sb.toString()); // 用电安全 隐患数据
-        model.addAttribute("number10",number10);
-
-        Integer number11 = tCheckItemMapper.zfHiddenTrouble("安全设施",sign,sb.toString()); // 安全设施 隐患数据
-        model.addAttribute("number11",number11);
-
-        Integer number12 = tCheckItemMapper.zfHiddenTrouble("防雷静电",sign,sb.toString()); // 防雷静电 隐患数据
-        model.addAttribute("number12",number12);
-
-        Integer number13 = tCheckItemMapper.zfHiddenTrouble("职业卫生",sign,sb.toString()); // 职业卫生 隐患数据
-        model.addAttribute("number13",number13);
-
-        Integer number14 = tCheckItemMapper.zfHiddenTrouble("职业卫生",sign,sb.toString()); // 职业卫生 隐患数据
-        model.addAttribute("number14",number14);
-
-        Integer number15 = tCheckItemMapper.zfHiddenTrouble11(sign,sb.toString()); // 其他 隐患数据
-
-        model.addAttribute("number15",number15);
-
-
-        Integer count1 = number1 + number2 + number3 + number4 + number5 + number6 + number7 + number8 + number9 + number10 + number11 + number12 + number13 + number14 + number15;
-
-        model.addAttribute("count1",count1);
-
-        if (null != count1 && 0 != count1) {
-
-            if (null != number1 && 0 != number1) {
-                String str = df.format((float)number1 / count1);
-                model.addAttribute("double1",str);
-
-            } else {
-                model.addAttribute("double1","0.00");  // 化工 占比数据
-            }
-
-            if (null != number2 && 0 != number2) {
-                String str = df.format((float)number2 / count1);
-                model.addAttribute("double2",str);
-
-            } else {
-                model.addAttribute("double2","0.00"); // 冶金 占比数据
-            }
-
-            if (null != number3 && 0 != number3) {
-                String str = df.format((float)number3 / count1);
-                model.addAttribute("double3",str);
-
-            } else {
-                model.addAttribute("double3","0.00");  // 有色 占比数据 竖
-            }
-
-            if (null != number4 && 0 != number4) {
-                String str = df.format((float)number4 / count1);
-                model.addAttribute("double4",str);
-
-            } else {
-                model.addAttribute("double4","0.00"); // 建材 占比数据
-            }
-
-            if (null != number5 && 0 != number5) {
-                String str = df.format((float)number5 / count1);
-                model.addAttribute("double5", str);
-
-            } else {
-                model.addAttribute("double5","0.00"); // 机械 占比数据
-            }
-
-            if (null != number6 && 0 != number6) {
-                String str = df.format((float)number6 / count1);
-                model.addAttribute("double6",str);
-
-            } else {
-                model.addAttribute("double6","0.00"); // 轻工 占比数据
-            }
-
-            if (null != number7 && 0 != number7) {
-                String str = df.format((float)number7 / count1);
-                model.addAttribute("double7",str);
-
-            } else {
-                model.addAttribute("double7","0.00"); // 纺织 占比数据
-            }
-
-            if (null != number8 && 0 != number8) {
-                String str = df.format((float)number8 / count1);
-                model.addAttribute("double8",str);
-
-            } else {
-                model.addAttribute("double8","0.00");// 商贸 占比数据
-            }
-
-            if (null != number9 && 0 != number9) {
-                String str = df.format((float)number9 / count1);
-                model.addAttribute("double9",str);
-
-            } else {
-                model.addAttribute("double9","0.00"); // 烟花 占比数据
-            }
-
-            if (null != number10 && 0 != number10) {
-                String str = df.format((float)number10 / count1);
-                model.addAttribute("double10",str);
-
-            } else {
-                model.addAttribute("double10","0.00"); // 其他 占比数据
-            }
-
-            if (null != number11 && 0 != number11) {
-                String str = df.format((float)number11 / count1);
-                model.addAttribute("double11",str);
-
-            } else {
-                model.addAttribute("double11","0.00"); // 其他 占比数据
-            }
-
-            if (null != number12 && 0 != number12) {
-                String str = df.format((float)number12 / count1);
-                model.addAttribute("double12",str);
-
-            } else {
-                model.addAttribute("double12","0.00"); // 其他 占比数据
-            }
-
-            if (null != number13 && 0 != number13) {
-                String str = df.format((float)number13 / count1);
-                model.addAttribute("double13",str);
-
-            } else {
-                model.addAttribute("double13","0.00"); // 其他 占比数据
-            }
-
-            if (null != number14 && 0 != number14) {
-                String str = df.format((float)number14 / count1);
-                model.addAttribute("double14",str);
-
-            } else {
-                model.addAttribute("double14","0.00"); // 其他 占比数据
-            }
-
-            if (null != number15 && 0 != number15) {
-                String str = df.format((float)number15 / count1);
-                model.addAttribute("double15",str);
-
-            } else {
-                model.addAttribute("double15","0.00"); // 其他 占比数据
-            }
-
-        }else {
-            // 占比 坚
-            model.addAttribute("double1", "0.00");
-            model.addAttribute("double2", "0.00");
-            model.addAttribute("double3", "0.00");
-            model.addAttribute("double4", "0.00");
-            model.addAttribute("double5", "0.00");
-            model.addAttribute("double6", "0.00");
-            model.addAttribute("double7", "0.00");
-            model.addAttribute("double8", "0.00");
-            model.addAttribute("double9", "0.00");
-            model.addAttribute("double10", "0.00");
-            model.addAttribute("double11", "0.00");
-            model.addAttribute("double12", "0.00");
-            model.addAttribute("double13", "0.00");
-            model.addAttribute("double14", "0.00");
-            model.addAttribute("double15", "0.00");
-        }
-
-        model.addAttribute("sign",sign);
-        model.addAttribute("flag",flag);
-
         return "global/company/evaluate/analysis/pc-analysis";
     }
 
@@ -5925,339 +5933,346 @@ public class GlobalController extends BaseController {
         if (null == sign){
             sign = 1;
         }
+        if (null == ids || ids.size() == 0){
 
-        for (int i = 0; i < ids.size() ; i++) {
+            return "global/evaluate/globalError";
 
-            if (i == ids.size()-1){
-                sb.append("'").append(ids.get(i)).append("'");
+        }else if (null != ids && ids.size() != 0){
+
+            for (int i = 0; i < ids.size() ; i++) {
+
+                if (i == ids.size()-1){
+                    sb.append("'").append(ids.get(i)).append("'");
+                }else {
+                    sb.append("'").append(ids.get(i)).append("',");
+                }
+
+            }
+
+            Integer a = tCheckItemMapper.zhengFuChartDataDanger(flag,"化工",sb.toString()); // 化工行业 数据
+            model.addAttribute("danger1",a);
+
+            Integer  b = tCheckItemMapper.zhengFuChartDataDanger(flag,"冶金",sb.toString()); // 冶金行业 数据
+            model.addAttribute("danger2",b);
+
+            Integer  c = tCheckItemMapper.zhengFuChartDataDanger(flag,"有色",sb.toString()); // 有色行业 数据
+            model.addAttribute("danger3",c);
+
+            Integer  d = tCheckItemMapper.zhengFuChartDataDanger(flag,"建材",sb.toString()); // 建材行业 数据
+            model.addAttribute("danger4",d);
+
+            Integer  e = tCheckItemMapper.zhengFuChartDataDanger(flag,"机械",sb.toString()); // 机械行业 数据
+            model.addAttribute("danger5",e);
+
+            Integer  f = tCheckItemMapper.zhengFuChartDataDanger(flag,"轻工",sb.toString()); // 轻工行业 数据
+            model.addAttribute("danger6",f);
+
+            Integer  g = tCheckItemMapper.zhengFuChartDataDanger(flag,"纺织",sb.toString()); // 纺织行业 数据
+            model.addAttribute("danger7",g);
+
+            Integer  h = tCheckItemMapper.zhengFuChartDataDanger(flag,"商贸",sb.toString()); // 商贸行业 数据
+            model.addAttribute("danger8",h);
+
+            Integer  i1 = tCheckItemMapper.zhengFuChartDataDanger(flag,"烟花",sb.toString()); // 烟花行业 数据
+            model.addAttribute("danger9",i1);
+
+            Integer  j = tCheckItemMapper.zhengFuChartDataDanger11(flag,sb.toString()); // 其他行业 数据
+            model.addAttribute("danger10",j);
+
+            Integer count = a + b + c + d + e + f + g + h + i1 + j ;
+
+            model.addAttribute("count",count);
+
+            if (null != count && 0 != count) {
+
+                if (null != a && 0 != a) {
+                    String str = df.format((float)a / count);
+                    model.addAttribute("result1",str);
+
+                } else {
+                    model.addAttribute("result1","0.00");  // 化工 占比数据
+                }
+
+                if (null != b && 0 != b) {
+                    String str = df.format((float)b / count);
+                    model.addAttribute("result2",str);
+
+                } else {
+                    model.addAttribute("result2","0.00"); // 冶金 占比数据
+                }
+
+                if (null != c && 0 != c) {
+                    String str = df.format((float)c / count);
+                    model.addAttribute("result3",str);
+
+                } else {
+                    model.addAttribute("result3","0.00");  // 有色 占比数据 竖
+                }
+
+                if (null != d && 0 != d) {
+                    String str = df.format((float)d / count);
+                    model.addAttribute("result4",str);
+
+                } else {
+                    model.addAttribute("result4","0.00"); // 建材 占比数据
+                }
+
+                if (null != e && 0 != e) {
+                    String str = df.format((float)e / count);
+                    model.addAttribute("result5", str);
+
+                } else {
+                    model.addAttribute("result5","0.00"); // 机械 占比数据
+                }
+
+                if (null != f && 0 != f) {
+                    String str = df.format((float)f / count);
+                    model.addAttribute("result6",str);
+
+                } else {
+                    model.addAttribute("result6","0.00"); // 轻工 占比数据
+                }
+
+                if (null != g && 0 != g) {
+                    String str = df.format((float)g / count);
+                    model.addAttribute("result7",str);
+
+                } else {
+                    model.addAttribute("result7","0.00"); // 纺织 占比数据
+                }
+
+                if (null != h && 0 != h) {
+                    String str = df.format((float)h / count);
+                    model.addAttribute("result8",str);
+
+                } else {
+                    model.addAttribute("result8","0.00");// 商贸 占比数据
+                }
+
+                if (null != i1 && 0 != i1) {
+                    String str = df.format((float)i1 / count);
+                    model.addAttribute("result9",str);
+
+                } else {
+                    model.addAttribute("result9","0.00"); // 烟花 占比数据
+                }
+
+                if (null != j && 0 != j) {
+                    String str = df.format((float)j / count);
+                    model.addAttribute("result10",str);
+
+                } else {
+                    model.addAttribute("result10","0.00"); // 其他 占比数据
+                }
+
             }else {
-                sb.append("'").append(ids.get(i)).append("',");
+                // 占比 坚
+                model.addAttribute("result1", "0.00");
+                model.addAttribute("result2", "0.00");
+                model.addAttribute("result3", "0.00");
+                model.addAttribute("result4", "0.00");
+                model.addAttribute("result5", "0.00");
+                model.addAttribute("result6", "0.00");
+                model.addAttribute("result7", "0.00");
+                model.addAttribute("result8", "0.00");
+                model.addAttribute("result9", "0.00");
+                model.addAttribute("result10", "0.00");
             }
 
+            Integer number1 = tCheckItemMapper.zhengFuChartData88("基础管理",sign,sb.toString()); // 基础管理 隐患数据
+            model.addAttribute("number1",number1);
+
+            Integer number2 = tCheckItemMapper.zhengFuChartData88("生产工艺",sign,sb.toString()); // 生产工艺 隐患数据
+            model.addAttribute("number2",number2);
+
+            Integer number3 = tCheckItemMapper.zhengFuChartData88("设备设施",sign,sb.toString()); // 设备设施 隐患数据
+            model.addAttribute("number3",number3);
+
+            Integer number4 = tCheckItemMapper.zhengFuChartData88("公用工程",sign,sb.toString()); // 公用工程 隐患数据
+            model.addAttribute("number4",number4);
+
+            Integer number5 = tCheckItemMapper.zhengFuChartData88("特种设备",sign,sb.toString()); // 特种设备 隐患数据
+            model.addAttribute("number5",number5);
+
+            Integer number6 = tCheckItemMapper.zhengFuChartData88("生产现场",sign,sb.toString()); // 生产现场 隐患数据
+            model.addAttribute("number6",number6);
+
+            Integer number7 = tCheckItemMapper.zhengFuChartData88("行为环境",sign,sb.toString()); // 行为环境 隐患数据
+            model.addAttribute("number7",number7);
+
+            Integer number8 = tCheckItemMapper.zhengFuChartData88("危化管理",sign,sb.toString()); // 危化管理 隐患数据
+            model.addAttribute("number8",number8);
+
+            Integer number9 = tCheckItemMapper.zhengFuChartData88("消防安全",sign,sb.toString()); // 消防安全 隐患数据
+            model.addAttribute("number9",number9);
+
+            Integer number10 = tCheckItemMapper.zhengFuChartData88("用电安全",sign,sb.toString()); // 用电安全 隐患数据
+            model.addAttribute("number10",number10);
+
+            Integer number11 = tCheckItemMapper.zhengFuChartData88("安全设施",sign,sb.toString()); // 安全设施 隐患数据
+            model.addAttribute("number11",number11);
+
+            Integer number12 = tCheckItemMapper.zhengFuChartData88("防雷静电",sign,sb.toString()); // 防雷静电 隐患数据
+            model.addAttribute("number12",number12);
+
+            Integer number13 = tCheckItemMapper.zhengFuChartData88("职业卫生",sign,sb.toString()); // 职业卫生 隐患数据
+            model.addAttribute("number13",number13);
+
+            Integer number14 = tCheckItemMapper.zhengFuChartData88("职业卫生",sign,sb.toString()); // 职业卫生 隐患数据
+            model.addAttribute("number14",number14);
+
+            Integer number15 = tCheckItemMapper.zhengFuChartData881(sign,sb.toString()); // 其他 隐患数据
+            model.addAttribute("number15",number15);
+
+            Integer count1 = number1 + number2 + number3 + number4 + number5 + number6 + number7 + number8 + number9 + number10 + number11 + number12 + number13 + number14 + number15;
+
+            model.addAttribute("count1",count1);
+
+            if (null != count1 && 0 != count1) {
+
+                if (null != number1 && 0 != number1) {
+                    String str = df.format((float)number1 / count1);
+                    model.addAttribute("double1",str);
+
+                } else {
+                    model.addAttribute("double1","0.00");  // 化工 占比数据
+                }
+
+                if (null != number2 && 0 != number2) {
+                    String str = df.format((float)number2 / count1);
+                    model.addAttribute("double2",str);
+
+                } else {
+                    model.addAttribute("double2","0.00"); // 冶金 占比数据
+                }
+
+                if (null != number3 && 0 != number3) {
+                    String str = df.format((float)number3 / count1);
+                    model.addAttribute("double3",str);
+
+                } else {
+                    model.addAttribute("double3","0.00");  // 有色 占比数据 竖
+                }
+
+                if (null != number4 && 0 != number4) {
+                    String str = df.format((float)number4 / count1);
+                    model.addAttribute("double4",str);
+
+                } else {
+                    model.addAttribute("double4","0.00"); // 建材 占比数据
+                }
+
+                if (null != number5 && 0 != number5) {
+                    String str = df.format((float)number5 / count1);
+                    model.addAttribute("double5", str);
+
+                } else {
+                    model.addAttribute("double5","0.00"); // 机械 占比数据
+                }
+
+                if (null != number6 && 0 != number6) {
+                    String str = df.format((float)number6 / count1);
+                    model.addAttribute("double6",str);
+
+                } else {
+                    model.addAttribute("double6","0.00"); // 轻工 占比数据
+                }
+
+                if (null != number7 && 0 != number7) {
+                    String str = df.format((float)number7 / count1);
+                    model.addAttribute("double7",str);
+
+                } else {
+                    model.addAttribute("double7","0.00"); // 纺织 占比数据
+                }
+
+                if (null != number8 && 0 != number8) {
+                    String str = df.format((float)number8 / count1);
+                    model.addAttribute("double8",str);
+
+                } else {
+                    model.addAttribute("double8","0.00");// 商贸 占比数据
+                }
+
+                if (null != number9 && 0 != number9) {
+                    String str = df.format((float)number9 / count1);
+                    model.addAttribute("double9",str);
+
+                } else {
+                    model.addAttribute("double9","0.00"); // 烟花 占比数据
+                }
+
+                if (null != number10 && 0 != number10) {
+                    String str = df.format((float)number10 / count1);
+                    model.addAttribute("double10",str);
+
+                } else {
+                    model.addAttribute("double10","0.00"); // 其他 占比数据
+                }
+
+                if (null != number11 && 0 != number11) {
+                    String str = df.format((float)number11 / count1);
+                    model.addAttribute("double11",str);
+
+                } else {
+                    model.addAttribute("double11","0.00"); // 其他 占比数据
+                }
+
+                if (null != number12 && 0 != number12) {
+                    String str = df.format((float)number12 / count1);
+                    model.addAttribute("double12",str);
+
+                } else {
+                    model.addAttribute("double12","0.00"); // 其他 占比数据
+                }
+
+                if (null != number13 && 0 != number13) {
+                    String str = df.format((float)number13 / count1);
+                    model.addAttribute("double13",str);
+
+                } else {
+                    model.addAttribute("double13","0.00"); // 其他 占比数据
+                }
+
+                if (null != number14 && 0 != number14) {
+                    String str = df.format((float)number14 / count1);
+                    model.addAttribute("double14",str);
+
+                } else {
+                    model.addAttribute("double14","0.00"); // 其他 占比数据
+                }
+
+                if (null != number15 && 0 != number15) {
+                    String str = df.format((float)number15 / count1);
+                    model.addAttribute("double15",str);
+
+                } else {
+                    model.addAttribute("double15","0.00"); // 其他 占比数据
+                }
+
+            }else {
+                // 占比 坚
+                model.addAttribute("double1", "0.00");
+                model.addAttribute("double2", "0.00");
+                model.addAttribute("double3", "0.00");
+                model.addAttribute("double4", "0.00");
+                model.addAttribute("double5", "0.00");
+                model.addAttribute("double6", "0.00");
+                model.addAttribute("double7", "0.00");
+                model.addAttribute("double8", "0.00");
+                model.addAttribute("double9", "0.00");
+                model.addAttribute("double10", "0.00");
+                model.addAttribute("double11", "0.00");
+                model.addAttribute("double12", "0.00");
+                model.addAttribute("double13", "0.00");
+                model.addAttribute("double14", "0.00");
+                model.addAttribute("double15", "0.00");
+            }
+
+            model.addAttribute("sign",sign);
+            model.addAttribute("flag",flag);
         }
 
-        Integer a = tCheckItemMapper.zhengFuChartDataDanger(flag,"化工",sb.toString()); // 化工行业 数据
-        model.addAttribute("danger1",a);
-
-        Integer  b = tCheckItemMapper.zhengFuChartDataDanger(flag,"冶金",sb.toString()); // 冶金行业 数据
-        model.addAttribute("danger2",b);
-
-        Integer  c = tCheckItemMapper.zhengFuChartDataDanger(flag,"有色",sb.toString()); // 有色行业 数据
-        model.addAttribute("danger3",c);
-
-        Integer  d = tCheckItemMapper.zhengFuChartDataDanger(flag,"建材",sb.toString()); // 建材行业 数据
-        model.addAttribute("danger4",d);
-
-        Integer  e = tCheckItemMapper.zhengFuChartDataDanger(flag,"机械",sb.toString()); // 机械行业 数据
-        model.addAttribute("danger5",e);
-
-        Integer  f = tCheckItemMapper.zhengFuChartDataDanger(flag,"轻工",sb.toString()); // 轻工行业 数据
-        model.addAttribute("danger6",f);
-
-        Integer  g = tCheckItemMapper.zhengFuChartDataDanger(flag,"纺织",sb.toString()); // 纺织行业 数据
-        model.addAttribute("danger7",g);
-
-        Integer  h = tCheckItemMapper.zhengFuChartDataDanger(flag,"商贸",sb.toString()); // 商贸行业 数据
-        model.addAttribute("danger8",h);
-
-        Integer  i1 = tCheckItemMapper.zhengFuChartDataDanger(flag,"烟花",sb.toString()); // 烟花行业 数据
-        model.addAttribute("danger9",i1);
-
-        Integer  j = tCheckItemMapper.zhengFuChartDataDanger11(flag,sb.toString()); // 其他行业 数据
-        model.addAttribute("danger10",j);
-
-        Integer count = a + b + c + d + e + f + g + h + i1 + j ;
-
-        model.addAttribute("count",count);
-
-        if (null != count && 0 != count) {
-
-            if (null != a && 0 != a) {
-                String str = df.format((float)a / count);
-                model.addAttribute("result1",str);
-
-            } else {
-                model.addAttribute("result1","0.00");  // 化工 占比数据
-            }
-
-            if (null != b && 0 != b) {
-                String str = df.format((float)b / count);
-                model.addAttribute("result2",str);
-
-            } else {
-                model.addAttribute("result2","0.00"); // 冶金 占比数据
-            }
-
-            if (null != c && 0 != c) {
-                String str = df.format((float)c / count);
-                model.addAttribute("result3",str);
-
-            } else {
-                model.addAttribute("result3","0.00");  // 有色 占比数据 竖
-            }
-
-            if (null != d && 0 != d) {
-                String str = df.format((float)d / count);
-                model.addAttribute("result4",str);
-
-            } else {
-                model.addAttribute("result4","0.00"); // 建材 占比数据
-            }
-
-            if (null != e && 0 != e) {
-                String str = df.format((float)e / count);
-                model.addAttribute("result5", str);
-
-            } else {
-                model.addAttribute("result5","0.00"); // 机械 占比数据
-            }
-
-            if (null != f && 0 != f) {
-                String str = df.format((float)f / count);
-                model.addAttribute("result6",str);
-
-            } else {
-                model.addAttribute("result6","0.00"); // 轻工 占比数据
-            }
-
-            if (null != g && 0 != g) {
-                String str = df.format((float)g / count);
-                model.addAttribute("result7",str);
-
-            } else {
-                model.addAttribute("result7","0.00"); // 纺织 占比数据
-            }
-
-            if (null != h && 0 != h) {
-                String str = df.format((float)h / count);
-                model.addAttribute("result8",str);
-
-            } else {
-                model.addAttribute("result8","0.00");// 商贸 占比数据
-            }
-
-            if (null != i1 && 0 != i1) {
-                String str = df.format((float)i1 / count);
-                model.addAttribute("result9",str);
-
-            } else {
-                model.addAttribute("result9","0.00"); // 烟花 占比数据
-            }
-
-            if (null != j && 0 != j) {
-                String str = df.format((float)j / count);
-                model.addAttribute("result10",str);
-
-            } else {
-                model.addAttribute("result10","0.00"); // 其他 占比数据
-            }
-
-        }else {
-            // 占比 坚
-            model.addAttribute("result1", "0.00");
-            model.addAttribute("result2", "0.00");
-            model.addAttribute("result3", "0.00");
-            model.addAttribute("result4", "0.00");
-            model.addAttribute("result5", "0.00");
-            model.addAttribute("result6", "0.00");
-            model.addAttribute("result7", "0.00");
-            model.addAttribute("result8", "0.00");
-            model.addAttribute("result9", "0.00");
-            model.addAttribute("result10", "0.00");
-        }
-
-        Integer number1 = tCheckItemMapper.zhengFuChartData88("基础管理",sign,sb.toString()); // 基础管理 隐患数据
-        model.addAttribute("number1",number1);
-
-        Integer number2 = tCheckItemMapper.zhengFuChartData88("生产工艺",sign,sb.toString()); // 生产工艺 隐患数据
-        model.addAttribute("number2",number2);
-
-        Integer number3 = tCheckItemMapper.zhengFuChartData88("设备设施",sign,sb.toString()); // 设备设施 隐患数据
-        model.addAttribute("number3",number3);
-
-        Integer number4 = tCheckItemMapper.zhengFuChartData88("公用工程",sign,sb.toString()); // 公用工程 隐患数据
-        model.addAttribute("number4",number4);
-
-        Integer number5 = tCheckItemMapper.zhengFuChartData88("特种设备",sign,sb.toString()); // 特种设备 隐患数据
-        model.addAttribute("number5",number5);
-
-        Integer number6 = tCheckItemMapper.zhengFuChartData88("生产现场",sign,sb.toString()); // 生产现场 隐患数据
-        model.addAttribute("number6",number6);
-
-        Integer number7 = tCheckItemMapper.zhengFuChartData88("行为环境",sign,sb.toString()); // 行为环境 隐患数据
-        model.addAttribute("number7",number7);
-
-        Integer number8 = tCheckItemMapper.zhengFuChartData88("危化管理",sign,sb.toString()); // 危化管理 隐患数据
-        model.addAttribute("number8",number8);
-
-        Integer number9 = tCheckItemMapper.zhengFuChartData88("消防安全",sign,sb.toString()); // 消防安全 隐患数据
-        model.addAttribute("number9",number9);
-
-        Integer number10 = tCheckItemMapper.zhengFuChartData88("用电安全",sign,sb.toString()); // 用电安全 隐患数据
-        model.addAttribute("number10",number10);
-
-        Integer number11 = tCheckItemMapper.zhengFuChartData88("安全设施",sign,sb.toString()); // 安全设施 隐患数据
-        model.addAttribute("number11",number11);
-
-        Integer number12 = tCheckItemMapper.zhengFuChartData88("防雷静电",sign,sb.toString()); // 防雷静电 隐患数据
-        model.addAttribute("number12",number12);
-
-        Integer number13 = tCheckItemMapper.zhengFuChartData88("职业卫生",sign,sb.toString()); // 职业卫生 隐患数据
-        model.addAttribute("number13",number13);
-
-        Integer number14 = tCheckItemMapper.zhengFuChartData88("职业卫生",sign,sb.toString()); // 职业卫生 隐患数据
-        model.addAttribute("number14",number14);
-
-        Integer number15 = tCheckItemMapper.zhengFuChartData881(sign,sb.toString()); // 其他 隐患数据
-        model.addAttribute("number15",number15);
-
-        Integer count1 = number1 + number2 + number3 + number4 + number5 + number6 + number7 + number8 + number9 + number10 + number11 + number12 + number13 + number14 + number15;
-
-        model.addAttribute("count1",count1);
-
-        if (null != count1 && 0 != count1) {
-
-            if (null != number1 && 0 != number1) {
-                String str = df.format((float)number1 / count1);
-                model.addAttribute("double1",str);
-
-            } else {
-                model.addAttribute("double1","0.00");  // 化工 占比数据
-            }
-
-            if (null != number2 && 0 != number2) {
-                String str = df.format((float)number2 / count1);
-                model.addAttribute("double2",str);
-
-            } else {
-                model.addAttribute("double2","0.00"); // 冶金 占比数据
-            }
-
-            if (null != number3 && 0 != number3) {
-                String str = df.format((float)number3 / count1);
-                model.addAttribute("double3",str);
-
-            } else {
-                model.addAttribute("double3","0.00");  // 有色 占比数据 竖
-            }
-
-            if (null != number4 && 0 != number4) {
-                String str = df.format((float)number4 / count1);
-                model.addAttribute("double4",str);
-
-            } else {
-                model.addAttribute("double4","0.00"); // 建材 占比数据
-            }
-
-            if (null != number5 && 0 != number5) {
-                String str = df.format((float)number5 / count1);
-                model.addAttribute("double5", str);
-
-            } else {
-                model.addAttribute("double5","0.00"); // 机械 占比数据
-            }
-
-            if (null != number6 && 0 != number6) {
-                String str = df.format((float)number6 / count1);
-                model.addAttribute("double6",str);
-
-            } else {
-                model.addAttribute("double6","0.00"); // 轻工 占比数据
-            }
-
-            if (null != number7 && 0 != number7) {
-                String str = df.format((float)number7 / count1);
-                model.addAttribute("double7",str);
-
-            } else {
-                model.addAttribute("double7","0.00"); // 纺织 占比数据
-            }
-
-            if (null != number8 && 0 != number8) {
-                String str = df.format((float)number8 / count1);
-                model.addAttribute("double8",str);
-
-            } else {
-                model.addAttribute("double8","0.00");// 商贸 占比数据
-            }
-
-            if (null != number9 && 0 != number9) {
-                String str = df.format((float)number9 / count1);
-                model.addAttribute("double9",str);
-
-            } else {
-                model.addAttribute("double9","0.00"); // 烟花 占比数据
-            }
-
-            if (null != number10 && 0 != number10) {
-                String str = df.format((float)number10 / count1);
-                model.addAttribute("double10",str);
-
-            } else {
-                model.addAttribute("double10","0.00"); // 其他 占比数据
-            }
-
-            if (null != number11 && 0 != number11) {
-                String str = df.format((float)number11 / count1);
-                model.addAttribute("double11",str);
-
-            } else {
-                model.addAttribute("double11","0.00"); // 其他 占比数据
-            }
-
-            if (null != number12 && 0 != number12) {
-                String str = df.format((float)number12 / count1);
-                model.addAttribute("double12",str);
-
-            } else {
-                model.addAttribute("double12","0.00"); // 其他 占比数据
-            }
-
-            if (null != number13 && 0 != number13) {
-                String str = df.format((float)number13 / count1);
-                model.addAttribute("double13",str);
-
-            } else {
-                model.addAttribute("double13","0.00"); // 其他 占比数据
-            }
-
-            if (null != number14 && 0 != number14) {
-                String str = df.format((float)number14 / count1);
-                model.addAttribute("double14",str);
-
-            } else {
-                model.addAttribute("double14","0.00"); // 其他 占比数据
-            }
-
-            if (null != number15 && 0 != number15) {
-                String str = df.format((float)number15 / count1);
-                model.addAttribute("double15",str);
-
-            } else {
-                model.addAttribute("double15","0.00"); // 其他 占比数据
-            }
-
-        }else {
-            // 占比 坚
-            model.addAttribute("double1", "0.00");
-            model.addAttribute("double2", "0.00");
-            model.addAttribute("double3", "0.00");
-            model.addAttribute("double4", "0.00");
-            model.addAttribute("double5", "0.00");
-            model.addAttribute("double6", "0.00");
-            model.addAttribute("double7", "0.00");
-            model.addAttribute("double8", "0.00");
-            model.addAttribute("double9", "0.00");
-            model.addAttribute("double10", "0.00");
-            model.addAttribute("double11", "0.00");
-            model.addAttribute("double12", "0.00");
-            model.addAttribute("double13", "0.00");
-            model.addAttribute("double14", "0.00");
-            model.addAttribute("double15", "0.00");
-        }
-
-        model.addAttribute("sign",sign);
-        model.addAttribute("flag",flag);
 
         return "global/company/evaluate/analysis/yh-analysis";
     }
@@ -6276,130 +6291,136 @@ public class GlobalController extends BaseController {
         StringBuilder sb = new StringBuilder();
         List<Integer> ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询所有的公司
         DecimalFormat df = new DecimalFormat("0.00");
-        for (int i = 0; i < ids.size() ; i++) {
 
-            if (i == ids.size()-1){
-                sb.append("'").append(ids.get(i)).append("'");
-            }else {
-                sb.append("'").append(ids.get(i)).append("',");
+        if (null == ids || ids.size() == 0){
+
+            return "global/evaluate/globalError";
+
+        }else if (null != ids && ids.size() != 0){
+
+            for (int i = 0; i < ids.size() ; i++) {
+                if (i == ids.size()-1){
+                    sb.append("'").append(ids.get(i)).append("'");
+                }else {
+                    sb.append("'").append(ids.get(i)).append("',");
+                }
             }
 
-        }
+            Integer  a = tCheckItemMapper.manageHiddenCompany(1,sb.toString(),3); // 一般和较小 合格 已治理
 
+            Integer  a1 = tCheckItemMapper.manageHiddenCompany(2,sb.toString(),3); // 一般和较小 不合格 未治理
 
-        Integer  a = tCheckItemMapper.manageHiddenCompany(1,sb.toString(),3); // 一般和较小 合格 已治理
+            Integer count1 = a + a1;
 
-        Integer  a1 = tCheckItemMapper.manageHiddenCompany(2,sb.toString(),3); // 一般和较小 不合格 未治理
+            Integer  b = tCheckItemMapper.manageHiddenCompany(1,sb.toString(),1); // 较大 合格 已治理
 
-        Integer count1 = a + a1;
+            Integer  b1 = tCheckItemMapper.manageHiddenCompany(2,sb.toString(),1); // 较大 不合格 未治理
 
-        Integer  b = tCheckItemMapper.manageHiddenCompany(1,sb.toString(),1); // 较大 合格 已治理
+            Integer count2  = b + b1;
 
-        Integer  b1 = tCheckItemMapper.manageHiddenCompany(2,sb.toString(),1); // 较大 不合格 未治理
+            Integer  c = tCheckItemMapper.manageHiddenCompany(1,sb.toString(),2); // 重大 合格 已治理
 
-        Integer count2  = b + b1;
+            Integer  c1 = tCheckItemMapper.manageHiddenCompany(1,sb.toString(),2); // 重大 不合格 未治理
 
-        Integer  c = tCheckItemMapper.manageHiddenCompany(1,sb.toString(),2); // 重大 合格 已治理
+            Integer count3  = c + c1;
 
-        Integer  c1 = tCheckItemMapper.manageHiddenCompany(1,sb.toString(),2); // 重大 不合格 未治理
+            if (null != count1 && count1 != 0){  // 一般和较小 治理率
+                String str = df.format((float)a/count1);
+                model.addAttribute("result11",str);
+            }else {
+                model.addAttribute("result11","0.00");
+            }
 
-        Integer count3  = c + c1;
+            if (null != count2 && count2 != 0){ // 较大 治理率
+                String str = df.format((float)b/count2);
+                model.addAttribute("result22",str);
+            }else {
+                model.addAttribute("result22","0.00");
+            }
 
-        if (null != count1 && count1 != 0){  // 一般和较小 治理率
-            String str = df.format((float)a/count1);
-            model.addAttribute("result11",str);
-        }else {
-            model.addAttribute("result11","0.00");
-        }
+            if (null != count3 && count3 != 0){ // 重大 治理率
+                String str = df.format((float)c/count3);
+                model.addAttribute("result33",str);
+            }else {
+                model.addAttribute("result33","0.00");
+            }
 
-        if (null != count2 && count2 != 0){ // 较大 治理率
-            String str = df.format((float)b/count2);
-            model.addAttribute("result22",str);
-        }else {
-            model.addAttribute("result22","0.00");
-        }
+            String string = "'基础管理','基础管理','基础管理','公用工程','特种设备','生产现场','行为环境','危化管理','消防安全','用电安全','安全设施','防雷静电','职业卫生','专项行业','其他'";
 
-        if (null != count3 && count3 != 0){ // 重大 治理率
-            String str = df.format((float)c/count3);
-            model.addAttribute("result33",str);
-        }else {
-            model.addAttribute("result33","0.00");
-        }
+            Integer number1 = tCheckItemMapper.manageHiddenDanger22(1,string,3,sb.toString()); // 一般和较小 合格 已治理
 
-        String string = "'基础管理','基础管理','基础管理','公用工程','特种设备','生产现场','行为环境','危化管理','消防安全','用电安全','安全设施','防雷静电','职业卫生','专项行业','其他'";
+            Integer number11 = tCheckItemMapper.manageHiddenDanger22(2,string,3,sb.toString()); // 一般和较小 不合格 未治理
 
-        Integer number1 = tCheckItemMapper.manageHiddenDanger22(1,string,3,sb.toString()); // 一般和较小 合格 已治理
+            Integer number2 = tCheckItemMapper.manageHiddenDanger22(1,string,1,sb.toString()); // 较大 合格 已治理
 
-        Integer number11 = tCheckItemMapper.manageHiddenDanger22(2,string,3,sb.toString()); // 一般和较小 不合格 未治理
+            Integer number22 = tCheckItemMapper.manageHiddenDanger22(2,string,1,sb.toString()); // 较大 不合格 未治理
 
-        Integer number2 = tCheckItemMapper.manageHiddenDanger22(1,string,1,sb.toString()); // 较大 合格 已治理
+            Integer number3 = tCheckItemMapper.manageHiddenDanger22(1,string,2,sb.toString()); // 重大 合格 已治理
 
-        Integer number22 = tCheckItemMapper.manageHiddenDanger22(2,string,1,sb.toString()); // 较大 不合格 未治理
+            Integer number33 = tCheckItemMapper.manageHiddenDanger22(1,string,2,sb.toString()); // 重大 不合格 未治理
 
-        Integer number3 = tCheckItemMapper.manageHiddenDanger22(1,string,2,sb.toString()); // 重大 合格 已治理
+            Integer counts1 = number1 + number11;
+            Integer counts2 = number2 + number22;
+            Integer counts3 = number3 + number33;
 
-        Integer number33 = tCheckItemMapper.manageHiddenDanger22(1,string,2,sb.toString()); // 重大 不合格 未治理
+            if (null != counts1 && 0 != counts1) {
+                String str = df.format((float) number1 / counts1);
+                model.addAttribute("resusts1",str);
+            }else {
+                model.addAttribute("resusts1","0.00");
+            }
 
-        Integer counts1 = number1 + number11;
-        Integer counts2 = number2 + number22;
-        Integer counts3 = number3 + number33;
+            if (null != counts2 && 0 != counts2) {
+                String str = df.format((float) number2 / counts2);
+                model.addAttribute("resusts2",str);
+            }else {
+                model.addAttribute("resusts2","0.00");
+            }
 
-        if (null != counts1 && 0 != counts1) {
-            String str = df.format((float) number1 / counts1);
-            model.addAttribute("resusts1",str);
-        }else {
-            model.addAttribute("resusts1","0.00");
-        }
+            if (null != counts3 && 0 != counts3) {
+                String str = df.format((float) number3 / counts3);
+                model.addAttribute("resusts3",str);
+            }else {
+                model.addAttribute("resusts3","0.00");
+            }
 
-        if (null != counts2 && 0 != counts2) {
-            String str = df.format((float) number2 / counts2);
-            model.addAttribute("resusts2",str);
-        }else {
-            model.addAttribute("resusts2","0.00");
-        }
+            Integer number4 = tCheckItemMapper.manageHiddenIndustry22(1,3,sb.toString()); // 一般和较小 合格 已治理
 
-        if (null != counts3 && 0 != counts3) {
-            String str = df.format((float) number3 / counts3);
-            model.addAttribute("resusts3",str);
-        }else {
-            model.addAttribute("resusts3","0.00");
-        }
+            Integer number44 = tCheckItemMapper.manageHiddenIndustry22(2,3,sb.toString()); // 一般和较小 不合格 未治理
 
-        Integer number4 = tCheckItemMapper.manageHiddenIndustry22(1,3,sb.toString()); // 一般和较小 合格 已治理
+            Integer number5 = tCheckItemMapper.manageHiddenIndustry22(1,1,sb.toString()); // 较大 合格 已治理
 
-        Integer number44 = tCheckItemMapper.manageHiddenIndustry22(2,3,sb.toString()); // 一般和较小 不合格 未治理
+            Integer number55 = tCheckItemMapper.manageHiddenIndustry22(2,1,sb.toString()); // 较大 不合格 未治理
 
-        Integer number5 = tCheckItemMapper.manageHiddenIndustry22(1,1,sb.toString()); // 较大 合格 已治理
+            Integer number6 = tCheckItemMapper.manageHiddenIndustry22(1,2,sb.toString()); // 重大 合格 已治理
 
-        Integer number55 = tCheckItemMapper.manageHiddenIndustry22(2,1,sb.toString()); // 较大 不合格 未治理
+            Integer number66 = tCheckItemMapper.manageHiddenIndustry22(1,2,sb.toString()); // 重大 不合格 未治理
 
-        Integer number6 = tCheckItemMapper.manageHiddenIndustry22(1,2,sb.toString()); // 重大 合格 已治理
+            Integer counts4 = number4 + number44;
+            Integer counts5 = number5 + number55;
+            Integer counts6 = number6 + number66;
 
-        Integer number66 = tCheckItemMapper.manageHiddenIndustry22(1,2,sb.toString()); // 重大 不合格 未治理
+            if (null != counts4 && 0 != counts4) {
+                String str = df.format((float) number4 / counts4);
+                model.addAttribute("resusts4",str);
+            }else {
+                model.addAttribute("resusts4","0.00");
+            }
 
-        Integer counts4 = number4 + number44;
-        Integer counts5 = number5 + number55;
-        Integer counts6 = number6 + number66;
+            if (null != counts5 && 0 != counts5) {
+                String str = df.format((float) number5 / counts5);
+                model.addAttribute("resusts5",str);
+            }else {
+                model.addAttribute("resusts5","0.00");
+            }
 
-        if (null != counts4 && 0 != counts4) {
-            String str = df.format((float) number4 / counts4);
-            model.addAttribute("resusts4",str);
-        }else {
-            model.addAttribute("resusts4","0.00");
-        }
+            if (null != counts6 && 0 != counts6) {
+                String str = df.format((float) number6 / counts6);
+                model.addAttribute("resusts6",str);
+            }else {
+                model.addAttribute("resusts6","0.00");
+            }
 
-        if (null != counts5 && 0 != counts5) {
-            String str = df.format((float) number5 / counts5);
-            model.addAttribute("resusts5",str);
-        }else {
-            model.addAttribute("resusts5","0.00");
-        }
-
-        if (null != counts6 && 0 != counts6) {
-            String str = df.format((float) number6 / counts6);
-            model.addAttribute("resusts6",str);
-        }else {
-            model.addAttribute("resusts6","0.00");
         }
 
         return "global/company/evaluate/analysis/zl-analysis";

@@ -2576,4 +2576,35 @@ public class SteelController extends BaseController {
 
         return "company/danger/zhuChartData66";
     }
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO 应急管理中心页面跳转
+     * create time: 2019/8/5 13:54
+     */
+    @RequestMapping("/tables/yjmanage_center")
+    public String yjmanage_center(Model model, HttpServletRequest request) throws Exception {
+
+        User user = getLoginUser(request);
+        Company c = companyMapper.selectByPrimaryKey(user.getId());
+        List<Integer> count = userService.selectCount(new CompanyListReqDTO(), user);
+
+        model.addAttribute("count", count);
+        model.addAttribute("c", c);
+        model.addAttribute("userName", userMapper.selectByPrimaryKey(user.getId()).getUserName());
+
+        return "steel/rescue/yjmanage_center";
+    }
+
+    /**
+     * 跳入应急响应模块
+     * @return
+     */
+    @RequestMapping("/searchPage2")
+    public String searchPage2(Model model, HttpServletRequest request){
+        User user = getLoginUser(request);
+        model.addAttribute("userId",user.getId());
+        return "steel/rescue/threeLeft2";
+    }
+
 }

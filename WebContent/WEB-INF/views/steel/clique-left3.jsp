@@ -232,7 +232,7 @@
       <!---------------------------------------------------------------------应急管理中心---------------------------------------------------------->
       <dl>
       <dt>
-      <a style="color:#fff;"  data-href="${ly }/company/tables/yjmanage_center"  data-title="应急管理中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急管理中心</a>
+      <a style="color:#fff;"  data-href="${ly }/steel/tables/yjmanage_center"  data-title="应急管理中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急管理中心</a>
       </dt>
       </dl>
       <!------------------------------------------------------------------------------------------------------------------------------------------->

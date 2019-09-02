@@ -1352,6 +1352,24 @@
         AND t2.user_id = #{user_id}
     </select>
 
+    <!-- 政府端 隐患排查对象分析数据 -->
+    <select id="zfHiddenTroubleType" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t3.control = #{control}
+        AND t2.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+    </select>
+
+
+
 
     <!-- 政府端 隐患排查对象分析数据 -->
     <select id="zfHiddenTrouble11" resultType="Integer">
@@ -2667,5 +2685,48 @@
             #{userId}
             )
         </if>
+    </select>
+    <select id="getTotalPage"  parameterType="INTEGER" resultType="Integer">
+        select count(*)
+        from company_view t1
+        left join company_tbl t2 on t1.user_id = t2.user_id
+        where
+        t1.is_del=0
+        <if test="type==6">
+            and t1.district_id = #{userId}
+        </if>
+        <if test="type==3">
+            and t1.town_id = #{userId}
+        </if>
+        <if test="type==4">
+            and t1.village_id = #{userId}
+        </if>
+        <if test="type==10">
+            and t1.user_id in ( select uid from trade_company_tbl where tid =
+            #{userId}
+            )
+        </if>
+    </select>
+    <select id="getData" parameterType="INTEGER" resultType="java.util.Map">
+        select t2.name as name, t2.industry as industry, t2.dlevel as dlevel, t1.user_id as userId
+        from company_view t1
+        left join company_tbl t2 on t1.user_id = t2.user_id
+        where
+        t1.is_del=0
+        <if test="type==6">
+            and t1.district_id = #{userId}
+        </if>
+        <if test="type==3">
+            and t1.town_id = #{userId}
+        </if>
+        <if test="type==4">
+            and t1.village_id = #{userId}
+        </if>
+        <if test="type==10">
+            and t1.user_id in ( select uid from trade_company_tbl where tid =
+            #{userId}
+            )
+        </if>
+        limit #{start}, 10
     </select>
 </mapper>

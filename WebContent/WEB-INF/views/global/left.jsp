@@ -186,9 +186,26 @@
                 <li><a data-href="${ly }/global/off-list" data-title="检查人员信息库" href="javascript:void(0)">检查人员信息库</a></li>
             </c:when>
         </c:choose>
-        <li><a data-href="${ly }/global/zf-performance-industry" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
+        <li><a data-href="${ly }/global/jx-analysis" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
         <li><a data-href="${ly }/global/yh-analysis" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
         <li><a data-href="${ly }/global/zl-analysis" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
+
+        <li><a data-href="${ly }/global/zf-performance-industry?flag=1" data-title="chart1" href="javascript:void(0)">chart1</a></li>
+        <li><a data-href="${ly }/global/zf-performance-industry?flag=2" data-title="chart1-2" href="javascript:void(0)">chart1-2</a></li>
+        <li><a data-href="${ly }/global/zf-performance-industry?flag=3" data-title="chart1-3" href="javascript:void(0)">chart1-3</a></li>
+        <li><a data-href="${ly }/global/zf-check-hidden-trouble?flag=1" data-title="chart2" href="javascript:void(0)">chart2-1</a></li>
+        <li><a data-href="${ly }/global/zf-check-hidden-trouble?flag=2" data-title="chart2" href="javascript:void(0)">chart2-2</a></li>
+        <li><a data-href="${ly }/global/zf-check-hidden-trouble?flag=3" data-title="chart2" href="javascript:void(0)">chart2-3</a></li>
+        <li><a data-href="${ly }/global/zf-hidden-industry?flag=1" data-title="charts3-1-1" href="javascript:void(0)">chart3-1-1</a></li>
+        <li><a data-href="${ly }/global/zf-hidden-industry?flag=2" data-title="charts3-1-2" href="javascript:void(0)">chart3-1-2</a></li>
+        <li><a data-href="${ly }/global/zf-hidden-industry?flag=3" data-title="charts3-1-3" href="javascript:void(0)">chart3-1-3</a></li>
+        <li><a data-href="${ly }/global/zf-hidden-trouble?flag=1" data-title="charts3-2-1" href="javascript:void(0)">chart3-2-1</a></li>
+        <li><a data-href="${ly }/global/zf-hidden-trouble?flag=2" data-title="charts3-2-2" href="javascript:void(0)">chart3-2-2</a></li>
+        <li><a data-href="${ly }/global/zf-hidden-trouble?flag=3" data-title="charts3-2-3" href="javascript:void(0)">chart3-2-3</a></li>
+
+        <li><a data-href="${ly }/global/manage-hidden-company" data-title="charts4-1" href="javascript:void(0)">chart4-1</a></li>
+        <li><a data-href="${ly }/global/manage-hidden-danger" data-title="charts4-2" href="javascript:void(0)">chart4-2</a></li>
+        <li><a data-href="${ly }/global/manage-hidden-industry" data-title="charts4-3" href="javascript:void(0)">chart4-3</a></li>
 
 
 
@@ -221,16 +238,6 @@
         </dl>
         <dl>
         <dt>
-        <a style="color:#fff;"  data-href="${ly }/company/tables/yjmanage_center"  data-title="应急指挥中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急指挥中心</a>
-        </dt>
-        </dl>
-        <dl>
-        <dt>
-        <a style="color:#fff" data-href="/global/Standard" href="javascript:void(0)" data-title="安全生产标准化"><i class="Hui-iconfont">&#xe687;</i>安全生产标准化</a>
-        </dt>
-        </dl>
-        <dl>
-        <dt>
         <i class="Hui-iconfont">&#xe687;</i>重大危险源长制
         <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
@@ -241,6 +248,26 @@
         <li><a data-href="${ly }/global/source/company-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
         <li><a data-href="${ly }/global/source/danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>
         <li><a data-href="${ly }/global/source/danger-chart" data-title="分类统计" href="javascript:void(0)">分类统计</a></li>
+        </ul>
+        </dd>
+        </dl>
+
+        <dl>
+        <dt>
+        <i class="Hui-iconfont">&#xe70c;</i>安全监察与监管
+        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+        </dt>
+        <dd>
+        <ul>
+        <li><a data-href="${ly }/global/company/company-list-zg?cisDanger=1" data-title="重大危险源" href="javascript:void(0)">重大危险源</a></li>
+        <li><a data-href="${ly }/global/company/company-list-zg?danger=1" data-title="高危作业" onclick="javascript:void(0)">高危作业</a></li>
+        <li><a data-href="${ly }/global/warning/sperson-list" data-title="持证上岗" href="javascript:void(0)">持证上岗</a></li>
+        <li><a data-href="${ly }/global/warning/sequipment-list" data-title="特种设备检测" href="javascript:void(0)">特种设备检测</a></li>
+        <li><a data-href="${ly }/global/warning/detection-list" data-title="职业卫生检测" href="javascript:void(0)">职业卫生检测</a></li>
+        <li><a data-href="${ly }/global/warning/lightning-list" data-title="防雷防静电" href="javascript:void(0)">防雷防静电</a></li>
+        <li><a data-href="${ly }/global/evaluate/evaluation-list" data-title="评价评估" href="javascript:void(0)">评价评估</a></li>
+        <li><a data-href="${ly }/global/evaluate/zheng-list" data-title="各类许可证" href="javascript:void(0)">各类许可证</a></li>
+        <li><a data-href="${ly }/company/tables/tab-yjlist" data-title="应急预案" href="javascript:void(0)">应急预案</a></li>
         </ul>
         </dd>
         </dl>
@@ -286,30 +313,6 @@
             <c:when test="${userType==4}">
                 <!--村级-->
                 <li><a data-href="${ly }/global/evaluate/lawDoc-list?flag=2" data-title="执法图片视频资料" href="javascript:void(0)">执法图片视频资料</a></li>
-
-
-
-                <li><a data-href="${ly }/global/pc-analysis?flag=1" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
-                <li><a data-href="${ly }/global/yh-all-analysis?flag=1" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
-                <li><a data-href="${ly }/global/zl-all-analysis" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
-
-
-                <%--<li><a data-href="${ly }/global/zf-performance-industry?flag=1" data-title="chart1" href="javascript:void(0)">chart1</a></li>--%>
-                <%--<li><a data-href="${ly }/global/zf-performance-industry?flag=2" data-title="chart1-2" href="javascript:void(0)">chart1-2</a></li>--%>
-                <%--<li><a data-href="${ly }/global/zf-performance-industry?flag=3" data-title="chart1-3" href="javascript:void(0)">chart1-3</a></li>--%>
-                <%--<li><a data-href="${ly }/global/zf-check-hidden-trouble?flag=1" data-title="chart2" href="javascript:void(0)">chart2-1</a></li>--%>
-                <%--<li><a data-href="${ly }/global/zf-check-hidden-trouble?flag=2" data-title="chart2" href="javascript:void(0)">chart2-2</a></li>--%>
-                <%--<li><a data-href="${ly }/global/zf-check-hidden-trouble?flag=3" data-title="chart2" href="javascript:void(0)">chart2-3</a></li>--%>
-                <%--<li><a data-href="${ly }/global/zf-hidden-industry?flag=1" data-title="charts3-1-1" href="javascript:void(0)">chart3-1-1</a></li>--%>
-                <%--<li><a data-href="${ly }/global/zf-hidden-industry?flag=2" data-title="charts3-1-2" href="javascript:void(0)">chart3-1-2</a></li>--%>
-                <%--<li><a data-href="${ly }/global/zf-hidden-industry?flag=3" data-title="charts3-1-3" href="javascript:void(0)">chart3-1-3</a></li>--%>
-                <%--<li><a data-href="${ly }/global/zf-hidden-trouble?flag=1" data-title="charts3-2-1" href="javascript:void(0)">chart3-2-1</a></li>--%>
-                <%--<li><a data-href="${ly }/global/zf-hidden-trouble?flag=2" data-title="charts3-2-2" href="javascript:void(0)">chart3-2-2</a></li>--%>
-                <%--<li><a data-href="${ly }/global/zf-hidden-trouble?flag=3" data-title="charts3-2-3" href="javascript:void(0)">chart3-2-3</a></li>--%>
-                <%--<li><a data-href="${ly }/global/manage-hidden-company" data-title="charts4-1" href="javascript:void(0)">chart4-1</a></li>--%>
-                <%--<li><a data-href="${ly }/global/manage-hidden-danger" data-title="charts4-2" href="javascript:void(0)">chart4-2</a></li>--%>
-                <%--<li><a data-href="${ly }/global/manage-hidden-industry" data-title="charts4-3" href="javascript:void(0)">chart4-3</a></li>--%>
-
             </c:when>
             <c:when test="${userType==10}">
                 <!--行业级-->
@@ -321,37 +324,14 @@
                 <li><a data-href="${ly }/global/off-list" data-title="执法人员信息库" href="javascript:void(0)">执法人员信息库</a></li>
             </c:when></c:choose>
         <li><a data-href="${ly }/global/opinion-show?flag2=2" data-title="执法档案" href="javascript:void(0)">执法档案</a></li>
-        </ul>
+
         </dd>
         </dl>
-
-
-        <%--<dl>--%>
-        <%--<dt>--%>
-        <%--<i class="Hui-iconfont">&#xe70c;</i>安全监察与监管--%>
-        <%--<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--%>
-        <%--</dt>--%>
-        <%--<dd>--%>
-        <%--<ul>--%>
-        <%--<li><a data-href="${ly }/global/company/company-list-zg?cisDanger=1" data-title="重大危险源" href="javascript:void(0)">重大危险源</a></li>--%>
-        <%--<li><a data-href="${ly }/global/company/company-list-zg?danger=1" data-title="高危作业" onclick="javascript:void(0)">高危作业</a></li>--%>
-        <%--<li><a data-href="${ly }/global/warning/sperson-list" data-title="持证上岗" href="javascript:void(0)">持证上岗</a></li>--%>
-        <%--<li><a data-href="${ly }/global/warning/sequipment-list" data-title="特种设备检测" href="javascript:void(0)">特种设备检测</a></li>--%>
-        <%--<li><a data-href="${ly }/global/warning/detection-list" data-title="职业卫生检测" href="javascript:void(0)">职业卫生检测</a></li>--%>
-        <%--<li><a data-href="${ly }/global/warning/lightning-list" data-title="防雷防静电" href="javascript:void(0)">防雷防静电</a></li>--%>
-        <%--<li><a data-href="${ly }/global/evaluate/evaluation-list" data-title="评价评估" href="javascript:void(0)">评价评估</a></li>--%>
-        <%--<li><a data-href="${ly }/global/evaluate/zheng-list" data-title="各类许可证" href="javascript:void(0)">各类许可证</a></li>--%>
-        <%--<li><a data-href="${ly }/company/tables/tab-yjlist" data-title="应急预案" href="javascript:void(0)">应急预案</a></li>--%>
-        <%--</ul>--%>
-        <%--</dd>--%>
-        <%--</dl>--%>
-
-
         <dl>
-        <%--<dt>--%>
-        <%--<i class="Hui-iconfont">&#xe653;</i>领导关注点汇总--%>
-        <%--<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--%>
-        <%--</dt>--%>
+        <dt>
+        <i class="Hui-iconfont">&#xe653;</i>领导关注点汇总
+        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+        </dt>
         <dd>
         <ul>
         <li><a data-href="${ly }/global/notice-list" data-title="一周监管动态" href="javascript:void(0)">一周监管动态</a></li>
@@ -361,45 +341,52 @@
         </ul>
         </dd>
         </dl>
-
-
-
-
+        <dl>
+        <dt>
+        <a style="color:#fff" data-href="/global/Standard" href="javascript:void(0)" data-title="安全生产标准化"><i class="Hui-iconfont">&#xe687;</i>安全生产标准化</a>
+        </dt>
+        </dl>
+        <dl>
+        <dt>
+        <a style="color:#fff;"  data-href="${ly }/company/tables/yjmanage_center"  data-title="应急指挥中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急指挥中心</a>
+        </dt>
+        </dl>
+        <c:if test="${userType==6||userType==3}">
             <!-------------信息推送及接受------------------------->
             <dl>
             <dt>
-            <i class="Hui-iconfont">&#xe61d;</i>信息推送互动
+            <i class="Hui-iconfont">&#xe61d;</i>信息推送及接受
             <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
             </dt>
             <dd>
             <ul>
+            <c:if test="${userType==3}">
                 <li><a data-href="${ly }/global/reviceMessageList" data-title="信息接收列表" href="javascript:void(0)">接收列表</a></li>
+            </c:if>
             <li><a data-href="${ly }/global/sendMessageList" data-title="信息发送列表" href="javascript:void(0)">发送列表</a></li>
             <li><a data-href="${ly }/global/addMessages" data-title="信息推送" href="javascript:void(0)">推送编辑</a></li>
             <li><a data-href="${ly }/global/groupIndex" data-title="群组设置" href="javascript:void(0)">群组设置</a></li>
             </ul>
             </dd>
             </dl>
-
-
-
+        </c:if>
         <dl>
         <dt>
-        <i class="Hui-iconfont">&#xe61d;</i>账号设置管理
+        <i class="Hui-iconfont">&#xe61d;</i>系统与账号设置
         <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
-        <%--<c:if test="${userType==4||userType==10}">--%>
-            <%--<div class="div_omenu">--%>
-            <%--<div  class="div_otop">信息推送<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>--%>
-            <%--<ul>--%>
-            <%--<li><a data-href="${ly }/global/sendMessageList" data-title="信息发送列表" href="javascript:void(0)">发送列表</a></li>--%>
-            <%--<li><a data-href="${ly }/global/reviceMessageList" data-title="信息接收列表" href="javascript:void(0)">接收列表</a></li>--%>
-            <%--<li><a data-href="${ly }/global/addMessages" data-title="信息推送" href="javascript:void(0)">推送编辑</a></li>--%>
-            <%--<li><a data-href="${ly }/global/groupIndex" data-title="群组设置" href="javascript:void(0)">群组设置</a></li>--%>
-            <%--</ul>--%>
-            <%--</div>--%>
-        <%--</c:if>--%>
+        <c:if test="${userType==4||userType==10}">
+            <div class="div_omenu">
+            <div  class="div_otop">信息推送<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
+            <ul>
+            <li><a data-href="${ly }/global/sendMessageList" data-title="信息发送列表" href="javascript:void(0)">发送列表</a></li>
+            <li><a data-href="${ly }/global/reviceMessageList" data-title="信息接收列表" href="javascript:void(0)">接收列表</a></li>
+            <li><a data-href="${ly }/global/addMessages" data-title="信息推送" href="javascript:void(0)">推送编辑</a></li>
+            <li><a data-href="${ly }/global/groupIndex" data-title="群组设置" href="javascript:void(0)">群组设置</a></li>
+            </ul>
+            </div>
+        </c:if>
         <c:if test="${userType==6||userType==4||userType==3}">
             <div class="div_omenu">
             <div  class="div_otop">在线监测<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>

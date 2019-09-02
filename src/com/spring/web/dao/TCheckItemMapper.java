@@ -339,6 +339,7 @@ public interface TCheckItemMapper {
     Map<String, Object> zhuChartData124Geo2(@Param("userId") Integer userId, @Param("type") Integer type);
 
     List<Map<String,Object>> findALL(@Param("userId")Integer userId, @Param("type")Integer type);
+
     List<Map<String, Object>> selectBasicMessage(@Param("userId") Integer userId, @Param("type") Integer type, @Param("start") Integer start);
 
     Integer zfHiddenTrouble(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
@@ -346,6 +347,8 @@ public interface TCheckItemMapper {
     Integer zfHiddenTrouble11(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer zfHiddenTrouble22(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zfHiddenTroubleType(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer zfHiddenTrouble33(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
@@ -377,9 +380,14 @@ public interface TCheckItemMapper {
 
     Integer manageHiddenIndustry(@Param("status")Integer status, @Param("industrys")String industrys, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
+    Integer getTotalPage(@Param("userId") Integer userId, @Param("type") Integer type);
+
+    List<Map<String, Object>> getData(@Param("userId") Integer userId, @Param("type") Integer type, @Param("start") Integer start);
+
     Integer manageHiddenDanger22(@Param("status")Integer status, @Param("controls")String controls,@Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer manageHiddenIndustry22(@Param("status")Integer status, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
 }
 
 

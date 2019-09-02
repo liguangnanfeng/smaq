@@ -468,14 +468,12 @@ function selectQccData() {
           if(status == 200){
 	  		//console.log(item);
             //console.log(data.Result);
-  	        //alert("开始赋值");
   	        $("#address").val(data.Address);
   	        $("#legal").val(data.OperName);
   	        $("#capital").val(data.RegistCapi);
   	        $("#establish").val(data.StartDate.substring(0, 10));
   	        $("#scope").val(data.Scope);
   	        $("#license").val(data.CreditCode);
-  	        
   	      	//console.log(data.EconKind);
   	        //console.log(data.BelongOrg);
   	        if(data.EconKind){
@@ -492,15 +490,12 @@ function selectQccData() {
   	          		}  
   	  	      	}); 
   	        }
-  	        
   	        if(data.ContactInfo.Email){
 	          	$("#email").val(data.ContactInfo.Email);
 	        }
-	        
 	        if(data.ContactInfo.PhoneNumber){
 	          	$("#duty").val(data.ContactInfo.PhoneNumber);
 	        }
-	        
 	        $("#charge").val(data.OperName);
 	        
           } else {

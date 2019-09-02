@@ -238,7 +238,7 @@ public class CompanyController_cd extends BaseController {
 
         model.addAttribute("count", count);
         model.addAttribute("c", c);
-        model.addAttribute("userName", companyMapper.selectByPrimaryKey(user.getId()).getName());
+        model.addAttribute("userName", userMapper.selectByPrimaryKey(user.getId()).getUserName());
 
         return "company/tables/yjmanage_center";
     }

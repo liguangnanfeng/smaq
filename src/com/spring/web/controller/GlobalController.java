@@ -202,6 +202,13 @@ public class GlobalController extends BaseController {
         }
         return "global/main";
     }
+
+    /**
+     * 查询
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("selectBranch")
     public String selectBranch(HttpServletRequest request, Model model){
         User user = getLoginUser(request);
@@ -217,6 +224,7 @@ public class GlobalController extends BaseController {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("districtId", user.getId());
             List<Map<String, Object>> list = townMapper.selectListByDistrict(m);//设置镇级
+            System.out.println("list:"+list);
             model.addAttribute("list", list);
             model.addAttribute("name_", districtMapper.selectByPrimaryKey(user.getId()).getName());
         }
@@ -248,6 +256,7 @@ public class GlobalController extends BaseController {
         }
         return "global/other/tab-biaozhun2";
     }
+
     /**
      * 政府首页-欢迎页
      */
@@ -2719,15 +2728,12 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping("/villageLogout")
     public String villageLogout(HttpServletRequest request) throws Exception {
-        System.out.println("******************************");
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.logout();
         String y = request.getServerName();
-        System.out.println("1.******************************");
         if(y.indexOf("kfq") > -1) {
             return "redirect:/fore/login-smaq";
         }
-        System.out.println("2.******************************");
         return "redirect:/fore/global";
     }
     /**
@@ -5461,47 +5467,47 @@ public class GlobalController extends BaseController {
             }
         }
 
-            if (flag ==1){
-                list = hiddenPlanMapper.selectDpids(sb.toString());
-            }else if (flag == 2){
-                list = tCheckMapper.findCheckCompany(sb.toString(),2);
-            }else if (flag == 3){
-                list = tCheckMapper.findCheckCompany(sb.toString(),3);
-            }
-            for (int i = 0; i < list.size(); i++) {
+        if (flag ==1){
+            list = hiddenPlanMapper.selectDpids(sb.toString());
+        }else if (flag == 2){
+            list = tCheckMapper.findCheckCompany(sb.toString(),2);
+        }else if (flag == 3){
+            list = tCheckMapper.findCheckCompany(sb.toString(),3);
+        }
+        for (int i = 0; i < list.size(); i++) {
 
-                if (flag == 1){
-                    if (null == list.get(i).get("dpid")|| list.get(i).get("dpid")==0){
-                        a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, "公司级", sb.toString(),2); // 现场
-                        list.get(i).put("danger1",a);
-
-                        b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, "公司级", sb.toString(),1); // 基础
-                        list.get(i).put("danger2",b);
-
-                    }else if (null != list.get(i).get("dpid")){
-                        a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),sb.toString(),2); // 现场
-                        list.get(i).put("danger1",a);
-
-                        b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),sb.toString(),1); // 基础
-                        list.get(i).put("danger2",b);
-                    }
-                }else {
-                    a = tCheckItemMapper.lookHiddenSource(flag, (String) list.get(i).get("name"), sb.toString(),2); // 现场
+            if (flag == 1){
+                if (null == list.get(i).get("dpid")|| list.get(i).get("dpid")==0){
+                    a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, "公司级", sb.toString(),2); // 现场
                     list.get(i).put("danger1",a);
 
-                    b = tCheckItemMapper.lookHiddenSource(flag, (String) list.get(i).get("name"), sb.toString(),1); // 基础
+                    b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, "公司级", sb.toString(),1); // 基础
+                    list.get(i).put("danger2",b);
+
+                }else if (null != list.get(i).get("dpid")){
+                    a = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),sb.toString(),2); // 现场
+                    list.get(i).put("danger1",a);
+
+                    b = tCheckItemMapper.findHiddenSourceTypeByMap(flag, (String) list.get(i).get("name"),sb.toString(),1); // 基础
                     list.get(i).put("danger2",b);
                 }
+            }else {
+                a = tCheckItemMapper.lookHiddenSource(flag, (String) list.get(i).get("name"), sb.toString(),2); // 现场
+                list.get(i).put("danger1",a);
 
-                count1 += a;
-                count2 += b;
-
-                Integer sum = a + b;
-
-                list.get(i).put("sum",sum); // 某车间 现场 和 基础 的合计总数
-                list2.addAll(list);
-
+                b = tCheckItemMapper.lookHiddenSource(flag, (String) list.get(i).get("name"), sb.toString(),1); // 基础
+                list.get(i).put("danger2",b);
             }
+
+            count1 += a;
+            count2 += b;
+
+            Integer sum = a + b;
+
+            list.get(i).put("sum",sum); // 某车间 现场 和 基础 的合计总数
+            list2.addAll(list);
+
+        }
 
         Integer sum   = count1 + count2;
 
@@ -6280,6 +6286,7 @@ public class GlobalController extends BaseController {
 
         }
 
+
         Integer  a = tCheckItemMapper.manageHiddenCompany(1,sb.toString(),3); // 一般和较小 合格 已治理
 
         Integer  a1 = tCheckItemMapper.manageHiddenCompany(2,sb.toString(),3); // 一般和较小 不合格 未治理
@@ -6319,26 +6326,23 @@ public class GlobalController extends BaseController {
             model.addAttribute("result33","0.00");
         }
 
+        String string = "'基础管理','基础管理','基础管理','公用工程','特种设备','生产现场','行为环境','危化管理','消防安全','用电安全','安全设施','防雷静电','职业卫生','专项行业','其他'";
 
-       String string = "'基础管理','基础管理','基础管理','公用工程','特种设备','生产现场','行为环境','危化管理','消防安全','用电安全','安全设施','防雷静电','职业卫生','专项行业','其他'";
+        Integer number1 = tCheckItemMapper.manageHiddenDanger22(1,string,3,sb.toString()); // 一般和较小 合格 已治理
 
-       Integer number1 = tCheckItemMapper.manageHiddenDanger22(1,string,3,sb.toString()); // 一般和较小 合格 已治理
+        Integer number11 = tCheckItemMapper.manageHiddenDanger22(2,string,3,sb.toString()); // 一般和较小 不合格 未治理
 
-       Integer number11 = tCheckItemMapper.manageHiddenDanger22(2,string,3,sb.toString()); // 一般和较小 不合格 未治理
+        Integer number2 = tCheckItemMapper.manageHiddenDanger22(1,string,1,sb.toString()); // 较大 合格 已治理
 
-       Integer number2 = tCheckItemMapper.manageHiddenDanger22(1,string,1,sb.toString()); // 较大 合格 已治理
+        Integer number22 = tCheckItemMapper.manageHiddenDanger22(2,string,1,sb.toString()); // 较大 不合格 未治理
 
-       Integer number22 = tCheckItemMapper.manageHiddenDanger22(2,string,1,sb.toString()); // 较大 不合格 未治理
+        Integer number3 = tCheckItemMapper.manageHiddenDanger22(1,string,2,sb.toString()); // 重大 合格 已治理
 
-       Integer number3 = tCheckItemMapper.manageHiddenDanger22(1,string,2,sb.toString()); // 重大 合格 已治理
+        Integer number33 = tCheckItemMapper.manageHiddenDanger22(1,string,2,sb.toString()); // 重大 不合格 未治理
 
-       Integer number33 = tCheckItemMapper.manageHiddenDanger22(1,string,2,sb.toString()); // 重大 不合格 未治理
-
-       Integer counts1 = number1 + number11;
-       Integer counts2 = number2 + number22;
-       Integer counts3 = number3 + number33;
-
-
+        Integer counts1 = number1 + number11;
+        Integer counts2 = number2 + number22;
+        Integer counts3 = number3 + number33;
 
         if (null != counts1 && 0 != counts1) {
             String str = df.format((float) number1 / counts1);
@@ -6361,22 +6365,21 @@ public class GlobalController extends BaseController {
             model.addAttribute("resusts3","0.00");
         }
 
-       Integer number4 = tCheckItemMapper.manageHiddenIndustry22(1,3,sb.toString()); // 一般和较小 合格 已治理
+        Integer number4 = tCheckItemMapper.manageHiddenIndustry22(1,3,sb.toString()); // 一般和较小 合格 已治理
 
-       Integer number44 = tCheckItemMapper.manageHiddenIndustry22(2,3,sb.toString()); // 一般和较小 不合格 未治理
+        Integer number44 = tCheckItemMapper.manageHiddenIndustry22(2,3,sb.toString()); // 一般和较小 不合格 未治理
 
-       Integer number5 = tCheckItemMapper.manageHiddenIndustry22(1,1,sb.toString()); // 较大 合格 已治理
+        Integer number5 = tCheckItemMapper.manageHiddenIndustry22(1,1,sb.toString()); // 较大 合格 已治理
 
-       Integer number55 = tCheckItemMapper.manageHiddenIndustry22(2,1,sb.toString()); // 较大 不合格 未治理
+        Integer number55 = tCheckItemMapper.manageHiddenIndustry22(2,1,sb.toString()); // 较大 不合格 未治理
 
-       Integer number6 = tCheckItemMapper.manageHiddenIndustry22(1,2,sb.toString()); // 重大 合格 已治理
+        Integer number6 = tCheckItemMapper.manageHiddenIndustry22(1,2,sb.toString()); // 重大 合格 已治理
 
-       Integer number66 = tCheckItemMapper.manageHiddenIndustry22(1,2,sb.toString()); // 重大 不合格 未治理
+        Integer number66 = tCheckItemMapper.manageHiddenIndustry22(1,2,sb.toString()); // 重大 不合格 未治理
 
-
-       Integer counts4 = number4 + number44;
-       Integer counts5 = number5 + number55;
-       Integer counts6 = number6 + number66;
+        Integer counts4 = number4 + number44;
+        Integer counts5 = number5 + number55;
+        Integer counts6 = number6 + number66;
 
         if (null != counts4 && 0 != counts4) {
             String str = df.format((float) number4 / counts4);
@@ -6398,7 +6401,6 @@ public class GlobalController extends BaseController {
         }else {
             model.addAttribute("resusts6","0.00");
         }
-
 
         return "global/company/evaluate/analysis/zl-analysis";
     }
@@ -6433,89 +6435,143 @@ public class GlobalController extends BaseController {
         Integer sum9 = 0;
         Integer sum10 = 0;
 
-
-        if (user.getUserType() == 4){ // 如何登录的账户是村级账号并且是企业自查
-
+        if (user.getUserType() == 4){ // 如果登录的账户是村级账号
+            // 根据登录账户 ID 查询该区域下的所有公司信息
             list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
 
-            for (int i = 0; i < list.size(); i++) {
+            if (null == list || list.size() == 0){// 如果该区域下没有公司
 
-                Integer a = tCheckMapper.zfPerformanceCount22(flag,"化工",(Integer) list.get(i).get("user_id")); // 化工行业 数据
-                list.get(i).put("danger1",a);
-                sum1 += a;
+                return "global/evaluate/globalError";// 返回提示页面
 
-                Integer  b = tCheckMapper.zfPerformanceCount22(flag,"冶金",(Integer) list.get(i).get("user_id")); // 冶金行业 数据
-                list.get(i).put("danger2",b);
-                sum2 += b;
+            }else if (null != list || list.size() != 0) {
 
-                Integer  c = tCheckMapper.zfPerformanceCount22(flag,"有色",(Integer) list.get(i).get("user_id")); // 有色行业 数据
-                list.get(i).put("danger3",c);
-                sum3 += c;
+                for (int i = 0; i < list.size(); i++) {
 
-                Integer  d = tCheckMapper.zfPerformanceCount22(flag,"建材",(Integer) list.get(i).get("user_id")); // 建材行业 数据
-                list.get(i).put("danger4",d);
-                sum4 += d;
+                    Integer a = tCheckMapper.zfPerformanceCount22(flag,"化工",(Integer) list.get(i).get("user_id")); // 化工行业 数据
+                    list.get(i).put("danger1",a);
+                    sum1 += a;
 
-                Integer  e = tCheckMapper.zfPerformanceCount22(flag,"机械",(Integer) list.get(i).get("user_id")); // 机械行业 数据
-                list.get(i).put("danger5",e);
-                sum5 += e;
+                    Integer  b = tCheckMapper.zfPerformanceCount22(flag,"冶金",(Integer) list.get(i).get("user_id")); // 冶金行业 数据
+                    list.get(i).put("danger2",b);
+                    sum2 += b;
 
-                Integer  f = tCheckMapper.zfPerformanceCount22(flag,"轻工",(Integer) list.get(i).get("user_id")); // 轻工行业 数据
-                list.get(i).put("danger6",f);
-                sum6 += f;
+                    Integer  c = tCheckMapper.zfPerformanceCount22(flag,"有色",(Integer) list.get(i).get("user_id")); // 有色行业 数据
+                    list.get(i).put("danger3",c);
+                    sum3 += c;
 
-                Integer  g = tCheckMapper.zfPerformanceCount22(flag,"纺织",(Integer) list.get(i).get("user_id")); // 纺织行业 数据
-                list.get(i).put("danger7",g);
-                sum7 += g;
+                    Integer  d = tCheckMapper.zfPerformanceCount22(flag,"建材",(Integer) list.get(i).get("user_id")); // 建材行业 数据
+                    list.get(i).put("danger4",d);
+                    sum4 += d;
 
-                Integer  h = tCheckMapper.zfPerformanceCount22(flag,"商贸",(Integer) list.get(i).get("user_id")); // 商贸行业 数据
-                list.get(i).put("danger8",h);
-                sum8 += h;
+                    Integer  e = tCheckMapper.zfPerformanceCount22(flag,"机械",(Integer) list.get(i).get("user_id")); // 机械行业 数据
+                    list.get(i).put("danger5",e);
+                    sum5 += e;
 
-                Integer  i1 = tCheckMapper.zfPerformanceCount22(flag,"烟花",(Integer) list.get(i).get("user_id")); // 烟花行业 数据
-                list.get(i).put("danger9",i1);
-                sum9 += i1;
+                    Integer  f = tCheckMapper.zfPerformanceCount22(flag,"轻工",(Integer) list.get(i).get("user_id")); // 轻工行业 数据
+                    list.get(i).put("danger6",f);
+                    sum6 += f;
 
-                Integer  j = tCheckMapper.zfPerformanceCount33(flag,(Integer) list.get(i).get("user_id")); // 其他行业 数据
-                list.get(i).put("danger10",j);
-                sum10 += j;
+                    Integer  g = tCheckMapper.zfPerformanceCount22(flag,"纺织",(Integer) list.get(i).get("user_id")); // 纺织行业 数据
+                    list.get(i).put("danger7",g);
+                    sum7 += g;
 
-                Integer count = a + b + c + d + e + f + g + h + i1 + j;
+                    Integer  h = tCheckMapper.zfPerformanceCount22(flag,"商贸",(Integer) list.get(i).get("user_id")); // 商贸行业 数据
+                    list.get(i).put("danger8",h);
+                    sum8 += h;
 
-                list.get(i).put("danger11",count);  // 某个公司的所有行业合计
+                    Integer  i1 = tCheckMapper.zfPerformanceCount22(flag,"烟花",(Integer) list.get(i).get("user_id")); // 烟花行业 数据
+                    list.get(i).put("danger9",i1);
+                    sum9 += i1;
 
+                    Integer  j = tCheckMapper.zfPerformanceCount33(flag,(Integer) list.get(i).get("user_id")); // 其他行业 数据
+                    list.get(i).put("danger10",j);
+                    sum10 += j;
+
+                    Integer count = a + b + c + d + e + f + g + h + i1 + j;
+
+                    list.get(i).put("danger11",count);  // 某个公司的所有行业合计
+
+                }
             }
 
-        }else if (user.getUserType() == 3){  // 如何登录的账户是镇级账号并且是企业自查
+        }else {
 
             List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
 
-            // 查询镇下面的所有村
-            List<Village> lists = villageMapper.findUserID(user.getId());
+            if (user.getUserType() == 3){// 如果登录的是镇级账号
 
-            for (int i = 0; i < lists.size(); i++) {
+                // 查询镇下面的所有村
+                List<Village> lists = villageMapper.findUserID(user.getId());
 
-                List<Integer> ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 3);
+                if (null == lists || lists.size() == 0){// 如果该区域下没有下级区域
 
-                for (int j = 0; j < ids.size(); j++) {
-                    if (i == ids.size()-1){
-                        sb.append("'").append(ids.get(i)).append("'");
-                    }else{
-                        sb.append("'").append(ids.get(i)).append("',");
+                    return "global/evaluate/globalError";// 返回提示页面
+
+                }else if (null != lists && lists.size() != 0) {
+
+                    for (int i = 0; i < lists.size(); i++) {
+                        // 根据区域 ID 查询该区域下所有的企业 ID
+                        List<Integer> ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 3);
+
+                        for (int j = 0; j < ids.size(); j++) {
+                            if (i == ids.size()-1){
+                                sb.append("'").append(ids.get(i)).append("'");
+                            }else{
+                                sb.append("'").append(ids.get(i)).append("',");
+                            }
+                        }
+
+                        Map<String,Object> map1 = new HashMap<>();
+
+                        map1.put("name",lists.get(i).getName());
+
+                        map1.put("user_id",sb.toString());
+
+                        list1.add(map1);
+
                     }
                 }
 
-                Map<String,Object> map1 = new HashMap<>();
+            }else if (user.getUserType() == 6){// 如果登录的是区级账号
 
-                map1.put("name",lists.get(i).getName());
+                // 查询区下面的所有镇
+                List<Town> lists = townMapper.findAll(user.getId());
 
-                map1.put("user_id",sb.toString());
+                if (null == lists || lists.size() == 0){// 如果该区域下没有下级区域
 
-                list1.add(map1);
+                    return "global/evaluate/globalError";// 返回提示页面
 
+                }else if (null != lists || lists.size() != 0){
+
+                    for (int i = 0; i < lists.size(); i++) {
+                        // 根据区域 ID 查询该区域下所有的企业 ID
+                        List<Integer> ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 6);
+
+                        for (int j = 0; j < ids.size(); j++) {
+                            if (i == ids.size()-1){
+                                sb.append("'").append(ids.get(i)).append("'");
+                            }else{
+                                sb.append("'").append(ids.get(i)).append("',");
+                            }
+                        }
+
+                        Map<String,Object> map1 = new HashMap<>();
+
+                        map1.put("name",lists.get(i).getName());
+
+                        map1.put("user_id",sb.toString());
+
+                        list1.add(map1);
+
+                    }
+                }
             }
 
-           if (null != list1 && list1.size() != 0){
+           if (null == list1 && list1.size() == 0){// 如果该区域下的下属区域没有公司
+
+                return "global/evaluate/globalError";// 返回提示页面
+
+           }else if (null != list1 && list1.size() != 0){
 
                for (int i = 0; i < list1.size(); i++) {
 
@@ -6564,88 +6620,8 @@ public class GlobalController extends BaseController {
                    list.get(i).put("danger11",count);  // 某个公司的所有行业合计
 
                }
-
            }
-        }else if (user.getUserType() == 6){  // 如何登录的账户是区级账号并且是企业自查
-
-            List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
-
-            // 查询区下面的所有镇
-            List<Town> lists = townMapper.findAll(user.getId());
-
-            for (int i = 0; i < lists.size(); i++) {
-
-                List<Integer> ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 6);
-
-                for (int j = 0; j < ids.size(); j++) {
-                    if (i == ids.size()-1){
-                        sb.append("'").append(ids.get(i)).append("'");
-                    }else{
-                        sb.append("'").append(ids.get(i)).append("',");
-                    }
-                }
-
-                Map<String,Object> map1 = new HashMap<>();
-
-                map1.put("name",lists.get(i).getName());
-
-                map1.put("user_id",sb.toString());
-
-                list1.add(map1);
-
-            }
-
-            if (null != list1 && list1.size() != 0) {
-
-                for (int i = 0; i < list1.size(); i++) {
-
-                    Integer a = tCheckMapper.zfPerformanceCount(flag, "化工", (String) list.get(i).get("user_id")); // 化工行业 数据
-                    list.get(i).put("danger1", a);
-                    sum1 += a;
-
-                    Integer b = tCheckMapper.zfPerformanceCount(flag, "冶金", (String) list.get(i).get("user_id")); // 冶金行业 数据
-                    list.get(i).put("danger2", b);
-                    sum2 += b;
-
-                    Integer c = tCheckMapper.zfPerformanceCount(flag, "有色", (String) list.get(i).get("user_id")); // 有色行业 数据
-                    list.get(i).put("danger3", c);
-                    sum3 += c;
-
-                    Integer d = tCheckMapper.zfPerformanceCount(flag, "建材", (String) list.get(i).get("user_id")); // 建材行业 数据
-                    list.get(i).put("danger4", d);
-                    sum4 += d;
-
-                    Integer e = tCheckMapper.zfPerformanceCount(flag, "机械", (String) list.get(i).get("user_id")); // 机械行业 数据
-                    list.get(i).put("danger5", e);
-                    sum5 += e;
-
-                    Integer f = tCheckMapper.zfPerformanceCount(flag, "轻工", (String) list.get(i).get("user_id")); // 轻工行业 数据
-                    list.get(i).put("danger6", f);
-                    sum6 += f;
-
-                    Integer g = tCheckMapper.zfPerformanceCount(flag, "纺织", (String) list.get(i).get("user_id")); // 纺织行业 数据
-                    list.get(i).put("danger7", g);
-                    sum7 += g;
-
-                    Integer h = tCheckMapper.zfPerformanceCount(flag, "商贸", (String) list.get(i).get("user_id")); // 商贸行业 数据
-                    list.get(i).put("danger8", h);
-                    sum8 += h;
-
-                    Integer i1 = tCheckMapper.zfPerformanceCount(flag, "烟花", (String) list.get(i).get("user_id")); // 烟花行业 数据
-                    list.get(i).put("danger9", i1);
-                    sum9 += i1;
-
-                    Integer j = tCheckMapper.zfPerformanceCount11(flag, (String) list.get(i).get("user_id")); // 其他行业 数据
-                    list.get(i).put("danger10", j);
-                    sum10 += j;
-
-                    Integer count = a + b + c + d + e + f + g + h + i1 + j;
-
-                    list.get(i).put("danger11", count);  // 某个公司的所有行业合计
-                }
-            }
         }
-
 
         Map<String,Object> map = new HashMap<>();
 
@@ -6766,7 +6742,12 @@ public class GlobalController extends BaseController {
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "global/company/evaluate/villageDown/zf-performance-industry-charts1";
+        if (user.getUserType() == 4){
+            return "global/company/evaluate/villageDown/zf-performance-industry-charts1";
+        }else {
+            return "global/company/evaluate/villageUp/zf-performance-industry-charts1";
+        }
+
     }
 
 
@@ -6780,11 +6761,11 @@ public class GlobalController extends BaseController {
     public String zfHiddenTrouble(HttpServletRequest request, Model model ,Integer flag){
 
         User user = getLoginUser(request);
+        StringBuilder sb = new StringBuilder();
         if (null == flag){
             flag = 1;
         }
-        List<Map<String,Object>> list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
-
+        List<Map<String,Object>> list = null;
         Map<String,Object> map = new HashMap<>();
 
         Integer sum1 = 0;
@@ -6803,91 +6784,232 @@ public class GlobalController extends BaseController {
         Integer sum14 = 0;
         Integer sum15 = 0;
 
-        for (int i = 0; i < list.size(); i++) {
+        if (user.getUserType() == 4){
+            list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
 
-            Integer a = 0;
-            Integer b = 0;
-            Integer c = 0;
-            Integer d = 0;
-            Integer e = 0;
-            Integer f = 0;
-            Integer g = 0;
-            Integer h = 0;
-            Integer i1 = 0;
-            Integer j = 0;
-            Integer k = 0;
-            Integer l = 0;
-            Integer m = 0;
-            Integer n = 0;
-            Integer o = 0;
+            if (null == list || list.size() == 0){
 
-            if (flag == 1){
+                return "global/evaluate/globalError";
 
-                a = tCheckItemMapper.zfHiddenTrouble22("基础管理",flag,(Integer) list.get(i).get("user_id")); // 基础管理 隐患数据
-                list.get(i).put("danger1",a);
-                sum1 += a;
+            }else if (null != list && list.size() != 0){
 
-                b = tCheckItemMapper.zfHiddenTrouble22("生产工艺",flag,(Integer) list.get(i).get("user_id")); // 生产工艺 隐患数据
-                list.get(i).put("danger2",b);
-                sum2 += b;
+                for (int i = 0; i < list.size(); i++) {
 
-                c = tCheckItemMapper.zfHiddenTrouble22("设备设施",flag,(Integer) list.get(i).get("user_id")); // 设备设施 隐患数据
-                list.get(i).put("danger3",c);
-                sum3 += c;
+                    Integer a = tCheckItemMapper.zfHiddenTrouble22("基础管理", flag, (Integer) list.get(i).get("user_id")); // 基础管理 隐患数据
+                    list.get(i).put("danger1", a);
+                    sum1 += a;
 
-                d = tCheckItemMapper.zfHiddenTrouble22("公用工程",flag,(Integer) list.get(i).get("user_id")); // 公用工程 隐患数据
-                list.get(i).put("danger4",d);
-                sum4 += d;
+                    Integer b = tCheckItemMapper.zfHiddenTrouble22("生产工艺", flag, (Integer) list.get(i).get("user_id")); // 生产工艺 隐患数据
+                    list.get(i).put("danger2", b);
+                    sum2 += b;
 
-                e = tCheckItemMapper.zfHiddenTrouble22("特种设备",flag,(Integer) list.get(i).get("user_id")); // 特种设备 隐患数据
-                list.get(i).put("danger5",e);
-                sum5 += e;
+                    Integer c = tCheckItemMapper.zfHiddenTrouble22("设备设施", flag, (Integer) list.get(i).get("user_id")); // 设备设施 隐患数据
+                    list.get(i).put("danger3", c);
+                    sum3 += c;
 
-                f = tCheckItemMapper.zfHiddenTrouble22("生产现场",flag,(Integer) list.get(i).get("user_id")); // 生产现场 隐患数据
-                list.get(i).put("danger6",f);
-                sum6 += f;
+                    Integer d = tCheckItemMapper.zfHiddenTrouble22("公用工程", flag, (Integer) list.get(i).get("user_id")); // 公用工程 隐患数据
+                    list.get(i).put("danger4", d);
+                    sum4 += d;
 
-                g = tCheckItemMapper.zfHiddenTrouble22("行为环境",flag,(Integer) list.get(i).get("user_id")); // 行为环境 隐患数据
-                list.get(i).put("danger7",g);
-                sum7 += g;
+                    Integer e = tCheckItemMapper.zfHiddenTrouble22("特种设备", flag, (Integer) list.get(i).get("user_id")); // 特种设备 隐患数据
+                    list.get(i).put("danger5", e);
+                    sum5 += e;
 
-                h = tCheckItemMapper.zfHiddenTrouble22("危化管理",flag,(Integer) list.get(i).get("user_id")); // 危化管理 隐患数据
-                list.get(i).put("danger8",h);
-                sum8 += h;
+                    Integer f = tCheckItemMapper.zfHiddenTrouble22("生产现场", flag, (Integer) list.get(i).get("user_id")); // 生产现场 隐患数据
+                    list.get(i).put("danger6", f);
+                    sum6 += f;
 
-                i1 = tCheckItemMapper.zfHiddenTrouble22("消防安全",flag,(Integer) list.get(i).get("user_id")); // 消防安全 隐患数据
-                list.get(i).put("danger9",i1);
-                sum9 += i1;
+                    Integer g = tCheckItemMapper.zfHiddenTrouble22("行为环境", flag, (Integer) list.get(i).get("user_id")); // 行为环境 隐患数据
+                    list.get(i).put("danger7", g);
+                    sum7 += g;
 
-                j = tCheckItemMapper.zfHiddenTrouble22("用电安全",flag,(Integer) list.get(i).get("user_id")); // 用电安全 隐患数据
-                list.get(i).put("danger10",j);
-                sum10 += j;
+                    Integer h = tCheckItemMapper.zfHiddenTrouble22("危化管理", flag, (Integer) list.get(i).get("user_id")); // 危化管理 隐患数据
+                    list.get(i).put("danger8", h);
+                    sum8 += h;
 
-                k = tCheckItemMapper.zfHiddenTrouble22("安全设施",flag,(Integer) list.get(i).get("user_id")); // 安全设施 隐患数据
-                list.get(i).put("danger11",k);
-                sum11 += k;
+                    Integer i1 = tCheckItemMapper.zfHiddenTrouble22("消防安全", flag, (Integer) list.get(i).get("user_id")); // 消防安全 隐患数据
+                    list.get(i).put("danger9", i1);
+                    sum9 += i1;
 
-                l = tCheckItemMapper.zfHiddenTrouble22("防雷静电",flag,(Integer) list.get(i).get("user_id")); // 防雷静电 隐患数据
-                list.get(i).put("danger12",l);
-                sum12 += l;
+                    Integer j = tCheckItemMapper.zfHiddenTrouble22("用电安全", flag, (Integer) list.get(i).get("user_id")); // 用电安全 隐患数据
+                    list.get(i).put("danger10", j);
+                    sum10 += j;
 
-                m = tCheckItemMapper.zfHiddenTrouble22("职业卫生",flag,(Integer) list.get(i).get("user_id")); // 职业卫生 隐患数据
-                list.get(i).put("danger13",m);
-                sum13 += m;
+                    Integer k = tCheckItemMapper.zfHiddenTrouble22("安全设施", flag, (Integer) list.get(i).get("user_id")); // 安全设施 隐患数据
+                    list.get(i).put("danger11", k);
+                    sum11 += k;
 
-                n = tCheckItemMapper.zfHiddenTrouble22("职业卫生",flag,(Integer) list.get(i).get("user_id")); // 职业卫生 隐患数据
-                list.get(i).put("danger14",m);
-                sum14 += m;
+                    Integer l = tCheckItemMapper.zfHiddenTrouble22("防雷静电", flag, (Integer) list.get(i).get("user_id")); // 防雷静电 隐患数据
+                    list.get(i).put("danger12", l);
+                    sum12 += l;
 
-                o = tCheckItemMapper.zfHiddenTrouble33(flag,(Integer) list.get(i).get("user_id")); // 其他 隐患数据
-                list.get(i).put("danger15",n);
-                sum15 += n;
+                    Integer m = tCheckItemMapper.zfHiddenTrouble22("职业卫生", flag, (Integer) list.get(i).get("user_id")); // 职业卫生 隐患数据
+                    list.get(i).put("danger13", m);
+                    sum13 += m;
 
+                    Integer n = tCheckItemMapper.zfHiddenTrouble22("职业卫生", flag, (Integer) list.get(i).get("user_id")); // 职业卫生 隐患数据
+                    list.get(i).put("danger14", m);
+                    sum14 += m;
+
+                    Integer o = tCheckItemMapper.zfHiddenTrouble33(flag, (Integer) list.get(i).get("user_id")); // 其他 隐患数据
+                    list.get(i).put("danger15", n);
+                    sum15 += n;
+
+                    Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o;
+
+                    list.get(i).put("danger16", count);  // 某个车间的所有种类隐患的合计
+                }
             }
 
-            Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o;
 
-            list.get(i).put("danger16",count);  // 某个车间的所有种类隐患的合计
+        }else {
+
+            List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
+
+            if (user.getUserType() == 3){// 如果登录的是镇级账号
+
+                // 查询镇下面的所有村
+                List<Village> lists = villageMapper.findUserID(user.getId());
+
+                if (null == lists || lists.size() == 0){// 如果该区域下没有下级区域
+
+                    return "global/evaluate/globalError";// 返回提示页面
+
+                }else if (null != lists && lists.size() != 0) {
+
+                    for (int i = 0; i < lists.size(); i++) {
+                        // 根据区域 ID 查询该区域下所有的企业 ID
+                        List<Integer> ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 3);
+
+                        for (int j = 0; j < ids.size(); j++) {
+                            if (i == ids.size()-1){
+                                sb.append("'").append(ids.get(i)).append("'");
+                            }else{
+                                sb.append("'").append(ids.get(i)).append("',");
+                            }
+                        }
+
+                        Map<String,Object> map1 = new HashMap<>();
+
+                        map1.put("name",lists.get(i).getName());
+
+                        map1.put("user_id",sb.toString());
+
+                        list1.add(map1);
+
+                    }
+                }
+
+
+            }else if (user.getUserType() == 6){// 如果登录的是区级账号
+
+                // 查询区下面的所有镇
+                List<Town> lists = townMapper.findAll(user.getId());
+
+                if (null == lists || lists.size() == 0){// 如果该区域下没有下级区域
+
+                    return "global/evaluate/globalError";// 返回提示页面
+
+                }else if (null != lists || lists.size() != 0){
+
+                    for (int i = 0; i < lists.size(); i++) {
+                        // 根据区域 ID 查询该区域下所有的企业 ID
+                        List<Integer> ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 6);
+
+                        for (int j = 0; j < ids.size(); j++) {
+                            if (i == ids.size()-1){
+                                sb.append("'").append(ids.get(i)).append("'");
+                            }else{
+                                sb.append("'").append(ids.get(i)).append("',");
+                            }
+                        }
+
+                        Map<String,Object> map1 = new HashMap<>();
+
+                        map1.put("name",lists.get(i).getName());
+
+                        map1.put("user_id",sb.toString());
+
+                        list1.add(map1);
+
+                    }
+                }
+            }
+
+            if (null == list1 && list1.size() == 0){// 如果该区域下的下属区域没有公司
+
+                return "global/evaluate/globalError";// 返回提示页面
+
+            }else if (null != list1 && list1.size() != 0){
+
+                for (int i = 0; i < list1.size(); i++) {
+
+                    Integer a = tCheckItemMapper.zfHiddenTroubleType("基础管理", flag, (String) list.get(i).get("user_id")); // 基础管理 隐患数据
+                    list.get(i).put("danger1", a);
+                    sum1 += a;
+
+                    Integer b = tCheckItemMapper.zfHiddenTroubleType("生产工艺", flag, (String) list.get(i).get("user_id")); // 生产工艺 隐患数据
+                    list.get(i).put("danger2", b);
+                    sum2 += b;
+
+                    Integer c = tCheckItemMapper.zfHiddenTroubleType("设备设施", flag, (String) list.get(i).get("user_id")); // 设备设施 隐患数据
+                    list.get(i).put("danger3", c);
+                    sum3 += c;
+
+                    Integer d = tCheckItemMapper.zfHiddenTroubleType("公用工程", flag, (String) list.get(i).get("user_id")); // 公用工程 隐患数据
+                    list.get(i).put("danger4", d);
+                    sum4 += d;
+
+                    Integer e = tCheckItemMapper.zfHiddenTroubleType("特种设备", flag, (String) list.get(i).get("user_id")); // 特种设备 隐患数据
+                    list.get(i).put("danger5", e);
+                    sum5 += e;
+
+                    Integer f = tCheckItemMapper.zfHiddenTroubleType("生产现场", flag, (String) list.get(i).get("user_id")); // 生产现场 隐患数据
+                    list.get(i).put("danger6", f);
+                    sum6 += f;
+
+                    Integer g = tCheckItemMapper.zfHiddenTroubleType("行为环境", flag, (String) list.get(i).get("user_id")); // 行为环境 隐患数据
+                    list.get(i).put("danger7", g);
+                    sum7 += g;
+
+                    Integer h = tCheckItemMapper.zfHiddenTroubleType("危化管理", flag, (String) list.get(i).get("user_id")); // 危化管理 隐患数据
+                    list.get(i).put("danger8", h);
+                    sum8 += h;
+
+                    Integer i1 = tCheckItemMapper.zfHiddenTroubleType("消防安全", flag, (String) list.get(i).get("user_id")); // 消防安全 隐患数据
+                    list.get(i).put("danger9", i1);
+                    sum9 += i1;
+
+                    Integer j = tCheckItemMapper.zfHiddenTroubleType("用电安全", flag, (String) list.get(i).get("user_id")); // 用电安全 隐患数据
+                    list.get(i).put("danger10", j);
+                    sum10 += j;
+
+                    Integer k = tCheckItemMapper.zfHiddenTroubleType("安全设施", flag, (String) list.get(i).get("user_id")); // 安全设施 隐患数据
+                    list.get(i).put("danger11", k);
+                    sum11 += k;
+
+                    Integer l = tCheckItemMapper.zfHiddenTroubleType("防雷静电", flag, (String) list.get(i).get("user_id")); // 防雷静电 隐患数据
+                    list.get(i).put("danger12", l);
+                    sum12 += l;
+
+                    Integer m = tCheckItemMapper.zfHiddenTroubleType("职业卫生", flag, (String) list.get(i).get("user_id")); // 职业卫生 隐患数据
+                    list.get(i).put("danger13", m);
+                    sum13 += m;
+
+                    Integer n = tCheckItemMapper.zfHiddenTroubleType("职业卫生", flag, (String) list.get(i).get("user_id")); // 职业卫生 隐患数据
+                    list.get(i).put("danger14", m);
+                    sum14 += m;
+
+                    Integer o = tCheckItemMapper.zfHiddenTrouble11(flag, (String) list.get(i).get("user_id")); // 其他 隐患数据
+                    list.get(i).put("danger15", n);
+                    sum15 += n;
+
+                    Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o;
+
+                    list.get(i).put("danger16", count);  // 某个车间的所有种类隐患的合计
+
+                }
+            }
         }
 
         Integer count = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 + sum11 + sum12 + sum13 + sum14 + sum15;;
@@ -7016,8 +7138,6 @@ public class GlobalController extends BaseController {
                 map.put("result15","0.00%"); // 其他 占比数据 竖
             }
 
-
-
         }else {
             // 占比 坚
             map.put("result1", "0.00%");
@@ -7058,7 +7178,12 @@ public class GlobalController extends BaseController {
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "global/company/evaluate/villageDown/zf-check-hidden-trouble-charts2";
+        if (user.getUserType() == 4){
+            return "global/company/evaluate/villageDown/zf-check-hidden-trouble-charts2";
+        }else {
+            return "global/company/evaluate/villageUp/zf-check-hidden-trouble-charts2";
+        }
+
     }
 
 
@@ -7070,10 +7195,11 @@ public class GlobalController extends BaseController {
     @RequestMapping(value = "zf-hidden-trouble")
     public String hiddenTrouble(HttpServletRequest request, Model model, Integer flag){
         User user = getLoginUser(request);
+        StringBuilder sb = new StringBuilder();
         if (null == flag){
             flag = 1;
         }
-        List<Map<String,Object>> list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+        List<Map<String,Object>> list = null;
 
         Map<String,Object> map = new HashMap<>();
 
@@ -7093,91 +7219,231 @@ public class GlobalController extends BaseController {
         Integer sum14 = 0;
         Integer sum15 = 0;
 
-        for (int i = 0; i < list.size(); i++) {
+        if (user.getUserType() == 4){
 
-            Integer a = 0;
-            Integer b = 0;
-            Integer c = 0;
-            Integer d = 0;
-            Integer e = 0;
-            Integer f = 0;
-            Integer g = 0;
-            Integer h = 0;
-            Integer i1 = 0;
-            Integer j = 0;
-            Integer k = 0;
-            Integer l = 0;
-            Integer m = 0;
-            Integer n = 0;
-            Integer o = 0;
+            list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
 
-            if (flag == 1){
+            if (null == list || list.size() == 0){
 
-                a = tCheckItemMapper.zhengFuChartData99("基础管理",flag,(Integer) list.get(i).get("user_id")); // 基础管理 隐患数据
-                list.get(i).put("danger1",a);
-                sum1 += a;
+                return "global/evaluate/globalError";
 
-                b = tCheckItemMapper.zhengFuChartData99("生产工艺",flag,(Integer) list.get(i).get("user_id")); // 生产工艺 隐患数据
-                list.get(i).put("danger2",b);
-                sum2 += b;
+            }else if (null != list && list.size() != 0){
 
-                c = tCheckItemMapper.zhengFuChartData99("设备设施",flag,(Integer) list.get(i).get("user_id")); // 设备设施 隐患数据
-                list.get(i).put("danger3",c);
-                sum3 += c;
+                for (int i = 0; i < list.size(); i++) {
 
-                d = tCheckItemMapper.zhengFuChartData99("公用工程",flag,(Integer) list.get(i).get("user_id")); // 公用工程 隐患数据
-                list.get(i).put("danger4",d);
-                sum4 += d;
+                    Integer a = tCheckItemMapper.zhengFuChartData99("基础管理",flag,(Integer) list.get(i).get("user_id")); // 基础管理 隐患数据
+                    list.get(i).put("danger1",a);
+                    sum1 += a;
 
-                e = tCheckItemMapper.zhengFuChartData99("特种设备",flag,(Integer) list.get(i).get("user_id")); // 特种设备 隐患数据
-                list.get(i).put("danger5",e);
-                sum5 += e;
+                    Integer b = tCheckItemMapper.zhengFuChartData99("生产工艺",flag,(Integer) list.get(i).get("user_id")); // 生产工艺 隐患数据
+                    list.get(i).put("danger2",b);
+                    sum2 += b;
 
-                f = tCheckItemMapper.zhengFuChartData99("生产现场",flag,(Integer) list.get(i).get("user_id")); // 生产现场 隐患数据
-                list.get(i).put("danger6",f);
-                sum6 += f;
+                    Integer c = tCheckItemMapper.zhengFuChartData99("设备设施",flag,(Integer) list.get(i).get("user_id")); // 设备设施 隐患数据
+                    list.get(i).put("danger3",c);
+                    sum3 += c;
 
-                g = tCheckItemMapper.zhengFuChartData99("行为环境",flag,(Integer) list.get(i).get("user_id")); // 行为环境 隐患数据
-                list.get(i).put("danger7",g);
-                sum7 += g;
+                    Integer d = tCheckItemMapper.zhengFuChartData99("公用工程",flag,(Integer) list.get(i).get("user_id")); // 公用工程 隐患数据
+                    list.get(i).put("danger4",d);
+                    sum4 += d;
 
-                h = tCheckItemMapper.zhengFuChartData99("危化管理",flag,(Integer) list.get(i).get("user_id")); // 危化管理 隐患数据
-                list.get(i).put("danger8",h);
-                sum8 += h;
+                    Integer e = tCheckItemMapper.zhengFuChartData99("特种设备",flag,(Integer) list.get(i).get("user_id")); // 特种设备 隐患数据
+                    list.get(i).put("danger5",e);
+                    sum5 += e;
 
-                i1 = tCheckItemMapper.zhengFuChartData99("消防安全",flag,(Integer) list.get(i).get("user_id")); // 消防安全 隐患数据
-                list.get(i).put("danger9",i1);
-                sum9 += i1;
+                    Integer f = tCheckItemMapper.zhengFuChartData99("生产现场",flag,(Integer) list.get(i).get("user_id")); // 生产现场 隐患数据
+                    list.get(i).put("danger6",f);
+                    sum6 += f;
 
-                j = tCheckItemMapper.zhengFuChartData99("用电安全",flag,(Integer) list.get(i).get("user_id")); // 用电安全 隐患数据
-                list.get(i).put("danger10",j);
-                sum10 += j;
+                    Integer g = tCheckItemMapper.zhengFuChartData99("行为环境",flag,(Integer) list.get(i).get("user_id")); // 行为环境 隐患数据
+                    list.get(i).put("danger7",g);
+                    sum7 += g;
 
-                k = tCheckItemMapper.zhengFuChartData99("安全设施",flag,(Integer) list.get(i).get("user_id")); // 安全设施 隐患数据
-                list.get(i).put("danger11",k);
-                sum11 += k;
+                    Integer h = tCheckItemMapper.zhengFuChartData99("危化管理",flag,(Integer) list.get(i).get("user_id")); // 危化管理 隐患数据
+                    list.get(i).put("danger8",h);
+                    sum8 += h;
 
-                l = tCheckItemMapper.zhengFuChartData99("防雷静电",flag,(Integer) list.get(i).get("user_id")); // 防雷静电 隐患数据
-                list.get(i).put("danger12",l);
-                sum12 += l;
+                    Integer i1 = tCheckItemMapper.zhengFuChartData99("消防安全",flag,(Integer) list.get(i).get("user_id")); // 消防安全 隐患数据
+                    list.get(i).put("danger9",i1);
+                    sum9 += i1;
 
-                m = tCheckItemMapper.zhengFuChartData99("职业卫生",flag,(Integer) list.get(i).get("user_id")); // 职业卫生 隐患数据
-                list.get(i).put("danger13",m);
-                sum13 += m;
+                    Integer j = tCheckItemMapper.zhengFuChartData99("用电安全",flag,(Integer) list.get(i).get("user_id")); // 用电安全 隐患数据
+                    list.get(i).put("danger10",j);
+                    sum10 += j;
 
-                n = tCheckItemMapper.zhengFuChartData99("职业卫生",flag,(Integer) list.get(i).get("user_id")); // 职业卫生 隐患数据
-                list.get(i).put("danger14",m);
-                sum14 += m;
+                    Integer k = tCheckItemMapper.zhengFuChartData99("安全设施",flag,(Integer) list.get(i).get("user_id")); // 安全设施 隐患数据
+                    list.get(i).put("danger11",k);
+                    sum11 += k;
 
-                o = tCheckItemMapper.zhengFuChartData991(flag,(Integer) list.get(i).get("user_id")); // 其他 隐患数据
-                list.get(i).put("danger15",n);
-                sum15 += n;
+                    Integer l = tCheckItemMapper.zhengFuChartData99("防雷静电",flag,(Integer) list.get(i).get("user_id")); // 防雷静电 隐患数据
+                    list.get(i).put("danger12",l);
+                    sum12 += l;
 
+                    Integer m = tCheckItemMapper.zhengFuChartData99("职业卫生",flag,(Integer) list.get(i).get("user_id")); // 职业卫生 隐患数据
+                    list.get(i).put("danger13",m);
+                    sum13 += m;
+
+                    Integer n = tCheckItemMapper.zhengFuChartData99("职业卫生",flag,(Integer) list.get(i).get("user_id")); // 职业卫生 隐患数据
+                    list.get(i).put("danger14",m);
+                    sum14 += m;
+
+                    Integer o = tCheckItemMapper.zhengFuChartData991(flag,(Integer) list.get(i).get("user_id")); // 其他 隐患数据
+                    list.get(i).put("danger15",n);
+                    sum15 += n;
+
+                    Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o;
+
+                    list.get(i).put("danger16",count);  // 某个车间的所有种类隐患的合计
+                }
+            }
+        }else {
+
+            List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
+
+            if (user.getUserType() == 3){// 如果登录的是镇级账号
+
+                // 查询镇下面的所有村
+                List<Village> lists = villageMapper.findUserID(user.getId());
+
+                if (null == lists || lists.size() == 0){// 如果该区域下没有下级区域
+
+                    return "global/evaluate/globalError";// 返回提示页面
+
+                }else if (null != lists && lists.size() != 0) {
+
+                    for (int i = 0; i < lists.size(); i++) {
+                        // 根据区域 ID 查询该区域下所有的企业 ID
+                        List<Integer> ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 3);
+
+                        for (int j = 0; j < ids.size(); j++) {
+                            if (i == ids.size()-1){
+                                sb.append("'").append(ids.get(i)).append("'");
+                            }else{
+                                sb.append("'").append(ids.get(i)).append("',");
+                            }
+                        }
+
+                        Map<String,Object> map1 = new HashMap<>();
+
+                        map1.put("name",lists.get(i).getName());
+
+                        map1.put("user_id",sb.toString());
+
+                        list1.add(map1);
+
+                    }
+                }
+
+
+            }else if (user.getUserType() == 6){// 如果登录的是区级账号
+
+                // 查询区下面的所有镇
+                List<Town> lists = townMapper.findAll(user.getId());
+
+                if (null == lists || lists.size() == 0){// 如果该区域下没有下级区域
+
+                    return "global/evaluate/globalError";// 返回提示页面
+
+                }else if (null != lists || lists.size() != 0){
+
+                    for (int i = 0; i < lists.size(); i++) {
+                        // 根据区域 ID 查询该区域下所有的企业 ID
+                        List<Integer> ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 6);
+
+                        for (int j = 0; j < ids.size(); j++) {
+                            if (i == ids.size()-1){
+                                sb.append("'").append(ids.get(i)).append("'");
+                            }else{
+                                sb.append("'").append(ids.get(i)).append("',");
+                            }
+                        }
+
+                        Map<String,Object> map1 = new HashMap<>();
+
+                        map1.put("name",lists.get(i).getName());
+
+                        map1.put("user_id",sb.toString());
+
+                        list1.add(map1);
+
+                    }
+                }
             }
 
-            Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o;
+            if (null == list1 && list1.size() == 0){// 如果该区域下的下属区域没有公司
 
-            list.get(i).put("danger16",count);  // 某个车间的所有种类隐患的合计
+                return "global/evaluate/globalError";// 返回提示页面
+
+            }else if (null != list1 && list1.size() != 0){
+
+                for (int i = 0; i < list1.size(); i++) {
+
+                    Integer a = tCheckItemMapper.zhengFuChartData88("基础管理",flag,(String) list.get(i).get("user_id")); // 基础管理 隐患数据
+                    list.get(i).put("danger1",a);
+                    sum1 += a;
+
+                    Integer b = tCheckItemMapper.zhengFuChartData88("生产工艺",flag,(String) list.get(i).get("user_id")); // 生产工艺 隐患数据
+                    list.get(i).put("danger2",b);
+                    sum2 += b;
+
+                    Integer c = tCheckItemMapper.zhengFuChartData88("设备设施",flag,(String) list.get(i).get("user_id")); // 设备设施 隐患数据
+                    list.get(i).put("danger3",c);
+                    sum3 += c;
+
+                    Integer d = tCheckItemMapper.zhengFuChartData88("公用工程",flag,(String) list.get(i).get("user_id")); // 公用工程 隐患数据
+                    list.get(i).put("danger4",d);
+                    sum4 += d;
+
+                    Integer e = tCheckItemMapper.zhengFuChartData88("特种设备",flag,(String) list.get(i).get("user_id")); // 特种设备 隐患数据
+                    list.get(i).put("danger5",e);
+                    sum5 += e;
+
+                    Integer f = tCheckItemMapper.zhengFuChartData88("生产现场",flag,(String) list.get(i).get("user_id")); // 生产现场 隐患数据
+                    list.get(i).put("danger6",f);
+                    sum6 += f;
+
+                    Integer g = tCheckItemMapper.zhengFuChartData88("行为环境",flag,(String) list.get(i).get("user_id")); // 行为环境 隐患数据
+                    list.get(i).put("danger7",g);
+                    sum7 += g;
+
+                    Integer h = tCheckItemMapper.zhengFuChartData88("危化管理",flag,(String) list.get(i).get("user_id")); // 危化管理 隐患数据
+                    list.get(i).put("danger8",h);
+                    sum8 += h;
+
+                    Integer i1 = tCheckItemMapper.zhengFuChartData88("消防安全",flag,(String) list.get(i).get("user_id")); // 消防安全 隐患数据
+                    list.get(i).put("danger9",i1);
+                    sum9 += i1;
+
+                    Integer j = tCheckItemMapper.zhengFuChartData88("用电安全",flag,(String) list.get(i).get("user_id")); // 用电安全 隐患数据
+                    list.get(i).put("danger10",j);
+                    sum10 += j;
+
+                    Integer k = tCheckItemMapper.zhengFuChartData88("安全设施",flag,(String) list.get(i).get("user_id")); // 安全设施 隐患数据
+                    list.get(i).put("danger11",k);
+                    sum11 += k;
+
+                    Integer l = tCheckItemMapper.zhengFuChartData88("防雷静电",flag,(String) list.get(i).get("user_id")); // 防雷静电 隐患数据
+                    list.get(i).put("danger12",l);
+                    sum12 += l;
+
+                    Integer m = tCheckItemMapper.zhengFuChartData88("职业卫生",flag,(String) list.get(i).get("user_id")); // 职业卫生 隐患数据
+                    list.get(i).put("danger13",m);
+                    sum13 += m;
+
+                    Integer n = tCheckItemMapper.zhengFuChartData88("职业卫生",flag,(String) list.get(i).get("user_id")); // 职业卫生 隐患数据
+                    list.get(i).put("danger14",m);
+                    sum14 += m;
+
+                    Integer o = tCheckItemMapper.zhengFuChartData881(flag,(String) list.get(i).get("user_id")); // 其他 隐患数据
+                    list.get(i).put("danger15",n);
+                    sum15 += n;
+
+                    Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o;
+
+                    list.get(i).put("danger16",count);  // 某个车间的所有种类隐患的合计
+
+                }
+            }
         }
 
         Integer count = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 + sum11 + sum12 + sum13 + sum14 + sum15;;
@@ -7346,7 +7612,12 @@ public class GlobalController extends BaseController {
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "global/company/evaluate/villageDown/zf-hidden-trouble-charts3-2";
+        if (user.getUserType() == 4){
+            return "global/company/evaluate/villageDown/zf-hidden-trouble-charts3-2";
+        }else {
+            return "global/company/evaluate/villageUp/zf-hidden-trouble-charts3-2";
+        }
+
     }
 
 
@@ -7357,12 +7628,16 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping(value = "zf-hidden-industry")
     public String hiddenIndustry(HttpServletRequest request, Model model, Integer flag){
+
         User user = getLoginUser(request);
+
+        StringBuilder sb = new StringBuilder();
+
         if (null == flag){
             flag = 1;
         }
 
-        List<Map<String,Object>> list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+        List<Map<String,Object>> list = null;
 
         Integer sum1 = 0;
         Integer sum2 = 0;
@@ -7375,53 +7650,185 @@ public class GlobalController extends BaseController {
         Integer sum9 = 0;
         Integer sum10 = 0;
 
+        if (user.getUserType() == 4){
 
-        for (int i = 0; i < list.size(); i++) {
+            list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
 
-            Integer a = tCheckItemMapper.zhengFuChartDataDanger22(flag,"化工",(Integer) list.get(i).get("user_id")); // 化工行业 数据
-            list.get(i).put("danger1",a);
-            sum1 += a;
+            for (int i = 0; i < list.size(); i++) {
 
-            Integer  b = tCheckItemMapper.zhengFuChartDataDanger22(flag,"冶金",(Integer) list.get(i).get("user_id")); // 冶金行业 数据
-            list.get(i).put("danger2",b);
-            sum2 += b;
+                Integer a = tCheckItemMapper.zhengFuChartDataDanger22(flag,"化工",(Integer) list.get(i).get("user_id")); // 化工行业 数据
+                list.get(i).put("danger1",a);
+                sum1 += a;
 
-            Integer  c = tCheckItemMapper.zhengFuChartDataDanger22(flag,"有色",(Integer) list.get(i).get("user_id")); // 有色行业 数据
-            list.get(i).put("danger3",c);
-            sum3 += c;
+                Integer  b = tCheckItemMapper.zhengFuChartDataDanger22(flag,"冶金",(Integer) list.get(i).get("user_id")); // 冶金行业 数据
+                list.get(i).put("danger2",b);
+                sum2 += b;
 
-            Integer  d = tCheckItemMapper.zhengFuChartDataDanger22(flag,"建材",(Integer) list.get(i).get("user_id")); // 建材行业 数据
-            list.get(i).put("danger4",d);
-            sum4 += d;
+                Integer  c = tCheckItemMapper.zhengFuChartDataDanger22(flag,"有色",(Integer) list.get(i).get("user_id")); // 有色行业 数据
+                list.get(i).put("danger3",c);
+                sum3 += c;
 
-            Integer  e = tCheckItemMapper.zhengFuChartDataDanger22(flag,"机械",(Integer) list.get(i).get("user_id")); // 机械行业 数据
-            list.get(i).put("danger5",e);
-            sum5 += e;
+                Integer  d = tCheckItemMapper.zhengFuChartDataDanger22(flag,"建材",(Integer) list.get(i).get("user_id")); // 建材行业 数据
+                list.get(i).put("danger4",d);
+                sum4 += d;
 
-            Integer  f = tCheckItemMapper.zhengFuChartDataDanger22(flag,"轻工",(Integer) list.get(i).get("user_id")); // 轻工行业 数据
-            list.get(i).put("danger6",f);
-            sum6 += f;
+                Integer  e = tCheckItemMapper.zhengFuChartDataDanger22(flag,"机械",(Integer) list.get(i).get("user_id")); // 机械行业 数据
+                list.get(i).put("danger5",e);
+                sum5 += e;
 
-            Integer  g = tCheckItemMapper.zhengFuChartDataDanger22(flag,"纺织",(Integer) list.get(i).get("user_id")); // 纺织行业 数据
-            list.get(i).put("danger7",g);
-            sum7 += g;
+                Integer  f = tCheckItemMapper.zhengFuChartDataDanger22(flag,"轻工",(Integer) list.get(i).get("user_id")); // 轻工行业 数据
+                list.get(i).put("danger6",f);
+                sum6 += f;
 
-            Integer  h = tCheckItemMapper.zhengFuChartDataDanger22(flag,"商贸",(Integer) list.get(i).get("user_id")); // 商贸行业 数据
-            list.get(i).put("danger8",h);
-            sum8 += h;
+                Integer  g = tCheckItemMapper.zhengFuChartDataDanger22(flag,"纺织",(Integer) list.get(i).get("user_id")); // 纺织行业 数据
+                list.get(i).put("danger7",g);
+                sum7 += g;
 
-            Integer  i1 = tCheckItemMapper.zhengFuChartDataDanger22(flag,"烟花",(Integer) list.get(i).get("user_id")); // 烟花行业 数据
-            list.get(i).put("danger9",i1);
-            sum9 += i1;
+                Integer  h = tCheckItemMapper.zhengFuChartDataDanger22(flag,"商贸",(Integer) list.get(i).get("user_id")); // 商贸行业 数据
+                list.get(i).put("danger8",h);
+                sum8 += h;
 
-            Integer  j = tCheckItemMapper.zhengFuChartDataDanger33(flag,(Integer) list.get(i).get("user_id")); // 其他行业 数据
-            list.get(i).put("danger10",j);
-            sum10 += j;
+                Integer  i1 = tCheckItemMapper.zhengFuChartDataDanger22(flag,"烟花",(Integer) list.get(i).get("user_id")); // 烟花行业 数据
+                list.get(i).put("danger9",i1);
+                sum9 += i1;
 
-            Integer count = a + b + c + d + e + f + g + h + i1 + j;
+                Integer  j = tCheckItemMapper.zhengFuChartDataDanger33(flag,(Integer) list.get(i).get("user_id")); // 其他行业 数据
+                list.get(i).put("danger10",j);
+                sum10 += j;
 
-            list.get(i).put("danger11",count);  // 某个公司的所有行业合计
+                Integer count = a + b + c + d + e + f + g + h + i1 + j;
 
+                list.get(i).put("danger11",count);  // 某个公司的所有行业合计
+
+            }
+        }else {
+
+            List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
+
+            if (user.getUserType() == 3){// 如果登录的是镇级账号
+
+                // 查询镇下面的所有村
+                List<Village> lists = villageMapper.findUserID(user.getId());
+
+                if (null == lists || lists.size() == 0){// 如果该区域下没有下级区域
+
+                    return "global/evaluate/globalError";// 返回提示页面
+
+                }else if (null != lists && lists.size() != 0) {
+
+                    for (int i = 0; i < lists.size(); i++) {
+                        // 根据区域 ID 查询该区域下所有的企业 ID
+                        List<Integer> ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 3);
+
+                        for (int j = 0; j < ids.size(); j++) {
+                            if (i == ids.size()-1){
+                                sb.append("'").append(ids.get(i)).append("'");
+                            }else{
+                                sb.append("'").append(ids.get(i)).append("',");
+                            }
+                        }
+
+                        Map<String,Object> map1 = new HashMap<>();
+
+                        map1.put("name",lists.get(i).getName());
+
+                        map1.put("user_id",sb.toString());
+
+                        list1.add(map1);
+
+                    }
+                }
+
+
+            }else if (user.getUserType() == 6){// 如果登录的是区级账号
+
+                // 查询区下面的所有镇
+                List<Town> lists = townMapper.findAll(user.getId());
+
+                if (null == lists || lists.size() == 0){// 如果该区域下没有下级区域
+
+                    return "global/evaluate/globalError";// 返回提示页面
+
+                }else if (null != lists || lists.size() != 0){
+
+                    for (int i = 0; i < lists.size(); i++) {
+                        // 根据区域 ID 查询该区域下所有的企业 ID
+                        List<Integer> ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 6);
+
+                        for (int j = 0; j < ids.size(); j++) {
+                            if (i == ids.size()-1){
+                                sb.append("'").append(ids.get(i)).append("'");
+                            }else{
+                                sb.append("'").append(ids.get(i)).append("',");
+                            }
+                        }
+
+                        Map<String,Object> map1 = new HashMap<>();
+
+                        map1.put("name",lists.get(i).getName());
+
+                        map1.put("user_id",sb.toString());
+
+                        list1.add(map1);
+
+                    }
+                }
+            }
+
+            if (null == list1 && list1.size() == 0){// 如果该区域下的下属区域没有公司
+
+                return "global/evaluate/globalError";// 返回提示页面
+
+            }else if (null != list1 && list1.size() != 0){
+
+                for (int i = 0; i < list1.size(); i++) {
+
+                    Integer a = tCheckItemMapper.zhengFuChartDataDanger(flag,"化工",(String) list.get(i).get("user_id")); // 化工行业 数据
+                    list.get(i).put("danger1",a);
+                    sum1 += a;
+
+                    Integer  b = tCheckItemMapper.zhengFuChartDataDanger(flag,"冶金",(String) list.get(i).get("user_id")); // 冶金行业 数据
+                    list.get(i).put("danger2",b);
+                    sum2 += b;
+
+                    Integer  c = tCheckItemMapper.zhengFuChartDataDanger(flag,"有色",(String) list.get(i).get("user_id")); // 有色行业 数据
+                    list.get(i).put("danger3",c);
+                    sum3 += c;
+
+                    Integer  d = tCheckItemMapper.zhengFuChartDataDanger(flag,"建材",(String) list.get(i).get("user_id")); // 建材行业 数据
+                    list.get(i).put("danger4",d);
+                    sum4 += d;
+
+                    Integer  e = tCheckItemMapper.zhengFuChartDataDanger(flag,"机械",(String) list.get(i).get("user_id")); // 机械行业 数据
+                    list.get(i).put("danger5",e);
+                    sum5 += e;
+
+                    Integer  f = tCheckItemMapper.zhengFuChartDataDanger(flag,"轻工",(String) list.get(i).get("user_id")); // 轻工行业 数据
+                    list.get(i).put("danger6",f);
+                    sum6 += f;
+
+                    Integer  g = tCheckItemMapper.zhengFuChartDataDanger(flag,"纺织",(String) list.get(i).get("user_id")); // 纺织行业 数据
+                    list.get(i).put("danger7",g);
+                    sum7 += g;
+
+                    Integer  h = tCheckItemMapper.zhengFuChartDataDanger(flag,"商贸",(String) list.get(i).get("user_id")); // 商贸行业 数据
+                    list.get(i).put("danger8",h);
+                    sum8 += h;
+
+                    Integer  i1 = tCheckItemMapper.zhengFuChartDataDanger(flag,"烟花",(String) list.get(i).get("user_id")); // 烟花行业 数据
+                    list.get(i).put("danger9",i1);
+                    sum9 += i1;
+
+                    Integer  j = tCheckItemMapper.zhengFuChartDataDanger11(flag,(String) list.get(i).get("user_id")); // 其他行业 数据
+                    list.get(i).put("danger10",j);
+                    sum10 += j;
+
+                    Integer count = a + b + c + d + e + f + g + h + i1 + j;
+
+                    list.get(i).put("danger11",count);  // 某个公司的所有行业合计
+
+                }
+            }
         }
 
         Map<String,Object> map = new HashMap<>();
@@ -7543,7 +7950,12 @@ public class GlobalController extends BaseController {
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "global/company/evaluate/villageDown/zf-hidden-industry-charts3-1";
+        if (user.getUserType() == 4){
+            return "global/company/evaluate/villageDown/zf-hidden-industry-charts3-1";
+        }else {
+            return "global/company/evaluate/villageUp/zf-hidden-industry-charts3-1";
+        }
+
     }
 
 
@@ -7556,7 +7968,14 @@ public class GlobalController extends BaseController {
     public String manegeHiddenConpany(HttpServletRequest request, Model model, Integer flag){
 
         User user = getLoginUser(request);
-        List<Map<String,Object>> list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+
+        StringBuilder sb = new StringBuilder();
+
+        if (null == flag){
+            flag = 1;
+        }
+
+        List<Map<String,Object>> list = null;
 
         Map<String,Object> map = new HashMap<>();
 
@@ -7573,66 +7992,213 @@ public class GlobalController extends BaseController {
         Integer sign22 = 0;
         Integer sign33 = 0;
 
-        for (int i = 0; i < list.size(); i++) {
+        if (user.getUserType() == 4){
 
-            Integer  a = tCheckItemMapper.manageHiddenCompany11(1,(Integer)list.get(i).get("user_id"),3); // 一般和较小 合格 已治理
-            list.get(i).put("danger1",a);
+            list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
 
-            Integer  a1 = tCheckItemMapper.manageHiddenCompany11(2,(Integer)list.get(i).get("user_id"),3); // 一般和较小 不合格 未治理
-            list.get(i).put("danger11",a1);
+            for (int i = 0; i < list.size(); i++) {
 
-            count1 = a + a1;
+                Integer  a = tCheckItemMapper.manageHiddenCompany11(1,(Integer)list.get(i).get("user_id"),3); // 一般和较小 合格 已治理
+                list.get(i).put("danger1",a);
 
-            Integer  b = tCheckItemMapper.manageHiddenCompany11(1,(Integer)list.get(i).get("user_id"),1); // 较大 合格 已治理
-            list.get(i).put("danger2",b);
+                Integer  a1 = tCheckItemMapper.manageHiddenCompany11(2,(Integer)list.get(i).get("user_id"),3); // 一般和较小 不合格 未治理
+                list.get(i).put("danger11",a1);
 
-            Integer  b1 = tCheckItemMapper.manageHiddenCompany11(2,(Integer)list.get(i).get("user_id"),1); // 较大 不合格 未治理
-            list.get(i).put("danger22",b1);
+                count1 = a + a1;
 
-            count2  = b + b1;
+                Integer  b = tCheckItemMapper.manageHiddenCompany11(1,(Integer)list.get(i).get("user_id"),1); // 较大 合格 已治理
+                list.get(i).put("danger2",b);
 
-            Integer  c = tCheckItemMapper.manageHiddenCompany11(1,(Integer)list.get(i).get("user_id"),2); // 重大 合格 已治理
-            list.get(i).put("danger3",c);
+                Integer  b1 = tCheckItemMapper.manageHiddenCompany11(2,(Integer)list.get(i).get("user_id"),1); // 较大 不合格 未治理
+                list.get(i).put("danger22",b1);
 
-            Integer  c1 = tCheckItemMapper.manageHiddenCompany11(1,(Integer)list.get(i).get("user_id"),2); // 重大 不合格 未治理
-            list.get(i).put("danger33",c1);
+                count2  = b + b1;
 
-            count3  = c + c1;
+                Integer  c = tCheckItemMapper.manageHiddenCompany11(1,(Integer)list.get(i).get("user_id"),2); // 重大 合格 已治理
+                list.get(i).put("danger3",c);
 
-            sign1 += a;
-            sign2 += b;
-            sign3 += c;
+                Integer  c1 = tCheckItemMapper.manageHiddenCompany11(1,(Integer)list.get(i).get("user_id"),2); // 重大 不合格 未治理
+                list.get(i).put("danger33",c1);
 
-            sign11 += a1;
-            sign22 += b1;
-            sign33 += c1;
+                count3  = c + c1;
 
-            DecimalFormat df = new DecimalFormat("0.00");
+                sign1 += a;
+                sign2 += b;
+                sign3 += c;
 
-            Integer sum = count1 + count2 + count3;
+                sign11 += a1;
+                sign22 += b1;
+                sign33 += c1;
 
-            if (null != count1 && count1 != 0){  // 一般和较小 治理率
-                String str = df.format((float)a/count1);
-                list.get(i).put("result11",str+"%");
-            }else {
-                list.get(i).put("result11",0.00);
+                DecimalFormat df = new DecimalFormat("0.00");
+
+                Integer sum = count1 + count2 + count3;
+
+                if (null != count1 && count1 != 0){  // 一般和较小 治理率
+                    String str = df.format((float)a/count1);
+                    list.get(i).put("result11",str+"%");
+                }else {
+                    list.get(i).put("result11",0.00);
+                }
+
+                if (null != count2 && count2 != 0){ // 较大 治理率
+                    String str = df.format((float)b/count2);
+                    list.get(i).put("result22",str+"%");
+                }else {
+                    list.get(i).put("result22",0.00);
+                }
+
+                if (null != count3 && count3 != 0){ // 重大 治理率
+                    String str = df.format((float)c/count3);
+                    list.get(i).put("result33",str+"%");
+                }else {
+                    list.get(i).put("result33",0.00);
+                }
+
             }
 
-            if (null != count2 && count2 != 0){ // 较大 治理率
-                String str = df.format((float)b/count2);
-                list.get(i).put("result22",str+"%");
-            }else {
-                list.get(i).put("result22",0.00);
+        }else {
+
+            List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
+
+            if (user.getUserType() == 3){// 如果登录的是镇级账号
+
+                // 查询镇下面的所有村
+                List<Village> lists = villageMapper.findUserID(user.getId());
+
+                if (null == lists || lists.size() == 0){// 如果该区域下没有下级区域
+
+                    return "global/evaluate/globalError";// 返回提示页面
+
+                }else if (null != lists && lists.size() != 0) {
+
+                    for (int i = 0; i < lists.size(); i++) {
+                        // 根据区域 ID 查询该区域下所有的企业 ID
+                        List<Integer> ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 3);
+
+                        for (int j = 0; j < ids.size(); j++) {
+                            if (i == ids.size()-1){
+                                sb.append("'").append(ids.get(i)).append("'");
+                            }else{
+                                sb.append("'").append(ids.get(i)).append("',");
+                            }
+                        }
+
+                        Map<String,Object> map1 = new HashMap<>();
+
+                        map1.put("name",lists.get(i).getName());
+
+                        map1.put("user_id",sb.toString());
+
+                        list1.add(map1);
+
+                    }
+                }
+
+
+            }else if (user.getUserType() == 6){// 如果登录的是区级账号
+
+                // 查询区下面的所有镇
+                List<Town> lists = townMapper.findAll(user.getId());
+
+                if (null == lists || lists.size() == 0){// 如果该区域下没有下级区域
+
+                    return "global/evaluate/globalError";// 返回提示页面
+
+                }else if (null != lists || lists.size() != 0){
+
+                    for (int i = 0; i < lists.size(); i++) {
+                        // 根据区域 ID 查询该区域下所有的企业 ID
+                        List<Integer> ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 6);
+
+                        for (int j = 0; j < ids.size(); j++) {
+                            if (i == ids.size()-1){
+                                sb.append("'").append(ids.get(i)).append("'");
+                            }else{
+                                sb.append("'").append(ids.get(i)).append("',");
+                            }
+                        }
+
+                        Map<String,Object> map1 = new HashMap<>();
+
+                        map1.put("name",lists.get(i).getName());
+
+                        map1.put("user_id",sb.toString());
+
+                        list1.add(map1);
+
+                    }
+                }
             }
 
-            if (null != count3 && count3 != 0){ // 重大 治理率
-                String str = df.format((float)c/count3);
-                list.get(i).put("result33",str+"%");
-            }else {
-                list.get(i).put("result33",0.00);
-            }
+            if (null == list1 && list1.size() == 0){// 如果该区域下的下属区域没有公司
 
+                return "global/evaluate/globalError";// 返回提示页面
+
+            }else if (null != list1 && list1.size() != 0){
+
+                for (int i = 0; i < list1.size(); i++) {
+
+                    Integer  a = tCheckItemMapper.manageHiddenCompany(1,(String)list.get(i).get("user_id"),3); // 一般和较小 合格 已治理
+                    list.get(i).put("danger1",a);
+
+                    Integer  a1 = tCheckItemMapper.manageHiddenCompany(2,(String)list.get(i).get("user_id"),3); // 一般和较小 不合格 未治理
+                    list.get(i).put("danger11",a1);
+
+                    count1 = a + a1;
+
+                    Integer  b = tCheckItemMapper.manageHiddenCompany(1,(String)list.get(i).get("user_id"),1); // 较大 合格 已治理
+                    list.get(i).put("danger2",b);
+
+                    Integer  b1 = tCheckItemMapper.manageHiddenCompany(2,(String)list.get(i).get("user_id"),1); // 较大 不合格 未治理
+                    list.get(i).put("danger22",b1);
+
+                    count2  = b + b1;
+
+                    Integer  c = tCheckItemMapper.manageHiddenCompany(1,(String)list.get(i).get("user_id"),2); // 重大 合格 已治理
+                    list.get(i).put("danger3",c);
+
+                    Integer  c1 = tCheckItemMapper.manageHiddenCompany(1,(String)list.get(i).get("user_id"),2); // 重大 不合格 未治理
+                    list.get(i).put("danger33",c1);
+
+                    count3  = c + c1;
+
+                    sign1 += a;
+                    sign2 += b;
+                    sign3 += c;
+
+                    sign11 += a1;
+                    sign22 += b1;
+                    sign33 += c1;
+
+                    DecimalFormat df = new DecimalFormat("0.00");
+
+                    Integer sum = count1 + count2 + count3;
+
+                    if (null != count1 && count1 != 0){  // 一般和较小 治理率
+                        String str = df.format((float)a/count1);
+                        list.get(i).put("result11",str+"%");
+                    }else {
+                        list.get(i).put("result11",0.00);
+                    }
+
+                    if (null != count2 && count2 != 0){ // 较大 治理率
+                        String str = df.format((float)b/count2);
+                        list.get(i).put("result22",str+"%");
+                    }else {
+                        list.get(i).put("result22",0.00);
+                    }
+
+                    if (null != count3 && count3 != 0){ // 重大 治理率
+                        String str = df.format((float)c/count3);
+                        list.get(i).put("result33",str+"%");
+                    }else {
+                        list.get(i).put("result33",0.00);
+                    }
+                }
+            }
         }
+
         DecimalFormat df = new DecimalFormat("0.00");
 
         Integer sum1 = sign1 + sign11;
@@ -7693,7 +8259,12 @@ public class GlobalController extends BaseController {
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "global/company/evaluate/villageDown/manage-hidden-company-charts4-1";
+        if (user.getUserType() == 4){
+            return "global/company/evaluate/villageDown/manage-hidden-company-charts4-1";
+        }else {
+            return "global/company/evaluate/villageUp/manage-hidden-company-charts4-1";
+        }
+
     }
 
 
@@ -7714,6 +8285,12 @@ public class GlobalController extends BaseController {
 
         StringBuilder sb = new StringBuilder();
 
+        StringBuilder sb1 = new StringBuilder();
+
+        if (null == flag){
+            flag = 1;
+        }
+
         for (int i = 0; i < ids.size() ; i++) {
 
             if (i == ids.size()-1){
@@ -7724,14 +8301,14 @@ public class GlobalController extends BaseController {
 
         }
 
-        String[] list1 = string.split(",");
+        String[] strs = string.split(",");
 
         Map<String,Object> map = new HashMap<>();
 
-        for (int i = 0; i < list1.length; i++) {
+        for (int i = 0; i < strs.length; i++) {
 
             Map<String,Object> map1 = new HashMap<>();
-            map1.put("danger",list1[i]);
+            map1.put("danger",strs[i]);
 
             list.add(map1);
         }
@@ -7749,93 +8326,265 @@ public class GlobalController extends BaseController {
         Integer sign22 = 0;
         Integer sign33 = 0;
 
-        for (int i = 0; i < list.size(); i++) {
+        if (user.getUserType() == 4){
 
-            Integer a = 0;
-            Integer a1 = 0;
-            Integer b = 0;
-            Integer b1 = 0;
-            Integer c = 0;
-            Integer c1 = 0;
+            for (int i = 0; i < list.size(); i++) {
 
-            if(null != list.get(i).get("danger") && list.get(i).get("danger").equals("其他")){
+                Integer a = 0;
+                Integer a1 = 0;
+                Integer b = 0;
+                Integer b1 = 0;
+                Integer c = 0;
+                Integer c1 = 0;
 
-                a = tCheckItemMapper.manageHiddenDanger11(1,3,sb.toString()); // 一般和较小 合格 已治理
-                list.get(i).put("danger1",a);
+                if(null != list.get(i).get("danger") && list.get(i).get("danger").equals("其他")){
 
-                a1 = tCheckItemMapper.manageHiddenDanger11(2,3,sb.toString()); // 一般和较小 不合格 未治理
-                list.get(i).put("danger11",a1);
+                    a = tCheckItemMapper.manageHiddenDanger11(1,3,sb.toString()); // 一般和较小 合格 已治理
+                    list.get(i).put("danger1",a);
 
-                b = tCheckItemMapper.manageHiddenDanger11(1,1,sb.toString()); // 较大 合格 已治理
-                list.get(i).put("danger2",b);
+                    a1 = tCheckItemMapper.manageHiddenDanger11(2,3,sb.toString()); // 一般和较小 不合格 未治理
+                    list.get(i).put("danger11",a1);
 
-                b1 = tCheckItemMapper.manageHiddenDanger11(2,1,sb.toString()); // 较大 不合格 未治理
-                list.get(i).put("danger22",b1);
+                    b = tCheckItemMapper.manageHiddenDanger11(1,1,sb.toString()); // 较大 合格 已治理
+                    list.get(i).put("danger2",b);
 
-                c = tCheckItemMapper.manageHiddenDanger11(1,2,sb.toString()); // 重大 合格 已治理
-                list.get(i).put("danger3",c);
+                    b1 = tCheckItemMapper.manageHiddenDanger11(2,1,sb.toString()); // 较大 不合格 未治理
+                    list.get(i).put("danger22",b1);
 
-                c1 = tCheckItemMapper.manageHiddenDanger11(1,2,sb.toString()); // 重大 不合格 未治理
-                list.get(i).put("danger33",c1);
+                    c = tCheckItemMapper.manageHiddenDanger11(1,2,sb.toString()); // 重大 合格 已治理
+                    list.get(i).put("danger3",c);
 
-            }else if (null != list.get(i).get("danger")){
+                    c1 = tCheckItemMapper.manageHiddenDanger11(1,2,sb.toString()); // 重大 不合格 未治理
+                    list.get(i).put("danger33",c1);
 
-                a = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),3,sb.toString()); // 一般和较小 合格 已治理
-                list.get(i).put("danger1",a);
+                }else if (null != list.get(i).get("danger")){
 
-                a1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),3,sb.toString()); // 一般和较小 不合格 未治理
-                list.get(i).put("danger11",a1);
+                    a = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),3,sb.toString()); // 一般和较小 合格 已治理
+                    list.get(i).put("danger1",a);
 
-                b = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),1,sb.toString()); // 较大 合格 已治理
-                list.get(i).put("danger2",b);
+                    a1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),3,sb.toString()); // 一般和较小 不合格 未治理
+                    list.get(i).put("danger11",a1);
 
-                b1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),1,sb.toString()); // 较大 不合格 未治理
-                list.get(i).put("danger22",b1);
+                    b = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),1,sb.toString()); // 较大 合格 已治理
+                    list.get(i).put("danger2",b);
 
-                c = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2,sb.toString()); // 重大 合格 已治理
-                list.get(i).put("danger3",c);
+                    b1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),1,sb.toString()); // 较大 不合格 未治理
+                    list.get(i).put("danger22",b1);
 
-                c1 = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2,sb.toString()); // 重大 不合格 未治理
-                list.get(i).put("danger33",c1);
+                    c = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2,sb.toString()); // 重大 合格 已治理
+                    list.get(i).put("danger3",c);
+
+                    c1 = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2,sb.toString()); // 重大 不合格 未治理
+                    list.get(i).put("danger33",c1);
+                }
+
+                count1 = a + a1;
+                count2  = b + b1;
+                count3  = c + c1;
+
+                sign1 += a;
+                sign2 += b;
+                sign3 += c;
+
+                sign11 += a1;
+                sign22 += b1;
+                sign33 += c1;
+
+                DecimalFormat df = new DecimalFormat("0.00");
+
+                Integer sum = count1 + count2 + count3; // 单个风险所包含的所有隐患
+
+                if (null != count1 && count1 != 0){  // 一般和较小 治理率
+                    String str = df.format((float)a/count1);
+                    list.get(i).put("result11",str+"%");
+                }else {
+                    list.get(i).put("result11",0.00);
+                }
+
+                if (null != count2 && count2 != 0){ // 较大 治理率
+                    String str = df.format((float)b/count2);
+                    list.get(i).put("result22",str+"%");
+                }else {
+                    list.get(i).put("result22",0.00);
+                }
+
+                if (null != count3 && count3 != 0){ // 重大 治理率
+                    String str = df.format((float)c/count3);
+                    list.get(i).put("result33",str+"%");
+                }else {
+                    list.get(i).put("result33",0.00);
+                }
+
             }
 
-            count1 = a + a1;
-            count2  = b + b1;
-            count3  = c + c1;
+        }else {
 
-            sign1 += a;
-            sign2 += b;
-            sign3 += c;
+            List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
 
-            sign11 += a1;
-            sign22 += b1;
-            sign33 += c1;
+            if (user.getUserType() == 3){// 如果登录的是镇级账号
 
-            DecimalFormat df = new DecimalFormat("0.00");
+                // 查询镇下面的所有村
+                List<Village> lists = villageMapper.findUserID(user.getId());
 
-            Integer sum = count1 + count2 + count3; // 单个风险所包含的所有隐患
+                if (null == lists || lists.size() == 0){// 如果该区域下没有下级区域
 
-            if (null != count1 && count1 != 0){  // 一般和较小 治理率
-                String str = df.format((float)a/count1);
-                list.get(i).put("result11",str+"%");
-            }else {
-                list.get(i).put("result11",0.00);
+                    return "global/evaluate/globalError";// 返回提示页面
+
+                }else if (null != lists && lists.size() != 0) {
+
+                    for (int i = 0; i < lists.size(); i++) {
+                        // 根据区域 ID 查询该区域下所有的企业 ID
+                        List<Integer> userIds = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 3);
+
+                        for (int j = 0; j < userIds.size(); j++) {
+                            if (i == userIds.size()-1){
+                                sb1.append("'").append(userIds.get(i)).append("'");
+                            }else{
+                                sb1.append("'").append(userIds.get(i)).append("',");
+                            }
+                        }
+
+                        Map<String,Object> map1 = new HashMap<>();
+
+                        map1.put("name",lists.get(i).getName());
+
+                        map1.put("user_id",sb1.toString());
+
+                        list1.add(map1);
+
+                    }
+                }
+
+            }else if (user.getUserType() == 6){// 如果登录的是区级账号
+
+                // 查询区下面的所有镇
+                List<Town> lists = townMapper.findAll(user.getId());
+
+                if (null == lists || lists.size() == 0){// 如果该区域下没有下级区域
+
+                    return "global/evaluate/globalError";// 返回提示页面
+
+                }else if (null != lists || lists.size() != 0){
+
+                    for (int i = 0; i < lists.size(); i++) {
+                        // 根据区域 ID 查询该区域下所有的企业 ID
+                        List<Integer> userIds = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 6);
+
+                        for (int j = 0; j < userIds.size(); j++) {
+                            if (i == userIds.size()-1){
+                                sb1.append("'").append(userIds.get(i)).append("'");
+                            }else{
+                                sb1.append("'").append(userIds.get(i)).append("',");
+                            }
+                        }
+
+                        Map<String,Object> map1 = new HashMap<>();
+
+                        map1.put("name",lists.get(i).getName());
+
+                        map1.put("user_id",sb.toString());
+
+                        list1.add(map1);
+
+                    }
+                }
             }
 
-            if (null != count2 && count2 != 0){ // 较大 治理率
-                String str = df.format((float)b/count2);
-                list.get(i).put("result22",str+"%");
-            }else {
-                list.get(i).put("result22",0.00);
-            }
+            if (null == list1 && list1.size() == 0){// 如果该区域下的下属区域没有公司
 
-            if (null != count3 && count3 != 0){ // 重大 治理率
-                String str = df.format((float)c/count3);
-                list.get(i).put("result33",str+"%");
-            }else {
-                list.get(i).put("result33",0.00);
-            }
+                return "global/evaluate/globalError";// 返回提示页面
 
+            }else if (null != list1 && list1.size() != 0){
+
+                for (int i = 0; i < list1.size(); i++) {
+
+                    Integer a = 0;
+                    Integer a1 = 0;
+                    Integer b = 0;
+                    Integer b1 = 0;
+                    Integer c = 0;
+                    Integer c1 = 0;
+
+                    if(null != list.get(i).get("danger") && list.get(i).get("danger").equals("其他")){
+
+                        a = tCheckItemMapper.manageHiddenDanger11(1,3,(String)list.get(i).get("user_id")); // 一般和较小 合格 已治理
+                        list.get(i).put("danger1",a);
+
+                        a1 = tCheckItemMapper.manageHiddenDanger11(2,3,(String)list.get(i).get("user_id")); // 一般和较小 不合格 未治理
+                        list.get(i).put("danger11",a1);
+
+                        b = tCheckItemMapper.manageHiddenDanger11(1,1,(String)list.get(i).get("user_id")); // 较大 合格 已治理
+                        list.get(i).put("danger2",b);
+
+                        b1 = tCheckItemMapper.manageHiddenDanger11(2,1,(String)list.get(i).get("user_id")); // 较大 不合格 未治理
+                        list.get(i).put("danger22",b1);
+
+                        c = tCheckItemMapper.manageHiddenDanger11(1,2,(String)list.get(i).get("user_id")); // 重大 合格 已治理
+                        list.get(i).put("danger3",c);
+
+                        c1 = tCheckItemMapper.manageHiddenDanger11(1,2,(String)list.get(i).get("user_id")); // 重大 不合格 未治理
+                        list.get(i).put("danger33",c1);
+
+                    }else if (null != list.get(i).get("danger")){
+
+                        a = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),3,(String)list.get(i).get("user_id")); // 一般和较小 合格 已治理
+                        list.get(i).put("danger1",a);
+
+                        a1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),3,(String)list.get(i).get("user_id")); // 一般和较小 不合格 未治理
+                        list.get(i).put("danger11",a1);
+
+                        b = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),1,(String)list.get(i).get("user_id")); // 较大 合格 已治理
+                        list.get(i).put("danger2",b);
+
+                        b1 = tCheckItemMapper.manageHiddenDanger(2,(String)list.get(i).get("danger"),1,(String)list.get(i).get("user_id")); // 较大 不合格 未治理
+                        list.get(i).put("danger22",b1);
+
+                        c = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2,(String)list.get(i).get("user_id")); // 重大 合格 已治理
+                        list.get(i).put("danger3",c);
+
+                        c1 = tCheckItemMapper.manageHiddenDanger(1,(String)list.get(i).get("danger"),2,(String)list.get(i).get("user_id")); // 重大 不合格 未治理
+                        list.get(i).put("danger33",c1);
+                    }
+
+                    count1 = a + a1;
+                    count2  = b + b1;
+                    count3  = c + c1;
+
+                    sign1 += a;
+                    sign2 += b;
+                    sign3 += c;
+
+                    sign11 += a1;
+                    sign22 += b1;
+                    sign33 += c1;
+
+                    DecimalFormat df = new DecimalFormat("0.00");
+
+                    Integer sum = count1 + count2 + count3; // 单个风险所包含的所有隐患
+
+                    if (null != count1 && count1 != 0){  // 一般和较小 治理率
+                        String str = df.format((float)a/count1);
+                        list.get(i).put("result11",str+"%");
+                    }else {
+                        list.get(i).put("result11",0.00);
+                    }
+
+                    if (null != count2 && count2 != 0){ // 较大 治理率
+                        String str = df.format((float)b/count2);
+                        list.get(i).put("result22",str+"%");
+                    }else {
+                        list.get(i).put("result22",0.00);
+                    }
+
+                    if (null != count3 && count3 != 0){ // 重大 治理率
+                        String str = df.format((float)c/count3);
+                        list.get(i).put("result33",str+"%");
+                    }else {
+                        list.get(i).put("result33",0.00);
+                    }
+
+                }
+            }
         }
 
         DecimalFormat df = new DecimalFormat("0.00");
@@ -7879,7 +8628,12 @@ public class GlobalController extends BaseController {
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "global/company/evaluate/villageDown/manage-hidden-danger-charts4-2";
+        if (user.getUserType() == 4){
+            return "global/company/evaluate/villageDown/manage-hidden-danger-charts4-2";
+        }else {
+            return "global/company/evaluate/villageUp/manage-hidden-danger-charts4-2";
+        }
+
     }
 
     
@@ -7889,7 +8643,7 @@ public class GlobalController extends BaseController {
      * create time: 2019/8/27 9:04
      */
     @RequestMapping(value = "manage-hidden-industry")
-    public String manegeHiddenIndustry(HttpServletRequest request, Model model, Integer flag){
+    public String manegeHiddenIndustry(HttpServletRequest request, Model model){
 
         User user = getLoginUser(request);
         List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
@@ -7897,6 +8651,8 @@ public class GlobalController extends BaseController {
         List<Integer> ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询所有的公司
 
         StringBuilder sb = new StringBuilder();
+
+        StringBuilder sb1 = new StringBuilder();
 
         for (int i = 0; i < ids.size() ; i++) {
 
@@ -7910,14 +8666,15 @@ public class GlobalController extends BaseController {
 
         String string = "化工,冶金,有色,建材,机械,轻工,纺织,商贸,烟花,其他";
 
-        String[] list1 = string.split(",");
+        String[] strs = string.split(",");
 
         Map<String,Object> map = new HashMap<>();
 
-        for (int i = 0; i < list1.length; i++) {
+        for (int i = 0; i < strs.length; i++) {
 
             Map<String,Object> map1 = new HashMap<>();
-            map1.put("industry",list1[i]);
+
+            map1.put("industry",strs[i]);
 
             list.add(map1);
         }
@@ -7935,94 +8692,268 @@ public class GlobalController extends BaseController {
         Integer sign22 = 0;
         Integer sign33 = 0;
 
-        for (int i = 0; i < list.size(); i++) {
+        if (user.getUserType() == 4){
 
-            Integer a = 0;
-            Integer a1 = 0;
-            Integer b = 0;
-            Integer b1 = 0;
-            Integer c = 0;
-            Integer c1 = 0;
+            for (int i = 0; i < list.size(); i++) {
 
-            if(null != list.get(i).get("industry") && list.get(i).get("industry").equals("其他")){
+                Integer a = 0;
+                Integer a1 = 0;
+                Integer b = 0;
+                Integer b1 = 0;
+                Integer c = 0;
+                Integer c1 = 0;
 
-                a = tCheckItemMapper.manageHiddenIndustry11(1,3,sb.toString()); // 一般和较小 合格 已治理
-                list.get(i).put("industry1",a);
+                if(null != list.get(i).get("industry") && list.get(i).get("industry").equals("其他")){
 
-                a1 = tCheckItemMapper.manageHiddenIndustry11(2,3,sb.toString()); // 一般和较小 不合格 未治理
-                list.get(i).put("industry11",a1);
+                    a = tCheckItemMapper.manageHiddenIndustry11(1,3,sb.toString()); // 一般和较小 合格 已治理
+                    list.get(i).put("industry1",a);
 
-                b = tCheckItemMapper.manageHiddenIndustry11(1,1,sb.toString()); // 较大 合格 已治理
-                list.get(i).put("industry2",b);
+                    a1 = tCheckItemMapper.manageHiddenIndustry11(2,3,sb.toString()); // 一般和较小 不合格 未治理
+                    list.get(i).put("industry11",a1);
 
-                b1 = tCheckItemMapper.manageHiddenIndustry11(2,1,sb.toString()); // 较大 不合格 未治理
-                list.get(i).put("industry22",b1);
+                    b = tCheckItemMapper.manageHiddenIndustry11(1,1,sb.toString()); // 较大 合格 已治理
+                    list.get(i).put("industry2",b);
 
-                c = tCheckItemMapper.manageHiddenIndustry11(1,2,sb.toString()); // 重大 合格 已治理
-                list.get(i).put("industry3",c);
+                    b1 = tCheckItemMapper.manageHiddenIndustry11(2,1,sb.toString()); // 较大 不合格 未治理
+                    list.get(i).put("industry22",b1);
 
-                c1 = tCheckItemMapper.manageHiddenIndustry11(1,2,sb.toString()); // 重大 不合格 未治理
-                list.get(i).put("industry33",c1);
+                    c = tCheckItemMapper.manageHiddenIndustry11(1,2,sb.toString()); // 重大 合格 已治理
+                    list.get(i).put("industry3",c);
 
-            }else if (null != list.get(i).get("industry")){
+                    c1 = tCheckItemMapper.manageHiddenIndustry11(1,2,sb.toString()); // 重大 不合格 未治理
+                    list.get(i).put("industry33",c1);
 
-                a = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),3,sb.toString()); // 一般和较小 合格 已治理
-                list.get(i).put("industry1",a);
+                }else if (null != list.get(i).get("industry")){
 
-                a1 = tCheckItemMapper.manageHiddenIndustry(2,(String)list.get(i).get("industry"),3,sb.toString()); // 一般和较小 不合格 未治理
-                list.get(i).put("industry11",a1);
+                    a = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),3,sb.toString()); // 一般和较小 合格 已治理
+                    list.get(i).put("industry1",a);
 
-                b = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),1,sb.toString()); // 较大 合格 已治理
-                list.get(i).put("industry2",b);
+                    a1 = tCheckItemMapper.manageHiddenIndustry(2,(String)list.get(i).get("industry"),3,sb.toString()); // 一般和较小 不合格 未治理
+                    list.get(i).put("industry11",a1);
 
-                b1 = tCheckItemMapper.manageHiddenIndustry(2,(String)list.get(i).get("industry"),1,sb.toString()); // 较大 不合格 未治理
-                list.get(i).put("industry22",b1);
+                    b = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),1,sb.toString()); // 较大 合格 已治理
+                    list.get(i).put("industry2",b);
 
-                c = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),2,sb.toString()); // 重大 合格 已治理
-                list.get(i).put("industry3",c);
+                    b1 = tCheckItemMapper.manageHiddenIndustry(2,(String)list.get(i).get("industry"),1,sb.toString()); // 较大 不合格 未治理
+                    list.get(i).put("industry22",b1);
 
-                c1 = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),2,sb.toString()); // 重大 不合格 未治理
-                list.get(i).put("industry33",c1);
+                    c = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),2,sb.toString()); // 重大 合格 已治理
+                    list.get(i).put("industry3",c);
+
+                    c1 = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),2,sb.toString()); // 重大 不合格 未治理
+                    list.get(i).put("industry33",c1);
+                }
+
+                count1 = a + a1;
+                count2  = b + b1;
+                count3  = c + c1;
+
+                sign1 += a;
+                sign2 += b;
+                sign3 += c;
+
+                sign11 += a1;
+                sign22 += b1;
+                sign33 += c1;
+
+                DecimalFormat df = new DecimalFormat("0.00");
+
+                Integer sum = count1 + count2 + count3; // 单个风险所包含的所有隐患
+
+                if (null != count1 && count1 != 0){  // 一般和较小 治理率
+                    String str = df.format((float)a/count1);
+                    list.get(i).put("result11",str+"%");
+                }else {
+                    list.get(i).put("result11",0.00);
+                }
+
+                if (null != count2 && count2 != 0){ // 较大 治理率
+                    String str = df.format((float)b/count2);
+                    list.get(i).put("result22",str+"%");
+                }else {
+                    list.get(i).put("result22",0.00);
+                }
+
+                if (null != count3 && count3 != 0){ // 重大 治理率
+                    String str = df.format((float)c/count3);
+                    list.get(i).put("result33",str+"%");
+                }else {
+                    list.get(i).put("result33",0.00);
+                }
+
             }
 
-            count1 = a + a1;
-            count2  = b + b1;
-            count3  = c + c1;
+        }else {
 
-            sign1 += a;
-            sign2 += b;
-            sign3 += c;
+            List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
 
-            sign11 += a1;
-            sign22 += b1;
-            sign33 += c1;
+            if (user.getUserType() == 3){// 如果登录的是镇级账号
 
-            DecimalFormat df = new DecimalFormat("0.00");
+                // 查询镇下面的所有村
+                List<Village> lists = villageMapper.findUserID(user.getId());
 
-            Integer sum = count1 + count2 + count3; // 单个风险所包含的所有隐患
+                if (null == lists || lists.size() == 0){// 如果该区域下没有下级区域
 
-            if (null != count1 && count1 != 0){  // 一般和较小 治理率
-                String str = df.format((float)a/count1);
-                list.get(i).put("result11",str+"%");
-            }else {
-                list.get(i).put("result11",0.00);
+                    return "global/evaluate/globalError";// 返回提示页面
+
+                }else if (null != lists && lists.size() != 0) {
+
+                    for (int i = 0; i < lists.size(); i++) {
+                        // 根据区域 ID 查询该区域下所有的企业 ID
+                        List<Integer> userIds = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 3);
+
+                        for (int j = 0; j < userIds.size(); j++) {
+                            if (i == userIds.size()-1){
+                                sb1.append("'").append(userIds.get(i)).append("'");
+                            }else{
+                                sb1.append("'").append(userIds.get(i)).append("',");
+                            }
+                        }
+
+                        Map<String,Object> map1 = new HashMap<>();
+
+                        map1.put("name",lists.get(i).getName());
+
+                        map1.put("user_id",sb1.toString());
+
+                        list1.add(map1);
+
+                    }
+                }
+
+
+            }else if (user.getUserType() == 6){// 如果登录的是区级账号
+
+                // 查询区下面的所有镇
+                List<Town> lists = townMapper.findAll(user.getId());
+
+                if (null == lists || lists.size() == 0){// 如果该区域下没有下级区域
+
+                    return "global/evaluate/globalError";// 返回提示页面
+
+                }else if (null != lists || lists.size() != 0){
+
+                    for (int i = 0; i < lists.size(); i++) {
+                        // 根据区域 ID 查询该区域下所有的企业 ID
+                        List<Integer> userIds = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 6);
+
+                        for (int j = 0; j < userIds.size(); j++) {
+                            if (i == userIds.size()-1){
+                                sb1.append("'").append(userIds.get(i)).append("'");
+                            }else{
+                                sb1.append("'").append(userIds.get(i)).append("',");
+                            }
+                        }
+
+                        Map<String,Object> map1 = new HashMap<>();
+
+                        map1.put("name",lists.get(i).getName());
+
+                        map1.put("user_id",sb1.toString());
+
+                        list1.add(map1);
+
+                    }
+                }
             }
 
-            if (null != count2 && count2 != 0){ // 较大 治理率
-                String str = df.format((float)b/count2);
-                list.get(i).put("result22",str+"%");
-            }else {
-                list.get(i).put("result22",0.00);
-            }
+            if (null == list1 && list1.size() == 0){// 如果该区域下的下属区域没有公司
 
-            if (null != count3 && count3 != 0){ // 重大 治理率
-                String str = df.format((float)c/count3);
-                list.get(i).put("result33",str+"%");
-            }else {
-                list.get(i).put("result33",0.00);
-            }
+                return "global/evaluate/globalError";// 返回提示页面
 
+            }else if (null != list1 && list1.size() != 0){
+
+                for (int i = 0; i < list1.size(); i++) {
+
+                    Integer a = 0;
+                    Integer a1 = 0;
+                    Integer b = 0;
+                    Integer b1 = 0;
+                    Integer c = 0;
+                    Integer c1 = 0;
+
+                    if(null != list.get(i).get("industry") && list.get(i).get("industry").equals("其他")){
+
+                        a = tCheckItemMapper.manageHiddenIndustry11(1,3,(String)list.get(i).get("user_id")); // 一般和较小 合格 已治理
+                        list.get(i).put("industry1",a);
+
+                        a1 = tCheckItemMapper.manageHiddenIndustry11(2,3,(String)list.get(i).get("user_id")); // 一般和较小 不合格 未治理
+                        list.get(i).put("industry11",a1);
+
+                        b = tCheckItemMapper.manageHiddenIndustry11(1,1,(String)list.get(i).get("user_id")); // 较大 合格 已治理
+                        list.get(i).put("industry2",b);
+
+                        b1 = tCheckItemMapper.manageHiddenIndustry11(2,1,(String)list.get(i).get("user_id")); // 较大 不合格 未治理
+                        list.get(i).put("industry22",b1);
+
+                        c = tCheckItemMapper.manageHiddenIndustry11(1,2,(String)list.get(i).get("user_id")); // 重大 合格 已治理
+                        list.get(i).put("industry3",c);
+
+                        c1 = tCheckItemMapper.manageHiddenIndustry11(1,2,(String)list.get(i).get("user_id")); // 重大 不合格 未治理
+                        list.get(i).put("industry33",c1);
+
+                    }else if (null != list.get(i).get("industry")){
+
+                        a = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),3,(String)list.get(i).get("user_id")); // 一般和较小 合格 已治理
+                        list.get(i).put("industry1",a);
+
+                        a1 = tCheckItemMapper.manageHiddenIndustry(2,(String)list.get(i).get("industry"),3,(String)list.get(i).get("user_id")); // 一般和较小 不合格 未治理
+                        list.get(i).put("industry11",a1);
+
+                        b = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),1,(String)list.get(i).get("user_id")); // 较大 合格 已治理
+                        list.get(i).put("industry2",b);
+
+                        b1 = tCheckItemMapper.manageHiddenIndustry(2,(String)list.get(i).get("industry"),1,(String)list.get(i).get("user_id")); // 较大 不合格 未治理
+                        list.get(i).put("industry22",b1);
+
+                        c = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),2,(String)list.get(i).get("user_id")); // 重大 合格 已治理
+                        list.get(i).put("industry3",c);
+
+                        c1 = tCheckItemMapper.manageHiddenIndustry(1,(String)list.get(i).get("industry"),2,(String)list.get(i).get("user_id")); // 重大 不合格 未治理
+                        list.get(i).put("industry33",c1);
+                    }
+
+                    count1 = a + a1;
+                    count2  = b + b1;
+                    count3  = c + c1;
+
+                    sign1 += a;
+                    sign2 += b;
+                    sign3 += c;
+
+                    sign11 += a1;
+                    sign22 += b1;
+                    sign33 += c1;
+
+                    DecimalFormat df = new DecimalFormat("0.00");
+
+                    Integer sum = count1 + count2 + count3; // 单个风险所包含的所有隐患
+
+                    if (null != count1 && count1 != 0){  // 一般和较小 治理率
+                        String str = df.format((float)a/count1);
+                        list.get(i).put("result11",str+"%");
+                    }else {
+                        list.get(i).put("result11",0.00);
+                    }
+
+                    if (null != count2 && count2 != 0){ // 较大 治理率
+                        String str = df.format((float)b/count2);
+                        list.get(i).put("result22",str+"%");
+                    }else {
+                        list.get(i).put("result22",0.00);
+                    }
+
+                    if (null != count3 && count3 != 0){ // 重大 治理率
+                        String str = df.format((float)c/count3);
+                        list.get(i).put("result33",str+"%");
+                    }else {
+                        list.get(i).put("result33",0.00);
+                    }
+                }
+            }
         }
+
+
 
         DecimalFormat df = new DecimalFormat("0.00");
 
@@ -8065,7 +8996,11 @@ public class GlobalController extends BaseController {
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
 
-        return "global/company/evaluate/villageDown/manage-hidden-industry-charts4-3";
+        if (user.getUserType() == 4){
+            return "global/company/evaluate/villageDown/manage-hidden-industry-charts4-3";
+        }else {
+            return "global/company/evaluate/villageUp/manage-hidden-industry-charts4-3";
+        }
     }
 
 
@@ -8950,6 +9885,26 @@ public class GlobalController extends BaseController {
     }
 
     /**
+     * 应急管理中心
+     * @param model
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/tables/yjmanage_center")
+    public String yjmanage_center(Model model, HttpServletRequest request) throws Exception {
+
+        User user = getLoginUser(request);
+        Company c = companyMapper.selectByPrimaryKey(user.getId());
+        List<Integer> count = userService.selectCount(new CompanyListReqDTO(), user);
+
+        model.addAttribute("count", count);
+        model.addAttribute("c", c);
+        model.addAttribute("userName", userMapper.selectByPrimaryKey(user.getId()).getUserName());
+        return "global/rescue/yjmanage_center";
+    }
+
+    /**
      * 隐患治理对象分析
      * @param request
      * @param model
@@ -9230,24 +10185,38 @@ public class GlobalController extends BaseController {
      * @return
      */
     @RequestMapping(value = "Standard")
-    public String Standard(HttpServletRequest request, Model model, Integer page){
-        User user = getLoginUser(request);
-        List<Map<String,Object>> list2 = tCheckItemMapper.selectBasicMessage(user.getId(), user.getUserType(), 20);
-        model.addAttribute("list", list2);
+    public String Standard(HttpServletRequest request, Model model){
+          User user = getLoginUser(request);
+//        List<Map<String,Object>> list2 = tCheckItemMapper.selectBasicMessage(user.getId(), user.getUserType(), 20);
+//        //List<Map<String, Object>> list2 = tCheckItemMapper.getData(user.getId(), user.getUserType(), 0);
+//        model.addAttribute("list", list2);
+         Integer total = tCheckItemMapper.getTotalPage(user.getId(), user.getUserType());
+         model.addAttribute("total", total);
         return "global/other/standard-list";
     }
     /**
      * 获取公司信息数据
      */
-    @RequestMapping("/n")
-    public String getData(){
-        return null;
+    @RequestMapping(value="/getData", method = RequestMethod.POST)
+    public @ResponseBody  Result getData(HttpServletRequest request, Model model, Integer page){
+        User user = getLoginUser(request);
+        Result result = new ResultImpl();
+        Integer start = page *10;
+        List<Map<String, Object>> list = tCheckItemMapper.getData(user.getId(), user.getUserType(), start);
+        result.setMap("list", list);
+        result.setStatus("0");
+        return result;
     }
     /**
-     * 获取显示公司的总页数
+     *获取当前账号下所有公司的分页
      */
-    public Integer getTotalPage(){
-        return null;
+    @RequestMapping("/getTotalPage")
+    @ResponseBody
+    public Integer getTotalPage(HttpServletRequest request, Model model){
+        User user = getLoginUser(request);
+        Integer total = tCheckItemMapper.getTotalPage(user.getId(), user.getUserType());
+        Integer totalPage = total/10+1;
+        return totalPage;
     }
     /**
      * 根据条件查询安全生产标准化数据
@@ -9292,10 +10261,234 @@ public class GlobalController extends BaseController {
      * create time: 2019/8/26 15:56
      */
     @RequestMapping(value = "allcompany-district")
-    public String allcompanyDistrict(HttpServletRequest request, Model model){
+    public String allcompanyDistrict(HttpServletRequest request, Model model) {
 
         return "/global/company/allcompany-district";
     }
 
+    /**
+     * 企业搜索页
+     * @return
+     */
+    @RequestMapping("searchPage")
+    public String searchPage(HttpServletRequest request, Model model){
 
+        return "global/other/company-search";
+    }
+    /**
+     * 企业应急管理中心
+     */
+    @RequestMapping("/conManager")
+    public String conManager(HttpServletRequest request, Model model,Integer userId){
+        model.addAttribute("userId", userId);
+        return "global/rescue/threeLeft1";
+    }
+    /**
+     * 企业应急管理中心
+     */
+    @RequestMapping("/conrespond")
+    public String conManager1(HttpServletRequest request, Model model,Integer userId){
+        model.addAttribute("userId", userId);
+        return "global/rescue/threeLeft2";
+    }
+    /**企业基本信息
+     * TODO 基本信息页面
+     */
+    @RequestMapping("basic-information")
+    public String basicInformation(Model model, HttpServletRequest request, Integer userId) throws Exception {
+        User user = userMapper.selectByPrimaryKey(userId);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        Regulation regulationComp = regulationGet(user.getId());
+        if (company.getHazard() == null) {
+            if (regulationComp.getCisDanger() != null) {
+                company.setHazard(regulationComp.getCisDanger());
+                companyMapper.updateByPrimaryKey(company);
+            }
+        } else {
+            if (regulationComp.getCisDanger() == null) {
+                company.setHazard(0);
+            } else {
+                company.setHazard(regulationComp.getCisDanger());
+            }
+            companyMapper.updateByPrimaryKey(company);
+        }
+
+        if (null != company.getRegionId()) {
+            model.addAttribute("regionName", globalRegionMapper.selectRegionName(company.getRegionId()));
+        }
+
+        model.addAttribute("c", company);
+        Regulation r = regulationGet(user.getId());
+        model.addAttribute("r", r);
+        return "global/other/information1";
+    }
+
+    /**
+     * 企业定位
+     * @param model
+     * @param request
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("information/information4")
+    public String information4(Model model, HttpServletRequest request, Integer userId) throws Exception {
+        User user = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(null == userId ? user.getId() : userId);
+        if (null != company.getRegionId()) {
+            model.addAttribute("regionName", globalRegionMapper.selectRegionName(company.getRegionId()));
+        }
+        model.addAttribute("company", company);
+        model.addAttribute("user", userMapper.selectByPrimaryKey(company.getUserId()));
+        model.addAttribute("v", userMapper.selectByPrimaryKey(company.getVillageId()));
+        return "company/information/information4";
+    }
+    /**
+     * TODO 四色图
+     * @param model
+     * @param request
+     * @param flag
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "control-list2")//zhangcl 2018.10.13
+    public String controlList2(Model model, HttpServletRequest request, String flag, Integer userId) throws Exception {
+        User user = userMapper.selectByPrimaryKey(userId);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("uid", user.getId());
+        m.put("order", 1);
+        Map<String, Object> m2 = new HashMap<String, Object>();
+        m.put("uid", user.getId());
+        model.addAttribute("company", company);
+        model.addAttribute("user", userMapper.selectByPrimaryKey(company.getUserId()));
+        model.addAttribute("v", userMapper.selectByPrimaryKey(company.getVillageId()));
+
+
+
+        /* List<Map<String, Object>> list = aCompanyManualMapper.selectRed(m2);*/
+        List<Map<String, Object>> list2 = aCompanyManualMapper.selectByMapTwo(m);
+        List<Map<String, Object>> list = aCompanyManualMapper.selectRed(user.getId());
+
+
+        model.addAttribute("list", list);
+        model.addAttribute("list2", list2);
+
+        Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
+        for (Map<String, Object> m1 : list) {
+            String level1 = null == m1.get("level1") ? "" : m1.get("level1").toString();
+            //log.error("level1：-----------start------------"+level1);
+            String level2 = null == m1.get("level2") ? "" : m1.get("level2").toString();
+            //log.error("level2："+level2);
+            LinkedHashSet<String> l2s = levmap.get(level1);
+            if (null == l2s) {
+                l2s = new LinkedHashSet<String>();
+                //log.error("level1："+level1);
+                levmap.put(level1, l2s);
+                //log.error("levmap："+levmap.toString());
+            }
+            l2s.add(level2);
+            //log.error("l2s：------------end-----------"+l2s.toString());
+        }
+        //log.error("levmap："+levmap.toString());
+        model.addAttribute("treeMap", levmap);
+        model.addAttribute("flag", flag);
+
+        /*
+         * 添加根据风险等级查询，查询结果可能会受到其他修改风险等级功能的影响	wz_20181116
+         */
+        m.put("level", "红色");
+        List<Map<String, Object>> list11 = aCompanyManualMapper.selectByMap(m);
+        model.addAttribute("list11", list11);
+
+        m.put("level", "橙色");
+        List<Map<String, Object>> list22 = aCompanyManualMapper.selectByMap(m);
+        model.addAttribute("list22", list22);
+
+
+        m.put("level", "黄色");
+        List<Map<String, Object>> list33 = aCompanyManualMapper.selectByMap(m);
+        model.addAttribute("list33", list33);
+
+        m.put("level", "蓝色");
+        List<Map<String, Object>> list44 = aCompanyManualMapper.selectByMap(m);
+        model.addAttribute("list44", list44);
+
+        m.put("level", "");
+        List<Map<String, Object>> list55 = aCompanyManualMapper.selectNum(m);
+        model.addAttribute("list55", list55);
+
+        Integer number = list11.size() + list22.size() +  list33.size() + list44.size() + list55.size();
+
+
+        model.addAttribute("number", number);
+        if (flag.equals("2")) {
+            //log.error("zhangcl 2018.10.18 controlList3,area_range="+company.getAreaRange());
+            return "company/safety-system/control-list3";
+        } else {
+            return "company/safety-system/control-list2";
+        }
+
+    }
+
+    @RequestMapping(value = "tables/tab-yjlist")
+    public String yjjyList(HttpServletRequest request, Model model, String companyName, String name, Integer isTime, Integer c, Integer userId) throws Exception {
+        User user = userMapper.selectByPrimaryKey(userId);
+        Map<String, Object> m = new HashMap<String, Object>();
+        if (null != c && c.compareTo(1) == 0) {
+            m.put("ownerId", user.getId());
+        } else {
+            setUserId(user, m);
+        }
+        m.put("name", name);
+        m.put("companyName", companyName);
+        if (null != isTime) {
+            if (isTime > 0) {
+                m.put("now", DateFormatUtils.format(new Date(), "yyyy-MM-dd"));
+            }
+            m.put("isTime", DateFormatUtils.format(DateConvertUtil.addMonths(new Date(), isTime), "yyyy-MM-dd"));
+        }
+        model.addAttribute("list", tContingencyPlanMapper.selectTable(m));
+        model.addAttribute("name", name);
+        model.addAttribute("isTime", isTime);
+        model.addAttribute("companyName", companyName);
+        model.addAttribute("c", c);
+        return "company/tables/tab-yjlist";
+    }
+    /**
+     * 前台首页
+     *
+     * @throws Exception
+     */
+    @RequestMapping("threeLeft")
+    public String threeLeft(Model model, HttpServletRequest request, String leftBasic) throws Exception {
+        User user = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+
+//        // TODO 判断该公司的行业是否为化工行业,为化工行业就显示内容
+//        if (company.getIndustry().contains("化工")) {
+//            model.addAttribute("industry", 5);
+//        }
+
+        model.addAttribute("leftBasic", leftBasic);
+        model.addAttribute("userName", user.getUserName());
+
+        return "company/threeLeft";
+    }
+    @RequestMapping("command")
+    public String command(Model model, HttpServletRequest request){
+        return "global/rescue/threeLeft3";
+    }
+
+    /**
+     * 企业搜索页
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("searchPage2")
+    public String searchPage2(HttpServletRequest request, Model model){
+
+        return "global/other/company-search2";
+    }
 }

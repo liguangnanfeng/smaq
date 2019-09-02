@@ -1120,7 +1120,7 @@
             t2. status = 2
         AND t2.del = 0
         AND t1. status = #{status}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
         AND t3.flag = #{flag}
         AND t1.recheck_file != ''
     </select>
@@ -1140,6 +1140,7 @@
         AND t1. status = #{status}
         AND t3.control = #{control}
         AND t3.flag = #{flag}
+        AND t2.user_id in (${user_ids})
         AND t1.recheck_file != ''
     </select>
 
@@ -1159,8 +1160,31 @@
         AND t3.control is null
         AND t1. status = #{status}
         AND t3.flag = #{flag}
+        AND t2.user_id in (${user_ids})
         AND t1.recheck_file != ''
     </select>
+
+
+    <!-- 政府端 隐患治理数据分析 风险 其他 -->
+    <select id="manageHiddenDanger22" resultType="Integer">
+        SELECT
+            count(t1.id)
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1. status = #{status}
+        AND t3.control in (${controls})
+        AND t3.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+        AND t1.recheck_file != ''
+    </select>
+
+
+
 
 
     <!-- 政府端 隐患治理数据分析 行业 -->
@@ -1176,8 +1200,9 @@
             t2. status = 2
         AND t2.del = 0
         AND t1. status = #{status}
-        AND c1.industry like CONCAT('%',#{industry},'%')
+        AND c1.industry like CONCAT('%',${industrys},'%')
         AND t3.flag = #{flag}
+        AND t2.user_id in (${user_ids})
         AND t1.recheck_file != ''
     </select>
 
@@ -1196,8 +1221,32 @@
         AND t1. status = #{status}
         AND c1.industry is null
         AND t3.flag = #{flag}
+        AND t2.user_id in (${user_ids})
         AND t1.recheck_file != ''
     </select>
+
+
+    <!-- 政府端 隐患治理数据分析 行业 -->
+    <select id="manageHiddenIndustry22" resultType="Integer">
+        SELECT
+            count(t1.id)
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        LEFT JOIN smaq.company_view c1 ON c1.user_id = t3.uid
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1. status = #{status}
+        AND (c1.industry like "%化工%" OR c1.industry like "%冶金%" OR c1.industry like "%有色%" OR c1.industry like "%建材%" OR c1.industry like "%机械%"
+               OR c1.industry like "%轻工%" OR c1.industry like "%纺织%" OR c1.industry like "%商贸%" OR c1.industry like "%烟花%" OR c1.industry is null)
+        AND t3.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+        AND t1.recheck_file != ''
+    </select>
+
+
 
 
 
@@ -1269,7 +1318,7 @@
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
     </select>
 
     <!-- 政府端 隐患排查对象分析数据 -->
@@ -1285,7 +1334,7 @@
         AND t2.del = 0
         AND t3.control is null
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
     </select>
 
 
@@ -1465,7 +1514,7 @@
         AND t1.status = 2
         AND t3.control = #{control}
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
     </select>
 
     <!-- 政府端 隐患数据分析 风险 flag = 1-->
@@ -1482,7 +1531,7 @@
         AND t1.status = 2
         AND t3.control is null
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
     </select>
 
 
@@ -1501,7 +1550,7 @@
         AND t1.status = 2
         AND t2.flag = #{flag}
         AND c1.industry  like  CONCAT('%', #{industry},'%')
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
     </select>
 
 
@@ -1520,7 +1569,7 @@
         AND t1.status = 2
         AND c1.industry  is null
         AND t2.flag = #{flag}
-        AND t2.user_id = #{user_id}
+        AND t2.user_id in (${user_ids})
     </select>
 
 

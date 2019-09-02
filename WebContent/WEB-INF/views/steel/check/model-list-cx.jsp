@@ -68,6 +68,19 @@
         .dataTables_wrapper{
             margin-bottom:50px;
         }
+        #selectBranch{
+            position: absolute;
+            top: 127px;
+            right: 31px;
+            width: 100px;
+            height: 32px;
+            padding: 4px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            box-shadow: 5px 5px 5px #fff;
+            color: black;
+            border-radius: 5px;
+        }
     </style>
     <script type="text/javascript">
         function open_jian(e, flag) {
@@ -197,6 +210,9 @@
 <%--        </c:if>--%>
         <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
     </div>
+    <!--企业列表-->
+    <select id="selectBranch">
+    </select>
     <!-- 弹窗选择 -->
     <div id="win_jian" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -657,6 +673,29 @@
     }
 
     $(function () {
+        $.ajax({
+            url:"${ly}/steel/company-list8",
+            type:"get",
+            success:function (data) {
+                var html="";
+                for(var i=0; i<data.map.list.length; i++){
+                    if(data.map.list[i]["id"]==${userId}){
+                        html += '<option value="'+data.map.list[i]["id"]+'" selected="selected">'+data.map.list[i]["name"]+'</option>';
+                    }else{
+                        html += '<option value="'+data.map.list[i]["id"]+'">'+data.map.list[i]["name"]+'</option>';
+                    }
+
+                }
+                $("#selectBranch").html(html);
+            },
+            error:function(){
+                alert("error");
+            }
+        });
+        $("#selectBranch").change(function () {
+
+            window.location.href="${ly }/steel/model-list-cx2?flag=${flag}&type=1&template=2&userId="+$(this).val();
+        })
         $('.table-sort').dataTable({
             "aaSorting": [[0, "asc"]],//默认第几个排序
             "bStateSave": false,//状态保存

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.Town;
+import org.apache.ibatis.annotations.Param;
 
 public interface TownMapper {
     /**
@@ -90,4 +91,6 @@ public interface TownMapper {
      * @return
      */
     Map selectParticularByUid(Integer id);
+
+    List<Town> findAll(@Param("userId") Integer userId);
 }

@@ -4,6 +4,7 @@
         <html>
         <head>
         <meta charset="utf-8" />
+            <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
         <title></title>
         <style>
         table {
@@ -106,14 +107,13 @@
         </head>
 
         <body>
-        <script>console.log('[{uid=26, utime=2019-07-06 14:51:48.0, number=0.0, pid=null, dangerId=,4,5,6,7,8,,1,2,3, ctime=2019-06-22 15:00:18.0, cid=260, result11=0.0, danger2=0, danger1=0, danger3=0, id=1, result33=0.0, number2=0, number1=0, result22=0.0, level=1, flag=1, name=车间一, del=0, danger33=0, danger22=0, danger11=0}, {uid=26, utime=2019-07-06 14:51:48.0, number=0.0, pid=null, dangerId=1,2,3,4,5,6,7,8, ctime=2019-06-22 15:00:25.0, cid=260, result11=0.0, danger2=0, danger1=0, danger3=0, id=2, result33=0.0, number2=0, number1=0, result22=0.0, level=1, flag=1, name=车间二, del=0, danger33=0, danger22=0, danger11=0}, {uid=26, utime=2019-07-06 14:51:48.0, number=0.00%, pid=null, dangerId=1,2,3,4,5,6,7,8, ctime=2019-06-22 15:00:31.0, cid=260, result11=0.0, danger2=0, danger1=0, danger3=0, id=3, result33=0.0, number2=7, number1=0, result22=0.00%, level=1, flag=1, name=实验室, del=0, danger33=0, danger22=7, danger11=0}, {uid=26, utime=2019-07-06 14:51:48.0, number=0.00%, pid=null, dangerId=1,2,3,4,5,6,7,8, ctime=2019-06-22 15:00:42.0, cid=260, result11=0.0, danger2=0, danger1=0, danger3=0, id=4, result33=0.0, number2=4, number1=0, result22=0.00%, level=1, flag=1, name=仓库, del=0, danger33=0, danger22=4, danger11=0}, {uid=26, utime=2019-07-06 16:27:27.0, number=0.0, pid=null, dangerId=1,2,3,4,5,7,6,8, ctime=2019-07-06 16:27:27.0, cid=260, result11=0.0, danger2=0, danger1=0, danger3=0, id=417, result33=0.0, number2=0, number1=0, result22=0.0, level=1, flag=1, name=车间1, del=0, danger33=0, danger22=0, danger11=0}, {sign3=0, sign2=0, sign1=0, sign11=0, result3=0.00%, proportion11=0.00%, sign22=11, result1=0.00%, result2=0.00%, sign33=0, proportion33=0.00%, proportion22=0.00%, proportion55=1.00%, proportion44=0.00%, proportion66=0.00%}]')</script>
-        <nav class="breadcrumb">
-        <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-        <span class="c-gray en">&gt;</span> <span>治理数据分析</span>
-        <span class="c-gray en">&gt;</span> <span class="zc">隐患治理数据分析 </span>
-        <a class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;"
-        href="javascript:history.back(-1)" title="返回">返回</a>
-        </nav>
+        <%--<nav class="breadcrumb">--%>
+        <%--<i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>--%>
+        <%--<span class="c-gray en">&gt;</span> <span>治理数据分析</span>--%>
+        <%--<span class="c-gray en">&gt;</span> <span class="zc">隐患治理数据分析 </span>--%>
+        <%--<a class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;"--%>
+        <%--href="javascript:history.back(-1)" title="返回">返回</a>--%>
+        <%--</nav>--%>
         <div class="cx">
         <div class="text-c mt-20 ">
         <h3 class="center">隐患治理数据分析</h3>
@@ -207,10 +207,7 @@
             </table>
         <script>
 
-        var endTime = new Date(new Date().getTime());
-        console.log(endTime);
         var myDate = new Date();
-        var mytime = myDate.toLocaleTimeString();     //获取当前时间
         var a = myDate.toLocaleDateString();
         $("#time").text('时间：' + a);
         </script>

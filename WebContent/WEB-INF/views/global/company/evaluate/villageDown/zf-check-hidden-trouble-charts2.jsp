@@ -98,13 +98,13 @@
         </head>
 
         <body>
-        <nav class="breadcrumb">
-        <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-        <span class="c-gray en">&gt;</span> <span>排查数据分析 </span>
-        <span class="c-gray en">&gt;</span> <span class="aaa"> </span>
-        <a class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;"
-        href="javascript:history.back(-1)" title="返回">返回</a>
-        </nav>
+        <%--<nav class="breadcrumb">--%>
+        <%--<i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>--%>
+        <%--<span class="c-gray en">&gt;</span> <span>排查数据分析 </span>--%>
+        <%--<span class="c-gray en">&gt;</span> <span class="aaa"> </span>--%>
+        <%--<a class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;"--%>
+        <%--href="javascript:history.back(-1)" title="返回">返回</a>--%>
+        <%--</nav>--%>
         <div class="containerx">
         <div class="text-c mt-20 ">
         <h3 class="center"></h3>
@@ -131,7 +131,7 @@
         title = "行政检查对象分析"; console.log('title:', title);
         }
         if (targetPageId == 3) {
-        title = "第三方检查绩效分析"; console.log('title:', title);
+        title = "第三方检查对象分析"; console.log('title:', title);
         }
         $(".center").text(title);
         $(".aaa").text(title);

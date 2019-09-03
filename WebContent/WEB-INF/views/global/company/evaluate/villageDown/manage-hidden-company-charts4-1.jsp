@@ -6,10 +6,25 @@
         <meta charset="utf-8" />
             <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
         <title></title>
+            <link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/lib/Hui-iconfont/1.0.8/iconfont.css" />
+            <link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/static/h-ui.admin/css/H-ui.admin.css" />
+            <link rel="stylesheet" type="text/css" href="/js/H-ui.admin_v3.0/static/h-ui/css/H-ui.css" />
+            <style>
+            nav.breadcrumb>span {
+            padding: 0;
+            font-size: 12px;
+            }
+            .breadcrumb{
+            height: 39px;
+            line-height: 39px;
+            overflow: hidden;
+            }
+            </style>
         <style>
         table {
         border-collapse: collapse;
         width: 100%;
+            font-size: 13px
         }
 
         .title>div {
@@ -27,6 +42,7 @@
         height: 38px;
         /*这里需要自己调整，根据自己的需求调整高度*/
         position: relative;
+            padding: 3px;
         }
 
         td[class=first] {
@@ -70,6 +86,7 @@
 
         .center {
         text-align: center;
+        font-weight: 500;
         }
 
         .flexcenter {
@@ -107,16 +124,17 @@
         </head>
 
         <body>
-        <%--<nav class="breadcrumb">--%>
-        <%--<i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>--%>
-        <%--<span class="c-gray en">&gt;</span> <span>治理数据分析</span>--%>
-        <%--<span class="c-gray en">&gt;</span> <span class="zc">隐患治理数据分析 </span>--%>
-        <%--<a class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;"--%>
-        <%--href="javascript:history.back(-1)" title="返回">返回</a>--%>
-        <%--</nav>--%>
+            <%--<i class="Hui-iconfont">&#xe67f;</i>--%>
+            <nav class="breadcrumb">
+            <i class="Hui-iconfont"></i>
+            <span>首页</span>
+            <span class="c-gray en">&gt;</span> <span>治理数据分析</span>
+            <span class="c-gray en">&gt;</span> <span class="aaa">隐患治理地区数据分析</span>
+            <a class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
+            </nav>
         <div class="cx">
         <div class="text-c mt-20 ">
-        <h3 class="center">隐患治理数据分析</h3>
+        <h3 class="center">隐患治理地区数据分析</h3>
         </div>
         <section class="title">
         <div class="flexspa">

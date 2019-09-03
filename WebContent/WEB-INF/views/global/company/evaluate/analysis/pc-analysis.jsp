@@ -79,9 +79,6 @@
             $("#chaBtn3").addClass('btn-default');
             url="${ly }/global/zf-performance-industry?flag=3";
             }
-            function addgjs() {
-            show_dialog(" ", "/global/pc-analysis?flag=1");
-            }
             // 基于准备好的dom，初始化echarts实例
             let number = ["${danger1}", "${danger2}", "${danger3}", "${danger4}", "${danger5}", "${danger6}", "${danger7}", "${danger8}", "${danger9}", "${danger10}"];
             var firstdata = ["${result1}", "${result2}", "${result3}", "${result4}", "${result5}", "${result6}", "${result7}", "${result8}", "${result9}", "${result10}"];
@@ -183,7 +180,7 @@
             $("#chaBtn2").removeClass('btn-default')
             });
             myChart.on('click', function(p) {
-            console.log("url:",url)
+            console.log("url:",url);
             window.location.href =url;
             })
 </script>
@@ -205,15 +202,15 @@
         var url2='';
         if('${sign}'==1){
         $("#chaBtn11").addClass('btn-default');
-        url2="${ly }/zf-check-hidden-trouble?sign=1";
+        url2="${ly }/global/zf-check-hidden-trouble?sign=1";
         }
         if('${sign}'==2){
         $("#chaBtn22").addClass('btn-default');
-        url2="${ly }/zf-check-hidden-trouble?sign=2";
+        url2="${ly }/global/zf-check-hidden-trouble?sign=2";
         }
         if('${sign}'==3){
         $("#chaBtn33").addClass('btn-default');
-        url2="${ly }/zf-check-hidden-trouble?sign=3";
+        url2="${ly }/global/zf-check-hidden-trouble?sign=3";
         }
         console.log('sign:,${sign}')
         // 基于准备好的dom，初始化echarts实例

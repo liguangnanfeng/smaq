@@ -10445,9 +10445,9 @@ public class GlobalController extends BaseController {
         model.addAttribute("number", number);
         if (flag.equals("2")) {
             //log.error("zhangcl 2018.10.18 controlList3,area_range="+company.getAreaRange());
-            return "company/safety-system/control-list3";
+            return "global/company/safety-system/control-list3";
         } else {
-            return "company/safety-system/control-list2";
+            return "global/company/safety-system/control-list2";
         }
 
     }
@@ -10474,7 +10474,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("isTime", isTime);
         model.addAttribute("companyName", companyName);
         model.addAttribute("c", c);
-        return "company/tables/tab-yjlist";
+        return "global/company/tables/tab-yjlist";
     }
     /**
      * 前台首页

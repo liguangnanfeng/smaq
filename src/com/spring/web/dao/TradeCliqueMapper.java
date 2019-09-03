@@ -61,4 +61,8 @@ public interface TradeCliqueMapper {
     DynamicParameter<String, Object> selectForCliqueByUserId(Map<String, Object> m);
 
     List<Map<String, Object>> selectCompanyByCqlib(@Param("tid") Integer tid);
+
+    List<Integer> selectCompanyIdsByCqlib(@Param("tid") Integer tid);
+
+    List<Map<String, Object>> selectCompanyMapByCqlib(@Param("tid") Integer tid);
 }

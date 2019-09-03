@@ -132,9 +132,9 @@
                     <li><a data-href="${ly }/steel/model-list-main?flag=1&userId=789" data-title="检查设置实施" href="javascript:void(0)">检查设置实施</a></li>
                     <li><a data-href="${ly }/steel/check-list?flag=1&status=2&userId=789" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
                     <li><a data-href="${ly }/steel/hidden-danger-list?flag=1&status=1&userId=789" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
-                    <li><a data-href="${ly }/steel/jx-analysis?flag=1&userId=789" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
-                    <li><a data-href="${ly }/steel/yh-analysis?flag=1&userId=789" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
-                    <li><a data-href="${ly }/steel/zl-analysis?userId=789" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
+                    <li><a data-href="${ly }/steel/pc-analysis?flag=1" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
+                    <li><a data-href="${ly }/steel/yh-all-analysis?flag=1" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
+                    <li><a data-href="${ly }/steel/zl-all-analysis" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
                </ul>
          </dd>
       </dl>
@@ -232,7 +232,7 @@
       <!---------------------------------------------------------------------应急管理中心---------------------------------------------------------->
       <dl>
       <dt>
-      <a style="color:#fff;"  data-href="${ly }/company/tables/yjmanage_center"  data-title="应急管理中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急管理中心</a>
+      <a style="color:#fff;"  data-href="${ly }/steel/tables/yjmanage_center"  data-title="应急管理中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急管理中心</a>
       </dt>
       </dl>
       <!------------------------------------------------------------------------------------------------------------------------------------------->

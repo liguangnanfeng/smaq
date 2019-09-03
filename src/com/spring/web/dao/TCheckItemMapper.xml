@@ -1214,7 +1214,7 @@
             t2. status = 2
         AND t2.del = 0
         AND t1. status = #{status}
-        AND c1.industry like CONCAT('%',${industrys},'%')
+        AND c1.industry like CONCAT('%','${industrys}','%')
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
         AND t1.recheck_file != ''

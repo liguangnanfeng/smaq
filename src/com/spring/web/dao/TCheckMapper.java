@@ -87,7 +87,6 @@ public interface TCheckMapper {
 
     Integer selectHiddenDangerNumber(Integer id);
 
-
     Integer selectHiddenDangerNumber2(Integer id);
 
     List<Map<String,Object>> selectShowAll(@Param("depart")String depart, @Param("user_id")Integer user_id, @Param("type")Integer type);
@@ -99,4 +98,8 @@ public interface TCheckMapper {
     Integer zfPerformanceCount(@Param("flag")Integer flag, @Param("industry")String industry, @Param("user_ids")String user_ids);
 
     Integer zfPerformanceCount11(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer zfPerformanceCount33(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zfPerformanceCount22(@Param("flag")Integer flag, @Param("industry")String industry, @Param("user_id")Integer user_id);
 }

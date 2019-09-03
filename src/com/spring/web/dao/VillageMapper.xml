@@ -35,13 +35,11 @@
     </select>
 
 
-    <select id="findUserID" parameterType="java.lang.Integer" resultType="com.spring.web.model.Village">
-        SELECT
-            user_id
-        FROM
-            village_tbl
-        WHERE
-            town_id = #{town_id}
+    <select id="findUserID" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from village_tbl
+        where town_id = #{town_id}
     </select>
 
 

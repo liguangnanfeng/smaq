@@ -346,15 +346,31 @@ public interface TCheckItemMapper {
 
     Integer zfHiddenTrouble11(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
+    Integer zfHiddenTrouble22(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zfHiddenTroubleType(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer zfHiddenTrouble33(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
     Integer zhengFuChartData88(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer zhengFuChartData881(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer zhengFuChartData99(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zhengFuChartData991(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
     Integer zhengFuChartDataDanger(@Param("flag")Integer flag, @Param("industry")String industry, @Param("user_ids")String user_ids);
 
     Integer zhengFuChartDataDanger11(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
+    Integer zhengFuChartDataDanger22(@Param("flag")Integer flag, @Param("industry")String industry, @Param("user_id")Integer user_id);
+
+    Integer zhengFuChartDataDanger33(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
     Integer manageHiddenCompany(@Param("status")Integer status, @Param("user_ids")String user_ids, @Param("flag")Integer flag);
+
+    Integer manageHiddenCompany11(@Param("status")Integer status, @Param("user_id")Integer user_id, @Param("flag")Integer flag);
 
     Integer manageHiddenDanger(@Param("status")Integer status, @Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 

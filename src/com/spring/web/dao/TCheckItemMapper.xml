@@ -1125,6 +1125,23 @@
         AND t1.recheck_file != ''
     </select>
 
+    <!-- 政府端 隐患治理数据分析 企业 -->
+    <select id="manageHiddenCompany11" resultType="Integer">
+        SELECT
+            count(t1.id)
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1. status = #{status}
+        AND t2.user_id = #{user_id}
+        AND t3.flag = #{flag}
+        AND t1.recheck_file != ''
+    </select>
+
 
     <!-- 政府端 隐患治理数据分析 风险 -->
     <select id="manageHiddenDanger" resultType="Integer">
@@ -1143,7 +1160,6 @@
         AND t2.user_id in (${user_ids})
         AND t1.recheck_file != ''
     </select>
-
 
 
     <!-- 政府端 隐患治理数据分析 风险 其他 -->
@@ -1165,7 +1181,7 @@
     </select>
 
 
-    <!-- 政府端 隐患治理数据分析 风险 其他 -->
+    <!-- 政府端 隐患治理数据分析 风险 -->
     <select id="manageHiddenDanger22" resultType="Integer">
         SELECT
             count(t1.id)
@@ -1185,8 +1201,6 @@
 
 
 
-
-
     <!-- 政府端 隐患治理数据分析 行业 -->
     <select id="manageHiddenIndustry" resultType="Integer">
         SELECT
@@ -1200,7 +1214,7 @@
             t2. status = 2
         AND t2.del = 0
         AND t1. status = #{status}
-        AND c1.industry like CONCAT('%',${industrys},'%')
+        AND c1.industry like CONCAT('%','${industrys}','%')
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
         AND t1.recheck_file != ''
@@ -1321,6 +1335,42 @@
         AND t2.user_id in (${user_ids})
     </select>
 
+
+    <!-- 政府端 隐患排查对象分析数据 -->
+    <select id="zfHiddenTrouble22" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t3.control = #{control}
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
+    <!-- 政府端 隐患排查对象分析数据 -->
+    <select id="zfHiddenTroubleType" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t3.control = #{control}
+        AND t2.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+    </select>
+
+
+
+
     <!-- 政府端 隐患排查对象分析数据 -->
     <select id="zfHiddenTrouble11" resultType="Integer">
         SELECT
@@ -1335,6 +1385,22 @@
         AND t3.control is null
         AND t2.flag = #{flag}
         AND t2.user_id in (${user_ids})
+    </select>
+
+    <!-- 政府端 隐患排查对象分析数据 -->
+    <select id="zfHiddenTrouble33" resultType="Integer">
+        SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t3.control is null
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
     </select>
 
 
@@ -1517,6 +1583,25 @@
         AND t2.user_id in (${user_ids})
     </select>
 
+
+    <!-- 政府端 隐患数据分析 柱状图 flag = 1-->
+    <select id="zhengFuChartData99" resultType="Integer">
+        SELECT
+        count(t1.id) as counts
+        FROM
+        smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+        t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t3.control = #{control}
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
+
     <!-- 政府端 隐患数据分析 风险 flag = 1-->
     <select id="zhengFuChartData881" resultType="Integer">
          SELECT
@@ -1535,6 +1620,26 @@
     </select>
 
 
+    <!-- 政府端 隐患数据分析 风险 flag = 1-->
+    <select id="zhengFuChartData991" resultType="Integer">
+         SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t3.control is null
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
+
+
+
     <!-- 政府端 隐患数据分析 行业 flag = 1-->
     <select id="zhengFuChartDataDanger" resultType="Integer">
          SELECT
@@ -1551,6 +1656,24 @@
         AND t2.flag = #{flag}
         AND c1.industry  like  CONCAT('%', #{industry},'%')
         AND t2.user_id in (${user_ids})
+    </select>
+
+    <!-- 政府端 隐患数据分析 行业 flag = 1-->
+    <select id="zhengFuChartDataDanger22" resultType="Integer">
+         SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t2.flag = #{flag}
+        AND c1.industry  like  CONCAT('%', #{industry},'%')
+        AND t2.user_id = #{user_id}
     </select>
 
 
@@ -1572,7 +1695,23 @@
         AND t2.user_id in (${user_ids})
     </select>
 
-
+    <!-- 政府端 隐患数据分析 行业 flag = 1-->
+    <select id="zhengFuChartDataDanger33" resultType="Integer">
+         SELECT
+            count(t1.id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND c1.industry  is null
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
 
 
     <select id="zhuChartData89" resultType="Integer">
@@ -2106,6 +2245,7 @@
             </if>
         </where>
     </select>
+
 
 
     <select id="findALL" parameterType="Integer" resultType="java.util.Map">

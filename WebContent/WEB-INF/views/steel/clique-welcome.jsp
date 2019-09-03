@@ -50,6 +50,8 @@ $(function () {
 });
 function showping(){
   $("#win-ping").modal("show")}
+  function showping2(){
+  $("#win-ping2").modal("show")}
 </script>
 </head>
 <body>
@@ -118,41 +120,80 @@ function showping(){
       <div class="mt-15 pos-r">
         <div class="div_tx div_yj" style="padding-top:15px;">
           <div class="title_xw pos-r" style="border-bottom:1px solid #F6F6F6;color:#FB0005;"><div class="bt_yuj">预警栏(${count[0] + count[1] + count[2] + count[3] + count[4] + count[5] + count[6] + zdsgyh + count[8]})</div></div>
-          <a class="one_tx radius pos-r" data-title="持证上岗" data-href="${ly }/village/warning/sperson-list?isTime=3&home=1" onclick="Hui_admin_tab(this)" href="javascript:;" style="margin-left:1%;background:#46D1E5;">
-                <img alt="" src="${ly }/images/httb1.png"/>
-                <font class="font_tx1 pos-a <c:if test="${count[0]>0}">blink</c:if>">${count[0]}</font>
-                <font class="font_tx2 pos-a">持证上岗</font>
-              </a>
-              <a class="one_tx radius pos-r" data-title="特种设备检测" data-href="${ly }/village/warning/sequipment-list?isTime=3&home=1" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#60D1FF;">
-                <img alt="" src="${ly }/images/httb2.png"/>
-                <font class="font_tx1 pos-a <c:if test="${count[1]>0}">blink</c:if>">${count[1] }</font>
-                <font class="font_tx2 pos-a">特种设备检测</font>
-              </a>
-              <a class="one_tx radius pos-r" data-title="职卫检测、体检" data-title="职卫检测、体检" data-href="${ly }/village/warning/detection-list?isTime=3" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#34B5ED;margin-right:0;">
-                <img alt="" src="${ly }/images/httb3.png"/>
-                <font class="font_tx1 pos-a <c:if test="${count[2] + count[3] >0}">blink</c:if>">${count[2] + count[3]}</font>
-                <font class="font_tx2 pos-a">职卫检测、体检</font>
-              </a>
-              <a class="one_tx radius pos-r" onClick="showping()" href="javascript:;" style="margin-left:1%;background:#FFA160;">
-                <img alt="" src="${ly }/images/httb4.png"/>
-                <font class="font_tx1 pos-a <c:if test="${count[4] + count[5] + count[8] >0}">blink</c:if>">${count[4] + count[5] + count[8]}</font>
-                <font class="font_tx2 pos-a">评价评估</font>
-              </a>
-              <%-- <a class="one_tx radius pos-r" data-title="行政执法" data-href="${ly }/village/rectification-list?flag=2&c=0" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#ED6840;">
-                <img alt="" src="${ly }/images/httb5.png"/>
-                <font class="font_tx1 pos-a <c:if test="${count[6] >0}">blink</c:if>">${count[6] }</font>
-                <font class="font_tx2 pos-a">行政执法</font>
-              </a> --%>
-              <a class="one_tx radius pos-r" data-title="定期检查" data-href="${ly }/tradeclique/check-list?flag=1&status=1" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#ED6840;">
-                <img alt="" src="${ly }/images/httb5.png"/>
-                <font class="font_tx1 pos-a <c:if test="${count[9] >0}">blink</c:if>">${count[9] }</font>
-                <font class="font_tx2 pos-a">定期检查</font>
-              </a>
-              <a class="one_tx radius pos-r" href="javascript:;" onclick="show_dialog('重大事故隐患', '${ly }/village/check-item3?status=2')"  style="background:#ea4f21;margin-right:0">
-                <img alt="" src="${ly }/images/httb9.png"/>
-                <font class="font_tx1 pos-a <c:if test="${zdsgyh >0}">blink</c:if>">${zdsgyh }</font>
-                <font class="font_tx2 pos-a">重大事故隐患</font>
-              </a>
+  <a class="one_tx radius pos-r" onClick="showping()" href="javascript:;" style="margin-right:2%;margin-left:1%;background:#FFA160;">
+  <img alt="" src="${ly }/images/httb4.png"/>
+  <font class="font_tx1 pos-a <c:if test="${count[4] + count[5] + count[8] >0}">blink</c:if>">${count[4] + count[5] + count[8]}</font>
+  <font class="font_tx2 pos-a">安全许可</font>
+  </a>
+  <a class="one_tx radius pos-r" data-title="持证上岗" data-href="${ly }/village/warning/sperson-list?isTime=3&home=1"  onclick="Hui_admin_tab(this)" href="javascript:;" style="margin-right:2%;background:#46D1E5;">
+  <img alt="" src="${ly }/images/httb1.png"/>
+  <font class="font_tx1 pos-a <c:if test="${count[0] >0}">blink</c:if>">${count[0]}</font>
+  <font class="font_tx2 pos-a">安全培训</font>
+  </a>
+  <a class="one_tx radius pos-r"  onclick="showping2()" href="javascript:;" style="background:#60D1FF;margin-right: 0;">
+  <img alt="" src="${ly }/images/httb2.png"/>
+  <font class="font_tx1 pos-a <c:if test="${count[1]+count[2] +count[3] >0}">blink</c:if>">${count[1]+count[2] +count[3]  }</font>
+  <font class="font_tx2 pos-a">检测检验</font>
+  </a>
+  <a class="one_tx radius pos-r" href="javascript:;" style="background:#ea4f21;margin-right:2%;margin-left:1%">
+  <img alt="" src="${ly }/images/httb9.png"/>
+  <font class="font_tx1 pos-a" ></font>
+  <font class="font_tx2 pos-a">隐患排查</font>
+  </a>
+
+  <a class="one_tx radius pos-r" href="javascript:;"  style="background:#ea4f21;margin-right:2%">
+  <img alt="" src="${ly }/images/httb9.png"/>
+  <font class="font_tx1 pos-a "></font>
+  <font class="font_tx2 pos-a">隐患治理</font>
+  </a>
+  <%--  <c:if test="${zdsgyh >0}">blink</c:if>  这是闪烁的特效--%>
+  <%--  onclick="show_dialog('隐患治理', '${ly }/global/check-item3?status=2')"--%>
+
+  <a class="one_tx radius pos-r" href="javascript:;"   onclick="show_dialog('重大隐患', '${ly }/village/check-item3?status=2')" style="background:#ea4f21;margin-right:0">
+  <img alt="" src="${ly }/images/httb9.png"/>
+  <font class="font_tx1 pos-a <c:if test="${zdsgyh >0}">blink</c:if>">${zdsgyh }</font>
+  <font class="font_tx2 pos-a">重大隐患</font>
+  </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <%--<a class="one_tx radius pos-r" data-title="持证上岗" data-href="${ly }/village/warning/sperson-list?isTime=3&home=1" onclick="Hui_admin_tab(this)" href="javascript:;" style="margin-left:1%;background:#46D1E5;">--%>
+                <%--<img alt="" src="${ly }/images/httb1.png"/>--%>
+                <%--<font class="font_tx1 pos-a <c:if test="${count[0]>0}">blink</c:if>">${count[0]}</font>--%>
+                <%--<font class="font_tx2 pos-a">持证上岗</font>--%>
+              <%--</a>--%>
+              <%--<a class="one_tx radius pos-r" data-title="特种设备检测" data-href="${ly }/village/warning/sequipment-list?isTime=3&home=1" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#60D1FF;">--%>
+                <%--<img alt="" src="${ly }/images/httb2.png"/>--%>
+                <%--<font class="font_tx1 pos-a <c:if test="${count[1]>0}">blink</c:if>">${count[1] }</font>--%>
+                <%--<font class="font_tx2 pos-a">特种设备检测</font>--%>
+              <%--</a>--%>
+              <%--<a class="one_tx radius pos-r" data-title="职卫检测、体检" data-title="职卫检测、体检" data-href="${ly }/village/warning/detection-list?isTime=3" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#34B5ED;margin-right:0;">--%>
+                <%--<img alt="" src="${ly }/images/httb3.png"/>--%>
+                <%--<font class="font_tx1 pos-a <c:if test="${count[2] + count[3] >0}">blink</c:if>">${count[2] + count[3]}</font>--%>
+                <%--<font class="font_tx2 pos-a">职卫检测、体检</font>--%>
+              <%--</a>--%>
+              <%--<a class="one_tx radius pos-r" onClick="showping()" href="javascript:;" style="margin-left:1%;background:#FFA160;">--%>
+                <%--<img alt="" src="${ly }/images/httb4.png"/>--%>
+                <%--<font class="font_tx1 pos-a <c:if test="${count[4] + count[5] + count[8] >0}">blink</c:if>">${count[4] + count[5] + count[8]}</font>--%>
+                <%--<font class="font_tx2 pos-a">评价评估</font>--%>
+              <%--</a>--%>
+         <%----%>
+              <%--<a class="one_tx radius pos-r" href="javascript:;" onclick="show_dialog('重大事故隐患', '${ly }/village/check-item3?status=2')"  style="background:#ea4f21;margin-right:0">--%>
+                <%--<img alt="" src="${ly }/images/httb9.png"/>--%>
+                <%--<font class="font_tx1 pos-a <c:if test="${zdsgyh >0}">blink</c:if>">${zdsgyh }</font>--%>
+                <%--<font class="font_tx2 pos-a">重大隐患</font>--%>
+              <%--</a>--%>
         </div>
         <div class="div_tx div_yh pos-a" style="height:315px;padding: 15px 20px;">
           <div class="title_xw pos-r" style="border-bottom:1px solid #F6F6F6;color:#FB0005;"><div class="bt_yuj" style="width:180px">在线监测预警.报警</div></div>
@@ -193,12 +234,53 @@ function showping(){
                     <img alt="" src="${ly }/images/httb10.png"/>
                     <font class="font_tx1 pos-a <c:if test="${count[8] >0}">blink</c:if>">${count[8] }</font>
                     <font class="font_tx2 pos-a">应急预案</font>
-                  </a> 
+                  </a>
+  <a class="one_tx radius pos-r" data-dismiss="modal" aria-hidden="true" data-title="备案块"  href="javascript:;" style="margin-right:0;background:#ff8048;">
+  <%--  data-href="${ly }/company/tables/tab-yjlist?isTime=6" onclick="Hui_admin_tab(this)"--%>
+  <img alt="" src="${ly }/images/httb10.png"/>
+  <font class="font_tx1 pos-a <c:if test="${count[8] >0}">blink</c:if>">${count[8] }</font>
+  <font class="font_tx2 pos-a">备案块</font>
+  </a>
                 </div>
             </div>
         </div>
     </div>
-      <div class="div_tx mt-15">
+  <!-- 检验检测弹窗 -->
+  <div id="win-ping2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:540px">
+  <div class="modal-content radius">
+  <div class="modal-header">
+  <h3 class="modal-title">检测</h3>
+  <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void()">×</a>
+  </div>
+  <div class="modal-body">
+  <a class="x one_tx radius pos-r" data-title="特种设备检测" data-href="${ly }/village/warning/sequipment-list?isTime=3&home=1" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#60D1FF;">
+  <img alt="" src="${ly }/images/httb2.png"/>
+  <font class="font_tx1 pos-a <c:if test="${count[1]>0}">blink</c:if>">${count[1] }</font>
+  <font class="font_tx2 pos-a">特种设备检测</font>
+  </a>
+  <a class="x one_tx radius pos-r" data-title="职卫检测、体检" data-title="职卫检测、体检" data-href="${ly }/village/warning/detection-list?isTime=3" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#34B5ED;margin-right:0;">
+  <img alt="" src="${ly }/images/httb3.png"/>
+  <font class="font_tx1 pos-a <c:if test="${count[2] + count[3] >0}">blink</c:if>">${count[2] + count[3]}</font>
+  <font class="font_tx2 pos-a">职卫检测、体检</font>
+  </a>
+  </div>
+  </div>
+  </div>
+  </div>
+<style>
+    .x{
+    width:48%;
+  }
+  </style>
+
+
+
+
+
+
+
+  <div class="div_tx mt-15">
         <div class="title_xw pb-5 pos-r" style="border-bottom:1px solid #F6F6F6">隐患排查治理汇总</div>
         <div class="div_hz">
           <span>企业自查</span>

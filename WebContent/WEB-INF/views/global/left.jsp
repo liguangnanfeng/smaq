@@ -154,15 +154,20 @@
         </dt>
         <dd>
         <div class="div_omenu">
-        <div  class="div_otop">检查设置与实施<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>
-        <ul>
-        <li><a data-href="${ly }/global/  ?flag=4" data-title="行政检查" href="javascript:void(0)">行政检查</a></li>
-        <c:if test="${userType==10||userType==9}">
-            <!--行业级-->
-            <li><a data-href="${ly }/global/check-list-cx?flag=3" data-title="部门抽查" href="javascript:void(0)">部门抽查</a></li>
+        <c:if test="${userType!=10&&userType!=9}">
+             <li><a id="div_otop1"   data-href="${ly }/global/check-list-cx?flag=4" data-title="行政检查">检查设置与实施</a></li>
         </c:if>
-        </ul>
-        </div>
+        <c:if test="${userType==10||userType==9}">
+            <li><a id="div_otop1"   data-href="${ly }/global/check-list-cx?flag=3" data-title="行政检查">检查设置与实施</a></li>
+        </c:if>
+            </div>
+        <%--<li><a data-href="${ly }/global/check-list-cx?flag=4" data-title="行政检查" href="javascript:void(0)">行政检查</a></li>--%>
+        <%--<c:if test="${userType==10||userType==9}">--%>
+            <%--<!--行业级-->--%>
+            <%--<li><a data-href="${ly }/global/check-list-cx?flag=3" data-title="部门抽查" href="javascript:void(0)">部门抽查</a></li>--%>
+        <%--</c:if>--%>
+
+
         <ul>
         <%--data-href="${ly }/global/check-list?flag=1&status=2" data-title="排查治理记录"--%>
         <c:choose>
@@ -197,9 +202,14 @@
         <li><a data-href="${ly }/global/zf-hidden-trouble?flag=1" data-title="charts3-2-1" href="javascript:void(0)">chart3-2-1</a></li>
         <li><a data-href="${ly }/global/zf-hidden-trouble?flag=2" data-title="charts3-2-2" href="javascript:void(0)">chart3-2-2</a></li>
         <li><a data-href="${ly }/global/zf-hidden-trouble?flag=3" data-title="charts3-2-3" href="javascript:void(0)">chart3-2-3</a></li>
+
         <li><a data-href="${ly }/global/manage-hidden-company" data-title="charts4-1" href="javascript:void(0)">chart4-1</a></li>
         <li><a data-href="${ly }/global/manage-hidden-danger" data-title="charts4-2" href="javascript:void(0)">chart4-2</a></li>
         <li><a data-href="${ly }/global/manage-hidden-industry" data-title="charts4-3" href="javascript:void(0)">chart4-3</a></li>
+
+
+
+
         </ul>
         </dd>
         </dl>
@@ -338,7 +348,7 @@
         </dl>
         <dl>
         <dt>
-        <a style="color:#fff;"  data-href="${ly}/global/tables/yjmanage_center"  data-title="应急指挥中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急指挥中心</a>
+        <a style="color:#fff;"  data-href="${ly }/global/tables/yjmanage_center"  data-title="应急指挥中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急指挥中心</a>
         </dt>
         </dl>
         <c:if test="${userType==6||userType==3}">

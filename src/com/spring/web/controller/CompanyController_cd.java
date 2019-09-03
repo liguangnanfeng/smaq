@@ -4397,21 +4397,21 @@ public class CompanyController_cd extends BaseController {
 
             if (0 != count1){
                 String s = df.format((float)count1 / sum);
-                map.put("result1",s+"%"); // 所有车间 现场风险 占比总数
+                map.put("result1",s); // 所有车间 现场风险 占比总数
             }else {
-                map.put("result1","0.00%"); // 所有车间 现场风险 占比总数
+                map.put("result1","0.00"); // 所有车间 现场风险 占比总数
             }
 
             if (0 != count2){
                 String s = df.format((float)count2 / sum);
-                map.put("result2",s+"%"); // 所有车间 基础风险 占比总数
+                map.put("result2",s); // 所有车间 基础风险 占比总数
             }else {
-                map.put("result2","0.00%"); // 所有车间 基础风险 占比总数
+                map.put("result2","0.00"); // 所有车间 基础风险 占比总数
             }
 
         }else {
-            map.put("result1","0.00%"); // 所有车间 现场风险 占比总数
-            map.put("result2","0.00%"); // 所有车间 基础风险 占比总数
+            map.put("result1","0.00"); // 所有车间 现场风险 占比总数
+            map.put("result2","0.00"); // 所有车间 基础风险 占比总数
         }
 
         map.put("count1",count1); // 所有车间 现场风险 合计总数
@@ -4463,20 +4463,20 @@ public class CompanyController_cd extends BaseController {
 
             if (null != sum && sum != 0){
                 String str = df.format((float)a / sum);// 一般 横占比
-                list.get(i).put("result11",str+"%");
+                list.get(i).put("result11",str);
 
                 String str1 = df.format((float)b / sum); // 较大 横占比
 
-                list.get(i).put("result22",str1+"%");
+                list.get(i).put("result22",str);
 
                 String str2 = df.format((float)c / sum); // 重大 横占比
 
-                list.get(i).put("result33",str2+"%");
+                list.get(i).put("result33",str);
             }else {
 
-                list.get(i).put("result11", 0.00);
-                list.get(i).put("result22", 0.00);
-                list.get(i).put("result33", 0.00);
+                list.get(i).put("result11", "0.00");
+                list.get(i).put("result22", "0.00");
+                list.get(i).put("result33", "0.00");
             }
 
         }
@@ -4489,30 +4489,30 @@ public class CompanyController_cd extends BaseController {
 
             if (null != count1 && 0 != count1){
                 String s = df.format((float)count1/sum);
-                map.put("result1",s+"%"); // 一般 竖占比
+                map.put("result1",s); // 一般 竖占比
 
             }else {
-                map.put("result1","0.00%"); // 一般 竖占比
+                map.put("result1","0.00"); // 一般 竖占比
             }
 
             if (null != count2 && 0 != count2){
                 String s = df.format((float)count2/sum);
-                map.put("result2",s+"%"); // 较大 竖占比
+                map.put("result2",s); // 较大 竖占比
             }else {
-                map.put("result2","0.00%"); // 较大 竖占比
+                map.put("result2","0.00"); // 较大 竖占比
             }
 
             if (null != count3 && 0 != count3){
                 String s = df.format((float)count3/sum);
-                map.put("result3",s+"%"); // 重大 竖占比
+                map.put("result3",s); // 重大 竖占比
             }else {
-                map.put("result3","0.00%"); // 重大 竖占比
+                map.put("result3","0.00"); // 重大 竖占比
             }
 
         }else {
-            map.put("result1","0.00%"); // 一般 竖占比
-            map.put("result2","0.00%"); // 较大 竖占比
-            map.put("result3","0.00%"); // 重大 竖占比
+            map.put("result1","0.00"); // 一般 竖占比
+            map.put("result2","0.00"); // 较大 竖占比
+            map.put("result3","0.00"); // 重大 竖占比
         }
 
         map.put("count1",count1); // 所有 一般隐患数据
@@ -4587,7 +4587,7 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("numbers3",numbers3);
         sign3 = numbers3;
 
-        numbers33 = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),2,company.getName()); // 重大 不合格 未治理
+        numbers33 = tCheckItemMapper.findRecheckFileByMap(2,user.getId(),2,company.getName()); // 重大 不合格 未治理
         model.addAttribute("numbers33",numbers33);
         sign33 = numbers33;
 
@@ -4599,21 +4599,21 @@ public class CompanyController_cd extends BaseController {
             String str = df.format((float)numbers1/add1);
             model.addAttribute("rate1",str);
         }else {
-            model.addAttribute("rate1",0.00);
+            model.addAttribute("rate1","0.00");
         }
 
         if (null != add2 && add2 != 0){ // 较大 治理率
             String str = df.format((float)numbers2/add2);
             model.addAttribute("rate2",str);
         }else {
-            model.addAttribute("rate2",0.00);
+            model.addAttribute("rate2","0.00");
         }
 
         if (null != add3 && add3 != 0){ // 重大 治理率
             String str = df.format((float)numbers3/add3);
             model.addAttribute("rate3",str);
         }else {
-            model.addAttribute("rate3",0.00);
+            model.addAttribute("rate3","0.00");
         }
 
         Integer flag1 = numbers1 + numbers2 + numbers3; // 已治理 合计
@@ -4626,9 +4626,9 @@ public class CompanyController_cd extends BaseController {
 
         if (null != flag && flag != 0){
             String str = df.format((float)flag1/flag);
-            model.addAttribute("number66",str+"%");  // 治理率 合计
+            model.addAttribute("number66",str);  // 治理率 合计
         }else {
-            model.addAttribute("number66",0.00);
+            model.addAttribute("number66","0.00");
         }
 
 
@@ -4653,7 +4653,7 @@ public class CompanyController_cd extends BaseController {
             Integer  c = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),2,(String) list.get(i).get("name")); // 重大 合格 已治理
             list.get(i).put("danger3",c);
 
-            Integer  c1 = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),2,(String) list.get(i).get("name")); // 重大 不合格 未治理
+            Integer  c1 = tCheckItemMapper.findRecheckFileByMap(2,user.getId(),2,(String) list.get(i).get("name")); // 重大 不合格 未治理
             list.get(i).put("danger33",c1);
 
             count3  = c + c1;
@@ -4670,23 +4670,23 @@ public class CompanyController_cd extends BaseController {
 
             if (null != count1 && count1 != 0){  // 一般和较小 治理率
                 String str = df.format((float)a/count1);
-                list.get(i).put("result11",str+"%");
+                list.get(i).put("result11",str);
             }else {
-                list.get(i).put("result11",0.00);
+                list.get(i).put("result11","0.00");
             }
 
             if (null != count2 && count2 != 0){ // 较大 治理率
                 String str = df.format((float)b/count2);
-                list.get(i).put("result22",str+"%");
+                list.get(i).put("result22",str);
             }else {
-                list.get(i).put("result22",0.00);
+                list.get(i).put("result22","0.00");
             }
 
             if (null != count3 && count3 != 0){ // 重大 治理率
                 String str = df.format((float)c/count3);
-                list.get(i).put("result33",str+"%");
+                list.get(i).put("result33",str);
             }else {
-                list.get(i).put("result33",0.00);
+                list.get(i).put("result33","0.00");
             }
 
 
@@ -4700,9 +4700,9 @@ public class CompanyController_cd extends BaseController {
 
             if (null != number && number != 0){
                 String str = df.format((float)number1/number);
-                list.get(i).put("number",str+"%");  // 治理率 合计
+                list.get(i).put("number",str);  // 治理率 合计
             }else {
-                list.get(i).put("number",0.00);
+                list.get(i).put("number","0.00");
             }
 
         }
@@ -4715,41 +4715,41 @@ public class CompanyController_cd extends BaseController {
 
             if (null != sign1 && 0 != sign1){
                 String str = df.format((float)sign1 / sum1);
-                map.put("result1",str+"%"); // 一般隐患的治理率 竖
+                map.put("result1",str); // 一般隐患的治理率 竖
 
             }else {
-                map.put("result1","0.00%"); // 一般隐患的治理率 竖
+                map.put("result1","0.00"); // 一般隐患的治理率 竖
             }
         }else {
-            map.put("result1","0.00%"); // 一般隐患的治理率 竖
+            map.put("result1","0.00"); // 一般隐患的治理率 竖
         }
 
         if (null != sum2 && 0 != sum2){
 
             if (null != sign2 && 0 != sign2){
                 String str = df.format((float)sign2 / sum2);
-                map.put("result2",str+"%"); // 较大隐患的治理率 竖
+                map.put("result2",str); // 较大隐患的治理率 竖
 
             }else {
-                map.put("result2","0.00%"); // 较大隐患的治理率 竖
+                map.put("result2","0.00"); // 较大隐患的治理率 竖
             }
 
         }else {
-            map.put("result2","0.00%"); // 一般隐患的治理率 竖
+            map.put("result2","0.00"); // 一般隐患的治理率 竖
         }
 
         if (null != sum3 && 0 != sum3){
 
             if (null != sign3 && 0 != sign3){
                 String str = df.format((float)sign3/sum3);
-                map.put("result3",str+"%"); // 重大隐患的治理率 竖
+                map.put("result3",str); // 重大隐患的治理率 竖
 
             }else {
-                map.put("result3","0.00%"); // 一般隐患的治理率 竖
+                map.put("result3","0.00"); // 一般隐患的治理率 竖
             }
 
         }else {
-            map.put("result3","0.00%"); // 一般隐患的治理率 竖
+            map.put("result3","0.00"); // 一般隐患的治理率 竖
         }
 
         Integer proportion1 = sign1 + sign2 + sign3;
@@ -4760,61 +4760,61 @@ public class CompanyController_cd extends BaseController {
 
             if (null != sign1 && 0 != sign1){
                 String str = df.format((float)sign1 / proportion1);
-                map.put("proportion11",str+"%");  // 一般隐患 已治理 占比数据 竖
+                map.put("proportion11",str);  // 一般隐患 已治理 占比数据 竖
             }else {
-                map.put("proportion11","0.00%"); // 一般隐患的治理率 竖
+                map.put("proportion11","0.00"); // 一般隐患的治理率 竖
             }
 
             if (null != sign2 && 0 != sign2){
                 String str = df.format((float)sign2 / proportion1);
-                map.put("proportion22",str+"%");  // 较大隐患 已治理 占比数据 竖
+                map.put("proportion22",str);  // 较大隐患 已治理 占比数据 竖
             }else {
-                map.put("proportion22","0.00%"); // 较大隐患 已治理 占比数据 竖
+                map.put("proportion22","0.00"); // 较大隐患 已治理 占比数据 竖
             }
 
             if (null != sign3 && 0 != sign3){
                 String str = df.format((float)sign3 / proportion1);
-                map.put("proportion33",str+"%");  // 重大隐患 已治理 占比数据 竖
+                map.put("proportion33",str);  // 重大隐患 已治理 占比数据 竖
 
             }else {
-                map.put("proportion33","0.00%"); // 重大隐患 已治理 占比数据 竖
+                map.put("proportion33","0.00"); // 重大隐患 已治理 占比数据 竖
             }
 
         }else {
-            map.put("proportion11","0.00%"); // 一般隐患的治理率 竖
-            map.put("proportion22","0.00%"); // 较大隐患 已治理 占比数据 竖
-            map.put("proportion33","0.00%"); // 重大隐患 已治理 占比数据 竖
+            map.put("proportion11","0.00"); // 一般隐患的治理率 竖
+            map.put("proportion22","0.00"); // 较大隐患 已治理 占比数据 竖
+            map.put("proportion33","0.00"); // 重大隐患 已治理 占比数据 竖
         }
 
         if (null != proportion2 && 0 != proportion2){
 
             if (null != sign11 && 0 != sign11){
                 String str = df.format((float)sign11 / proportion2);
-                map.put("proportion44",str+"%");  // 一般隐患 未治理 占比数据 竖
+                map.put("proportion44",str);  // 一般隐患 未治理 占比数据 竖
             }else {
-                map.put("proportion44","0.00%"); // 一般隐患 未治理 占比数据 竖
+                map.put("proportion44","0.00"); // 一般隐患 未治理 占比数据 竖
             }
 
             if (null != sign22 && 0 != sign22){
                 String str = df.format((float)sign22 / proportion2);
-                map.put("proportion55",str+"%");  // 较大隐患 未治理 占比数据 竖
+                map.put("proportion55",str);  // 较大隐患 未治理 占比数据 竖
             }else {
-                map.put("proportion55","0.00%"); // 较大隐患 未治理 占比数据 竖
+                map.put("proportion55","0.00"); // 较大隐患 未治理 占比数据 竖
             }
 
             if (null != sign33 && 0 != sign33){
                 Double sign = Double.valueOf(sign33 / proportion2);
                 String str = df.format((float)sign3/proportion2);
-                map.put("proportion66",str+"%");  // 重大隐患 未治理 占比数据 竖
+                map.put("proportion66",str);  // 重大隐患 未治理 占比数据 竖
 
             }else {
-                map.put("proportion66","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("proportion66","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
         }else {
-            map.put("proportion44","0.00%"); // 一般隐患的治理率 竖
-            map.put("proportion55","0.00%"); // 较大隐患 已治理 占比数据 竖
-            map.put("proportion66","0.00%"); // 重大隐患 已治理 占比数据 竖
+            map.put("proportion44","0.00"); // 一般隐患的治理率 竖
+            map.put("proportion55","0.00"); // 较大隐患 已治理 占比数据 竖
+            map.put("proportion66","0.00"); // 重大隐患 已治理 占比数据 竖
         }
 
         map.put("sign1",sign1); // 一般隐患 已治理 合计 竖
@@ -5080,132 +5080,132 @@ public class CompanyController_cd extends BaseController {
 
             if (null != sum1 && 0 != sum1) {
                 String str = df.format((float)sum1 / count);
-                map.put("result1",str+"%");
+                map.put("result1",str);
 
             } else {
-                map.put("result1","0.00%");  // 重大隐患 未治理 占比数据 竖
+                map.put("result1","0.00");  // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum2 && 0 != sum2) {
                 String str = df.format((float)sum2 / count);
-                map.put("result2",str + "%");
+                map.put("result2",str);
 
             } else {
-                map.put("result2","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result2","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum3 && 0 != sum3) {
                 String str = df.format((float)sum3 / count);
-                map.put("result3",str + "%");
+                map.put("result3",str);
 
             } else {
-                map.put("result3","0.00%");  // 重大隐患 未治理 占比数据 竖
+                map.put("result3","0.00");  // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum4 && 0 != sum4) {
                 String str = df.format((float)sum4 / count);
-                map.put("result4",str + "%");
+                map.put("result4",str);
 
             } else {
-                map.put("result4","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result4","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum5 && 0 != sum5) {
                 String str = df.format((float)sum5 / count);
-                map.put("result5", str + "%");
+                map.put("result5", str);
 
             } else {
-                map.put("result5","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result5","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum6 && 0 != sum6) {
                 String str = df.format((float)sum6 / count);
-                map.put("result6",str + "%");
+                map.put("result6",str);
 
             } else {
-                map.put("result6","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result6","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum7 && 0 != sum7) {
                 String str = df.format((float)sum7 / count);
-                map.put("result7",str + "%");
+                map.put("result7",str);
 
             } else {
-                map.put("result7","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result7","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum8 && 0 != sum8) {
                 String str = df.format((float)sum8 / count);
-                map.put("result8",str + "%");
+                map.put("result8",str);
 
             } else {
-                map.put("result8","0.00%");// 重大隐患 未治理 占比数据 竖
+                map.put("result8","0.00");// 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum9 && 0 != sum9) {
                 String str = df.format((float)sum9 / count);
-                map.put("result9",str + "%");
+                map.put("result9",str);
 
             } else {
-                map.put("result9","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result9","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum10 && 0 != sum10) {
                 String str = df.format((float)sum10 / count);
-                map.put("result10",str + "%");
+                map.put("result10",str);
 
             } else {
-                map.put("result10","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result10","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum11 && 0 != sum11) {
                 String str = df.format((float)sum11 / count);
-                map.put("result11",str + "%");
+                map.put("result11",str);
 
             } else {
-                map.put("result11","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result11","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum12 && 0 != sum12) {
                 String str = df.format((float)sum12 / count);
-                map.put("result12",str + "%");
+                map.put("result12",str);
 
             } else {
-                map.put("result12","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result12","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum13 && 0 != sum13) {
                 String str = df.format((float)sum13 / count);
-                map.put("result13",str + "%");
+                map.put("result13",str);
 
             } else {
-                map.put("result13","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result13","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum14 && 0 != sum14) {
                 String str = df.format((float)sum14 / count);
-                map.put("result14",str + "%");
+                map.put("result14",str);
 
             } else {
-                map.put("result14","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result14","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
         }else {
             // 占比 坚
-            map.put("result1", "0.00%");
-            map.put("result2", "0.00%");
-            map.put("result3", "0.00%");
-            map.put("result4", "0.00%");
-            map.put("result5", "0.00%");
-            map.put("result6", "0.00%");
-            map.put("result7", "0.00%");
-            map.put("result8", "0.00%");
-            map.put("result9", "0.00%");
-            map.put("result10", "0.00%");
-            map.put("result11", "0.00%");
-            map.put("result12", "0.00%");
-            map.put("result13", "0.00%");
-            map.put("result14", "0.00%");
+            map.put("result1", "0.00");
+            map.put("result2", "0.00");
+            map.put("result3", "0.00");
+            map.put("result4", "0.00");
+            map.put("result5", "0.00");
+            map.put("result6", "0.00");
+            map.put("result7", "0.00");
+            map.put("result8", "0.00");
+            map.put("result9", "0.00");
+            map.put("result10", "0.00");
+            map.put("result11", "0.00");
+            map.put("result12", "0.00");
+            map.put("result13", "0.00");
+            map.put("result14", "0.00");
         }
 
         // 合计 坚
@@ -5476,132 +5476,132 @@ public class CompanyController_cd extends BaseController {
 
             if (null != sum1 && 0 != sum1) {
                 String str = df.format((float)sum1 / count);
-                map.put("result1",str+"%");
+                map.put("result1",str);
 
             } else {
-                map.put("result1","0.00%");  // 重大隐患 未治理 占比数据 竖
+                map.put("result1","0.00");  // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum2 && 0 != sum2) {
                 String str = df.format((float)sum2 / count);
-                map.put("result2",str + "%");
+                map.put("result2",str);
 
             } else {
-                map.put("result2","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result2","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum3 && 0 != sum3) {
                 String str = df.format((float)sum3 / count);
-                map.put("result3",str + "%");
+                map.put("result3",str);
 
             } else {
-                map.put("result3","0.00%");  // 重大隐患 未治理 占比数据 竖
+                map.put("result3","0.00");  // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum4 && 0 != sum4) {
                 String str = df.format((float)sum4 / count);
-                map.put("result4",str + "%");
+                map.put("result4",str);
 
             } else {
-                map.put("result4","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result4","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum5 && 0 != sum5) {
                 String str = df.format((float)sum5 / count);
-                map.put("result5", str + "%");
+                map.put("result5", str);
 
             } else {
-                map.put("result5","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result5","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum6 && 0 != sum6) {
                 String str = df.format((float)sum6 / count);
-                map.put("result6",str + "%");
+                map.put("result6",str);
 
             } else {
-                map.put("result6","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result6","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum7 && 0 != sum7) {
                 String str = df.format((float)sum7 / count);
-                map.put("result7",str + "%");
+                map.put("result7",str);
 
             } else {
-                map.put("result7","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result7","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum8 && 0 != sum8) {
                 String str = df.format((float)sum8 / count);
-                map.put("result8",str + "%");
+                map.put("result8",str);
 
             } else {
-                map.put("result8","0.00%");// 重大隐患 未治理 占比数据 竖
+                map.put("result8","0.00");// 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum9 && 0 != sum9) {
                 String str = df.format((float)sum9 / count);
-                map.put("result9",str + "%");
+                map.put("result9",str);
 
             } else {
-                map.put("result9","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result9","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum10 && 0 != sum10) {
                 String str = df.format((float)sum10 / count);
-                map.put("result10",str + "%");
+                map.put("result10",str);
 
             } else {
-                map.put("result10","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result10","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum11 && 0 != sum11) {
                 String str = df.format((float)sum11 / count);
-                map.put("result11",str + "%");
+                map.put("result11",str);
 
             } else {
-                map.put("result11","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result11","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum12 && 0 != sum12) {
                 String str = df.format((float)sum12 / count);
-                map.put("result12",str + "%");
+                map.put("result12",str);
 
             } else {
-                map.put("result12","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result12","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum13 && 0 != sum13) {
                 String str = df.format((float)sum13 / count);
-                map.put("result13",str + "%");
+                map.put("result13",str);
 
             } else {
-                map.put("result13","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result13","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum14 && 0 != sum14) {
                 String str = df.format((float)sum14 / count);
-                map.put("result14",str + "%");
+                map.put("result14",str);
 
             } else {
-                map.put("result14","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result14","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
         }else {
             // 占比 坚
-            map.put("result1", "0.00%");
-            map.put("result2", "0.00%");
-            map.put("result3", "0.00%");
-            map.put("result4", "0.00%");
-            map.put("result5", "0.00%");
-            map.put("result6", "0.00%");
-            map.put("result7", "0.00%");
-            map.put("result8", "0.00%");
-            map.put("result9", "0.00%");
-            map.put("result10", "0.00%");
-            map.put("result11", "0.00%");
-            map.put("result12", "0.00%");
-            map.put("result13", "0.00%");
-            map.put("result14", "0.00%");
+            map.put("result1", "0.00");
+            map.put("result2", "0.00");
+            map.put("result3", "0.00");
+            map.put("result4", "0.00");
+            map.put("result5", "0.00");
+            map.put("result6", "0.00");
+            map.put("result7", "0.00");
+            map.put("result8", "0.00");
+            map.put("result9", "0.00");
+            map.put("result10", "0.00");
+            map.put("result11", "0.00");
+            map.put("result12", "0.00");
+            map.put("result13", "0.00");
+            map.put("result14", "0.00");
         }
         // 合计 坚
         map.put("sum1",sum1);
@@ -5804,132 +5804,132 @@ public class CompanyController_cd extends BaseController {
 
             if (null != sum1 && 0 != sum1) {
                 String str = df.format((float)sum1 / count);
-                map.put("result1",str+"%");
+                map.put("result1",str);
 
             } else {
-                map.put("result1","0.00%");  // 重大隐患 未治理 占比数据 竖
+                map.put("result1","0.00");  // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum2 && 0 != sum2) {
                 String str = df.format((float)sum2 / count);
-                map.put("result2",str + "%");
+                map.put("result2",str);
 
             } else {
-                map.put("result2","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result2","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum3 && 0 != sum3) {
                 String str = df.format((float)sum3 / count);
-                map.put("result3",str + "%");
+                map.put("result3",str);
 
             } else {
-                map.put("result3","0.00%");  // 重大隐患 未治理 占比数据 竖
+                map.put("result3","0.00");  // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum4 && 0 != sum4) {
                 String str = df.format((float)sum4 / count);
-                map.put("result4",str + "%");
+                map.put("result4",str);
 
             } else {
-                map.put("result4","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result4","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum5 && 0 != sum5) {
                 String str = df.format((float)sum5 / count);
-                map.put("result5", str + "%");
+                map.put("result5", str);
 
             } else {
-                map.put("result5","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result5","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum6 && 0 != sum6) {
                 String str = df.format((float)sum6 / count);
-                map.put("result6",str + "%");
+                map.put("result6",str);
 
             } else {
-                map.put("result6","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result6","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum7 && 0 != sum7) {
                 String str = df.format((float)sum7 / count);
-                map.put("result7",str + "%");
+                map.put("result7",str);
 
             } else {
-                map.put("result7","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result7","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum8 && 0 != sum8) {
                 String str = df.format((float)sum8 / count);
-                map.put("result8",str + "%");
+                map.put("result8",str);
 
             } else {
-                map.put("result8","0.00%");// 重大隐患 未治理 占比数据 竖
+                map.put("result8","0.00");// 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum9 && 0 != sum9) {
                 String str = df.format((float)sum9 / count);
-                map.put("result9",str + "%");
+                map.put("result9",str);
 
             } else {
-                map.put("result9","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result9","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum10 && 0 != sum10) {
                 String str = df.format((float)sum10 / count);
-                map.put("result10",str + "%");
+                map.put("result10",str);
 
             } else {
-                map.put("result10","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result10","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum11 && 0 != sum11) {
                 String str = df.format((float)sum11 / count);
-                map.put("result11",str + "%");
+                map.put("result11",str);
 
             } else {
-                map.put("result11","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result11","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum12 && 0 != sum12) {
                 String str = df.format((float)sum12 / count);
-                map.put("result12",str + "%");
+                map.put("result12",str);
 
             } else {
-                map.put("result12","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result12","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum13 && 0 != sum13) {
                 String str = df.format((float)sum13 / count);
-                map.put("result13",str + "%");
+                map.put("result13",str);
 
             } else {
-                map.put("result13","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result13","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
             if (null != sum14 && 0 != sum14) {
                 String str = df.format((float)sum14 / count);
-                map.put("result14",str + "%");
+                map.put("result14",str);
 
             } else {
-                map.put("result14","0.00%"); // 重大隐患 未治理 占比数据 竖
+                map.put("result14","0.00"); // 重大隐患 未治理 占比数据 竖
             }
 
         }else {
             // 占比 坚
-            map.put("result1", "0.00%");
-            map.put("result2", "0.00%");
-            map.put("result3", "0.00%");
-            map.put("result4", "0.00%");
-            map.put("result5", "0.00%");
-            map.put("result6", "0.00%");
-            map.put("result7", "0.00%");
-            map.put("result8", "0.00%");
-            map.put("result9", "0.00%");
-            map.put("result10", "0.00%");
-            map.put("result11", "0.00%");
-            map.put("result12", "0.00%");
-            map.put("result13", "0.00%");
-            map.put("result14", "0.00%");
+            map.put("result1", "0.00");
+            map.put("result2", "0.00");
+            map.put("result3", "0.00");
+            map.put("result4", "0.00");
+            map.put("result5", "0.00");
+            map.put("result6", "0.00");
+            map.put("result7", "0.00");
+            map.put("result8", "0.00");
+            map.put("result9", "0.00");
+            map.put("result10", "0.00");
+            map.put("result11", "0.00");
+            map.put("result12", "0.00");
+            map.put("result13", "0.00");
+            map.put("result14", "0.00");
         }
 
         // 合计 坚
@@ -6052,22 +6052,17 @@ public class CompanyController_cd extends BaseController {
             }else {
                 number6 += (Integer) list.get(i).get("bas_year");
             }
-
+        }
             /*if (null == (Integer) list.get(i).get("total_count")){
                 sum = (Integer) list.get(i).get("danger1") + (Integer)list.get(i).get("danger2") + (Integer) list.get(i).get("danger3") + (Integer) list.get(i).get("danger4") + (Integer) list.get(i).get("danger5");
-
             }else if (null != (Integer) list.get(i).get("total_count")){
                 sum = (Integer) list.get(i).get("danger1") + (Integer)list.get(i).get("danger2") + (Integer) list.get(i).get("danger3") + (Integer) list.get(i).get("danger4") + (Integer) list.get(i).get("danger5") + (Integer) list.get(i).get("total_count");
-
             }
             if (i == list.size()-1){
                 sb1.append(sum);
             }else {
                 sb1.append(sum).append(",");
             }*/
-
-        }
-
         /*String[] str = sb1.toString().split(",");
         Integer count6 = Integer.parseInt(str[0]);
         Integer count7 = Integer.parseInt(str[1]);
@@ -6079,8 +6074,6 @@ public class CompanyController_cd extends BaseController {
 
         Integer sum1 = number1 + number2 + number3 + number4 + number5 + number6;
 
-
-
         NumberFormat numberFormat = NumberFormat.getInstance();
         // 设置精确到小数点后2位
         numberFormat.setMaximumFractionDigits(2);
@@ -6090,15 +6083,12 @@ public class CompanyController_cd extends BaseController {
         String result4 = numberFormat.format((float)count4 / (float)sum * 100);
         String result5 = numberFormat.format((float)count5 / (float)sum * 100);
 
-
-
         String result11 = numberFormat.format((float)number1 / (float)sum1 * 100);
         String result22 = numberFormat.format((float)number2 / (float)sum1 * 100);
         String result33 = numberFormat.format((float)number3 / (float)sum1 * 100);
         String result44 = numberFormat.format((float)number4 / (float)sum1 * 100);
         String result55 = numberFormat.format((float)number5 / (float)sum1 * 100);
         String result66 = numberFormat.format((float)number6 / (float)sum1 * 100);
-
 
         map1.put("result1",result1+"%");
         map1.put("result2",result2+"%");

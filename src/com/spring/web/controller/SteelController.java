@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -2988,8 +2989,8 @@ public class SteelController extends BaseController {
                 sum14 += m;
 
                 Integer o = tCheckItemMapper.zfHiddenTrouble33(flag, (Integer) list.get(i).get("user_id")); // 其他 隐患数据
-                list.get(i).put("danger15", n);
-                sum15 += n;
+                list.get(i).put("danger15", o);
+                sum15 += o;
 
                 Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o;
 
@@ -3460,8 +3461,8 @@ public class SteelController extends BaseController {
                 sum14 += m;
 
                 Integer o = tCheckItemMapper.zhengFuChartData991(flag, (Integer) list.get(i).get("user_id")); // 其他 隐患数据
-                list.get(i).put("danger15", n);
-                sum15 += n;
+                list.get(i).put("danger15", o);
+                sum15 += o;
 
                 Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o;
 
@@ -4173,6 +4174,23 @@ public class SteelController extends BaseController {
         return "steel/company/evaluate/villageDown/manage-hidden-industry-charts4-3";
 
 
+    }
+    /**
+     * 行业端——集团企业首页——企业数量——跳转到企业页面
+     */
+    @RequestMapping(value = "move/company")
+    public String move(HttpServletRequest request, Model model,Integer uid) throws Exception {
+        User user = getLoginUser(request); //用户登录
+        if(user.getUserType()!=5){ //当用户不是企业类型时
+            HttpSession session = request.getSession();
+            //log.error("moveBefore："+user.toString());
+            session.setAttribute("govUser",user); //跳转前user保存
+            user = userMapper.selectByPrimaryKey(uid);
+            SessionUtil.setUser(request, user);
+        }
+        model.addAttribute("userName", companyMapper.selectByPrimaryKey(user.getId()).getName());
+        model.addAttribute("loginUserId", user.getId());
+        return "company/main";
     }
 
 

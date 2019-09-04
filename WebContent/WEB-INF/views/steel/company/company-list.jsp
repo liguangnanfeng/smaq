@@ -248,7 +248,7 @@ $(function() {
                 	line-height: 46px;width:180px;background-color: #eee;
                 	border: 0px solid #ddd;padding:3px 3px;
                 	border-radius: 0px;text-decoration:none" 
-                	href="${ly }/tradeclique/move/company?uid=${co.userId }" target="_parent">${co.name }</a>
+                	href="${ly }/steel/move/company?uid=${co.userId }" target="_parent">${co.name }</a>
             </td>
             <td>${co.industry2 }</td>
             <td>${co.dlevel }</td>

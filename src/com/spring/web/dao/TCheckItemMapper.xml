@@ -1154,8 +1154,13 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
+        <if test="control != '其他' ">
+            AND t3.control = #{control}
+        </if>
+        <if test="control == '其他' ">
+            AND t3.control is null
+        </if>
         AND t1. status = #{status}
-        AND t3.control = #{control}
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
         AND t1.recheck_file != ''
@@ -1193,7 +1198,7 @@
             t2. status = 2
         AND t2.del = 0
         AND t1. status = #{status}
-        AND t3.control in (${controls})
+        AND (t3.control in (${controls}) OR t3.control is null)
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
         AND t1.recheck_file != ''
@@ -1214,7 +1219,12 @@
             t2. status = 2
         AND t2.del = 0
         AND t1. status = #{status}
-        AND c1.industry like CONCAT('%','${industrys}','%')
+        <if test="industry != '其他'" >
+            AND c1.industry like CONCAT('%',#{industry},'%')
+        </if>
+        <if test="industry == '其他'" >
+            AND c1.industry is null
+        </if>
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
         AND t1.recheck_file != ''

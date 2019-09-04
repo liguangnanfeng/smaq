@@ -185,11 +185,12 @@
         <td>频次</td>
         <td>频次</td>
         <script>
-        console.log("${list}");
+        console.log('${list}')
+        window.a = 0;
         </script>
         </tr>
         <c:forEach items="${list}" varStatus="index" var="be">
-            <c:if test="${index.index<fn:length(list)-2 }">
+            <c:if test="${index.index<fn:length(list)-1 }">
                 <tr>
                 <td>${index.index + 1}</td>
                 <td>${be.name}</td>
@@ -207,13 +208,14 @@
                 <td></td>
                 <td></td>
                 <script>
-               <%--var sum=sum+'${be.danger11}';--%>
-                <%--&lt;%&ndash;console.log('${be.danger11}');&ndash;%&gt;--%>
-                <%--console.log(sum);--%>
+                window.a=window.a+'${be.danger11}'*1;
+                console.log(window.a);
                 </script>
                 </tr>
             </c:if>
+
             <c:if test="${index.index>fn:length(list)-2 }">
+
         <tr>
         <td>合计</td>
         <td>---</td>
@@ -233,29 +235,27 @@
         </tr>
         </c:if>
 
-         <c:if test="${index.index>fn:length(list)-2 }">
-            <tr>
-                <td>占比%</td>
-                <td>---</td>
-                <td>${be.result1}</td>
-                <td>${be.result2}</td>
-                <td>${be.result3}</td>
-                <td>${be.result4}</td>
-                <td>${be.result5}</td>
-                <td>${be.result6}</td>
-                <td>${be.result7}</td>
-                <td>${be.result8}</td>
-                <td>${be.result9}</td>
-                <td>${be.result10}</td>
-                <td>--</td>
-                <td></td>
-                <td></td>
-            </tr>
+
+            <c:if test="${index.index>fn:length(list)-2 }">
+                <tr>
+        <td>占比%</td>
+        <td>---</td>
+        <td>${be.result1}</td>
+        <td>${be.result2}</td>
+        <td>${be.result3}</td>
+        <td>${be.result4}</td>
+        <td>${be.result5}</td>
+        <td>${be.result6}</td>
+        <td>${be.result7}</td>
+        <td>${be.result8}</td>
+        <td>${be.result9}</td>
+        <td>${be.result10}</td>
+        <td>--</td>
+        <td></td>
+        <td></td>
+        </tr>
         </c:if>
         </c:forEach>
-            <%--<script>--%>
-                <%--$(".tdd").text(sum);--%>
-            <%--</script>--%>
         </table>
         </div>
         </div>

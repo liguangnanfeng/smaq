@@ -199,7 +199,7 @@
         </script>
         </tr>
             <c:forEach items="${list}" varStatus="index" var="be">
-                    <c:if test="${index.index<fn:length(list)-2}">
+                    <c:if test="${index.index<fn:length(list)-1}">
                             <tr class="tcontent">
                             <td>${index.index + 1}</td>
                             <td>${be.name}</td>
@@ -251,6 +251,7 @@
                             <td></td>
                             <td></td>
                             </tr>
+
                     </c:if>
                     <c:if test="${index.index>fn:length(list)-2 }">
                             <tr>

@@ -378,7 +378,7 @@ public interface TCheckItemMapper {
 
     Integer manageHiddenIndustry11(@Param("status")Integer status, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
-    Integer manageHiddenIndustry(@Param("status")Integer status, @Param("industrys")String industrys, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+    Integer manageHiddenIndustry(@Param("status")Integer status, @Param("industry")String industry, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer getTotalPage(@Param("userId") Integer userId, @Param("type") Integer type);
 

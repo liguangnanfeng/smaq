@@ -58,8 +58,12 @@ function openzl(){
   
 function showping(){
   $("#win-ping").modal("show")}
-  function showping2(){
-  $("#win-ping2").modal("show")}
+function showping2(){
+$("#win-ping2").modal("show")}
+  function showping3(){
+  $("#win-ping3").modal("show")}
+  function showping4(){
+  $("#win-ping4").modal("show")}
 
   </script>
 </head>
@@ -214,13 +218,16 @@ function showping(){
             </a> --%>
             <c:choose>
                 <c:when test="${c.hazard eq '1'}">
-                  <a class="one_tx radius pos-r"  data-title="重大危险源" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/village/company/zdlist?hazard=1" style="width:100%;margin-right:0;background:#1450DD;" >
+                  <%--onclick="Hui_admin_tab(this)"--%>
+                  <%--data-href="${ly }/village/company/zdlist?hazard=1"--%>
+                  <a class="one_tx radius pos-r"  data-title="重大危险源" onClick="showping3()" href="javascript:;"  style="width:100%;margin-right:0;background:#1450DD;" >
                   	<font style="width: 95%;text-align: center;left:auto;" id="zd_font" class="font_tx1 pos-a "></font>
                     	<font style="left:5px;width:88%;text-align:center;" class="font_tx2 pos-a" title="重大危险源">重大危险源</font>
                   </a>
                 </c:when>
                 <c:otherwise>
-                  <a class="one_tx radius pos-r"  data-title="重点部位关键装置实时监控" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="/village/to_monitor-list" style="width:100%;margin-right:0;background:#1450DD;" >
+                  <%--data-href="/village/to_monitor-list"--%>
+                  <a class="one_tx radius pos-r"  data-title="重点部位关键装置实时监控" onclick="showping3()" href="javascript:;" style="width:100%;margin-right:0;background:#1450DD;" >
                     <font style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a "></font>
                     <font style="left:5px;width:88%;text-align:center;" class="font_tx2 pos-a" title="重点部位">重点部位</font>
                   </a>
@@ -228,13 +235,15 @@ function showping(){
             </c:choose>
             <c:choose>
                 <c:when test="${c.danger eq '1'}">
-                  <a class="one_tx radius pos-r"  data-title="有限（受限）空间作业" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/village/company/gwlist?danger=1" style="width:100%;margin-right:0;background:#1450DD;" >
+                  <%--data-href="${ly }/village/company/gwlist?danger=1"--%>
+                  <a class="one_tx radius pos-r"  data-title="有限（受限）空间作业" onclick="showping4()"  href="javascript:;"  style="width:100%;margin-right:0;background:#1450DD;" >
                   	<font id="gw_font" style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a "></font>
                      <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="有限（受限）空间作业">有限（受限）空间作业</font>
                   </a>
                 </c:when>
                 <c:otherwise>
-                  <a class="one_tx radius pos-r"  data-title="重点部位关键装置实时监控" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="/village/to_monitor-list" style="width:100%;margin-right:0;background:#1450DD;" >
+                  <%--data-href="/village/to_monitor-list"--%>
+                  <a class="one_tx radius pos-r"  data-title="重点部位关键装置实时监控" onclick="showping4()" href="javascript:;" style="width:100%;margin-right:0;background:#1450DD;" >
                     <font style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a "></font>
                     <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="关键装置">关键装置</font>
                   </a>
@@ -283,7 +292,12 @@ function showping(){
   </div>
   </div>
   </div>
-
+<style>
+  .fal{
+     font-size:22px;
+     text-align:center
+  }
+  </style>
   <!-- 检验检测弹窗 -->
   <div id="win-ping2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="width:800px">
@@ -307,6 +321,52 @@ function showping(){
   </div>
   </div>
   </div>
+
+  <%--重点部位--%>
+  <div id="win-ping3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:400px">
+  <div class="modal-content radius">
+  <div class="modal-header">
+  <h3 class="modal-title">在线监测预警.报警</h3>
+  <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+  </div>
+  <div class="modal-body fal">
+  <c:choose>
+    <c:when test="${c.hazard eq '1'}">
+      重大危险源无报警
+    </c:when>
+    <c:otherwise>
+      重点部位无报警
+    </c:otherwise>
+  </c:choose>
+  </div>
+  </div>
+  </div>
+  </div>
+
+  <%--关键设备--%>
+  <div id="win-ping4" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:400px">
+  <div class="modal-content radius">
+  <div class="modal-header">
+  <h3 class="modal-title">在线监测预警.报警</h3>
+  <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+  </div>
+  <div class="modal-body fal">
+  <c:choose>
+    <c:when test="${c.danger eq '1'}">
+      有限（受限）空间作业无故障
+    </c:when>
+    <c:otherwise>
+      关键装置无故障
+    </c:otherwise>
+  </c:choose>
+
+  </div>
+  </div>
+  </div>
+  </div>
+
 
 
   <div class="div_tx mt-15">

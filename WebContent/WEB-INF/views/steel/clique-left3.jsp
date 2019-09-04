@@ -99,7 +99,7 @@
               <ul>
                   <li><a data-href="${ly }/steel/clique/basic-information" data-title="基本信息" href="javascript:void(0)">基本信息</a></li>
                   <li><a data-href="${ly }/steel/threeLeft?leftBasic=1" data-title="组织架构" href="javascript:void(0)">组织架构</a></li>
-                  <li><a data-href="${ly }/steel/product/mequipment-list" data-title="主要设备设施" href="javascript:void(0)">主要设备设施</a></li>
+                  <%--<li><a data-href="${ly }/steel/product/mequipment-list" data-title="主要设备设施" href="javascript:void(0)">主要设备设施</a></li>--%>
                   <li><a data-href="${ly }/steel/product/material-list" data-title="原辅材料" href="javascript:void(0)">原辅材料</a></li>
                   <li><a data-href="${ly }/steel/product/product-list" data-title="主要产品" href="javascript:void(0)">主要产品</a></li>
                   <li><a data-href="${ly }/steel/process/process-list" data-title="生产工艺" href="javascript:void(0)">生产工艺</a></li>

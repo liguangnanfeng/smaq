@@ -38,7 +38,7 @@
     select
     <include refid="Base_Column_List" />
     from town_tbl
-    where user_id = #{userId,jdbcType=INTEGER}
+    where district_id = #{districtId,jdbcType=INTEGER}
   </select>
 
 

@@ -8797,7 +8797,6 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping("/tables/yjmanage_center")
     public String yjmanage_center(Model model, HttpServletRequest request) throws Exception {
-
         User user = getLoginUser(request);
         Company c = companyMapper.selectByPrimaryKey(user.getId());
         List<Integer> count = userService.selectCount(new CompanyListReqDTO(), user);

@@ -1,6 +1,7 @@
 package com.spring.web.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.spring.web.BaseController;
 import com.spring.web.dao.HiddenPlanMapper;
 import com.spring.web.ibatis.DynamicParameter;
@@ -4193,5 +4194,103 @@ public class SteelController extends BaseController {
         return "company/main";
     }
 
+    @RequestMapping(value = "safety-system/statistics-list")
+    public String statisticsList(Model model, HttpServletRequest request) throws Exception {
+        User user = getLoginUser(request);
+        List<Map<String, Object>> branchs = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId()); //获取所有分厂信息
+        //将分厂的id变成一个集合
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < branchs.size() ; i++) {
 
+            if (i == branchs.size()-1){
+                sb.append("'").append(branchs.get(i).get("user_id")).append("'");
+            }else {
+                sb.append("'").append(branchs.get(i).get("user_id")).append("',");
+            }
+
+        }
+        List<Map<String, Object>> list = aCompanyManualMapper.findManualLevel(sb.toString());
+        String[] industrys = new String[branchs.size()];
+        Integer[] gg1 = new Integer[branchs.size()];//红
+        Integer[] gg2 = new Integer[branchs.size()];//橙
+        Integer[] gg3 = new Integer[branchs.size()];//黄
+        Integer[] gg4 = new Integer[branchs.size()];//蓝
+        Integer[] flag1 = new Integer[]{0, 0, 0, 0};//部位 数值顺序对应 红橙黄蓝
+        for(int i = 0; i<branchs.size(); i++){
+            industrys[i] = (String)branchs.get(i).get("user_name");
+            gg1[i] = 0;
+            gg2[i] = 0;
+            gg3[i] = 0;
+            gg4[i] = 0;
+        }
+        Gson gson = new Gson();
+        if(0L == list.size()) { //当查询为空时
+            model.addAttribute("flag1", flag1);
+            model.addAttribute("industrys", gson.toJson(industrys));
+            model.addAttribute("gg1", gson.toJson(gg1));
+            model.addAttribute("gg2", gson.toJson(gg2));
+            model.addAttribute("gg3", gson.toJson(gg3));
+            model.addAttribute("gg4", gson.toJson(gg4));
+            return "village/safety-system/statistics-list";
+        }
+        else{
+           for(Map map:list){
+               String level = ""; //获取风险等级
+               if (null != map.get("level")) {//保证所获取的分险的不为空
+                   level = (String) map.get("level");
+               }
+               setcompany_manualCount(level, flag1);//统计饼状图数据
+               String industry = null;
+               if (null != map.get("user_name")) {//保证所获取的分险的不为空
+                   industry = (String) map.get("user_name");
+               }
+               if (null != industry && !"".equals(industry)) {
+                   for (int i = 0; i < industrys.length; i++) {
+                       if (industry.equals(industrys[i])) {
+                           if ("红色".equals(level)) {
+                               gg1[i] = gg1[i] + 1;
+                           } else if ("橙色".equals(level)) {
+                               gg2[i] = gg2[i] + 1;
+                           } else if ("黄色".equals(level)) {
+                               gg3[i] = gg3[i] + 1;
+                           } else if ("蓝色".equals(level)) {
+                               gg4[i] = gg4[i] + 1;
+                           }
+                           break;
+                       }
+                   }
+               }
+
+           }
+        }
+        List<Map<String, Object>> list1 = aCompanyManualMapper.selectCompanyLevel(sb.toString());
+        model.addAttribute("list", list1);
+        model.addAttribute("flag1", flag1);
+        model.addAttribute("industrys", gson.toJson(industrys));
+        model.addAttribute("gg1", gson.toJson(gg1));
+        model.addAttribute("gg2", gson.toJson(gg2));
+        model.addAttribute("gg3", gson.toJson(gg3));
+        model.addAttribute("gg4", gson.toJson(gg4));
+        return "village/safety-system/statistics-list";
+    }
+
+    void setcompany_manualCount(String level, Integer[] arr) {
+        if ("红色".equals(level)) {
+            arr[0] = arr[0] + 1;
+        } else if ("橙色".equals(level)) {
+            arr[1] = arr[1] + 1;
+        } else if ("黄色".equals(level)) {
+            arr[2] = arr[2] + 1;
+        } else if ("蓝色".equals(level)) {
+            arr[3] = arr[3] + 1;
+        }
+    }
+
+    @RequestMapping(value = "/selectLevelMessage", method = RequestMethod.POST)
+    public @ResponseBody Result selectLevelMessage( HttpServletRequest request, String companyName){
+        Result result = new ResultImpl();
+        List<Map<String, Object>> list = aCompanyManualMapper.selectLevelMessage(companyName);
+         result.setMap("list", list);
+        return result;
+    }
 }

@@ -2896,7 +2896,7 @@ public class VillageController extends BaseController {
         setUserId(user, m);
         List<Map<String, Object>> list = aCompanyManualMapper.selectByMap2(m);
 
-        List<Library> ll = libraryMapper.selectLibraryList(1);//行业
+        List<Library> ll = libraryMapper.selectLibraryList(1);//查询所有行业
 
         String[] industrys = new String[ll.size()];
         Integer[] gg1 = new Integer[ll.size()];//红
@@ -2913,8 +2913,8 @@ public class VillageController extends BaseController {
 
         Integer[] flag1 = new Integer[]{0, 0, 0, 0};//部位 数值顺序对应 红橙黄蓝
         for (Map<String, Object> l : list) {
-            String level = "";
-            if (null != l.get("level")) {
+            String level = ""; //获取风险等级
+            if (null != l.get("level")) {//保证所获取的分险的不为空
                 level = (String) l.get("level");
             }
             setcompany_manualCount(level, flag1);

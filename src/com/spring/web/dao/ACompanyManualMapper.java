@@ -194,5 +194,11 @@ public interface ACompanyManualMapper {
     Integer selectCountNow(@Param("uid")Integer uid,@Param("name")String name);
 
     List<ACompanyManual> findDangerOne(@Param("uid")Integer uid, @Param("dmid")String dmid);
+
+    List<Map<String, Object>> findManualLevel(@Param("Ids") String Ids);
+
+    List<Map<String, Object>> selectCompanyLevel(@Param("Ids") String Ids);
+
+    List<Map<String, Object>> selectLevelMessage(@Param("companyName") String companyName);
 }
 

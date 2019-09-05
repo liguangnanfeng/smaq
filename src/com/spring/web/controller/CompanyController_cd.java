@@ -4631,7 +4631,6 @@ public class CompanyController_cd extends BaseController {
             model.addAttribute("number66","0.00");
         }
 
-
         for (int i = 0; i < list.size(); i++) {
 
             Integer  a = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),3,(String) list.get(i).get("name")); // 一般和较小 合格 已治理
@@ -4689,7 +4688,6 @@ public class CompanyController_cd extends BaseController {
                 list.get(i).put("result33","0.00");
             }
 
-
             Integer number1 = a + b + c; // 已治理 合计
             list.get(i).put("number1",number1);
 
@@ -4711,46 +4709,7 @@ public class CompanyController_cd extends BaseController {
         Integer sum2 = sign2 + sign22;
         Integer sum3 = sign3 + sign33;
 
-        if (null != sum1 && 0 != sum1){
-
-            if (null != sign1 && 0 != sign1){
-                String str = df.format((float)sign1 / sum1);
-                map.put("result1",str); // 一般隐患的治理率 竖
-
-            }else {
-                map.put("result1","0.00"); // 一般隐患的治理率 竖
-            }
-        }else {
-            map.put("result1","0.00"); // 一般隐患的治理率 竖
-        }
-
-        if (null != sum2 && 0 != sum2){
-
-            if (null != sign2 && 0 != sign2){
-                String str = df.format((float)sign2 / sum2);
-                map.put("result2",str); // 较大隐患的治理率 竖
-
-            }else {
-                map.put("result2","0.00"); // 较大隐患的治理率 竖
-            }
-
-        }else {
-            map.put("result2","0.00"); // 一般隐患的治理率 竖
-        }
-
-        if (null != sum3 && 0 != sum3){
-
-            if (null != sign3 && 0 != sign3){
-                String str = df.format((float)sign3/sum3);
-                map.put("result3",str); // 重大隐患的治理率 竖
-
-            }else {
-                map.put("result3","0.00"); // 一般隐患的治理率 竖
-            }
-
-        }else {
-            map.put("result3","0.00"); // 一般隐患的治理率 竖
-        }
+        findCounts7(map, sign1, sign2, sign3, df, sum1, sum2, sum3);
 
         Integer proportion1 = sign1 + sign2 + sign3;
 
@@ -4831,6 +4790,49 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("list",list);
 
         return "company/danger/zhuChartData44";
+    }
+
+    private void findCounts7(Map<String, Object> map, Integer sign1, Integer sign2, Integer sign3, DecimalFormat df, Integer sum1, Integer sum2, Integer sum3) {
+        if (null != sum1 && 0 != sum1){
+
+            if (null != sign1 && 0 != sign1){
+                String str = df.format((float)sign1 / sum1);
+                map.put("result1",str); // 一般隐患的治理率 竖
+
+            }else {
+                map.put("result1","0.00"); // 一般隐患的治理率 竖
+            }
+        }else {
+            map.put("result1","0.00"); // 一般隐患的治理率 竖
+        }
+
+        if (null != sum2 && 0 != sum2){
+
+            if (null != sign2 && 0 != sign2){
+                String str = df.format((float)sign2 / sum2);
+                map.put("result2",str); // 较大隐患的治理率 竖
+
+            }else {
+                map.put("result2","0.00"); // 较大隐患的治理率 竖
+            }
+
+        }else {
+            map.put("result2","0.00"); // 一般隐患的治理率 竖
+        }
+
+        if (null != sum3 && 0 != sum3){
+
+            if (null != sign3 && 0 != sign3){
+                String str = df.format((float)sign3/sum3);
+                map.put("result3",str); // 重大隐患的治理率 竖
+
+            }else {
+                map.put("result3","0.00"); // 一般隐患的治理率 竖
+            }
+
+        }else {
+            map.put("result3","0.00"); // 一般隐患的治理率 竖
+        }
     }
 
 

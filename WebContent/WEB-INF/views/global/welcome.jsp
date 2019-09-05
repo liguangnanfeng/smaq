@@ -34,6 +34,10 @@ body .lianj_com img{margin-right:6px;margin-left:6px;}
 .div_zhe{width:100%;}
 .change_zhe{float: right;margin-top: 20px;}
 body .iconxw{transform: rotate(-90deg);float:right;margin-right:-5px;margin-top: -3px;}
+  .fal{
+  font-size:22px;
+  text-align:center
+  }
 </style>
 <script type="text/javascript">
 var chart = null;
@@ -53,6 +57,10 @@ function showping(){
   function showping2(){
   $("#win-ping2").modal("show")}
 
+  function showping3(){
+  $("#win-ping3").modal("show")}
+  function showping4(){
+  $("#win-ping4").modal("show")}
 
 
 
@@ -182,14 +190,22 @@ function showping(){
         <div class="div_tx div_yh pos-a" style="height:313px;padding: 13px 20px 0px;">
           <div class="title_xw pos-r" style="border-bottom:1px solid #F6F6F6;color:#FB0005;"><div class="bt_yuj" style="width:180px">在线监测预警.报警</div></div>
           <div class="list_zd">
-            <a class="one_tx radius pos-r"  data-title="重大危险源隐患企业列表" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/global/company/toZdCompanyList?hazard=1" style="width:100%;margin-right:0;background:#1450DD;" >
-            	<font style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a " id="zd_font"></font>
-              	<font style="left:5px;width:88%;text-align:center;" class="font_tx2 pos-a" title="重大危险源">重大危险源</font>
+            <a class="one_tx radius pos-r"  data-title="重大危险源隐患企业列表" onClick="showping3()"  href="javascript:;" data-href="${ly }/global/company/toZdCompanyList?hazard=1" style="width:100%;margin-right:0;background:#1450DD;" >
+            <font style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a " id="zd_font"></font>
+            <font style="left:5px;width:88%;text-align:center;" class="font_tx2 pos-a" title="重大危险源">重大危险源</font>
             </a>
-            <a class="one_tx radius pos-r"  data-title="高危作业隐患企业列表" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/global/company/toGwCompanyList?danger=1" style="width:100%;margin-right:0;background:#1450DD;" >
-            	<font id="gw_font" style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a "></font>
-               <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="有限（受限）空间作业">有限（受限）空间作业</font>
+            <a class="one_tx radius pos-r"  data-title="高危作业隐患企业列表" onClick="showping4()"  href="javascript:;" data-href="${ly }/global/company/toGwCompanyList?danger=1" style="width:100%;margin-right:0;background:#1450DD;" >
+            <font id="gw_font" style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a "></font>
+            <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="有限（受限）空间作业">有限（受限）空间作业</font>
             </a>
+            <%--<a class="one_tx radius pos-r"  data-title="重大危险源隐患企业列表" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/global/company/toZdCompanyList?hazard=1" style="width:100%;margin-right:0;background:#1450DD;" >--%>
+            	<%--<font style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a " id="zd_font"></font>--%>
+              	<%--<font style="left:5px;width:88%;text-align:center;" class="font_tx2 pos-a" title="重大危险源">重大危险源</font>--%>
+            <%--</a>--%>
+            <%--<a class="one_tx radius pos-r"  data-title="高危作业隐患企业列表" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/global/company/toGwCompanyList?danger=1" style="width:100%;margin-right:0;background:#1450DD;" >--%>
+            	<%--<font id="gw_font" style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a "></font>--%>
+               <%--<font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="有限（受限）空间作业">有限（受限）空间作业</font>--%>
+            <%--</a>--%>
             <%-- <a class="one_tx radius pos-r" data-title="河道污染隐患企业列表" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/village/company/toWaterWarnCompanyList?danger=1" style="width:100%;margin-right:0;background:#DF3030;">
             <img alt="" src="${ly }/images/httb8.png"/>
             <font class="font_tx1 pos-a "></font>
@@ -259,6 +275,40 @@ function showping(){
   </div>
 
 
+  <%--重点部位--%>
+  <div id="win-ping3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:400px">
+  <div class="modal-content radius">
+  <div class="modal-header">
+  <h3 class="modal-title">在线监测预警.报警</h3>
+  <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+  </div>
+  <div class="modal-body fal">
+
+      重大危险源无报警
+
+  </div>
+  </div>
+  </div>
+  </div>
+
+  <%--关键设备--%>
+  <div id="win-ping4" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:400px">
+  <div class="modal-content radius">
+  <div class="modal-header">
+  <h3 class="modal-title">在线监测预警.报警</h3>
+  <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+  </div>
+  <div class="modal-body fal">
+
+      有限（受限）空间作业无故障
+
+
+  </div>
+  </div>
+  </div>
+  </div>
 
 
       <div class="div_tx mt-15">

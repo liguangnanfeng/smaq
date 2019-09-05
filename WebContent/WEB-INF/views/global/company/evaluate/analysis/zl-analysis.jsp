@@ -122,9 +122,9 @@
         <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var a2={
-        一般:'${result1}',
-        较大:'${result2}',
-        重大:'${result3}'
+        一般:'${resusts1}',
+        较大:'${resusts2}',
+        重大:'${resusts3}'
         }
         console.log('a2:',a2);
         var option2 = {
@@ -148,15 +148,15 @@
         data: [
         {
         name: '一般隐患',
-        value: '${result1!=null?result1:0}',
+        value: '${resusts1!=null?resusts1:0}',
         },
         {
         name: '较大隐患',
-        value:'${result2!=null?result2:0}',
+        value:'${resusts2!=null?resusts2:0}',
         },
         {
         name: '重大隐患',
-        value: '${result3!=null?result3:0}',
+        value: '${resusts3!=null?resusts3:0}',
         }
         ],
         itemStyle: {
@@ -212,9 +212,9 @@
         <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var a3={
-        一般:'${result4}',
-        较大:'${result5}',
-        重大:'${result6}'
+        一般:'${resusts4}',
+        较大:'${resusts5}',
+        重大:'${resusts6}'
         }
         console.log('a3:',a3);
         var option3 = {
@@ -238,15 +238,15 @@
         data: [
             {
             name: '一般隐患',
-            value: '${result4!=null?result4:"0"}',
+            value: '${resusts4!=null?resusts4:"0"}',
             },
             {
             name: '较大隐患',
-            value:'${result5!=null?result5:"0"}',
+            value:'${resusts5!=null?resusts5:"0"}',
             },
             {
             name: '重大隐患',
-            value: '${result6!=null?result6:"0"}',
+            value: '${resusts6!=null?resusts6:"0"}',
             }
         ],
         itemStyle: {

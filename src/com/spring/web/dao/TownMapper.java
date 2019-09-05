@@ -92,5 +92,5 @@ public interface TownMapper {
      */
     Map selectParticularByUid(Integer id);
 
-    List<Town> findAll(@Param("userId") Integer userId);
+    List<Town> findAll(@Param("districtId") Integer districtId);
 }

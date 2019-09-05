@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -1152,6 +1153,8 @@ public class SteelController extends BaseController {
         User user = getLoginUser(request);
         StringBuilder sb = new StringBuilder();
         List<Integer> ids = tradeCliqueMapper.selectCompanyIdsByCqlib(user.getId());
+        List<Map<String, Object>> branchs = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
+        String[] companyNames = new String[branchs.size()];
         DecimalFormat df = new DecimalFormat("0.00");
         if (null == flag){
             flag = 1;
@@ -1170,38 +1173,50 @@ public class SteelController extends BaseController {
             }
 
         }
+        //获取各个分公司名称
+        for(int i=0; i<branchs.size(); i++){
+            companyNames[i] = (String)branchs.get(i).get("user_name");
+        }
 
-        Integer a = tCheckMapper.zfPerformanceCount(flag,"化工",sb.toString()); // 化工行业 数据
+       // Integer a = tCheckMapper.zfPerformanceCount(flag,"化工",sb.toString()); // 化工行业 数据
+        Integer a = tCheckMapper.zfPerformanceCount2(flag, (Integer)branchs.get(0).get("user_id"));
         model.addAttribute("danger1",a);
 
-        Integer  b = tCheckMapper.zfPerformanceCount(flag,"冶金",sb.toString()); // 冶金行业 数据
+        //Integer  b = tCheckMapper.zfPerformanceCount(flag,"冶金",sb.toString()); // 冶金行业 数据
+        Integer b = tCheckMapper.zfPerformanceCount2(flag,(Integer)branchs.get(1).get("user_id"));
         model.addAttribute("danger2",b);
 
-        Integer  c = tCheckMapper.zfPerformanceCount(flag,"有色",sb.toString()); // 有色行业 数据
+        //Integer  c = tCheckMapper.zfPerformanceCount(flag,"有色",sb.toString()); // 有色行业 数据
+        Integer c = tCheckMapper.zfPerformanceCount2(flag,(Integer)branchs.get(2).get("user_id"));
         model.addAttribute("danger3",c);
 
-        Integer  d = tCheckMapper.zfPerformanceCount(flag,"建材",sb.toString()); // 建材行业 数据
+        //Integer  d = tCheckMapper.zfPerformanceCount(flag,"建材",sb.toString()); // 建材行业 数据
+        Integer d = tCheckMapper.zfPerformanceCount2(flag,(Integer)branchs.get(3).get("user_id"));
         model.addAttribute("danger4",d);
 
-        Integer  e = tCheckMapper.zfPerformanceCount(flag,"机械",sb.toString()); // 机械行业 数据
+        //Integer  e = tCheckMapper.zfPerformanceCount(flag,"机械",sb.toString()); // 机械行业 数据
+        Integer e = tCheckMapper.zfPerformanceCount2(flag,(Integer)branchs.get(4).get("user_ids"));
         model.addAttribute("danger5",e);
 
-        Integer  f = tCheckMapper.zfPerformanceCount(flag,"轻工",sb.toString()); // 轻工行业 数据
+        //Integer  f = tCheckMapper.zfPerformanceCount(flag,"轻工",sb.toString()); // 轻工行业 数据
+        Integer f = tCheckMapper.zfPerformanceCount2(flag,(Integer)branchs.get(5).get("user_id"));
         model.addAttribute("danger6",f);
 
-        Integer  g = tCheckMapper.zfPerformanceCount(flag,"纺织",sb.toString()); // 纺织行业 数据
+        //Integer  g = tCheckMapper.zfPerformanceCount(flag,"纺织",sb.toString()); // 纺织行业 数据
+        Integer g = tCheckMapper.zfPerformanceCount2(flag,(Integer)branchs.get(6).get("user_id"));
         model.addAttribute("danger7",g);
 
-        Integer  h = tCheckMapper.zfPerformanceCount(flag,"商贸",sb.toString()); // 商贸行业 数据
+        //Integer  h = tCheckMapper.zfPerformanceCount(flag,"商贸",sb.toString()); // 商贸行业 数据
+        Integer h = tCheckMapper.zfPerformanceCount2(flag,(Integer)branchs.get(7).get("user_id"));
         model.addAttribute("danger8",h);
 
-        Integer  i1 = tCheckMapper.zfPerformanceCount(flag,"烟花",sb.toString()); // 烟花行业 数据
-        model.addAttribute("danger9",i1);
+//        Integer  i1 = tCheckMapper.zfPerformanceCount(flag,"烟花",sb.toString()); // 烟花行业 数据
+//        model.addAttribute("danger9",i1);
+//
+//        Integer  j = tCheckMapper.zfPerformanceCount11(flag,sb.toString()); // 其他行业 数据
+//        model.addAttribute("danger10",j);
 
-        Integer  j = tCheckMapper.zfPerformanceCount11(flag,sb.toString()); // 其他行业 数据
-        model.addAttribute("danger10",j);
-
-        Integer count = a + b + c + d + e + f + g + h + i1 + j ;
+        Integer count = a + b + c + d + e + f + g + h;
 
         model.addAttribute("count",count);
 
@@ -1271,7 +1286,7 @@ public class SteelController extends BaseController {
                 model.addAttribute("result8","0.00");// 商贸 占比数据
             }
 
-            if (null != i1 && 0 != i1) {
+            /*if (null != i1 && 0 != i1) {
                 String str = df.format((float)i1 / count);
                 model.addAttribute("result9",str);
 
@@ -1285,7 +1300,7 @@ public class SteelController extends BaseController {
 
             } else {
                 model.addAttribute("result10","0.00"); // 其他 占比数据
-            }
+            }*/
 
         }else {
             // 占比 坚
@@ -1493,7 +1508,8 @@ public class SteelController extends BaseController {
             model.addAttribute("double14", "0.00");
             model.addAttribute("double15", "0.00");
         }
-
+        Gson gson = new Gson();
+        model.addAttribute("companyNames", gson.toJson(companyNames));
         model.addAttribute("sign",sign);
         model.addAttribute("flag",flag);
 

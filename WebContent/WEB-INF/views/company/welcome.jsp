@@ -119,10 +119,18 @@ $("#win-ping2").modal("show")}
           		<label class="bt_zd">重点企业</label>
           	</c:if>
           	<c:if test="${moveCompany == 1 }">
+              <c:if test="${flage == 2}">
           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          		<a href="${ly }/steel/back/gov" target="_parent">
+          		<a href="${ly }/steel/back/steel" target="_parent">
           			<strong style="color:red;">${nameBefore }</strong>
           		</a>
+              </c:if>
+              <c:if test="${flage == 1}">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="${ly }/global/back/global" target="_parent">
+                  <strong style="color:red;">${nameBefore }</strong>
+                </a>
+              </c:if>
           	</c:if>
           </p>
           <span>统一社会信用代码：${c.license }</span>

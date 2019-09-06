@@ -4207,6 +4207,7 @@ public class SteelController extends BaseController {
         }
         model.addAttribute("userName", companyMapper.selectByPrimaryKey(user.getId()).getName());
         model.addAttribute("loginUserId", user.getId());
+        model.addAttribute("flage", 2);
         return "company/main";
     }
 
@@ -4312,7 +4313,7 @@ public class SteelController extends BaseController {
     /**
      * 行业端——集团企业首页——企业数量——跳转返回
      */
-    @RequestMapping(value = "back/gov")
+    @RequestMapping(value = "back/steel")
     public String back(HttpServletRequest request, Model model) throws Exception {
         HttpSession session = request.getSession();
         User user =  (User)session.getAttribute("govUser");
@@ -4331,7 +4332,7 @@ public class SteelController extends BaseController {
                 //log.error("TradeCompany："+tradeMapper.selectTradeCompany(user.getId()));
                 return "steel/clique-main";
             }
-            return "trade/main";
+
         }
         if(user.getUserType()==6){//区
             Map<String, Object> m = new HashMap<String, Object>();
@@ -4340,7 +4341,7 @@ public class SteelController extends BaseController {
             model.addAttribute("list", list);
             model.addAttribute("name_", districtMapper.selectByPrimaryKey(user.getId()).getName());
             model.addAttribute("loginUserId", user.getId());
-            return "area/main";
+
         }
         if(user.getUserType()==3){//镇
             Map<String, Object> m = new HashMap<String, Object>();
@@ -4349,7 +4350,7 @@ public class SteelController extends BaseController {
             model.addAttribute("list", list);
             model.addAttribute("name_", townMapper.selectByPrimaryKey(user.getId()).getName());
             model.addAttribute("loginUserId", user.getId());
-            return "town/main";
+
         }
         if(user.getUserType()==4){//乡
             model.addAttribute("name_", villageMapper.selectByPrimaryKey(user.getId()).getName());
@@ -4357,15 +4358,13 @@ public class SteelController extends BaseController {
 //                return "gang/main";
 //            }
             model.addAttribute("loginUserId", user.getId());
-            return "village/main";
         }
         if(user.getUserType()==9){//安泰
             model.addAttribute("list", districtMapper.selectDistrict());
             model.addAttribute("list1", tradeMapper.selectTrade());
             model.addAttribute("name_", user.getUserName());
             model.addAttribute("loginUserId", user.getId());
-            return "country/main";
         }
-        return "";
+        return "global/main";
     }
 }

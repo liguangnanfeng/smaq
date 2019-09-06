@@ -504,6 +504,7 @@ public class GlobalController extends BaseController {
         }
         model.addAttribute("userName", companyMapper.selectByPrimaryKey(user.getId()).getName());
         model.addAttribute("loginUserId", user.getId());
+        model.addAttribute("flage", 1);
         return "company/main";
     }
     /**
@@ -9487,6 +9488,61 @@ public class GlobalController extends BaseController {
         }
         // TODO 找到这个界面
         return "village/danger/check-list";
+    }
+
+    @RequestMapping(value = "back/global")
+    public String back2(HttpServletRequest request, Model model) throws Exception {
+        HttpSession session = request.getSession();
+        User user =  (User)session.getAttribute("govUser");
+        if(user == null){//返回后的刷新
+            user = getLoginUser(request);
+        }else{
+            SessionUtil.setUser(request, user);
+            session.removeAttribute("govUser");//返回时将moveBefore的session删除
+        }
+        if(user.getUserType()==10){//行业端
+            Trade trade = tradeMapper.selectByPrimaryKey(user.getId());
+            model.addAttribute("name_", trade.getName());
+            model.addAttribute("loginUserId", user.getId());
+            if(trade.getIsClique() == 1){//集团型企业
+                //model.addAttribute("list", tradeMapper.selectTradeCompany(user.getId()));
+                //log.error("TradeCompany："+tradeMapper.selectTradeCompany(user.getId()));
+                return "steel/clique-main";
+            }
+
+        }
+        if(user.getUserType()==6){//区
+            Map<String, Object> m = new HashMap<String, Object>();
+            m.put("districtId", user.getId());
+            List<Map<String, Object>> list = townMapper.selectListByDistrict(m);
+            model.addAttribute("list", list);
+            model.addAttribute("name_", districtMapper.selectByPrimaryKey(user.getId()).getName());
+            model.addAttribute("loginUserId", user.getId());
+
+        }
+        if(user.getUserType()==3){//镇
+            Map<String, Object> m = new HashMap<String, Object>();
+            m.put("townId", user.getId());
+            List<DynamicParameter<String, Object>> list = villageMapper.selectListByTown(m);
+            model.addAttribute("list", list);
+            model.addAttribute("name_", townMapper.selectByPrimaryKey(user.getId()).getName());
+            model.addAttribute("loginUserId", user.getId());
+
+        }
+        if(user.getUserType()==4){//乡
+            model.addAttribute("name_", villageMapper.selectByPrimaryKey(user.getId()).getName());
+//            if(user.getUserName().equals("港口")) {//港口特殊账号
+//                return "gang/main";
+//            }
+            model.addAttribute("loginUserId", user.getId());
+        }
+        if(user.getUserType()==9){//安泰
+            model.addAttribute("list", districtMapper.selectDistrict());
+            model.addAttribute("list1", tradeMapper.selectTrade());
+            model.addAttribute("name_", user.getUserName());
+            model.addAttribute("loginUserId", user.getId());
+        }
+        return "global/main";
     }
 
 }

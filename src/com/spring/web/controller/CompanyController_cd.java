@@ -116,10 +116,10 @@ public class CompanyController_cd extends BaseController {
      * @throws Exception
      */
     @RequestMapping("welcome")
-    public String welcome(Model model, HttpServletRequest request) throws Exception {
+    public String welcome(Model model, HttpServletRequest request,Integer flage) throws Exception {
         User user = getLoginUser(request);
         Company c = companyMapper.selectByPrimaryKey(user.getId());
-
+        System.out.println(flage);
         model.addAttribute("c", c);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("type", "1");
@@ -167,6 +167,7 @@ public class CompanyController_cd extends BaseController {
 
             }
             model.addAttribute("nameBefore", nameBefore);
+            model.addAttribute("flage", flage);
 
         }
 

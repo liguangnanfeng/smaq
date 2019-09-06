@@ -183,16 +183,16 @@
         <%--data-href="${ly }/global/check-list?flag=1&status=2" data-title="排查治理记录"--%>
         <c:choose>
             <c:when test="${userType==6||userType==9||userType==10}">
-                <li><a data-href="${ly }/village/check-list?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
+                <li><a data-href="${ly }/global/check-list500?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
                 <li><a data-href="${ly }/global/check-list4?flag=4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
             </c:when>
             <c:when test="${userType==4}">
-                <li><a data-href="${ly }/village/check-list?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
+                <li><a data-href="${ly }/global/check-list500?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
                 <li><a data-href="${ly }/global/check-list4?flag=4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
                 <li><a data-href="${ly }/global/off-list" data-title="检查人员信息库" href="javascript:void(0)">检查人员信息库</a></li>
             </c:when>
             <c:when test="${userType==3}">
-                <li><a data-href="${ly }/village/check-list?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
+                <li><a data-href="${ly }/global/check-list500?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
                 <li><a data-href="${ly} /global/check-list4?flag=4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
                 <li><a data-href="${ly }/global/off-list" data-title="检查人员信息库" href="javascript:void(0)">检查人员信息库</a></li>
             </c:when>

@@ -1851,19 +1851,33 @@ public class GlobalController extends BaseController {
                                Integer status, Integer flag, Model model) throws Exception {
         User user = getLoginUser(request);
         // 根据登录 ID 查询所有属于这个地区中的所有公司信息
-        List<Company> companyList = companyMapper.selectAllList(user.getId());
+        //List<Company> companyList = companyMapper.selectAllList(user.getId());
+
+        List<Map<String,Object>> map = tCheckItemMapper.findALL(user.getId(), user.getUserType());
         StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < companyList.size() ; i++) {
+        /*for (int i = 0; i < companyList.size() ; i++) {
             if (i == companyList.size()-1){
                 sb.append(companyList.get(i).getUserId());
             }else {
                 sb.append(companyList.get(i).getUserId()).append(",");
             }
 
-        }
-        String userIds = sb.toString();
+        }*/
+        for (int i = 0; i < map.size() ; i++) {
+            if (i == map.size()-1){
+                sb.append(map.get(i).get("user_id"));
+            }else {
+                sb.append(map.get(i).get("user_id")).append(",");
+            }
 
-        List<Map> list = tCheckItemMapper.selectAll(userIds);
+        }
+
+        String userIds = sb.toString();
+        //System.out.println(userIds);
+        List<Map> list = new ArrayList<>();
+        if(userIds.length()!=0) {
+            list = tCheckItemMapper.selectAll(userIds);
+        }
 
         model.addAttribute("list", list);
 
@@ -9394,4 +9408,85 @@ public class GlobalController extends BaseController {
 
         return "global/other/company-search2";
     }
+    /**
+     * 检查历史
+     * TODO 排查治理记录 隐患排查记录(只需要已经检查过的,没有不合格记录的)
+     * user. userType : 管理类型  1 超管 2普管 3镇 4 村 5 企业 6区县 7市 8省
+     */
+    @RequestMapping(value = "check-list500")//flag:3 部门抽查
+    public String troubleList4(HttpServletRequest request, String title, Integer type, String companyName,
+                               Integer townId, Integer villageId,
+                               Integer status, Integer flag, Model model,String dmName) throws Exception {
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
+
+        if (user.getUserType() == 3) {//镇
+            model.addAttribute("villageL", villageMapper.selectListByTown(m));
+        }
+        if (user.getUserType() == 6) {//区
+            model.addAttribute("townL", townMapper.selectListByDistrict(m));
+        }
+
+        // 向map集合进行存储
+        m.put("type", type);  //
+        m.put("flag", flag);  // 1
+        m.put("title", title); // 1
+        m.put("townId", townId);   // null
+        m.put("villageId", villageId);  //1
+        m.put("companyName", companyName); // null
+        m.put("status", status); //状态  null
+        Set set = new LinkedHashSet();
+        if(Objects.equals("",dmName)){
+
+        }else{
+            m.put("dmName",dmName);
+        }
+
+        // 进行判断
+
+        if (setUserId(user, m)) {
+            clearVillageTown(m);
+
+            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            //List<Map<String, Object>> list = tCheckMapper.selectList3(m);
+
+            Integer sum = 0;
+            for (int i = 0; i < list.size(); i++) {
+                DynamicParameter<String, Object> id = tCheckMapper.selectCompany((Integer) list.get(i).get("id"));
+                list.get(i).put("listM",id);
+                sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
+
+            }
+            model.addAttribute("sum", sum);
+            model.addAttribute("list", list);
+
+
+            m.put("dmName",null);
+            List<Map<String, Object>> list2 = tCheckMapper.selectList(m);
+            for (int i = 0; i < list2.size(); i++) {
+                set.add(list2.get(i).get("depart"));
+            }
+
+        }
+        model.addAttribute("set",set);
+        model.addAttribute("type", type);
+        model.addAttribute("flag", flag);
+        model.addAttribute("companyName", companyName);
+        model.addAttribute("title", title);
+        model.addAttribute("status", status);
+        model.addAttribute("townId", townId);
+        model.addAttribute("villageId", villageId);
+        model.addAttribute("dmName",dmName);
+        Date d = new Date();
+        String x = DateFormatUtils.format(d, "yyyy-MM-dd");
+        d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
+        model.addAttribute("t", d.getTime());
+        if (user.getUserType() == 5) {
+            // 表示等于5的话就将页面进行跳转
+            return "company/danger/check-list";
+        }
+        // TODO 找到这个界面
+        return "village/danger/check-list";
+    }
+
 }

@@ -120,7 +120,7 @@ $("#win-ping2").modal("show")}
           	</c:if>
           	<c:if test="${moveCompany == 1 }">
           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          		<a href="${ly }/tradeclique/back/gov" target="_parent">
+          		<a href="${ly }/steel/back/gov" target="_parent">
           			<strong style="color:red;">${nameBefore }</strong>
           		</a>
           	</c:if>

@@ -1232,7 +1232,6 @@ public class GlobalController extends BaseController {
         }
         model.addAttribute("list",comps);
         model.addAttribute("osl", operatingStatusList);
-
         if(user.getUserType().intValue() == 3) {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("townId", dto.getTownId());
@@ -6090,6 +6089,8 @@ public class GlobalController extends BaseController {
                     sb.append("'").append(ids.get(i)).append("',");
                 }
             }
+
+            System.out.println(sb.toString());
 
             Integer  a = tCheckItemMapper.manageHiddenCompany(1,sb.toString(),3); // 一般和较小 合格 已治理
 

@@ -1705,7 +1705,10 @@
 		from
 		(select * from company_view
 		<where>
-			<if test="userIds != null and userIds != ''">and user_id in (${userIds})</if>
+			<if test="userIds != null and userIds != ''">
+				and user_id in (${userIds})
+			</if>
+			and name not like "%分厂%"
 		</where>
 		)
 		T1

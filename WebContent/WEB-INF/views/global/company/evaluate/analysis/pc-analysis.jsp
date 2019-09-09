@@ -216,12 +216,14 @@
         // 基于准备好的dom，初始化echarts实例
         var number2 = ["${number1}", "${number2}", "${number3}", "${number4}", "${number5}", "${number6}", "${number7}", "${number8}", "${number9}", "${number10}", "${number11}", "${number12}", "${number13}", "${number14}","${number15}"];
         var firstdata2 = ["${double1}", "${double2}", "${double3}", "${double4}", "${double5}", "${double6}", "${double7}", "${double8}", "${double9}", "${double10}", "${double11}", "${double12}", "${double13}", "${double14}","${double15}"];
-        var x2="",fdata2=[];
-        console.log(number);
-        firstdata2.map((v,i)=>{
-        x2=v*100;
-        fdata2.push(x2);
-        });
+        <%--var x2="",fdata2=[];--%>
+        <%--console.log(number);--%>
+        <%--firstdata2.map((v,i)=>{--%>
+        <%--x2=v*100;--%>
+        <%--fdata2.push(x2);--%>
+        <%--});--%>
+        var fdata2=Array.from(firstdata2,v=>v*100);
+        console.log('firstdata2:',firstdata2)
         console.log('fdata2:',fdata2)
         var myChart2 = echarts.init(document.getElementById('main2'));
         // 使用刚指定的配置项和数据显示图表。

@@ -29,11 +29,11 @@
         console.log('a1:',a1);
         </script>
         <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-        <div id="main" style="width: 90%;height:70%;margin: 50px  auto 0 auto;"></div>
+        <%--<div id="main" style="width: 90%;height:70%;margin: 50px  auto 0 auto;"></div>--%>
         <div id="main2" style="width: 90%;height:70%;margin: 30px auto 30px auto;"></div>
         <div id="main3" style="width: 90%;height:70%;margin: 30px auto 30px auto;"></div>
 
-        <%--饼状图1--%>
+        饼状图1
         <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
 
@@ -52,7 +52,6 @@
         },
         series: {
         name: '绩效分析',
-        url:url,
         type: 'pie',
         center: ['50%', '50%'],
         data: [
@@ -141,7 +140,6 @@
         },
         series: {
         name: '绩效分析',
-        url:url,
         type: 'pie',
         center: ['50%', '50%'],
         data: [
@@ -231,7 +229,6 @@
         },
         series: {
         name: '绩效分析',
-        url:url,
         type: 'pie',
         center: ['50%', '50%'],
         data: [

@@ -77,8 +77,7 @@ dt a:hover{text-decoration: none;}
     <div id="iframe_box" class="Hui-article">
       <div class="show_iframe">
         <div style="display:none" class="loading"></div>
-        <iframe scrolling="yes" frameborder="0" src="${ly }/company/welcome?flage=${flage}"></iframe>
-      </div>
+  <iframe scrolling="yes" frameborder="0" src="${ly }/company/welcome?flage=${flage}"></iframe>      </div>
     </div>
   </section>
   <div class="contextMenu" id="Huiadminmenu">

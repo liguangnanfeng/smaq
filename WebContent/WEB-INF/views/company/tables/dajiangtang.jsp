@@ -12,6 +12,7 @@
 				height: 100vh;
 				margin: 0;
 				padding: 0;
+				overflow-y: hidden;
 			}
 
 			header {
@@ -94,7 +95,7 @@
 				font-size: 18px;
 				font-weight: bold;
 			}
-			
+
 			.func {
 				display: flex;
 				justify-content: center;
@@ -146,7 +147,7 @@
 		</header>
 		<main>
 					<div class="com"><span class="time2">${userName}</span></div>
-			
+
 		</main>
 		<footer>
 
@@ -165,14 +166,21 @@
 		<section ><a href="jswx.zayxy.com/index.php?user-app-login&mobile=${userName}" target="_blank">职业资格培训</a></section>
 		</div>
 		</footer>
-		<script>
-
-		</script>
-
-
-		<iframe src="http://jswx.zayxy.com/index.php?user-app-login&mobile=${userName}" width="100%" height="100%" sandbox="allow-scripts" frameborder="0"  allowtransparency="true"></iframe>
+		<iframe scrolling="no"   src="http://jswx.zayxy.com/index.php?user-app-login&mobile=${userName}" width="100%" height="100%" sandbox="allow-scripts" frameborder="1px"  allowtransparency="true"></iframe>
 
 		<script>
+		console.log("aaaaaaaaaaaa");
+         $("body").outerHeight("6720px");
+		console.log($("body").height());
+
+
+
+
+
+
+
+
+
 		var w=$('main').height();
 		$('main').height(w*0.4015625)
 

@@ -14,8 +14,20 @@
     <meta name="description" content="风险分级管控   隐患排查治理智能化平台">
     <style type="text/css">
         body .dis-ib{margin-right:15px;}
+    .xxx{
+    position: relative;
+    top: 5px;
+    }
+    .xxx2{
+    position: relative;
+    top: 6px;
+    }
+    .xxx3{
+     height:31px
+    }
     </style>
     <script type="text/javascript">
+
     console.log("我是check-list，v")
         var villageId = '${villageId}';
         $(function() {
@@ -83,9 +95,9 @@
                 </select>
             </c:if>
             <c:if test="${session_user.userType == 3}">
-                <div class="dis-ib">
+                <div class="dis-ib xxx2">
                     <span>所在村：</span>
-                    <select id="villageId" name="villageId" class="select" style="width:100px;">
+                    <select id="villageId" name="villageId" class="select xxx3" style="width:100px;">
                         <option value="">全部</option>
                         <c:forEach items="${villageL }" var="be">
                             <option value="${be.userId }" <c:if test="${villageId == be.userId}"> selected</c:if>>${be.name }</option>
@@ -99,7 +111,7 @@
             </div>
             <div class="dis-ib">
                 <span>检查状态：</span>
-                <select class="input-text mb-5 mt-5" name="status" style="width:150px;">
+                <select class="input-text mb-5 mt-5 xxx" name="status" style="width:150px;">
                     <option value="">请选择</option>
                     <option value="1" <c:if test="${status == 1}"> selected</c:if>>未检查</option>
                     <option value="2" <c:if test="${status == 2}"> selected</c:if>>已检查</option>
@@ -370,6 +382,35 @@
             })
         })
     }
+
+    $(function () {
+
+    var b = null, l1 = '', c = 1;
+    $("tbody tr").each(function (k,v) {
+    console.log("k")
+    console.log(v)
+    var td = $(this).children("td").eq(1);
+    var l1_ = td.text();
+    console.log(l1_)
+    //Same to top level
+    if (l1 == l1_) {
+    td.remove();
+    c = c + 1;
+
+    } else {//Diffrent to top level
+    l1 = l1_;
+    if (b != null) {
+    b.attr("rowspan", c);
+    c = 1;
+    }
+    b = td;
+    }
+    if (b != null) {
+    b.attr("rowspan", c);
+    }
+    })
+
+    });
 </script>
 </body>
 </html>

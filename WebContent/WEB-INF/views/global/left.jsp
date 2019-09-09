@@ -155,10 +155,10 @@
         <dd>
         <div class="div_omenu">
         <c:if test="${userType!=10&&userType!=9}">
-             <li><a id="div_otop1"   data-href="${ly }/global/check-list-cx?flag=4" data-title="行政检查">检查设置与实施</a></li>
+             <li><a id="div_otop1"   data-href="${ly }/global/check-list-cx?flag=4" data-title="行政检查">检查设置实施</a></li>
         </c:if>
         <c:if test="${userType==10||userType==9}">
-            <li><a id="div_otop1"   data-href="${ly }/global/check-list-cx?flag=3" data-title="行政检查">检查设置与实施</a></li>
+            <li><a id="div_otop1"   data-href="${ly }/global/check-list-cx?flag=3" data-title="行政检查">检查设置实施</a></li>
         </c:if>
             </div>
         <%--<li><a data-href="${ly }/global/check-list-cx?flag=4" data-title="行政检查" href="javascript:void(0)">行政检查</a></li>--%>
@@ -181,38 +181,38 @@
 
         <ul>
         <%--data-href="${ly }/global/check-list?flag=1&status=2" data-title="排查治理记录"--%>
-        <c:choose>
-            <c:when test="${userType==6||userType==9||userType==10}">
-                <li><a data-href="${ly }/global/check-list500?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
-                <li><a data-href="${ly }/global/check-list4?flag=4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
-            </c:when>
-            <c:when test="${userType==4}">
-                <li><a data-href="${ly }/global/check-list500?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
-                <li><a data-href="${ly }/global/check-list4?flag=4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
-                <li><a data-href="${ly }/global/off-list" data-title="检查人员信息库" href="javascript:void(0)">检查人员信息库</a></li>
-            </c:when>
-            <c:when test="${userType==3}">
-                <li><a data-href="${ly }/global/check-list500?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
-                <li><a data-href="${ly} /global/check-list4?flag=4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
-                <li><a data-href="${ly }/global/off-list" data-title="检查人员信息库" href="javascript:void(0)">检查人员信息库</a></li>
-            </c:when>
-        </c:choose>
         <%--<c:choose>--%>
             <%--<c:when test="${userType==6||userType==9||userType==10}">--%>
-                <%--<li><a data-href="${ly }/global/check-company?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>--%>
-                <%--<li><a data-href="${ly }/global/hidden-company-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>--%>
+                <%--<li><a data-href="${ly }/village/check-list?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>--%>
+                <%--<li><a data-href="${ly }/global/check-list4?flag=4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>--%>
             <%--</c:when>--%>
             <%--<c:when test="${userType==4}">--%>
-                <%--<li><a data-href="${ly }/global/check-company?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>--%>
-                <%--<li><a data-href="${ly }/global/hidden-company-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>--%>
+                <%--<li><a data-href="${ly }/village/check-list?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>--%>
+                <%--<li><a data-href="${ly }/global/check-list4?flag=4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>--%>
                 <%--<li><a data-href="${ly }/global/off-list" data-title="检查人员信息库" href="javascript:void(0)">检查人员信息库</a></li>--%>
             <%--</c:when>--%>
             <%--<c:when test="${userType==3}">--%>
-                <%--<li><a data-href="${ly }/global/check-company?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>--%>
-                <%--<li><a data-href="${ly }/global/hidden-company-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>--%>
+                <%--<li><a data-href="${ly }/village/check-list?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>--%>
+                <%--<li><a data-href="${ly} /global/check-list4?flag=4" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>--%>
                 <%--<li><a data-href="${ly }/global/off-list" data-title="检查人员信息库" href="javascript:void(0)">检查人员信息库</a></li>--%>
             <%--</c:when>--%>
         <%--</c:choose>--%>
+        <c:choose>
+            <c:when test="${userType==6||userType==9||userType==10}">
+                <li><a data-href="${ly }/global/check-company?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
+                <li><a data-href="${ly }/global/hidden-company-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
+            </c:when>
+            <c:when test="${userType==4}">
+                <li><a data-href="${ly }/global/check-company?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
+                <li><a data-href="${ly }/global/hidden-company-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
+                <li><a data-href="${ly }/global/off-list" data-title="检查人员信息库" href="javascript:void(0)">检查人员信息库</a></li>
+            </c:when>
+            <c:when test="${userType==3}">
+                <li><a data-href="${ly }/global/check-company?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
+                <li><a data-href="${ly }/global/hidden-company-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
+                <li><a data-href="${ly }/global/off-list" data-title="检查人员信息库" href="javascript:void(0)">检查人员信息库</a></li>
+            </c:when>
+        </c:choose>
         <li><a data-href="${ly }/global/pc-analysis?flag=1" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
         <li><a data-href="${ly }/global/yh-all-analysis?flag=1" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
         <li><a data-href="${ly }/global/zl-all-analysis" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
@@ -227,26 +227,15 @@
         <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
+
         <ul>
-        <li><a data-href="${ly }/company/threeLeft?leftBasic=6" data-title="流程管理"
-        href="javascript:void(0)">流程管理</a>
-        </li>
-        <li><a data-href="${ly }/company/threeLeft?leftBasic=7" data-title="运行管理"
-        href="javascript:void(0)">运行管理</a>
-        </li>
-        <li><a data-href="${ly }/company/study/targetassessment" data-title="履职考核"
-        href="javascript:void(0)">履职考核</a>
-        </li>
-        </ul>
-        <ul>
-        <li><a data-href="${ly }/company/study/promise" data-title="承诺公示"
-        href="javascript:void(0)">承诺公示</a></li>
+        <li><a data-href="${ly }/global/study/promise-collect" data-title="安全承诺公告" href="###">承诺公告公示汇总</a></li>
         </ul>
         </dd>
         </dl>
         <dl>
         <dt>
-        <a style="color:#fff;"  data-href="${ly }/global/tables/yjmanage_center"  data-title="应急指挥中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急指挥中心</a>
+        <a style="color:#fff;"  data-href="${ly }/company/tables/yjmanage_center"  data-title="应急指挥中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急指挥中心</a>
         </dt>
         </dl>
         <dl>

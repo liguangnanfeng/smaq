@@ -226,7 +226,7 @@ $(function(){
           <tr class="text-c">
             <td>${dto.page * dto.rows + index.index + 1}</td>
             <td ondblclick="window.open('/fore/company?un=${co.name}');">
-
+                
                 <c:choose>
                     <c:when test="${session_user.userType == 4 }">
                     <c:if test="${co.isKey == '1' && not empty sk}"><label style="color:#DF2E30">【重点企业】</label></c:if>

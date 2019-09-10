@@ -58,7 +58,7 @@
         } main{
             width:100%;
             height: 100vw;
-            background: url(/images/companyImg/newimg/yj.jpg) no-repeat center;
+            background: url(${ly}/images/yj-jy.png) no-repeat center;
             background-size: 100% 100%;
 <%--            margin-top: 22px;--%>
             position: relative;
@@ -103,7 +103,7 @@
             <div class="topleftmod">
             <img style="display: flex;" width="60" height="60" src="/images/companyImg/newimg/logo.png" />
             <span class="logo" style="">
-            <span class="antai">应急管理中心</span>
+            <span class="antai">应急救援中心</span>
             <span class="webadd">www.antai.com</span>
             </span>
             </div>
@@ -128,18 +128,13 @@
             <div class="func">
                 <section><a href="/global/searchPage">企业搜索</a></section>
                 <section><a href="/global/searchPage2">应急响应</a></section>
-                <section><a href="/global/command">指挥现场</a></section>
+                <section><a href="/global/command">指挥中心</a></section>
                 <section><a href="${ly }/global/source/video" data-title="实时监控">实时监控</a></section>
                 <section><a  onClick="showz()"  data-title="在线监测">在线监测</a></section>
                 <section><a  onClick="showp()"   data-title="动态预警">预警动态</a></section>
-            <%--href="/company/threeLeft?leftBasic=11"--%>
-                <%--href="/village/check-item3?status=2"--%>
                 <section><a target="_blank" href="#">应急管理</a></section>
                 <section><a target="_blank" href="http://www.emc.gov.cn/">应急信息</a></section>
             </div>
-
-
-
             <style>
             .t{
             margin-top:20px
@@ -175,9 +170,15 @@
             <font class="font_tx2 pos-a">安全培训</font>
             </a>
 
-            <a class="one_tx radius pos-r"  onClick="showping2()" href="javascript:;" style="background:#60D1FF;">
+            <%--<a class="one_tx radius pos-r"  onClick="showping2()" href="javascript:;" style="background:#60D1FF;">--%>
+            <%--<img alt="" src="${ly }/images/httb2.png"/>--%>
+            <%--<font class="font_tx1 pos-a <c:if test="${count[1]+count[2]+count[3] >0}">blink</c:if>">${count[1]+count[2]+count[3] }</font>--%>
+            <%--<font class="font_tx2 pos-a">检测检验</font>--%>
+            <%--</a>--%>
+
+            <a class="one_tx radius pos-r "  data-title="检测检验" data-href="${ly }/company/sequipment/sequipment-list?isTime=3" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#60D1FF;">
             <img alt="" src="${ly }/images/httb2.png"/>
-            <font class="font_tx1 pos-a <c:if test="${count[1]+count[2]+count[3] >0}">blink</c:if>">${count[1]+count[2]+count[3] }</font>
+            <font class="font_tx1 pos-a <c:if test="${count[1] >0}">blink</c:if>">${count[1] }</font>
             <font class="font_tx2 pos-a">检测检验</font>
             </a>
 

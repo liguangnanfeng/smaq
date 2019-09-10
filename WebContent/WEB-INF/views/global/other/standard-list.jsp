@@ -62,6 +62,24 @@ $(function() {
     }
   });
   //请求起始数据
+    function dj(i){
+    console.log(dj)
+    var dj=$('.dj'+i).text();
+    console.log(dj)
+    if(dj=='红色'){
+    $(".dj").text('1级');
+    }
+    else if(dj=='黄色'){
+    $(".dj").text('2级');
+    }
+    else if(dj=='橙色'||'蓝色'){
+    $(".dj").text('3级');
+    }
+
+    }
+
+
+
   $.ajax({
      type:"POST",
      url:"${ly}/global/getData?page=0",
@@ -84,15 +102,18 @@ $(function() {
             html += '<td>'+(i+1)+'</td>';//序号
             html += "<td>"+list[i]['name']+"</td>";//企业名称
             html += "<td>"+list[i]['industry']+"</td>";//行业
-            html += "<td>"+list[i]['dlevel']+"</td>";//标准化等级
+            html += "<td class=dj"+i+">"+list[i]['dlevel']+"</td>";//标准化等级
             html += "<td>"+0+"</td>"; //操作时间
             html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
             html += '</tr>';
+
+            dj(i)
           }
           html += ' </tbody>\n' +
                   '      </table>';
           $("#dataTables").html(html);
           $("#currentpage").val(0);
+    console.log(i)
      },
     error:function () {
       alert("发生错误");
@@ -125,11 +146,25 @@ $(function() {
               html += '<td>'+parseInt(10*currentPage+i+1)+'</td>';//序号
               html += "<td>"+list[i]['name']+"</td>";//企业名称
               html += "<td>"+list[i]['industry']+"</td>";//行业
-              html += "<td>"+list[i]['dlevel']+"</td>";//标准化等级
+              html += "<td class=dj"+i+">"+list[i]['dlevel']+"</td>";//标准化等级
               html += "<td>"+0+"</td>"; //操作时间
               html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
               html += '</tr>';
+                var dj=$(".dj").text();
+                if(dj=='红色'){
+                    $(".dj").text('1级');
+                }
+                else if(dj=='黄色'){
+                    $(".dj").text('2级');
+                }
+                else if(dj=='橙色'||'蓝色'){
+                    $(".dj").text('3级');
+                }
+
             }
+
+
+
             html += ' </tbody>\n' +
                     '      </table>';
             $("#dataTables").html(html);
@@ -168,7 +203,7 @@ $(function() {
             html += '<td>'+parseInt(10*currentPage+i+1)+'</td>';//序号
             html += "<td>"+list[i]['name']+"</td>";//企业名称
             html += "<td>"+list[i]['industry']+"</td>";//行业
-            html += "<td>"+list[i]['dlevel']+"</td>";//标准化等级
+            html += "<td class=dj"+i+">"+list[i]['dlevel']+"</td>";//标准化等级
             html += "<td>"+0+"</td>"; //操作时间
             html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
             html += '</tr>';
@@ -186,6 +221,6 @@ $(function() {
   });
 });
 
-</script> 
+</script>
 </body>
 </html>

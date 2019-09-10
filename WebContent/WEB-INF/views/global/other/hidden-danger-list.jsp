@@ -41,6 +41,7 @@
     </style>
     <script type="text/javascript">
         console.log('${host}');
+    console.log('other/hidden-danger-list');
 
         function showpicture(memoImg) {
             //memoImg = "";
@@ -194,7 +195,7 @@
                         <%--<c:if test="${list.levels!=null}">
                             <c:if test="${not empty item[0]}">
                                 <td>${item[1]}</td>
-                                &lt;%&ndash;<c:if test="${not empty item[1]&&not empty item[2]}">
+                                <%--<c:if test="${not empty item[1]&&not empty item[2]}">
                                     <td>${item[1]}/${item[2]}</td>
                                 </c:if>
                                 <c:if test="${not empty item[1]&& empty item[2]}">
@@ -202,7 +203,7 @@
                                 </c:if>
                                 <c:if test="${ empty item[1]&& empty item[2]}">
                                     <td>暂无数据</td>
-                                </c:if>&ndash;%&gt;
+                                </c:if>--%>
                             </c:if>
 
                             <c:if test="${empty item[0]}">

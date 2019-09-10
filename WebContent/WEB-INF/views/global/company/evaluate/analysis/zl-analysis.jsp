@@ -8,20 +8,17 @@
         <!-- 引入 echarts.js -->
         <script src="/js/echarts.min.js"></script>
         </head>
+            <style>
+              .m{
+               margin-bottom:20px
+            }
+            body{
+              display:flex;
+                align-items:center;
+            }
+            </style>
         <body style="height: 100vh;">
         <script>
-
-
-
-
-
-
-
-
-
-
-
-
         var a1={
         一般:'${result11}',
         较大:'${result22}',
@@ -30,16 +27,16 @@
         console.log('a1:',a1);
         </script>
         <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-        <div id="main" style="width: 90%;height:70%;margin: 50px  auto 0 auto;"></div>
-        <div id="main2" style="width: 90%;height:70%;margin: 30px auto 30px auto;"></div>
-        <div id="main3" style="width: 90%;height:70%;margin: 30px auto 30px auto;"></div>
+        <div id="main" class="m" style="width: 33%;height:70%;display:inline-block"></div>
+        <div id="main2" class="m" style="width: 33%;height:70%;display:inline-block"></div>
+        <div id="main3" class="m" style="width: 33%;height:70%;display:inline-block"></div>
 
         <%--饼状图1--%>
         <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
 
         var option = {
-        title:{ text:'隐患治理地区数据分析',
+        title:{ text:'地区数据分析',
         left:'center',
         textStyle:{
         fontStyle:'normal',
@@ -128,7 +125,7 @@
         }
         console.log('a2:',a2);
         var option2 = {
-        title:{ text:'隐患治理对象数据分析',
+        title:{ text:'对象数据分析',
         left:'center',
         textStyle:{
         fontStyle:'normal',
@@ -218,7 +215,7 @@
         }
         console.log('a3:',a3);
         var option3 = {
-        title:{ text:'隐患治理行业数据分析',
+        title:{ text:'行业数据分析',
         left:'center',
         textStyle:{
         fontStyle:'normal',

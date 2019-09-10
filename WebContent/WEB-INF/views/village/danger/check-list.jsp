@@ -25,6 +25,17 @@
     .xxx3{
      height:31px
     }
+    .s1{
+    height: 31px;
+    position: relative;
+    top: 5px;
+
+    }
+    .s2{
+    font-size: 14px!important;
+    position: relative;
+    top: 5px;
+    }
     </style>
     <script type="text/javascript">
 
@@ -82,15 +93,15 @@
     <div class="text-c">
         <form action="${ly }/village/check-list?flag=${flag}" method="post">
             <c:if test="${session_user.userType == 6}">
-                <label>所在镇：</label>
-                <select name="townId" id="townId" class="select" style="width:100px;">
+                <label class="s2">所在镇：</label>
+                <select name="townId" id="townId" class="select s1" style="    margin-right: 25px;;width:100px;">
                     <option value="">全部</option>
                     <c:forEach items="${townL }" var="be">
                         <option value="${be.userId }" <c:if test="${townId == be.userId}"> selected</c:if>>${be.name }</option>
                     </c:forEach>
                 </select>
-                <label>所在村：</label>
-                <select name="villageId" id="villageId" class="select" style="width:100px;">
+                <label class="s2">所在村：</label>
+                <select name="villageId" id="villageId" class="select s1" style="margin-right:25px;width:100px;">
                     <option value="">全部</option>
                 </select>
             </c:if>

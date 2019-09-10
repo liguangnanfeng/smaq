@@ -97,7 +97,7 @@
         // 指定图表的配置项和数据
         option = {
         title: [{
-        text: '隐患行业数据分析',
+        text: '行业隐患数据分析',
         left: 'center',
         },
         {
@@ -231,7 +231,7 @@
         // 指定图表的配置项和数据
         option2 = {
         title: [{
-        text: '隐患对象数据分析',
+        text: '对象隐患数据分析',
         left: 'center',
         },
         {

@@ -63,17 +63,17 @@ $(function() {
   });
   //请求起始数据
     function dj(i){
-    console.log(dj)
     var dj=$('.dj'+i).text();
+    console.log(i)
     console.log(dj)
-    if(dj=='红色'){
-    $(".dj").text('1级');
+    if(dj==="红色"){
+    $('.dj'+i).text('1级');
     }
-    else if(dj=='黄色'){
-    $(".dj").text('2级');
+    else if(dj==='黄色'){
+    $('.dj'+i).text('2级');
     }
-    else if(dj=='橙色'||'蓝色'){
-    $(".dj").text('3级');
+    else if(dj==='橙色'|| dj==='蓝色'){
+    $('.dj'+i).text('3级');
     }
 
     }
@@ -107,13 +107,15 @@ $(function() {
             html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
             html += '</tr>';
 
-            dj(i)
+
           }
           html += ' </tbody>\n' +
                   '      </table>';
           $("#dataTables").html(html);
           $("#currentpage").val(0);
-    console.log(i)
+            for(let j=0;j<=i-1;j++){
+                dj(j)
+            }
      },
     error:function () {
       alert("发生错误");
@@ -150,17 +152,6 @@ $(function() {
               html += "<td>"+0+"</td>"; //操作时间
               html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
               html += '</tr>';
-                var dj=$(".dj").text();
-                if(dj=='红色'){
-                    $(".dj").text('1级');
-                }
-                else if(dj=='黄色'){
-                    $(".dj").text('2级');
-                }
-                else if(dj=='橙色'||'蓝色'){
-                    $(".dj").text('3级');
-                }
-
             }
 
 
@@ -169,6 +160,9 @@ $(function() {
                     '      </table>';
             $("#dataTables").html(html);
             $("#currentpage").val(currentPage);
+    for(let j=0;j<=i-1;j++){
+    dj(j)
+    }
           },
           error:function () {
             alert("发生错误");
@@ -212,6 +206,9 @@ $(function() {
                   '      </table>';
           $("#dataTables").html(html);
           $("#currentpage").val(currentPage);
+    for(let j=0;j<=i-1;j++){
+    dj(j)
+    }
         },
         error:function () {
           alert("发生错误");

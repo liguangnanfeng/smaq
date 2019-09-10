@@ -111,6 +111,15 @@
         <%--<strong>第${page+1}页/共${count}页</strong>--%>
         <%--<a href="${ly }/village/recheck-list?flag=${flag}&page=${page+1}">下一页 &gt;</a>--%>
         <%--</p>--%>
+    <%--<style>--%>
+    <%--.totalyh{--%>
+        <%--position:absolute;--%>
+
+    <%--}--%>
+    <%--</style>--%>
+     <%--<div class="totalyh">--%>
+        <%--总隐患数:--%>
+    <%--</div>--%>
     </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort">

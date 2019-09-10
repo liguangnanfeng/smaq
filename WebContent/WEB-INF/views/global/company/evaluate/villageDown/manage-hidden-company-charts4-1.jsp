@@ -129,12 +129,12 @@
             <i class="Hui-iconfont"></i>
             <span>首页</span>
             <span class="c-gray en">&gt;</span> <span>治理数据分析</span>
-            <span class="c-gray en">&gt;</span> <span class="aaa">隐患治理地区数据分析</span>
+            <span class="c-gray en">&gt;</span> <span class="aaa">地区数据分析</span>
             <a class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
             </nav>
         <div class="cx">
         <div class="text-c mt-20 ">
-        <h3 class="center">隐患治理地区数据分析</h3>
+        <h3 class="center">地区数据分析</h3>
         </div>
         <section class="title">
         <div class="flexspa">

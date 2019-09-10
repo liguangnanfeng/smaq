@@ -126,8 +126,8 @@
 
             </script>
             <div class="func">
-                <section><a href="/steel/searchPage2">应急响应</a></section>
-                <section><a href="/global/command">指挥现场</a></section>
+                <section><a href="/steel/searchPage2">应急管理</a></section>
+                <section><a href="/global/command">指挥中心</a></section>
                 <section><a href="/village/to_monitor-list?flag=2" data-title="实时监控">实时监控</a></section>
                 <section><a  onClick="showz()"  data-title="在线监测">在线监测</a></section>
                 <section><a  onClick="showp()"   data-title="动态预警">预警动态</a></section>

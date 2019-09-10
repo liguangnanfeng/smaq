@@ -99,6 +99,10 @@ public interface TCheckMapper {
 
     Integer zfPerformanceCount11(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
+    Integer zfCount(@Param("industry")String industry, @Param("user_ids")String user_ids);
+
+    Integer zfCount11(@Param("user_ids")String user_ids);
+
     Integer zfPerformanceCount33(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
     Integer zfPerformanceCount22(@Param("flag")Integer flag, @Param("industry")String industry, @Param("user_id")Integer user_id);

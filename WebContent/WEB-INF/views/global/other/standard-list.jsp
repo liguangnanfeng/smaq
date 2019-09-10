@@ -62,6 +62,24 @@ $(function() {
     }
   });
   //请求起始数据
+    function dj(i){
+    var dj=$('.dj'+i).text();
+    console.log(i)
+    console.log(dj)
+    if(dj==="红色"){
+    $('.dj'+i).text('1级');
+    }
+    else if(dj==='黄色'){
+    $('.dj'+i).text('2级');
+    }
+    else if(dj==='橙色'|| dj==='蓝色'){
+    $('.dj'+i).text('3级');
+    }
+
+    }
+
+
+
   $.ajax({
      type:"POST",
      url:"${ly}/global/getData?page=0",
@@ -84,15 +102,20 @@ $(function() {
             html += '<td>'+(i+1)+'</td>';//序号
             html += "<td>"+list[i]['name']+"</td>";//企业名称
             html += "<td>"+list[i]['industry']+"</td>";//行业
-            html += "<td>"+list[i]['dlevel']+"</td>";//标准化等级
+            html += "<td class=dj"+i+">"+list[i]['dlevel']+"</td>";//标准化等级
             html += "<td>"+0+"</td>"; //操作时间
             html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
             html += '</tr>';
+
+
           }
           html += ' </tbody>\n' +
                   '      </table>';
           $("#dataTables").html(html);
           $("#currentpage").val(0);
+            for(let j=0;j<=i-1;j++){
+                dj(j)
+            }
      },
     error:function () {
       alert("发生错误");
@@ -125,15 +148,21 @@ $(function() {
               html += '<td>'+parseInt(10*currentPage+i+1)+'</td>';//序号
               html += "<td>"+list[i]['name']+"</td>";//企业名称
               html += "<td>"+list[i]['industry']+"</td>";//行业
-              html += "<td>"+list[i]['dlevel']+"</td>";//标准化等级
+              html += "<td class=dj"+i+">"+list[i]['dlevel']+"</td>";//标准化等级
               html += "<td>"+0+"</td>"; //操作时间
               html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
               html += '</tr>';
             }
+
+
+
             html += ' </tbody>\n' +
                     '      </table>';
             $("#dataTables").html(html);
             $("#currentpage").val(currentPage);
+    for(let j=0;j<=i-1;j++){
+    dj(j)
+    }
           },
           error:function () {
             alert("发生错误");
@@ -168,7 +197,7 @@ $(function() {
             html += '<td>'+parseInt(10*currentPage+i+1)+'</td>';//序号
             html += "<td>"+list[i]['name']+"</td>";//企业名称
             html += "<td>"+list[i]['industry']+"</td>";//行业
-            html += "<td>"+list[i]['dlevel']+"</td>";//标准化等级
+            html += "<td class=dj"+i+">"+list[i]['dlevel']+"</td>";//标准化等级
             html += "<td>"+0+"</td>"; //操作时间
             html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
             html += '</tr>';
@@ -177,6 +206,9 @@ $(function() {
                   '      </table>';
           $("#dataTables").html(html);
           $("#currentpage").val(currentPage);
+    for(let j=0;j<=i-1;j++){
+    dj(j)
+    }
         },
         error:function () {
           alert("发生错误");
@@ -186,6 +218,6 @@ $(function() {
   });
 });
 
-</script> 
+</script>
 </body>
 </html>

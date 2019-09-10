@@ -118,25 +118,33 @@
 		<td rowspan="2">序号</td>
 		<td class="first" rowspan="2" ><span class="title1">对象</span><br><span class="title3">部门</span></td>
 
+		<td>设计总图</td>
+		<td>试生产</td>
+		<td>装置运行</td>
+		<td>设备安全</td>
+		<td>仪表安全</td>
+		<td>电气安全</td>
+		<td>应急消防</td>
+		<td>特殊管控</td>
+		<td>行为环境</td>
+		<td>生产现场</td>
+		<td>公辅工程</td>
+		<td>特种设备</td>
+		<td>专项行业</td>
 		<td>生产工艺</td>
 		<td>设备设施</td>
-		<td>特种设备</td>
-		<td>消防安全</td>
-		<td>用电安全</td>
-		<td>行为环境</td>
-		<td>公辅设备</td>
 		<td>危化管理</td>
-		<td>基础管理</td>
-		<td>防雷静电</td>
 		<td>安全设施</td>
-		<td>职业卫生</td>
-		<td>生产现场</td>
 		<td >其他</td>
 		<td rowspan="2" class="sum">合计</td>
 		<td rowspan="2">排名</td>
 		<td rowspan="2">同比%</td>
 		</tr>
 		<tr style="background-color: #F5F9FE;    font-weight: bold;">
+		<td>频次</td>
+		<td>频次</td>
+		<td>频次</td>
+		<td>频次</td>
 		<td>频次</td>
 		<td>频次</td>
 		<td>频次</td>
@@ -176,10 +184,14 @@
 				<td>${be.danger13}</td>
 				<td>${be.danger14}</td>
 				<td>${be.danger15}</td>
+				<td>${be.danger16}</td>
+				<td>${be.danger17}</td>
+				<td>${be.danger18}</td>
+				<td>${be.danger19}</td>
 				<td></td>
 				<td></td>
 				<script>
-				   window.a=window.a+'${be.danger15}'*1;
+				   window.a=window.a+'${be.danger19}'*1;
 				</script>
 				</tr>
 			</c:if>
@@ -202,6 +214,10 @@
 				<td>${be.sum12}</td>
 				<td>${be.sum13}</td>
 				<td>${be.sum14}</td>
+				<td>${be.sum15}</td>
+				<td>${be.sum16}</td>
+				<td>${be.sum17}</td>
+				<td>${be.sum18}</td>
 				<td class="tdd"></td>
 				<td></td>
 				<td></td>
@@ -228,6 +244,10 @@
 				<td>${be.result12}</td>
 				<td>${be.result13}</td>
 				<td>${be.result14}</td>
+				<td>${be.result15}</td>
+				<td>${be.result16}</td>
+				<td>${be.result17}</td>
+				<td>${be.result18}</td>
 				<td>--</td>
 				<td></td>
 				<td></td>

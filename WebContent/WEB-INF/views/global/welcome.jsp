@@ -157,11 +157,18 @@ function showping(){
               <font class="font_tx1 pos-a <c:if test="${count[0] >0}">blink</c:if>">${count[0]}</font>
               <font class="font_tx2 pos-a">安全培训</font>
               </a>
-              <a class="one_tx radius pos-r"  onclick="showping2()" href="javascript:;" style="background:#60D1FF;margin-right: 0;">
+              <%--<a class="one_tx radius pos-r"  onclick="showping2()" href="javascript:;" style="background:#60D1FF;margin-right: 0;">--%>
+              <%--<img alt="" src="${ly }/images/httb2.png"/>--%>
+              <%--<font class="font_tx1 pos-a <c:if test="${count[1]+count[2] +count[3] >0}">blink</c:if>">${count[1]+count[2] +count[3]  }</font>--%>
+              <%--<font class="font_tx2 pos-a">检测检验</font>--%>
+              <%--</a>--%>
+              <a class="one_tx radius pos-r w" data-title="检测检验" data-href="${ly }/global/warning/sequipment-list?isTime=3&home=1" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#60D1FF;margin-right: 0;width:30.5%">
               <img alt="" src="${ly }/images/httb2.png"/>
-              <font class="font_tx1 pos-a <c:if test="${count[1]+count[2] +count[3] >0}">blink</c:if>">${count[1]+count[2] +count[3]  }</font>
+              <font class="font_tx1 pos-a <c:if test="${count[1] >0}">blink</c:if>">${count[1] }</font>
               <font class="font_tx2 pos-a">检测检验</font>
               </a>
+
+
               <a class="one_tx radius pos-r" href="javascript:;" style="background:#ea4f21;margin-right:2%;margin-left:1%">
               <img alt="" src="${ly }/images/httb9.png"/>
               <font class="font_tx1 pos-a" ></font>
@@ -331,7 +338,7 @@ function showping(){
           </div>
         </div>
         <div class="div_hz">
-          <span>部门抽查</span>
+          <span>第三方检查</span>
           <div class="div_hui">
             <a class="one_huiz" data-title="部门抽查-隐患排查记录" data-href="${ly }/global/danger-index-list?flag=3" onclick="Hui_admin_tab(this)" href="javascript:;">
               <font>${c3_2 + c3_3}</font>

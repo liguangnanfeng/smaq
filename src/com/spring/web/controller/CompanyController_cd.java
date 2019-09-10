@@ -8476,7 +8476,7 @@ public class CompanyController_cd extends BaseController {
      * create time: 2019/8/12 10:48
      */
     @RequestMapping(value = "fuchadetail")
-    public String fuchadetail(HttpServletRequest request,Model model,Integer checkId, Integer flag, Integer number){
+    public String fuchadetail(HttpServletRequest request,Model model,Integer checkId, Integer flag, Integer number) {
         Integer id = checkId;
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
         List<Map> maps = tCheckItemMapper.selectAllByCheckId(checkId);

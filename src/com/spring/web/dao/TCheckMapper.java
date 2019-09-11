@@ -110,4 +110,12 @@ public interface TCheckMapper {
     Integer zfPerformanceCount2(@Param("flag")Integer flag,  @Param("userId")Integer userId);
 
     Integer findAllCounte(@Param("userIds")String userIds);
+
+    Integer selectGreateDanger(@Param("control")String control, @Param("user_id")Integer user_id);
+
+    Integer selectGreateDanger11(@Param("userIds")Integer userIds);
+
+    Integer greateDangerCount(@Param("control")String control, @Param("userIds")String userIds);
+
+    Integer greateDangerCount11(@Param("userIds")String userIds);
 }

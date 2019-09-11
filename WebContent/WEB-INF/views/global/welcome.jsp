@@ -171,13 +171,13 @@ function showping(){
 
               <a class="one_tx radius pos-r" href="javascript:;" style="background:#ea4f21;margin-right:2%;margin-left:1%">
               <img alt="" src="${ly }/images/httb9.png"/>
-              <font class="font_tx1 pos-a" ></font>
+                <font class="font_tx1 pos-a <c:if test="${counts >0}">blink</c:if>">${counts}</font>
               <font class="font_tx2 pos-a">隐患排查</font>
               </a>
 
               <a class="one_tx radius pos-r" href="javascript:;"  style="background:#ea4f21;margin-right:2%">
               <img alt="" src="${ly }/images/httb9.png"/>
-              <font class="font_tx1 pos-a "></font>
+                <font class="font_tx1 pos-a <c:if test="${counts1 >0}">blink</c:if>">${counts1}</font>
               <font class="font_tx2 pos-a">隐患治理</font>
               </a>
             <%--  <c:if test="${zdsgyh >0}">blink</c:if>  这是闪烁的特效--%>

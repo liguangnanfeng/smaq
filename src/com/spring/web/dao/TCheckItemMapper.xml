@@ -758,6 +758,7 @@
             <if test="endTime != null and endTime != ''">
                 <![CDATA[and DATE_FORMAT(t2.real_time, '%Y-%m-%d') <= #{endTime}]]>
             </if>
+            and t4.name not like "%分厂%"
         </where>
         GROUP BY t2.user_id, t2.flag, t1.status, d
     </select>

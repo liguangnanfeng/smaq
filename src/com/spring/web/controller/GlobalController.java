@@ -6301,6 +6301,188 @@ public class GlobalController extends BaseController {
     }
 
 
+    /**
+     * create by  : 小明！！！
+     * description: TODO 重大危险源分类统计
+     * create time: 2019/9/11 11:22
+     */
+    @RequestMapping(value = "greateDanger")
+    public String greateDanger(HttpServletRequest request, Model model){
+
+        User user = getLoginUser(request);
+
+        List<Map<String,Object>> list = null;
+        List<Map<String,Object>> list1 = null;
+        Integer sum1 = 0;
+        Integer sum2 = 0;
+        Integer sum3 = 0;
+        Integer sum4 = 0;
+        Integer sum5 = 0;
+        Integer sum6 = 0;
+        Integer sum7 = 0;
+        Integer sum8 = 0;
+        Integer sum9 = 0;
+        Integer sum10 = 0;
+
+        if (user.getUserType() == 4){ // 如果登录的账户是村级账号
+            // 根据登录账户 ID 查询该区域下的所有公司信息
+            list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+
+            if (null == list || list.size() == 0){// 如果该区域下没有公司
+
+                return "global/evaluate/globalError";// 返回提示页面
+
+            }else if (null != list || list.size() != 0) {
+
+                for (int i = 0; i < list.size(); i++) {
+
+                    Integer a = tCheckMapper.selectGreateDanger("化工",(Integer) list.get(i).get("user_id")); // 化工行业 数据
+                    list.get(i).put("danger1",a);
+                    sum1 += a;
+
+                    Integer  b = tCheckMapper.selectGreateDanger("冶金",(Integer) list.get(i).get("user_id")); // 冶金行业 数据
+                    list.get(i).put("danger2",b);
+                    sum2 += b;
+
+                    Integer  c = tCheckMapper.selectGreateDanger("有色",(Integer) list.get(i).get("user_id")); // 有色行业 数据
+                    list.get(i).put("danger3",c);
+                    sum3 += c;
+
+                    Integer  d = tCheckMapper.selectGreateDanger("建材",(Integer) list.get(i).get("user_id")); // 建材行业 数据
+                    list.get(i).put("danger4",d);
+                    sum4 += d;
+
+                    Integer  e = tCheckMapper.selectGreateDanger("机械",(Integer) list.get(i).get("user_id")); // 机械行业 数据
+                    list.get(i).put("danger5",e);
+                    sum5 += e;
+
+                    Integer  f = tCheckMapper.selectGreateDanger("轻工",(Integer) list.get(i).get("user_id")); // 轻工行业 数据
+                    list.get(i).put("danger6",f);
+                    sum6 += f;
+
+                    Integer  g = tCheckMapper.selectGreateDanger("纺织",(Integer) list.get(i).get("user_id")); // 纺织行业 数据
+                    list.get(i).put("danger7",g);
+                    sum7 += g;
+
+                    Integer  h = tCheckMapper.selectGreateDanger("商贸",(Integer) list.get(i).get("user_id")); // 商贸行业 数据
+                    list.get(i).put("danger8",h);
+                    sum8 += h;
+
+                    Integer  i1 = tCheckMapper.selectGreateDanger("烟花",(Integer) list.get(i).get("user_id")); // 烟花行业 数据
+                    list.get(i).put("danger9",i1);
+                    sum9 += i1;
+
+                    Integer  j = tCheckMapper.selectGreateDanger11((Integer) list.get(i).get("user_id")); // 其他行业 数据
+                    list.get(i).put("danger10",j);
+                    sum10 += j;
+
+                    Integer count = a + b + c + d + e + f + g + h + i1 + j;
+
+                    list.get(i).put("danger11",count);  // 某个公司的所有行业合计
+
+                }
+            }
+
+        }else {
+
+            list1 = new ArrayList<Map<String, Object>>();
+
+            if (findAllIds(user, list1)) return "global/evaluate/globalError";
+
+            if (null == list1 && list1.size() == 0){// 如果该区域下的下属区域没有公司
+
+                return "global/evaluate/globalError";// 返回提示页面
+
+            }else if (null != list1 && list1.size() != 0){
+
+                for (int i = 0; i < list1.size(); i++) {
+
+                    Integer a = tCheckMapper.greateDangerCount("化工",(String) list1.get(i).get("user_id")); // 化工行业 数据
+                    list1.get(i).put("danger1",a);
+                    sum1 += a;
+
+                    Integer  b = tCheckMapper.greateDangerCount("冶金",(String) list1.get(i).get("user_id")); // 冶金行业 数据
+                    list1.get(i).put("danger2",b);
+                    sum2 += b;
+
+                    Integer  c = tCheckMapper.greateDangerCount("有色",(String) list1.get(i).get("user_id")); // 有色行业 数据
+                    list1.get(i).put("danger3",c);
+                    sum3 += c;
+
+                    Integer  d = tCheckMapper.greateDangerCount("建材",(String) list1.get(i).get("user_id")); // 建材行业 数据
+                    list1.get(i).put("danger4",d);
+                    sum4 += d;
+
+                    Integer  e = tCheckMapper.greateDangerCount("机械",(String) list1.get(i).get("user_id")); // 机械行业 数据
+                    list1.get(i).put("danger5",e);
+                    sum5 += e;
+
+                    Integer  f = tCheckMapper.greateDangerCount("轻工",(String) list1.get(i).get("user_id")); // 轻工行业 数据
+                    list1.get(i).put("danger6",f);
+                    sum6 += f;
+
+                    Integer  g = tCheckMapper.greateDangerCount("纺织",(String) list1.get(i).get("user_id")); // 纺织行业 数据
+                    list1.get(i).put("danger7",g);
+                    sum7 += g;
+
+                    Integer  h = tCheckMapper.greateDangerCount("商贸",(String) list1.get(i).get("user_id")); // 商贸行业 数据
+                    list1.get(i).put("danger8",h);
+                    sum8 += h;
+
+                    Integer  i1 = tCheckMapper.greateDangerCount("烟花",(String) list1.get(i).get("user_id")); // 烟花行业 数据
+                    list1.get(i).put("danger9",i1);
+                    sum9 += i1;
+
+                    Integer  j = tCheckMapper.greateDangerCount11((String) list1.get(i).get("user_id")); // 其他行业 数据
+                    list1.get(i).put("danger10",j);
+                    sum10 += j;
+
+                    Integer count = a + b + c + d + e + f + g + h + i1 + j;
+
+                    list1.get(i).put("danger11",count);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+                }
+            }
+        }
+
+        Map<String,Object> map = new HashMap<>();
+
+        Integer counts = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 ;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        findCounts1(sum1, sum2, sum3, sum4, sum5, sum6, sum7, sum8, sum9, sum10, map, counts, df);
+
+        // 合计 坚
+        map.put("sum1",sum1);
+        map.put("sum2",sum2);
+        map.put("sum3",sum3);
+        map.put("sum4",sum4);
+        map.put("sum5",sum5);
+        map.put("sum6",sum6);
+        map.put("sum7",sum7);
+        map.put("sum8",sum8);
+        map.put("sum9",sum9);
+        map.put("sum10",sum10);
+        map.put("counts",counts);
+
+        model.addAttribute("data",new Date());
+
+        if (user.getUserType() == 4){
+            list.add(map);
+            model.addAttribute("list",list);
+            return "global/company/evaluate/villageDown/zf-performance-industry-charts1";
+        }else {
+            list1.add(map);
+            model.addAttribute("list",list1);
+            return "global/company/evaluate/villageUp/zf-performance-industry-charts1";
+        }
+
+    }
+
+
+
+
 
 
 

@@ -263,6 +263,22 @@ public class GlobalController extends BaseController {
     @RequestMapping(value = "/welcome")
     public String welcome(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
+        StringBuilder sb = new StringBuilder();
+        List<Integer> ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询该账户下所有公司id
+        for (int i = 0; i < ids.size(); i++) {
+            if (i == ids.size()-1){
+                sb.append("'").append(ids.get(i)).append("'");
+            }else {
+                sb.append("'").append(ids.get(i)).append("',");
+            }
+        }
+
+        Integer counts = tCheckMapper.findAllCounte(sb.toString()); // 排查数据
+        Integer counts1 = tCheckItemMapper.findAllCounte(sb.toString()); // 治理数据
+
+        model.addAttribute("counts",counts);
+        model.addAttribute("counts1",counts1);
+
         if (user.getUserType() == 9) { //地级市
             Map<String, Object> m = new HashMap<String, Object>();
             setUserId(user, m);

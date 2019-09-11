@@ -7,13 +7,14 @@
         <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
         <title>Document</title>
         <style>
         ul{
         text-align:center;
         margin:0;
         padding:0;
-        margin-top:18%;
+        margin-top:3%;
         display:flex;
         justify-content: center;
         <%--        background: #efefef;--%>
@@ -105,7 +106,7 @@
             <ul>
             <li><a href="${ly }/company/safety-system/assess7" data-title="评估操作"
             href="javascript:void(0)">评估操作</a></li>
-            <li><a href="${ly }/company/safety-system/control-list2?flag=1" data-title="评估结果"
+            <li><a  data-title="评估结果"
             href="javascript:void(0)">评估结果</a></li>
             <li><a href="${ly }/company/safety-system/control-list2?flag=3" data-title="风险分布表"
             href="javascript:void(0)">风险分布表</a></li>
@@ -124,8 +125,7 @@
             <ul>
             <li><a href="${ly }/company/safety-system/risk-information-list?flag=1"
             data-title="公司风险公告牌" href="javascript:void(0)">公司风险公告牌</a></li>
-            <li><a href="${ly }/company/safety-system/risk-information-list?flag=2"
-            data-title="车间风险公告牌" href="javascript:void(0)">车间风险公告牌</a></li>
+            <li><a onclick="sub1()" data-title="车间风险公告牌" href="javascript:void(0)">车间风险公告牌</a></li>
             <li><a href="${ly }/company/safety-system/risk-information-list?flag=3"
             data-title="岗位风险公告牌" href="javascript:void(0)">岗位风险公告牌</a></li>
             <li><a href="${ly }/company/safety-system/ying-add" data-title="岗位应急处置卡"
@@ -134,6 +134,27 @@
             href="javascript:void(0)">告知牌</a></li>
             </ul>
         </c:if>
+        <script>
+        window.onload=function(){
+        $("#iframe").contents().find("nav").hide();
+        };
+        function sub1(){
+        var iframe=$("#iframe");
+        iframe.attr("src", "${ly }/company/safety-system/risk-information-list?flag=2");
+        console.log('1');
+        console.log('2');
+        iframe.onreadystatechange=function(){
+        iframe.contents().find("nav").hide();
+        console.log('3')
+        };
+
+
+
+
+
+        }
+        </script>
+
         <!--检查模版设置-->
         <c:if test="${leftBasic == 4}">
             <ul>
@@ -187,6 +208,7 @@
             <%--<li><a href="${ly }/company/tables/tab-list?isType=1" data-title="安全生产规章制度"
                    href="javascript:void(0)"> <img alt="" src="${ly }/images/companyImg/icon/zhuyaoshebei.png"/>安全生产规章制度</a></li>
             </ul>--%>
+            </ul>
         </c:if>
         <!--管理档案-->
         <c:if test="${leftBasic == 9}">
@@ -378,9 +400,20 @@
             </ul>
         </c:if>
         </div>
+        <iframe scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly}/company/safety-system/risk-information-list?flag=1"></iframe>
         </body>
         </html>
         <script>
+
+
+
+
+
+
+
+
+
+
         function firstAcitive(v){
         var str = document.querySelector('.children_div')
         v.parentNode.parentNode.style.display="none"

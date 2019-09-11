@@ -108,4 +108,6 @@ public interface TCheckMapper {
     Integer zfPerformanceCount22(@Param("flag")Integer flag, @Param("industry")String industry, @Param("user_id")Integer user_id);
 
     Integer zfPerformanceCount2(@Param("flag")Integer flag,  @Param("userId")Integer userId);
+
+    Integer findAllCounte(@Param("userIds")String userIds);
 }

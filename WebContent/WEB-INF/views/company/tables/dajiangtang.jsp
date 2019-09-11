@@ -173,14 +173,6 @@
          $("body").outerHeight("6720px");
 		console.log($("body").height());
 
-
-
-
-
-
-
-
-
 		var w=$('main').height();
 		$('main').height(w*0.4015625)
 

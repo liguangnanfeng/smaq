@@ -184,7 +184,7 @@
 
 
 
-    <a class="one_tx radius pos-r" href="javascript:;"   style="background:#ea4f21;    margin-left: 1%;;margin-right:0">
+    <a class="one_tx radius pos-r" href="${ly}/village/hidden-danger-list?flag=1&status=1"   style="background:#ea4f21;    margin-left: 1%;;margin-right:0">
     <img alt="" src="${ly }/images/httb9.png"/>
     <font class="font_tx1 pos-a"></font>
     <font class="font_tx2 pos-a">隐患排查</font>
@@ -192,7 +192,7 @@
     </a>
 
 
-    <a class="one_tx radius pos-r" href="javascript:;"   style="background:#ea4f21;margin-left: 3%;">
+    <a class="one_tx radius pos-r" href="/village/hidden-danger-list?flag=1&status=1"   style="background:#ea4f21;margin-left: 3%;">
     <img alt="" src="${ly }/images/httb9.png"/>
     <font class="font_tx1 pos-a "></font>
     <font class="font_tx2 pos-a">隐患治理</font>

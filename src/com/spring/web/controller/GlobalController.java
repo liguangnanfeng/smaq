@@ -1346,9 +1346,12 @@ public class GlobalController extends BaseController {
     /**
      * 重大危险源源长制————隐患排查治理
      */
-    @RequestMapping(value = "source/danger-collect")
+    @RequestMapping(value = "greate-danger-collect")
     public String modelList(HttpServletRequest request, Integer industryType, Integer townId, Integer villageId, String companyName, Model model, String startTime, String endTime) throws Exception {
         User user = getLoginUser(request);
+
+        log.error("11111");
+
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
         if (user.getUserType() == 3) {//镇

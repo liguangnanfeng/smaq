@@ -169,13 +169,13 @@ function showping(){
               </a>
 
 
-              <a class="one_tx radius pos-r" href="javascript:;" style="background:#ea4f21;margin-right:2%;margin-left:1%">
+              <a class="one_tx radius pos-r" href="/global/check-company?flag=1&status=2" style="background:#ea4f21;margin-right:2%;margin-left:1%">
               <img alt="" src="${ly }/images/httb9.png"/>
                 <font class="font_tx1 pos-a <c:if test="${counts >0}">blink</c:if>">${counts}</font>
               <font class="font_tx2 pos-a">隐患排查</font>
               </a>
 
-              <a class="one_tx radius pos-r" href="javascript:;"  style="background:#ea4f21;margin-right:2%">
+              <a class="one_tx radius pos-r" data-href="/global/hidden-company-list?flag=1&status=1"  style="background:#ea4f21;margin-right:2%">
               <img alt="" src="${ly }/images/httb9.png"/>
                 <font class="font_tx1 pos-a <c:if test="${counts1 >0}">blink</c:if>">${counts1}</font>
               <font class="font_tx2 pos-a">隐患治理</font>

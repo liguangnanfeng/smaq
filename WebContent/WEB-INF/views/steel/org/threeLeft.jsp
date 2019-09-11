@@ -96,7 +96,7 @@
             <ul>
             <li><a href="${ly }/company/system/department-list" data-title="组织架构"
             href="javascript:void(0)">组织架构</a></li>
-            <li><a href="${ly }/company/system/user-list" data-title="部门人员" href="javascript:void(0)">人员在位在岗</a>
+            <li><a href="${ly }/company/system/user-list" data-title="部门人员" href="javascript:void(0)">部门人员</a>
             </li>
             </ul>
         </c:if>

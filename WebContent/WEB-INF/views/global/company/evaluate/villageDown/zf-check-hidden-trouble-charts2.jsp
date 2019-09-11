@@ -157,6 +157,7 @@
         <tr class="trf" style="background-color: #F5F9FE;font-weight: bold;">
         <td rowspan="2">序号</td>
         <td class="first" rowspan="2"><span class="title1">对象</span><br><span class="title3">部门</span></td>
+        <td>基础管理</td>
         <td>设计总图</td>
         <td>试生产</td>
         <td>装置运行</td>
@@ -198,6 +199,7 @@
         <td>频次</td>
         <td>频次</td>
         <td>频次</td>
+        <td>频次</td>
         <script>
         console.log('[{sum10=0, sum11=0, sum12=0, sum13=0, sum14=0, result14=0.00%, result3=0.00%, result4=0.00%, result1=0.00%, result2=0.00%, result9=0.00%, result7=0.00%, result8=0.00%, result5=0.00%, result6=0.00%, result13=0.00%, result12=0.00%, result11=0.00%, result10=0.00%, sum2=0, sum1=0, sum4=0, sum3=0, sum6=0, sum5=0, sum8=0, sum7=0, sum9=0}]');
         window.a = 0;
@@ -208,6 +210,7 @@
                             <tr class="tcontent">
                             <td>${index.index + 1}</td>
                             <td>${be.name}</td>
+                            <td>${be.danger19}</td>
                             <td>${be.danger1}</td>
                             <td>${be.danger2}</td>
                             <td>${be.danger3}</td>
@@ -226,11 +229,11 @@
                             <td>${be.danger16}</td>
                             <td>${be.danger17}</td>
                             <td>${be.danger18}</td>
-                            <td>${be.danger19}</td>
+                            <td>${be.danger20}</td>
                             <td></td>
                             <td></td>
                             <script>
-                            window.a=window.a+'${be.danger19}'*1;
+                            window.a=window.a+'${be.danger20}'*1;
                             console.log(window.a);
                             </script>
                             </tr>
@@ -240,6 +243,7 @@
                             <tr>
                             <td>合计</td>
                             <td>---</td>
+                            <td>${be.sum19}</td>
                             <td>${be.sum1}</td>
                             <td>${be.sum2}</td>
                             <td>${be.sum3}</td>
@@ -270,6 +274,7 @@
                             <tr>
                             <td>占比%</td>
                             <td>---</td>
+                            <td>${be.result19}</td>
                             <td>${be.result1}</td>
                             <td>${be.result2}</td>
                             <td>${be.result3}</td>

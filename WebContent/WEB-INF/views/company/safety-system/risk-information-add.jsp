@@ -155,6 +155,28 @@ function save() {
            <textarea name="yjczcs" class="textarea txtarea_sq">${be.yjczcs }</textarea>
       </div> 
     </div>
+
+  <div class="row cl">
+  <label class="form-label col-xs-4 col-sm-2">图例编辑(点击图片编辑)：</label>
+  <div class="formControls col-xs-8 col-sm-9">
+  <img  id="pic3"   onclick="img_upload('pic3', null)"  src="${ly }/images/zwtp.jpg" style="width:100px!important;min-height:100px!important;" url=""/>
+<%--  <a href="javascript:void(0);" onclick="img_upload('pic3', null)"--%>
+<%--  class="btn btn-primary radius upload-btn mt-10"><i class="Hui-iconfont">&#xe642;</i> 上传图片</a> --%>
+  </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="row cl">
       <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
         <button onClick="save()" class="btn btn-primary radius" type="button" style="padding: 0 70px;">

@@ -274,11 +274,9 @@
                 </table>
             </div>
         </div>
-        <c:if test="${flag != 1}">
         <!--企业列表-->
         <select id="selectBranch">
         </select>
-        </c:if>
         <div class="tabCon" >
             <div class="mt-20">
                 <table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -404,10 +402,63 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${list1}" varStatus="index" var="be">
+                    <c:forEach items="${hiddenPlanList}" varStatus="index" var="be">
                         <tr class="text-c">
                             <td>1</td>
-                            <td>总部级</td>
+                            <td>公司级</td>
+                            <td onClick="inputC(this,1,'${be.c}',0)">${be.syn_month }</td>
+                            <td>${be.syn_year }</td>
+                            <td onClick="inputC(this,3,'${be.c}',0)">${be.syn_ratio }</td>
+                            <td onClick="inputC(this,4,'${be.c}',0)">${be.eve_month }</td>
+                            <td>${be.eve_year }</td>
+                            <td onClick="inputC(this,6,'${be.c}',0)">${be.eve_ratio }</td>
+                            <td onClick="inputC(this,7,'${be.c}',0)">${be.reg_month }</td>
+                            <td>${be.reg_year }</td>
+                            <td onClick="inputC(this,9,'${be.c}',0)">${be.reg_ratio }</td>
+                                <%--<td onClick="inputC(this,10,'${be.c}',0)">${be.sea_month }</td>--%>
+                            <td onClick="inputC(this,11,'${be.c}',0)">${be.sea_year }</td>
+                            <td onClick="inputC(this,12,'${be.c}',0)">${be.sea_ratio }</td>
+                                <%--<td onClick="inputC(this,13,'${be.c}',0)">${be.els_month }</td>--%>
+                            <td onClick="inputC(this,14,'${be.c}',0)">${be.els_year }</td>
+                            <td onClick="inputC(this,15,'${be.c}',0)">${be.els_ratio }</td>
+                                <%--<td onClick="inputC(this,16,'${be.c}',0)">${be.bas_month }</td>--%>
+                            <td onClick="inputC(this,17,'${be.c}',0)">${be.bas_year }</td>
+                            <td onClick="inputC(this,18,'${be.c}',0)">${be.bas_ratio }</td>
+                            <td onClick="inputC(this,19,'${be.c}',0)">${be.total_count }</td>
+                            <td onClick="inputC(this,20,'${be.c}',0)">${be.total_ratio }</td>
+                        </tr>
+                    </c:forEach>
+                    <!-- 循环-->
+                    <c:forEach items="${list}" varStatus="index" var="be">
+                        <tr class="text-c">
+                            <td>${index.index + 2}</td>
+                            <td>${be.name }</td>
+                            <td onClick="inputC(this,1,'${be.c}',${be.id})">${be.syn_month }</td>
+                            <td>${be.syn_year }</td>
+                            <td onClick="inputC(this,3,'${be.c}',${be.id})">${be.syn_ratio }</td>
+                            <td onClick="inputC(this,4,'${be.c}',${be.id})">${be.eve_month }</td>
+                            <td>${be.eve_year }</td>
+                            <td onClick="inputC(this,6,'${be.c}',${be.id})">${be.eve_ratio }</td>
+                            <td onClick="inputC(this,7,'${be.c}',${be.id})">${be.reg_month }</td>
+                            <td>${be.reg_year }</td>
+                            <td onClick="inputC(this,9,'${be.c}',${be.id})">${be.reg_ratio }</td>
+                                <%--<td onClick="inputC(this,10,'${be.c}',${be.id})">${be.sea_month }</td>--%>
+                            <td onClick="inputC(this,11,'${be.c}',${be.id})">${be.sea_year }</td>
+                            <td onClick="inputC(this,12,'${be.c}',${be.id})">${be.sea_ratio }</td>
+                                <%--<td onClick="inputC(this,13,'${be.c}',${be.id})">${be.els_month }</td>--%>
+                            <td onClick="inputC(this,14,'${be.c}',${be.id})">${be.els_year }</td>
+                            <td onClick="inputC(this,15,'${be.c}',${be.id})">${be.els_ratio }</td>
+                                <%--<td onClick="inputC(this,16,'${be.c}',${be.id})">${be.bas_month }</td>--%>
+                            <td onClick="inputC(this,17,'${be.c}',${be.id})">${be.bas_year }</td>
+                            <td onClick="inputC(this,18,'${be.c}',${be.id})">${be.bas_ratio }</td>
+                            <td onClick="inputC(this,19,'${be.c}',${be.id})">${be.total_count }</td>
+                            <td onClick="inputC(this,20,'${be.c}',${be.id})">${be.total_ratio }</td>
+                        </tr>
+                    </c:forEach>
+                    <c:forEach items="${list1}" varStatus="index" var="be">
+                        <tr class="text-c">
+                            <td></td>
+                            <td style="font-weight:bold;">合计</td>
                             <td>${be.danger21 }</td>
                             <td>${be.danger22 }</td>
                             <td>${be.danger23 }</td>
@@ -429,33 +480,6 @@
                             <td>${be.danger39 }</td>
                             <td>${be.danger40 }</td>
                         </tr>
-                    </c:forEach>
-                    <!-- 循环-->
-                    <c:forEach items="${hiddenPlanList2}" varStatus="index" var="be">
-                    <tr class="text-c">
-                        <td></td>
-                        <td style="font-weight:bold;">${be.name}</td>
-                        <td>${be.danger21 }</td>
-                        <td>${be.danger22 }</td>
-                        <td>${be.danger23 }</td>
-                        <td>${be.danger24 }</td>
-                        <td>${be.danger25 }</td>
-                        <td>${be.danger26 }</td>
-                        <td>${be.danger27 }</td>
-                        <td>${be.danger28 }</td>
-                        <%--<td onClick="inputC(this,29,'${be.c}',${be.id})">${be.sea_month }</td>--%>
-                        <td>${be.danger30 }</td>
-                        <%--<td onClick="inputC(this,31,'${be.c}',${be.id})">${be.els_month }</td>--%>
-                        <td>${be.danger32 }</td>
-                        <%--<td onClick="inputC(this,33,'${be.c}',${be.id})">${be.bas_month }</td>--%>
-                        <td>${be.danger34 }</td>
-                        <td>${be.danger35 }</td>
-                        <td>${be.danger36 }</td>
-                        <td>${be.danger37 }</td>
-                        <td>${be.danger38 }</td>
-                        <td>${be.danger39 }</td>
-                        <td>${be.danger40 }</td>
-                    </tr>
                     </c:forEach>
                     <!-- 循环结束 -->
                     </tbody>

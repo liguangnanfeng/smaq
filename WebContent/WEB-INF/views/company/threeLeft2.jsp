@@ -24,7 +24,7 @@
         list-style-type: none;
         <%--        border-right: 1px solid #efefef;--%>
         text-align: center;
-        padding: 6px 16px;
+        padding: 10px 20px;
         margin-left: 12px;
         height: 3.2vw;
         line-height: 3.2vw;
@@ -95,52 +95,45 @@
         <!--组织架构-->
         <c:if test="${leftBasic == 1}">
             <ul>
-            <li><a onclick="sub1()"  data-title="组织架构" href="javascript:void(0)">组织架构</a></li>
-            <li><a onclick="sub2()" data-title="人员在岗在位" href="javascript:void(0)">人员在岗在位</a>
+            <li><a href="${ly }/company/system/department-list" data-title="组织架构"
+            href="javascript:void(0)">组织架构</a></li>
+            <li><a href="${ly }/company/system/user-list" data-title="人员在岗在位" href="javascript:void(0)">人员在岗在位</a>
             </li>
             </ul>
-            <iframe  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="/company/system/department-list"></iframe>
+        </c:if>
+        <!-- 风险评估 -->
+        <c:if test="${leftBasic== 2}">
+            <ul>
+            <li><a onclick="sub1()"  data-title="评估操作"
+            href="javascript:void(0)">评估操作</a></li>
+            <li><a onclick="sub1()" data-title="评估结果"
+            href="javascript:void(0)">评估结果</a></li>
+            <li><a onclick="sub1()" href="${ly }/company/safety-system/control-list2?flag=3" data-title="风险分布表"
+            href="javascript:void(0)">风险分布表</a></li>
+            <li><a onclick="sub1()" data-title="风险分布图"
+            href="javascript:void(0)" onclick="firstAcitive(this)">风险分布图</a></li>
+            </ul>
+            <ul class="children_div">
+            <li><a href="${ly }/api/map/control-list4" data-title="公司/厂级风险分布图"
+            href="javascript:void(0)">公司/厂级风险分布图</a></li>
+            <li><a href="${ly }/company/safety-system/control-photo" data-title="车间/岗位风险分布图"
+            href="javascript:void(0)">车间/岗位风险分布图</a></li>
+            </ul>
             <script>
             function sub1(){
             $("#iframe").attr("src", "${ly }/company/safety-system/assess7");
             }
             function sub2(){
-            $("#iframe").attr("src", "${ly }/company/system/user-list");
-            }
-            </script>
-
-
-        </c:if>
-        <!-- 风险评估 -->
-        <c:if test="${leftBasic== 2}">
-            <ul>
-            <li><a onclick="sub1()"  data-title="评估操作" href="javascript:void(0)">评估操作</a></li>
-            <li><a onclick="sub2()" data-title="评估结果" href="javascript:void(0)">评估结果</a></li>
-            <li><a onclick="sub3()"  data-title="风险分布表" href="javascript:void(0)">风险分布表</a></li>
-            <li><a  data-title="风险分布图" href="javascript:void(0)" onclick="firstAcitive(this)">风险分布图</a></li>
-            </ul>
-            <ul class="children_div">
-            <li><a onclick="sub4()"   data-title="公司/厂级风险分布图"
-            href="javascript:void(0)">公司/厂级风险分布图</a></li>
-            <li><a onclick="sub5()"   data-title="车间/岗位风险分布图"
-            href="javascript:void(0)">车间/岗位风险分布图</a></li>
-            </ul>
-            <iframe  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly}/company/safety-system/risk-information-list?flag=1"></iframe>
-            <script>
-            function sub1(){
-<%--            $("#iframe").attr("src", "${ly }/company/safety-system/assess7");--%>
-            }
-            function sub2(){
-<%--            $("#iframe").attr("src", "${ly }/company/safety-system/risk-information-list?flag=2");--%>
+            $("#iframe").attr("src", "${ly }/company/safety-system/risk-information-list?flag=2");
             }
             function sub3(){
-            $("#iframe").attr("src", "${ly }/company/safety-system/control-list2?flag=3");
+            $("#iframe").attr("src", "${ly }/company/safety-system/risk-information-list?flag=3");
             }
             function sub4(){
-            $("#iframe").attr("src", "${ly }/api/map/control-list4");
+            $("#iframe").attr("src", "${ly }/company/safety-system/ying-add");
             }
             function sub5(){
-            $("#iframe").attr("src", "${ly }/company/safety-system/control-photo");
+            $("#iframe").attr("src", "${ly }/company/safety-system/harm-list");
             }
             </script>
         </c:if>
@@ -153,9 +146,6 @@
             <li><a onclick="sub4()"  data-title="岗位应急处置卡" href="javascript:void(0)">岗位应急处置卡</a></li>
             <li><a onclick="sub5()"  data-title="告知牌" href="javascript:void(0)">告知牌</a></li>
             </ul>
-            <iframe  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly }/company/safety-system/risk-information-list?flag=1"></iframe>
-            <script>
-            </script>
             <script>
             function sub1(){
             $("#iframe").attr("src", "${ly }/company/safety-system/risk-information-list?flag=1");
@@ -189,95 +179,55 @@
         <!--体系管理-->
         <c:if test="${leftBasic == 5}">
             <ul class="oul">
-            <li><a  data-title="管理手册"
+            <li><a href="${ly }/company/study/management-guide" data-title="管理手册"
             href="javascript:void(0)">管理手册</a></li>
             </ul>
-            <iframe  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly }/company/study/management-guide"></iframe>
         </c:if>
         <!--流程管理-->
         <c:if test="${leftBasic == 6}">
             <ul>
-            <li><a onclick="sub1()" data-title="特殊作业流程" href="javascript:void(0)">特殊作业流程</a></li>
-            <li><a onclick="sub2()" data-title="检维修作业流程" href="javascript:void(0)">检维修作业流程</a></li>
-            <li><a onclick="sub3()" data-title="承包商作业流程" href="javascript:void(0)">承包商作业流程</a></li>
+            <li><a href="${ly }/company/study/select?type=1"
+            data-title="特殊作业流程" href="javascript:void(0)">特殊作业流程</a></li>
+            <li><a href="${ly }/company/study/select?type=2"
+            data-title="检维修作业流程" href="javascript:void(0)">检维修作业流程</a></li>
+            <li><a href="${ly }/company/study/select?type=3"
+            data-title="承包商作业流程" href="javascript:void(0)">承包商作业流程</a></li>
             </ul>
-            <iframe src="${ly }/company/study/select?type=1"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
-        <script>
-            function sub1(){
-            $("#iframe").attr("src", "${ly }/company/study/select?type=1");
-            }
-            function sub2(){
-            $("#iframe").attr("src", "${ly }/company/study/select?type=2");
-            }
-            function sub3(){
-            $("#iframe").attr("src", "${ly }/company/study/select?type=3");
-            }
-        </script>
         </c:if>
         <!--运行管理-->
         <c:if test="${leftBasic == 7}">
             <ul>
-            <li><a onclick="sub1()"  data-title="固有风险研判"
+            <li><a href="${ly }/company/study/naturaldanger-list" data-title="固有风险研判"
             href="javascript:void(0)">固有风险研判</a></li>
-            <li><a onclick="sub2()" href=" data-title="临时风险研判"
+            <li><a href="${ly }/company/study/temporaryrisk-list" data-title="临时风险研判"
             href="javascript:void(0)">临时风险研判</a></li>
-            <li><a onclick="sub3()" href="" data-title="重大/较大隐患治理风险研判"
+            <li><a href="${ly }/company/study/greatdanger-list" data-title="重大/较大隐患治理风险研判"
             href="javascript:void(0)">重大/较大隐患治理风险研判</a></li>
             </ul>
-            <iframe src="${ly }/company/study/naturaldanger-list"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
-            <script>
-            function sub1(){
-            $("#iframe").attr("src", "${ly }/company/study/naturaldanger-list");
-            }
-            function sub2(){
-            $("#iframe").attr("src", "${ly }/company/study/temporaryrisk-list");
-            }
-            function sub3(){
-            $("#iframe").attr("src", "${ly }/company/study/greatdanger-list");
-            }
-            </script>
-
-
         </c:if>
         <!--责任制-->
         <c:if test="${leftBasic == 8}">
             <ul>
-            <li><a onclick="sub1()"  data-title="安全生产责任制"
+            <li><a href="${ly }/company/tables/tab-list?isType=0" data-title="安全生产责任制"
             href="javascript:void(0)">责任制</a></li>
-            <li><a onclick="sub2()"  data-title="安全生产管理网络图"
+            <li><a href="${ly }/company/information/information6" data-title="安全生产管理网络图"
             href="javascript:void(0)">网络图</a></li>
-            <li><a onclick="sub3()" href="" data-title="安全生产规章制度"
+
+            <li><a href="${ly }/company/tables/tab-list?isType=1" data-title="安全生产规章制度"
             href="javascript:void(0)">安全生产规章制度</a></li>
+
+            <%--<li><a href="${ly }/company/tables/tab-list?isType=1" data-title="安全生产规章制度"
+                   href="javascript:void(0)"> <img alt="" src="${ly }/images/companyImg/icon/zhuyaoshebei.png"/>安全生产规章制度</a></li>
+            </ul>--%>
             </ul>
-            <iframe src="${ly }/company/tables/tab-list?isType=0"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
-            <script>
-            function sub1(){
-            $("#iframe").attr("src", "${ly }/company/tables/tab-list?isType=0");
-            }
-            function sub2(){
-            $("#iframe").attr("src", "${ly }/company/information/information6");
-            }
-            function sub3(){
-            $("#iframe").attr("src", "${ly }/company/tables/tab-list?isType=1");
-            }
-            </script>
         </c:if>
         <!--管理档案-->
         <c:if test="${leftBasic == 9}">
             <ul>
-            <li><a onclick="sub1()"  data-title="安全工作台账"
+            <li><a href="${ly }/company/tables/tab-taizhang" data-title="安全工作台账"
             href="javascript:void(0)">安全工作台账</a></li>
-            <li><a onclick="sub2()"  data-title="安全档案"
+            <li><a href="${ly }/company/tables/tab-dangan" data-title="安全档案"
             href="javascript:void(0)">安全档案</a></li>
-            <iframe src="${ly }/company/tables/tab-taizhang"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
-            <script>
-            function sub1(){
-            $("#iframe").attr("src", "${ly }/company/tables/tab-taizhang");
-            }
-            function sub2(){
-            $("#iframe").attr("src", "${ly }/company/tables/tab-dangan");
-            }
-            </script>
             </ul>
 
 
@@ -461,14 +411,17 @@
             </ul>
         </c:if>
         </div>
-
-        </body>
-        </html>
+        <iframe  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly}/company/safety-system/risk-information-list?flag=1"></iframe>
         <script>
         function loadFrame(){
         $("#iframe").contents().find("nav").hide();
         console.log("onload")
         }
+        </script>
+        </body>
+        </html>
+        <script>
+
         function firstAcitive(v){
         var str = document.querySelector('.children_div')
         v.parentNode.parentNode.style.display="none"

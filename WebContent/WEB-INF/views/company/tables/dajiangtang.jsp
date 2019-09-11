@@ -169,7 +169,6 @@
 		<iframe scrolling="no"   src="http://jswx.zayxy.com/index.php?user-app-login&mobile=${userName}" width="100%" height="100%" sandbox="allow-scripts" frameborder="1px"  allowtransparency="true"></iframe>
 
 		<script>
-		console.log("aaaaaaaaaaaa");
          $("body").outerHeight("6720px");
 		console.log($("body").height());
 

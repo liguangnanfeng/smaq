@@ -5676,6 +5676,9 @@ public class GlobalController extends BaseController {
 
             findCounts3(model, df, a, b, c, d, e, f, g, h, i1, j, count);
 
+            Integer number19 = tCheckItemMapper.zfTrouble("基础管理",sb.toString()); // 基础管理 隐患数据
+            model.addAttribute("number19",number19);
+
             Integer number1 = tCheckItemMapper.zfTrouble("设计总图",sb.toString()); // 基础管理 隐患数据
             model.addAttribute("number1",number1);
 
@@ -5732,11 +5735,11 @@ public class GlobalController extends BaseController {
             model.addAttribute("number18",number18);
 
 
-            Integer count1 = number1 + number2 + number3 + number4 + number5 + number6 + number7 + number8 + number9 + number10 + number11 + number12 + number13 + number14 + number15 + number16 + number17 + number18;
+            Integer count1 = number1 + number2 + number3 + number4 + number5 + number6 + number7 + number8 + number9 + number10 + number11 + number12 + number13 + number14 + number15 + number16 + number17 + number18 + number19;
 
             model.addAttribute("count1",count1);
 
-            findCounts2(model, df, number1, number2, number3, number4, number5, number6, number7, number8, number9, number10, number11, number12, number13, number14, number15, number16, number17, number18, count1);
+            findCounts2(model, df, number1, number2, number3, number4, number5, number6, number7, number8, number9, number10, number11, number12, number13, number14, number15, number16, number17, number18, number19, count1);
 
         }
         return "global/company/evaluate/analysis/pc-analysis";
@@ -5902,6 +5905,9 @@ public class GlobalController extends BaseController {
 
             findCounts3(model, df, a, b, c, d, e, f, g, h, i1, j, count);
 
+            Integer number19 = tCheckItemMapper.zfData88("基础管理",sb.toString()); // 基础管理 隐患数据
+            model.addAttribute("number19",number19);
+
             Integer number1 = tCheckItemMapper.zfData88("设计总图",sb.toString()); // 基础管理 隐患数据
             model.addAttribute("number1",number1);
 
@@ -5956,19 +5962,27 @@ public class GlobalController extends BaseController {
             Integer number18 = tCheckItemMapper.zfData881(sb.toString()); // 其他 隐患数据
             model.addAttribute("number18",number18);
 
-            Integer count1 = number1 + number2 + number3 + number4 + number5 + number6 + number7 + number8 + number9 + number10 + number11 + number12 + number13 + number14 + number15 + number16 + number17 + number18;
+            Integer count1 = number1 + number2 + number3 + number4 + number5 + number6 + number7 + number8 + number9 + number10 + number11 + number12 + number13 + number14 + number15 + number16 + number17 + number18 + number19;
 
             model.addAttribute("count1",count1);
 
-            findCounts2(model, df, number1, number2, number3, number4, number5, number6, number7, number8, number9, number10, number11, number12, number13, number14, number15, number16, number17, number18, count1);
+            findCounts2(model, df, number1, number2, number3, number4, number5, number6, number7, number8, number9, number10, number11, number12, number13, number14, number15, number16, number17, number18, number19, count1);
 
         }
 
         return "global/company/evaluate/analysis/yh-analysis";
     }
 
-    private void findCounts2(Model model, DecimalFormat df, Integer number1, Integer number2, Integer number3, Integer number4, Integer number5, Integer number6, Integer number7, Integer number8, Integer number9, Integer number10, Integer number11, Integer number12, Integer number13, Integer number14, Integer number15, Integer number16, Integer number17, Integer number18, Integer count1) {
+    private void findCounts2(Model model, DecimalFormat df, Integer number1, Integer number2, Integer number3, Integer number4, Integer number5, Integer number6, Integer number7, Integer number8, Integer number9, Integer number10, Integer number11, Integer number12, Integer number13, Integer number14, Integer number15, Integer number16, Integer number17, Integer number18, Integer number19, Integer count1) {
         if (null != count1 && 0 != count1) {
+
+            if (null != number19 && 0 != number19) {
+                String str = df.format((float)number19 / count1);
+                model.addAttribute("double19",str);
+
+            } else {
+                model.addAttribute("double19","0.00");  // 化工 占比数据
+            }
 
             if (null != number1 && 0 != number1) {
                 String str = df.format((float)number1 / count1);
@@ -6134,6 +6148,7 @@ public class GlobalController extends BaseController {
             model.addAttribute("double16", "0.00");
             model.addAttribute("double17", "0.00");
             model.addAttribute("double18", "0.00");
+            model.addAttribute("double19", "0.00");
         }
     }
 
@@ -6206,7 +6221,7 @@ public class GlobalController extends BaseController {
                 model.addAttribute("result33","0.00");
             }
 
-            String string = "'设计总图','试生产','装置运行','设备安全','仪表安全','电气安全','应急消防','特殊管控','行为环境','生产现场','公辅工程','特种设备','专项行业','生产工艺','设备设施','危化管理','安全设施','其他'";
+            String string = "'基础管理','设计总图','试生产','装置运行','设备安全','仪表安全','电气安全','应急消防','特殊管控','行为环境','生产现场','公辅工程','特种设备','专项行业','生产工艺','设备设施','危化管理','安全设施','其他'";
 
             Integer number1 = tCheckItemMapper.manageHiddenDanger22(1,string,3,sb.toString()); // 一般和较小 合格 已治理
 
@@ -6605,6 +6620,7 @@ public class GlobalController extends BaseController {
         Integer sum16 = 0;
         Integer sum17 = 0;
         Integer sum18 = 0;
+        Integer sum19 = 0;
 
         if (user.getUserType() == 4){
             list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
@@ -6616,6 +6632,10 @@ public class GlobalController extends BaseController {
             }else if (null != list && list.size() != 0){
 
                 for (int i = 0; i < list.size(); i++) {
+
+                    Integer s = tCheckItemMapper.zfHiddenTrouble22("基础管理", flag, (Integer) list.get(i).get("user_id")); // 基础管理 隐患数据
+                    list.get(i).put("danger19", s);
+                    sum19 += s;
 
                     Integer a = tCheckItemMapper.zfHiddenTrouble22("设计总图", flag, (Integer) list.get(i).get("user_id")); // 设计总图 隐患数据
                     list.get(i).put("danger1", a);
@@ -6689,9 +6709,9 @@ public class GlobalController extends BaseController {
                     list.get(i).put("danger18", r);
                     sum18 += r;
 
-                    Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o + p + q + r;
+                    Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o + p + q + r + s;
 
-                    list.get(i).put("danger19", count);  // 某个车间的所有种类隐患的合计
+                    list.get(i).put("danger20", count);  // 某个车间的所有种类隐患的合计
                 }
             }
 
@@ -6708,6 +6728,10 @@ public class GlobalController extends BaseController {
             }else if (null != list1 && list1.size() != 0){
 
                 for (int i = 0; i < list1.size(); i++) {
+
+                    Integer s = tCheckItemMapper.zfHiddenTroubleType("基础管理", flag, (String) list1.get(i).get("user_id")); // 基础管理 隐患数据
+                    list1.get(i).put("danger19", s);
+                    sum19 += s;
 
                     Integer a = tCheckItemMapper.zfHiddenTroubleType("设计总图", flag, (String) list1.get(i).get("user_id")); // 基础管理 隐患数据
                     list1.get(i).put("danger1", a);
@@ -6781,19 +6805,19 @@ public class GlobalController extends BaseController {
                     list1.get(i).put("danger18", r);
                     sum18 += r;
 
-                    Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o + p + q + r;
+                    Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o + p + q + r + s;
 
-                    list1.get(i).put("danger19", count);  // 某个车间的所有种类隐患的合计
+                    list1.get(i).put("danger20", count);  // 某个车间的所有种类隐患的合计
 
                 }
             }
         }
 
-        Integer counts = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 + sum11 + sum12 + sum13 + sum14 + sum15 + sum16 + sum17 + sum18;
+        Integer counts = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 + sum11 + sum12 + sum13 + sum14 + sum15 + sum16 + sum17 + sum18 + sum19;
 
         DecimalFormat df = new DecimalFormat("0.00");
 
-        findCounts(map, sum1, sum2, sum3, sum4, sum5, sum6, sum7, sum8, sum9, sum10, sum11, sum12, sum13, sum14, sum15, sum16, sum17, sum18, counts, df);
+        findCounts(map, sum1, sum2, sum3, sum4, sum5, sum6, sum7, sum8, sum9, sum10, sum11, sum12, sum13, sum14, sum15, sum16, sum17, sum18, sum19, counts, df);
         // 合计 坚
         map.put("sum1",sum1);
         map.put("sum2",sum2);
@@ -6813,6 +6837,8 @@ public class GlobalController extends BaseController {
         map.put("sum16",sum16);
         map.put("sum17",sum17);
         map.put("sum18",sum18);
+        map.put("sum19",sum19);
+
         map.put("counts",counts);
 
         model.addAttribute("data",new Date());
@@ -6864,6 +6890,7 @@ public class GlobalController extends BaseController {
         Integer sum16 = 0;
         Integer sum17 = 0;
         Integer sum18 = 0;
+        Integer sum19 = 0;
 
         if (user.getUserType() == 4){
 
@@ -6876,6 +6903,10 @@ public class GlobalController extends BaseController {
             }else if (null != list && list.size() != 0){
 
                 for (int i = 0; i < list.size(); i++) {
+
+                    Integer s = tCheckItemMapper.zhengFuChartData99("基础管理",flag,(Integer) list.get(i).get("user_id")); // 基础管理 隐患数据
+                    list.get(i).put("danger19",s);
+                    sum19 += s;
 
                     Integer a = tCheckItemMapper.zhengFuChartData99("设计总图",flag,(Integer) list.get(i).get("user_id")); // 基础管理 隐患数据
                     list.get(i).put("danger1",a);
@@ -6949,9 +6980,9 @@ public class GlobalController extends BaseController {
                     list.get(i).put("danger18",r);
                     sum18 += r;
 
-                    Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o + p + q + r;
+                    Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o + p + q + r + s;
 
-                    list.get(i).put("danger19",count);  // 某个车间的所有种类隐患的合计
+                    list.get(i).put("danger20",count);  // 某个车间的所有种类隐患的合计
                 }
             }
 
@@ -6968,6 +6999,10 @@ public class GlobalController extends BaseController {
             }else if (null != list1 && list1.size() != 0){
 
                 for (int i = 0; i < list1.size(); i++) {
+
+                    Integer s = tCheckItemMapper.zhengFuChartData88("基础管理",flag,(String) list1.get(i).get("user_id")); // 基础管理 隐患数据
+                    list1.get(i).put("danger19",s);
+                    sum19 += s;
 
                     Integer a = tCheckItemMapper.zhengFuChartData88("设计总图",flag,(String) list1.get(i).get("user_id")); // 基础管理 隐患数据
                     list1.get(i).put("danger1",a);
@@ -7041,19 +7076,19 @@ public class GlobalController extends BaseController {
                     list1.get(i).put("danger18",r);
                     sum18 += r;
 
-                    Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o + p + q + r;
+                    Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o + p + q + r + s;
 
-                    list1.get(i).put("danger19",count);  // 某个车间的所有种类隐患的合计
+                    list1.get(i).put("danger20",count);  // 某个车间的所有种类隐患的合计
 
                 }
             }
         }
 
-        Integer counts = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 + sum11 + sum12 + sum13 + sum14 + sum15 + sum16 + sum17 + sum18;
+        Integer counts = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 + sum11 + sum12 + sum13 + sum14 + sum15 + sum16 + sum17 + sum18 + sum19;
 
         DecimalFormat df = new DecimalFormat("0.00");
 
-        findCounts(map, sum1, sum2, sum3, sum4, sum5, sum6, sum7, sum8, sum9, sum10, sum11, sum12, sum13, sum14, sum15, sum16, sum17, sum18, counts, df);
+        findCounts(map, sum1, sum2, sum3, sum4, sum5, sum6, sum7, sum8, sum9, sum10, sum11, sum12, sum13, sum14, sum15, sum16, sum17, sum18, sum19, counts, df);
         // 合计 坚
         map.put("sum1",sum1);
         map.put("sum2",sum2);
@@ -7073,6 +7108,8 @@ public class GlobalController extends BaseController {
         map.put("sum16",sum16);
         map.put("sum17",sum17);
         map.put("sum18",sum18);
+        map.put("sum19",sum19);
+
         map.put("counts",counts);
 
         model.addAttribute("data",new Date());
@@ -7089,8 +7126,16 @@ public class GlobalController extends BaseController {
 
     }
 
-    private void findCounts(Map<String, Object> map, Integer sum1, Integer sum2, Integer sum3, Integer sum4, Integer sum5, Integer sum6, Integer sum7, Integer sum8, Integer sum9, Integer sum10, Integer sum11, Integer sum12, Integer sum13, Integer sum14, Integer sum15, Integer sum16, Integer sum17, Integer sum18, Integer counts, DecimalFormat df) {
+    private void findCounts(Map<String, Object> map, Integer sum1, Integer sum2, Integer sum3, Integer sum4, Integer sum5, Integer sum6, Integer sum7, Integer sum8, Integer sum9, Integer sum10, Integer sum11, Integer sum12, Integer sum13, Integer sum14, Integer sum15, Integer sum16, Integer sum17, Integer sum18, Integer sum19, Integer counts, DecimalFormat df) {
         if (null != counts && 0 != counts) {
+
+            if (null != sum19 && 0 != sum19) {
+                String str = df.format((float)sum19 / counts);
+                map.put("result19",str);
+
+            } else {
+                map.put("result19","0.00");  // 基础管理 占比数据 竖
+            }
 
             if (null != sum1 && 0 != sum1) {
                 String str = df.format((float)sum1 / counts);
@@ -7256,6 +7301,7 @@ public class GlobalController extends BaseController {
             map.put("result16", "0.00");
             map.put("result17", "0.00");
             map.put("result18", "0.00");
+            map.put("result19", "0.00");
         }
     }
 
@@ -7760,7 +7806,7 @@ public class GlobalController extends BaseController {
 
         User user = getLoginUser(request);
         List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
-        String string = "设计总图,试生产,装置运行,设备安全,仪表安全,电气安全,应急消防,特殊管控,行为环境,生产现场,公辅工程,特种设备,专项行业,生产工艺,设备设施,危化管理.安全设施,其他";
+        String string = "基础管理,设计总图,试生产,装置运行,设备安全,仪表安全,电气安全,应急消防,特殊管控,行为环境,生产现场,公辅工程,特种设备,专项行业,生产工艺,设备设施,危化管理.安全设施,其他";
 
         List<Integer> ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询所有的公司
 

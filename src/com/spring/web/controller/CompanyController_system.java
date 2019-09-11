@@ -157,7 +157,6 @@ public class CompanyController_system extends BaseController {
         List<LlHashMap<Object, Object>> userList=zzjgCompanyService.selectByMap(m);
 
         model.addAttribute("list", userList);
-        System.out.println(userList);
         model.addAttribute("m", m);
         //model.addAttribute("companyL", zzjgCompanyMapper.selectAll(user.getId()));    TODO 2
         model.addAttribute("companyL", zzjgCompanyService.selectAll(user.getId()));
@@ -182,7 +181,6 @@ public class CompanyController_system extends BaseController {
         User user = getLoginUser(request);
         if (null != id) {
             ZzjgPersonnel p = zzjgPersonnelMapper.selectByPrimaryKey(id);
-
             model.addAttribute("user", p);
         }
         model.addAttribute("companyL", zzjgCompanyMapper.selectAll(user.getId()));
@@ -222,11 +220,10 @@ public class CompanyController_system extends BaseController {
         dto.setCtime(d);
         dto.setDel(0);
 
-        if (null == dto.getId()) {
+       if (null == dto.getId()) {
             zzjgPersonnelMapper.insertSelective(dto);
         } else {
             zzjgPersonnelMapper.updateByPrimaryKeySelective(dto);
-
         }
         return result;
     }

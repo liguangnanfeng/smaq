@@ -31,5 +31,9 @@ public interface HiddenPlanMapper {
 
     List<Map<String,Object>> selectAllDpids(@Param("ids")String ids);
 
+    List<Map<String,Object>> selectCountAllTraces(@Param("uids") String uid);
+
+    List<Map<String,Object>> selectCountAllName(@Param("uid") Integer uid);
+
 }
 

@@ -1016,10 +1016,10 @@ public class CgfServiceImpl implements CgfService {
         }
         dto.setIndustry2(industry2);
         List<Integer> userIds = getCompanyUserIdsWithPage(dto, user);
-
         //log.error("userIds："+userIds.toString());
 
         String all_userIds = dto.getUserIds();
+
         if ("-1".equals(all_userIds)) {
             model.addAttribute("total", 0);
         } else {

@@ -9553,7 +9553,7 @@ public class GlobalController extends BaseController {
         List<TSafetyStandard> TSafetyStandardlist = tSafetyStandardMapper.findAll(map);
         // 判断是否有顺序,有书序就按照顺序来,没有就是倒序
         model.addAttribute("sort", sort);
-        model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("companyName", companyMapper.selectByPrimaryKey(userId).getName());
         model.addAttribute("list", TSafetyStandardlist);
         return "company/tables/tab-biaozhun2";
 

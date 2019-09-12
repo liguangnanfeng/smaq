@@ -378,9 +378,9 @@
         </dt>
         <dd>
         <ul>
-        <li><a data-href="${ly }/company/threeLeft?leftBasic=5" data-title="体系管理"
-        href="javascript:void(0)">体系管理</a>
-        </li>
+<%--        <li><a data-href="${ly }/company/threeLeft?leftBasic=5" data-title="体系管理"--%>
+<%--        href="javascript:void(0)">体系管理</a>--%>
+<%--        </li>--%>
         <li><a data-href="${ly }/company/threeLeft?leftBasic=6" data-title="流程管理"
         href="javascript:void(0)">流程管理</a>
         </li>
@@ -435,41 +435,41 @@
         <%--</dd>--%>
         <%--</dl>--%>
 
-        <dl>
-        <dt>
-        <i class="Hui-iconfont">&#xe687;</i>职业卫生健康
-        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-        </dt>
-        <dd>
-        <ul>
-        <li><a data-href="${ly }/company/labor/labor-list" data-title="劳保用品配备" href="javascript:void(0)">劳保用品配备</a>
-        </li>
-        <li><a data-href="${ly }/company/threeLeft?leftBasic=10" data-title="管理档案台账" href="javascript:void(0)">管理档案台账</a>
-        </li>
-        <%-- <li><a data-href="${ly }/company/tables/tab-list?isType=29" data-title="职业卫生管理制度" href="javascript:void(0)" style="color:#fff;">管理制度</a></li> --%>
-        </ul>
-        <%--<div class="div_omenu">--%>
-        <%--<div class="div_otop">管理档案<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>--%>
-        <%--<ul>--%>
-        <%--<li><a data-href="${ly }/company/evaluate/detection-list" data-title="职卫检测、体检"--%>
-        <%--href="javascript:void(0)">职卫检测、体检</a></li>--%>
-        <%--&lt;%&ndash; <li><a data-href="${ly }/company/evaluate/health-list" data-title="职业健康体检" href="javascript:void(0)" style="color:#fff;">职业健康体检</a></li> &ndash;%&gt;--%>
-        <%--<li><a data-href="${ly }/company/tables/tab-health/2" data-title="职业卫生管理"--%>
-        <%--href="javascript:void(0)">职业卫生管理</a></li>--%>
-        <%--<li><a data-href="${ly }/company/tables/tab-health/3" data-title="职业卫生宣传培训"--%>
-        <%--href="javascript:void(0)">职业卫生宣传培训</a></li>--%>
-        <%--<li><a data-href="${ly }/company/tables/tab-health/4" data-title="职业病危害因素监测与检测评价"--%>
-        <%--href="javascript:void(0)">职业病危害因素检测评价</a></li>--%>
-        <%--<li><a data-href="${ly }/company/tables/tab-health/5" data-title="用人单位职业健康监护管理"--%>
-        <%--href="javascript:void(0)">职业健康监护管理</a></li>--%>
-        <%--<li><a data-href="${ly }/company/cyryjkjh" data-title="劳动者个人职业健康监护" href="javascript:void(0)">劳动者个人职业健康监护</a>--%>
-        <%--</li>--%>
-        <%--<li><a data-href="${ly }/company/tables/tab-health/7" data-title="其他" href="javascript:void(0)">其他</a>--%>
-        <%--</li>--%>
-        <%--</ul>--%>
-        <%--</div>--%>
-        </dd>
-        </dl>
+<%--        <dl>--%>
+<%--        <dt>--%>
+<%--        <i class="Hui-iconfont">&#xe687;</i>职业卫生健康--%>
+<%--        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--%>
+<%--        </dt>--%>
+<%--        <dd>--%>
+<%--        <ul>--%>
+<%--        <li><a data-href="${ly }/company/labor/labor-list" data-title="劳保用品配备" href="javascript:void(0)">劳保用品配备</a>--%>
+<%--        </li>--%>
+<%--        <li><a data-href="${ly }/company/threeLeft?leftBasic=10" data-title="管理档案台账" href="javascript:void(0)">管理档案台账</a>--%>
+<%--        </li>--%>
+<%--        &lt;%&ndash; <li><a data-href="${ly }/company/tables/tab-list?isType=29" data-title="职业卫生管理制度" href="javascript:void(0)" style="color:#fff;">管理制度</a></li> &ndash;%&gt;--%>
+<%--        </ul>--%>
+<%--        &lt;%&ndash;<div class="div_omenu">&ndash;%&gt;--%>
+<%--        &lt;%&ndash;<div class="div_otop">管理档案<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>&ndash;%&gt;--%>
+<%--        &lt;%&ndash;<ul>&ndash;%&gt;--%>
+<%--        &lt;%&ndash;<li><a data-href="${ly }/company/evaluate/detection-list" data-title="职卫检测、体检"&ndash;%&gt;--%>
+<%--        &lt;%&ndash;href="javascript:void(0)">职卫检测、体检</a></li>&ndash;%&gt;--%>
+<%--        &lt;%&ndash;&lt;%&ndash; <li><a data-href="${ly }/company/evaluate/health-list" data-title="职业健康体检" href="javascript:void(0)" style="color:#fff;">职业健康体检</a></li> &ndash;%&gt;&ndash;%&gt;--%>
+<%--        &lt;%&ndash;<li><a data-href="${ly }/company/tables/tab-health/2" data-title="职业卫生管理"&ndash;%&gt;--%>
+<%--        &lt;%&ndash;href="javascript:void(0)">职业卫生管理</a></li>&ndash;%&gt;--%>
+<%--        &lt;%&ndash;<li><a data-href="${ly }/company/tables/tab-health/3" data-title="职业卫生宣传培训"&ndash;%&gt;--%>
+<%--        &lt;%&ndash;href="javascript:void(0)">职业卫生宣传培训</a></li>&ndash;%&gt;--%>
+<%--        &lt;%&ndash;<li><a data-href="${ly }/company/tables/tab-health/4" data-title="职业病危害因素监测与检测评价"&ndash;%&gt;--%>
+<%--        &lt;%&ndash;href="javascript:void(0)">职业病危害因素检测评价</a></li>&ndash;%&gt;--%>
+<%--        &lt;%&ndash;<li><a data-href="${ly }/company/tables/tab-health/5" data-title="用人单位职业健康监护管理"&ndash;%&gt;--%>
+<%--        &lt;%&ndash;href="javascript:void(0)">职业健康监护管理</a></li>&ndash;%&gt;--%>
+<%--        &lt;%&ndash;<li><a data-href="${ly }/company/cyryjkjh" data-title="劳动者个人职业健康监护" href="javascript:void(0)">劳动者个人职业健康监护</a>&ndash;%&gt;--%>
+<%--        &lt;%&ndash;</li>&ndash;%&gt;--%>
+<%--        &lt;%&ndash;<li><a data-href="${ly }/company/tables/tab-health/7" data-title="其他" href="javascript:void(0)">其他</a>&ndash;%&gt;--%>
+<%--        &lt;%&ndash;</li>&ndash;%&gt;--%>
+<%--        &lt;%&ndash;</ul>&ndash;%&gt;--%>
+<%--        &lt;%&ndash;</div>&ndash;%&gt;--%>
+<%--        </dd>--%>
+<%--        </dl>--%>
         <dl>
         <dt>
         <i class="Hui-iconfont">&#xe70c;</i>行政执法检查

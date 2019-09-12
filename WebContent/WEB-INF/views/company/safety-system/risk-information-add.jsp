@@ -1,4 +1,4 @@
-    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+        <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
         <%@ include file="/WEB-INF/views/taglibs.jsp" %>
         <!DOCTYPE HTML>
         <html>
@@ -60,16 +60,31 @@
         obj.id = id_;
         obj.flag = flag;
         obj.isedit = 1;
+        let img="";
+        for(let i=3;i<=11;i++){
+        let a=$("#pic"+i).attr("src");
+        if(i===3){
+        img=img+a;
+        }else{
+        img=img+'&'+a;
+        }
+        }
+        obj.img=img;
+        console.log('2333333333333333');
+        console.log(obj.img);
         $.post("/company/safety-system/risk-information-save", obj, function(result) {
         layer.close(i);
         parent.location.reload();
-        /*if(flag == 1) {
-        parent.location.reload();
-        } else {
-        parent.load_();
-        }*/
+        console.log(result)
         })
         }
+                $(window).load(function(){
+                //编写代码 等价于 //编写代码
+
+                });
+
+
+
         </script>
         </head>
         <body>
@@ -170,7 +185,7 @@
         </div>
         </div>
         <style>
-        #pic3{
+        #pic3,#pic4,#pic5,#pic6,#pic7,#pic8,#pic9,#pic10,#pic11{
         cursor:pointer
         }
         .a{
@@ -183,23 +198,23 @@
         <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">图例编辑( 点击图片编辑)：</label>
         <div class="formControls col-xs-8 col-sm-9 a">
-        <img id="pic3" onclick="img_upload('pic3', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic3" class="pic" onclick="img_upload('pic3', null)" src="${ly }/images/zwtp.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic3" onclick="img_upload('pic4', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic4" class="pic" onclick="img_upload('pic4', null)" src="${ly }/images/zwtp.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic3" onclick="img_upload('pic5', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic5" class="pic" onclick="img_upload('pic5', null)" src="${ly }/images/zwtp.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic3" onclick="img_upload('pic6', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic6" class="pic" onclick="img_upload('pic6', null)" src="${ly }/images/zwtp.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic3" onclick="img_upload('pic3', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic7" class="pic" onclick="img_upload('pic7', null)" src="${ly }/images/zwtp.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic3" onclick="img_upload('pic3', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic8" class="pic" onclick="img_upload('pic8', null)" src="${ly }/images/zwtp.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic3" onclick="img_upload('pic3', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic9" class="pic" onclick="img_upload('pic9', null)" src="${ly }/images/zwtp.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic3" onclick="img_upload('pic3', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic10" class="pic" onclick="img_upload('pic10', null)" src="${ly }/images/zwtp.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic3" onclick="img_upload('pic3', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic11" class="pic" onclick="img_upload('pic11', null)" src="${ly }/images/zwtp.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
 
         </div>

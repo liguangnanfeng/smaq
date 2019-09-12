@@ -49,9 +49,10 @@
         </script>
         <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
         <div class="select-btn">
-        <a class="sbtn" id="chaBtn1"  href="${ly }/company/jx-analysis?flag=1">企业自查</a>
-        <a class="sbtn" id="chaBtn2" href="${ly }/company/jx-analysis?flag=2">行政检查</a>
-        <a class="sbtn" id="chaBtn3" href="${ly }/company/jx-analysis?flag=3">第三方检查</a>
+        <a class="sbtn btn-default" id="chaBtn0"  href="###">总览</a>
+        <a class="sbtn" id="chaBtn1"  href="${ly }/company/zhuChartData66?flag=1">企业自查</a>
+        <a class="sbtn" id="chaBtn2" href="${ly }/company/zhuChartData66?flag=2">行政检查</a>
+        <a class="sbtn" id="chaBtn3" href="${ly }/company/zhuChartData66?flag=3">第三方检查</a>
         </div>
         <div id="main2" style="width: 90%;height:400px;margin: 50px auto 0 auto;"></div>
 <%--        <iframe id="colum" src=""></iframe>--%>
@@ -245,52 +246,10 @@
         myChart.setOption(option, true);
 
         // 监听事件
-        $("#chaBtn1").click(() => {
-        url='${ly }/company/zhuChartData66?flag=1';
-        $("#chaBtn1").addClass('btn-default')
-        $("#chaBtn2").removeClass('btn-default')
-        $("#chaBtn3").removeClass('btn-default')
-        let number11 = ["${s}","${a}", "${b}", "${c}", "${d}", "${e}", "${f}", "${g}", "${h}", "${i}", "${j}", "${k}", "${l}", "${m}", "${n}", "${o}", "${p}", "${q}", "${r}"];
-        let firstdata11 = ["${s1}","${a1}", "${b1}", "${c1}", "${d1}", "${e1}", "${f1}", "${g1}", "${h1}", "${i1}", "${j1}", "${k1}", "${l1}", "${m1}", "${n1}", "${o1}", "${p1}", "${q1}", "${r1}"];
-        let x11="",fdata11=[];
-        firstdata11.map((v,i)=>{
-        x11=v*100;
-        fdata11.push(x11);
-        });
-        })
-        $("#chaBtn2").click(() => {
-        url='${ly }/company/zhuChartData66?flag=2';
 
-        $("#chaBtn2").addClass('btn-default')
-        $("#chaBtn1").removeClass('btn-default')
-        $("#chaBtn3").removeClass('btn-default')
-
-        let number22= ["${s}","${a}", "${b}", "${c}", "${d}", "${e}", "${f}", "${g}", "${h}", "${i}", "${j}", "${k}", "${l}", "${m}", "${n}", "${o}", "${p}", "${q}", "${r}"];
-        let firstdata22 = ["${s1}","${a1}", "${b1}", "${c1}", "${d1}", "${e1}", "${f1}", "${g1}", "${h1}", "${i1}", "${j1}", "${k1}", "${l1}", "${m1}", "${n1}", "${o1}", "${p1}", "${q1}", "${r1}"];
-        let x22="",fdata22=[];
-        firstdata22.map((v,i)=>{
-        x22=v*100;
-        fdata22.push(x22);
-        });
-        })
-        $("#chaBtn3").click(() => {
-        url='${ly }/company/zhuChartData66?flag=3';
-        $("#chaBtn3").addClass('btn-default')
-        $("#chaBtn1").removeClass('btn-default')
-        $("#chaBtn2").removeClass('btn-default')
-        let number33 = ["${s}","${a}", "${b}", "${c}", "${d}", "${e}", "${f}", "${g}", "${h}", "${i}", "${j}", "${k}", "${l}", "${m}", "${n}", "${o}", "${p}", "${q}", "${r}"];
-        let firstdata33 = ["${s1}","${a1}", "${b1}", "${c1}", "${d1}", "${e1}", "${f1}", "${g1}", "${h1}", "${i1}", "${j1}", "${k1}", "${l1}", "${m1}", "${n1}", "${o1}", "${p1}", "${q1}", "${r1}"];
-        let x33="",fdata33=[];
-        firstdata33.map((v,i)=>{
-
-        x33=v*100;
-        fdata33.push(x33);
-        });
-        });
-
-       myChart.on('click', function(p) {
-        window.location.href =url;
-        })
+<%--       myChart.on('click', function(p) {--%>
+<%--        window.location.href =url;--%>
+<%--        })--%>
         </script>
         </body>
 

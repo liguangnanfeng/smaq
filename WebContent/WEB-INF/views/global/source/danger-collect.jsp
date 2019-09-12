@@ -27,7 +27,7 @@ body .lhover strong {color: red;margin:0;}
 var villageId = '${m.villageId}';
 function openzl(){
   $("#upload-zl").modal("show")}
-  
+
 $(function() {
   if($("#townId").length > 0) {
     $("#townId").change(function() {
@@ -47,7 +47,7 @@ $(function() {
         })
       }
     })
-    
+
     $("#townId").change();
   }
 })
@@ -60,10 +60,10 @@ function print_() {
 </head>
 <body>
   <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-    <span class="c-gray en">&gt;</span> <span>隐患统计分析系统</span> 
-    <span class="c-gray en">&gt;</span> <span>隐患数据分析</span> 
-    
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+    <span class="c-gray en">&gt;</span> <span>隐患统计分析系统</span>
+    <span class="c-gray en">&gt;</span> <span>隐患数据分析</span>
+
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>
     </a>
@@ -127,12 +127,12 @@ function print_() {
     <c:set value="${be[3] + be[7] + be[11] + be[15] + yyy}" var="yyy"/>
     </c:forEach>
    <!--  <div class="cl pd-5 bg-1 bk-gray mt-20"> -->
-      <%-- <span class="l">共有<strong>${fn:length(list) }</strong> 家企业存在隐患；</span> 
-      <span class="l">隐患总数<strong>${xxx }</strong> 条；</span> 
-      <span class="l">已整改<strong>${yyy }</strong> 条；</span> 
+      <%-- <span class="l">共有<strong>${fn:length(list) }</strong> 家企业存在隐患；</span>
+      <span class="l">隐患总数<strong>${xxx }</strong> 条；</span>
+      <span class="l">已整改<strong>${yyy }</strong> 条；</span>
       <span class="l">未整改<strong>${xxx - yyy}</strong> 条；</span>
       <span class="l">重大隐患<strong>${d}</strong> 条；</span> --%>
-      
+
       <c:set var="hg" value="0"/>
       <c:set var="yb" value="0"/>
       <c:forEach items="${groupIndu }" var="be">
@@ -143,7 +143,7 @@ function print_() {
           <c:set var="yb" value="${yb + be.c}"/>
           </c:if>
       </c:forEach>
-      
+
       <%-- <span class="l">化工企业（危险化学品生产、经营、使用）、加油站<strong>${hg}</strong> 条；</span>
       <span class="l">工贸企业<strong>${yb}</strong> 条；</span> --%>
     <!-- </div> -->
@@ -162,10 +162,15 @@ function print_() {
         </thead>
         <tbody>
           <!-- 循环-->
+  <script>
+   console.log('${list1}')
+  </script>
           <c:forEach items="${list }" varStatus="index" var="be">
+            <c:if test='${be[1]!="炼铁分厂"&&be[1]!="炼钢分厂"&&be[1]!="高线分厂"&&be[1]!="一轧分厂"&&be[1]!="二轧分厂"&&be[1]!="物流分部"&&be[1]!="动力分厂"&&be[1]!="制氧分厂"}'>
+
             <tr class="text-c">
             <td>${index.index + 1 }</td>
-            <td>${be[1] }</td>
+              <td>${be[1]}</td>
             <td>
               <span>${be[2] + be[3] + be[6] + be[7] + be[10] + be[11] + be[14] + be[15]}</span>
              <%--  <span>已整改：${be[3] + be[7] + be[11] + be[15]}</span>
@@ -206,20 +211,22 @@ function print_() {
               <a href="${ly }/village/danger-index-list?flag=4&cId=${be[0]}&d=1&status=3">已整改：${be[17]}</a>
               <a href="${ly }/village/danger-index-list?flag=4&cId=${be[0]}&d=1&status=2">未整改：${be[16]}</a> --%>
             </td>
+              </tr>
+            </c:if>
           </c:forEach>
           <!-- 循环结束 -->
         </tbody>
       </table>
     </div>
   </div>
-  
+
   <div id="upload-zl" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content radius">
               <div class="modal-body">
                 <div class="row cl">
-                  <span class="l">隐患总数<strong>${xxx }</strong> 条</span> 
-                  <span class="l">已整改<strong>${yyy }</strong> 条</span> 
+                  <span class="l">隐患总数<strong>${xxx }</strong> 条</span>
+                  <span class="l">已整改<strong>${yyy }</strong> 条</span>
                   <span class="l">未整改<strong>${xxx - yyy}</strong> 条</span>
                   <span class="l">重大隐患<strong>${d}</strong> 条</span>
                   <%-- <span class="l">化工企业（危险化学品生产、经营、使用）、加油站<strong>${hg}</strong> 条</span>
@@ -232,8 +239,8 @@ function print_() {
           </div>
       </div>
   </div>
-  
-  
+
+
 <script type="text/javascript">
 $(function() {
   $('.table-sort').dataTable({
@@ -243,6 +250,6 @@ $(function() {
     ]
     });
 });
-</script> 
+</script>
 </body>
 </html>

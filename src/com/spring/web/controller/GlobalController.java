@@ -6477,11 +6477,11 @@ public class GlobalController extends BaseController {
         if (user.getUserType() == 4){
             list.add(map);
             model.addAttribute("list",list);
-            return "global/company/evaluate/villageDown/zf-performance-industry-charts1";
+            return "global/company/evaluate/sortTj";
         }else {
             list1.add(map);
             model.addAttribute("list",list1);
-            return "global/company/evaluate/villageUp/zf-performance-industry-charts1";
+            return "global/company/evaluate/sortTj-up";
         }
 
     }

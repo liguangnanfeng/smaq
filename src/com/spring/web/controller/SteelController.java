@@ -997,7 +997,6 @@ public class SteelController extends BaseController {
 
         if (setUserId(user, m)) {
             clearVillageTown(m);
-
             List<Map<String, Object>> list = tCheckMapper.selectList(m);
             //List<Map<String, Object>> list = tCheckMapper.selectList3(m);
 
@@ -4408,4 +4407,76 @@ public class SteelController extends BaseController {
         }
         return "global/main";
     }
+
+    @RequestMapping(value = "source/company-list")
+    public String companyList2(Model model, HttpServletRequest request, CompanyListReqDTO dto, Integer totalzc, Integer totalwyx) throws Exception{
+        User user = getLoginUser(request);
+        StringBuilder sb = new StringBuilder();
+        List<Integer> ids = tradeCliqueMapper.selectCompanyIdsByCqlib(user.getId());
+        for (int i = 0; i < ids.size() ; i++) {
+
+            if (i == ids.size()-1){
+                sb.append("'").append(ids.get(i)).append("'");
+            }else {
+                sb.append("'").append(ids.get(i)).append("',");
+            }
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("Ids", sb.toString());
+        if (StringUtils.isNotBlank(dto.getIndustry2_())) {
+           String industry2 = dto.getIndustry2_();
+            if (StringUtils.isNotBlank(dto.getIndustry2_2())) {
+                industry2 = industry2 + " > " + dto.getIndustry2_2();
+            }
+            map.put("industry2",industry2);
+        }
+        if (StringUtils.isNotBlank(dto.getCompanyName())) {
+            map.put("companyName", dto.getCompanyName());
+        }
+        if(StringUtils.isNotBlank(dto.getIsFreeze())){
+            String freeze = dto.getIsFreeze();
+            map.put("isFreeze", dto.getIsFreeze());
+        }
+        List<Map<String, Object>> list = companyMapper.selectCompanyCliq(map);
+        System.out.println(list);
+        model.addAttribute("list", list);
+        return "steel/source/company-list";
+    }
+    /**
+     * 重大危险源源长制————在线监测
+     */
+    @RequestMapping(value = "source/video")
+    public String monitorListSupervise(HttpServletRequest request, String companyName, Model model) throws Exception {
+
+         return null;
+    }
+
+    /**
+     * 重大危险源源长制————企业分布
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("source/company-map")
+    public String coMap(Model model, HttpServletRequest request) throws Exception {
+
+        return null;
+    }
+
+    /**
+     * 重大危险源源长制————隐患排查治理
+     */
+    @RequestMapping(value = "source/danger-collect")
+    public String modelList(HttpServletRequest request, Integer industryType, Integer townId, Integer villageId, String companyName, Model model, String startTime, String endTime) throws Exception {
+        return null;
+    }
+
+    /**
+     * 重大危险源源长制————分类统计
+     */
+    @RequestMapping("source/danger-chart")
+    public String dangerChart() {
+
+        return "village/source/danger-chart";
+    }
+
+
 }

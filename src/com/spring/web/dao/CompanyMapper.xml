@@ -1708,7 +1708,6 @@
 			<if test="userIds != null and userIds != ''">
 				and user_id in (${userIds})
 			</if>
-			and name not like "%分厂%"
 		</where>
 		)
 		T1
@@ -1875,6 +1874,21 @@
 	<!--根据村查询所有的部门-->
 	<select id="selectByVillageId" resultType="java.util.Map" parameterType="Integer">
 		select user_id as id ,name from company_tbl where village_id=#{id} order by user_id desc ;
+	</select>
+
+	<select id="selectCompanyCliq" parameterType="java.util.Map" resultType="java.util.Map">
+		select name, industry2, dlevel, address, scale, is_freeze as isFreeze,reg_region as regionName, user_id as userId
+         from company_view
+         where user_id in (${Ids})
+         <if test="companyName != null">
+			 and name = #{companyName}
+		 </if>
+		 <if test="industry2 != null">
+			 and industry2 = #{industry2}
+		 </if>
+		 <if test="isFreeze != null">
+			 and is_freeze=#{isFreeze}
+		 </if>
 	</select>
 
 </mapper>

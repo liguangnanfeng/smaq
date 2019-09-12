@@ -207,4 +207,11 @@ public interface CompanyMapper {
     * 根据村级ID查询对应的企业信息
     * */
     List<Company> selectAllList(Integer village_id);
+
+    /**
+     * 查询三角洲信息
+     * @param map
+     * @return
+     */
+    List<Map<String, Object>> selectCompanyCliq(Map<String, Object> map);
 }

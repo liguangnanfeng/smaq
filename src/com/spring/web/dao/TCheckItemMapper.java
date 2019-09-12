@@ -287,17 +287,17 @@ public interface TCheckItemMapper {
 
     Integer zhuChartData77(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
-    Integer zhuChartData78(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids, @Param("departs")String departs);
+    Integer zhuChartData78(@Param("control")String control,@Param("user_ids")String user_ids, @Param("departs")String departs);
 
     Integer zhuChartData771(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
-    Integer zhuChartData781(@Param("flag")Integer flag, @Param("user_ids")String user_ids, @Param("departs")String departs);
+    Integer zhuChartData781(@Param("user_ids")String user_ids, @Param("departs")String departs);
 
-    Integer zhuChartData88(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids, @Param("departs")String departs);
+    Integer zhuChartData88(@Param("control")String control, @Param("user_ids")String user_ids, @Param("departs")String departs);
 
     Integer zhuChartData89(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
-    Integer zhuChartData881(@Param("flag")Integer flag, @Param("user_ids")String user_ids, @Param("departs")String departs);
+    Integer zhuChartData881(@Param("user_ids")String user_ids, @Param("departs")String departs);
 
     Integer zhuChartData891(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
 

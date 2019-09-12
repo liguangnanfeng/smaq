@@ -44,9 +44,10 @@
         <%--柱状图1--%>
 
         <div class="select-btn">
-        <a class="sbtn" id="chaBtn1"  href="${ly }/global/pc-analysis?flag=1">企业自查</a>
-        <a class="sbtn" id="chaBtn2" href="${ly }/global/pc-analysis?flag=2">行政检查</a>
-        <a class="sbtn" id="chaBtn3" href="${ly }/global/pc-analysis?flag=3">第三方检查</a>
+        <a class="sbtn btn-default" id="chaBtn0"  href="###">总览</a>
+        <a class="sbtn" id="chaBtn1"  href="${ly }/global/zf-performance-industry?flag=1">企业自查</a>
+        <a class="sbtn" id="chaBtn2" href="${ly }/global/zf-performance-industry?flag=2">行政检查</a>
+        <a class="sbtn" id="chaBtn3" href="${ly }/global/zf-performance-industry?flag=3">第三方检查</a>
         </div>
         <div id="main" style="width: 90%;height:400px;margin: 50px auto 0 auto;"></div>
 
@@ -56,9 +57,10 @@
 
 
         <div class="select-btn">
-        <a class="sbtn" id="chaBtn11"  href="${ly }/global/pc-analysis?sign=1">企业自查</a>
-        <a class="sbtn" id="chaBtn22" href="${ly }/global/pc-analysis?sign=2">行政检查</a>
-        <a class="sbtn" id="chaBtn33" href="${ly }/global/pc-analysis?sign=3">第三方检查</a>
+        <a class="sbtn btn-default" id="chaBtn0"  href="###">总览</a>
+        <a class="sbtn" id="chaBtn11"  href="${ly }/global/zf-check-hidden-trouble?flag=1">企业自查</a>
+        <a class="sbtn" id="chaBtn22" href="${ly }/global/zf-check-hidden-trouble?flag=2">行政检查</a>
+        <a class="sbtn" id="chaBtn33" href="${ly }/global/zf-check-hidden-trouble?flag=3">第三方检查</a>
         </div>
         <div id="main2" style="width: 90%;height:60%;margin: 100px auto 0 auto;"></div>
 
@@ -66,19 +68,19 @@
             <%--        柱状图1--%>
             <script>
             console.log("flag:","${flag}");
-            var url='';
-            if('${flag}'==1){
-            $("#chaBtn1").addClass('btn-default');
-            url="${ly }/global/zf-performance-industry?flag=1";
-            }
-            if('${flag}'==2){
-            $("#chaBtn2").addClass('btn-default');
-            url="${ly }/global/zf-performance-industry?flag=2";
-            }
-            if('${flag}'==3){
-            $("#chaBtn3").addClass('btn-default');
-            url="${ly }/global/zf-performance-industry?flag=3";
-            }
+<%--            var url='';--%>
+<%--            if('${flag}'==1){--%>
+<%--            $("#chaBtn1").addClass('btn-default');--%>
+<%--            url="${ly }/global/zf-performance-industry?flag=1";--%>
+<%--            }--%>
+<%--            if('${flag}'==2){--%>
+<%--            $("#chaBtn2").addClass('btn-default');--%>
+<%--            url="${ly }/global/zf-performance-industry?flag=2";--%>
+<%--            }--%>
+<%--            if('${flag}'==3){--%>
+<%--            $("#chaBtn3").addClass('btn-default');--%>
+<%--            url="${ly }/global/zf-performance-industry?flag=3";--%>
+<%--            }--%>
             // 基于准备好的dom，初始化echarts实例
             let number = ["${danger1}", "${danger2}", "${danger3}", "${danger4}", "${danger5}", "${danger6}", "${danger7}", "${danger8}", "${danger9}", "${danger10}"];
             var firstdata = ["${result1}", "${result2}", "${result3}", "${result4}", "${result5}", "${result6}", "${result7}", "${result8}", "${result9}", "${result10}"];
@@ -160,29 +162,29 @@
             myChart.setOption(option, true);
 
             // 监听事件
-            $("#chaBtn1").click(() => {
+<%--            $("#chaBtn1").click(() => {--%>
 
-            $("#chaBtn1").addClass('btn-default')
-            $("#chaBtn2").removeClass('btn-default')
-            $("#chaBtn3").removeClass('btn-default')
-            });
-            $("#chaBtn2").click(() => {
+<%--            $("#chaBtn1").addClass('btn-default')--%>
+<%--            $("#chaBtn2").removeClass('btn-default')--%>
+<%--            $("#chaBtn3").removeClass('btn-default')--%>
+<%--            });--%>
+<%--            $("#chaBtn2").click(() => {--%>
 
-            $("#chaBtn2").addClass('btn-default')
-            $("#chaBtn1").removeClass('btn-default')
-            $("#chaBtn3").removeClass('btn-default')
-            })
+<%--            $("#chaBtn2").addClass('btn-default')--%>
+<%--            $("#chaBtn1").removeClass('btn-default')--%>
+<%--            $("#chaBtn3").removeClass('btn-default')--%>
+<%--            })--%>
 
 
-            $("#chaBtn3").click(() => {
-            $("#chaBtn3").addClass('btn-default')
-            $("#chaBtn1").removeClass('btn-default')
-            $("#chaBtn2").removeClass('btn-default')
-            });
-            myChart.on('click', function(p) {
-            console.log("url:",url);
-            window.location.href =url;
-            })
+<%--            $("#chaBtn3").click(() => {--%>
+<%--            $("#chaBtn3").addClass('btn-default')--%>
+<%--            $("#chaBtn1").removeClass('btn-default')--%>
+<%--            $("#chaBtn2").removeClass('btn-default')--%>
+<%--            });--%>
+<%--            myChart.on('click', function(p) {--%>
+<%--            console.log("url:",url);--%>
+<%--            window.location.href =url;--%>
+<%--            })--%>
 </script>
 
 
@@ -199,20 +201,20 @@
 
 <script>
         console.log("flag:","${flag}");
-        var url2='';
-        if('${sign}'==1){
-        $("#chaBtn11").addClass('btn-default');
-        url2="${ly }/global/zf-check-hidden-trouble?sign=1";
-        }
-        if('${sign}'==2){
-        $("#chaBtn22").addClass('btn-default');
-        url2="${ly }/global/zf-check-hidden-trouble?sign=2";
-        }
-        if('${sign}'==3){
-        $("#chaBtn33").addClass('btn-default');
-        url2="${ly }/global/zf-check-hidden-trouble?sign=3";
-        }
-        console.log('sign:,${sign}')
+<%--        var url2='';--%>
+<%--        if('${sign}'==1){--%>
+<%--        $("#chaBtn11").addClass('btn-default');--%>
+<%--        url2="${ly }/global/zf-check-hidden-trouble?sign=1";--%>
+<%--        }--%>
+<%--        if('${sign}'==2){--%>
+<%--        $("#chaBtn22").addClass('btn-default');--%>
+<%--        url2="${ly }/global/zf-check-hidden-trouble?sign=2";--%>
+<%--        }--%>
+<%--        if('${sign}'==3){--%>
+<%--        $("#chaBtn33").addClass('btn-default');--%>
+<%--        url2="${ly }/global/zf-check-hidden-trouble?sign=3";--%>
+<%--        }--%>
+<%--        console.log('sign:,${sign}')--%>
         // 基于准备好的dom，初始化echarts实例
         var number2 = ["${number19}","${number1}", "${number2}", "${number3}", "${number4}", "${number5}", "${number6}", "${number7}", "${number8}", "${number9}", "${number10}", "${number11}", "${number12}", "${number13}", "${number14}","${number15}","${number16}","${number17}","${number18}"];
         var firstdata2 = ["${double19}","${double1}", "${double2}", "${double3}", "${double4}", "${double5}", "${double6}", "${double7}", "${double8}", "${double9}", "${double10}", "${double11}", "${double12}", "${double13}", "${double14}","${double15}","${double16}","${double17}","${double18}"];
@@ -297,31 +299,31 @@
         myChart2.setOption(option2, true);
 
         // 监听事件
-        $("#chaBtn11").click(() => {
-        url='${ly }/company/zhuChartData66?flag=1';
-        $("#chaBtn11").addClass('btn-default')
-        $("#chaBtn22").removeClass('btn-default')
-        $("#chaBtn33").removeClass('btn-default')
-        })
-        $("#chaBtn22").click(() => {
-        url='${ly }/company/zhuChartData66?flag=2';
+<%--        $("#chaBtn11").click(() => {--%>
+<%--        url='${ly }/company/zhuChartData66?flag=1';--%>
+<%--        $("#chaBtn11").addClass('btn-default')--%>
+<%--        $("#chaBtn22").removeClass('btn-default')--%>
+<%--        $("#chaBtn33").removeClass('btn-default')--%>
+<%--        })--%>
+<%--        $("#chaBtn22").click(() => {--%>
+<%--        url='${ly }/company/zhuChartData66?flag=2';--%>
 
-        $("#chaBtn22").addClass('btn-default')
-        $("#chaBtn11").removeClass('btn-default')
-        $("#chaBtn33").removeClass('btn-default')
-        })
+<%--        $("#chaBtn22").addClass('btn-default')--%>
+<%--        $("#chaBtn11").removeClass('btn-default')--%>
+<%--        $("#chaBtn33").removeClass('btn-default')--%>
+<%--        })--%>
 
-        $("#chaBtn33").click(() => {
-        url='${ly }/company/zhuChartData66?flag=3';
-        $("#chaBtn33").addClass('btn-default')
-        $("#chaBtn11").removeClass('btn-default')
-        $("#chaBtn22").removeClass('btn-default')
-        });
+<%--        $("#chaBtn33").click(() => {--%>
+<%--        url='${ly }/company/zhuChartData66?flag=3';--%>
+<%--        $("#chaBtn33").addClass('btn-default')--%>
+<%--        $("#chaBtn11").removeClass('btn-default')--%>
+<%--        $("#chaBtn22").removeClass('btn-default')--%>
+<%--        });--%>
 
-        myChart2.on('click', function(p) {
-        console.log("url2:",url2)
-        window.location.href =url2;
-        })
+<%--        myChart2.on('click', function(p) {--%>
+<%--        console.log("url2:",url2)--%>
+<%--        window.location.href =url2;--%>
+<%--        })--%>
         </script>
 
 

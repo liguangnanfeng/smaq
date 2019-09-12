@@ -194,6 +194,7 @@
        href="javascript:location.replace(location.href);" title="刷新">
         <i class="Hui-iconfont">&#xe68f;</i>
     </a>
+    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
     <%--	<a id="fxan" class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;display:none"--%>
     <%--       href="javascript:showJiePing();" title="显示企业风险图片">--%>
     <%--        显示风险图片--%>

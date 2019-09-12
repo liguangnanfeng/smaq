@@ -1343,16 +1343,15 @@ public class GlobalController extends BaseController {
         model.addAttribute("user", userStr);
         return "global/source/company-map";
     }
+
+
     /**
      * 重大危险源源长制————隐患排查治理
      */
-    @RequestMapping(value = "greate-danger-collect")
+    @RequestMapping(value = "source/danger-collect")
     public String modelList(HttpServletRequest request, Integer industryType, Integer townId, Integer villageId, String companyName, Model model, String startTime, String endTime) throws Exception {
         User user = getLoginUser(request);
-
-        log.error("11111");
-
-        Map<String, Object> m = new HashMap<String, Object>();
+       Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
@@ -1368,6 +1367,7 @@ public class GlobalController extends BaseController {
         m.put("endTime", endTime);
         m.put("industryType", industryType);
         List<Map<String, Object>> list = tCheckItemMapper.selectDangerCollectByCompany(m);
+        model.addAttribute("list1",list);
         if (user.getUserType() == 6) {
             m.put("districtId", user.getId());
         }
@@ -1427,6 +1427,8 @@ public class GlobalController extends BaseController {
         model.addAttribute("libL", libraryMapper.selectLibraryList(1));// 行业
         return "global/source/danger-collect";
     }
+
+
     /**
      * 重大危险源源长制————分类统计
      */
@@ -6474,18 +6476,14 @@ public class GlobalController extends BaseController {
         if (user.getUserType() == 4){
             list.add(map);
             model.addAttribute("list",list);
-            return "global/company/evaluate/villageDown/zf-performance-industry-charts1";
+            return "global/company/evaluate/sortTj";
         }else {
             list1.add(map);
             model.addAttribute("list",list1);
-            return "global/company/evaluate/villageUp/zf-performance-industry-charts1";
+            return "global/company/evaluate/sortTj-up";
         }
 
     }
-
-
-
-
 
 
 

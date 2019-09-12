@@ -125,13 +125,13 @@
             <li><a onclick="sub5()"   data-title="车间/岗位风险分布图"
             href="javascript:void(0)">车间/岗位风险分布图</a></li>
             </ul>
-            <iframe  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly}/company/safety-system/risk-information-list?flag=1"></iframe>
+            <iframe  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly }/company/safety-system/assess7"></iframe>
             <script>
             function sub1(){
-<%--            $("#iframe").attr("src", "${ly }/company/safety-system/assess7");--%>
+            $("#iframe").attr("src", "${ly }/company/safety-system/assess7");
             }
             function sub2(){
-<%--            $("#iframe").attr("src", "${ly }/company/safety-system/risk-information-list?flag=2");--%>
+            $("#iframe").attr("src", "${ly }/company/safety-system/control-list2?flag=1");
             }
             function sub3(){
             $("#iframe").attr("src", "${ly }/company/safety-system/control-list2?flag=3");
@@ -219,9 +219,9 @@
             <ul>
             <li><a onclick="sub1()"  data-title="固有风险研判"
             href="javascript:void(0)">固有风险研判</a></li>
-            <li><a onclick="sub2()" href=" data-title="临时风险研判"
+            <li><a onclick="sub2()" data-title="临时风险研判"
             href="javascript:void(0)">临时风险研判</a></li>
-            <li><a onclick="sub3()" href="" data-title="重大/较大隐患治理风险研判"
+            <li><a onclick="sub3()"  data-title="重大/较大隐患治理风险研判"
             href="javascript:void(0)">重大/较大隐患治理风险研判</a></li>
             </ul>
             <iframe src="${ly }/company/study/naturaldanger-list"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
@@ -359,106 +359,215 @@
         <!--职业健康管理 管理档案-->
         <c:if test="${leftBasic == 10}">
             <ul>
-            <li><a href="${ly }/company/evaluate/detection-list" data-title="职卫检测、体检"
-            href="javascript:void(0)">职卫检测、体检</a></li>
-            <li><a href="${ly }/company/tables/tab-health/2" data-title="职业卫生管理"
-            href="javascript:void(0)">职业卫生管理</a></li>
-            <li><a href="${ly }/company/tables/tab-health/3" data-title="职业卫生宣传培训"
-            href="javascript:void(0)">职业卫生宣传培训</a></li>
-            <li><a href="${ly }/company/tables/tab-health/4" data-title="职业病危害因素监测与检测评价"
-            href="javascript:void(0)">职业病危害因素检测评价</a></li>
-            <li><a href="${ly }/company/tables/tab-health/5" data-title="用人单位职业健康监护管理"
-            href="javascript:void(0)">职业健康监护管理</a></li>
-            <li><a href="${ly }/company/cyryjkjh" data-title="劳动者个人职业健康监护" href="javascript:void(0)">劳动者个人职业健康监护</a>
-            </li>
-            <li><a href="${ly }/company/tables/tab-health/7" data-title="其他" href="javascript:void(0)">其他</a>
+            <li><a onclick="sub1()"  data-title="职卫检测、体检" href="javascript:void(0)">职卫检测、体检</a></li>
+            <li><a onclick="sub2()"  data-title="职业卫生管理" href="javascript:void(0)">职业卫生管理</a></li>
+            <li><a onclick="sub3()"  data-title="职业卫生宣传培训" href="javascript:void(0)">职业卫生宣传培训</a></li>
+            <li><a onclick="sub4()"  data-title="职业病危害因素监测与检测评价" href="javascript:void(0)">职业病危害因素检测评价</a></li>
+            <li><a onclick="sub5()"  data-title="用人单位职业健康监护管理" href="javascript:void(0)">职业健康监护管理</a></li>
+            <li><a onclick="sub6()"  data-title="劳动者个人职业健康监护" href="javascript:void(0)">劳动者个人职业健康监护</a> </li>
+            <li><a onclick="sub7()"  data-title="其他" href="javascript:void(0)">其他</a>
             </li>
             </ul>
+            <iframe src="${ly }/company/evaluate/detection-list"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
+            <script>
+            function sub1(){
+            $("#iframe").attr("src", "${ly }/company/tables/tab-taizhang");
+            }
+            function sub2(){
+            $("#iframe").attr("src", "${ly }/company/tables/tab-health/2");
+            }
+            function sub3(){
+            $("#iframe").attr("src", "${ly }/company/tables/tab-health/3");
+            }
+            function sub4(){
+            $("#iframe").attr("src", "${ly }/company/tables/tab-health/4");
+            }
+            function sub5(){
+            $("#iframe").attr("src", "${ly }/company/tables/tab-health/5");
+            }
+            function sub6(){
+            $("#iframe").attr("src", "${ly }/company/cyryjkjh");
+            }
+            function sub7(){
+            $("#iframe").attr("src", "${ly }/company/tables/tab-health/7");
+            }
+            </script>
         </c:if>
         <!--在线监测设置-->
         <c:if test="${leftBasic == 11}">
             <ul>
-            <li><a href="${ly }/village/toSensorList" data-title="传感器列表" href="javascript:void(0)">传感器列表</a>
-            </li>
-            <li><a href="${ly }/village/toAddSensor" data-title="传感器设置"
-            href="javascript:void(0)">传感器设置</a></li>
+            <li><a onclick="sub1()"  data-title="传感器列表" href="javascript:void(0)">传感器列表</a> </li>
+            <li><a onclick="sub2()"  data-title="传感器设置" href="javascript:void(0)">传感器设置</a></li>
             </ul>
+            <iframe src="${ly }/village/toSensorList"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
+            <script>
+            function sub1(){
+            $("#iframe").attr("src", "${ly }/village/toSensorList");
+            }
+            function sub2(){
+            $("#iframe").attr("src", "${ly }/village/toAddSensor");
+            }
+            </script>
+
+
         </c:if>
         <c:if test="${leftBasic == 12}">
             <ul>
-            <li><a href="/village/to_monitor-list?flag=2" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
-            <li><a href="/village/company/zdlist?hazard=1&yzz=1" data-title="报警设备"
-            href="javascript:void(0)">报警设备</a></li>
+            <li><a onclick="sub1()"  data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
+            <li><a onclick="sub2()"  data-title="报警设备" href="javascript:void(0)">报警设备</a></li>
             </ul>
+            <iframe src="${ly}/village/to_monitor-list?flag=2"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
+            <script>
+            function sub1(){
+            $("#iframe").attr("src","${ly}/village/to_monitor-list?flag=2");
+            }
+            function sub2(){
+            $("#iframe").attr("src", "${ly}/village/company/zdlist?hazard=1&yzz=1");
+            }
+            </script>
         </c:if>
         <c:if test="${leftBasic == 13}">
             <ul>
-            <li><a href="${ly }/company/study/department-list?sign=2" data-title="管控架构"
-            href="javascript:void(0)">管控架构</a></li>
-            <li><a href="${ly }/company/source/management-guide" data-title="机制文件"
-            href="javascript:void(0)">机制文件</a></li>
+            <li><a onclick="sub1()"  data-title="管控架构" href="javascript:void(0)">管控架构</a></li>
+            <li><a onclick="sub2()"  data-title="机制文件" href="javascript:void(0)">机制文件</a></li>
             </ul>
+
+            <iframe src="${ly }/company/study/department-list?sign=2"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
+            <script>
+            function sub1(){
+            $("#iframe").attr("src","${ly }/company/study/department-list?sign=2");
+            }
+            function sub2(){
+            $("#iframe").attr("src", "${ly }/company/source/management-guide");
+            }
+            </script>
         </c:if>
         <c:if test="${leftBasic == 14}">
             <ul>
-            <li><a href="${ly }/company/source/equipment?type=1" data-title="设备设施管理"
-            href="javascript:void(0)">设备设施管理</a></li>
-            <li><a href="${ly }/company/source/staff" data-title="人员管理"
-            href="javascript:void(0)">人员管理</a></li>
-            <li><a href="${ly }/company/threeLeft?leftBasic=12" data-title="在线检测"
-            href="javascript:void(0)">在线检测</a></li>
-            <li><a href="${ly }/company/source/distribution" data-title="风险分布图"
-            href="javascript:void(0)">风险分布图</a></li>
-            <li><a href="${ly }/company/source/publicity?flag=1" data-title="公示"
-            href="javascript:void(0)">公示</a></li>
+            <li><a onclick="sub1()"  data-title="设备设施管理" href="javascript:void(0)">设备设施管理</a></li>
+            <li><a onclick="sub2()"  data-title="人员管理" href="javascript:void(0)">人员管理</a></li>
+            <li><a onclick="sub3()"  data-title="在线检测" href="javascript:void(0)">在线检测</a></li>
+            <li><a onclick="sub4()"  data-title="风险分布图" href="javascript:void(0)">风险分布图</a></li>
+            <li><a onclick="sub5()"  data-title="公示" href="javascript:void(0)">公示</a></li>
             </ul>
+
+            <iframe src="${ly }/company/source/equipment?type=1"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
+            <script>
+            function sub1(){
+            $("#iframe").attr("src", "${ly }/company/source/equipment?type=1" );
+            }
+            function sub2(){
+            $("#iframe").attr("src", "${ly }/company/source/staff" );
+            }
+            function sub3(){
+            $("#iframe").attr("src", "${ly }/company/threeLeft?leftBasic=12");
+            }
+            function sub4(){
+            $("#iframe").attr("src", "${ly }/company/source/distribution");
+            }
+            function sub5(){
+            $("#iframe").attr("src", "${ly }/company/source/publicity?flag=1");
+            }
+            </script>
         </c:if>
         <c:if test="${leftBasic == 15}">
             <ul>
-            <li><a href="${ly }/company/source/specialWork?type=1" data-title="非化工液氨使用企业"
+            <li><a onclick="sub1()" href= data-title="非化工液氨使用企业"
             href="javascript:void(0)">非化工液氨使用企业</a></li>
-            <li><a href="${ly }/company/source/specialWork?type=2" data-title="粉尘涉爆企业"
+            <li><a onclick="sub2()" href= data-title="粉尘涉爆企业"
             href="javascript:void(0)">粉尘涉爆企业</a></li>
-            <li><a href="${ly }/company/source/specialWork?type=3" data-title="高温熔融金属现场运输"
+            <li><a onclick="sub3()" href= data-title="高温熔融金属现场运输"
             href="javascript:void(0)">高温熔融金属现场运输</a></li>
-            <li><a href="${ly }/company/source/specialWork?type=4" data-title="工贸行业有限空间安全作业"
+            <li><a onclick="sub4()" href= data-title="工贸行业有限空间安全作业"
             href="javascript:void(0)">工贸行业有限空间安全作业</a></li>
-            <li><a href="${ly }/company/source/specialWork?type=5" data-title="冶金企业煤气"
+            <li><a onclick="sub5()" href=" data-title="冶金企业煤气"
             href="javascript:void(0)">冶金企业煤气</a></li>
             </ul>
+
+            <iframe src="${ly }/company/source/specialWork?type=1"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
+            <script>
+            function sub1(){
+            $("#iframe").attr("src", "${ly }/company/source/specialWork?type=1" );
+            }
+            function sub2(){
+            $("#iframe").attr("src", "${ly }/company/source/specialWork?type=2" );
+            }
+            function sub3(){
+            $("#iframe").attr("src","${ly }/company/source/specialWork?type=3");
+            }
+            function sub4(){
+            $("#iframe").attr("src", "${ly }/company/source/specialWork?type=4");
+            }
+            function sub5(){
+            $("#iframe").attr("src", "${ly }/company/source/specialWork?type=5");
+            }
+            </script>
         </c:if>
         <c:if test="${leftBasic == 16}">
             <ul>
-            <li><a href="${ly }/company/tables/tab-yjlist" data-title="应急预案" href="javascript:void(0)">应急预案</a>
+            <li><a onclick="sub1()" data-title="应急预案" href="javascript:void(0)">应急预案</a>
             </li>
-            <li><a href="${ly }/company/facilities/facilities-list?flag=1" data-title="消防设备设施"
-            href="javascript:void(0)">消防设备设施</a></li>
-            <%--            zhiweijiance--%>
-            <li><a href="${ly }/company/facilities/facilities-list?flag=2" data-title="应急设备设施"
-            href="javascript:void(0)">应急设备设施</a></li>
+            <li><a onclick="sub2()"  data-title="消防设备设施" href="javascript:void(0)">消防设备设施</a></li>
+
+            <li><a onclick="sub3()"  data-title="应急设备设施" href="javascript:void(0)">应急设备设施</a></li>
             </ul>
+            <iframe src="${ly }/company/tables/tab-yjlist"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
+            <script>
+            function sub1(){
+            $("#iframe").attr("src", "${ly }/company/tables/tab-yjlist" );
+            }
+            function sub2(){
+            $("#iframe").attr("src", "${ly }/company/facilities/facilities-list?flag=1" );
+            }
+            function sub3(){
+            $("#iframe").attr("src","${ly }/company/facilities/facilities-list?flag=2");
+            }
+            </script>
         </c:if>
         <c:if test="${leftBasic == 17}">
             <ul>
-            <li><a href="${ly }/company/train/special-list?spFlag=0" style="padding-left:55px;"
+            <li><a onclick="sub1()"  style="padding-left:55px;"
             data-title="持证上岗" href="javascript:void(0)">持证上岗</a></li>
-            <li><a href="${ly }/company/tables/tab-anlist" style="padding-left:55px;"
+            <li><a onclick="sub2()"  style="padding-left:55px;"
             data-title="安全生产教育台账" href="javascript:void(0)">教育台账</a></li>
-            <li><a target="_blank" href="http://exam.dicarl.com/index.php?user-app-login&mobile=${userName}"
-            data-title="安全培训" >安全培训</a></li>
+            <li><a onclick="sub3()" target="_blank" href="javascript:void(0)" data-title="安全培训" >安全培训</a></li>
             </ul>
+            <iframe src="${ly }/company/tables/tab-yjlist"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
+            <script>
+            function sub1(){
+            $("#iframe").attr("src", "${ly }/company/train/special-list?spFlag=0" );
+            }
+            function sub2(){
+            $("#iframe").attr("src", "${ly }/company/tables/tab-anlist" );
+            }
+            function sub3(){
+            $("#iframe").attr("src","http://exam.dicarl.com/index.php?user-app-login&mobile=${userName}");
+            }
+            </script>
         </c:if>
         <c:if test="${leftBasic == 18}">
             <ul>
-            <li><a href="${ly }/company/product/mequipment-list"
-            data-title="主要设备清单" href="javascript:void(0)">主要设备清单</a></li>
-            <li><a href="${ly }/company/sequipment/sequipment-list"
-            data-title="特种设备检测" href="javascript:void(0)">特种设备检测</a></li>
-            <li><a href="${ly }/company/product/lightning-list"
-            data-title="防雷防静电" href="javascript:void(0)">防雷防静电</a></li>
-            <li><a href="${ly }/company/safety-facilities"
-            data-title="安全设施登记台账" href="javascript:void(0)">安全设施登记台账</a></li>
+            <li><a onclick="sub1()" data-title="主要设备清单" href="javascript:void(0)">主要设备清单</a></li>
+            <li><a onclick="sub2()" data-title="特种设备检测" href="javascript:void(0)">特种设备检测</a></li>
+            <li><a onclick="sub3()" data-title="防雷防静电" href="javascript:void(0)">防雷防静电</a></li>
+            <li><a onclick="sub4()" data-title="安全设施登记台账" href="javascript:void(0)">安全设施登记台账</a></li>
             </ul>
+
+            <iframe src="${ly }/company/product/mequipment-list"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
+            <script>
+            function sub1(){
+            $("#iframe").attr("src", "${ly }/company/product/mequipment-list" );
+            }
+            function sub2(){
+            $("#iframe").attr("src","${ly }/company/sequipment/sequipment-list" );
+            }
+            function sub3(){
+            $("#iframe").attr("src","${ly }/company/product/lightning-list");
+            }
+            function sub4(){
+            $("#iframe").attr("src","${ly }/company/safety-facilities");
+            }
+            </script>
         </c:if>
         </div>
 

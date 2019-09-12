@@ -41,9 +41,10 @@
         </head>
         <body style="height: 100vh;">
         <div class="select-btn">
-        <a class="sbtn" id="chaBtn1"  href="${ly }/company/yh-analysis?flag=1">企业自查</a>
-        <a class="sbtn" id="chaBtn2" href="${ly }/company/yh-analysis?flag=2">行政检查</a>
-        <a class="sbtn" id="chaBtn3" href="${ly }/company/yh-analysis?flag=3">第三方检查</a>
+        <a class="sbtn btn-default" id="chaBtn0"  href="###">总览</a>
+        <a class="sbtn" id="chaBtn1"  href="${ly }/company/zhuChartData22?flag=1">企业自查</a>
+        <a class="sbtn" id="chaBtn2" href="${ly }/company/zhuChartData22?flag=2">行政检查</a>
+        <a class="sbtn" id="chaBtn3" href="${ly }/company/zhuChartData22?flag=3">第三方检查</a>
         </div>
         <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
         <div id="main2" style="width: 90%;height:400px;margin: 50px auto 0 auto;"></div>
@@ -151,27 +152,7 @@
         }
         myChart.setOption(option, true);
 
-        // 监听事件
-        $("#chaBtn1").click(() => {
-        $("#chaBtn1").addClass('btn-default')
-        $("#chaBtn2").removeClass('btn-default')
-        $("#chaBtn3").removeClass('btn-default')
-        })
-        $("#chaBtn2").click(() => {
-        $("#chaBtn2").addClass('btn-default')
-        $("#chaBtn1").removeClass('btn-default')
-        $("#chaBtn3").removeClass('btn-default')
 
-        })
-        $("#chaBtn3").click(() => {
-        $("#chaBtn3").addClass('btn-default')
-        $("#chaBtn1").removeClass('btn-default')
-        $("#chaBtn2").removeClass('btn-default')
-        });
-
-        myChart.on('click', function(p) {
-        window.location.href =url;
-        })
         </script>
 
 

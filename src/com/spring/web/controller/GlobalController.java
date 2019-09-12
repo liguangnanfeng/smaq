@@ -1348,11 +1348,10 @@ public class GlobalController extends BaseController {
     /**
      * 重大危险源源长制————隐患排查治理
      */
-    @RequestMapping(value = "greate-danger-collect")
+    @RequestMapping(value = "source/danger-collect")
     public String modelList(HttpServletRequest request, Integer industryType, Integer townId, Integer villageId, String companyName, Model model, String startTime, String endTime) throws Exception {
         User user = getLoginUser(request);
-
-        Map<String, Object> m = new HashMap<String, Object>();
+       Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
@@ -1426,7 +1425,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("groupIndu", lll);
         model.addAttribute("d", d);
         model.addAttribute("libL", libraryMapper.selectLibraryList(1));// 行业
-        return "global/source/gerate-danger-collect";
+        return "global/source/danger-collect";
     }
 
 

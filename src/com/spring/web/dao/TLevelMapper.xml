@@ -49,6 +49,14 @@
     </select>
 
 
+    <select id="findIndustry" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from t_level_tbl
+        where  industry  like  CONCAT('%', #{industry},'%')
+    </select>
+
+
     <!-- 根据 level1 查询对应的 level2 -->
     <select id="selectLevel1" resultType="com.spring.web.model.TLevel" >
         select distinct level2 from t_level_tbl where level1 = #{level1}

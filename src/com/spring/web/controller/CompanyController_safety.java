@@ -2599,7 +2599,15 @@ public class CompanyController_safety extends BaseController {
             industry = company.getIndustry();
         }
 
-        List<TLevel> dL = tLevelMapper.selectAll();
+        List<TLevel> dL = null;
+
+        if (company.getIndustry().contains("化工")){
+
+            dL = tLevelMapper.findIndustry("化工企业");
+        }else {
+            dL = tLevelMapper.findIndustry("工贸企业");
+        }
+
         Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
         for (TLevel ad : dL) {
             String l1 = ad.getLevel1();
@@ -2613,7 +2621,7 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("list", list);
         model.addAttribute("dL", dL);
         model.addAttribute("depId", depId);
-        log.error("risk-list-loads depId:" + depId);
+
         return "company/safety-system/risk-list1-loads";
     }
 

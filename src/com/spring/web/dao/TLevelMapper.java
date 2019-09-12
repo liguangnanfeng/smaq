@@ -103,6 +103,8 @@ public interface TLevelMapper {
 
     List<TLevel> selectAll();
 
+    List<TLevel> findIndustry(@Param("industry")String industry);
+
     List<TLevel> selectAllIds( @Param("ids")Integer[] ids);
 
     List<String> selectAllDep3();

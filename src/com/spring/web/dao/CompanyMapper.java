@@ -182,6 +182,8 @@ public interface CompanyMapper {
      * @return 
      */
     List<Map<String, Object>> selectByIds(CompanyListReqDTO dto);
+
+    List<Map<String, Object>> selectByIds2(CompanyListReqDTO dto);
     
     /**
      * 查询所有企业

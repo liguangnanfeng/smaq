@@ -431,7 +431,7 @@ public class SteelController extends BaseController {
     @RequestMapping(value = "company/company-list")
     public String companyList(Model model, HttpServletRequest request, CompanyListReqDTO dto, Integer totalzc, Integer totalwyx) throws Exception {
         User user = getLoginUser(request);
-        cgfService.selectCompanyWithPage(dto, user, model);
+        cgfService.selectCompanyWithPage2(dto, user, model);
         if(user.getUserType().intValue() == 3) {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("townId", dto.getTownId());
@@ -4370,7 +4370,7 @@ public class SteelController extends BaseController {
             if(trade.getIsClique() == 1){//集团型企业
                 //model.addAttribute("list", tradeMapper.selectTradeCompany(user.getId()));
                 //log.error("TradeCompany："+tradeMapper.selectTradeCompany(user.getId()));
-                return "steel/clique-main";
+                return "redirect:/steel/main";
             }
 
         }
@@ -4405,7 +4405,7 @@ public class SteelController extends BaseController {
             model.addAttribute("name_", user.getUserName());
             model.addAttribute("loginUserId", user.getId());
         }
-        return "global/main";
+        return "redirect:/steel/main";
     }
 
     @RequestMapping(value = "source/company-list")

@@ -303,7 +303,7 @@ public interface TCheckItemMapper {
 
     Integer zhuChartData124(@Param("control")String control, @Param("user_id")Integer user_id);
 
-    Integer zhuChartData1241(@Param("user_id")Integer user_id,@Param("depart")String depart);
+    Integer zhuChartData1241(@Param("user_id")Integer user_id);
 
     List<Integer> selectCompanyId(@Param("userId") Integer userId, @Param("type") Integer type);
 
@@ -402,6 +402,7 @@ public interface TCheckItemMapper {
 
     Integer manageHiddenIndustry22(@Param("status")Integer status, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
+    Integer findAllCounte(@Param("userIds")String userIds);
 }
 
 

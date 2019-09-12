@@ -194,8 +194,8 @@
         </dt>
         <dd>
         <ul>
-        <li><a data-href="${ly }/html/editor/plan-list.html" data-title="管理手册" href="javascript:void(0)">管理手册</a>
-        </li>
+<%--        <li><a data-href="${ly }/html/editor/plan-list.html" data-title="管理手册" href="javascript:void(0)">管理手册</a>--%>
+<%--        </li>--%>
         <%--<li><a data-href="${ly }/company/safety-system/risk-list-update" data-title="风险辨识"--%>
         <%--href="javascript:void(0)">风险辨识</a></li>--%>
         <li><a data-href="${ly }/company/safety-system/risk-list" data-title="风险辨识"
@@ -844,8 +844,8 @@
         <%--                </ul>--%>
         <%--                </div>--%>
         <ul>
-        <li><a data-href="${ly }/company/threeLeft?leftBasic=13" data-title="管控机制"
-        href="javascript:void(0)">管控机制</a></li>
+<%--        <li><a data-href="${ly }/company/threeLeft?leftBasic=13" data-title="管控机制"--%>
+<%--        href="javascript:void(0)">管控机制</a></li>--%>
         <li><a data-href="${ly }/company/threeLeft?leftBasic=14" data-title="管控措施"
         href="javascript:void(0)">管控措施</a></li>
         <li><a data-href="${ly }/company/source/model-list-cx" data-title="隐患排查"

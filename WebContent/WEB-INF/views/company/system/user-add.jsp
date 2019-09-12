@@ -95,10 +95,10 @@
                 </div>
             </div>
         </c:if>
-
+            
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>安全岗位:</label>
-            <div class="formControls col-xs-8 col-sm-9">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>安全岗位:</label>
+        <div class="formControls col-xs-8 col-sm-9">
             <span class="select-box inline">
               <%--  <label><input type="radio"/>无</label>
                 <label><input type="radio"/>安全检查员</label>
@@ -110,7 +110,7 @@
 
                   </select>
             </span>
-            </div>
+        </div>
         </div>
 
         <div class="row cl">
@@ -118,7 +118,7 @@
                     test="${session_user.userType != 3}">车间/部位：</c:if><c:if
                     test="${session_user.userType == 3}">部门/科室：</c:if></label>
             <div class="formControls col-xs-8 col-sm-9">
-        <span class="select-box inline">
+        <span class="select-box inline"> 
           <select name="cid" class="select" id="cid">
             <option value=""><c:if test="${session_user.userType != 3}">选择所在公司</c:if><c:if
                     test="${session_user.userType == 3}">选择单位</c:if></option>
@@ -134,7 +134,7 @@
           </select>
         </span>
 
-                <span class="select-box inline">
+        <span class="select-box inline">
           <select name="did" class="select" id="did">
             <option value=""><c:if test="${session_user.userType != 3}">选择部位</c:if><c:if
                     test="${session_user.userType == 3}">选择科室</c:if></option>
@@ -144,44 +144,44 @@
         </div>
 
 
-        <%--特种作业--%>
-        <%--培训--%>
-        <%--在岗在位--%>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>特种作业：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" id="specialOperation" name="password" value="${ user.specialOperation}" placeholder="工种"
-                       style="width:350px" class="input-text required" maxlength="50">
+    <%--特种作业--%>
+    <%--培训--%>
+    <%--在岗在位--%>
+    <div class="row cl">
+    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>特种作业：</label>
+    <div class="formControls col-xs-8 col-sm-9">
+    <input type="text" id="pwd" name="password" value="" placeholder="工种"
+    style="width:350px" class="input-text required" maxlength="50">
 
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>培训:</label>
-            <div class="formControls col-xs-8 col-sm-9">
+    </div>
+    </div>
+    <div class="row cl">
+    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>培训:</label>
+    <div class="formControls col-xs-8 col-sm-9">
     <span class="select-box inline">
-    <select name="dpid" class="select" id="trainType" value="" >
+    <select name="dpid" class="select" id="statusId" value="" >
     <option value="0">请选择</option>
     <option value="1">三级</option>
     <option value="2">四新</option>
 
     </select>
     </span>
-            </div>
-        </div>
+    </div>
+    </div>
 
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>在岗在位:</label>
-            <div class="formControls col-xs-8 col-sm-9">
+    <div class="row cl">
+    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>在岗在位:</label>
+    <div class="formControls col-xs-8 col-sm-9">
     <span class="select-box inline">
-    <select name="dpid" class="select" id="IsDuty" value="" >
+    <select name="dpid" class="select" id="statusId" value="" >
     <option value="0">请选择</option>
     <option value="1">是</option>
     <option value="2">否</option>
 
     </select>
     </span>
-            </div>
-        </div>
+    </div>
+    </div>
 
 
 
@@ -239,11 +239,7 @@
                 dpid: $("#dpid").val(),
                 did: $("#did").val(),
                 password:$("#addpw").val(),
-                status: $("#statusId").val(),
-                specialOperation:$("#specialOperation").val(),
-                trainType:$("#trainType").val(),
-                isDuty:$("#IsDuty").val()
-
+                status: $("#statusId").val()
             }
         }else {
             user = {
@@ -254,10 +250,7 @@
                 dpid: $("#dpid").val(),
                 did: $("#did").val(),
                 password: $("#pwd").val(),
-                status: $("#statusId").val(),
-                specialOperation:$("#specialOperation").val(),
-                trainType:$("#trainType").val(),
-                isDuty:$("#IsDuty").val()
+                status: $("#statusId").val()
             }
         }
 
@@ -372,10 +365,10 @@
 
         var titles = "新密码 : ";
 
-        $("#label_").text(titles);
-        $("#type").val(1);
-        $("#win-add").modal("show");
-        $("#pwd").focus();
+            $("#label_").text(titles);
+            $("#type").val(1);
+            $("#win-add").modal("show");
+            $("#pwd").focus();
         ;
 
     }

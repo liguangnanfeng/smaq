@@ -83,8 +83,8 @@
 
 
         // 基于准备好的dom，初始化echarts实例
-        let number = ["${danger1}", "${danger2}", "${danger3}", "${danger4}", "${danger5}", "${danger6}", "${danger7}", "${danger8}"];
-        var firstdata = ["${result1}", "${result2}", "${result3}", "${result4}", "${result5}", "${result6}", "${result7}", "${result8}"];
+        let number = ["${danger1}", "${danger2}", "${danger3}", "${danger4}", "${danger5}", "${danger6}", "${danger7}", "${danger8}", "${danger9}", "${danger10}"];
+        var firstdata = ["${result1}", "${result2}", "${result3}", "${result4}", "${result5}", "${result6}", "${result7}", "${result8}", "${result9}", "${result10}"];
         var x="",fdata=[];
         console.log(number);
         firstdata.map((v,i)=>{
@@ -130,7 +130,8 @@
         },
         xAxis: {
         type: 'category',
-        data: ${companyNames},
+        data: ["化工", "冶金", "有色", "建材", "机械", "轻工", "纺织", "商贸", "烟花", "其他"
+        ],
         axisLabel: {
         interval: 0, //横轴信息全部显示
         rotate: 0, //-30度角倾斜显示

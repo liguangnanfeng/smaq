@@ -107,6 +107,7 @@
 			<td rowspan="2">序号</td>
 			<td class="first" rowspan="2"><span class="title1">对象</span><br><span class="title3">部门</span></td>
 
+			<td>基础管理</td>
 			<td>设计总图</td>
 			<td>试生产</td>
 			<td>装置运行</td>
@@ -149,6 +150,7 @@
 			<td>数量</td>
 			<td>数量</td>
 			<td>数量</td>
+			<td>数量</td>
 			<script>
 			window.a=0;
 			console.log('${list}');
@@ -158,6 +160,7 @@
 			<tr>
 				<td>1</td>
 				<td>公司级</td>
+				<td>${ss}</td>
 				<td>${aa}</td>
 				<td>${bb}</td>
 				<td>${cc}</td>
@@ -187,6 +190,7 @@
 				<tr>
 					<td>${index.index + 2}</td>
 					<td>${be.name}</td>
+					<td>${be.danger19}</td>
 					<td>${be.danger1}</td>
 					<td>${be.danger2}</td>
 					<td>${be.danger3}</td>
@@ -205,14 +209,14 @@
 					<td>${be.danger16}</td>
 					<td>${be.danger17}</td>
 					<td>${be.danger18}</td>
-					<td>${be.danger19}</td>
+					<td>${be.danger20}</td>
 					<td></td>
 					<td></td>
 					<td></td>
 					</tr>
 				</c:if>
 				<script>
-				 window.a=window.a+'${be.danger19}'*1;
+				 window.a=window.a+'${be.danger20}'*1;
 				</script>
 
 
@@ -220,6 +224,7 @@
 				<tr>
 				<td>合计</td>
 				<td>---</td>
+				<td>${be.sum19}</td>
 				<td>${be.sum1}</td>
 				<td>${be.sum2}</td>
 				<td>${be.sum3}</td>
@@ -238,22 +243,18 @@
 				<td>${be.sum16}</td>
 				<td>${be.sum17}</td>
 				<td>${be.sum18}</td>
-				<td class="tdd"></td>
+				<td>${counts}</td>
 				<td></td>
 				<td></td>
 				<td></td>
 				</tr>
-				<script>
-				console.log('wjj:',window.a);
-				$(".tdd").text(window.a);
-				console.log('${index.index}')
-				console.log('${fn:length(list)-2}')
-				</script>
+
 			</c:if>
 			<c:if test="${index.index>fn:length(list)-2 }">
 				<tr>
 				<td>占比%</td>
 				<td>---</td>
+				<td>${be.result19}</td>
 				<td>${be.result1}</td>
 				<td>${be.result2}</td>
 				<td>${be.result3}</td>

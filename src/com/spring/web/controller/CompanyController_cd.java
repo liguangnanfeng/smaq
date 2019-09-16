@@ -24,6 +24,7 @@ import com.spring.web.util.*;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -274,6 +275,7 @@ public class CompanyController_cd extends BaseController {
     public String basicInformation(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         Company company = companyMapper.selectByPrimaryKey(user.getId());
+
         Regulation regulationComp = regulationGet(user.getId());
         if (company.getHazard() == null) {
             if (regulationComp.getCisDanger() != null) {
@@ -2225,8 +2227,8 @@ public class CompanyController_cd extends BaseController {
         mm.add(m3);
         log.error(m1);
         log.error(m2);
-
         result.setMap("categories", monthL);//时间段内所有的天
+
         result.setMap("count", counts);//时间段内所有的天
         result.setMap("series", mm);// List<Data{String name; Integer[] data}> Data
 
@@ -8497,6 +8499,29 @@ public class CompanyController_cd extends BaseController {
             return result;
         }
 
+    }
+    /**
+     * 更新重大危险源
+     */
+    @ResponseBody
+    @RequestMapping("updateHazard")
+    public Result updateHazard(HttpServletRequest request, Integer hazard){
+        Result result = new ResultImpl();
+        User user = getLoginUser(request);
+        Company company = new Company();
+        company.setUserId(user.getId());
+        company.setHazard(hazard);
+        System.out.println(hazard);
+
+
+
+        int flag = companyMapper.updateByPrimaryKeySelective(company);
+        if (flag==1){
+            result.setStatus("1");
+        }else{
+            result.setStatus("0");
+        }
+         return result;
     }
 
     /**

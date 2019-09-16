@@ -150,8 +150,8 @@
     <div class="row cl">
     <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>特种作业：</label>
     <div class="formControls col-xs-8 col-sm-9">
-    <input type="text" id="pwd" name="password" value="" placeholder="工种"
-    style="width:350px" class="input-text required" maxlength="50">
+    <input type="text" id="SpecialOperation" name="password" placeholder="工种"
+    style="width:350px" class="input-text required" maxlength="50" value="${user.specialOperation}">
 
     </div>
     </div>
@@ -159,7 +159,7 @@
     <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>培训:</label>
     <div class="formControls col-xs-8 col-sm-9">
     <span class="select-box inline">
-    <select name="dpid" class="select" id="statusId" value="" >
+    <select name="dpid" class="select" id="trainType" value="" >
     <option value="0">请选择</option>
     <option value="1">三级</option>
     <option value="2">四新</option>
@@ -173,7 +173,7 @@
     <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>在岗在位:</label>
     <div class="formControls col-xs-8 col-sm-9">
     <span class="select-box inline">
-    <select name="dpid" class="select" id="statusId" value="" >
+    <select name="dpid" class="select" id="IsDuty" value="" >
     <option value="0">请选择</option>
     <option value="1">是</option>
     <option value="2">否</option>
@@ -239,7 +239,11 @@
                 dpid: $("#dpid").val(),
                 did: $("#did").val(),
                 password:$("#addpw").val(),
-                status: $("#statusId").val()
+                status: $("#statusId").val(),
+                specialOperation:$("#SpecialOperation").val(),
+                trainType:$("#trainType").val(),
+                isDuty:$("#IsDuty").val()
+
             }
         }else {
             user = {
@@ -250,7 +254,11 @@
                 dpid: $("#dpid").val(),
                 did: $("#did").val(),
                 password: $("#pwd").val(),
-                status: $("#statusId").val()
+                status: $("#statusId").val(),
+                specialOperation:$("#SpecialOperation").val(),
+                trainType:$("#trainType").val(),
+                isDuty:$("#IsDuty").val()
+
             }
         }
 

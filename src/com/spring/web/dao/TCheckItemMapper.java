@@ -362,7 +362,11 @@ public interface TCheckItemMapper {
 
     Integer zhengFuChartData88(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
+    Integer zhengFuChartData882(@Param("control")String control, @Param("user_ids")String user_ids);
+
     Integer zhengFuChartData881(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer zhengFuChartData8812(@Param("user_ids")String user_ids);
 
     Integer zfData88(@Param("control")String control, @Param("user_ids")String user_ids);
 
@@ -375,6 +379,8 @@ public interface TCheckItemMapper {
     Integer zhengFuChartDataDanger(@Param("flag")Integer flag, @Param("industry")String industry, @Param("user_ids")String user_ids);
 
     Integer zhengFuChartDataDanger2(@Param("flag")Integer flag, @Param("userId")Integer user_ids);
+
+    Integer zhengFuChartDataDanger3(@Param("userId")Integer user_ids);
 
     Integer zhengFuChartDataDanger11(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
 

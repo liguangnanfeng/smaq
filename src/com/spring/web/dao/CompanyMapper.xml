@@ -1924,5 +1924,4 @@
 			 and is_freeze=#{isFreeze}
 		 </if>
 	</select>
-
 </mapper>

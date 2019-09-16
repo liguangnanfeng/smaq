@@ -216,4 +216,5 @@ public interface CompanyMapper {
      * @return
      */
     List<Map<String, Object>> selectCompanyCliq(Map<String, Object> map);
+
 }

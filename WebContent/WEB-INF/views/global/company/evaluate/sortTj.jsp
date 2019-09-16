@@ -1,6 +1,6 @@
     <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <%@ include file="/WEB-INF/views/taglibs.jsp"%>
-    <!DOCTYPE html>
+        <!DOCTYPE html>
         <html>
 
         <head>
@@ -157,7 +157,7 @@
         <table class=".table table-hover" style="margin: auto;" cellpadding="2">
         <tr style="background-color: #F5F9FE;font-weight: bold;">
         <td rowspan="2">序号</td>
-        <td class="first" rowspan="2"><span class="title1">行业</span><br><span class="title3">地区</span></td>
+        <td class="first" rowspan="2"><span class="title1">行业</span><br><span class="title3">企业</span></td>
 
         <td>化工</td>
         <td>冶金</td>
@@ -216,46 +216,49 @@
 
             <c:if test="${index.index>fn:length(list)-2 }">
 
-        <tr>
-        <td>合计</td>
-        <td>---</td>
-        <td>${be.sum1}</td>
-        <td>${be.sum2}</td>
-        <td>${be.sum3}</td>
-        <td>${be.sum4}</td>
-        <td>${be.sum5}</td>
-        <td>${be.sum6}</td>
-        <td>${be.sum7}</td>
-        <td>${be.sum8}</td>
-        <td>${be.sum9}</td>
-        <td>${be.sum10}</td>
-        <td class="tdd">${be.counts}</td>
-        <td></td>
-        <td></td>
-        </tr>
-        </c:if>
-
+                <tr>
+                <td>合计</td>
+                <td>---</td>
+                <td>${be.sum1}</td>
+                <td>${be.sum2}</td>
+                <td>${be.sum3}</td>
+                <td>${be.sum4}</td>
+                <td>${be.sum5}</td>
+                <td>${be.sum6}</td>
+                <td>${be.sum7}</td>
+                <td>${be.sum8}</td>
+                <td>${be.sum9}</td>
+                <td>${be.sum10}</td>
+                <td class="tdd"></td>
+                <td></td>
+                <td></td>
+                </tr>
+            </c:if>
 
             <c:if test="${index.index>fn:length(list)-2 }">
                 <tr>
-        <td>占比%</td>
-        <td>---</td>
-        <td>${be.result1}</td>
-        <td>${be.result2}</td>
-        <td>${be.result3}</td>
-        <td>${be.result4}</td>
-        <td>${be.result5}</td>
-        <td>${be.result6}</td>
-        <td>${be.result7}</td>
-        <td>${be.result8}</td>
-        <td>${be.result9}</td>
-        <td>${be.result10}</td>
-        <td>--</td>
-        <td></td>
-        <td></td>
-        </tr>
-        </c:if>
+                <td>占比%</td>
+                <td>---</td>
+                <td>${be.result1}</td>
+                <td>${be.result2}</td>
+                <td>${be.result3}</td>
+                <td>${be.result4}</td>
+                <td>${be.result5}</td>
+                <td>${be.result6}</td>
+                <td>${be.result7}</td>
+                <td>${be.result8}</td>
+                <td>${be.result9}</td>
+                <td>${be.result10}</td>
+                <td>--</td>
+                <td></td>
+                <td></td>
+                </tr>
+            </c:if>
         </c:forEach>
+        <script>
+        $(".tdd").text(window.a);
+        </script>
+
         </table>
         </div>
         </div>

@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="${ly}/styles/print-tab.css"/>
 <link rel="stylesheet" type="text/css" href="${ly}/styles/print-tab.css" media="print" />
 <link rel="stylesheet" type="text/css" media="print"  href="${ly}/js/H-ui.admin_v3.0/static/h-ui/css/H-ui.css" />
-<script type="text/javascript" src="${ly}/js/H-ui.admin_v3.0/lib/layer/2.4/layer.js"></script> 
+<script type="text/javascript" src="${ly}/js/H-ui.admin_v3.0/lib/layer/2.4/layer.js"></script>
 <style type="text/css" media="print">
 .div-print{width:98%;margin:auto;padding:30px 0 0 0;}
 body .dis-ib{margin-right:15px;}
@@ -47,10 +47,10 @@ function pr_() {
 </head>
 <body>
   <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-    <span class="c-gray en">&gt;</span> <span>风险分级管控</span> 
-    <span class="c-gray en">&gt;</span> <span>公告警示</span> 
-    <span class="c-gray en">&gt;</span> <span>公司风险公告牌</span> 
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+    <span class="c-gray en">&gt;</span> <span>风险分级管控</span>
+    <span class="c-gray en">&gt;</span> <span>公告警示</span>
+    <span class="c-gray en">&gt;</span> <span>公司风险公告牌</span>
     <%--<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>--%>
   <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;" href="javascript:history.back(-1)" title="返回">返回</a>
   </nav>
@@ -97,7 +97,7 @@ function pr_() {
                 	<c:when test="${fn:contains(be.fxdj, '红')}"><c:set value="back-a" var="cl"/></c:when>
                 	<c:when test="${fn:contains(be.fxdj, '橙')}"><c:set value="back-b" var="cl"/></c:when>
                 	<c:when test="${fn:contains(be.fxdj, '黄')}"><c:set value="back-c" var="cl"/></c:when>
-                	<c:when test="${fn:contains(be.fxdj, '蓝')}"><c:set value="back-d" var="cl"/></c:when>	               	
+                	<c:when test="${fn:contains(be.fxdj, '蓝')}"><c:set value="back-d" var="cl"/></c:when>
                 </c:choose>
                 <td colspan="2" style="border:1px solid #BEBEBE;vertical-align: top;">
                   <b class="${cl }" style="font-size:14px;text-align:center;width:100%;display:inline-block;padding:5px 0;color:#fff">本企业存在以下风险类型，进入厂区，注意安全</b>
@@ -125,10 +125,10 @@ function pr_() {
                 </td>
               </tr>
               <tr>
-                
+
               </tr>
               <tr>
-                
+
               </tr>
               <tr><td colspan="3" style="height:5px"></td></tr>
               <tr>
@@ -143,15 +143,24 @@ function pr_() {
               <tr>
                 <td colspan="3">
                   <div class="div-gimg" style="margin-bottom:6px;">
-                    <img ondblclick="showhide()" alt="" src="${ly }/images/gao/aqgz1.jpg"/>
-                    <img alt="" src="${ly }/images/gao/aqgz2.jpg"/>
-                    <img alt="" src="${ly }/images/gao/aqgz3.jpg"/>
-                    <img alt="" src="${ly }/images/gao/aqgz4.jpg"/>
-                    <img alt="" src="${ly }/images/gao/aqgz6.jpg"/>
-                    <img alt="" src="${ly }/images/gao/l1.jpg"/>
-                    <img alt="" src="${ly }/images/gao/l2.jpg"/>
-                    <img alt="" src="${ly }/images/gao/l3.jpg"/>
-                    <img alt="" src="${ly }/images/gao/l4.jpg" style="margin-right:0;"/>
+                        <img ondblclick="showhide()" alt="" src="${ly }${img0==null?'/images/gao/aqgz1.jpg':img0}"/>
+                        <img alt="" src="${ly }${img1==null?'/images/gao/aqgz2.jpg':img1}"/>
+                        <img alt="" src="${ly }${img2==null?'/images/gao/aqgz3.jpg':img2}"/>
+                        <img alt="" src="${ly }${img3==null?'/images/gao/aqgz4.jpg':img3}"/>
+                        <img alt="" src="${ly }${img4==null?'/images/gao/aqgz5.jpg':img4}"/>
+                        <img alt="" src="${ly }${img5==null?'/images/gao/l1.jpg':img5}"/>
+                        <img alt="" src="${ly }${img6==null?'/images/gao/l2.jpg':img6}"/>
+                        <img alt="" src="${ly }${img7==null?'/images/gao/l3.jpg':img7}"/>
+                        <img alt="" src="${ly }${img8==null?'/images/gao/l4.jpg':img8}" style="margin-right:0;"/>
+<%--                    <img ondblclick="showhide()" alt="" src="${ly }/images/gao/aqgz1.jpg"/>--%>
+<%--                    <img alt="" src="${ly }/images/gao/aqgz2.jpg"/>--%>
+<%--                    <img alt="" src="${ly }/images/gao/aqgz3.jpg"/>--%>
+<%--                    <img alt="" src="${ly }/images/gao/aqgz4.jpg"/>--%>
+<%--                    <img alt="" src="${ly }/images/gao/aqgz6.jpg"/>--%>
+<%--                    <img alt="" src="${ly }/images/gao/l1.jpg"/>--%>
+<%--                    <img alt="" src="${ly }/images/gao/l2.jpg"/>--%>
+<%--                    <img alt="" src="${ly }/images/gao/l3.jpg"/>--%>
+<%--                    <img alt="" src="${ly }/images/gao/l4.jpg" style="margin-right:0;"/>--%>
                   </div>
                 </td>
               </tr>
@@ -188,7 +197,10 @@ function pr_() {
   </div>
 </body>
 <script type="text/javascript">
-function del(id) {
+  console.log('img0-8::');
+  console.log('${img0},${img1},${img2},${img3},${img4},${img5},${img6},${img7},${img8}');
+
+  function del(id) {
   $.post("/company/safety-system/risk-information-save", {
     id : id,
     del : 1

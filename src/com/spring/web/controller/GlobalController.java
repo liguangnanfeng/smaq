@@ -1000,10 +1000,59 @@ public class GlobalController extends BaseController {
         model.addAttribute("danger", danger);*/
         return "global/company/company-tab";
     }
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO    风险分级管控 —— 管控数据
+     * create time: 2019/9/12 15:30
+     */
+    @RequestMapping(value = "control-data")
+    public String controlData(HttpServletRequest request,Model model) throws Exception {
+        User user = getLoginUser(request);
+
+        List<Map<String,Object>> list = tCheckItemMapper.findControlData(user.getId(), user.getUserType());
+
+
+        return "global/safety-system/control-data";
+
+    }
+
+
+
+    /**
+     *
+     * create by  : 小明！！！
+     * description: TODO    风险分级管控 —— 管控分布
+     * create time: 2019/9/12 15:30
+     */
+    @RequestMapping(value = "control-distribution")
+    public String controlDistribution(HttpServletRequest request,Model model) throws Exception {
+        User user = getLoginUser(request);
+
+
+        return "global/safety-system/control-distribution";
+
+    }
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO    风险分级管控 ——  实时监控
+     * create time: 2019/9/12 15:30
+     */
+    @RequestMapping(value = "real-time-monitoring")
+    public String realTimeMonitoring(HttpServletRequest request,Model model) throws Exception {
+        User user = getLoginUser(request);
+
+
+        return "global/safety-system/real-time-monitoring";
+
+    }
+
+
     /**
      * 安全风险管控-企业列表
      */
-    @RequestMapping(value = "safety-system/control-listmenu")
+    /*@RequestMapping(value = "safety-system/control-listmenu")
     public String controlListmenu(HttpServletRequest request,
                                   Integer townId, Integer villageId, Integer userId, Model model,
                                   String companyName, String level) throws Exception {
@@ -1047,7 +1096,8 @@ public class GlobalController extends BaseController {
         } else {
             return "global/safety-system/control-listmenu1";
         }
-    }
+    }*/
+
     /**
      * 安全风险管控
      */

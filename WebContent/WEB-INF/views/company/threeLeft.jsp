@@ -125,7 +125,7 @@
             <li><a onclick="sub5()"   data-title="车间/岗位风险分布图"
             href="javascript:void(0)">车间/岗位风险分布图</a></li>
             </ul>
-            <iframe  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly }/company/safety-system/assess7"></iframe>
+            <iframe   scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly }/company/safety-system/assess7"></iframe>
             <script>
             function sub1(){
             $("#iframe").attr("src", "${ly }/company/safety-system/assess7");
@@ -179,12 +179,22 @@
         <!--检查模版设置-->
         <c:if test="${leftBasic == 4}">
             <ul>
-            <li><a href="${ly }/village/addCheckModel" data-title="添加检查模版" href="javascript:void(0)">添加检查模版</a>
+            <li><a  data-title="添加检查模版" href="javascript:void(0)">添加检查模版</a>
             </li>
-            <li><a href="${ly }/company/model-list-cx?flag=1&type=1" data-title="查看检查模版"
-            href="javascript:void(0)">查看检查模版</a>
+            <li><a  data-title="查看检查模版" href="javascript:void(0)">查看检查模版</a>
             </li>
             </ul>
+            <iframe  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly }/village/addCheckModel"></iframe>
+            <script>
+            </script>
+            <script>
+            function sub1(){
+            $("#iframe").attr("src", "${ly }/village/addCheckModel");
+            }
+            function sub2(){
+            $("#iframe").attr("src", "${ly }/company/model-list-cx?flag=1&type=1");
+            }
+            </script>
         </c:if>
         <!--体系管理-->
         <c:if test="${leftBasic == 5}">
@@ -242,12 +252,9 @@
         <!--责任制-->
         <c:if test="${leftBasic == 8}">
             <ul>
-            <li><a onclick="sub1()"  data-title="安全生产责任制"
-            href="javascript:void(0)">责任制</a></li>
-            <li><a onclick="sub2()"  data-title="安全生产管理网络图"
-            href="javascript:void(0)">网络图</a></li>
-            <li><a onclick="sub3()" href="" data-title="安全生产规章制度"
-            href="javascript:void(0)">安全生产规章制度</a></li>
+            <li><a onclick="sub1()"  data-title="安全生产责任制" href="javascript:void(0)">责任制</a></li>
+            <li><a onclick="sub2()"  data-title="安全生产管理网络图" href="javascript:void(0)">网络图</a></li>
+            <li><a onclick="sub3()" data-title="安全生产规章制度" href="javascript:void(0)">安全生产规章制度</a></li>
             </ul>
             <iframe src="${ly }/company/tables/tab-list?isType=0"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
             <script>
@@ -472,16 +479,11 @@
         </c:if>
         <c:if test="${leftBasic == 15}">
             <ul>
-            <li><a onclick="sub1()" href= data-title="非化工液氨使用企业"
-            href="javascript:void(0)">非化工液氨使用企业</a></li>
-            <li><a onclick="sub2()" href= data-title="粉尘涉爆企业"
-            href="javascript:void(0)">粉尘涉爆企业</a></li>
-            <li><a onclick="sub3()" href= data-title="高温熔融金属现场运输"
-            href="javascript:void(0)">高温熔融金属现场运输</a></li>
-            <li><a onclick="sub4()" href= data-title="工贸行业有限空间安全作业"
-            href="javascript:void(0)">工贸行业有限空间安全作业</a></li>
-            <li><a onclick="sub5()" href=" data-title="冶金企业煤气"
-            href="javascript:void(0)">冶金企业煤气</a></li>
+            <li><a onclick="sub1()"  data-title="非化工液氨使用企业" href="javascript:void(0)">非化工液氨使用企业</a></li>
+            <li><a onclick="sub2()"  data-title="粉尘涉爆企业" href="javascript:void(0)">粉尘涉爆企业</a></li>
+            <li><a onclick="sub3()"  data-title="高温熔融金属现场运输" href="javascript:void(0)">高温熔融金属现场运输</a></li>
+            <li><a onclick="sub4()"  data-title="工贸行业有限空间安全作业" href="javascript:void(0)">工贸行业有限空间安全作业</a></li>
+            <li><a onclick="sub5()"  data-title="冶金企业煤气" href="javascript:void(0)">冶金企业煤气</a></li>
             </ul>
 
             <iframe src="${ly }/company/source/specialWork?type=1"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
@@ -526,10 +528,8 @@
         </c:if>
         <c:if test="${leftBasic == 17}">
             <ul>
-            <li><a onclick="sub1()"  style="padding-left:55px;"
-            data-title="持证上岗" href="javascript:void(0)">持证上岗</a></li>
-            <li><a onclick="sub2()"  style="padding-left:55px;"
-            data-title="安全生产教育台账" href="javascript:void(0)">教育台账</a></li>
+            <li><a onclick="sub1()"  style="padding-left:55px;" data-title="持证上岗" href="javascript:void(0)">持证上岗</a></li>
+            <li><a onclick="sub2()"  style="padding-left:55px;" data-title="安全生产教育台账" href="javascript:void(0)">教育台账</a></li>
             <li><a onclick="sub3()" target="_blank" href="javascript:void(0)" data-title="安全培训" >安全培训</a></li>
             </ul>
             <iframe src="${ly }/company/tables/tab-yjlist"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>

@@ -413,6 +413,8 @@ public interface TCheckItemMapper {
     Integer manageHiddenIndustry22(@Param("status")Integer status, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer findAllCounte(@Param("userIds")String userIds);
+
+    List<Map<String,Object>> findControlData(@Param("userId")Integer userId, @Param("type")Integer type);
 }
 
 

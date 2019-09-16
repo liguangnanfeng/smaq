@@ -93,13 +93,28 @@
         <div class="three">
         <!--组织架构-->
             <ul>
-                <li><a href="${ly }/global/control-list2?flag=2&userId=${userId}" data-title="企业风险分布图" href="javascript:void(0)">企业风险分布图</a>
-                <li><a href="${ly }/global/tables/tab-yjlist?userId=${userId}" data-title="应急预案" href="javascript:void(0)">应急预案</a>
-                <li><a href="#" data-title="应急物资" href="javascript:void(0)">应急物资</a></li>
-                <li><a href="#" data-title="预案演练" href="javascript:void(0)">预案演练</a></li>
-                <li><a href="#" data-title="预案备案" href="javascript:void(0)">预案备案</a></li>
-                <li><a href="#" data-title="应急培训" href="javascript:void(0)">应急培训</a></li>
+                <li><a onclick="sub1()"  data-title="企业风险分布图" href="javascript:void(0)">企业风险分布图</a>
+                <li><a onclick="sub2()"  data-title="应急预案" href="javascript:void(0)">应急预案</a>
+                <li><a onclick="sub3()" data-title="应急物资" href="javascript:void(0)">应急物资</a></li>
+                <li><a onclick="sub4()"  data-title="预案演练" href="javascript:void(0)">预案演练</a></li>
+                <li><a onclick="sub5()"  data-title="预案备案" href="javascript:void(0)">预案备案</a></li>
+                <li><a onclick="sub6()" data-title="应急培训" href="javascript:void(0)">应急培训</a></li>
             </ul>
+            <iframe src="${ly }/global/control-list2?flag=2&userId=${userId}"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
+            <script>
+            function sub1(){
+            $("#iframe").attr("src", "${ly }/global/control-list2?flag=2&userId=${userId}" );
+            }
+            function sub2(){
+            $("#iframe").attr("src","${ly }/global/tables/tab-yjlist?userId=${userId}" );
+            }
+<%--            function sub3(){--%>
+<%--            $("#iframe").attr("src","${ly }/company/product/lightning-list");--%>
+<%--            }--%>
+<%--            function sub4(){--%>
+<%--            $("#iframe").attr("src","${ly }/company/safety-facilities");--%>
+<%--            }--%>
+            </script>
         </div>
         </body>
         </html>

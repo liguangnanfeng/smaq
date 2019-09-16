@@ -2444,6 +2444,40 @@
     </select>
 
 
+    <select id="findControlData" parameterType="Integer" resultType="java.util.Map">
+        SELECT
+            c1. NAME,
+            c1.dlevel,
+            c1.address,
+            c1.industry,
+            count(a1.uid)
+        FROM
+            company_view c1
+        LEFT JOIN a_company_manual_tbl a1 ON a1.uid = c1.user_id
+        <where>
+            <if test="type==6">
+                district_id = #{userId}
+            </if>
+            <if test="type==3">
+                town_id = #{userId}
+            </if>
+            <if test="type==4">
+                village_id = #{userId}
+            </if>
+            <if test="type==10">
+                user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid = #{userId})
+            </if>
+            AND a1.del = 0
+            GROUP BY
+            a1.uid
+            ORDER BY
+            find_in_set(c1.dlevel,"蓝色,黄色,橙色,红色") DESC
+        </where>
+    </select>
+
+
+
+
 
     <select id="findTypeByGeo" resultType="Integer">
         SELECT

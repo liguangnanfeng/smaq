@@ -141,9 +141,13 @@
         </dt>
         <dd>
         <ul>
-        <li><a data-href="${ly }/global/safety-system/control-listmenu?level=红色" data-title="重大风险汇总" href="javascript:void(0)">重大风险汇总</a></li>
-        <li><a data-href="${ly }/global/safety-system/control-listmenu?level=橙色" data-title="较大风险汇总" href="javascript:void(0)">较大风险汇总</a></li>
-        <li><a data-href="${ly }/global/safety-system/statistics-list" data-title="数据分析" href="javascript:void(0)">数据分析</a></li>
+            <li><a data-href="${ly }/global/safety-system/control-data" data-title="管控数据" href="javascript:void(0)">管控数据</a></li>
+            <li><a data-href="${ly }/global/safety-system/control-distribution" data-title="管控分布" href="javascript:void(0)">管控分布</a></li>
+            <li><a data-href="${ly }/global/safety-system/real-time-monitoring" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
+            <li><a data-href="${ly }/global/safety-system/statistics-list" data-title="数据分析" href="javascript:void(0)">数据分析</a></li>
+            <%--<li><a data-href="${ly }/global/safety-system/control-listmenu?level=红色" data-title="重大风险汇总" href="javascript:void(0)">重大风险汇总</a></li>
+            <li><a data-href="${ly }/global/safety-system/control-listmenu?level=橙色" data-title="较大风险汇总" href="javascript:void(0)">较大风险汇总</a></li>
+            <li><a data-href="${ly }/global/safety-system/statistics-list" data-title="数据分析" href="javascript:void(0)">数据分析</a></li>--%>
         </ul>
         </dd>
         </dl>
@@ -344,8 +348,8 @@
         <li><a data-href="${ly }/global/source/company-list" data-title="全部企业" onclick="javascript:void(0)">全部企业</a></li>
         <li><a data-href="${ly }/global/source/video" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
         <li><a data-href="${ly }/global/source/company-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
-        <li><a data-href="${ly }/global/greate-danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>
-        <%--        <li><a data-href="${ly }/global/source/danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>--%>
+<%--        <li><a data-href="${ly }/global/greate-danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>--%>
+                <li><a data-href="${ly }/global/source/danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>
         <li><a data-href="${ly }/global/source/danger-chart" data-title="分类统计" href="javascript:void(0)">分类统计</a></li>
         </ul>
         </dd>

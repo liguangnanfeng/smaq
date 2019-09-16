@@ -6147,9 +6147,9 @@ public class CompanyController_cd extends BaseController {
 
         findComment1(company, list, sb);
 
-//        if (null == flag){
-//            flag = 1;
-//        }
+        /*if (null == flag){
+            flag = 1;
+        }*/
 
         Integer number1 = tCheckItemMapper.selectHiddenSources(1,String.valueOf(user.getId())); // 企业自查
 
@@ -6650,7 +6650,7 @@ public class CompanyController_cd extends BaseController {
 
         selectCounts3(model, s, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, count, df);
 
-       /* model.addAttribute("flag",flag);*/
+        /*model.addAttribute("flag",flag);*/
         return "company/danger/yh-analysis";
     }
 

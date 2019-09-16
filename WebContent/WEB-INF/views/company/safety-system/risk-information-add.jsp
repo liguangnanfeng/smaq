@@ -18,6 +18,8 @@
         .txtarea_sq{height:150px;width:550px;}
         </style>
         <script type="text/javascript">
+                console.log('img0-8');
+                console.log('${img0},${img1},${img2},${img3},${img4},${img5},${img6},${img7},${img8}');
         var id_ = '${be.id}', flag = '${be.flag}';
         function show(){
         $("#win-show").modal("show");
@@ -69,19 +71,14 @@
         img=img+'&'+a;
         }
         }
-        obj.img=img;
-        console.log('2333333333333333');
-        console.log(obj.img);
+        obj.imgUrl=img;
         $.post("/company/safety-system/risk-information-save", obj, function(result) {
         layer.close(i);
         parent.location.reload();
         console.log(result)
         })
         }
-                $(window).load(function(){
-                //编写代码 等价于 //编写代码
 
-                });
 
 
 
@@ -198,31 +195,49 @@
         <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">图例编辑( 点击图片编辑)：</label>
         <div class="formControls col-xs-8 col-sm-9 a">
-        <img id="pic3" class="pic" onclick="img_upload('pic3', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic3" class="pic" onclick="img_upload('pic3', null)" src="${ly }${img0==null?'/images/gao/aqgz1.jpg':img0}"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic4" class="pic" onclick="img_upload('pic4', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic4" class="pic" onclick="img_upload('pic4', null)" src="${ly }${img1==null?'/images/gao/aqgz2.jpg':img1}"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic5" class="pic" onclick="img_upload('pic5', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic5" class="pic" onclick="img_upload('pic5', null)" src="${ly }${img1==null?'/images/gao/aqgz3.jpg':img2}"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic6" class="pic" onclick="img_upload('pic6', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic6" class="pic" onclick="img_upload('pic6', null)" src="${ly }${img1==null?'/images/gao/aqgz4.jpg':img3}"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic7" class="pic" onclick="img_upload('pic7', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic7" class="pic" onclick="img_upload('pic7', null)" src="${ly }${img1==null?'/images/gao/aqgz6.jpg':img4}"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic8" class="pic" onclick="img_upload('pic8', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic8" class="pic" onclick="img_upload('pic8', null)" src="${ly }${img1==null?'/images/gao/l1.jpg':img5}"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic9" class="pic" onclick="img_upload('pic9', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic9" class="pic" onclick="img_upload('pic9', null)" src="${ly }${img1==null?'/images/gao/l2.jpg':img6}"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic10" class="pic" onclick="img_upload('pic10', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic10" class="pic" onclick="img_upload('pic10', null)" src="${ly }${img1==null?'/images/gao/l3.jpg':img7}"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic11" class="pic" onclick="img_upload('pic11', null)" src="${ly }/images/zwtp.jpg"
+        <img id="pic11" class="pic" onclick="img_upload('pic11', null)" src="${ly }${img1==null?'/images/gao/l4.jpg':img8}"
         style="width:100px!important;min-height:100px!important;" url=""/>
 
         </div>
 
         </div>
+<script>
+                let img=null;
+                for(let i=3;i<=11;i++){
+                let a=$("#pic"+i).attr("src");
+                if(i===3){
+                img=img+a;
+                }else{
+                img=img+'&'+a;
+                }
+                }
+                console.log('img-src:')
+                console.log(img)
 
-
-        <div class="row cl">
+</script>
+<style>
+.aa{
+margin-bottom: 50px;
+margin-top: 50px!important;
+}
+                </style>
+        <div class="row cl aa">
         <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
         <button onClick="save()" class="btn btn-primary radius" type="button" style="padding: 0 70px;">
         <i class="Hui-iconfont">&#xe632;</i>生成公告牌

@@ -216,4 +216,6 @@ public interface CompanyMapper {
      * @return
      */
     List<Map<String, Object>> selectCompanyCliq(Map<String, Object> map);
+
+    Integer findALL(@Param("userId") Integer userId, @Param("type")Integer type, @Param("isFreeze")Integer isFreeze);
 }

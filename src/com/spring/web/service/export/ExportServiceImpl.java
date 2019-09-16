@@ -451,7 +451,7 @@ public class ExportServiceImpl implements ExportService {
                 null, fixed, staff, income, industry, danger, null, hazard, dlevel, charge, 
                 chargeContact, safety, safetyContact, safetyM, safetyMContact, duty, postage, email, null, null, 0, null, null,area_range);//modify by zhangcl 2018.10.18
     }
-    
+
     /** 
      * cell转integer
      */

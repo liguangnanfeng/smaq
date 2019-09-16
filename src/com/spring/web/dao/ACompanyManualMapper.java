@@ -200,5 +200,7 @@ public interface ACompanyManualMapper {
     List<Map<String, Object>> selectCompanyLevel(@Param("Ids") String Ids);
 
     List<Map<String, Object>> selectLevelMessage(@Param("companyName") String companyName);
+
+    List<Map<String,Object>> findControlData(@Param("userId")Integer userId, @Param("type")Integer type, @Param("dlevel")String dlevel);
 }
 

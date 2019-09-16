@@ -2399,11 +2399,11 @@
 
     <select id="findControlData" parameterType="Integer" resultType="java.util.Map">
         SELECT
-            c1. NAME,
+            c1. name,
             c1.dlevel,
             c1.address,
             c1.industry,
-            count(a1.uid)
+            count(a1.uid) counts
         FROM
             company_view c1
         LEFT JOIN a_company_manual_tbl a1 ON a1.uid = c1.user_id

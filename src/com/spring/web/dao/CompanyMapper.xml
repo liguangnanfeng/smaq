@@ -48,6 +48,7 @@
 			<arg column="industry2" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="scale" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="area_range" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="is_controls" javaType="java.lang.Integer" jdbcType="INTEGER" />
 		</constructor>
 	</resultMap>
 	<sql id="Base_Column_List">
@@ -61,7 +62,7 @@
 		charge_contact,
 		safety, safety_contact, safety_m, safety_m_contact, duty, postage, email,
 		pic1, pic2,
-		is_key, industry2, scale, area_range
+		is_key, industry2, scale, area_range, is_controls
 	</sql>
 
 	<select id="selectByPrimaryKey"   parameterType="java.lang.Integer"
@@ -503,6 +504,9 @@
 			</if>
 			<if test="areaRange != null">
 				area_range = #{areaRange,jdbcType=VARCHAR},
+			</if>
+			<if test="isControls != null">
+				is_controls = #{isControls,jdbcType=INTEGER},
 			</if>
 		</set>
 		where user_id = #{userId,jdbcType=INTEGER}
@@ -1687,7 +1691,7 @@
 		T1.user_id userId,
 		T1.name, T1.industry, T1.industry2, T1.scale, T1.dlevel, T1.address, T1.is_key
 		isKey, T1.dangers, T1.charge,
-		T1.is_freeze isFreeze, T1.village_name villageName, T1.town_name townName,
+		T1.is_freeze isFreeze, T1.village_name villageName, T1.town_name townName, T1.controls,
 		<if test="tradeId != null">
 			(SELECT iskey FROM trade_company_tbl WHERE tid = ${tradeId} and uid =
 			T1.user_id limit 1) tradeKey,
@@ -1703,11 +1707,12 @@
 		regionName,
 		T3.key1, T3.key2, T3.key3, T3.key4
 		from
-		(select * from company_view
+		(select c1.*,a1.is_controls controls from company_view c1
+		LEFT JOIN company_tbl a1 ON a1.user_id = c1.user_id
 		<where>
-			user_id not in ("789","791","793","795","790","792","794","796")
+			c1.user_id not in ("789","791","793","795","790","792","794","796")
 			<if test="userIds != null and userIds != ''">
-				and user_id in (${userIds})
+				and c1.user_id in (${userIds})
 			</if>
 		</where>
 		)
@@ -1924,5 +1929,28 @@
 			 and is_freeze=#{isFreeze}
 		 </if>
 	</select>
+
+
+	<select id="findALL" parameterType="Integer" resultType="Integer">
+		SELECT count(*) FROM company_view
+		<where>
+			<if test="type==6">
+				district_id = #{userId}
+			</if>
+			<if test="type==3">
+				town_id = #{userId}
+			</if>
+			<if test="type==4">
+				village_id = #{userId}
+			</if>
+			<if test="type==10">
+				user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
+				#{userId}
+				)
+			</if>
+			AND is_freeze = #{isFreeze}
+		</where>
+	</select>
+
 
 </mapper>

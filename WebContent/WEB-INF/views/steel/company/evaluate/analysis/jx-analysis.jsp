@@ -49,7 +49,7 @@
         </script>
         <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
         <div class="select-btn">
-        <a class="sbtn" id="chaBtn0"  href="${ly }/steel/jx-analysis?flag=1">总览</a>
+        <a class="sbtn" id="chaBtn0"  href="${ly }/global/jx-analysis?flag=1">总览</a>
         <a class="sbtn" id="chaBtn1"  href="${ly }/global/zhuChartData66?flag=1">企业自查</a>
         <a class="sbtn" id="chaBtn2" href="${ly }/global/zhuChartData66?flag=2">行政检查</a>
         <a class="sbtn" id="chaBtn3" href="${ly }/global/zhuChartData66?flag=3">第三方检查</a>

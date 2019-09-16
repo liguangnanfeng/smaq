@@ -127,6 +127,8 @@ public interface CgfService extends Serializable {
     */
     public void selectCompanyWithPage(CompanyListReqDTO dto, User user, Model model);
 
+    public void selectCompanyWithPage2(CompanyListReqDTO dto, User user, Model model);
+
     /**
     * @param dto
     * @param object

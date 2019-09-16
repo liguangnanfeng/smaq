@@ -913,5 +913,15 @@
         AND t1.user_id in (${userIds})
     </select>
 
+    <select id="zfPerformanceCount3" parameterType="Integer" resultType="Integer">
+      SELECT
+       count(*)
+       FROM
+       t_check_tbl t1
+       LEFT JOIN company_view c1 ON t1.user_id = c1.user_id
+       WHERE
+       del = 0
+       AND t1.user_id = #{userId}
+    </select>
 
 </mapper>

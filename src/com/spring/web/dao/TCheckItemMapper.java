@@ -344,7 +344,11 @@ public interface TCheckItemMapper {
 
     Integer zfHiddenTrouble(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
+    Integer zfHiddenTrouble2(@Param("control")String control, @Param("user_ids")String user_ids);
+
     Integer zfHiddenTrouble11(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer zfHiddenTrouble12(@Param("user_ids")String user_ids);
 
     Integer zfTrouble(@Param("control")String control, @Param("user_ids")String user_ids);
 

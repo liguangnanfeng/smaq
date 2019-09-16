@@ -1714,6 +1714,39 @@
 		T1
 		left join company_iskey_tbl T3 on T1.user_id = T3.user_id
 	</select>
+
+
+	<select id="selectByIds2" resultType="java.util.HashMap">
+		select
+		T1.user_id userId,
+		T1.name, T1.industry, T1.industry2, T1.scale, T1.dlevel, T1.address, T1.is_key
+		isKey, T1.dangers, T1.charge,
+		T1.is_freeze isFreeze, T1.village_name villageName, T1.town_name townName,
+		<if test="tradeId != null">
+			(SELECT iskey FROM trade_company_tbl WHERE tid = ${tradeId} and uid =
+			T1.user_id limit 1) tradeKey,
+			(SELECT id FROM trade_company_tbl WHERE tid = ${tradeId} and uid =
+			T1.user_id limit 1) tradeCompanyId,
+		</if>
+		(select
+		COUNT(0) from a_company_manual_tbl T4
+		where
+		T4.del = 0 and T4.uid = T1.user_id
+		) count,
+		(select region_name from global_region_view where id = T1.region_id)
+		regionName,
+		T3.key1, T3.key2, T3.key3, T3.key4
+		from
+		(select * from company_view
+		<where>
+			<if test="userIds != null and userIds != ''">
+				and user_id in (${userIds})
+			</if>
+		</where>
+		)
+		T1
+		left join company_iskey_tbl T3 on T1.user_id = T3.user_id
+	</select>
 	<select id="selectByDTO" resultType="java.util.HashMap">
 		select
 		T1.user_id userId,

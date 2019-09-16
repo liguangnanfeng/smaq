@@ -431,7 +431,7 @@ public class SteelController extends BaseController {
     @RequestMapping(value = "company/company-list")
     public String companyList(Model model, HttpServletRequest request, CompanyListReqDTO dto, Integer totalzc, Integer totalwyx) throws Exception {
         User user = getLoginUser(request);
-        cgfService.selectCompanyWithPage(dto, user, model);
+        cgfService.selectCompanyWithPage2(dto, user, model);
         if(user.getUserType().intValue() == 3) {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("townId", dto.getTownId());
@@ -1169,7 +1169,7 @@ public class SteelController extends BaseController {
      * create time: 2019/8/29 16:35
      */
     @RequestMapping(value = "pc-analysis")
-    public String pcAnalysis (HttpServletRequest request, Model model, Integer flag, Integer sign){
+    public String pcAnalysis (HttpServletRequest request, Model model){
 
         User user = getLoginUser(request);
         StringBuilder sb = new StringBuilder();
@@ -1177,13 +1177,6 @@ public class SteelController extends BaseController {
         List<Map<String, Object>> branchs = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
         String[] companyNames = new String[branchs.size()];
         DecimalFormat df = new DecimalFormat("0.00");
-        if (null == flag){
-            flag = 1;
-        }
-
-        if (null == sign){
-            sign = 1;
-        }
 
         for (int i = 0; i < ids.size() ; i++) {
 
@@ -1200,35 +1193,35 @@ public class SteelController extends BaseController {
         }
 
        // Integer a = tCheckMapper.zfPerformanceCount(flag,"化工",sb.toString()); // 化工行业 数据
-        Integer a = tCheckMapper.zfPerformanceCount2(flag, (Integer)branchs.get(0).get("user_id"));
+        Integer a = tCheckMapper.zfPerformanceCount3((Integer)branchs.get(0).get("user_id"));
         model.addAttribute("danger1",a);
 
         //Integer  b = tCheckMapper.zfPerformanceCount(flag,"冶金",sb.toString()); // 冶金行业 数据
-        Integer b = tCheckMapper.zfPerformanceCount2(flag,(Integer)branchs.get(1).get("user_id"));
+        Integer b = tCheckMapper.zfPerformanceCount3((Integer)branchs.get(1).get("user_id"));
         model.addAttribute("danger2",b);
 
         //Integer  c = tCheckMapper.zfPerformanceCount(flag,"有色",sb.toString()); // 有色行业 数据
-        Integer c = tCheckMapper.zfPerformanceCount2(flag,(Integer)branchs.get(2).get("user_id"));
+        Integer c = tCheckMapper.zfPerformanceCount3((Integer)branchs.get(2).get("user_id"));
         model.addAttribute("danger3",c);
 
         //Integer  d = tCheckMapper.zfPerformanceCount(flag,"建材",sb.toString()); // 建材行业 数据
-        Integer d = tCheckMapper.zfPerformanceCount2(flag,(Integer)branchs.get(3).get("user_id"));
+        Integer d = tCheckMapper.zfPerformanceCount3((Integer)branchs.get(3).get("user_id"));
         model.addAttribute("danger4",d);
 
         //Integer  e = tCheckMapper.zfPerformanceCount(flag,"机械",sb.toString()); // 机械行业 数据
-        Integer e = tCheckMapper.zfPerformanceCount2(flag,(Integer)branchs.get(4).get("user_ids"));
+        Integer e = tCheckMapper.zfPerformanceCount3((Integer)branchs.get(4).get("user_ids"));
         model.addAttribute("danger5",e);
 
         //Integer  f = tCheckMapper.zfPerformanceCount(flag,"轻工",sb.toString()); // 轻工行业 数据
-        Integer f = tCheckMapper.zfPerformanceCount2(flag,(Integer)branchs.get(5).get("user_id"));
+        Integer f = tCheckMapper.zfPerformanceCount3((Integer)branchs.get(5).get("user_id"));
         model.addAttribute("danger6",f);
 
         //Integer  g = tCheckMapper.zfPerformanceCount(flag,"纺织",sb.toString()); // 纺织行业 数据
-        Integer g = tCheckMapper.zfPerformanceCount2(flag,(Integer)branchs.get(6).get("user_id"));
+        Integer g = tCheckMapper.zfPerformanceCount3((Integer)branchs.get(6).get("user_id"));
         model.addAttribute("danger7",g);
 
         //Integer  h = tCheckMapper.zfPerformanceCount(flag,"商贸",sb.toString()); // 商贸行业 数据
-        Integer h = tCheckMapper.zfPerformanceCount2(flag,(Integer)branchs.get(7).get("user_id"));
+        Integer h = tCheckMapper.zfPerformanceCount3((Integer)branchs.get(7).get("user_id"));
         model.addAttribute("danger8",h);
 
 //        Integer  i1 = tCheckMapper.zfPerformanceCount(flag,"烟花",sb.toString()); // 烟花行业 数据
@@ -1338,49 +1331,49 @@ public class SteelController extends BaseController {
         }
 
 
-        Integer number1 = tCheckItemMapper.zfHiddenTrouble("基础管理",sign,sb.toString()); // 基础管理 隐患数据
+        Integer number1 = tCheckItemMapper.zfHiddenTrouble2("基础管理", sb.toString()); // 基础管理 隐患数据
         model.addAttribute("number1",number1);
 
-        Integer number2 = tCheckItemMapper.zfHiddenTrouble("生产工艺",sign,sb.toString()); // 生产工艺 隐患数据
+        Integer number2 = tCheckItemMapper.zfHiddenTrouble2("生产工艺", sb.toString()); // 生产工艺 隐患数据
         model.addAttribute("number2",number2);
 
-        Integer number3 = tCheckItemMapper.zfHiddenTrouble("设备设施",sign,sb.toString()); // 设备设施 隐患数据
+        Integer number3 = tCheckItemMapper.zfHiddenTrouble2("设备设施", sb.toString()); // 设备设施 隐患数据
         model.addAttribute("number3",number3);
 
-        Integer number4 = tCheckItemMapper.zfHiddenTrouble("公用工程",sign,sb.toString()); // 公用工程 隐患数据
+        Integer number4 = tCheckItemMapper.zfHiddenTrouble2("公用工程", sb.toString()); // 公用工程 隐患数据
         model.addAttribute("number4",number4);
 
-        Integer number5 = tCheckItemMapper.zfHiddenTrouble("特种设备",sign,sb.toString()); // 特种设备 隐患数据
+        Integer number5 = tCheckItemMapper.zfHiddenTrouble2("特种设备", sb.toString()); // 特种设备 隐患数据
         model.addAttribute("number5",number5);
 
-        Integer number6 = tCheckItemMapper.zfHiddenTrouble("生产现场",sign,sb.toString()); // 生产现场 隐患数据
+        Integer number6 = tCheckItemMapper.zfHiddenTrouble2("生产现场", sb.toString()); // 生产现场 隐患数据
         model.addAttribute("number6",number6);
 
-        Integer number7 = tCheckItemMapper.zfHiddenTrouble("行为环境",sign,sb.toString()); // 行为环境 隐患数据
+        Integer number7 = tCheckItemMapper.zfHiddenTrouble2("行为环境", sb.toString()); // 行为环境 隐患数据
         model.addAttribute("number7",number7);
 
-        Integer number8 = tCheckItemMapper.zfHiddenTrouble("危化管理",sign,sb.toString()); // 危化管理 隐患数据
+        Integer number8 = tCheckItemMapper.zfHiddenTrouble2("危化管理", sb.toString()); // 危化管理 隐患数据
         model.addAttribute("number8",number8);
 
-        Integer number9 = tCheckItemMapper.zfHiddenTrouble("消防安全",sign,sb.toString()); // 消防安全 隐患数据
+        Integer number9 = tCheckItemMapper.zfHiddenTrouble2("消防安全", sb.toString()); // 消防安全 隐患数据
         model.addAttribute("number9",number9);
 
-        Integer number10 = tCheckItemMapper.zfHiddenTrouble("用电安全",sign,sb.toString()); // 用电安全 隐患数据
+        Integer number10 = tCheckItemMapper.zfHiddenTrouble2("用电安全", sb.toString()); // 用电安全 隐患数据
         model.addAttribute("number10",number10);
 
-        Integer number11 = tCheckItemMapper.zfHiddenTrouble("安全设施",sign,sb.toString()); // 安全设施 隐患数据
+        Integer number11 = tCheckItemMapper.zfHiddenTrouble2("安全设施", sb.toString()); // 安全设施 隐患数据
         model.addAttribute("number11",number11);
 
-        Integer number12 = tCheckItemMapper.zfHiddenTrouble("防雷静电",sign,sb.toString()); // 防雷静电 隐患数据
+        Integer number12 = tCheckItemMapper.zfHiddenTrouble2("防雷静电", sb.toString()); // 防雷静电 隐患数据
         model.addAttribute("number12",number12);
 
-        Integer number13 = tCheckItemMapper.zfHiddenTrouble("职业卫生",sign,sb.toString()); // 职业卫生 隐患数据
+        Integer number13 = tCheckItemMapper.zfHiddenTrouble2("职业卫生", sb.toString()); // 职业卫生 隐患数据
         model.addAttribute("number13",number13);
 
-        Integer number14 = tCheckItemMapper.zfHiddenTrouble("职业卫生",sign,sb.toString()); // 职业卫生 隐患数据
+        Integer number14 = tCheckItemMapper.zfHiddenTrouble2("职业卫生",sb.toString()); // 职业卫生 隐患数据
         model.addAttribute("number14",number14);
 
-        Integer number15 = tCheckItemMapper.zfHiddenTrouble11(sign,sb.toString()); // 其他 隐患数据
+        Integer number15 = tCheckItemMapper.zfHiddenTrouble12(sb.toString()); // 其他 隐患数据
 
         model.addAttribute("number15",number15);
 
@@ -1531,9 +1524,6 @@ public class SteelController extends BaseController {
         }
         Gson gson = new Gson();
         model.addAttribute("companyNames", gson.toJson(companyNames));
-        model.addAttribute("sign",sign);
-        model.addAttribute("flag",flag);
-
         return "steel/company/evaluate/analysis/pc-analysis";
     }
     /**
@@ -4370,7 +4360,7 @@ public class SteelController extends BaseController {
             if(trade.getIsClique() == 1){//集团型企业
                 //model.addAttribute("list", tradeMapper.selectTradeCompany(user.getId()));
                 //log.error("TradeCompany："+tradeMapper.selectTradeCompany(user.getId()));
-                return "steel/clique-main";
+                return "redirect:/steel/main";
             }
 
         }
@@ -4405,7 +4395,7 @@ public class SteelController extends BaseController {
             model.addAttribute("name_", user.getUserName());
             model.addAttribute("loginUserId", user.getId());
         }
-        return "global/main";
+        return "redirect:/steel/main";
     }
 
     @RequestMapping(value = "source/company-list")

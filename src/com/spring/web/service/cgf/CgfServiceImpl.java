@@ -1034,6 +1034,35 @@ public class CgfServiceImpl implements CgfService {
         model.addAttribute("dto", dto);
     }
 
+    public void selectCompanyWithPage2(CompanyListReqDTO dto, User user, Model model) {
+        String industry2 = null;
+        if (StringUtils.isNotBlank(dto.getIndustry2_())) {
+            industry2 = dto.getIndustry2_();
+            if (StringUtils.isNotBlank(dto.getIndustry2_2())) {
+                industry2 = industry2 + " > " + dto.getIndustry2_2();
+            }
+        }
+        dto.setIndustry2(industry2);
+        List<Integer> userIds = getCompanyUserIdsWithPage(dto, user);
+        //log.error("userIds："+userIds.toString());
+
+        String all_userIds = dto.getUserIds();
+
+        if ("-1".equals(all_userIds)) {
+            model.addAttribute("total", 0);
+        } else {
+            model.addAttribute("total", all_userIds.split(",").length);
+        }
+        if (userIds.size() > 0) {
+            dto.setUserIds(StringUtils.join(userIds, ","));
+//            dto.setUserIds(getUserIdsByPage(userIds, dto));
+            model.addAttribute("list", companyMapper.selectByIds2(dto));
+        }
+        dto.setUserIds(all_userIds);
+        model.addAttribute("dto", dto);
+    }
+
+
     // String getUserIdsByPage(List<Integer> userIds, CompanyListReqDTO dto) {
     // Integer from = dto.getIndex();
     // Integer end = dto.getIndex() + dto.getRows();

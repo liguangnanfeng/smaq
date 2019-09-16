@@ -2213,6 +2213,14 @@ public class CompanyController_safety extends BaseController {
         //公司级公告牌
         if (flag.intValue() == 1) {
             AFxgzp ggp = aFxgzpMapper.selectFlag1(user.getId());
+            if(null != ggp) {
+                if (null != ggp.getImgUrl()) {
+                    String[] img = ggp.getImgUrl().split("&");
+                    for (int i = 0; i < img.length; i++) {
+                        model.addAttribute("img" + i, img[i]);
+                    }
+                }
+            }
             if (null == ggp || ggp.getIsedit().intValue() == 0) {//没有公告牌或没有修改过，重新生成
                 if (null == ggp) {
                     ggp = new AFxgzp();
@@ -2524,7 +2532,16 @@ public class CompanyController_safety extends BaseController {
      */
     @RequestMapping(value = "risk-information-add")
     public String riskInformationAdd(Model model, HttpServletRequest request, Integer id) throws Exception {
+        AFxgzp ggp = aFxgzpMapper.selectByPrimaryKey(id);
         model.addAttribute("be", aFxgzpMapper.selectByPrimaryKey(id));
+        if(null != ggp) {
+            if (null != ggp.getImgUrl()) {
+                String[] img = ggp.getImgUrl().split("&");
+                for (int i = 0; i < img.length; i++) {
+                    model.addAttribute("img" + i, img[i]);
+                }
+            }
+        }
         return "company/safety-system/risk-information-add";
     }
 

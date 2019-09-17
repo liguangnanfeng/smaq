@@ -1053,31 +1053,86 @@ public class GlobalController extends BaseController {
         Integer totalzc = companyMapper.findALL(user.getId(), user.getUserType(),0); // 正常
         Integer totalwyx = companyMapper.findALL(user.getId(), user.getUserType(),1); // 冻结
 
-        cgfService.selectCompanyWithPage3(dto, user, model);
-        if (user.getUserType().intValue() == 3) {
-            Map<String, Object> m = new HashMap<String, Object>();
-            m.put("townId", dto.getTownId());
-            m.put("districtId", dto.getDistrictId());
-            List<DynamicParameter<String, Object>> villagelist = villageMapper.selectListByTown(m);//查询所属下的所有乡村
-            model.addAttribute("villagelist", villagelist);
-        }
-        model.addAttribute("lib", libraryMapper.selectLibraryList(1));//查询行业列表
-        model.addAttribute("sk", request.getParameter("sk"));
-        model.addAttribute("totalzc", totalzc);
-        model.addAttribute("totalwyx", totalwyx);
-        model.addAttribute("dto", dto);
-        model.addAttribute("title", "全部企业");
-        if (StringUtils.isNotBlank(dto.getDoubleDanger())) {
-            model.addAttribute("title", "高危作业");
-        }
-        if (StringUtils.isNotBlank(dto.getCisDanger())) {
-            model.addAttribute("title", "重大危险源企业");
-        }
+        System.out.println(user.getId());
+        System.out.println(user.getUserType());
 
+        List<Map<String,Object>> list = tCheckItemMapper.findCompany(user.getId(), user.getUserType());
+
+        Integer falg = 0;
+        // 4 村  3 镇  6 区  7 市
+        if (null == list || list.size() == 0){
+
+        }else {
+            addFlag(user, list);
+        }
+        model.addAttribute("list",list);
         model.addAttribute("userType",user.getUserType());
 
-        return "global/safety-system/control-operation";
+        return "global/safety-system/check-company";
 
+    }
+
+    private void addFlag(User user, List<Map<String, Object>> list) {
+        for (int i = 0; i < list.size(); i++) {  // 1.可升可取; 2.不可升不可取; 3.可升不可取; 4.不可升可取
+
+            if (null == (Integer)list.get(i).get("controls")){
+
+                list.get(i).put("flag",3);
+
+            }else if (null != (Integer)list.get(i).get("controls") ){
+                if (user.getUserType() == 7){ // 如何登录的是 市级 账户
+                    if ((Integer)list.get(i).get("controls") == 7){
+                        list.get(i).put("flag",4);
+                    }else if ((Integer)list.get(i).get("controls") == 6 || (Integer)list.get(i).get("controls") == 3 || (Integer)list.get(i).get("controls") == 4) {
+                        list.get(i).put("flag",3);
+                    }else {
+                        list.get(i).put("flag",3);
+                    }
+                }
+
+                if (user.getUserType() == 6){ // 如何登录的是 区级 账户
+                    if ((Integer)list.get(i).get("controls") == 7){
+                        list.get(i).put("flag",2);
+                    }else if ((Integer)list.get(i).get("controls") == 6){
+                        list.get(i).put("flag",4);
+                    }else if ((Integer)list.get(i).get("controls") == 3 || (Integer)list.get(i).get("controls") == 4){
+                        list.get(i).put("flag",3);
+                    }else {
+                        list.get(i).put("flag",3);
+                    }
+                }
+
+                if (user.getUserType() == 3){ // 如何登录的是 镇级 账户
+                    if ((Integer)list.get(i).get("controls") == 7){
+                        list.get(i).put("flag",2);
+                    }else if ((Integer)list.get(i).get("controls") == 6){
+                        list.get(i).put("flag",2);
+                    }else if ((Integer)list.get(i).get("controls") == 3){
+                        list.get(i).put("flag",4);
+                    }else if ((Integer)list.get(i).get("controls") == 4){
+                        list.get(i).put("flag",3);
+                    }else {
+                        list.get(i).put("flag",3);
+                    }
+                }
+
+                if (user.getUserType() == 4){ // 如何登录的是 村级 账户
+                    if ((Integer)list.get(i).get("controls") == 7){
+                        list.get(i).put("flag",2);
+                    }else if ((Integer)list.get(i).get("controls") == 6){
+                        list.get(i).put("flag",2);
+                    }else if ((Integer)list.get(i).get("controls") == 3){
+                        list.get(i).put("flag",2);
+                    }else if ((Integer)list.get(i).get("controls") == 4){
+                        list.get(i).put("flag",4);
+                    }else if ((Integer)list.get(i).get("controls") == 0){
+                        list.get(i).put("flag",3);
+                    }else {
+                        list.get(i).put("flag",3);
+                    }
+                }
+            }
+        }
     }
 
     /**

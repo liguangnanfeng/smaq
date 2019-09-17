@@ -1003,17 +1003,18 @@ public class GlobalController extends BaseController {
 
     /**
      * create by  : 小明！！！
-     * description: TODO    风险分级管控 —— 管控数据
+     * description: TODO    风险分级管控 —— 风险数据分析 -- 数据内容表格
      * create time: 2019/9/12 15:30
      */
-    @RequestMapping(value = "control-data")
-    public String controlData(HttpServletRequest request,Model model) throws Exception {
+    @RequestMapping(value = "all-statistics-list")
+    public String controlData(HttpServletRequest request,Model model,String dlevel) throws Exception {
         User user = getLoginUser(request);
 
-        List<Map<String,Object>> list = tCheckItemMapper.findControlData(user.getId(), user.getUserType());
+        List<Map<String,Object>> list = aCompanyManualMapper.findControlData(user.getId(), user.getUserType(),dlevel);
 
+        model.addAttribute("list",list);
 
-        return "global/safety-system/control-data";
+        return "global/safety-system/all-statistics-list";
 
     }
 
@@ -1025,7 +1026,7 @@ public class GlobalController extends BaseController {
      * description: TODO    风险分级管控 —— 管控分布
      * create time: 2019/9/12 15:30
      */
-    @RequestMapping(value = "control-distribution")
+    @RequestMapping(value = "/safety-system/control-distribution")
     public String controlDistribution(HttpServletRequest request,Model model) throws Exception {
         User user = getLoginUser(request);
 
@@ -1036,16 +1037,54 @@ public class GlobalController extends BaseController {
 
     /**
      * create by  : 小明！！！
-     * description: TODO    风险分级管控 ——  实时监控
+     * description: TODO    风险分级管控 ——  分级管控运行
      * create time: 2019/9/12 15:30
      */
-    @RequestMapping(value = "real-time-monitoring")
-    public String realTimeMonitoring(HttpServletRequest request,Model model) throws Exception {
+    @RequestMapping(value = "/safety-system/control-operation")
+
+    public String realTimeMonitoring(HttpServletRequest request,Model model,CompanyListReqDTO dto) throws Exception {
+
         User user = getLoginUser(request);
 
+        Integer totalzc = companyMapper.findALL(user.getId(), user.getUserType(),0); // 正常
+        Integer totalwyx = companyMapper.findALL(user.getId(), user.getUserType(),1); // 冻结
 
-        return "global/safety-system/real-time-monitoring";
+        cgfService.selectCompanyWithPage(dto, user, model);
+        if (user.getUserType().intValue() == 3) {
+            Map<String, Object> m = new HashMap<String, Object>();
+            m.put("townId", dto.getTownId());
+            m.put("districtId", dto.getDistrictId());
+            List<DynamicParameter<String, Object>> villagelist = villageMapper.selectListByTown(m);//查询所属下的所有乡村
+            model.addAttribute("villagelist", villagelist);
+        }
+        model.addAttribute("lib", libraryMapper.selectLibraryList(1));//查询行业列表
+        model.addAttribute("sk", request.getParameter("sk"));
+        model.addAttribute("totalzc", totalzc);
+        model.addAttribute("totalwyx", totalwyx);
+        model.addAttribute("dto", dto);
+        model.addAttribute("title", "全部企业");
+        if (StringUtils.isNotBlank(dto.getDoubleDanger())) {
+            model.addAttribute("title", "高危作业");
+        }
+        if (StringUtils.isNotBlank(dto.getCisDanger())) {
+            model.addAttribute("title", "重大危险源企业");
+        }
 
+        return "global/safety-system/control-operation";
+
+    }
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO  是否是本级管控
+     * create time: 2019/9/16 16:23
+     */
+    @RequestMapping(value = "user-isControls")
+    public @ResponseBody
+    Result userisControls(Company company, HttpServletRequest request) throws Exception {
+        Result result = new ResultImpl();
+        companyMapper.updateByPrimaryKeySelective(company);
+        return result;
     }
 
 

@@ -141,10 +141,10 @@
         </dt>
         <dd>
         <ul>
-            <li><a data-href="${ly }/global/safety-system/control-data" data-title="管控数据" href="javascript:void(0)">管控数据</a></li>
-            <li><a data-href="${ly }/global/safety-system/control-distribution" data-title="管控分布" href="javascript:void(0)">管控分布</a></li>
-            <li><a data-href="${ly }/global/safety-system/real-time-monitoring" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
-            <li><a data-href="${ly }/global/safety-system/statistics-list" data-title="数据分析" href="javascript:void(0)">数据分析</a></li>
+            <li><a data-href="${ly }/global/safety-system/statistics-list" data-title="风险数据分析" href="javascript:void(0)">风险数据分析</a></li>
+            <li><a data-href="${ly }/global/safety-system/control-operation" data-title="分级管控运行" href="javascript:void(0)">分级管控运行</a></li>
+            <li><a data-href="${ly }/global/safety-system/risk-distribution" data-title="各类风险分布" href="javascript:void(0)">各类风险分布</a></li>
+
             <%--<li><a data-href="${ly }/global/safety-system/control-listmenu?level=红色" data-title="重大风险汇总" href="javascript:void(0)">重大风险汇总</a></li>
             <li><a data-href="${ly }/global/safety-system/control-listmenu?level=橙色" data-title="较大风险汇总" href="javascript:void(0)">较大风险汇总</a></li>
             <li><a data-href="${ly }/global/safety-system/statistics-list" data-title="数据分析" href="javascript:void(0)">数据分析</a></li>--%>

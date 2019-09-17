@@ -120,10 +120,20 @@
      <%--<div class="totalyh">--%>
         <%--总隐患数:--%>
     <%--</div>--%>
+<style>
+    span#list {
+    position: absolute;
+    z-index: 100000;
+    margin-top: 5px;
+    right: 290px;
+    }
+</style>
     </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort">
-            <thead>
+    <span id="list">总隐患数: ${fn:length(list) } 条</span>
+
+    <thead>
             <tr class="text-c">
                 <th width="5%">检查类型</th>
                 <th width="5%">车间/场所</th>

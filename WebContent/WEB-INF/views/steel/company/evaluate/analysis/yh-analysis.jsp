@@ -44,9 +44,10 @@
         <%--柱状图1--%>
 
         <div class="select-btn">
-        <a class="sbtn" id="chaBtn1"  href="${ly }/steel/yh-all-analysis?flag=1">企业自查</a>
-        <a class="sbtn" id="chaBtn2" href="${ly }/steel/yh-all-analysis?flag=2">行政检查</a>
-        <a class="sbtn" id="chaBtn3" href="${ly }/steel/yh-all-analysis?flag=3">第三方检查</a>
+        <a class="sbtn btn-default" id="chaBtn0"  href="###">总览</a>
+        <a class="sbtn" id="chaBtn1"  href="${ly }/steel/zf-hidden-industry?flag=1">企业自查</a>
+        <a class="sbtn" id="chaBtn2" href="${ly }/steel/zf-hidden-industry?flag=2">行政检查</a>
+        <a class="sbtn" id="chaBtn3" href="${ly }/steel/zf-hidden-industry?flag=3">第三方检查</a>
         </div>
         <div id="main" style="width: 90%;height:400px;margin: 50px auto 0 auto;"></div>
 
@@ -56,29 +57,17 @@
 
 
         <div class="select-btn">
-        <a class="sbtn" id="chaBtn11"  href="${ly }/steel/yh-all-analysis?sign=1">企业自查</a>
-        <a class="sbtn" id="chaBtn22" href="${ly }/steel/yh-all-analysis?sign=2">行政检查</a>
-        <a class="sbtn" id="chaBtn33" href="${ly }/steel/yh-all-analysis?sign=3">第三方检查</a>
+            <a class="sbtn btn-default" id="chaBtn0"  href="###">总览</a>
+        <a class="sbtn" id="chaBtn11"  href="${ly }/steel/zf-hidden-trouble?flag=1">企业自查</a>
+        <a class="sbtn" id="chaBtn22" href="${ly }/steel/zf-hidden-trouble?flag=2">行政检查</a>
+        <a class="sbtn" id="chaBtn33" href="${ly }/steel/zf-hidden-trouble?flag=3">第三方检查</a>
         </div>
         <div id="main2" style="width: 90%;height:60%;margin: 100px auto 0 auto;"></div>
 
 
         <%--        柱状图1--%>
         <script>
-        console.log("flag:","${flag}");
-        var url='';
-        if('${flag}'==1){
-        $("#chaBtn1").addClass('btn-default');
-        url="${ly }/steel/zf-hidden-industry?flag=1"
-        }
-        if('${flag}'==2){
-        $("#chaBtn2").addClass('btn-default');
-        url="${ly }/steel/zf-hidden-industry?flag=2"
-        }
-        if('${flag}'==3){
-        $("#chaBtn3").addClass('btn-default');
-        url="${ly }/steel/zf-hidden-industry?flag=3"
-        }
+
 
 
 
@@ -130,8 +119,7 @@
         },
         xAxis: {
         type: 'category',
-        data: ["化工", "冶金", "有色", "建材", "机械", "轻工", "纺织", "商贸", "烟花", "其他"
-        ],
+        data: ${companyNames},
         axisLabel: {
         interval: 0, //横轴信息全部显示
         rotate: 0, //-30度角倾斜显示
@@ -162,30 +150,30 @@
         };
         myChart.setOption(option, true);
 
-        // 监听事件
-        $("#chaBtn1").click(() => {
+<%--        // 监听事件--%>
+<%--        $("#chaBtn1").click(() => {--%>
 
-        $("#chaBtn1").addClass('btn-default')
-        $("#chaBtn2").removeClass('btn-default')
-        $("#chaBtn3").removeClass('btn-default')
-        });
-        $("#chaBtn2").click(() => {
+<%--        $("#chaBtn1").addClass('btn-default')--%>
+<%--        $("#chaBtn2").removeClass('btn-default')--%>
+<%--        $("#chaBtn3").removeClass('btn-default')--%>
+<%--        });--%>
+<%--        $("#chaBtn2").click(() => {--%>
 
-        $("#chaBtn2").addClass('btn-default')
-        $("#chaBtn1").removeClass('btn-default')
-        $("#chaBtn3").removeClass('btn-default')
-        })
+<%--        $("#chaBtn2").addClass('btn-default')--%>
+<%--        $("#chaBtn1").removeClass('btn-default')--%>
+<%--        $("#chaBtn3").removeClass('btn-default')--%>
+<%--        })--%>
 
 
-        $("#chaBtn3").click(() => {
-        $("#chaBtn3").addClass('btn-default')
-        $("#chaBtn1").removeClass('btn-default')
-        $("#chaBtn2").removeClass('btn-default')
-        });
-        myChart.on('click', function(p) {
-        console.log('url:',url);
-        window.location.href =url;
-        })
+<%--        $("#chaBtn3").click(() => {--%>
+<%--        $("#chaBtn3").addClass('btn-default')--%>
+<%--        $("#chaBtn1").removeClass('btn-default')--%>
+<%--        $("#chaBtn2").removeClass('btn-default')--%>
+<%--        });--%>
+<%--        myChart.on('click', function(p) {--%>
+<%--        console.log('url:',url);--%>
+<%--        window.location.href =url;--%>
+<%--        })--%>
         </script>
 
 
@@ -202,19 +190,7 @@
 
         <script>
         console.log("flag:","${flag}");
-        var url2='';
-        if('${sign}'==1){
-        $("#chaBtn11").addClass('btn-default');
-        url2= "${ly }/steel/zf-hidden-trouble?sign=1"
-        }
-        if('${sign}'==2){
-        $("#chaBtn22").addClass('btn-default');
-        url2="${ly }/steel/zf-hidden-trouble?sign=2"
-        }
-        if('${sign}'==3){
-        $("#chaBtn33").addClass('btn-default');
-        url2="${ly }/steel/zf-hidden-trouble?sign=3"
-        }
+
         console.log('sign:,${sign}')
         // 基于准备好的dom，初始化echarts实例
         var number2 = ["${number1}", "${number2}", "${number3}", "${number4}", "${number5}", "${number6}", "${number7}", "${number8}", "${number9}", "${number10}", "${number11}", "${number12}", "${number13}", "${number14}","${number15}"];
@@ -299,30 +275,30 @@
         myChart2.setOption(option2, true);
 
         // 监听事件
-        $("#chaBtn11").click(() => {
-        url='${ly }/company/zhuChartData66?flag=1';
-        $("#chaBtn11").addClass('btn-default')
-        $("#chaBtn22").removeClass('btn-default')
-        $("#chaBtn33").removeClass('btn-default')
-        })
-        $("#chaBtn22").click(() => {
-        url='${ly }/company/zhuChartData66?flag=2';
+<%--        $("#chaBtn11").click(() => {--%>
+<%--        url='${ly }/company/zhuChartData66?flag=1';--%>
+<%--        $("#chaBtn11").addClass('btn-default')--%>
+<%--        $("#chaBtn22").removeClass('btn-default')--%>
+<%--        $("#chaBtn33").removeClass('btn-default')--%>
+<%--        })--%>
+<%--        $("#chaBtn22").click(() => {--%>
+<%--        url='${ly }/company/zhuChartData66?flag=2';--%>
 
-        $("#chaBtn22").addClass('btn-default')
-        $("#chaBtn11").removeClass('btn-default')
-        $("#chaBtn33").removeClass('btn-default')
-        })
+<%--        $("#chaBtn22").addClass('btn-default')--%>
+<%--        $("#chaBtn11").removeClass('btn-default')--%>
+<%--        $("#chaBtn33").removeClass('btn-default')--%>
+<%--        })--%>
 
-        $("#chaBtn33").click(() => {
-        url='${ly }/company/zhuChartData66?flag=3';
-        $("#chaBtn33").addClass('btn-default')
-        $("#chaBtn11").removeClass('btn-default')
-        $("#chaBtn22").removeClass('btn-default')
-        });
+<%--        $("#chaBtn33").click(() => {--%>
+<%--        url='${ly }/company/zhuChartData66?flag=3';--%>
+<%--        $("#chaBtn33").addClass('btn-default')--%>
+<%--        $("#chaBtn11").removeClass('btn-default')--%>
+<%--        $("#chaBtn22").removeClass('btn-default')--%>
+<%--        });--%>
 
-        myChart2.on('click', function(p) {
-        window.location.href =url2;
-        })
+<%--        myChart2.on('click', function(p) {--%>
+<%--        window.location.href =url2;--%>
+<%--        })--%>
         </script>
 
 

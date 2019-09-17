@@ -1007,10 +1007,10 @@ public class GlobalController extends BaseController {
      * create time: 2019/9/12 15:30
      */
     @RequestMapping(value = "all-statistics-list")
-    public String controlData(HttpServletRequest request,Model model,String dlevel) throws Exception {
+    public String controlData(HttpServletRequest request,Model model,Integer flag) throws Exception {
         User user = getLoginUser(request);
 
-        List<Map<String,Object>> list = aCompanyManualMapper.findControlData(user.getId(), user.getUserType(),dlevel);
+        List<Map<String,Object>> list = aCompanyManualMapper.findControlData(user.getId(), user.getUserType(),flag);
 
         model.addAttribute("list",list);
 

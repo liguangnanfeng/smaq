@@ -327,11 +327,47 @@ public class Company {
         this.isControls = isControls;
     }
 
-    public Integer getIsControls() {
-        return isControls;
-    }
-
-    public void setIsControls(Integer isControls) {
+    public Company(Integer userId, Integer villageId, String name, String regType, String regType2, Integer regionId, String address, String legal, String legalContact, String capital, String establish, String business, String scope, String license, Integer regRegion, String authority, String economic, String fixed, Integer staff, String income, String industry, Integer danger, String dangers, Integer hazard, String dlevel, String charge, String chargeContact, String safety, String safetyContact, String safetyM, String safetyMContact, String duty, String postage, String email, String pic1, String pic2, Integer isKey, String industry2, String scale, String areaRange, Integer isControls) {
+        this.userId = userId;
+        this.villageId = villageId;
+        this.name = name;
+        this.regType = regType;
+        this.regType2 = regType2;
+        this.regionId = regionId;
+        this.address = address;
+        this.legal = legal;
+        this.legalContact = legalContact;
+        this.capital = capital;
+        this.establish = establish;
+        this.business = business;
+        this.scope = scope;
+        this.license = license;
+        this.regRegion = regRegion;
+        this.authority = authority;
+        this.economic = economic;
+        this.fixed = fixed;
+        this.staff = staff;
+        this.income = income;
+        this.industry = industry;
+        this.danger = danger;
+        this.dangers = dangers;
+        this.hazard = hazard;
+        this.dlevel = dlevel;
+        this.charge = charge;
+        this.chargeContact = chargeContact;
+        this.safety = safety;
+        this.safetyContact = safetyContact;
+        this.safetyM = safetyM;
+        this.safetyMContact = safetyMContact;
+        this.duty = duty;
+        this.postage = postage;
+        this.email = email;
+        this.pic1 = pic1;
+        this.pic2 = pic2;
+        this.isKey = isKey;
+        this.industry2 = industry2;
+        this.scale = scale;
+        this.areaRange = areaRange;
         this.isControls = isControls;
     }
 

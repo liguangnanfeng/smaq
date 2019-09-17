@@ -799,7 +799,7 @@
             <if test="type==10">
                 user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid = #{userId})
             </if>
-            AND a1.del = 0 AND c1.dlevel = #{dlevel}
+            AND a1.del = 0 AND a1.flag = #{flag}
             GROUP BY
             a1.uid
         </where>

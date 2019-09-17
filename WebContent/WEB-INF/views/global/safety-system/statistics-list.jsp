@@ -20,8 +20,8 @@ body .dis-ib{margin-right:15px;}
 <body>
   <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-    <span class="c-gray en">&gt;</span> <span>风险分级管控</span>
-    <span class="c-gray en">&gt;</span> <span>数据分析</span>
+    <span class="c-gray en">&gt;</span> <span>风险分级管控</span> 
+    <span class="c-gray en">&gt;</span> <span>数据分析</span> 
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>
     </a>
@@ -136,13 +136,12 @@ var chart = Highcharts.chart('container', {
           point: {
             events: {
                 legendItemClick: function(e) {
-                  alert(this.name);
-                  $("#win-show").modal("show");
+<%--                  alert(this.name);--%>
+<%--                  $("#win-show").modal("show");--%>
                   return false; 
                 },
                 click:function(e){
-                  alert(this.name);
-                  $("#win-show").modal("show");
+                  window.location.href="/global/all-statistics-list"
                 }
             }
         }
@@ -155,11 +154,17 @@ var chart = Highcharts.chart('container', {
           {name:'重大风险',y:${flag1[0]} },
           {name:'较大风险',y:${flag1[1]} },
           {name:'一般和较低风险',y:${flag1[2]} },
-          {name:'低风险',y:${flag1[3]} },
       ]
   }]
 });
 /* 柱状图 */
+
+    const f1='#FF0000';
+    const f2='#FFA500';
+    const f3='#FFFF00';
+    var d=${gg2};
+    console.log('d',d);
+
 var chart2 = Highcharts.chart('container2',{
   chart: {
           type: 'column'
@@ -170,7 +175,7 @@ var chart2 = Highcharts.chart('container2',{
   title: {
           text: '风险统计'
   },
-  colors: ['#FF0000', '#FFA500', '#FFFF00', '#3B9BFF'],
+  colors: [f1, f2, f3],
   xAxis: {
           categories: ${industrys},
           labels: {
@@ -208,30 +213,69 @@ var chart2 = Highcharts.chart('container2',{
           },
   series: {
     events: {
-        legendItemClick: function() {
+        legendItemClick: function(e) {
+    let x= e.target.index;
+    var exSeries =  $('#container2').highcharts().get('gg2');
+    console.log(exSeries);
+    if(x===0){
+      d=${gg1};
+    exSeries.color=f1;
+    exSeries.name="重大风险";
+    exSeries.setData(d, true, true, false);
+    }
+    else if(x===1){
+    d=${gg2};
+    exSeries.color=f2;
+    exSeries.name="较大风险";
+    exSeries.setData(d, true, true, false);
+    }
+    else if(x===2){
+    console.log(3);
+    d=${gg3};
+    console.log(d)
+    exSeries.color=f3;
+    exSeries.name="一般和较低风险";
+    exSeries.setData(d, true, true, false);
+    }
+
+
             return false; // 直接 return false 即可禁用图例点击事件
+
         },
         click:function(e){
-          alert(e.point.category);
-          $("#win-show2").modal("show");
+<%--          alert(e.point.category);--%>
+<%--          $("#win-show2").modal("show");--%>
+            console.log('123')
         }
     },
   }
   },
   series: [{
           name: '重大风险',
-          data: ${gg1}
-  }, {
+<%--          data: ${gg1}--%>
+  }
+    , {
           name: '较大风险',
-          data: ${gg2}
+         id:'gg2',
+<%--          data: ${gg2}--%>
+            data:d
   }, {
           name: '一般和较低风险',
-          data: ${gg3}
-  }, {
-          name: '低风险',
-          data: ${gg4}
-  }]
+<%--          data: ${gg3}--%>
+  }
+
+    ]
 });
+
+    console.log('industrys---------------')
+    console.log('${industrys}')
+    let a=${gg1};
+    let b=${gg1};
+    let c=${gg1};
+    let ddd={
+     a,b,c
+    };
+    console.log(ddd)
 </script>
 </body>
 </html>

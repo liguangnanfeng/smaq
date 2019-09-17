@@ -26,7 +26,9 @@ body .lhover strong {color: red;margin:0;}
 <script type="text/javascript">
 var villageId = '${m.villageId}';
 function openzl(){
-  $("#upload-zl").modal("show")}
+  //$("#upload-zl").modal("show")
+    window.location.href="/global/source/company-map"
+    }
 
 $(function() {
   if($("#townId").length > 0) {
@@ -153,7 +155,7 @@ function print_() {
           <tr class="text-c">
             <th width="5%">编号</th>
             <th width="20%">企业名称</th>
-            <th width="15%">隐患总数</th>
+            <th width="15%">风险数量</th>
             <th width="15%">企业自查</th>
             <th width="15%">执法检查</th>
             <th width="15%">部门抽查</th>
@@ -167,7 +169,6 @@ function print_() {
   </script>
           <c:forEach items="${list }" varStatus="index" var="be">
             <c:if test='${be[1]!="炼铁分厂"&&be[1]!="炼钢分厂"&&be[1]!="高线分厂"&&be[1]!="一轧分厂"&&be[1]!="二轧分厂"&&be[1]!="物流分部"&&be[1]!="动力分厂"&&be[1]!="制氧分厂"}'>
-
             <tr class="text-c">
             <td>${index.index + 1 }</td>
               <td>${be[1]}</td>

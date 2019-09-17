@@ -868,7 +868,7 @@ public class SteelController extends BaseController {
 
         //List<Map<String, Object>> list1 = hiddenPlanMapper.selectCountAll(company.getUserId());
 
-        List<Map<String, Object>> list1 = hiddenPlanMapper.selectCountAllTraces(sb.toString());
+        List<Map<String, Object>> list1 = hiddenPlanMapper.selectCountAllTraces(sb.toString());//合计的数据
 
         List<Map<String, Object>> hiddenPlanList = hiddenPlanMapper.findDpid(0,company.getUserId());
         List<Map<String, Object>> hiddenPlanList2 = new ArrayList<>();
@@ -1565,35 +1565,35 @@ public class SteelController extends BaseController {
         }
 
        //Integer a = tCheckItemMapper.zhengFuChartDataDanger(flag,"化工",sb.toString()); // 化工行业 数据
-        Integer a = tCheckItemMapper.zhengFuChartDataDanger2(flag,(Integer)branchs.get(0).get("user_id"));
+        Integer a = tCheckItemMapper.zhengFuChartDataDanger3((Integer)branchs.get(0).get("user_id"));
         model.addAttribute("danger1",a);
 
         //Integer  b = tCheckItemMapper.zhengFuChartDataDanger(flag,"冶金",sb.toString()); // 冶金行业 数据
-        Integer b = tCheckItemMapper.zhengFuChartDataDanger2(flag,(Integer)branchs.get(1).get("user_id"));
+        Integer b = tCheckItemMapper.zhengFuChartDataDanger3((Integer)branchs.get(1).get("user_id"));
         model.addAttribute("danger2",b);
 
         //Integer  c = tCheckItemMapper.zhengFuChartDataDanger(flag,"有色",sb.toString()); // 有色行业 数据
-        Integer c = tCheckItemMapper.zhengFuChartDataDanger2(flag,(Integer)branchs.get(2).get("user_id"));
+        Integer c = tCheckItemMapper.zhengFuChartDataDanger3((Integer)branchs.get(2).get("user_id"));
         model.addAttribute("danger3",c);
 
         //Integer  d = tCheckItemMapper.zhengFuChartDataDanger(flag,"建材",sb.toString()); // 建材行业 数据
-        Integer d = tCheckItemMapper.zhengFuChartDataDanger2(flag,(Integer)branchs.get(3).get("user_id"));
+        Integer d = tCheckItemMapper.zhengFuChartDataDanger3((Integer)branchs.get(3).get("user_id"));
         model.addAttribute("danger4",d);
 
         //Integer  e = tCheckItemMapper.zhengFuChartDataDanger(flag,"机械",sb.toString()); // 机械行业 数据
-        Integer e = tCheckItemMapper.zhengFuChartDataDanger2(flag,(Integer)branchs.get(4).get("user_id"));
+        Integer e = tCheckItemMapper.zhengFuChartDataDanger3((Integer)branchs.get(4).get("user_id"));
         model.addAttribute("danger5",e);
 
         //Integer  f = tCheckItemMapper.zhengFuChartDataDanger(flag,"轻工",sb.toString()); // 轻工行业 数据
-        Integer f = tCheckItemMapper.zhengFuChartDataDanger2(flag,(Integer)branchs.get(5).get("user_id"));
+        Integer f = tCheckItemMapper.zhengFuChartDataDanger3((Integer)branchs.get(5).get("user_id"));
         model.addAttribute("danger6",f);
 
         //Integer  g = tCheckItemMapper.zhengFuChartDataDanger(flag,"纺织",sb.toString()); // 纺织行业 数据
-        Integer g = tCheckItemMapper.zhengFuChartDataDanger2(flag,(Integer)branchs.get(6).get("user_id"));
+        Integer g = tCheckItemMapper.zhengFuChartDataDanger3((Integer)branchs.get(6).get("user_id"));
         model.addAttribute("danger7",g);
 
         //Integer  h = tCheckItemMapper.zhengFuChartDataDanger(flag,"商贸",sb.toString()); // 商贸行业 数据
-        Integer h = tCheckItemMapper.zhengFuChartDataDanger2(flag,(Integer)branchs.get(7).get("user_id"));
+        Integer h = tCheckItemMapper.zhengFuChartDataDanger3((Integer)branchs.get(7).get("user_id"));
         model.addAttribute("danger8",h);
 
         /*Integer  i1 = tCheckItemMapper.zhengFuChartDataDanger(flag,"烟花",sb.toString()); // 烟花行业 数据
@@ -1704,49 +1704,49 @@ public class SteelController extends BaseController {
             model.addAttribute("result10", "0.00");
         }
 
-        Integer number1 = tCheckItemMapper.zhengFuChartData88("基础管理",sign,sb.toString()); // 基础管理 隐患数据
+        Integer number1 = tCheckItemMapper.zhengFuChartData882("基础管理", sb.toString()); // 基础管理 隐患数据
         model.addAttribute("number1",number1);
 
-        Integer number2 = tCheckItemMapper.zhengFuChartData88("生产工艺",sign,sb.toString()); // 生产工艺 隐患数据
+        Integer number2 = tCheckItemMapper.zhengFuChartData882("生产工艺", sb.toString()); // 生产工艺 隐患数据
         model.addAttribute("number2",number2);
 
-        Integer number3 = tCheckItemMapper.zhengFuChartData88("设备设施",sign,sb.toString()); // 设备设施 隐患数据
+        Integer number3 = tCheckItemMapper.zhengFuChartData882("设备设施", sb.toString()); // 设备设施 隐患数据
         model.addAttribute("number3",number3);
 
-        Integer number4 = tCheckItemMapper.zhengFuChartData88("公用工程",sign,sb.toString()); // 公用工程 隐患数据
+        Integer number4 = tCheckItemMapper.zhengFuChartData882("公用工程", sb.toString()); // 公用工程 隐患数据
         model.addAttribute("number4",number4);
 
-        Integer number5 = tCheckItemMapper.zhengFuChartData88("特种设备",sign,sb.toString()); // 特种设备 隐患数据
+        Integer number5 = tCheckItemMapper.zhengFuChartData882("特种设备", sb.toString()); // 特种设备 隐患数据
         model.addAttribute("number5",number5);
 
-        Integer number6 = tCheckItemMapper.zhengFuChartData88("生产现场",sign,sb.toString()); // 生产现场 隐患数据
+        Integer number6 = tCheckItemMapper.zhengFuChartData882("生产现场", sb.toString()); // 生产现场 隐患数据
         model.addAttribute("number6",number6);
 
-        Integer number7 = tCheckItemMapper.zhengFuChartData88("行为环境",sign,sb.toString()); // 行为环境 隐患数据
+        Integer number7 = tCheckItemMapper.zhengFuChartData882("行为环境", sb.toString()); // 行为环境 隐患数据
         model.addAttribute("number7",number7);
 
-        Integer number8 = tCheckItemMapper.zhengFuChartData88("危化管理",sign,sb.toString()); // 危化管理 隐患数据
+        Integer number8 = tCheckItemMapper.zhengFuChartData882("危化管理", sb.toString()); // 危化管理 隐患数据
         model.addAttribute("number8",number8);
 
-        Integer number9 = tCheckItemMapper.zhengFuChartData88("消防安全",sign,sb.toString()); // 消防安全 隐患数据
+        Integer number9 = tCheckItemMapper.zhengFuChartData882("消防安全", sb.toString()); // 消防安全 隐患数据
         model.addAttribute("number9",number9);
 
-        Integer number10 = tCheckItemMapper.zhengFuChartData88("用电安全",sign,sb.toString()); // 用电安全 隐患数据
+        Integer number10 = tCheckItemMapper.zhengFuChartData882("用电安全", sb.toString()); // 用电安全 隐患数据
         model.addAttribute("number10",number10);
 
-        Integer number11 = tCheckItemMapper.zhengFuChartData88("安全设施",sign,sb.toString()); // 安全设施 隐患数据
+        Integer number11 = tCheckItemMapper.zhengFuChartData882("安全设施", sb.toString()); // 安全设施 隐患数据
         model.addAttribute("number11",number11);
 
-        Integer number12 = tCheckItemMapper.zhengFuChartData88("防雷静电",sign,sb.toString()); // 防雷静电 隐患数据
+        Integer number12 = tCheckItemMapper.zhengFuChartData882("防雷静电", sb.toString()); // 防雷静电 隐患数据
         model.addAttribute("number12",number12);
 
-        Integer number13 = tCheckItemMapper.zhengFuChartData88("职业卫生",sign,sb.toString()); // 职业卫生 隐患数据
+        Integer number13 = tCheckItemMapper.zhengFuChartData882("职业卫生", sb.toString()); // 职业卫生 隐患数据
         model.addAttribute("number13",number13);
 
-        Integer number14 = tCheckItemMapper.zhengFuChartData88("职业卫生",sign,sb.toString()); // 职业卫生 隐患数据
+        Integer number14 = tCheckItemMapper.zhengFuChartData882("职业卫生", sb.toString()); // 职业卫生 隐患数据
         model.addAttribute("number14",number14);
 
-        Integer number15 = tCheckItemMapper.zhengFuChartData881(sign,sb.toString()); // 其他 隐患数据
+        Integer number15 = tCheckItemMapper.zhengFuChartData8812(sb.toString()); // 其他 隐患数据
         model.addAttribute("number15",number15);
 
         Integer count1 = number1 + number2 + number3 + number4 + number5 + number6 + number7 + number8 + number9 + number10 + number11 + number12 + number13 + number14 + number15;

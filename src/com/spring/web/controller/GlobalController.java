@@ -10039,7 +10039,7 @@ public class GlobalController extends BaseController {
             model.addAttribute("name_", user.getUserName());
             model.addAttribute("loginUserId", user.getId());
         }
-        return "global/main";
+        return "redirect:/global/main";
     }
 
 }

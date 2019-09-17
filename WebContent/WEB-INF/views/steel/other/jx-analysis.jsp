@@ -37,6 +37,20 @@
         a:hover{
           text-decoration:none;
         }
+        #selectBranch{
+            position: absolute;
+            top: 142px;
+            right: 100px;
+            width: 100px;
+            height: 32px;
+            padding: 4px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            box-shadow: 5px 5px 5px #fff;
+            color: black;
+            border-radius: 5px;
+            z-index: 100000000000000000000000;
+        }
         </style>
         </head>
         <body style="height: 100vh;">
@@ -47,27 +61,54 @@
             3:'${number3}'
         }
         </script>
+        <select id="selectBranch">
+        </select>
         <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
         <div class="select-btn">
-        <a class="sbtn" id="chaBtn0"  href="${ly }/steel/jx-analysis?flag=1">总览</a>
-        <a class="sbtn" id="chaBtn1"  href="${ly }/global/zhuChartData66?flag=1">企业自查</a>
-        <a class="sbtn" id="chaBtn2" href="${ly }/global/zhuChartData66?flag=2">行政检查</a>
-        <a class="sbtn" id="chaBtn3" href="${ly }/global/zhuChartData66?flag=3">第三方检查</a>
-<%--        <a class="sbtn" id="chaBtn1"  href="${ly }/global/jx-analysis?flag=1">企业自查</a>--%>
-<%--        <a class="sbtn" id="chaBtn2" href="${ly }/global/jx-analysis?flag=2">行政检查</a>--%>
-<%--        <a class="sbtn" id="chaBtn3" href="${ly }/global/jx-analysis?flag=3">第三方检查</a>--%>
+        <a class="sbtn" id="chaBtn1"  href="${ly }/steel/jx-analysis?flag=1&userId=${userId}">企业自查</a>
+        <a class="sbtn" id="chaBtn2" href="${ly }/steel/jx-analysis?flag=2&userId=${userId}">行政检查</a>
+        <a class="sbtn" id="chaBtn3" href="${ly }/steel/jx-analysis?flag=3&userId=${userId}">第三方检查</a>
         </div>
+        <!--企业列表-->
+
         <div id="main2" style="width: 90%;height:400px;margin: 50px auto 0 auto;"></div>
 <%--        <iframe id="colum" src=""></iframe>--%>
 
         <div id="main" style="width: 90%;height:60%;margin: 100px auto 0 auto;"></div>
         <script src="/js/echarts.min.js"></script>
+        <script>
+            $(function () {
+                $.ajax({
+                    url:"${ly}/steel/company-list8",
+                    type:"get",
+                    success:function (data) {
+                        var html="";
+                        for(var i=0; i<data.map.list.length; i++){
+                            if(data.map.list[i]["id"]==${userId}){
+                                html += '<option value="'+data.map.list[i]["id"]+'" selected="selected">'+data.map.list[i]["name"]+'</option>';
+                            }else{
+                                html += '<option value="'+data.map.list[i]["id"]+'">'+data.map.list[i]["name"]+'</option>';
+                            }
+
+                        }
+                        $("#selectBranch").html(html);
+                    },
+                    error:function(){
+                        alert("error");
+                    }
+                });
+                $("#selectBranch").change(function () {
+
+                    window.location.href="${ly }/steel/jx-analysis?flag=${flag}&userId="+$(this).val();
+                })
+            })
+        </script>
         <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         window.onload = function() {
-        var u1 = '${ly }/global/danger-chart-jx';
-        var u2 = '${ly }/global/zhuChartData55?flag=2';
-        var u3 = '${ly }/global/zhuChartData55?flag=3';
+        var u1 = '${ly }/steel/danger-chart-jx?userId=${userId}';
+        var u2 = '${ly }/steel/zhuChartData55?flag=2&userId=${userId}';
+        var u3 = '${ly }/steel/zhuChartData55?flag=3&userId=${userId}';
         var option = {
         title:{
         text:'排查绩效分析',
@@ -148,24 +189,24 @@
 
 
 
-<%--        柱状图--%>
+        <%--        柱状图--%>
         <script>
          console.log("flag:","${flag}");
         var url='';
         if('${flag}'==1){
         $("#chaBtn1").addClass('btn-default');
-         url='${ly }/global/zhuChartData66?flag=1';
+         url='${ly }/steel/zhuChartData66?flag=1&userId=${userId}';
         }
         if('${flag}'==2){
         $("#chaBtn2").addClass('btn-default');
-         url='${ly }/global/zhuChartData66?flag=2';
+         url='${ly }/steel/zhuChartData66?flag=2&userId=${userId}';
         }
         if('${flag}'==3){
         $("#chaBtn3").addClass('btn-default');
-         url='${ly }/global/zhuChartData66?flag=3';
+         url='${ly }/steel/zhuChartData66?flag=3&userId=${userId}';
         }
             function addgjs() {
-                show_dialog(" ", "/company/jx-analysis?flag=1");
+                show_dialog(" ", "/steel/jx-analysis?flag=1&userId=${userId}");
             }
         // 基于准备好的dom，初始化echarts实例
         var number = ["${a}", "${b}", "${c}", "${d}", "${e}", "${f}", "${g}", "${h}", "${i}", "${j}", "${k}", "${l}", "${m}", "${n}"];
@@ -263,7 +304,7 @@
         });
         })
         $("#chaBtn2").click(() => {
-        url='${ly }/global/zhuChartData66?flag=2';
+        url='${ly }/company/zhuChartData66?flag=2';
 
         $("#chaBtn2").addClass('btn-default')
         $("#chaBtn1").removeClass('btn-default')
@@ -278,7 +319,7 @@
         });
         })
         $("#chaBtn3").click(() => {
-        url='${ly }/global/zhuChartData66?flag=3';
+        url='${ly }/company/zhuChartData66?flag=3';
         $("#chaBtn3").addClass('btn-default')
         $("#chaBtn1").removeClass('btn-default')
         $("#chaBtn2").removeClass('btn-default')
@@ -291,7 +332,6 @@
         fdata33.push(x33);
         });
         });
-
        myChart.on('click', function(p) {
         window.location.href =url;
         })

@@ -1006,6 +1006,107 @@ public class CgfServiceImpl implements CgfService {
      *              就是显示出是否为重点企业
      * @param model
      */
+    public void selectCompanyWithPage3(CompanyListReqDTO dto, User user, Model model) {
+        String industry2 = null;
+        if (StringUtils.isNotBlank(dto.getIndustry2_())) {
+            industry2 = dto.getIndustry2_();
+            if (StringUtils.isNotBlank(dto.getIndustry2_2())) {
+                industry2 = industry2 + " > " + dto.getIndustry2_2();
+            }
+        }
+        dto.setIndustry2(industry2);
+        List<Integer> userIds = getCompanyUserIdsWithPage(dto, user);
+        //log.error("userIds："+userIds.toString());
+        List<Map<String, Object>> list = null;
+        String all_userIds = dto.getUserIds();
+
+        if ("-1".equals(all_userIds)) {
+            model.addAttribute("total", 0);
+        } else {
+            model.addAttribute("total", all_userIds.split(",").length);
+        }
+        if (userIds.size() > 0) {
+            dto.setUserIds(StringUtils.join(userIds, ","));
+//            dto.setUserIds(getUserIdsByPage(userIds, dto));
+            list = companyMapper.selectByIds(dto);
+            model.addAttribute("list", list);
+        }
+        Integer falg = 0;
+        // 4 村  3 镇  6 区  7 市
+        if (null == list || list.size() == 0){
+            return;
+        }else {
+            for (int i = 0; i < list.size(); i++) {  // 1.可升可取; 2.不可升不可取; 3.可升不可取; 4.不可升可取
+
+                if (null == (Integer)list.get(i).get("controls")){
+
+                    list.get(i).put("flag",3);
+
+                }else if (null != (Integer)list.get(i).get("controls") ){
+                    if (user.getUserType() == 7){ // 如何登录的是 市级 账户
+                        if ((Integer)list.get(i).get("controls") == 7){
+                            list.get(i).put("flag",4);
+                        }else if ((Integer)list.get(i).get("controls") == 6 || (Integer)list.get(i).get("controls") == 3 || (Integer)list.get(i).get("controls") == 4) {
+                            list.get(i).put("flag",3);
+                        }else {
+                            list.get(i).put("flag",3);
+                        }
+                    }
+
+                    if (user.getUserType() == 6){ // 如何登录的是 区级 账户
+                        if ((Integer)list.get(i).get("controls") == 7){
+                            list.get(i).put("flag",2);
+                        }else if ((Integer)list.get(i).get("controls") == 6){
+                            list.get(i).put("flag",4);
+                        }else if ((Integer)list.get(i).get("controls") == 3 || (Integer)list.get(i).get("controls") == 4){
+                            list.get(i).put("flag",3);
+                        }else {
+                            list.get(i).put("flag",3);
+                        }
+                    }
+
+                    if (user.getUserType() == 3){ // 如何登录的是 镇级 账户
+                        if ((Integer)list.get(i).get("controls") == 7){
+                            list.get(i).put("flag",2);
+                        }else if ((Integer)list.get(i).get("controls") == 6){
+                            list.get(i).put("flag",2);
+                        }else if ((Integer)list.get(i).get("controls") == 3){
+                            list.get(i).put("flag",4);
+                        }else if ((Integer)list.get(i).get("controls") == 4){
+                            list.get(i).put("flag",3);
+                        }else {
+                            list.get(i).put("flag",3);
+                        }
+                    }
+
+                    if (user.getUserType() == 4){ // 如何登录的是 村级 账户
+                        if ((Integer)list.get(i).get("controls") == 7){
+                            list.get(i).put("flag",2);
+                        }else if ((Integer)list.get(i).get("controls") == 6){
+                            list.get(i).put("flag",2);
+                        }else if ((Integer)list.get(i).get("controls") == 3){
+                            list.get(i).put("flag",2);
+                        }else if ((Integer)list.get(i).get("controls") == 4){
+                            list.get(i).put("flag",4);
+                        }else if ((Integer)list.get(i).get("controls") == 0){
+                            list.get(i).put("flag",3);
+                        }else {
+                            list.get(i).put("flag",3);
+                        }
+                    }
+                }
+            }
+        }
+
+        dto.setUserIds(all_userIds);
+        model.addAttribute("dto", dto);
+    }
+
+    /**
+     * @param dto   TODO 企业查询分页 功能进行显示
+     *              就是显示出是否为重点企业
+     * @param model
+     */
     public void selectCompanyWithPage(CompanyListReqDTO dto, User user, Model model) {
         String industry2 = null;
         if (StringUtils.isNotBlank(dto.getIndustry2_())) {
@@ -1017,7 +1118,6 @@ public class CgfServiceImpl implements CgfService {
         dto.setIndustry2(industry2);
         List<Integer> userIds = getCompanyUserIdsWithPage(dto, user);
         //log.error("userIds："+userIds.toString());
-
         String all_userIds = dto.getUserIds();
 
         if ("-1".equals(all_userIds)) {

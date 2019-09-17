@@ -272,12 +272,16 @@ public class GlobalController extends BaseController {
                 sb.append("'").append(ids.get(i)).append("',");
             }
         }
+        if (null == ids || ids.size() == 0){
+            model.addAttribute("counts",0);
+            model.addAttribute("counts1",0);
+        }else {
+            Integer counts = tCheckMapper.findAllCounte(sb.toString()); // 排查数据
+            Integer counts1 = tCheckItemMapper.findAllCounte(sb.toString()); // 治理数据
 
-        Integer counts = tCheckMapper.findAllCounte(sb.toString()); // 排查数据
-        Integer counts1 = tCheckItemMapper.findAllCounte(sb.toString()); // 治理数据
-
-        model.addAttribute("counts",counts);
-        model.addAttribute("counts1",counts1);
+            model.addAttribute("counts",counts);
+            model.addAttribute("counts1",counts1);
+        }
 
         if (user.getUserType() == 9) { //地级市
             Map<String, Object> m = new HashMap<String, Object>();
@@ -1049,7 +1053,7 @@ public class GlobalController extends BaseController {
         Integer totalzc = companyMapper.findALL(user.getId(), user.getUserType(),0); // 正常
         Integer totalwyx = companyMapper.findALL(user.getId(), user.getUserType(),1); // 冻结
 
-        cgfService.selectCompanyWithPage(dto, user, model);
+        cgfService.selectCompanyWithPage3(dto, user, model);
         if (user.getUserType().intValue() == 3) {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("townId", dto.getTownId());
@@ -1070,6 +1074,8 @@ public class GlobalController extends BaseController {
             model.addAttribute("title", "重大危险源企业");
         }
 
+        model.addAttribute("userType",user.getUserType());
+
         return "global/safety-system/control-operation";
 
     }
@@ -1081,9 +1087,19 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping(value = "user-isControls")
     public @ResponseBody
-    Result userisControls(Company company, HttpServletRequest request) throws Exception {
+    Result userisControls(HttpServletRequest request, Integer userId, Integer flag) throws Exception {
         Result result = new ResultImpl();
+        User user = getLoginUser(request);
+        Company company = new Company();
+        company.setUserId(userId);
+
+        if (flag == 1){
+            company.setIsControls(user.getUserType());
+        }else if (flag == 0){
+            company.setIsControls(0);
+        }
         companyMapper.updateByPrimaryKeySelective(company);
+
         return result;
     }
 

@@ -129,6 +129,7 @@ public interface CgfService extends Serializable {
 
     public void selectCompanyWithPage2(CompanyListReqDTO dto, User user, Model model);
 
+    public void selectCompanyWithPage3(CompanyListReqDTO dto, User user, Model model);
     /**
     * @param dto
     * @param object
@@ -147,5 +148,6 @@ public interface CgfService extends Serializable {
 	public void temporarydangerSave(TemporaryDangerSaveReqDTO dto) throws Exception;
 
 	public void monitorUpdate(String puids, String ids, String names, Integer userId)throws Exception;
-    
+
+
 }

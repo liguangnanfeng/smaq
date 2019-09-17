@@ -269,22 +269,38 @@ $(function() {
             </td>
 
             <td>
-              <c:if test="${1 == co.controls }">
+              <c:if test="${userType == co.controls }">
                 是
               </c:if>
 
-              <c:if test="${0 == co.controls }">
+              <c:if test="${userType != co.controls }">
                 否
               </c:if>
             </td>
 
-
             <td>
-                <c:if test="${co.controls == 0}">
-                <a style="text-decoration:none" onClick="user_isControls(${co.userId },1)" href="javascript:;">设为本级管控</a>
+                <c:if test="${1 == co.flag }">
+                    <a style="text-decoration:none" onClick="user_isControls(${co.userId },1)" href="javascript:;">设为本级管控</a>
+
+                    <a style="text-decoration:none" onClick="user_isControls(${co.userId },0)" href="javascript:;">取消本级管控</a>
                 </c:if>
-                <c:if test="${co.controls == 1}">
-                <a style="text-decoration:none" onClick="user_isControls(${co.userId },0)" href="javascript:;">取消本级管控</a>
+
+                <c:if test="${2 == co.flag }">
+                    <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >设为本级管控</a>
+
+                    <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >取消本级管控</a>
+                </c:if>
+
+                <c:if test="${3 == co.flag }">
+                    <a style="text-decoration:none" onClick="user_isControls(${co.userId },1)" href="javascript:;">设为本级管控</a>
+
+                    <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >取消本级管控</a>
+                </c:if>
+
+                <c:if test="${4 == co.flag }">
+                    <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >设为本级管控</a>
+
+                    <a style="text-decoration:none" onClick="user_isControls(${co.userId },0)" href="javascript:;">取消本级管控</a>
                 </c:if>
             </td>
           </tr>
@@ -340,7 +356,7 @@ function user_isControls(userId,isControls){
     var index = layer.load();
     $.post(getRootPath() + "/global/user-isControls",{
       userId : userId,
-      isControls : isControls
+      flag : isControls
     },function(result){
         location.reload();
     })
@@ -445,8 +461,9 @@ if(a_p > 1) {
     jump: function(obj){ //触发分页后的回调
       if($("#page").val() != obj.curr - 1) {
             $("#page").val(obj.curr - 1);
-            $("form").submit();
-            layer.load();
+          // /*  $("form").submit();
+          //   */
+          // // layer.load();
       }
     }
   });

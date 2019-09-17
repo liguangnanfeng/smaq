@@ -143,24 +143,6 @@ function pr_() {
               <tr>
                 <td colspan="3">
                   <div class="div-gimg" style="margin-bottom:6px;">
-                        <img ondblclick="showhide()" alt="" src="${ly }${img0==null?'/images/zwtp.jpg':img0}"/>
-                        <img alt="" src="${ly }${img1==null?'/images/zwtp.jpg':img1}"/>
-                        <img alt="" src="${ly }${img2==null?'/images/zwtp.jpg':img2}"/>
-                        <img alt="" src="${ly }${img3==null?'/images/zwtp.jpg':img3}"/>
-                        <img alt="" src="${ly }${img4==null?'/images/zwtp.jpg':img4}"/>
-                        <img alt="" src="${ly }${img5==null?'/images/zwtp.jpg':img5}"/>
-                        <img alt="" src="${ly }${img6==null?'/images/zwtp.jpg':img6}"/>
-                        <img alt="" src="${ly }${img7==null?'/images/zwtp.jpg':img7}"/>
-                        <img alt="" src="${ly }${img8==null?'/images/zwtp.jpg':img8}" style="margin-right:0;"/>
-<%--                    <img ondblclick="showhide()" alt="" src="${ly }/images/gao/aqgz1.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/aqgz2.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/aqgz3.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/aqgz4.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/aqgz6.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/l1.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/l2.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/l3.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/l4.jpg" style="margin-right:0;"/>--%>
                         <img ondblclick="showhide()" alt="" src="${ly }${img0==null?'/images/gao/aqgz1.jpg':img0}"/>
                         <img alt="" src="${ly }${img1==null?'/images/gao/aqgz2.jpg':img1}"/>
                         <img alt="" src="${ly }${img2==null?'/images/gao/aqgz3.jpg':img2}"/>

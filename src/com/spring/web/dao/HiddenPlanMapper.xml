@@ -164,6 +164,14 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
+    <delete id="deleteDate" parameterType="java.lang.Integer">
+        delete from hidden_plan
+        where dpid = #{dpid,jdbcType=INTEGER} and uid = #{uid,jdbcType=INTEGER}
+    </delete>
+
+
+
+
     <insert id="insert" parameterType="com.spring.web.model.HiddenPlan">
         insert into hidden_plan (uid, dpid,
         syn_month, syn_year, syn_ratio,

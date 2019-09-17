@@ -5,6 +5,7 @@
 package com.spring.web.controller;
 
 import com.spring.web.BaseController;
+import com.spring.web.dao.HiddenPlanMapper;
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.User;
 import com.spring.web.model.ZzjgCompany;
@@ -56,6 +57,8 @@ public class CompanyController_system extends BaseController {
     @Autowired
     private IzzjgCompanyService zzjgCompanyService;
 
+    @Autowired
+    private HiddenPlanMapper hiddenPlanMapper;
 
     /** 组织架构 开始 */
 
@@ -115,6 +118,7 @@ public class CompanyController_system extends BaseController {
     @RequestMapping(value = "depart-save")
     public @ResponseBody Result DepartSave(ZzjgDepartment dto, HttpServletRequest request) throws Exception {
         Result result = new ResultImpl();
+        User user = getLoginUser(request);
         Date d = new Date();
         dto.setUtime(d);
         dto.setUid(getLoginUser(request).getId());
@@ -127,6 +131,10 @@ public class CompanyController_system extends BaseController {
             result.setMap("obj", dto);
         } else {
             zzjgDepartmentMapper.updateByPrimaryKeySelective(dto);
+        }
+
+        if (dto.getDel() == 1){
+            hiddenPlanMapper.deleteDate(dto.getId(),user.getId());
         }
         return result;
     }

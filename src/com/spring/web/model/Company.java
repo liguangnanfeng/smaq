@@ -323,6 +323,14 @@ public class Company {
 
     private Integer isControls;
 
+    public Integer getIsControls() {
+        return isControls;
+    }
+
+    public void setIsControls(Integer isControls) {
+        this.isControls = isControls;
+    }
+
     public Company(Integer isControls) {
         this.isControls = isControls;
     }

@@ -186,7 +186,7 @@
 
     <a class="one_tx radius pos-r" href="${ly}/village/hidden-danger-list?flag=1&status=1"   style="background:#ea4f21;    margin-left: 1%;;margin-right:0">
     <img alt="" src="${ly }/images/httb9.png"/>
-    <font class="font_tx1 pos-a"></font>
+    <font class="font_tx1 pos-a <c:if test="${counts >0}">blink</c:if>">${counts}</font>
     <font class="font_tx2 pos-a">隐患排查</font>
     <%--  onclick="show_dialog('隐患排查', '${ly }/village/check-item3?status=2')"--%>
     </a>
@@ -194,7 +194,7 @@
 
     <a class="one_tx radius pos-r" href="/village/hidden-danger-list?flag=1&status=1"   style="background:#ea4f21;margin-left: 3%;">
     <img alt="" src="${ly }/images/httb9.png"/>
-    <font class="font_tx1 pos-a "></font>
+    <font class="font_tx1 pos-a <c:if test="${counts1 >0}">blink</c:if>">${counts1}</font>
     <font class="font_tx2 pos-a">隐患治理</font>
     <%--  onclick="show_dialog('隐患治理', '${ly }/village/check-item3?status=2')"--%>
     </a>

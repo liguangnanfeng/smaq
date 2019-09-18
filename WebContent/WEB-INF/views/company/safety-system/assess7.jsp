@@ -13,6 +13,9 @@
         <title>风险分级管控 隐患排查治理智能化平台</title>
         <meta name="keywords" content="风险分级管控 隐患排查治理智能化平台">
         <meta name="description" content="风险分级管控 隐患排查治理智能化平台">
+        <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://sec.dicarl.com/js/H-ui.admin_v3.0/static/h-ui.admin/js/H-ui.admin.js"></script>
+        <script src="https://sec.dicarl.com/js/H-ui.admin_v3.0/static/h-ui/js/H-ui.min.js"></script>
         <style type="text/css">
         body .dis-ib{margin-right:15px;}
         .col-b,.col-a,.col-c,.col-d{margin:0;padding:0 15px;height:25px;line-height:25px;}
@@ -93,6 +96,7 @@
         <%--location.reload();--%>
         })
         }
+
         </script>
         </head>
         <body>

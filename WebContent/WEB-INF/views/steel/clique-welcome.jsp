@@ -102,7 +102,7 @@ function showping(){
         <div class="div_company">
           <c:if test="${userId == 35346 }"><p style="margin-top:10px">无锡新三洲特钢集团</p></c:if>
           <c:if test="${userId != 35346 }"><p style="margin-top:10px">${name_ }</p></c:if>
-          <span  style="margin-top:10px"><a data-href="${ly }/tradeclique/company/company-list" data-title="全部企业" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业数量：${number }</a></span>
+          <span  style="margin-top:10px"><a data-href="${ly }/steel/company/company-list" data-title="全部企业" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业数量：${number }</a></span>
           <span style="margin-top:10px">
             <a data-href="${ly }/tradeclique/control-list2" data-title="企业分布图" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业分布图<img alt="" src="${ly }/images/fore/fb.jpg"/></a>
           </span>

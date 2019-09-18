@@ -53,8 +53,8 @@ body .check-box label{margin-left:5px;}
 </head>
 <body>
 	<nav class="breadcrumb">
-	    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-	    <span class="c-gray en">&gt;</span> <span>风险研判与承诺公告</span> 
+	    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+	    <span class="c-gray en">&gt;</span> <span>风险研判与承诺公告</span>
 	    <span class="c-gray en">&gt;</span> <span>承诺公告公示</span>
 	    <c:if test="${action1 == 'read1'}"><a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="window.location.href = '${ly }/villageAdd/study/promise-list?uid=${pro.uid }&type=${type }';">返回</a></c:if>
 	</nav>
@@ -75,7 +75,7 @@ body .check-box label{margin-left:5px;}
 			</td>
     		<td style="width: 75%;text-align:left;padding-left:40px;">
     			<%--<textarea id="qyzt" style="margin-top:5px;width:99%;height:99%;font-size:16pt"> </textarea>--%>
-    			<h4>生产装置（<b><input id="numSc" value="${pro.numSc }"/></b>）套，其中运行（<b><input id="numYx" value="${pro.numYx }"/></b>）套，停产（<b><input id="numTc" value="${pro.numTc }"/></b>）套，检修&nbsp;（<b>${pro.numJx }</b>）&nbsp;套；</h4>	
+    			<h4>生产装置（<b><input id="numSc" value="${pro.numSc }"/></b>）套，其中运行（<b><input id="numYx" value="${pro.numYx }"/></b>）套，停产（<b><input id="numTc" value="${pro.numTc }"/></b>）套，检修&nbsp;（<b>${pro.numJx }</b>）&nbsp;套；</h4>
     		</td>
     	</tr>
     	<tr>
@@ -105,7 +105,7 @@ body .check-box label{margin-left:5px;}
     			<h4>承</h4>
     			<h4>诺</h4>
     		</td>
-    		<td style="width: 75%;text-align:left;padding-left:40px;padding-right:60px;">		
+    		<td style="width: 75%;text-align:left;padding-left:40px;padding-right:60px;">
     			<%--<textarea id="qycn" style="margin-top:5px;width:99%;height:99%;font-size:16pt" readonly="readonly"></textarea> --%>
     			<input type="hidden" id="cnggid" value="${pro.id }" />
     			<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今天我们公司已经进行安全风险研判，各项安全风险防控措施已落实到位，
@@ -113,7 +113,7 @@ body .check-box label{margin-left:5px;}
     			</h4>
     		</td>
     	</tr>
-    </table>  
+    </table>
      <table class="table table-border table-bordered table-bg table-hover table-sort" style="width:80%;margin-left:10%;">
     	<tr>
     		<td style="width: 25%;text-align:center;"><h4>主要负责人</h4></td>
@@ -123,7 +123,7 @@ body .check-box label{margin-left:5px;}
     	</tr>
     </table>
 </div>
-  
+
   <div class="mt-20 f-l mb-40" style="width:100%;text-align:center;">
   	 <button onClick="pr_()" class="btn btn-primary radius mt-20" type="button" style="padding:0 70px;">
         <i class="Hui-iconfont mr-10">&#xe632;</i>打印
@@ -138,32 +138,32 @@ body .check-box label{margin-left:5px;}
 <!-- <script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset.js"></script> -->
 <script type="text/javascript">
 //if("${action}" == "read"){
-	//$("textarea").attr("readonly","readonly");	
+	//$("textarea").attr("readonly","readonly");
 	//$("input").attr("disabled","disabled");
 	//$("input").css("background-color","white");
-	
+
     //$("#qyzt").val("${pr.qyzt}");
     //$("#qycn").val("${pr.qycn}");
     //$("#zyfzr").val("${pr.zyfzr}");
     //$("#aqcnsj").val("<fmt:formatDate value='${pr.aqcnsj}' pattern='yyyy-MM-dd'/>");
-    
+
 // }else{
 	//var status1 = '${status}';
 	//alert(status1);
 	//$("#qyzt").val(status1);
 	//var undertake1 = '${undertake}';
 	//alert(undertake1);
-	//$("#qycn").val(undertake1);	
+	//$("#qycn").val(undertake1);
 //	var today=new Date();
 //	var submitTime = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 //	$("#aqcnsj").attr('value',submitTime);
 //	var zyfzr1 = '${legal }';
-//	$("#zyfzr").val(zyfzr1);		
+//	$("#zyfzr").val(zyfzr1);
 // }
 function save() {
   var obj = {
 	"id" :  $("#cnggid").val(),
-	"numSc" : $("#numSc").val(),	
+	"numSc" : $("#numSc").val(),
 	"numYx" : $("#numYx").val(),
 	"numTc" : $("#numTc").val(),
   }
@@ -200,7 +200,7 @@ function save() {
       layer.alert(result.mess);
     }
   }
-  
+
   );
 }
 </script>

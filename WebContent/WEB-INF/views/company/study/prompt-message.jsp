@@ -57,14 +57,20 @@ function addgj() {
     	<table>
           <tr>
 		     <td class="text-c" style="width:60px;height: 90px;text-align:center;">
-                <button class="btn btn-primary radius" onClick="addgj()">请完善《安全风险研判目标管理履职考核》信息</button>
+                <button class="btn btn-primary radius" >请完善《安全风险研判目标管理履职考核》信息</button>
             </td>
           </tr>
-
+<%--    onClick="addgj()"--%>
      </table>
   </div>
+    <iframe src="${ly }/company/study/targetassessment"  onload="loadFrame()"  scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
 
-  
+  <script>
+    function loadFrame(){
+    $("#iframe").contents().find("nav").hide();
+    console.log("onload")
+    }
+    </script>
 </body>
 <script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset.js"></script>
 </html>

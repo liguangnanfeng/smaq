@@ -138,10 +138,17 @@ var chart = Highcharts.chart('container', {
                 legendItemClick: function(e) {
 <%--                  alert(this.name);--%>
 <%--                  $("#win-show").modal("show");--%>
-                  return false; 
+                  return false;
                 },
-                click:function(e){
-                  window.location.href="/global/all-statistics-list"
+                click:function(x){
+                console.log(x.point.index);
+                const e=x.point.index;
+                let f=null;
+                if(e===0) f=2;
+                if(e===1) f=1;
+                if(e===2) f=3;
+                  window.location.href="/global/all-statistics-list?flag="+f;
+<%--    window.location.href="/global/all-statistics-list"--%>
                 }
             }
         }
@@ -151,9 +158,9 @@ var chart = Highcharts.chart('container', {
       type: 'pie',
       name: '占比',
       data: [
-          {name:'重大风险',y:${flag1[0]} },
-          {name:'较大风险',y:${flag1[1]} },
-          {name:'一般和较低风险',y:${flag1[2]} },
+          {name:'重大风险',y:${flag1[0]} ,url:'http://www.baidu.com'},
+          {name:'较大风险',y:${flag1[1]} ,url:'http://www.baidu.com'},
+          {name:'一般和较低风险',y:${flag1[2]} ,url:'http://www.baidu.com'},
       ]
   }]
 });
@@ -245,7 +252,7 @@ var chart2 = Highcharts.chart('container2',{
         click:function(e){
 <%--          alert(e.point.category);--%>
 <%--          $("#win-show2").modal("show");--%>
-            console.log('123')
+            console.log(e)
         }
     },
   }

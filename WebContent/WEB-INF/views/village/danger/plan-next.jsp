@@ -309,7 +309,7 @@
     <label class="form-label col-xs-4 col-sm-2" style="width:20%;text-align:right;">隐患图片：</label>
     <div class="formControls col-xs-8 col-sm-9" style="width:70%;">
     <img id="pic3" src="${ly }/images/zwtp.jpg" style="width:200px;min-height:200px;" url=""/>
-    <a href="javascript:void(0);" onclick="img_upload('pic3', null)"
+    <a href="javascript:void(0);" style="padding:0;border:0" onclick="img_upload('pic3', null)"
     class="btn btn-primary radius upload-btn mt-10"><i class="Hui-iconfont">&#xe642;</i> 上传图片</a>
     </div>
     </div>
@@ -523,7 +523,7 @@
 
     if($("#pic3").attr("src")==window.imgsrc){
     console.log("图片为空!")
-    $("#pic3").attr("url","/images/zwtp.jpg");
+    $("#pic3").attr("url","/images/white.png");
     console.log($("#pic3").attr("url"));
     <%--layer.alert("图片不能为空")--%>
     <%--return false;--%>

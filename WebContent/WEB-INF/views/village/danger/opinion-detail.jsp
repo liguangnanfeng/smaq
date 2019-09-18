@@ -319,6 +319,7 @@
                     </div>
                     <div class="div_pri" style="display: none;">
                         <!-- 循环 -->
+<%--                         isli--%>
                         <c:forEach items="${itemL }" var="be" varStatus="index">
                             <div class="check-box">
                                 <input type="checkbox" name="isli" data-i="${be.id }" checked="checked"/>
@@ -335,6 +336,7 @@
                     </div>
                     <div class="div_pri" style="display: none;">
                         <!-- 循环 -->
+<%--    isxian--%>
                         <c:forEach items="${itemL }" var="be" varStatus="index">
                             <div class="check-box">
                                 <input type="checkbox" name="isxian" data-i="${be.id }" checked="checked"/>
@@ -361,6 +363,9 @@
 <%--                    wjj--%>
                     <div class="div_pri">
                         <!-- 循环 -->
+
+
+<%--    isyan--%>
                         <c:forEach items="${itemL }" var="be" varStatus="index">
                             <div class="check-box">
                                 <input type="checkbox" name="isyan" data-i="${be.id }" data-item="${be.dangerFlag}"  />
@@ -536,15 +541,15 @@
         $(":checkbox[name='isxian']:checked").each(function () {
             var it = $(this).attr("data-i");
             item2 = item2 == '' ? it : item2 + "," + it;
-        })
+        });
         $(":checkbox[name='isli']:checked").each(function () {
             var it = $(this).attr("data-i");
             item1 = item1 == '' ? it : item1 + "," + it;
-        })
+        });
         $(":checkbox[name='isyan']:checked").each(function () {
             var it = $(this).attr("data-i");
             item3 = item3 == '' ? it : item3 + "," + it;
-        })
+        });
 
         //alert(checkId+",item1="+item1+",item2="+item2+",item3="+item3+","+$("#deadline").val()+","+$("#planTime").val());
         //return;

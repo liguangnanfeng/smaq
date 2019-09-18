@@ -19,7 +19,7 @@ body .dis-ib{margin-right:15px;}
 $(function() {
   if($("input[name='totalwyx']").val() == '') {
     $.post("/village/company-list-tj", {
-
+      
     },function(result) {
       var totalwyx = result.map.totalwyx;
       var totalzc = result.map.totalzc;
@@ -34,16 +34,16 @@ $(function() {
 </head>
 <body>
   <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-    <span class="c-gray en">&gt;</span> <span>企业信息库</span>
-    <span class="c-gray en">&gt;</span> <span>${title }</span>
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
+    <span class="c-gray en">&gt;</span> <span>企业信息库</span> 
+    <span class="c-gray en">&gt;</span> <span>${title }</span> 
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>
     </a>
   </nav>
   <div class="page-container">
     <div class="text-c">
-      <form action="/global/safety-system/control-operation" method="post">
+      <form action="/global/company/company-list" method="post">
         <div class="dis-ib">
        <%-- <span>企业名称：</span>
         <input type="text" value="${dto.userIds }" name="userIds" class="input-text mb-5 mt-5" style="width:150px;display: none;">
@@ -73,7 +73,7 @@ $(function() {
             </span>
         </div>
         </c:if>
-
+        
         <div class="dis-ib">
           <span>所属行业：</span>
           &lt;%&ndash; <select id="industry" name="industry" class="select" style="width:230px;">
@@ -103,7 +103,7 @@ $(function() {
                     })
                   }
                 })
-
+                
                 if(industry2 != '') {
                   $("#industry2_2").val(industry2.split(" > ")[1]);
                   industry2 = '';
@@ -129,7 +129,7 @@ $(function() {
           </select>
           </span>
         </div>
-
+        
         <c:if test="${session_user.userType == 4}">
         <div class="dis-ib">
           <span>是否重点企业：</span>
@@ -142,7 +142,7 @@ $(function() {
           </span>
         </div>
         </c:if>
-
+        
         <c:if test="${session_user.userType == 3}">
         <div class="dis-ib">
           <span>重点企业：</span>
@@ -155,7 +155,7 @@ $(function() {
           </span>
         </div>
         </c:if>
-
+        
         <c:if test="${session_user.userType == 6}">
         <div class="dis-ib">
           <span>重点企业：</span>
@@ -168,7 +168,7 @@ $(function() {
           </span>
         </div>
         </c:if>
-
+        
         <c:if test="${session_user.userType == 10}">
         <div class="dis-ib">
           <span>是否重点企业：</span>
@@ -181,29 +181,28 @@ $(function() {
           </span>
         </div>
         </c:if>
-
+        
         <button class="btn btn-success" type="submit" onclick="$('#page').val(0);$('input[name=userIds]').val('');">
           <i class="Hui-iconfont">&#xe665;</i> 查询
         </button>
-      --%>
-      </form>
+      </form>--%>
     </div>
-
+    
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <span class="l isAll">
         <c:if test="${session_user.userType == 4 || session_user.userType == 3 || session_user.userType == 6}">
         <!-- <a class="btn btn-primary radius" data-title="导入企业信息"  onclick="leadin()" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe642;</i> 导入企业信息</a> -->
         <a class="btn btn-primary radius" data-title="添加企业" data-href="${ly }/global/company/company-add" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加企业</a>
         </c:if>
-
+        
         <c:if test="${session_user.userType == 10}">
         <a class="btn btn-primary radius" data-title="添加企业" data-href="${ly }/global/company/company-add-trade" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加企业</a>
         </c:if>
-
+        
       </span>
       <span class="r">未运行企业：<strong id="totalwyx">${totalwyx }</strong> 家。</span>
       <span class="r">所有数据中正常企业：<strong id="totalzc">${totalzc }</strong> 家，</span>
-      <span class="r">当前共有数据：<strong>${total }</strong> 条。</span>
+      <span class="r">当前共有数据：<strong>${total }</strong> 条。</span> 
     </div>
     <div class="mt-20">
       <table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -227,7 +226,7 @@ $(function() {
           <tr class="text-c">
             <td>${dto.page * dto.rows + index.index + 1}</td>
             <td ondblclick="window.open('/fore/company?un=${co.name}');">
-
+                
                 <c:choose>
                     <c:when test="${session_user.userType == 4 }">
                     <c:if test="${co.isKey == '1' && not empty sk}"><label style="color:#DF2E30">【重点企业】</label></c:if>
@@ -245,10 +244,10 @@ $(function() {
                 <a  style="color:black;display: inline-block;margin: -18px 0px;
                 	line-height: 46px;width:180px;background-color: #eee;
                 	border: 0px solid #ddd;padding:3px 3px;
-                	border-radius: 0px;text-decoration:none"
+                	border-radius: 0px;text-decoration:none" 
                 	href="${ly }/global/move/company?uid=${co.userId }" target="_parent">${co.name }</a>
             </td>
-            <td>${co.industry }</td>
+            <td>${co.industry2 }</td>
             <td>${co.dlevel }</td>
             <td>${co.regionName} ${co.address }</td>
             <td>${co.scale}</td>
@@ -270,38 +269,22 @@ $(function() {
             </td>
 
             <td>
-              <c:if test="${userType == co.controls }">
+              <c:if test="${1 == co.controls }">
                 是
               </c:if>
 
-              <c:if test="${userType != co.controls }">
+              <c:if test="${0 == co.controls }">
                 否
               </c:if>
             </td>
 
+
             <td>
-                <c:if test="${1 == co.flag }">
-                    <a style="text-decoration:none" onClick="user_isControls(${co.userId },1)" href="javascript:;">设为本级管控</a>
-
-                    <a style="text-decoration:none" onClick="user_isControls(${co.userId },0)" href="javascript:;">取消本级管控</a>
+                <c:if test="${co.controls == 0}">
+                <a style="text-decoration:none" onClick="user_isControls(${co.userId },1)" href="javascript:;">设为本级管控</a>
                 </c:if>
-
-                <c:if test="${2 == co.flag }">
-                    <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >设为本级管控</a>
-
-                    <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >取消本级管控</a>
-                </c:if>
-
-                <c:if test="${3 == co.flag }">
-                    <a style="text-decoration:none" onClick="user_isControls(${co.userId },1)" href="javascript:;">设为本级管控</a>
-
-                    <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >取消本级管控</a>
-                </c:if>
-
-                <c:if test="${4 == co.flag }">
-                    <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >设为本级管控</a>
-
-                    <a style="text-decoration:none" onClick="user_isControls(${co.userId },0)" href="javascript:;">取消本级管控</a>
+                <c:if test="${co.controls == 1}">
+                <a style="text-decoration:none" onClick="user_isControls(${co.userId },0)" href="javascript:;">取消本级管控</a>
                 </c:if>
             </td>
           </tr>
@@ -312,8 +295,8 @@ $(function() {
       <div id="layer_page_div" style="margin-top: 15px;"></div>
     </div>
   </div>
-
-
+  
+  
 <script type="text/javascript">
 //冻结
 function user_freeze(userId){
@@ -357,7 +340,7 @@ function user_isControls(userId,isControls){
     var index = layer.load();
     $.post(getRootPath() + "/global/user-isControls",{
       userId : userId,
-      flag : isControls
+      isControls : isControls
     },function(result){
         location.reload();
     })
@@ -437,7 +420,7 @@ layer.confirm("确认要重置密码么？",function(index){
 });
 }
 
-</script>
+</script> 
 </body>
 <script type="text/javascript" src="${ly }/js/H-ui.admin_v3.0/lib/laypage/1.2/laypage.js"></script>
 <link type="text/css" href="${ly }/js/H-ui.admin_v3.0/lib/laypage/1.2/skin/laypage.css" rel="stylesheet" />
@@ -463,7 +446,7 @@ if(a_p > 1) {
       if($("#page").val() != obj.curr - 1) {
             $("#page").val(obj.curr - 1);
             $("form").submit();
-          layer.load();
+            layer.load();
       }
     }
   });

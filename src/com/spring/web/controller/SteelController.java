@@ -2841,7 +2841,7 @@ public class SteelController extends BaseController {
         if (null != count && 0 != count) {
 
             if (null != sum1 && 0 != sum1) {
-                String str = df.format((float)sum1 / count);
+                String str = df.format((float)(sum1 / count*100));
                 map.put("result1",str+"%");
 
             } else {
@@ -2849,7 +2849,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum2 && 0 != sum2) {
-                String str = df.format((float)sum2 / count);
+                String str = df.format((float)(sum2 / count*100));
                 map.put("result2",str + "%");
 
             } else {
@@ -2857,7 +2857,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum3 && 0 != sum3) {
-                String str = df.format((float)sum3 / count);
+                String str = df.format((float)(sum3 / count*100));
                 map.put("result3",str + "%");
 
             } else {
@@ -2865,7 +2865,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum4 && 0 != sum4) {
-                String str = df.format((float)sum4 / count);
+                String str = df.format((float)(sum4 / count*100));
                 map.put("result4",str + "%");
 
             } else {
@@ -2873,7 +2873,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum5 && 0 != sum5) {
-                String str = df.format((float)sum5 / count);
+                String str = df.format((float)(sum5 / count*100));
                 map.put("result5", str + "%");
 
             } else {
@@ -2881,7 +2881,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum6 && 0 != sum6) {
-                String str = df.format((float)sum6 / count);
+                String str = df.format((float)(sum6 / count*100));
                 map.put("result6",str + "%");
 
             } else {
@@ -2889,7 +2889,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum7 && 0 != sum7) {
-                String str = df.format((float)sum7 / count);
+                String str = df.format((float)(sum7 / count*100));
                 map.put("result7",str + "%");
 
             } else {
@@ -2897,7 +2897,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum8 && 0 != sum8) {
-                String str = df.format((float)sum8 / count);
+                String str = df.format((float)(sum8 / count*100));
                 map.put("result8",str + "%");
 
             } else {
@@ -2905,7 +2905,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum9 && 0 != sum9) {
-                String str = df.format((float)sum9 / count);
+                String str = df.format((float)(sum9 / count*100));
                 map.put("result9",str + "%");
 
             } else {
@@ -2913,7 +2913,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum10 && 0 != sum10) {
-                String str = df.format((float)sum10 / count);
+                String str = df.format((float)(sum10 / count*100));
                 map.put("result10",str + "%");
 
             } else {
@@ -3057,7 +3057,7 @@ public class SteelController extends BaseController {
         if (null != count && 0 != count) {
 
             if (null != sum1 && 0 != sum1) {
-                String str = df.format((float)sum1 / count);
+                String str = df.format((float)(sum1 / count*100));
                 map.put("result1",str+"%");
 
             } else {
@@ -3065,7 +3065,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum2 && 0 != sum2) {
-                String str = df.format((float)sum2 / count);
+                String str = df.format((float)(sum2 / count*100));
                 map.put("result2",str + "%");
 
             } else {
@@ -3073,7 +3073,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum3 && 0 != sum3) {
-                String str = df.format((float)sum3 / count);
+                String str = df.format((float)(sum3 / count*100));
                 map.put("result3",str + "%");
 
             } else {
@@ -3081,7 +3081,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum4 && 0 != sum4) {
-                String str = df.format((float)sum4 / count);
+                String str = df.format((float)(sum4 / count*100));
                 map.put("result4",str + "%");
 
             } else {
@@ -3089,7 +3089,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum5 && 0 != sum5) {
-                String str = df.format((float)sum5 / count);
+                String str = df.format((float)(sum5 / count*100));
                 map.put("result5", str + "%");
 
             } else {
@@ -3105,7 +3105,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum7 && 0 != sum7) {
-                String str = df.format((float)sum7 / count);
+                String str = df.format((float)(sum7 / count*100));
                 map.put("result7",str + "%");
 
             } else {
@@ -3113,7 +3113,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum8 && 0 != sum8) {
-                String str = df.format((float)sum8 / count);
+                String str = df.format((float)(sum8 / count*100));
                 map.put("result8",str + "%");
 
             } else {
@@ -3121,7 +3121,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum9 && 0 != sum9) {
-                String str = df.format((float)sum9 / count);
+                String str = df.format((float)(sum9 / count*100));
                 map.put("result9",str + "%");
 
             } else {
@@ -3129,7 +3129,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum10 && 0 != sum10) {
-                String str = df.format((float)sum10 / count);
+                String str = df.format((float)(sum10 / count*100));
                 map.put("result10",str + "%");
 
             } else {
@@ -3137,7 +3137,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum11 && 0 != sum11) {
-                String str = df.format((float)sum11 / count);
+                String str = df.format((float)(sum11 / count*100));
                 map.put("result11",str + "%");
 
             } else {
@@ -3145,7 +3145,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum12 && 0 != sum12) {
-                String str = df.format((float)sum12 / count);
+                String str = df.format((float)(sum12 / count*100));
                 map.put("result12",str + "%");
 
             } else {
@@ -3153,7 +3153,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum13 && 0 != sum13) {
-                String str = df.format((float)sum13 / count);
+                String str = df.format((float)(sum13 / count*100));
                 map.put("result13",str + "%");
 
             } else {
@@ -3161,7 +3161,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum14 && 0 != sum14) {
-                String str = df.format((float)sum14 / count);
+                String str = df.format((float)(sum14 / count*100));
                 map.put("result14",str + "%");
 
             } else {
@@ -3169,7 +3169,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum15 && 0 != sum15) {
-                String str = df.format((float)sum15 / count);
+                String str = df.format((float)(sum15 / count*100));
                 map.put("result15",str + "%");
 
             } else {
@@ -3304,7 +3304,7 @@ public class SteelController extends BaseController {
         if (null != count && 0 != count) {
 
             if (null != sum1 && 0 != sum1) {
-                String str = df.format((float)sum1 / count);
+                String str = df.format((float)(sum1 / count*100));
                 map.put("result1",str+"%");
 
             } else {
@@ -3312,7 +3312,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum2 && 0 != sum2) {
-                String str = df.format((float)sum2 / count);
+                String str = df.format((float)(sum2 / count*100));
                 map.put("result2",str + "%");
 
             } else {
@@ -3320,7 +3320,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum3 && 0 != sum3) {
-                String str = df.format((float)sum3 / count);
+                String str = df.format((float)(sum3 / count*100));
                 map.put("result3",str + "%");
 
             } else {
@@ -3328,7 +3328,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum4 && 0 != sum4) {
-                String str = df.format((float)sum4 / count);
+                String str = df.format((float)(sum4 / count*100));
                 map.put("result4",str + "%");
 
             } else {
@@ -3336,7 +3336,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum5 && 0 != sum5) {
-                String str = df.format((float)sum5 / count);
+                String str = df.format((float)(sum5 / count*100));
                 map.put("result5", str + "%");
 
             } else {
@@ -3344,7 +3344,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum6 && 0 != sum6) {
-                String str = df.format((float)sum6 / count);
+                String str = df.format((float)(sum6 / count*100));
                 map.put("result6",str + "%");
 
             } else {
@@ -3352,7 +3352,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum7 && 0 != sum7) {
-                String str = df.format((float)sum7 / count);
+                String str = df.format((float)(sum7 / count*100));
                 map.put("result7",str + "%");
 
             } else {
@@ -3360,7 +3360,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum8 && 0 != sum8) {
-                String str = df.format((float)sum8 / count);
+                String str = df.format((float)(sum8 / count*100));
                 map.put("result8",str + "%");
 
             } else {
@@ -3368,7 +3368,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum9 && 0 != sum9) {
-                String str = df.format((float)sum9 / count);
+                String str = df.format((float)(sum9 / count*100));
                 map.put("result9",str + "%");
 
             } else {
@@ -3376,7 +3376,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum10 && 0 != sum10) {
-                String str = df.format((float)sum10 / count);
+                String str = df.format((float)(sum10 / count*100));
                 map.put("result10",str + "%");
 
             } else {
@@ -3529,7 +3529,7 @@ public class SteelController extends BaseController {
         if (null != count && 0 != count) {
 
             if (null != sum1 && 0 != sum1) {
-                String str = df.format((float) sum1 / count);
+                String str = df.format((float) (sum1 / count*100));
                 map.put("result1", str + "%");
 
             } else {
@@ -3537,7 +3537,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum2 && 0 != sum2) {
-                String str = df.format((float) sum2 / count);
+                String str = df.format((float) (sum2 / count*100));
                 map.put("result2", str + "%");
 
             } else {
@@ -3545,7 +3545,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum3 && 0 != sum3) {
-                String str = df.format((float) sum3 / count);
+                String str = df.format((float) (sum3 / count*100));
                 map.put("result3", str + "%");
 
             } else {
@@ -3553,7 +3553,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum4 && 0 != sum4) {
-                String str = df.format((float) sum4 / count);
+                String str = df.format((float) (sum4 / count*100));
                 map.put("result4", str + "%");
 
             } else {
@@ -3561,7 +3561,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum5 && 0 != sum5) {
-                String str = df.format((float) sum5 / count);
+                String str = df.format((float) (sum5 / count*100));
                 map.put("result5", str + "%");
 
             } else {
@@ -3569,7 +3569,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum6 && 0 != sum6) {
-                String str = df.format((float) sum6 / count);
+                String str = df.format((float) (sum6 / count*100));
                 map.put("result6", str + "%");
 
             } else {
@@ -3577,7 +3577,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum7 && 0 != sum7) {
-                String str = df.format((float) sum7 / count);
+                String str = df.format((float) (sum7 / count*100));
                 map.put("result7", str + "%");
 
             } else {
@@ -3585,7 +3585,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum8 && 0 != sum8) {
-                String str = df.format((float) sum8 / count);
+                String str = df.format((float) (sum8 / count*100));
                 map.put("result8", str + "%");
 
             } else {
@@ -3593,7 +3593,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum9 && 0 != sum9) {
-                String str = df.format((float) sum9 / count);
+                String str = df.format((float) (sum9 / count*100));
                 map.put("result9", str + "%");
 
             } else {
@@ -3601,7 +3601,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum10 && 0 != sum10) {
-                String str = df.format((float) sum10 / count);
+                String str = df.format((float) (sum10 / count*100));
                 map.put("result10", str + "%");
 
             } else {
@@ -3609,7 +3609,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum11 && 0 != sum11) {
-                String str = df.format((float) sum11 / count);
+                String str = df.format((float) (sum11 / count*100));
                 map.put("result11", str + "%");
 
             } else {
@@ -3617,7 +3617,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum12 && 0 != sum12) {
-                String str = df.format((float) sum12 / count);
+                String str = df.format((float) (sum12 / count*100));
                 map.put("result12", str + "%");
 
             } else {
@@ -3625,7 +3625,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum13 && 0 != sum13) {
-                String str = df.format((float) sum13 / count);
+                String str = df.format((float) (sum13 / count*100));
                 map.put("result13", str + "%");
 
             } else {
@@ -3633,7 +3633,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum14 && 0 != sum14) {
-                String str = df.format((float) sum14 / count);
+                String str = df.format((float) (sum14 / count*100));
                 map.put("result14", str + "%");
 
             } else {
@@ -3641,7 +3641,7 @@ public class SteelController extends BaseController {
             }
 
             if (null != sum15 && 0 != sum15) {
-                String str = df.format((float) sum15 / count);
+                String str = df.format((float)(sum15 / count*100));
                 map.put("result15", str + "%");
 
             } else {
@@ -3763,21 +3763,21 @@ public class SteelController extends BaseController {
                 Integer sum = count1 + count2 + count3;
 
                 if (null != count1 && count1 != 0){  // 一般和较小 治理率
-                    String str = df.format((float)a/count1);
+                    String str = df.format((float)(a/count1*100));
                     list.get(i).put("result11",str+"%");
                 }else {
                     list.get(i).put("result11",0.00);
                 }
 
                 if (null != count2 && count2 != 0){ // 较大 治理率
-                    String str = df.format((float)b/count2);
+                    String str = df.format((float)(b/count2*100));
                     list.get(i).put("result22",str+"%");
                 }else {
                     list.get(i).put("result22",0.00);
                 }
 
                 if (null != count3 && count3 != 0){ // 重大 治理率
-                    String str = df.format((float)c/count3);
+                    String str = df.format((float)(c/count3*100));
                     list.get(i).put("result33",str+"%");
                 }else {
                     list.get(i).put("result33",0.00);
@@ -3795,7 +3795,7 @@ public class SteelController extends BaseController {
         if (null != sum1 && 0 != sum1){
 
             if (null != sign1 && 0 != sign1){
-                String str = df.format((float)sign1 / sum1);
+                String str = df.format((float)(sign1 / sum1*100));
                 map.put("result1",str+"%"); // 一般隐患的治理率 竖
 
             }else {
@@ -3808,7 +3808,7 @@ public class SteelController extends BaseController {
         if (null != sum2 && 0 != sum2){
 
             if (null != sign2 && 0 != sign2){
-                String str = df.format((float)sign2 / sum2);
+                String str = df.format((float)(sign2 / sum2*100));
                 map.put("result2",str+"%"); // 较大隐患的治理率 竖
 
             }else {
@@ -3822,7 +3822,7 @@ public class SteelController extends BaseController {
         if (null != sum3 && 0 != sum3){
 
             if (null != sign3 && 0 != sign3){
-                String str = df.format((float)sign3/sum3);
+                String str = df.format((float)(sign3/sum3*100));
                 map.put("result3",str+"%"); // 重大隐患的治理率 竖
 
             }else {
@@ -3975,21 +3975,21 @@ public class SteelController extends BaseController {
                 Integer sum = count1 + count2 + count3; // 单个风险所包含的所有隐患
 
                 if (null != count1 && count1 != 0) {  // 一般和较小 治理率
-                    String str = df.format((float) a / count1);
+                    String str = df.format((float) (a / count1*100));
                     list.get(i).put("result11", str + "%");
                 } else {
                     list.get(i).put("result11", 0.00);
                 }
 
                 if (null != count2 && count2 != 0) { // 较大 治理率
-                    String str = df.format((float) b / count2);
+                    String str = df.format((float) (b / count2*100));
                     list.get(i).put("result22", str + "%");
                 } else {
                     list.get(i).put("result22", 0.00);
                 }
 
                 if (null != count3 && count3 != 0) { // 重大 治理率
-                    String str = df.format((float) c / count3);
+                    String str = df.format((float) (c / count3*100));
                     list.get(i).put("result33", str + "%");
                 } else {
                     list.get(i).put("result33", 0.00);
@@ -4006,21 +4006,21 @@ public class SteelController extends BaseController {
         Integer sum3 = sign3 + sign33;  // 所有风险  重大隐患的总和
 
         if (null != sum1 && sum1 != 0){  // 一般和较小 治理率
-            String str = df.format((float)sign1/sum1);
+            String str = df.format((float)(sign1/sum1*100));
             map.put("number111",str+"%");
         }else {
             map.put("number111",0.00);
         }
 
         if (null != sum2 && sum2 != 0){ // 较大 治理率
-            String str = df.format((float)sign2/sum2);
+            String str = df.format((float)(sign2/sum2*100));
             map.put("number222",str+"%");
         }else {
             map.put("number222",0.00);
         }
 
         if (null != sum3 && sum3 != 0){ // 重大 治理率
-            String str = df.format((float)sign3/sum3);
+            String str = df.format((float)(sign3/sum3*100));
             map.put("number333",str+"%");
         }else {
             map.put("number222",0.00);
@@ -4160,21 +4160,21 @@ public class SteelController extends BaseController {
             Integer sum = count1 + count2 + count3; // 单个风险所包含的所有隐患
 
             if (null != count1 && count1 != 0){  // 一般和较小 治理率
-                String str = df.format((float)a/count1);
+                String str = df.format((float)(a/count1*100));
                 list.get(i).put("result11",str+"%");
             }else {
                 list.get(i).put("result11",0.00);
             }
 
             if (null != count2 && count2 != 0){ // 较大 治理率
-                String str = df.format((float)b/count2);
+                String str = df.format((float)(b/count2*100));
                 list.get(i).put("result22",str+"%");
             }else {
                 list.get(i).put("result22",0.00);
             }
 
             if (null != count3 && count3 != 0){ // 重大 治理率
-                String str = df.format((float)c/count3);
+                String str = df.format((float)(c/count3*100));
                 list.get(i).put("result33",str+"%");
             }else {
                 list.get(i).put("result33",0.00);
@@ -4191,21 +4191,21 @@ public class SteelController extends BaseController {
         Integer sum3 = sign3 + sign33;  // 所有风险  重大隐患的总和
 
         if (null != sum1 && sum1 != 0){  // 一般和较小 治理率
-            String str = df.format((float)sign1/sum1);
+            String str = df.format((float)(sign1/sum1*100));
             map.put("number111",str+"%");
         }else {
             map.put("number111",0.00);
         }
 
         if (null != sum2 && sum2 != 0){ // 较大 治理率
-            String str = df.format((float)sign2/sum2);
+            String str = df.format((float)(sign2/sum2*100));
             map.put("number222",str+"%");
         }else {
             map.put("number222",0.00);
         }
 
         if (null != sum3 && sum3 != 0){ // 重大 治理率
-            String str = df.format((float)sign3/sum3);
+            String str = df.format((float)(sign3/sum3*100));
             map.put("number333",str+"%");
         }else {
             map.put("number333",0.00);

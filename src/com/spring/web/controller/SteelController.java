@@ -877,7 +877,7 @@ public class SteelController extends BaseController {
         List<Map<String, Object>> list1 = hiddenPlanMapper.selectCountAllTraces(sb.toString());//合计的数据
 
         List<Map<String, Object>> hiddenPlanList = hiddenPlanMapper.findDpid(0,company.getUserId());
-        List<Map<String, Object>> hiddenPlanList2 = new ArrayList<>();
+        List<Map<String, Object>> hiddenPlanList2 = new ArrayList<>();//各个分公司合计数据
         for(Integer id:ids){
            List<Map<String, Object>> map = hiddenPlanMapper.selectCountAllName(id);
             hiddenPlanList2.addAll(map);
@@ -919,7 +919,6 @@ public class SteelController extends BaseController {
             model.addAttribute("hiddenPlanList2",hiddenPlanList2);
 
         }
-
         model.addAttribute("data",sdf.format(new Date()));
         model.addAttribute("list", list);
         model.addAttribute("flag", flag);

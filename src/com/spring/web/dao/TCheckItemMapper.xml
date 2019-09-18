@@ -973,7 +973,7 @@
              left join a_danger_manual_tbl T4 on T1.level_id = T4.id
         where T2.user_id = #{userId}
           and T2.status = 2
-          and T1.status = 1
+          and T1.status = 3
           and T2.del= 0
           and T2.flag=#{flag}
           and T1.recheck_file is not null
@@ -1007,7 +1007,7 @@
              left join t_level_tbl T4 on T1.level_id = T4.id
         where T2.user_id = #{userId}
           and T2.status = 2
-          and T1.status = 1
+          and T1.status = 3
           and T2.del= 0
           and T2.flag=#{flag}
           and T1.recheck_file is not null

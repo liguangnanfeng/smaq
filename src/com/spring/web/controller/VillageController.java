@@ -80,7 +80,7 @@ public class VillageController extends BaseController {
         if (server.startsWith("smaq.safety365.com.cn")) {
             return "redirect:/fore/login-smaq";
         }
-        return "village/blogin2";
+        return "redirect:/fore/company";
     }
 
     /**

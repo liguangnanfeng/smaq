@@ -69,11 +69,9 @@
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>隐患统计分析系统</span>
     <span class="c-gray en">&gt;</span> <span>隐患治理记录</span>
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
-       href="javascript:location.replace(location.href);" title="刷新">
-        <i class="Hui-iconfont">&#xe68f;</i>
-    </a>
-</nav>
+    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="javascript:history.go(-1)" title="返回">返回</a>
+
+    </nav>
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
         <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}"

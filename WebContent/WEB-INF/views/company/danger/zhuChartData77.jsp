@@ -147,7 +147,7 @@
 				<td></td>
 
 				<td>${be.sum}</td>
-				<td></td>
+				<td>${be.result44}</td>
 				<td></td>
 				<td></td>
 				</tr>
@@ -167,9 +167,9 @@
 
 				<td>${be.count3}</td>
 				<td></td>
+				<td></td>
 
-				<td></td>
-				<td></td>
+				<td>${sums}</td>
 				<td></td>
 				<td></td>
 				<td></td>

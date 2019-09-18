@@ -29,13 +29,11 @@
         <c:if test="${flag == 2}">
             <span class="c-gray en">&gt;</span> <span>执法记录</span>
         </c:if>--%>
-        <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
-        <i class="Hui-iconfont">&#xe68f;</i>
-        </a>
+        <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="javascript:history.go(-1)" title="返回">返回</a>
         </nav>
         <div>
         </div>
-        <div class="mt-20">
+        <div class="mt-20" style="padding:16px">
         <table class="table table-border table-bordered table-bg table-hover table-sort">
         <thead>
         <tr class="text-c">
@@ -62,13 +60,14 @@
             <td>${be.address}</td>
             <td>${be.scale}</td>
             <td>
-                <c:if test="${0 == be.isFreeze }">
-                    正常
-                </c:if>
-                <c:if test="${1 == be.isFreeze }">
-                    冻结
-                </c:if>
+            <c:if test="${0 == be.isFreeze }">
+                正常
+            </c:if>
+            <c:if test="${1 == be.isFreeze }">
+                冻结
+            </c:if>
             </td>
+
             </tr>
         </c:forEach>
         <!-- 循环结束 -->
@@ -77,14 +76,15 @@
         </div>
         </div>
         <script type="text/javascript">
-        $(function() {
-        $('.table-sort').dataTable({
-        "aaSorting": [[0, "asc"]],//默认第几个排序
-        "bStateSave": false,//状态保存
-        "aoColumnDefs": [
-        ]
-        });
-        });
+<%--        $(function() {--%>
+<%--        $('.table-sort').dataTable({--%>
+<%--        "aaSorting": [[0, "asc"]],//默认第几个排序--%>
+<%--        "bStateSave": false,//状态保存--%>
+<%--        "aoColumnDefs": [--%>
+<%--        ]--%>
+<%--        });--%>
+<%--        });--%>
+
         /*删除*/
         /* function del_(id){
         layer.confirm("要删除该记录？", function(i) {

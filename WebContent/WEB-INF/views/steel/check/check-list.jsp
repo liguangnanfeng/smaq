@@ -77,10 +77,8 @@
     <c:if test="${flag == 2}">
         <span class="c-gray en">&gt;</span> <span>执法记录</span>
     </c:if>
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
-       href="javascript:location.replace(location.href);" title="刷新">
-        <i class="Hui-iconfont">&#xe68f;</i>
-    </a>
+    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="javascript:history.go(-1)" title="返回">返回</a>
+
 </nav>
 <div class="page-container">
 

@@ -1017,7 +1017,7 @@
     <!-- 检查绩效分析 -->
     <select id="findHiddenSourceTypeByMap" resultType="Integer">
         select
-        count(t1.id) as count
+            DISTINCT count(t1.check_id) as counts
         from smaq.t_check_item_tbl t1
         left join smaq.t_check_tbl t2 on t1.check_id = t2.id
         where t2.status = 2
@@ -1032,7 +1032,7 @@
     <!-- 检查绩效分析, 饼状图 -->
     <select id="selectHiddenSources" resultType="Integer">
         select
-        count(t1.id) as count
+            DISTINCT count(t1.check_id) as counts
         from smaq.t_check_item_tbl t1
         left join smaq.t_check_tbl t2 on t1.check_id = t2.id
         where t2.status = 2
@@ -1045,7 +1045,7 @@
 
     <select id="lookHiddenSource" resultType="Integer">
         select
-        count(t1.id) as count
+            DISTINCT count(t1.check_id) as counts
         from smaq.t_check_item_tbl t1
         left join smaq.t_check_tbl t2 on t1.check_id = t2.id
         where t2.status = 2
@@ -1060,7 +1060,7 @@
     <!-- 隐患数据分析  1. 较大; 2.重大; 3.一般和较小 -->
     <select id="findHiddenLevelTypeByMap"  resultType="Integer">
         SELECT
-         count(t1.id) as count
+             DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1077,7 +1077,7 @@
     <!-- 隐患数据分析 饼状图  1. 较大; 2.重大; 3.一般和较小 -->
     <select id="findTypeByMap"  resultType="Integer">
         SELECT
-         count(t1.id) as count
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1093,7 +1093,7 @@
     <!-- 隐患治理数据分析 -->
     <select id="findRecheckFileByMap" resultType="Integer">
         SELECT
-            count(t1.id)
+            DISTINCT count(t1.check_id)
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1111,7 +1111,7 @@
     <!-- 政府端 隐患治理数据分析 企业 -->
     <select id="manageHiddenCompany" resultType="Integer">
         SELECT
-            count(t1.id)
+            DISTINCT count(t1.check_id)
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1128,7 +1128,7 @@
     <!-- 政府端 隐患治理数据分析 企业 -->
     <select id="manageHiddenCompany11" resultType="Integer">
         SELECT
-            count(t1.id)
+            DISTINCT count(t1.check_id)
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1146,7 +1146,7 @@
     <!-- 政府端 隐患治理数据分析 风险 -->
     <select id="manageHiddenDanger" resultType="Integer">
         SELECT
-            count(t1.id)
+          DISTINCT count(t1.check_id)
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1170,7 +1170,7 @@
     <!-- 政府端 隐患治理数据分析 风险 其他 -->
     <select id="manageHiddenDanger11" resultType="Integer">
         SELECT
-            count(t1.id)
+            DISTINCT count(t1.check_id)
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1189,7 +1189,7 @@
     <!-- 政府端 隐患治理数据分析 风险 -->
     <select id="manageHiddenDanger22" resultType="Integer">
         SELECT
-            count(t1.id)
+            DISTINCT count(t1.check_id)
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1209,7 +1209,7 @@
     <!-- 政府端 隐患治理数据分析 行业 -->
     <select id="manageHiddenIndustry" resultType="Integer">
         SELECT
-            count(t1.id)
+          DISTINCT count(t1.check_id)
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1233,7 +1233,7 @@
     <!-- 政府端 隐患治理数据分析 行业 其他 -->
     <select id="manageHiddenIndustry11" resultType="Integer">
         SELECT
-            count(t1.id)
+            DISTINCT count(t1.check_id)
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1253,7 +1253,7 @@
     <!-- 政府端 隐患治理数据分析 行业 -->
     <select id="manageHiddenIndustry22" resultType="Integer">
         SELECT
-            count(t1.id)
+            DISTINCT count(t1.check_id)
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1278,7 +1278,7 @@
     <!-- 隐患治理数据分析 饼状图 -->
     <select id="findFileByMap" resultType="Integer">
         SELECT
-            count(t1.id)
+            DISTINCT count(t1.check_id)
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1297,7 +1297,7 @@
 
     <select id="findMapzhuChartData2" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1315,7 +1315,7 @@
 
     <select id="zhuChartData66" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1332,7 +1332,7 @@
     <!-- 政府端 隐患排查对象分析数据 -->
     <select id="zfHiddenTrouble" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1347,7 +1347,7 @@
 
     <select id="zfHiddenTrouble2" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+           DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1361,7 +1361,7 @@
 
     <select id="zfTrouble" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1377,7 +1377,7 @@
     <!-- 政府端 隐患排查对象分析数据 -->
     <select id="zfHiddenTrouble22" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1393,7 +1393,7 @@
     <!-- 政府端 隐患排查对象分析数据 -->
     <select id="zfHiddenTroubleType" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1410,7 +1410,7 @@
     <!-- 政府端 隐患排查对象分析数据 -->
     <select id="zfHiddenTrouble11" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1426,7 +1426,7 @@
     <!-- 政府端 隐患排查对象分析数据 -->
     <select id="zfHiddenTrouble12" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1440,7 +1440,7 @@
 
     <select id="zfTrouble11" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1455,7 +1455,7 @@
     <!-- 政府端 隐患排查对象分析数据 -->
     <select id="zfHiddenTrouble33" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1471,7 +1471,7 @@
 
     <select id="zhuChartData661" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+           DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1488,7 +1488,7 @@
 
     <select id="zhuChartData67" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1504,7 +1504,7 @@
 
     <select id="zhuChartData671" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1522,7 +1522,7 @@
     <!-- 排查对象分析 柱状图 flag == 1-->
     <select id="zhuChartData78" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1539,7 +1539,7 @@
 
     <select id="zhuChartData781" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1556,7 +1556,7 @@
 
     <select id="zhuChartData77" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1571,7 +1571,7 @@
 
     <select id="zhuChartData771" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1589,7 +1589,7 @@
     <!-- 隐患数据分析 柱状图 flag = 1-->
     <select id="zhuChartData88" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+           DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1605,7 +1605,7 @@
 
     <select id="zhuChartData881" resultType="Integer">
         SELECT
-        count(t1.id) as counts
+          DISTINCT count(t1.check_id) as counts
         FROM
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1623,7 +1623,7 @@
     <!-- 政府端 隐患数据分析 柱状图 flag = 1-->
     <select id="zhengFuChartData88" resultType="Integer">
         SELECT
-        count(t1.id) as counts
+          DISTINCT count(t1.check_id) as counts
         FROM
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1639,7 +1639,7 @@
 
     <select id="zhengFuChartData882" resultType="Integer">
         SELECT
-        count(t1.id) as counts
+        DISTINCT count(t1.check_id) as counts
         FROM
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1654,7 +1654,7 @@
 
     <select id="zfData88" resultType="Integer">
         SELECT
-        count(t1.id) as counts
+        DISTINCT count(t1.check_id) as counts
         FROM
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1670,7 +1670,7 @@
     <!-- 政府端 隐患数据分析 柱状图 flag = 1-->
     <select id="zhengFuChartData99" resultType="Integer">
         SELECT
-        count(t1.id) as counts
+        DISTINCT count(t1.check_id) as counts
         FROM
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1688,7 +1688,7 @@
     <!-- 政府端 隐患数据分析 风险 flag = 1-->
     <select id="zhengFuChartData881" resultType="Integer">
          SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1705,7 +1705,7 @@
     <!-- 政府端 隐患数据分析 风险 flag = 1-->
     <select id="zhengFuChartData8812" resultType="Integer">
          SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1720,7 +1720,7 @@
 
     <select id="zfData881" resultType="Integer">
          SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1736,7 +1736,7 @@
     <!-- 政府端 隐患数据分析 风险 flag = 1-->
     <select id="zhengFuChartData991" resultType="Integer">
          SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1756,7 +1756,7 @@
     <!-- 政府端 隐患数据分析 行业 flag = 1-->
     <select id="zhengFuChartDataDanger" resultType="Integer">
          SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1773,7 +1773,7 @@
 
     <select id="zhengFuDanger" resultType="Integer">
          SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1790,7 +1790,7 @@
     <!-- 政府端 隐患数据分析 行业 flag = 1-->
     <select id="zhengFuChartDataDanger22" resultType="Integer">
          SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1806,8 +1806,8 @@
     </select>
 
     <select id="zhengFuChartDataDanger2" parameterType="INTEGER" resultType="INTEGER">
-          SELECT
-       count(t1.id) as counts
+      SELECT
+          DISTINCT count(t1.check_id) as counts
          FROM
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1824,7 +1824,7 @@
 
     <select id="zhengFuChartDataDanger3" parameterType="INTEGER" resultType="INTEGER">
           SELECT
-       count(t1.id) as counts
+       DISTINCT count(t1.check_id) as counts
          FROM
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1840,7 +1840,7 @@
     <!-- 政府端 隐患数据分析 行业 flag = 1-->
     <select id="zhengFuChartDataDanger11" resultType="Integer">
          SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1857,7 +1857,7 @@
 
     <select id="zhengFuDanger11" resultType="Integer">
          SELECT
-            count(t1.id) as counts
+           DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1874,7 +1874,7 @@
     <!-- 政府端 隐患数据分析 行业 flag = 1-->
     <select id="zhengFuChartDataDanger33" resultType="Integer">
          SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1892,7 +1892,7 @@
 
     <select id="zhuChartData89" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1908,7 +1908,7 @@
 
     <select id="zhuChartData891" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1927,7 +1927,7 @@
     <!-- 企业自查隐患数据分析 -->
     <select id="zhuChartData22" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+           DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1944,7 +1944,7 @@
 
     <select id="zhuChartData221" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+           DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1963,7 +1963,7 @@
     <!-- 其他自查隐患数据分析 -->
     <select id="zhuChartData23" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1980,7 +1980,7 @@
 
     <select id="zhuChartData231" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1999,7 +1999,7 @@
     <!-- 隐患治理数据分析 柱状图 -->
     <select id="zhuChartData125" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -2017,7 +2017,7 @@
 
     <select id="zhuChartData124" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -2032,7 +2032,7 @@
 
     <select id="zhuChartData1241" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -2049,7 +2049,7 @@
     <!-- 隐患治理对象分析 -->
     <select id="zhuChartData123" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -2065,7 +2065,7 @@
 
     <select id="zhuChartData1231" resultType="Integer">
         SELECT
-            count(t1.id) as counts
+            DISTINCT count(t1.check_id) as counts
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -2460,16 +2460,16 @@
         LEFT JOIN company_tbl a1 ON a1.user_id = c1.user_id
         <where>
             <if test="type==6">
-                district_id = #{userId}
+                c1.district_id = #{userId}
             </if>
             <if test="type==3">
-                town_id = #{userId}
+                c1.town_id = #{userId}
             </if>
             <if test="type==4">
-                village_id = #{userId}
+                c1.village_id = #{userId}
             </if>
             <if test="type==10">
-                user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
+                c1.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
                 #{userId}
                 )
             </if>

@@ -141,14 +141,7 @@ var chart = Highcharts.chart('container', {
                   return false;
                 },
                 click:function(x){
-                console.log(x.point.index);
-                const e=x.point.index;
-                let f=null;
-                if(e===0) f=2;
-                if(e===1) f=1;
-                if(e===2) f=3;
-                  window.location.href="/global/all-statistics-list?flag="+f;
-<%--    window.location.href="/global/all-statistics-list"--%>
+                  window.location.href="/global/all-statistics-list";
                 }
             }
         }
@@ -160,7 +153,8 @@ var chart = Highcharts.chart('container', {
       data: [
           {name:'重大风险',y:${flag1[0]} ,url:'http://www.baidu.com'},
           {name:'较大风险',y:${flag1[1]} ,url:'http://www.baidu.com'},
-          {name:'一般和较低风险',y:${flag1[2]} ,url:'http://www.baidu.com'},
+          {name:'一般风险',y:${flag1[2]} ,url:'http://www.baidu.com'},
+          {name:'较低风险',y:${flag1[3]} ,url:'http://www.baidu.com'}
       ]
   }]
 });
@@ -169,6 +163,7 @@ var chart = Highcharts.chart('container', {
     const f1='#FF0000';
     const f2='#FFA500';
     const f3='#FFFF00';
+    const f4='#3B9BFF';
     var d=${gg2};
     console.log('d',d);
 
@@ -182,7 +177,7 @@ var chart2 = Highcharts.chart('container2',{
   title: {
           text: '风险统计'
   },
-  colors: [f1, f2, f3],
+  colors: [f1, f2, f3,f4],
   xAxis: {
           categories: ${industrys},
           labels: {
@@ -241,7 +236,15 @@ var chart2 = Highcharts.chart('container2',{
     d=${gg3};
     console.log(d)
     exSeries.color=f3;
-    exSeries.name="一般和较低风险";
+    exSeries.name="一般风险";
+    exSeries.setData(d, true, true, false);
+    }
+    else if(x===3){
+    console.log(4);
+    d=${gg4};
+    console.log(d)
+    exSeries.color=f4;
+    exSeries.name="较低风险";
     exSeries.setData(d, true, true, false);
     }
 
@@ -267,9 +270,12 @@ var chart2 = Highcharts.chart('container2',{
 <%--          data: ${gg2}--%>
             data:d
   }, {
-          name: '一般和较低风险',
+          name: '一般风险',
 <%--          data: ${gg3}--%>
-  }
+  }, {
+    name: '较低风险',
+    <%--          data: ${gg3}--%>
+    }
 
     ]
 });

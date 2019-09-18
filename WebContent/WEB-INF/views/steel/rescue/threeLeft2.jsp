@@ -13,7 +13,7 @@
         text-align:center;
         margin:0;
         padding:0;
-        margin-top:18%;
+        margin-top:1%;
         display:flex;
         justify-content: center;
         <%--        background: #efefef;--%>
@@ -92,7 +92,7 @@
         </script>
         <div class="three">
         <!--组织架构-->
-            <ul>
+            <ul id="ul">
                 <li><a onclick="sub1()"  data-title="企业风险分布图" href="javascript:void(0)">企业风险分布图</a>
                 <li><a onclick="sub2()"  data-title="应急预案" href="javascript:void(0)">应急预案</a>
                 <li><a onclick="sub3()" data-title="应急物资" href="javascript:void(0)">应急物资</a></li>
@@ -103,7 +103,10 @@
             <iframe src="${ly }/global/control-list2?flag=2&userId=${userId}"  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" ></iframe>
             <script>
             function sub1(){
+            $("#ul").hide()
             $("#iframe").attr("src", "${ly }/global/control-list2?flag=2&userId=${userId}" );
+
+
             }
             function sub2(){
             $("#iframe").attr("src","${ly }/global/tables/tab-yjlist?userId=${userId}" );
@@ -118,6 +121,7 @@
         </div>
         </body>
         </html>
+            <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
         <script>
         function firstAcitive(v){
         var str = document.querySelector('.children_div')

@@ -61,12 +61,14 @@
             <td>${be.dlevel}</td>
             <td>${be.address}</td>
             <td>${be.scale}</td>
-            <c:if test="${0 == be.isFreeze }">
-                <td>正常</td>
-            </c:if>
-            <c:if test="${1 == be.isFreeze }">
-                <td>冻结</td>
-            </c:if>
+            <td>
+                <c:if test="${0 == be.isFreeze }">
+                    正常
+                </c:if>
+                <c:if test="${1 == be.isFreeze }">
+                    冻结
+                </c:if>
+            </td>
             </tr>
         </c:forEach>
         <!-- 循环结束 -->

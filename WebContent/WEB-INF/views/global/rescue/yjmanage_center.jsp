@@ -58,7 +58,7 @@
         } main{
             width:100%;
             height: 100vw;
-            background: url(${ly}/images/yj-jy.png) no-repeat center;
+            background: url(/images/companyImg/newimg/yj.jpg) no-repeat center;
             background-size: 100% 100%;
 <%--            margin-top: 22px;--%>
             position: relative;

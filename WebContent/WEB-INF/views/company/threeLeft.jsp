@@ -99,10 +99,10 @@
             <li><a onclick="sub2()" data-title="人员在岗在位" href="javascript:void(0)">人员在岗在位</a>
             </li>
             </ul>
-            <iframe  onload="loadFrame()" scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="/company/system/department-list"></iframe>
+            <iframe  scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly}/company/system/department-list"></iframe>
             <script>
             function sub1(){
-            $("#iframe").attr("src", "${ly }/company/safety-system/assess7");
+            $("#iframe").attr("src", "${ly}/company/system/department-list");
             }
             function sub2(){
             $("#iframe").attr("src", "${ly }/company/system/user-list");
@@ -114,7 +114,7 @@
         <!-- 风险评估 -->
         <c:if test="${leftBasic== 2}">
             <ul>
-            <li><a onclick="sub1()"  data-title="评估操作" href="javascript:void(0)">评估操作</a></li>
+            <li><a onclick="sub1()"  data-title="评估操作" href="/company/safety-system/assess7">评估操作</a></li>
             <li><a onclick="sub2()" data-title="评估结果" href="javascript:void(0)">评估结果</a></li>
             <li><a onclick="sub3()"  data-title="风险分布表" href="javascript:void(0)">风险分布表</a></li>
             <li><a  data-title="风险分布图" href="javascript:void(0)" onclick="firstAcitive(this)">风险分布图</a></li>
@@ -125,8 +125,11 @@
             <li><a onclick="sub5()"   data-title="车间/岗位风险分布图"
             href="javascript:void(0)">车间/岗位风险分布图</a></li>
             </ul>
-            <iframe onload="loadFrame2()"   scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly }/company/safety-system/assess7"></iframe>
+            <iframe onload="loadFrame2()"   scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly }/company/safety-system/control-list2?flag=1"></iframe>
             <script>
+            function Hui_admin_tab(a){
+              console.log(a);
+            }
             function sub1(){
             $("#iframe").attr("src", "${ly }/company/safety-system/assess7");
             }

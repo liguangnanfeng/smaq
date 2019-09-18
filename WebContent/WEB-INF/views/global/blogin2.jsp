@@ -165,7 +165,7 @@
         $("#userName").val(name);
         $('.name').append(name)
         }else{
-        $('.name').append('')
+        $('.name').append('无锡南方石油添加剂有限公司')
         <%--无锡南方石油添加剂有限公司--%>
         }
         if (null != pwd && '' != pwd) {

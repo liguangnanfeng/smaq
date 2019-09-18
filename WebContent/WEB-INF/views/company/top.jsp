@@ -14,7 +14,7 @@
         <a href="javascript:void(0)" class="dropDown_A"><span>${userName }</span><i class="Hui-iconfont">&#xe6d5;</i>
         </a>
         <ul class="dropDown-menu menu radius box-shadow">
-        <li><a href="${ly }/fore/companyForeLogout">退出</a></li>
+        <li><a href="${ly }/villageLogout">退出</a></li>
         </ul>
         </li>
         <!-- <li id="Hui-msg">

@@ -1011,10 +1011,26 @@ public class GlobalController extends BaseController {
      * create time: 2019/9/12 15:30
      */
     @RequestMapping(value = "all-statistics-list")
-    public String controlData(HttpServletRequest request,Model model,Integer flag) throws Exception {
+    public String controlData(HttpServletRequest request,Model model) throws Exception {
         User user = getLoginUser(request);
 
-        List<Map<String,Object>> list = aCompanyManualMapper.findControlData(user.getId(), user.getUserType(),flag);
+        List<Map<String,Object>> list = aCompanyManualMapper.findControlData(user.getId(), user.getUserType());
+
+        for (int i = 0; i < list.size(); i++) {
+
+            Integer red = aCompanyManualMapper.totalize((Integer) list.get(i).get("uid"),"红色");
+            list.get(i).put("red",red);
+
+            Integer orange = aCompanyManualMapper.totalize((Integer) list.get(i).get("uid"),"橙色");
+            list.get(i).put("orange",orange);
+
+            Integer yellow = aCompanyManualMapper.totalize((Integer) list.get(i).get("uid"),"黄色");
+            list.get(i).put("yellow",yellow);
+
+            Integer blue = aCompanyManualMapper.totalizeBlue((Integer) list.get(i).get("uid"));
+            list.get(i).put("blue",blue);
+
+        }
 
         model.addAttribute("list",list);
 
@@ -1022,22 +1038,6 @@ public class GlobalController extends BaseController {
 
     }
 
-
-
-    /**
-     *
-     * create by  : 小明！！！
-     * description: TODO    风险分级管控 —— 管控分布
-     * create time: 2019/9/12 15:30
-     */
-    @RequestMapping(value = "/safety-system/control-distribution")
-    public String controlDistribution(HttpServletRequest request,Model model) throws Exception {
-        User user = getLoginUser(request);
-
-
-        return "global/safety-system/control-distribution";
-
-    }
 
     /**
      * create by  : 小明！！！
@@ -1156,6 +1156,23 @@ public class GlobalController extends BaseController {
         companyMapper.updateByPrimaryKeySelective(company);
 
         return result;
+    }
+
+
+
+    /**
+     *
+     * create by  : 小明！！！
+     * description: TODO    风险分级管控 —— 管控分布
+     * create time: 2019/9/12 15:30
+     */
+    @RequestMapping(value = "/safety-system/control-distribution")
+    public String controlDistribution(HttpServletRequest request,Model model) throws Exception {
+        User user = getLoginUser(request);
+
+
+        return "global/safety-system/control-distribution";
+
     }
 
 

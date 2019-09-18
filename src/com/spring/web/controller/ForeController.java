@@ -258,7 +258,7 @@ public class ForeController extends BaseController {
             un = utf8Str(un);
             model.addAttribute("un", un);
         }
-        return "company/blogin";
+        return "village/blogin2";
     }
 
     /**

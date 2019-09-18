@@ -125,7 +125,7 @@
             <li><a onclick="sub5()"   data-title="车间/岗位风险分布图"
             href="javascript:void(0)">车间/岗位风险分布图</a></li>
             </ul>
-            <iframe   scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly }/company/safety-system/assess7"></iframe>
+            <iframe onload="loadFrame2()"   scrolling="no" id="iframe" frameborder="0" width="100%" height="700px" src="${ly }/company/safety-system/assess7"></iframe>
             <script>
             function sub1(){
             $("#iframe").attr("src", "${ly }/company/safety-system/assess7");
@@ -138,9 +138,11 @@
             }
             function sub4(){
             $("#iframe").attr("src", "${ly }/api/map/control-list4");
+            $(".children_div").hide()
             }
             function sub5(){
             $("#iframe").attr("src", "${ly }/company/safety-system/control-photo");
+            $(".children_div").hide()
             }
             </script>
         </c:if>
@@ -578,7 +580,11 @@
         $("#iframe").contents().find("nav").hide();
         console.log("onload")
         }
+        function loadFrame2(){
+
+        }
         function firstAcitive(v){
+        $("#iframe").attr("src", "${ly }/api/map/control-list4");
         var str = document.querySelector('.children_div')
         v.parentNode.parentNode.style.display="none"
         if(str.style.display=="block"){
@@ -587,6 +593,7 @@
         str.style.display="block"
         }
         }
+<%--        $(".children_div").hide();--%>
         }
 
         localStorage.setItem('areaType', 2);

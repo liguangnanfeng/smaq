@@ -340,6 +340,8 @@ public interface TCheckItemMapper {
 
     List<Map<String,Object>> findALL(@Param("userId")Integer userId, @Param("type")Integer type);
 
+    List<Map<String,Object>> findCompany(@Param("userId")Integer userId, @Param("type")Integer type);
+
     List<Map<String, Object>> selectBasicMessage(@Param("userId") Integer userId, @Param("type") Integer type, @Param("start") Integer start);
 
     Integer zfHiddenTrouble(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);

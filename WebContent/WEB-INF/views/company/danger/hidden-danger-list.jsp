@@ -105,6 +105,14 @@
     <%--</button>--%>
     <%--</form>--%>
     <%--</div>--%>
+    <style>
+    span#list {
+    position: absolute;
+    z-index: 100000;
+    margin-top: 5px;
+    right: 290px;
+    }
+    </style>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <%--<p class="paging">--%>
         <%--<a href="${ly }/village/recheck-list?flag=${flag}&page=${page-1 }">    &lt; 上一页 </a>--%>
@@ -113,7 +121,8 @@
         <%--</p>--%>
     </div>
     <div class="mt-20">
-        <table class="table table-border table-bordered table-bg table-hover table-sort">
+    <span id="list">总隐患数: ${fn:length(list) } 条</span>
+    <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
             <tr class="text-c">
                 <th width="5%">隐患类型</th>

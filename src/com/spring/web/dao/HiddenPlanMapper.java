@@ -35,5 +35,6 @@ public interface HiddenPlanMapper {
 
     List<Map<String,Object>> selectCountAllName(@Param("uid") Integer uid);
 
+    void deleteDate(@Param("dpid")Integer dpid, @Param("uid")Integer uid);
 }
 

@@ -130,6 +130,13 @@ public class CompanyController_cd extends BaseController {
         if (c.getIndustry().contains("化工")) {
             model.addAttribute("industry", 5);
         }
+
+        Integer counts = tCheckMapper.findAllCounte(String.valueOf(user.getId())); // 排查数据
+        Integer counts1 = tCheckItemMapper.findAllCounte(String.valueOf(user.getId())); // 治理数据
+
+        model.addAttribute("counts",counts);
+        model.addAttribute("counts1",counts1);
+
         List<Integer> count = userService.selectCount(new CompanyListReqDTO(), user);
 
         model.addAttribute("lib", libraryMapper.selectLibraryList(2));

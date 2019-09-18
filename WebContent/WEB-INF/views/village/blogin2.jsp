@@ -195,7 +195,7 @@
         $("#userName").val(name);
         $('.name').append(name)
         }else{
-        $('.name').append('无锡南方石油添加剂有限公司')
+        $('.name').append('')
         <%--无锡南方石油添加剂有限公司--%>
         }
         if (null != pwd && '' != pwd) {
@@ -247,22 +247,19 @@
         } else {
         if (url != '') {
         window.location.href = url;
+
         } else {
-        if(result.map.userType == '4') {
-        window.location.href = getRootPath() + '/village/main';
+
+                if(result.map.userType=='10'&&result.map.userId==35346){
+                        window.location.href = '/steel/main';
+                        return ;
+                }
+        if(result.map.userType == '5') { //跳转到公司级
+        window.location.href = getRootPath() + '/company/main';
         }
-        if(result.map.userType == '3') {
-        window.location.href = getRootPath() + '/town/main';
-        }
-        if(result.map.userType == 6) {
-        window.location.href = getRootPath() + '/district/main';
-        }
-        if(result.map.userType == 9) {
-        window.location.href = getRootPath() + '/country/main';
-        }
-        if(result.map.userType == 10) {
-        window.location.href = getRootPath() + '/trade/main';
-        }
+                if(result.map.userType == '4'||result.map.userType=='3'||result.map.userType=='6'||result.map.userType=='9'||result.map.userType=='10') {
+                        window.location.href = getRootPath() + '/global/main';
+                }
         }
         }
         });

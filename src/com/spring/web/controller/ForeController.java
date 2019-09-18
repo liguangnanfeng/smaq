@@ -108,14 +108,14 @@ public class ForeController extends BaseController {
             }
 
             //处理惠山区港口的特殊账号
-            if (!user.getUserName().equals("惠山区港口")) {
-                // 判断当用户类型不是10时,提示错误
-                if (user.getUserType() == 1 || user.getUserType() == 2 || user.getUserType() == 5) {
-                    result.setStatus("1");
-                    result.setMap("message", "请用政府账号登录。");
-                    return result;
-                }
-            }
+//            if (!user.getUserName().equals("惠山区港口")) {
+//                // 判断当用户类型不是10时,提示错误
+//                if (user.getUserType() == 1 || user.getUserType() == 2 || user.getUserType() == 5) {
+//                    result.setStatus("1");
+//                    result.setMap("message", "请用政府账号登录。");
+//                    return result;
+//                }
+//            }
             //使用shiro进行登录
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             token.setRememberMe(true);
@@ -123,6 +123,7 @@ public class ForeController extends BaseController {
             currentUser.login(token);
             SessionUtil.setUser(request, user);
             result.setMap("userType", user.getUserType());
+            result.setMap("userId", user.getId());
         } catch (Exception uae) {
             uae.printStackTrace();
             log.info("对用户[" + username + "]进行登录验证..验证未通过,未知账户");
@@ -381,15 +382,15 @@ public class ForeController extends BaseController {
                 return result;
             }
 
-            // 判断前后台登录
-            if (!user.getUserName().equals("惠山区港口")) {
-                // 判断前后台登录
-                if (user.getUserType() == 1 || user.getUserType() == 2 || user.getUserType() == 5) {
-                    result.setStatus("1");
-                    result.setMap("message", "请用政府账号登录。");
-                    return result;
-                }
-            }
+//            // 判断前后台登录
+//            if (!user.getUserName().equals("惠山区港口")) {
+//                // 判断前后台登录
+//                if (user.getUserType() == 1 || user.getUserType() == 2 || user.getUserType() == 5) {
+//                    result.setStatus("1");
+//                    result.setMap("message", "请用政府账号登录。");
+//                    return result;
+//                }
+//            }
 
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             token.setRememberMe(true);
@@ -397,6 +398,7 @@ public class ForeController extends BaseController {
             currentUser.login(token);
             SessionUtil.setUser(request, user);
             result.setMap("userType", user.getUserType());
+            result.setMap("userId", user.getId());
         } catch (Exception uae) {
             uae.printStackTrace();
             log.info("对用户[" + username + "]进行登录验证..验证未通过,未知账户");

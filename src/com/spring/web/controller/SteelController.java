@@ -742,7 +742,13 @@ public class SteelController extends BaseController {
     public  @ResponseBody Result selectCompanyByCqlib8(Model model, HttpServletRequest request){
         Result result = new ResultImpl();
         User user = getLoginUser(request);
+        /*List<Map<String, Object>> list2 = new ArrayList<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", user.getId());
+        map.put("name", user.getUserName());
+        list2.add(map);*/
         List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
+        //list2.addAll(list1);
         result.setMap("list", list1);
         return result;
     }

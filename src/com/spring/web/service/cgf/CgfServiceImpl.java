@@ -465,6 +465,7 @@ public class CgfServiceImpl implements CgfService {
             m.put("suggest", 1);
             m.put("deadline", tr.getDeadline());
             m.put("planTime", tr.getPlanTime());
+            System.out.println("m1:"+m);
             tCheckItemMapper.updSuggest(m);
         }
         if (!StringUtils.isEmpty(tr.getItem2())) {
@@ -472,6 +473,7 @@ public class CgfServiceImpl implements CgfService {
             m.put("suggest", 2);
             m.put("deadline", tr.getDeadline());
             m.put("planTime", tr.getPlanTime());
+            System.out.println("m2:"+m);
             tCheckItemMapper.updSuggest(m);
         }
     }

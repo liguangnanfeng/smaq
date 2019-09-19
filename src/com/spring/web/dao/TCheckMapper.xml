@@ -762,7 +762,7 @@
 
 
     <select id="findCountAll" parameterType="Integer" resultType="Integer">
-        select count(*) from t_check_tbl where del = 0 and flag = 1 and depart = #{depart} and user_id in (${user_ids}) and type = #{type}
+        select count(*) from t_check_tbl where del = 0 and flag = 1 and status = 2 and depart = #{depart} and user_id in (${user_ids}) and type = #{type}
     </select>
 
     <!-- 政府端 绩效分析数据查询  flag = 1 -->

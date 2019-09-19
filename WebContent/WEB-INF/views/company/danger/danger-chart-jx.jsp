@@ -178,8 +178,8 @@
         <th>实绩</th>
         <th>同比</th>
         <th>数量</th>
-        <th>完成率%</th>
-        <th>同比%</th>
+        <th>完成率</th>
+        <th>同比</th>
         </tr>
         </thead>
         <tbody>
@@ -217,8 +217,8 @@
                         <td><%--${be.sea_year != null ? be.sea_year : 0 }--%>0</td>
                         <td><%--${be.sea_year }--%></td>
 
-                        <td>${be.danger1+be.danger2+be.danger3+be.danger4+be.danger5+be.danger6 }</td>
-                        <td class="add"><fmt:formatNumber type="number" value="${(be.danger1+be.danger2+be.danger3+be.danger4+be.danger5+be.danger6)/(be.syn_year+be.eve_year+be.reg_year+be.sea_year+be.els_year+be.bas_year) }" pattern="0.00"/> </td>
+                        <td>${be.count}</td>
+                        <td class="add"><fmt:formatNumber type="number" value="${(be.danger1+be.danger2+be.danger3+be.danger4+be.danger5+be.danger6)/(be.syn_year+be.eve_year+be.reg_year+be.sea_year+be.els_year+be.bas_year)}" pattern="0.00"/> </td>
                         <script>
                         console.log($(".add").text());
                         if(!$(".add").text()){
@@ -259,7 +259,7 @@
                         <td><%--${be.count6}--%>0</td>
                         <td></td>
 
-                        <td>${be.number1+be.number2+be.number3+be.number4+be.number5+be.number6 }</td>
+                        <td>${be.count}</td>
                         <td><fmt:formatNumber type="number" value="${(be.count1+be.count2+be.count3+be.count4+be.count5+be.count6)/(be.number1+be.number2+be.number3+be.number4+be.number5+be.number6) }" pattern="0.00"/> </td>
                         <td></td>
                         </tr>

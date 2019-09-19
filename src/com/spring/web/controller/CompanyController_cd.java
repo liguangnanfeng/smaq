@@ -4451,6 +4451,7 @@ public class CompanyController_cd extends BaseController {
     public String zhuChartData77 (HttpServletRequest request, Model model){
         User user = getLoginUser(request);
         List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());
+        List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
         DecimalFormat df = new DecimalFormat("0.00");
         Map<String,Object> map = new HashMap<>();
 
@@ -4495,6 +4496,48 @@ public class CompanyController_cd extends BaseController {
                     list.get(i).put("result11", "0.00%");
                     list.get(i).put("result22", "0.00%");
                     list.get(i).put("result33", "0.00%");
+                }
+
+                Map<String,Object> map1 = new HashMap<>();
+
+                map1.put("name",list.get(i).get("name"));
+                map1.put("sum",sum);
+
+                list1.add(map1);
+            }
+
+            Collections.sort(list1, new Comparator<Map<String, Object>>() {
+
+                public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+
+                    Integer name1 = Integer.valueOf(o1.get("sum").toString()) ;
+
+                    Integer name2 = Integer.valueOf(o2.get("sum").toString()) ;
+
+                    return name1.compareTo(name2);
+
+                }
+            });
+
+            for (int i = 0; i < list1.size(); i++) {
+
+                list1.get(i).put("data",list1.size()-i);
+
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+
+                for (int j = 0; j < list1.size(); j++) {
+
+                    if (null != list.get(i).get("name") &&  null != list1.get(j).get("name")){
+
+                        if (list.get(i).get("name").equals(list1.get(j).get("name"))){
+
+                            list.get(i).put("data",list1.get(j).get("data"));
+
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -4566,6 +4609,7 @@ public class CompanyController_cd extends BaseController {
     public String zhuChartData44 (HttpServletRequest request, Model model){
         User user = getLoginUser(request);
         List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());
+        List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         Map<String,Object> map = new HashMap<>();
 
@@ -4590,7 +4634,6 @@ public class CompanyController_cd extends BaseController {
         Integer numbers33 = 0;
 
         Map<String,Object> map1 = new HashMap<>();
-
 
         numbers1 = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),3,company.getName()); // 一般和较小 合格 已治理
         model.addAttribute("numbers1",numbers1);
@@ -4653,6 +4696,12 @@ public class CompanyController_cd extends BaseController {
 
         Integer flag = flag1 + flag2;
 
+        Map<String,Object> map3 = new HashMap<>();
+
+        map3.put("name",company.getName());
+        map3.put("sum",flag1);
+
+        list.add(map3);
         if (null != flag && flag != 0){
             String str = df.format((float)flag1 / flag * 100);
             model.addAttribute("number66",str + "%");  // 治理率 合计
@@ -4736,6 +4785,65 @@ public class CompanyController_cd extends BaseController {
                     list.get(i).put("number","0.00%");
                 }
 
+                Map<String,Object> map2 = new HashMap<>();
+
+                if (list.get(i).get("name").equals(company.getName())){
+
+                    map2.put("name",company.getName());
+                    map2.put("sum",sum);
+                }else {
+                    map2.put("name",list.get(i).get("name"));
+                    map2.put("sum",sum);
+
+                }
+                list1.add(map2);
+            }
+
+            Collections.sort(list1, new Comparator<Map<String, Object>>() {
+
+                public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+
+                    Integer name1 = Integer.valueOf(o1.get("sum").toString()) ;
+
+                    Integer name2 = Integer.valueOf(o2.get("sum").toString()) ;
+
+                    return name1.compareTo(name2);
+
+                }
+            });
+
+            for (int i = 0; i < list1.size(); i++) {
+
+                list1.get(i).put("data",list1.size()-i);
+
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+
+                for (int j = 0; j < list1.size(); j++) {
+
+                    if (null != list.get(i).get("name") &&  null != list1.get(j).get("name")){
+
+                        if (list.get(i).get("name").equals(list1.get(j).get("name"))){
+
+                            list.get(i).put("data",list1.get(j).get("data"));
+
+                            break;
+                        }
+                    }
+                }
+            }
+            Integer datas = 0;
+            for (int i = 0; i < list1.size(); i++) {
+                if (list1.get(i).get("name").equals(company.getName())){
+                    datas = (Integer) list1.get(i).get("data");
+                }
+            }
+           model.addAttribute("datas",datas);
+        }
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).get("name").equals(company.getName())){
+                list.remove(i);
             }
         }
 
@@ -4881,6 +4989,7 @@ public class CompanyController_cd extends BaseController {
         /*List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());*/
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         List<Map<String,Object>> list = null;
+        List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
 
         if (flag ==1){
             list = hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
@@ -4940,7 +5049,7 @@ public class CompanyController_cd extends BaseController {
                 if (flag == 1){
 
                     if (null == list.get(i).get("dpid") || list.get(i).get("dpid") == 0){
-
+                        list.get(i).put("name",company.getName());
                         s = tCheckItemMapper.zhuChartData22("基础管理",company.getName(),flag,user.getId()); // 生产工艺 隐患数据
                         list.get(i).put("danger19",s);
                         sum19 += s;
@@ -5178,6 +5287,58 @@ public class CompanyController_cd extends BaseController {
                 Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o + p + q + r + s;
 
                 list.get(i).put("danger20",count);  // 某个车间的所有种类隐患的合计
+
+                if (null != flag){
+
+                    Map<String,Object> map1 = new HashMap<>();
+
+                    if (null == list.get(i).get("name")){
+                        map1.put("name",company.getName());
+                        map1.put("danger20",count);
+                    }else {
+                        map1.put("name",list.get(i).get("name"));
+                        map1.put("danger20",count);
+                    }
+                    list1.add(map1);
+                }
+            }
+        }
+
+        if (null != flag){
+
+            Collections.sort(list1, new Comparator<Map<String, Object>>() {
+
+                public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+
+                    Integer name1 = Integer.valueOf(o1.get("danger20").toString()) ;
+
+                    Integer name2 = Integer.valueOf(o2.get("danger20").toString()) ;
+
+                    return name1.compareTo(name2);
+
+                }
+            });
+
+            for (int i = 0; i < list1.size(); i++) {
+
+                list1.get(i).put("data",list1.size()-i);
+
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+
+                for (int j = 0; j < list1.size(); j++) {
+
+                    if (null != list.get(i).get("name") &&  null != list1.get(j).get("name")){
+
+                        if (list.get(i).get("name").equals(list1.get(j).get("name"))){
+
+                            list.get(i).put("data",list1.get(j).get("data"));
+
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -5229,7 +5390,7 @@ public class CompanyController_cd extends BaseController {
        /* List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());*/
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         List<Map<String,Object>> list = null;
-
+        List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
         if (flag ==1){
             list = hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
         }else if (flag == 2){
@@ -5289,6 +5450,7 @@ public class CompanyController_cd extends BaseController {
 
                     if (null == list.get(i).get("dpid") || list.get(i).get("dpid") == 0){
 
+                        list.get(i).put("name",company.getName());
                         s = tCheckItemMapper.zhuChartData66("基础管理",company.getName(),flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
                         list.get(i).put("danger19",s);
                         sum19 += s;
@@ -5526,6 +5688,60 @@ public class CompanyController_cd extends BaseController {
                 Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o + p + q + r + s;
 
                 list.get(i).put("danger20",count);  // 某个车间的所有种类隐患的合计
+
+                if (null != flag){
+
+                    Map<String,Object> map1 = new HashMap<>();
+
+                    if (null == list.get(i).get("name")){
+                        map1.put("name",company.getName());
+                        map1.put("danger20",count);
+                    }else {
+                        map1.put("name",list.get(i).get("name"));
+                        map1.put("danger20",count);
+                    }
+
+                    list1.add(map1);
+                }
+            }
+
+        }
+
+        if (null != flag){
+
+            Collections.sort(list1, new Comparator<Map<String, Object>>() {
+
+                public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+
+                    Integer name1 = Integer.valueOf(o1.get("danger20").toString()) ;
+
+                    Integer name2 = Integer.valueOf(o2.get("danger20").toString()) ;
+
+                    return name1.compareTo(name2);
+
+                }
+            });
+
+            for (int i = 0; i < list1.size(); i++) {
+
+                list1.get(i).put("data",list1.size()-i);
+
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+
+                for (int j = 0; j < list1.size(); j++) {
+
+                    if (null != list.get(i).get("name") &&  null != list1.get(j).get("name")){
+
+                        if (list.get(i).get("name").equals(list1.get(j).get("name"))){
+
+                            list.get(i).put("data",list1.get(j).get("data"));
+
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -5559,6 +5775,8 @@ public class CompanyController_cd extends BaseController {
 
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
+
+        model.addAttribute("list1",list1);
 
         return "company/danger/zhuChartData66";
     }
@@ -5753,6 +5971,7 @@ public class CompanyController_cd extends BaseController {
     public String zhuChartData123 (HttpServletRequest request, Model model){
         User user = getLoginUser(request);
         List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());
+        List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         Map<String,Object> map = new HashMap<>();
 
@@ -5861,6 +6080,13 @@ public class CompanyController_cd extends BaseController {
 
         model.addAttribute("count1",count1);
 
+        Map<String,Object> map3 = new HashMap<>();
+
+        map3.put("name",company.getName());
+        map3.put("danger20",count1);
+
+        list.add(map3);
+
         if (null == list || list.size() == 0){
 
         }else if (null != list && list.size() != 0){
@@ -5946,6 +6172,69 @@ public class CompanyController_cd extends BaseController {
                 Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o + p + q + r + s;
 
                 list.get(i).put("danger20",count);  // 某个车间的所有种类隐患的合计
+
+                Map<String,Object> map2 = new HashMap<>();
+
+                if (list.get(i).get("name").equals(company.getName())){
+
+                    map2.put("name",company.getName());
+                    map2.put("danger20",count);
+                }else {
+                    map2.put("name",list.get(i).get("name"));
+                    map2.put("danger20",count);
+
+                }
+                list1.add(map2);
+            }
+        }
+
+        Collections.sort(list1, new Comparator<Map<String, Object>>() {
+
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+
+                Integer name1 = Integer.valueOf(o1.get("danger20").toString()) ;
+
+                Integer name2 = Integer.valueOf(o2.get("danger20").toString()) ;
+
+                return name1.compareTo(name2);
+
+            }
+        });
+
+        for (int i = 0; i < list1.size(); i++) {
+
+            list1.get(i).put("data",list1.size()-i);
+
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+
+            for (int j = 0; j < list1.size(); j++) {
+
+                if (null != list.get(i).get("name") &&  null != list1.get(j).get("name")){
+
+                    if (list.get(i).get("name").equals(list1.get(j).get("name"))){
+
+                        list.get(i).put("data",list1.get(j).get("data"));
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        Integer datas = 0;
+        for (int i = 0; i < list1.size(); i++) {
+            if (list1.get(i).get("name").equals(company.getName())){
+                datas = (Integer) list1.get(i).get("data");
+            }
+        }
+
+        model.addAttribute("datas",datas);
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).get("name").equals(company.getName())){
+                list.remove(i);
             }
         }
 

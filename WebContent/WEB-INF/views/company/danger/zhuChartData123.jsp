@@ -129,7 +129,6 @@
 			<td rowspan="2" class="sum">合计</td>
 			<td rowspan="2">排名</td>
 			<td rowspan="2">同比%</td>
-			<td rowspan="2">排名</td>
 		</tr>
 		<tr class="f">
 			<td>数量</td>
@@ -180,8 +179,7 @@
 				<td>${qq}</td>
 				<td>${rr}</td>
 				<td>${count1}</td>
-				<td></td>
-				<td></td>
+				<td>${datas}</td>
 				<td></td>
 			</tr>
 
@@ -210,8 +208,7 @@
 					<td>${be.danger17}</td>
 					<td>${be.danger18}</td>
 					<td>${be.danger20}</td>
-					<td></td>
-					<td></td>
+					<td>${be.data}</td>
 					<td></td>
 					</tr>
 				</c:if>
@@ -246,7 +243,6 @@
 				<td>${counts}</td>
 				<td></td>
 				<td></td>
-				<td></td>
 				</tr>
 
 			</c:if>
@@ -274,7 +270,6 @@
 				<td>${be.result17}</td>
 				<td>${be.result18}</td>
 				<td>--</td>
-				<td></td>
 				<td></td>
 				<td></td>
 				</tr>

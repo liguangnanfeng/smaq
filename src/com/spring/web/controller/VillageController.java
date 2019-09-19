@@ -1244,14 +1244,23 @@ public class VillageController extends BaseController {
 
             Integer sum = 0;
             for (int i = 0; i < list.size(); i++) {
+
+                System.out.println((Integer) list.get(i).get("id"));
+
                 DynamicParameter<String, Object> id = tCheckMapper.selectCompany((Integer) list.get(i).get("id"));
                 list.get(i).put("listM",id);
                 sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
-
             }
-            model.addAttribute("sum", sum);
-            model.addAttribute("list", list);
 
+            model.addAttribute("sum",tCheckMapper.findDataCounts(user.getId(),flag)); // 总条数
+
+            model.addAttribute("sum1",tCheckMapper.findDataCountSum(user.getId(),1,flag)); // 合格数据
+
+            model.addAttribute("sum2", tCheckMapper.findDataCountSum(user.getId(),2,flag)); // 不合格数据
+
+            model.addAttribute("sum3",tCheckMapper.findDataCountSum(user.getId(),3,flag)); // 复查数据
+
+            model.addAttribute("list", list);
 
             m.put("dmName",null);
             List<Map<String, Object>> list2 = tCheckMapper.selectList(m);

@@ -80,13 +80,13 @@ public interface TCheckItemMapper {
     int deleteByCheckId(@Param("checkId") Integer checkId);
 
     /**
-     * @param userId
+     *
      * @return 企业/村/镇/区首页 隐患汇总数据
      */
     List<Map<String, Object>> selectCount(Map<String, Object> m);
 
     /**
-     * @param userId
+     *
      * @return 企业/村/镇/区首页 隐患汇总数据 重大隐患
      */
     List<Map<String, Object>> selectZhongCount(Map<String, Object> m);
@@ -291,11 +291,9 @@ public interface TCheckItemMapper {
 
     Integer zhuChartData771(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
-    Integer zhuChartData781(@Param("user_ids")String user_ids, @Param("departs")String departs);
-
-    Integer zhuChartData88(@Param("control")String control, @Param("user_ids")String user_ids, @Param("departs")String departs);
-
     Integer zhuChartData89(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer zhuChartData88(@Param("control")String control,@Param("user_ids")String user_ids, @Param("departs")String departs);
 
     Integer zhuChartData881(@Param("user_ids")String user_ids, @Param("departs")String departs);
 
@@ -417,6 +415,9 @@ public interface TCheckItemMapper {
     Integer findAllCounte(@Param("userIds")String userIds);
 
     List<Map<String,Object>> findControlData(@Param("userId")Integer userId, @Param("type")Integer type);
+
+    List<Map<String,Object>> zhuChartData781(@Param("control")String control,@Param("user_ids")String user_ids, @Param("departs")String departs);
+
 }
 
 

@@ -120,4 +120,8 @@ public interface TCheckMapper {
     Integer greateDangerCount(@Param("control")String control, @Param("userIds")String userIds);
 
     Integer greateDangerCount11(@Param("userIds")String userIds);
+
+    Integer findDataCounts(@Param("user_id")Integer user_id,@Param("flag")Integer flag);
+
+    Integer findDataCountSum(@Param("user_id")Integer user_id,@Param("status")Integer status,@Param("flag")Integer flag);
 }

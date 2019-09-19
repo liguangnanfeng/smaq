@@ -1,4 +1,4 @@
-        <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
         <%@ include file="/WEB-INF/views/taglibs.jsp" %>
         <!DOCTYPE HTML>
         <html>
@@ -18,8 +18,9 @@
         .txtarea_sq{height:150px;width:550px;}
         </style>
         <script type="text/javascript">
-                console.log('img0-8');
-                console.log('${img0},${img1},${img2},${img3},${img4},${img5},${img6},${img7},${img8}');
+
+        console.log('img0-8');
+        console.log('${img0},${img1},${img2},${img3},${img4},${img5},${img6},${img7},${img8}');
         var id_ = '${be.id}', flag = '${be.flag}';
         function show(){
         $("#win-show").modal("show");
@@ -63,14 +64,27 @@
         obj.flag = flag;
         obj.isedit = 1;
         let img="";
-        for(let i=3;i<=11;i++){
-        let a=$("#pic"+i).attr("src");
-        if(i===3){
-        img=img+a;
-        }else{
-        img=img+'&'+a;
+        let a=null;
+        for(let i=1;i<=9;i++){
+            let x=$('#myCheck'+i).prop('checked');
+            if(x){
+                     a=$("#pic"+i).attr("src");
+                    if(i===1){
+                    img=img+a;
+                    }else{
+                    img=img+'&'+a;
+                    }
+            }else{
+                     a='null';
+                    if(i===1){
+                    img=img+a;
+                    }else{
+                    img=img+'&'+a;
+                    }
+            }
         }
-        }
+            console.log('img---------------');
+            console.log(img);
         obj.imgUrl=img;
         $.post("/company/safety-system/risk-information-save", obj, function(result) {
         layer.close(i);
@@ -78,8 +92,6 @@
         console.log(result)
         })
         }
-
-
 
 
         </script>
@@ -183,60 +195,68 @@
         </div>
         <style>
         #pic3,#pic4,#pic5,#pic6,#pic7,#pic8,#pic9,#pic10,#pic11{
-        cursor:pointer
+        cursor:pointer;
+        margin-top:17px;
         }
         .a{
         width:550px;
         }
+        .c{
+        position:relative;
+        top:-47px;
+        left:-20px;
+        }
         </style>
         <script>
-        var a="https://sec.dicarl.com/upload/20190911104219_590.jpg"
+        console.log('img0:',${img0});
         </script>
         <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">图例编辑( 点击图片编辑)：</label>
+        <label class="form-label col-xs-4 col-sm-2">图例编辑：</label>
         <div class="formControls col-xs-8 col-sm-9 a">
-        <img id="pic3" class="pic" onclick="img_upload('pic3', null)" src="${ly }${img0==null?'/images/gao/aqgz1.jpg':img0}"
+        <%--                onclick="img_upload('pic3', null)"--%>
+        <img id="pic1" class="pic" src="${ly }/images/gao/aqgz1.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic4" class="pic" onclick="img_upload('pic4', null)" src="${ly }${img1==null?'/images/gao/aqgz2.jpg':img1}"
+        <input class="c" type="checkbox" id="myCheck1" checked="${img0==null||img0=='null'?false:true}" />
+        <img id="pic2" class="pic" src="${ly }/images/gao/aqgz2.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic5" class="pic" onclick="img_upload('pic5', null)" src="${ly }${img1==null?'/images/gao/aqgz3.jpg':img2}"
+        <input class="c" type="checkbox" id="myCheck2" />
+        <img id="pic3" class="pic" src="${ly }/images/gao/aqgz3.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic6" class="pic" onclick="img_upload('pic6', null)" src="${ly }${img1==null?'/images/gao/aqgz4.jpg':img3}"
+        <input class="c" type="checkbox" id="myCheck3" />
+        <img id="pic4" class="pic" src="${ly }/images/gao/aqgz4.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic7" class="pic" onclick="img_upload('pic7', null)" src="${ly }${img1==null?'/images/gao/aqgz6.jpg':img4}"
+        <input class="c" type="checkbox" id="myCheck4" />
+        <img id="pic5" class="pic" src="${ly }/images/gao/aqgz6.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic8" class="pic" onclick="img_upload('pic8', null)" src="${ly }${img1==null?'/images/gao/l1.jpg':img5}"
+        <input class="c" type="checkbox" id="myCheck5"/>
+        <img id="pic6" class="pic" src="${ly }/images/gao/l1.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic9" class="pic" onclick="img_upload('pic9', null)" src="${ly }${img1==null?'/images/gao/l2.jpg':img6}"
+        <input class="c" type="checkbox" id="myCheck6"/>
+        <img id="pic7" class="pic" src="${ly }/images/gao/l2.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic10" class="pic" onclick="img_upload('pic10', null)" src="${ly }${img1==null?'/images/gao/l3.jpg':img7}"
+        <input class="c" type="checkbox" id="myCheck7"/>
+        <img id="pic8" class="pic" src="${ly }/images/gao/l3.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <img id="pic11" class="pic" onclick="img_upload('pic11', null)" src="${ly }${img1==null?'/images/gao/l4.jpg':img8}"
+        <input class="c" type="checkbox" id="myCheck8"/>
+        <img id="pic9" class="pic" src="${ly }/images/gao/l4.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-
+        <input class="c" type="checkbox" id="myCheck9"/>
         </div>
 
         </div>
-<script>
-                let img=null;
-                for(let i=3;i<=11;i++){
-                let a=$("#pic"+i).attr("src");
-                if(i===3){
-                img=img+a;
-                }else{
-                img=img+'&'+a;
-                }
-                }
-                console.log('img-src:')
-                console.log(img)
+        <script>
+        let img=null;
+        for(let i=0;i<=8;i++){
+           console.log(${img+i})
+        }
 
-</script>
-<style>
-.aa{
-margin-bottom: 50px;
-margin-top: 50px!important;
-}
-                </style>
+        </script>
+        <style>
+        .aa{
+        margin-bottom: 50px;
+        margin-top: 50px!important;
+        }
+        </style>
         <div class="row cl aa">
         <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
         <button onClick="save()" class="btn btn-primary radius" type="button" style="padding: 0 70px;">

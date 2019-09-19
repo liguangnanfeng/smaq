@@ -96,7 +96,7 @@
                 <li><a href="${ly}/village/to_monitor-list?flag=2" data-title="应急响应" href="javascript:void(0)">企业实时监控</a></li>
                 <li><a href="#" data-title="指挥中心与企业现场信息互动" href="javascript:void(0)">指挥中心与企业现场信息互动</a>
                 <li><a href="#" data-title="九宫格和页面缩放" href="javascript:void(0)">九宫格和页面缩放</a>
-                <li><a href="#" data-title="应急响应模块" href="javascript:void(0)">应急响应模块</a>
+                <li><a href="/steel/searchPage2" data-title="应急响应模块" href="javascript:void(0)">应急响应模块</a>
                 <li><a href="#" data-title="数据存储" href="javascript:void(0)">数据存储</a>
                 <li><a href="#" data-title="会议中心" href="javascript:void(0)">会议中心</a>
             </li>

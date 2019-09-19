@@ -32,6 +32,10 @@ body .check-box label{margin-left:5px;}
 .one-danrisk{float:left;width:100%;border-bottom:1px solid #ddd}
 .one-danrisk p{float:left;width:80%;padding: 8px}
 .table tbody tr td .one-danrisk a{float:right;margin-top:8px;margin-right:8px;}
+.x{
+  height:47px;
+font-size:15px;
+}
 </style>
 <script type="text/javascript">
 /* 弹窗工具添加 */
@@ -57,7 +61,7 @@ function addgj() {
     	<table>
           <tr>
 		     <td class="text-c" style="width:60px;height: 90px;text-align:center;">
-                <button class="btn btn-primary radius" >请完善《安全风险研判目标管理履职考核》信息</button>
+                <button class="x btn btn-primary radius" >请完善《安全风险研判目标管理履职考核》信息</button>
             </td>
           </tr>
 <%--    onClick="addgj()"--%>

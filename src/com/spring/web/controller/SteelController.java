@@ -1379,7 +1379,7 @@ public class SteelController extends BaseController {
         Integer number14 = tCheckItemMapper.zfHiddenTrouble2("职业卫生",sb.toString()); // 职业卫生 隐患数据
         model.addAttribute("number14",number14);
 
-        Integer number15 = tCheckItemMapper.zfHiddenTrouble12(sb.toString()); // 其他 隐患数据
+        Integer number15 = tCheckItemMapper.zfHiddenTrouble2("其他",sb.toString()); // 其他 隐患数据
 
         model.addAttribute("number15",number15);
 
@@ -1752,7 +1752,7 @@ public class SteelController extends BaseController {
         Integer number14 = tCheckItemMapper.zhengFuChartData882("职业卫生", sb.toString()); // 职业卫生 隐患数据
         model.addAttribute("number14",number14);
 
-        Integer number15 = tCheckItemMapper.zhengFuChartData8812(sb.toString()); // 其他 隐患数据
+        Integer number15 = tCheckItemMapper.zhengFuChartData882("其他", sb.toString()); // 其他 隐患数据
         model.addAttribute("number15",number15);
 
         Integer count1 = number1 + number2 + number3 + number4 + number5 + number6 + number7 + number8 + number9 + number10 + number11 + number12 + number13 + number14 + number15;
@@ -2444,7 +2444,7 @@ public class SteelController extends BaseController {
                     list.get(i).put("danger13",m);
                     sum13 += m;
 
-                    n = tCheckItemMapper.zhuChartData661(company.getName(),flag,String.valueOf(user.getId())); // 其他 隐患数据
+                    n = tCheckItemMapper.zhuChartData66("其他",company.getName(),flag,String.valueOf(user.getId())); // 其他 隐患数据
                     list.get(i).put("danger14",n);
                     sum14 += n;
 
@@ -2502,7 +2502,7 @@ public class SteelController extends BaseController {
                     list.get(i).put("danger13",m);
                     sum13 += m;
 
-                    n = tCheckItemMapper.zhuChartData661((String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 其他 隐患数据
+                    n = tCheckItemMapper.zhuChartData66("其他",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 其他 隐患数据
                     list.get(i).put("danger14",n);
                     sum14 += n;
                 }
@@ -2559,7 +2559,7 @@ public class SteelController extends BaseController {
                 list.get(i).put("danger13",m);
                 sum13 += m;
 
-                n = tCheckItemMapper.zhuChartData671((String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 其他 隐患数据
+                n = tCheckItemMapper.zhuChartData67("其他",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 其他 隐患数据
                 list.get(i).put("danger14",n);
                 sum14 += n;
             }
@@ -3041,7 +3041,7 @@ public class SteelController extends BaseController {
                 list.get(i).put("danger14", m);
                 sum14 += m;
 
-                Integer o = tCheckItemMapper.zfHiddenTrouble33(flag, (Integer) list.get(i).get("user_id")); // 其他 隐患数据
+                Integer o = tCheckItemMapper.zfHiddenTrouble22("其他", flag, (Integer) list.get(i).get("user_id")); // 其他 隐患数据
                 list.get(i).put("danger15", o);
                 sum15 += o;
 
@@ -3513,7 +3513,7 @@ public class SteelController extends BaseController {
                 list.get(i).put("danger14", m);
                 sum14 += m;
 
-                Integer o = tCheckItemMapper.zhengFuChartData991(flag, (Integer) list.get(i).get("user_id")); // 其他 隐患数据
+                Integer o = tCheckItemMapper.zhengFuChartData99("其他", flag, (Integer) list.get(i).get("user_id")); // 其他 隐患数据
                 list.get(i).put("danger15", o);
                 sum15 += o;
 

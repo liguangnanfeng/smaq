@@ -5302,10 +5302,10 @@ public class GlobalController extends BaseController {
      * @param flag
      * @return
      */
-    @RequestMapping(value = "zhuChartData66")
+    /*@RequestMapping(value = "zhuChartData66")
     public String zhuChartData66 (HttpServletRequest request, Model model, Integer flag){
         User user = getLoginUser(request);
-        /* List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());*/
+        *//* List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());*//*
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         List<Map<String,Object>> list = null;
 
@@ -5689,7 +5689,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("list",list);
 
         return "company/danger/zhuChartData66";
-    }
+    }*/
 
     /**
      * 绩效分析

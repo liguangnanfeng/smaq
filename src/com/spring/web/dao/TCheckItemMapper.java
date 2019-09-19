@@ -257,17 +257,9 @@ public interface TCheckItemMapper {
 
     Integer findMapzhuChartData2(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
-    Integer zhuChartData66(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
-
-    Integer zhuChartData661(@Param("depart")String depart, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
-
     Integer zhuChartData123(@Param("control")String control, @Param("depart")String depart, @Param("user_id")Integer user_id);
 
     Integer zhuChartData1231(@Param("depart")String depart, @Param("user_id")Integer user_id);
-
-    Integer zhuChartData67(@Param("control")String control, @Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
-
-    Integer zhuChartData671(@Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer lookHiddenSource(@Param("flag") Integer flag, @Param("check_company")String check_company, @Param("userIds")String userIds, @Param("industry_type")Integer industry_type);
 
@@ -417,6 +409,14 @@ public interface TCheckItemMapper {
     List<Map<String,Object>> findControlData(@Param("userId")Integer userId, @Param("type")Integer type);
 
     List<Map<String,Object>> zhuChartData781(@Param("control")String control,@Param("user_ids")String user_ids, @Param("departs")String departs);
+
+    List<Map<String,Object>> zhuChartData661(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    List<Map<String,Object>> zhuChartData671(@Param("control")String control, @Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer zhuChartData66(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer zhuChartData67(@Param("control")String control, @Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
 }
 

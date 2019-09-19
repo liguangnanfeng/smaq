@@ -5288,59 +5288,11 @@ public class CompanyController_cd extends BaseController {
 
                 list.get(i).put("danger20",count);  // 某个车间的所有种类隐患的合计
 
-                if (null != flag){
-
-                    Map<String,Object> map1 = new HashMap<>();
-
-                    if (null == list.get(i).get("name")){
-                        map1.put("name",company.getName());
-                        map1.put("danger20",count);
-                    }else {
-                        map1.put("name",list.get(i).get("name"));
-                        map1.put("danger20",count);
-                    }
-                    list1.add(map1);
-                }
+                findSort2(flag, company, list, list1, i, count);
             }
         }
 
-        if (null != flag){
-
-            Collections.sort(list1, new Comparator<Map<String, Object>>() {
-
-                public int compare(Map<String, Object> o1, Map<String, Object> o2) {
-
-                    Integer name1 = Integer.valueOf(o1.get("danger20").toString()) ;
-
-                    Integer name2 = Integer.valueOf(o2.get("danger20").toString()) ;
-
-                    return name1.compareTo(name2);
-
-                }
-            });
-
-            for (int i = 0; i < list1.size(); i++) {
-
-                list1.get(i).put("data",list1.size()-i);
-
-            }
-
-            for (int i = 0; i < list.size(); i++) {
-
-                for (int j = 0; j < list1.size(); j++) {
-
-                    if (null != list.get(i).get("name") &&  null != list1.get(j).get("name")){
-
-                        if (list.get(i).get("name").equals(list1.get(j).get("name"))){
-
-                            list.get(i).put("data",list1.get(j).get("data"));
-
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+        findSort1(flag, list, list1);
 
 
         Integer count = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 + sum11 + sum12 + sum13 + sum14 + sum15 + sum16 + sum17 + sum18 + sum19;
@@ -5378,6 +5330,22 @@ public class CompanyController_cd extends BaseController {
         return "company/danger/zhuChartData22";
     }
 
+    private void findSort2(Integer flag, Company company, List<Map<String, Object>> list, List<Map<String, Object>> list1, int i, Integer count) {
+        if (null != flag){
+
+            Map<String,Object> map1 = new HashMap<>();
+
+            if (null == list.get(i).get("name")){
+                map1.put("name",company.getName());
+                map1.put("danger20",count);
+            }else {
+                map1.put("name",list.get(i).get("name"));
+                map1.put("danger20",count);
+            }
+            list1.add(map1);
+        }
+    }
+
 
     /**
      * create by  : 小明！！！
@@ -5391,6 +5359,7 @@ public class CompanyController_cd extends BaseController {
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         List<Map<String,Object>> list = null;
         List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
+        List<Map<String,Object>> list2 = null;
         if (flag ==1){
             list = hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
         }else if (flag == 2){
@@ -5451,235 +5420,292 @@ public class CompanyController_cd extends BaseController {
                     if (null == list.get(i).get("dpid") || list.get(i).get("dpid") == 0){
 
                         list.get(i).put("name",company.getName());
-                        s = tCheckItemMapper.zhuChartData66("基础管理",company.getName(),flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("基础管理",company.getName(),flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
+                        s = list2.size();
                         list.get(i).put("danger19",s);
                         sum19 += s;
 
-                        a = tCheckItemMapper.zhuChartData66("设计总图",company.getName(),flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("设计总图",company.getName(),flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
+                        a = list2.size();
                         list.get(i).put("danger1",a);
                         sum1 += a;
 
-                        b = tCheckItemMapper.zhuChartData66("试生产",company.getName(),flag,String.valueOf(user.getId())); // 设备设施 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("试生产",company.getName(),flag,String.valueOf(user.getId())); // 设备设施 隐患数据
+                        b = list2.size();
                         list.get(i).put("danger2",b);
                         sum2 += b;
 
-                        c = tCheckItemMapper.zhuChartData66("装置运行",company.getName(),flag,String.valueOf(user.getId())); // 特种设备 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("装置运行",company.getName(),flag,String.valueOf(user.getId())); // 特种设备 隐患数据
+                        c = list2.size();
                         list.get(i).put("danger3",c);
                         sum3 += c;
 
-                        d = tCheckItemMapper.zhuChartData66("设备安全",company.getName(),flag,String.valueOf(user.getId())); // 消防安全 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("设备安全",company.getName(),flag,String.valueOf(user.getId())); // 消防安全 隐患数据
+                        d = list2.size();
                         list.get(i).put("danger4",d);
                         sum4 += d;
 
-                        e = tCheckItemMapper.zhuChartData66("仪表安全",company.getName(),flag,String.valueOf(user.getId())); // 用电安全 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("仪表安全",company.getName(),flag,String.valueOf(user.getId())); // 用电安全 隐患数据
+                        e = list2.size();
                         list.get(i).put("danger5",e);
                         sum5 += e;
 
-                        f = tCheckItemMapper.zhuChartData66("电气安全",company.getName(),flag,String.valueOf(user.getId())); // 行为环境 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("电气安全",company.getName(),flag,String.valueOf(user.getId())); // 行为环境 隐患数据
+                        f = list2.size();
                         list.get(i).put("danger6",f);
                         sum6 += f;
 
-                        g = tCheckItemMapper.zhuChartData66("应急消防",company.getName(),flag,String.valueOf(user.getId())); // 公辅设备 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("应急消防",company.getName(),flag,String.valueOf(user.getId())); // 公辅设备 隐患数据
+                        g = list2.size();
                         list.get(i).put("danger7",g);
                         sum7 += g;
 
-                        h = tCheckItemMapper.zhuChartData66("特殊管控",company.getName(),flag,String.valueOf(user.getId())); // 危化管理 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("特殊管控",company.getName(),flag,String.valueOf(user.getId())); // 危化管理 隐患数据
+                        h = list2.size();
                         list.get(i).put("danger8",h);
                         sum8 += h;
 
-                        i1 = tCheckItemMapper.zhuChartData66("行为环境",company.getName(),flag,String.valueOf(user.getId())); // 基础管理 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("行为环境",company.getName(),flag,String.valueOf(user.getId())); // 基础管理 隐患数据
+                        i1 = list2.size();
                         list.get(i).put("danger9",i1);
                         sum9 += i1;
 
-                        j = tCheckItemMapper.zhuChartData66("生产现场",company.getName(),flag,String.valueOf(user.getId())); // 防雷静电 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("生产现场",company.getName(),flag,String.valueOf(user.getId())); // 防雷静电 隐患数据
+                        j = list2.size();
                         list.get(i).put("danger10",j);
                         sum10 += j;
 
-                        k = tCheckItemMapper.zhuChartData66("公辅工程",company.getName(),flag,String.valueOf(user.getId())); // 安全设施 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("公辅工程",company.getName(),flag,String.valueOf(user.getId())); // 安全设施 隐患数据
+                        k = list2.size();
                         list.get(i).put("danger11",k);
                         sum11 += k;
 
-                        l = tCheckItemMapper.zhuChartData66("特种设备",company.getName(),flag,String.valueOf(user.getId())); // 职业卫生 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("特种设备",company.getName(),flag,String.valueOf(user.getId())); // 职业卫生 隐患数据
+                        l = list2.size();
                         list.get(i).put("danger12",l);
                         sum12 += l;
 
-                        m = tCheckItemMapper.zhuChartData66("专项行业",company.getName(),flag,String.valueOf(user.getId())); // 生产现场 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("专项行业",company.getName(),flag,String.valueOf(user.getId())); // 生产现场 隐患数据
+                        m = list2.size();
                         list.get(i).put("danger13",m);
                         sum13 += m;
 
-                        n = tCheckItemMapper.zhuChartData66("生产工艺",company.getName(),flag,String.valueOf(user.getId())); // 防雷静电 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("生产工艺",company.getName(),flag,String.valueOf(user.getId())); // 防雷静电 隐患数据
+                        n = list2.size();
                         list.get(i).put("danger14",n);
                         sum14 += n;
 
-                        o = tCheckItemMapper.zhuChartData66("设备设施",company.getName(),flag,String.valueOf(user.getId())); // 安全设施 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("设备设施",company.getName(),flag,String.valueOf(user.getId())); // 安全设施 隐患数据
+                        o = list2.size();
                         list.get(i).put("danger15",o);
                         sum15 += o;
 
-                        p = tCheckItemMapper.zhuChartData66("危化管理",company.getName(),flag,String.valueOf(user.getId())); // 职业卫生 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("危化管理",company.getName(),flag,String.valueOf(user.getId())); // 职业卫生 隐患数据
+                        p = list2.size();
                         list.get(i).put("danger16",p);
                         sum16 += p;
 
-                        q = tCheckItemMapper.zhuChartData66("安全设施",company.getName(),flag,String.valueOf(user.getId())); // 生产现场 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("安全设施",company.getName(),flag,String.valueOf(user.getId())); // 生产现场 隐患数据
+                        q = list2.size();
                         list.get(i).put("danger17",q);
                         sum17 += q;
 
-                        r = tCheckItemMapper.zhuChartData66("其他",company.getName(),flag,String.valueOf(user.getId())); // 其他 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("其他",company.getName(),flag,String.valueOf(user.getId())); // 其他 隐患数据
+                        r = list2.size();
                         list.get(i).put("danger18",r);
                         sum18 += r;
 
                     }else if (null != list.get(i).get("dpid") && list.get(i).get("dpid") != 0){
 
-                        s = tCheckItemMapper.zhuChartData66("基础管理",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("基础管理",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
+                        s = list2.size();
                         list.get(i).put("danger19",s);
                         sum19 += s;
 
-                        a = tCheckItemMapper.zhuChartData66("设计总图",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("设计总图",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
+                        a = list2.size();
                         list.get(i).put("danger1",a);
                         sum1 += a;
 
-                        b = tCheckItemMapper.zhuChartData66("试生产",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 设备设施 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("试生产",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 设备设施 隐患数据
+                        b = list2.size();
                         list.get(i).put("danger2",b);
                         sum2 += b;
 
-                        c = tCheckItemMapper.zhuChartData66("装置运行",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 特种设备 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("装置运行",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 特种设备 隐患数据
+                        c = list2.size();
                         list.get(i).put("danger3",c);
                         sum3 += c;
 
-                        d = tCheckItemMapper.zhuChartData66("设备安全",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 消防安全 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("设备安全",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 消防安全 隐患数据
+                        d = list2.size();
                         list.get(i).put("danger4",d);
                         sum4 += d;
 
-                        e = tCheckItemMapper.zhuChartData66("仪表安全",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 用电安全 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("仪表安全",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 用电安全 隐患数据
+                        e = list2.size();
                         list.get(i).put("danger5",e);
                         sum5 += e;
 
-                        f = tCheckItemMapper.zhuChartData66("电气安全",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 行为环境 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("电气安全",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 行为环境 隐患数据
+                        f = list2.size();
                         list.get(i).put("danger6",f);
                         sum6 += f;
 
-                        g = tCheckItemMapper.zhuChartData66("应急消防",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 公辅设备 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("应急消防",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 公辅设备 隐患数据
+                        g = list2.size();
                         list.get(i).put("danger7",g);
                         sum7 += g;
 
-                        h = tCheckItemMapper.zhuChartData66("特殊管控",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 危化管理 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("特殊管控",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 危化管理 隐患数据
+                        h = list2.size();
                         list.get(i).put("danger8",h);
                         sum8 += h;
 
-                        i1 = tCheckItemMapper.zhuChartData66("行为环境",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 基础管理 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("行为环境",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 基础管理 隐患数据
+                        i1 = list2.size();
                         list.get(i).put("danger9",i1);
                         sum9 += i1;
 
-                        j = tCheckItemMapper.zhuChartData66("生产现场",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 防雷静电 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("生产现场",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 防雷静电 隐患数据
+                        j = list2.size();
                         list.get(i).put("danger10",j);
                         sum10 += j;
 
-                        k = tCheckItemMapper.zhuChartData66("公辅工程",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 安全设施 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("公辅工程",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 安全设施 隐患数据
+                        k = list2.size();
                         list.get(i).put("danger11",k);
                         sum11 += k;
 
-                        l = tCheckItemMapper.zhuChartData66("特种设备",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 职业卫生 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("特种设备",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 职业卫生 隐患数据
+                        l = list2.size();
                         list.get(i).put("danger12",l);
                         sum12 += l;
 
-                        m = tCheckItemMapper.zhuChartData66("专项行业",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产现场 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("专项行业",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产现场 隐患数据
+                        m = list2.size();
                         list.get(i).put("danger13",m);
                         sum13 += m;
 
-                        n = tCheckItemMapper.zhuChartData66("生产工艺",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 防雷静电 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("生产工艺",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 防雷静电 隐患数据
+                        n = list2.size();
                         list.get(i).put("danger14",n);
                         sum14 += n;
 
-                        o = tCheckItemMapper.zhuChartData66("设备设施",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 安全设施 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("设备设施",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 安全设施 隐患数据
+                        o = list2.size();
                         list.get(i).put("danger15",o);
                         sum15 += o;
 
-                        p = tCheckItemMapper.zhuChartData66("危化管理",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 职业卫生 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("危化管理",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 职业卫生 隐患数据
+                        p = list2.size();
                         list.get(i).put("danger16",p);
                         sum16 += p;
 
-                        q = tCheckItemMapper.zhuChartData66("安全设施",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产现场 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("安全设施",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产现场 隐患数据
+                        q = list2.size();
                         list.get(i).put("danger17",q);
                         sum17 += q;
 
-                        r = tCheckItemMapper.zhuChartData66("其他",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 其他 隐患数据
+                        list2 = tCheckItemMapper.zhuChartData661("其他",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 其他 隐患数据
+                        r = list2.size();
                         list.get(i).put("danger18",r);
                         sum18 += n;
                     }
                 }else {
 
-                    s = tCheckItemMapper.zhuChartData67("基础管理",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("基础管理",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
+                    s = list2.size();
                     list.get(i).put("danger19",s);
                     sum19 += s;
 
-                    a = tCheckItemMapper.zhuChartData67("设计总图",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("设计总图",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
+                    a = list2.size();
                     list.get(i).put("danger1",a);
                     sum1 += a;
 
-                    b = tCheckItemMapper.zhuChartData67("试生产",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 设备设施 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("试生产",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 设备设施 隐患数据
+                    b = list2.size();
                     list.get(i).put("danger2",b);
                     sum2 += b;
 
-                    c = tCheckItemMapper.zhuChartData67("装置运行",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 特种设备 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("装置运行",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 特种设备 隐患数据
+                    c = list2.size();
                     list.get(i).put("danger3",c);
                     sum3 += c;
 
-                    d = tCheckItemMapper.zhuChartData67("设备安全",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 消防安全 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("设备安全",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 消防安全 隐患数据
+                    d = list2.size();
                     list.get(i).put("danger4",d);
                     sum4 += d;
 
-                    e = tCheckItemMapper.zhuChartData67("仪表安全",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 用电安全 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("仪表安全",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 用电安全 隐患数据
+                    e = list2.size();
                     list.get(i).put("danger5",e);
                     sum5 += e;
 
-                    f = tCheckItemMapper.zhuChartData67("电气安全",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 行为环境 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("电气安全",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 行为环境 隐患数据
+                    f = list2.size();
                     list.get(i).put("danger6",f);
                     sum6 += f;
 
-                    g = tCheckItemMapper.zhuChartData67("应急消防",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 公辅设备 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("应急消防",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 公辅设备 隐患数据
+                    g = list2.size();
                     list.get(i).put("danger7",g);
                     sum7 += g;
 
-                    h = tCheckItemMapper.zhuChartData67("特殊管控",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 危化管理 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("特殊管控",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 危化管理 隐患数据
+                    h = list2.size();
                     list.get(i).put("danger8",h);
                     sum8 += h;
 
-                    i1 = tCheckItemMapper.zhuChartData67("行为环境",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 基础管理 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("行为环境",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 基础管理 隐患数据
+                    i1 = list2.size();
                     list.get(i).put("danger9",i1);
                     sum9 += i1;
 
-                    j = tCheckItemMapper.zhuChartData67("生产现场",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 防雷静电 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("生产现场",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 防雷静电 隐患数据
+                    j = list2.size();
                     list.get(i).put("danger10",j);
                     sum10 += j;
 
-                    k = tCheckItemMapper.zhuChartData67("公辅工程",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 安全设施 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("公辅工程",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 安全设施 隐患数据
+                    k = list2.size();
                     list.get(i).put("danger11",k);
                     sum11 += k;
 
-                    l = tCheckItemMapper.zhuChartData67("特种设备",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 职业卫生 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("特种设备",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 职业卫生 隐患数据
+                    l = list2.size();
                     list.get(i).put("danger12",l);
                     sum12 += l;
 
-                    m = tCheckItemMapper.zhuChartData67("专项行业",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产现场 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("专项行业",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产现场 隐患数据
+                    m = list2.size();
                     list.get(i).put("danger13",m);
                     sum13 += m;
 
-                    n = tCheckItemMapper.zhuChartData67("生产工艺",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 防雷静电 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("生产工艺",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 防雷静电 隐患数据
+                    n = list2.size();
                     list.get(i).put("danger14",n);
                     sum14 += n;
 
-                    o = tCheckItemMapper.zhuChartData67("设备设施",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 安全设施 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("设备设施",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 安全设施 隐患数据
+                    o = list2.size();
                     list.get(i).put("danger15",o);
                     sum15 += o;
 
-                    p = tCheckItemMapper.zhuChartData67("危化管理",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 职业卫生 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("危化管理",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 职业卫生 隐患数据
+                    p = list2.size();
                     list.get(i).put("danger16",p);
                     sum16 += p;
 
-                    q = tCheckItemMapper.zhuChartData67("安全设施",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产现场 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("安全设施",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 生产现场 隐患数据
+                    q = list2.size();
                     list.get(i).put("danger17",q);
                     sum17 += q;
 
-                    r = tCheckItemMapper.zhuChartData67("其他",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 其他 隐患数据
+                    list2 = tCheckItemMapper.zhuChartData671("其他",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 其他 隐患数据
+                    r = list2.size();
                     list.get(i).put("danger18",r);
                     sum18 += n;
 
@@ -5689,24 +5715,50 @@ public class CompanyController_cd extends BaseController {
 
                 list.get(i).put("danger20",count);  // 某个车间的所有种类隐患的合计
 
-                if (null != flag){
-
-                    Map<String,Object> map1 = new HashMap<>();
-
-                    if (null == list.get(i).get("name")){
-                        map1.put("name",company.getName());
-                        map1.put("danger20",count);
-                    }else {
-                        map1.put("name",list.get(i).get("name"));
-                        map1.put("danger20",count);
-                    }
-
-                    list1.add(map1);
-                }
+                findSort2(flag, company, list, list1, i, count);
             }
 
         }
 
+        findSort1(flag, list, list1);
+
+        Integer count = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 + sum11 + sum12 + sum13 + sum14 + sum15 + sum16 + sum17 + sum18 + sum19;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        selectCount1(map, sum1, sum2, sum3, sum4, sum5, sum6, sum7, sum8, sum9, sum10, sum11, sum12, sum13, sum14, sum15, sum16, sum17, sum18, sum19, count, df);
+        // 合计 坚
+        map.put("sum1",sum1);
+        map.put("sum2",sum2);
+        map.put("sum3",sum3);
+        map.put("sum4",sum4);
+        map.put("sum5",sum5);
+        map.put("sum6",sum6);
+        map.put("sum7",sum7);
+        map.put("sum8",sum8);
+        map.put("sum9",sum9);
+        map.put("sum10",sum10);
+        map.put("sum11",sum11);
+        map.put("sum12",sum12);
+        map.put("sum13",sum13);
+        map.put("sum14",sum14);
+        map.put("sum15",sum15);
+        map.put("sum16",sum16);
+        map.put("sum17",sum17);
+        map.put("sum18",sum18);
+        map.put("sum19",sum19);
+
+        list.add(map);
+
+        model.addAttribute("data",new Date());
+        model.addAttribute("list",list);
+
+        model.addAttribute("list1",list1);
+
+        return "company/danger/zhuChartData66";
+    }
+
+    private void findSort1(Integer flag, List<Map<String, Object>> list, List<Map<String, Object>> list1) {
         if (null != flag){
 
             Collections.sort(list1, new Comparator<Map<String, Object>>() {
@@ -5744,41 +5796,6 @@ public class CompanyController_cd extends BaseController {
                 }
             }
         }
-
-        Integer count = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10 + sum11 + sum12 + sum13 + sum14 + sum15 + sum16 + sum17 + sum18 + sum19;
-
-        DecimalFormat df = new DecimalFormat("0.00");
-
-        selectCount1(map, sum1, sum2, sum3, sum4, sum5, sum6, sum7, sum8, sum9, sum10, sum11, sum12, sum13, sum14, sum15, sum16, sum17, sum18, sum19, count, df);
-        // 合计 坚
-        map.put("sum1",sum1);
-        map.put("sum2",sum2);
-        map.put("sum3",sum3);
-        map.put("sum4",sum4);
-        map.put("sum5",sum5);
-        map.put("sum6",sum6);
-        map.put("sum7",sum7);
-        map.put("sum8",sum8);
-        map.put("sum9",sum9);
-        map.put("sum10",sum10);
-        map.put("sum11",sum11);
-        map.put("sum12",sum12);
-        map.put("sum13",sum13);
-        map.put("sum14",sum14);
-        map.put("sum15",sum15);
-        map.put("sum16",sum16);
-        map.put("sum17",sum17);
-        map.put("sum18",sum18);
-        map.put("sum19",sum19);
-
-        list.add(map);
-
-        model.addAttribute("data",new Date());
-        model.addAttribute("list",list);
-
-        model.addAttribute("list1",list1);
-
-        return "company/danger/zhuChartData66";
     }
 
     private void selectCount1(Map<String, Object> map, Integer sum1, Integer sum2, Integer sum3, Integer sum4, Integer sum5, Integer sum6, Integer sum7, Integer sum8, Integer sum9, Integer sum10, Integer sum11, Integer sum12, Integer sum13, Integer sum14, Integer sum15, Integer sum16, Integer sum17, Integer sum18, Integer sum19, Integer count, DecimalFormat df) {

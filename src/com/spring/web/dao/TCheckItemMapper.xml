@@ -1313,7 +1313,7 @@
     </select>
 
 
-    <select id="zhuChartData66" resultType="Integer">
+    <select id="zhuChartData66" resultType="java.util.Map">
         SELECT
             DISTINCT count(t1.check_id) as counts
         FROM
@@ -1328,6 +1328,26 @@
         AND t2.flag = #{flag}
         AND t2.user_id in (${user_ids})
     </select>
+
+
+    <select id="zhuChartData661" resultType="Integer">
+        SELECT
+            *
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t3.control = #{control}
+        AND t2.depart = #{depart}
+        AND t2.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+        GROUP BY t1.check_id
+    </select>
+
+
 
     <!-- 政府端 隐患排查对象分析数据 -->
     <select id="zfHiddenTrouble" resultType="Integer">
@@ -1469,21 +1489,7 @@
     </select>
 
 
-    <select id="zhuChartData661" resultType="Integer">
-        SELECT
-           DISTINCT count(t1.check_id) as counts
-        FROM
-            smaq.t_check_item_tbl t1
-        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
-        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
-        WHERE
-            t2. status = 2
-        AND t2.del = 0
-        AND t3.control is null
-        AND t2.depart = #{depart}
-        AND t2.flag = #{flag}
-        AND t2.user_id in (${user_ids})
-    </select>
+
 
 
     <select id="zhuChartData67" resultType="Integer">
@@ -1504,7 +1510,7 @@
 
     <select id="zhuChartData671" resultType="Integer">
         SELECT
-            DISTINCT count(t1.check_id) as counts
+            *
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1512,10 +1518,11 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
-        AND t3.control is null
+        AND t3.control = #{control}
         AND t2.check_company = #{check_company}
         AND t2.flag = #{flag}
         AND t2.user_id in (${user_ids})
+        GROUP BY t1.check_id
     </select>
 
 

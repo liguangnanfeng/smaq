@@ -925,7 +925,8 @@ public class SteelController extends BaseController {
         model.addAttribute("status", status);
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
-        model.addAttribute("companyName", company.getName());
+       // model.addAttribute("companyName", company.getName());
+        model.addAttribute("companyName", user.getUserName());
         model.addAttribute("plan", plan);
         model.addAttribute("list1",list1);
         model.addAttribute("name","合计");

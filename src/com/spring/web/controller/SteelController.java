@@ -4474,5 +4474,131 @@ public class SteelController extends BaseController {
         return "village/source/danger-chart";
     }
 
+    @RequestMapping(value = "source/company-list2")
+    public String companyList22(Model model, HttpServletRequest request, CompanyListReqDTO dto, Integer totalzc, Integer totalwyx) throws Exception {
+        User user = getLoginUser(request);
+        //设置查询条件
+        setUserId22(user, dto);
+        dto.setCisDanger("1");
+        String industry2 = null;
+        if (StringUtils.isNotBlank(dto.getIndustry2_())) {
+            industry2 = dto.getIndustry2_();
+            if (StringUtils.isNotBlank(dto.getIndustry2_2())) {
+                industry2 = industry2 + " > " + dto.getIndustry2_2();
+            }
+        }
+        dto.setIndustry2(industry2);
+        String freeze = null;//isFreeze属性用来判断运行状态（当日是否已填写每日检查表）而非是否冻结
+        if(StringUtils.isNotBlank(dto.getIsFreeze())){
+            freeze = dto.getIsFreeze();
+            dto.setIsFreeze(null);
+        }
+        //获取所有符合条件的user_id
+        if(StringUtils.isBlank(dto.getUserIds()) || "-1".equals(dto.getUserIds())){
+            List<Integer> allUserIds = companyMapper.selectIdsByCompany_view(dto);
+            if (allUserIds.size() == 0) {
+                dto.setUserIds("-1");
+            } else {
+                dto.setUserIds(StringUtils.join(allUserIds, ","));
+            }
+        }
+        //全部企业列表
+        List<Map<String,Object>> comps = new ArrayList<Map<String,Object>>();
+        //判断每日检查表是否填写 运行状态列表operatingStatusList
+        List<Boolean> operatingStatusList = new ArrayList<Boolean>();
+        if( ! dto.getUserIds().equals("-1")){
+            comps = companyMapper.selectByIds2(dto);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String date = sdf.format(new Date());
+            boolean operatingStatus = false;
+            String title = "重大危险源每日检查表";
+            Map<String, Object> c = new HashMap<String, Object>();
+            c.put("flag", 1);
+            c.put("title", title);
+            for(int i=0; i < comps.size(); i++){
+                c.put("userIds", comps.get(i).get("userId"));
+                List<Map<String, Object>> lists = tCheckMapper.selectList(c);
+                for (Map<String, Object> list : lists) {
+                    String rt = list.get("realTime").toString();
+                    if(date.equals(rt.substring(0,10))){
+                        operatingStatus = true;
+                        break;
+                    }
+                }
+                operatingStatusList.add(operatingStatus);
+                operatingStatus = false;
+            }
+            //运行状态筛选
+            List<Integer> removeList = new ArrayList<Integer>();
+            if(freeze != null){
+                dto.setIsFreeze(freeze);
+                if(freeze.equals("1")){
+                    for(int i = 0; i < comps.size(); i++){
+                        if(operatingStatusList.get(i) == false){
+                            removeList.add(i);
+                        }
+                    }
+                }else{//freeze为"0"
+                    for(int i = 0; i < comps.size(); i++){
+                        if(operatingStatusList.get(i) == true){
+                            removeList.add(i);
+                        }
+                    }
+                }
+                if(removeList.size() > 0){
+                    for(int i = removeList.size()-1; i >= 0; i--){
+                        comps.remove(removeList.get(i).intValue());
+                        operatingStatusList.remove(removeList.get(i).intValue());
+                    }
+                }
+            }
+            //分页
+            model.addAttribute("total", comps.size());
+            Integer from = dto.getPage() * dto.getRows();
+            Integer end = null;
+            end = Math.min(from + dto.getRows(), comps.size());
+            comps = comps.subList(from, end);
+            operatingStatusList = operatingStatusList.subList(from, end);
+        }else{
+            model.addAttribute("total", 0);
+        }
+        model.addAttribute("list",comps);
+        model.addAttribute("osl", operatingStatusList);
+
+        if(user.getUserType().intValue() == 3) {
+            Map<String, Object> m = new HashMap<String, Object>();
+            m.put("townId", dto.getTownId());
+            m.put("districtId", dto.getDistrictId());
+            List<DynamicParameter<String, Object>> villagelist = villageMapper.selectListByTown(m);
+            model.addAttribute("villagelist", villagelist);
+        }
+//        model.addAttribute("lib", libraryMapper.selectLibraryList(1));
+        model.addAttribute("sk", request.getParameter("sk"));
+//        model.addAttribute("totalzc", totalzc);
+//        model.addAttribute("totalwyx", totalwyx);
+        model.addAttribute("dto", dto);
+
+        return "village/source/company-list";
+    }
+    void setUserId22(User user, CompanyListReqDTO dto) {
+        if (user.getUserType() == 4) {
+            dto.setVillageId(user.getId());
+        }
+        if (user.getUserType() == 5) {
+            dto.setUserId(user.getId());
+        }
+        if (user.getUserType() == 3) {
+            dto.setTownId(user.getId());
+        }
+        if (user.getUserType() == 6) {
+            dto.setDistrictId(user.getId());
+        }
+        if (user.getUserType() == 9) {
+        }
+        if (user.getUserType() == 10) {
+            dto.setTradeId(user.getId());
+        }
+    }
+
 
 }

@@ -5845,7 +5845,7 @@ public class GlobalController extends BaseController {
             Integer  i1 = tCheckMapper.zfCount("烟花",sb.toString()); // 烟花行业 数据
             model.addAttribute("danger9",i1);
 
-            Integer  j = tCheckMapper.zfCount11(sb.toString()); // 其他行业 数据
+            Integer  j = tCheckMapper.zfCount("其他",sb.toString()); // 其他行业 数据
             model.addAttribute("danger10",j);
 
             Integer count = a + b + c + d + e + f + g + h + i1 + j ;
@@ -5908,7 +5908,7 @@ public class GlobalController extends BaseController {
             Integer number17 = tCheckItemMapper.zfTrouble("安全设施",sb.toString()); // 职业卫生 隐患数据
             model.addAttribute("number17",number17);
 
-            Integer number18 = tCheckItemMapper.zfTrouble11(sb.toString()); // 其他 隐患数据
+            Integer number18 = tCheckItemMapper.zfTrouble("其他",sb.toString()); // 其他 隐患数据
 
             model.addAttribute("number18",number18);
 
@@ -6074,7 +6074,7 @@ public class GlobalController extends BaseController {
             Integer  i1 = tCheckItemMapper.zhengFuDanger("烟花",sb.toString()); // 烟花行业 数据
             model.addAttribute("danger9",i1);
 
-            Integer  j = tCheckItemMapper.zhengFuDanger11(sb.toString()); // 其他行业 数据
+            Integer  j = tCheckItemMapper.zhengFuDanger("其他",sb.toString()); // 其他行业 数据
             model.addAttribute("danger10",j);
 
             Integer count = a + b + c + d + e + f + g + h + i1 + j ;
@@ -6137,7 +6137,7 @@ public class GlobalController extends BaseController {
             Integer number17 = tCheckItemMapper.zfData88("安全设施",sb.toString()); // 职业卫生 隐患数据
             model.addAttribute("number17",number17);
 
-            Integer number18 = tCheckItemMapper.zfData881(sb.toString()); // 其他 隐患数据
+            Integer number18 = tCheckItemMapper.zfData88("其他",sb.toString()); // 其他 隐患数据
             model.addAttribute("number18",number18);
 
             Integer count1 = number1 + number2 + number3 + number4 + number5 + number6 + number7 + number8 + number9 + number10 + number11 + number12 + number13 + number14 + number15 + number16 + number17 + number18 + number19;
@@ -6734,7 +6734,7 @@ public class GlobalController extends BaseController {
                     list.get(i).put("danger9",i1);
                     sum9 += i1;
 
-                    Integer  j = tCheckMapper.zfPerformanceCount33(flag,(Integer) list.get(i).get("user_id")); // 其他行业 数据
+                    Integer  j = tCheckMapper.zfPerformanceCount22(flag,"其他",(Integer) list.get(i).get("user_id")); // 其他行业 数据
                     list.get(i).put("danger10",j);
                     sum10 += j;
 
@@ -6795,7 +6795,7 @@ public class GlobalController extends BaseController {
                    list1.get(i).put("danger9",i1);
                    sum9 += i1;
 
-                   Integer  j = tCheckMapper.zfPerformanceCount11(flag,(String) list1.get(i).get("user_id")); // 其他行业 数据
+                   Integer  j = tCheckMapper.zfPerformanceCount(flag,"其他",(String) list1.get(i).get("user_id")); // 其他行业 数据
                    list1.get(i).put("danger10",j);
                    sum10 += j;
 
@@ -7061,7 +7061,7 @@ public class GlobalController extends BaseController {
                     list.get(i).put("danger17", q);
                     sum17 += q;
 
-                    Integer r = tCheckItemMapper.zfHiddenTrouble33(flag, (Integer) list.get(i).get("user_id")); // 其他 隐患数据
+                    Integer r = tCheckItemMapper.zfHiddenTrouble22("其他", flag, (Integer) list.get(i).get("user_id")); // 其他 隐患数据
                     list.get(i).put("danger18", r);
                     sum18 += r;
 
@@ -7157,7 +7157,7 @@ public class GlobalController extends BaseController {
                     list1.get(i).put("danger17", q);
                     sum17 += q;
 
-                    Integer r = tCheckItemMapper.zfHiddenTrouble11(flag, (String) list1.get(i).get("user_id")); // 其他 隐患数据
+                    Integer r = tCheckItemMapper.zfHiddenTroubleType("其他", flag, (String) list1.get(i).get("user_id")); // 其他 隐患数据
                     list1.get(i).put("danger18", r);
                     sum18 += r;
 
@@ -7332,7 +7332,7 @@ public class GlobalController extends BaseController {
                     list.get(i).put("danger17",q);
                     sum17 += q;
 
-                    Integer r = tCheckItemMapper.zhengFuChartData991(flag,(Integer) list.get(i).get("user_id")); // 其他 隐患数据
+                    Integer r = tCheckItemMapper.zhengFuChartData99("其他",flag,(Integer) list.get(i).get("user_id")); // 其他 隐患数据
                     list.get(i).put("danger18",r);
                     sum18 += r;
 
@@ -7428,7 +7428,7 @@ public class GlobalController extends BaseController {
                     list1.get(i).put("danger17",q);
                     sum17 += q;
 
-                    Integer r = tCheckItemMapper.zhengFuChartData881(flag,(String) list1.get(i).get("user_id")); // 其他 隐患数据
+                    Integer r = tCheckItemMapper.zhengFuChartData88("其他",flag,(String) list1.get(i).get("user_id")); // 其他 隐患数据
                     list1.get(i).put("danger18",r);
                     sum18 += r;
 
@@ -7732,7 +7732,7 @@ public class GlobalController extends BaseController {
                 list.get(i).put("danger9",i1);
                 sum9 += i1;
 
-                Integer  j = tCheckItemMapper.zhengFuChartDataDanger33(flag,(Integer) list.get(i).get("user_id")); // 其他行业 数据
+                Integer  j = tCheckItemMapper.zhengFuChartDataDanger22(flag,"其他",(Integer) list.get(i).get("user_id")); // 其他行业 数据
                 list.get(i).put("danger10",j);
                 sum10 += j;
 
@@ -7791,7 +7791,7 @@ public class GlobalController extends BaseController {
                     list1.get(i).put("danger9",i1);
                     sum9 += i1;
 
-                    Integer  j = tCheckItemMapper.zhengFuChartDataDanger11(flag,(String) list1.get(i).get("user_id")); // 其他行业 数据
+                    Integer  j = tCheckItemMapper.zhengFuChartDataDanger(flag,"其他",(String) list1.get(i).get("user_id")); // 其他行业 数据
                     list1.get(i).put("danger10",j);
                     sum10 += j;
 

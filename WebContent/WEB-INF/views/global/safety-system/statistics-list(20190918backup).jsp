@@ -158,78 +158,137 @@ var chart = Highcharts.chart('container', {
       ]
   }]
 });
-    /* 柱状图 */
-    var chart2 = Highcharts.chart('container2',{
-    chart: {
-    type: 'column'
-    },
-    credits: {
-    enabled: false
-    },
-    title: {
-    text: '风险统计'
-    },
-    colors: ['#FF0000', '#FFA500', '#FFFF00', '#3B9BFF'],
-    xAxis: {
-    categories: ${industrys},
-    labels: {
-    style: {
-    fontWeight: 'bold',//颜色
-    fontSize:'15px'  //字体
-    }
-    },
-    crosshair: true
-    },
-    yAxis: {
-    min: 0,
-    title: {
-    text: '数量'
-    },
-    labels: {
-    style: {
-    fontWeight: 'bold',//颜色
-    fontSize:'15px'  //字体
-    }
-    }
-    },
-    tooltip: {
-    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-    '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
-    footerFormat: '</table>',
-    shared: true,
-    useHTML: true
-    },
-    plotOptions: {
-    column: {
-    borderWidth: 0,
-    pointWidth: 35
-    },
-    series: {
-    events: {
-    legendItemClick: function() {
-    return false; // 直接 return false 即可禁用图例点击事件
-    },
-    click:function(e){
+/* 柱状图 */
 
+    const f1='#FF0000';
+    const f2='#FFA500';
+    const f3='#FFFF00';
+    const f4='#3B9BFF';
+    var d=${gg2};
+    console.log('d',d);
+
+var chart2 = Highcharts.chart('container2',{
+  chart: {
+          type: 'column'
+  },
+  credits: {
+    enabled: false
+},
+  title: {
+          text: '风险统计'
+  },
+  colors: [f1, f2, f3,f4],
+  xAxis: {
+          categories: ${industrys},
+          labels: {
+            style: {
+                fontWeight: 'bold',//颜色
+                fontSize:'15px'  //字体
+            }
+        },
+          crosshair: true
+  },
+  yAxis: {
+          min: 0,
+          title: {
+                  text: '数量'
+          },
+          labels: {
+            style: {
+                fontWeight: 'bold',//颜色
+                fontSize:'15px'  //字体
+            }
+        }
+  },
+  tooltip: {
+          headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+          pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+          '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+          footerFormat: '</table>',
+          shared: true,
+          useHTML: true
+  },
+  plotOptions: {
+          column: {
+                  borderWidth: 0,
+                  pointWidth: 35
+          },
+  series: {
+    events: {
+        legendItemClick: function(e) {
+    let x= e.target.index;
+    var exSeries =  $('#container2').highcharts().get('gg2');
+    console.log(exSeries);
+    if(x===0){
+      d=${gg1};
+    exSeries.color=f1;
+    exSeries.name="重大风险";
+    exSeries.setData(d, true, true, false);
     }
-    },
+    else if(x===1){
+    d=${gg2};
+    exSeries.color=f2;
+    exSeries.name="较大风险";
+    exSeries.setData(d, true, true, false);
     }
+    else if(x===2){
+    console.log(3);
+    d=${gg3};
+    console.log(d)
+    exSeries.color=f3;
+    exSeries.name="一般风险";
+    exSeries.setData(d, true, true, false);
+    }
+    else if(x===3){
+    console.log(4);
+    d=${gg4};
+    console.log(d)
+    exSeries.color=f4;
+    exSeries.name="较低风险";
+    exSeries.setData(d, true, true, false);
+    }
+
+
+            return false; // 直接 return false 即可禁用图例点击事件
+
+        },
+        click:function(e){
+<%--          alert(e.point.category);--%>
+<%--          $("#win-show2").modal("show");--%>
+            console.log(e)
+        }
     },
-    series: [{
-    name: '重大风险',
-    data: ${gg1}
-    }, {
-    name: '较大风险',
-    data: ${gg2}
-    }, {
-    name: '一般和较低风险',
-    data: ${gg3}
-    }, {
-    name: '低风险',
-    data: ${gg4}
-    }]
-    });
+  }
+  },
+  series: [{
+          name: '重大风险',
+<%--          data: ${gg1}--%>
+  }
+    , {
+          name: '较大风险',
+         id:'gg2',
+<%--          data: ${gg2}--%>
+            data:d
+  }, {
+          name: '一般风险',
+<%--          data: ${gg3}--%>
+  }, {
+    name: '较低风险',
+    <%--          data: ${gg3}--%>
+    }
+
+    ]
+});
+
+    console.log('industrys---------------')
+    console.log('${industrys}')
+    let a=${gg1};
+    let b=${gg1};
+    let c=${gg1};
+    let ddd={
+     a,b,c
+    };
+    console.log(ddd)
 </script>
 </body>
 </html>

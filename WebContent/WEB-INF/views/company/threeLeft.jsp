@@ -24,7 +24,7 @@
         list-style-type: none;
         <%--        border-right: 1px solid #efefef;--%>
         text-align: center;
-        padding: 6px 16px;
+        padding: 3px 0px;
         margin-left: 12px;
         height: 3.2vw;
         line-height: 3.2vw;

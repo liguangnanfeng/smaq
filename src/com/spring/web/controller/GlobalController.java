@@ -1050,18 +1050,14 @@ public class GlobalController extends BaseController {
 
         User user = getLoginUser(request);
 
-        Integer totalzc = companyMapper.findALL(user.getId(), user.getUserType(),0); // 正常
-        Integer totalwyx = companyMapper.findALL(user.getId(), user.getUserType(),1); // 冻结
-
-        System.out.println(user.getId());
-        System.out.println(user.getUserType());
+        /*Integer totalzc = companyMapper.findALL(user.getId(), user.getUserType(),0); // 正常
+        Integer totalwyx = companyMapper.findALL(user.getId(), user.getUserType(),1); // 冻结*/
 
         List<Map<String,Object>> list = tCheckItemMapper.findCompany(user.getId(), user.getUserType());
 
-        Integer falg = 0;
         // 4 村  3 镇  6 区  7 市
         if (null == list || list.size() == 0){
-
+            log.error("11111111111");
         }else {
             addFlag(user, list);
         }

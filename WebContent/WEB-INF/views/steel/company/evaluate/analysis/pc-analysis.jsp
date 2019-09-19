@@ -44,7 +44,7 @@
         <%--柱状图1--%>
 
         <div class="select-btn">
-        <a class="sbtn btn-default" id="chaBtn0"  href="###">总览</a>
+        <a class="sbtn btn-default" id="chaBtn0"  href="###">汇总</a>
         <a class="sbtn" id="chaBtn1"  href="${ly }/steel/zf-performance-industry?flag=1">企业自查</a>
         <a class="sbtn" id="chaBtn2" href="${ly }/steel/zf-performance-industry?flag=2">行政检查</a>
         <a class="sbtn" id="chaBtn3" href="${ly }/steel/zf-performance-industry?flag=3">第三方检查</a>
@@ -54,10 +54,8 @@
 
         <%--柱状图2--%>
 
-
-
         <div class="select-btn">
-        <a class="sbtn btn-default" id="chaBtn0"  href="###">总览</a>
+        <a class="sbtn btn-default" id="chaBtn0"  href="###">汇总</a>
         <a class="sbtn" id="chaBtn11"  href="${ly }/steel/zf-check-hidden-trouble?flag=1">企业自查</a>
         <a class="sbtn" id="chaBtn22" href="${ly }/steel/zf-check-hidden-trouble?flag=2">行政检查</a>
         <a class="sbtn" id="chaBtn33" href="${ly}/steel/zf-check-hidden-trouble?flag=3">第三方检查</a>

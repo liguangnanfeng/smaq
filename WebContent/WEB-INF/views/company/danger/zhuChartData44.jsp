@@ -154,7 +154,7 @@
 			<td>${flag2}</td>
 			<td>${number66}</td>
 			<td></td>
-			<td></td>
+			<td>${datas}</td>
 		</tr>
 		<c:forEach items="${list}" varStatus="index" var="be">
 			<c:if test="${index.index<fn:length(list)-1 }">
@@ -180,7 +180,7 @@
 				<td>${be.number2}</td>
 				<td>${be.number}</td>
 				<td></td>
-				<td></td>
+				<td>${be.data}</td>
 				</tr>
 			</c:if>
 

@@ -44,7 +44,7 @@
         <%--柱状图1--%>
 
         <div class="select-btn">
-        <a class="sbtn btn-default" id="chaBtn0"  href="###">总览</a>
+        <a class="sbtn btn-default" id="chaBtn0"  href="###">汇总</a>
         <a class="sbtn" id="chaBtn1"  href="${ly }/steel/zf-hidden-industry?flag=1">企业自查</a>
         <a class="sbtn" id="chaBtn2" href="${ly }/steel/zf-hidden-industry?flag=2">行政检查</a>
         <a class="sbtn" id="chaBtn3" href="${ly }/steel/zf-hidden-industry?flag=3">第三方检查</a>
@@ -57,7 +57,7 @@
 
 
         <div class="select-btn">
-            <a class="sbtn btn-default" id="chaBtn0"  href="###">总览</a>
+            <a class="sbtn btn-default" id="chaBtn0"  href="###">汇总</a>
         <a class="sbtn" id="chaBtn11"  href="${ly }/steel/zf-hidden-trouble?flag=1">企业自查</a>
         <a class="sbtn" id="chaBtn22" href="${ly }/steel/zf-hidden-trouble?flag=2">行政检查</a>
         <a class="sbtn" id="chaBtn33" href="${ly }/steel/zf-hidden-trouble?flag=3">第三方检查</a>
@@ -119,7 +119,8 @@
         },
         xAxis: {
         type: 'category',
-        data: ${companyNames},
+        data: ["化工", "冶金", "有色", "建材", "机械", "轻工", "纺织", "商贸", "烟花", "其他"
+        ],
         axisLabel: {
         interval: 0, //横轴信息全部显示
         rotate: 0, //-30度角倾斜显示

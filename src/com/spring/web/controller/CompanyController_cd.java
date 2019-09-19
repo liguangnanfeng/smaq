@@ -4451,6 +4451,7 @@ public class CompanyController_cd extends BaseController {
     public String zhuChartData77 (HttpServletRequest request, Model model){
         User user = getLoginUser(request);
         List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());
+        List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
         DecimalFormat df = new DecimalFormat("0.00");
         Map<String,Object> map = new HashMap<>();
 
@@ -4495,6 +4496,48 @@ public class CompanyController_cd extends BaseController {
                     list.get(i).put("result11", "0.00%");
                     list.get(i).put("result22", "0.00%");
                     list.get(i).put("result33", "0.00%");
+                }
+
+                Map<String,Object> map1 = new HashMap<>();
+
+                map1.put("name",list.get(i).get("name"));
+                map1.put("sum",sum);
+
+                list1.add(map1);
+            }
+
+            Collections.sort(list1, new Comparator<Map<String, Object>>() {
+
+                public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+
+                    Integer name1 = Integer.valueOf(o1.get("sum").toString()) ;
+
+                    Integer name2 = Integer.valueOf(o2.get("sum").toString()) ;
+
+                    return name1.compareTo(name2);
+
+                }
+            });
+
+            for (int i = 0; i < list1.size(); i++) {
+
+                list1.get(i).put("data",list1.size()-i);
+
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+
+                for (int j = 0; j < list1.size(); j++) {
+
+                    if (null != list.get(i).get("name") &&  null != list1.get(j).get("name")){
+
+                        if (list.get(i).get("name").equals(list1.get(j).get("name"))){
+
+                            list.get(i).put("data",list1.get(j).get("data"));
+
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -4566,6 +4609,7 @@ public class CompanyController_cd extends BaseController {
     public String zhuChartData44 (HttpServletRequest request, Model model){
         User user = getLoginUser(request);
         List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());
+        List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         Map<String,Object> map = new HashMap<>();
 
@@ -4590,7 +4634,6 @@ public class CompanyController_cd extends BaseController {
         Integer numbers33 = 0;
 
         Map<String,Object> map1 = new HashMap<>();
-
 
         numbers1 = tCheckItemMapper.findRecheckFileByMap(1,user.getId(),3,company.getName()); // 一般和较小 合格 已治理
         model.addAttribute("numbers1",numbers1);
@@ -4653,6 +4696,12 @@ public class CompanyController_cd extends BaseController {
 
         Integer flag = flag1 + flag2;
 
+        Map<String,Object> map3 = new HashMap<>();
+
+        map3.put("name",company.getName());
+        map3.put("sum",flag1);
+
+        list.add(map3);
         if (null != flag && flag != 0){
             String str = df.format((float)flag1 / flag * 100);
             model.addAttribute("number66",str + "%");  // 治理率 合计
@@ -4736,6 +4785,65 @@ public class CompanyController_cd extends BaseController {
                     list.get(i).put("number","0.00%");
                 }
 
+                Map<String,Object> map2 = new HashMap<>();
+
+                if (list.get(i).get("name").equals(company.getName())){
+
+                    map2.put("name",company.getName());
+                    map2.put("sum",sum);
+                }else {
+                    map2.put("name",list.get(i).get("name"));
+                    map2.put("sum",sum);
+
+                }
+                list1.add(map2);
+            }
+
+            Collections.sort(list1, new Comparator<Map<String, Object>>() {
+
+                public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+
+                    Integer name1 = Integer.valueOf(o1.get("sum").toString()) ;
+
+                    Integer name2 = Integer.valueOf(o2.get("sum").toString()) ;
+
+                    return name1.compareTo(name2);
+
+                }
+            });
+
+            for (int i = 0; i < list1.size(); i++) {
+
+                list1.get(i).put("data",list1.size()-i);
+
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+
+                for (int j = 0; j < list1.size(); j++) {
+
+                    if (null != list.get(i).get("name") &&  null != list1.get(j).get("name")){
+
+                        if (list.get(i).get("name").equals(list1.get(j).get("name"))){
+
+                            list.get(i).put("data",list1.get(j).get("data"));
+
+                            break;
+                        }
+                    }
+                }
+            }
+            Integer datas = 0;
+            for (int i = 0; i < list1.size(); i++) {
+                if (list1.get(i).get("name").equals(company.getName())){
+                    datas = (Integer) list1.get(i).get("data");
+                }
+            }
+           model.addAttribute("datas",datas);
+        }
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).get("name").equals(company.getName())){
+                list.remove(i);
             }
         }
 
@@ -4881,6 +4989,7 @@ public class CompanyController_cd extends BaseController {
         /*List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());*/
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         List<Map<String,Object>> list = null;
+        List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
 
         if (flag ==1){
             list = hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
@@ -4940,7 +5049,7 @@ public class CompanyController_cd extends BaseController {
                 if (flag == 1){
 
                     if (null == list.get(i).get("dpid") || list.get(i).get("dpid") == 0){
-
+                        list.get(i).put("name",company.getName());
                         s = tCheckItemMapper.zhuChartData22("基础管理",company.getName(),flag,user.getId()); // 生产工艺 隐患数据
                         list.get(i).put("danger19",s);
                         sum19 += s;
@@ -5013,7 +5122,7 @@ public class CompanyController_cd extends BaseController {
                         list.get(i).put("danger17",q);
                         sum17 += q;
 
-                        r = tCheckItemMapper.zhuChartData221(company.getName(),flag,user.getId()); // 其他 隐患数据
+                        r = tCheckItemMapper.zhuChartData22("其他",company.getName(),flag,user.getId()); // 其他 隐患数据
                         list.get(i).put("danger18",r);
                         sum18 += r;
 
@@ -5091,7 +5200,7 @@ public class CompanyController_cd extends BaseController {
                         list.get(i).put("danger17",q);
                         sum17 += q;
 
-                        r = tCheckItemMapper.zhuChartData221((String) list.get(i).get("name"),flag,user.getId()); // 其他 隐患数据
+                        r = tCheckItemMapper.zhuChartData22("其他",(String)list.get(i).get("name"),flag,user.getId()); // 其他 隐患数据
                         list.get(i).put("danger18",r);
                         sum18 += r;
                     }
@@ -5170,7 +5279,7 @@ public class CompanyController_cd extends BaseController {
                     list.get(i).put("danger17",q);
                     sum17 += q;
 
-                    r = tCheckItemMapper.zhuChartData231((String) list.get(i).get("name"),flag,user.getId()); // 其他 隐患数据
+                    r = tCheckItemMapper.zhuChartData23("其他",(String)list.get(i).get("name"),flag,user.getId()); // 其他 隐患数据
                     list.get(i).put("danger18",r);
                     sum18 += r;
                 }
@@ -5178,6 +5287,58 @@ public class CompanyController_cd extends BaseController {
                 Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o + p + q + r + s;
 
                 list.get(i).put("danger20",count);  // 某个车间的所有种类隐患的合计
+
+                if (null != flag){
+
+                    Map<String,Object> map1 = new HashMap<>();
+
+                    if (null == list.get(i).get("name")){
+                        map1.put("name",company.getName());
+                        map1.put("danger20",count);
+                    }else {
+                        map1.put("name",list.get(i).get("name"));
+                        map1.put("danger20",count);
+                    }
+                    list1.add(map1);
+                }
+            }
+        }
+
+        if (null != flag){
+
+            Collections.sort(list1, new Comparator<Map<String, Object>>() {
+
+                public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+
+                    Integer name1 = Integer.valueOf(o1.get("danger20").toString()) ;
+
+                    Integer name2 = Integer.valueOf(o2.get("danger20").toString()) ;
+
+                    return name1.compareTo(name2);
+
+                }
+            });
+
+            for (int i = 0; i < list1.size(); i++) {
+
+                list1.get(i).put("data",list1.size()-i);
+
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+
+                for (int j = 0; j < list1.size(); j++) {
+
+                    if (null != list.get(i).get("name") &&  null != list1.get(j).get("name")){
+
+                        if (list.get(i).get("name").equals(list1.get(j).get("name"))){
+
+                            list.get(i).put("data",list1.get(j).get("data"));
+
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -5229,7 +5390,7 @@ public class CompanyController_cd extends BaseController {
        /* List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());*/
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         List<Map<String,Object>> list = null;
-
+        List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
         if (flag ==1){
             list = hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
         }else if (flag == 2){
@@ -5289,6 +5450,7 @@ public class CompanyController_cd extends BaseController {
 
                     if (null == list.get(i).get("dpid") || list.get(i).get("dpid") == 0){
 
+                        list.get(i).put("name",company.getName());
                         s = tCheckItemMapper.zhuChartData66("基础管理",company.getName(),flag,String.valueOf(user.getId())); // 生产工艺 隐患数据
                         list.get(i).put("danger19",s);
                         sum19 += s;
@@ -5361,7 +5523,7 @@ public class CompanyController_cd extends BaseController {
                         list.get(i).put("danger17",q);
                         sum17 += q;
 
-                        r = tCheckItemMapper.zhuChartData661(company.getName(),flag,String.valueOf(user.getId())); // 其他 隐患数据
+                        r = tCheckItemMapper.zhuChartData66("其他",company.getName(),flag,String.valueOf(user.getId())); // 其他 隐患数据
                         list.get(i).put("danger18",r);
                         sum18 += r;
 
@@ -5439,7 +5601,7 @@ public class CompanyController_cd extends BaseController {
                         list.get(i).put("danger17",q);
                         sum17 += q;
 
-                        r = tCheckItemMapper.zhuChartData661((String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 其他 隐患数据
+                        r = tCheckItemMapper.zhuChartData66("其他",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 其他 隐患数据
                         list.get(i).put("danger18",r);
                         sum18 += n;
                     }
@@ -5517,7 +5679,7 @@ public class CompanyController_cd extends BaseController {
                     list.get(i).put("danger17",q);
                     sum17 += q;
 
-                    r = tCheckItemMapper.zhuChartData671((String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 其他 隐患数据
+                    r = tCheckItemMapper.zhuChartData67("其他",(String) list.get(i).get("name"),flag,String.valueOf(user.getId())); // 其他 隐患数据
                     list.get(i).put("danger18",r);
                     sum18 += n;
 
@@ -5526,6 +5688,60 @@ public class CompanyController_cd extends BaseController {
                 Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o + p + q + r + s;
 
                 list.get(i).put("danger20",count);  // 某个车间的所有种类隐患的合计
+
+                if (null != flag){
+
+                    Map<String,Object> map1 = new HashMap<>();
+
+                    if (null == list.get(i).get("name")){
+                        map1.put("name",company.getName());
+                        map1.put("danger20",count);
+                    }else {
+                        map1.put("name",list.get(i).get("name"));
+                        map1.put("danger20",count);
+                    }
+
+                    list1.add(map1);
+                }
+            }
+
+        }
+
+        if (null != flag){
+
+            Collections.sort(list1, new Comparator<Map<String, Object>>() {
+
+                public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+
+                    Integer name1 = Integer.valueOf(o1.get("danger20").toString()) ;
+
+                    Integer name2 = Integer.valueOf(o2.get("danger20").toString()) ;
+
+                    return name1.compareTo(name2);
+
+                }
+            });
+
+            for (int i = 0; i < list1.size(); i++) {
+
+                list1.get(i).put("data",list1.size()-i);
+
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+
+                for (int j = 0; j < list1.size(); j++) {
+
+                    if (null != list.get(i).get("name") &&  null != list1.get(j).get("name")){
+
+                        if (list.get(i).get("name").equals(list1.get(j).get("name"))){
+
+                            list.get(i).put("data",list1.get(j).get("data"));
+
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -5559,6 +5775,8 @@ public class CompanyController_cd extends BaseController {
 
         model.addAttribute("data",new Date());
         model.addAttribute("list",list);
+
+        model.addAttribute("list1",list1);
 
         return "company/danger/zhuChartData66";
     }
@@ -5753,6 +5971,7 @@ public class CompanyController_cd extends BaseController {
     public String zhuChartData123 (HttpServletRequest request, Model model){
         User user = getLoginUser(request);
         List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());
+        List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         Map<String,Object> map = new HashMap<>();
 
@@ -5854,12 +6073,19 @@ public class CompanyController_cd extends BaseController {
         qq = tCheckItemMapper.zhuChartData123("安全设施",company.getName(),user.getId()); // 生产现场 隐患数据
         model.addAttribute("qq",qq);
 
-        rr = tCheckItemMapper.zhuChartData1231(company.getName(),user.getId()); // 其他 隐患数据
+        rr = tCheckItemMapper.zhuChartData123("其他",company.getName(),user.getId()); // 其他 隐患数据
         model.addAttribute("rr",rr);
 
         count1 = aa + bb + cc + dd + ee + ff + gg + hh + ii + jj + kk + ll + mm + nn + oo + pp + qq + rr + ss;
 
         model.addAttribute("count1",count1);
+
+        Map<String,Object> map3 = new HashMap<>();
+
+        map3.put("name",company.getName());
+        map3.put("danger20",count1);
+
+        list.add(map3);
 
         if (null == list || list.size() == 0){
 
@@ -5939,13 +6165,76 @@ public class CompanyController_cd extends BaseController {
                 list.get(i).put("danger17",q);
                 sum17 += q;
 
-                Integer  r = tCheckItemMapper.zhuChartData1231((String) list.get(i).get("name"),user.getId()); // 其他 隐患数据
+                Integer  r = tCheckItemMapper.zhuChartData123("其他",(String) list.get(i).get("name"),user.getId()); // 其他 隐患数据
                 list.get(i).put("danger18",r);
                 sum18 += r;
 
                 Integer count = a + b + c + d + e + f + g + h + i1 + j + k + l + m + n + o + p + q + r + s;
 
                 list.get(i).put("danger20",count);  // 某个车间的所有种类隐患的合计
+
+                Map<String,Object> map2 = new HashMap<>();
+
+                if (list.get(i).get("name").equals(company.getName())){
+
+                    map2.put("name",company.getName());
+                    map2.put("danger20",count);
+                }else {
+                    map2.put("name",list.get(i).get("name"));
+                    map2.put("danger20",count);
+
+                }
+                list1.add(map2);
+            }
+        }
+
+        Collections.sort(list1, new Comparator<Map<String, Object>>() {
+
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+
+                Integer name1 = Integer.valueOf(o1.get("danger20").toString()) ;
+
+                Integer name2 = Integer.valueOf(o2.get("danger20").toString()) ;
+
+                return name1.compareTo(name2);
+
+            }
+        });
+
+        for (int i = 0; i < list1.size(); i++) {
+
+            list1.get(i).put("data",list1.size()-i);
+
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+
+            for (int j = 0; j < list1.size(); j++) {
+
+                if (null != list.get(i).get("name") &&  null != list1.get(j).get("name")){
+
+                    if (list.get(i).get("name").equals(list1.get(j).get("name"))){
+
+                        list.get(i).put("data",list1.get(j).get("data"));
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        Integer datas = 0;
+        for (int i = 0; i < list1.size(); i++) {
+            if (list1.get(i).get("name").equals(company.getName())){
+                datas = (Integer) list1.get(i).get("data");
+            }
+        }
+
+        model.addAttribute("datas",datas);
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).get("name").equals(company.getName())){
+                list.remove(i);
             }
         }
 
@@ -6227,49 +6516,70 @@ public class CompanyController_cd extends BaseController {
         Integer q = 0;
         Integer r = 0;
         Integer s = 0;
-
+        List<Map<String,Object>> list2 = null;
         /*if (flag == 1){*/
         if (null == sb.toString() || sb.toString().length() == 0){
 
         }else if (null != sb.toString() && sb.toString().length() != 0){
 
-            s = tCheckItemMapper.zhuChartData78("基础管理",String.valueOf(user.getId()),sb.toString()); // 生产工艺 隐患数据
 
-            a = tCheckItemMapper.zhuChartData78("设计总图",String.valueOf(user.getId()),sb.toString()); // 生产工艺 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("基础管理",String.valueOf(user.getId()),sb.toString()); // 生产工艺 隐患数据
+            s = list2.size();
 
-            b = tCheckItemMapper.zhuChartData78("试生产",String.valueOf(user.getId()),sb.toString()); // 设备设施 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("设计总图",String.valueOf(user.getId()),sb.toString()); // 生产工艺 隐患数据
+            a = list2.size();
 
-            c = tCheckItemMapper.zhuChartData78("装置运行",String.valueOf(user.getId()),sb.toString()); // 特种设备 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("试生产",String.valueOf(user.getId()),sb.toString()); // 设备设施 隐患数据
+            b = list2.size();
 
-            d = tCheckItemMapper.zhuChartData78("设备安全",String.valueOf(user.getId()),sb.toString()); // 消防安全 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("装置运行",String.valueOf(user.getId()),sb.toString()); // 特种设备 隐患数据
+            c = list2.size();
 
-            e = tCheckItemMapper.zhuChartData78("仪表安全",String.valueOf(user.getId()),sb.toString()); // 用电安全 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("设备安全",String.valueOf(user.getId()),sb.toString()); // 消防安全 隐患数据
+            d = list2.size();
 
-            f = tCheckItemMapper.zhuChartData78("电气安全",String.valueOf(user.getId()),sb.toString()); // 行为环境 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("仪表安全",String.valueOf(user.getId()),sb.toString()); // 用电安全 隐患数据
+            e = list2.size();
 
-            g = tCheckItemMapper.zhuChartData78("应急消防",String.valueOf(user.getId()),sb.toString()); // 公辅设备 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("电气安全",String.valueOf(user.getId()),sb.toString()); // 行为环境 隐患数据
+            f = list2.size();
 
-            h = tCheckItemMapper.zhuChartData78("特殊管控",String.valueOf(user.getId()),sb.toString()); // 危化管理 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("应急消防",String.valueOf(user.getId()),sb.toString()); // 公辅设备 隐患数据
+            g = list2.size();
 
-            i = tCheckItemMapper.zhuChartData78("行为环境",String.valueOf(user.getId()),sb.toString()); // 基础管理 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("特殊管控",String.valueOf(user.getId()),sb.toString()); // 危化管理 隐患数据
+            h = list2.size();
 
-            j = tCheckItemMapper.zhuChartData78("生产现场",String.valueOf(user.getId()),sb.toString()); // 防雷静电 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("行为环境",String.valueOf(user.getId()),sb.toString()); // 基础管理 隐患数据
+            i = list2.size();
 
-            k = tCheckItemMapper.zhuChartData78("公辅工程",String.valueOf(user.getId()),sb.toString()); // 安全设施 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("生产现场",String.valueOf(user.getId()),sb.toString()); // 防雷静电 隐患数据
+            j = list2.size();
 
-            l = tCheckItemMapper.zhuChartData78("特种设备",String.valueOf(user.getId()),sb.toString()); // 职业卫生 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("公辅工程",String.valueOf(user.getId()),sb.toString()); // 安全设施 隐患数据
+            k = list2.size();
 
-            m = tCheckItemMapper.zhuChartData78("专项行业",String.valueOf(user.getId()),sb.toString()); // 生产现场 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("特种设备",String.valueOf(user.getId()),sb.toString()); // 职业卫生 隐患数据
+            l = list2.size();
 
-            n = tCheckItemMapper.zhuChartData78("生产工艺",String.valueOf(user.getId()),sb.toString()); // 防雷静电 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("专项行业",String.valueOf(user.getId()),sb.toString()); // 生产现场 隐患数据
+            m = list2.size();
 
-            o = tCheckItemMapper.zhuChartData78("设备设施",String.valueOf(user.getId()),sb.toString()); // 安全设施 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("生产工艺",String.valueOf(user.getId()),sb.toString()); // 防雷静电 隐患数据
+            n = list2.size();
 
-            p = tCheckItemMapper.zhuChartData78("危化管理",String.valueOf(user.getId()),sb.toString()); // 职业卫生 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("设备设施",String.valueOf(user.getId()),sb.toString()); // 安全设施 隐患数据
+            o = list2.size();
 
-            q = tCheckItemMapper.zhuChartData78("安全设施",String.valueOf(user.getId()),sb.toString()); // 生产现场 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("危化管理",String.valueOf(user.getId()),sb.toString()); // 职业卫生 隐患数据
+            p = list2.size();
 
-            r = tCheckItemMapper.zhuChartData781(String.valueOf(user.getId()),sb.toString()); // 其他 隐患数据
+            list2 = tCheckItemMapper.zhuChartData781("安全设施",String.valueOf(user.getId()),sb.toString()); // 生产现场 隐患数据
+            q = list2.size();
+
+            list2 = tCheckItemMapper.zhuChartData781("其他",String.valueOf(user.getId()),sb.toString()); // 其他 隐患数据
+            r = list2.size();
+
         }
 
        /* }else {
@@ -6395,7 +6705,7 @@ public class CompanyController_cd extends BaseController {
             }
 
             if (null != c && 0 != c) {
-                String str = df.format((float) c / count * 100);
+                String str = df.format((float) c / count);
                 model.addAttribute("c1",str);
 
             } else {
@@ -6601,6 +6911,10 @@ public class CompanyController_cd extends BaseController {
 
         }else if (null != sb.toString() || sb.toString().length() != 0){
 
+
+            System.out.println(sb.toString());
+            System.out.println(user.getId());
+
             s = tCheckItemMapper.zhuChartData88("基础管理",String.valueOf(user.getId()),sb.toString()); // 生产工艺 隐患数据
 
             a = tCheckItemMapper.zhuChartData88("设计总图",String.valueOf(user.getId()),sb.toString()); // 生产工艺 隐患数据
@@ -6637,7 +6951,7 @@ public class CompanyController_cd extends BaseController {
 
             q = tCheckItemMapper.zhuChartData88("安全设施",String.valueOf(user.getId()),sb.toString()); // 生产现场 隐患数据
 
-            r = tCheckItemMapper.zhuChartData881(String.valueOf(user.getId()),sb.toString()); // 其他 隐患数据
+            r = tCheckItemMapper.zhuChartData88("其他",String.valueOf(user.getId()),sb.toString()); // 其他 隐患数据
         }
 
         /*}else {
@@ -6786,7 +7100,7 @@ public class CompanyController_cd extends BaseController {
         Integer q = tCheckItemMapper.zhuChartData124("安全设施",user.getId()); // 生产现场 隐患数据
         model.addAttribute("q",q);
 
-        Integer r = tCheckItemMapper.zhuChartData1241(user.getId()); // 其他 隐患数据
+        Integer r = tCheckItemMapper.zhuChartData124("其他",user.getId()); // 其他 隐患数据
         model.addAttribute("r",r);
 
         Integer count = a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + p + q + r + s;

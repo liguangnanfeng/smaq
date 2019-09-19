@@ -233,7 +233,7 @@
         <dd>
 
         <ul>
-        <li><a data-href="${ly }/global/study/promise-collect" data-title="安全承诺公告" href="###">承诺公告公示汇总</a></li>
+        <li><a data-href="${ly }/global/study/promise-collect" data-title="承诺公告汇总" href="###">承诺公告汇总</a></li>
         </ul>
         </dd>
         </dl>
@@ -253,7 +253,7 @@
                 <li><a data-href="${ly }/global/check-list?flag=2" data-title="执法记录" href="javascript:void(0)">执法记录</a></li>
                 <li><a data-href="${ly }/global/danger/opinion-list?type=3&flag2=2" data-title="行政处罚" href="javascript:void(0)">行政处罚</a></li>
                 <li><a data-href="${ly }/global/evaluate/lawDoc-list?flag=2" data-title="上传图片视频资料" href="javascript:void(0)">上传图片视频资料</a></li>
-                <li><a data-href="${ly }/global/off-list" data-title="执法人员信息库" href="javascript:void(0)">执法人员信息库</a></li>
+                <li><a data-href="${ly }/global/off-list" data-title="人员信息" href="javascript:void(0)">人员信息</a></li>
 
             </c:when>
             <c:when test="${userType==6}">
@@ -263,7 +263,7 @@
                 <li><a data-href="${ly }/global/check-list?flag=2" data-title="执法记录" href="javascript:void(0)">执法记录</a></li>
                 <li><a data-href="${ly }/global/evaluate/lawDoc-list?flag=2" data-title="执法终端" href="javascript:void(0)">执法终端</a></li>
                 <li><a data-href="${ly }/global/danger/opinion-list?type=3&flag2=2" data-title="行政处罚" href="javascript:void(0)">行政处罚</a></li>
-                <li><a data-href="${ly }/global/off-list" data-title="执法人员信息库" href="javascript:void(0)">执法人员信息库</a></li>
+                <li><a data-href="${ly }/global/off-list" data-title="人员信息" href="javascript:void(0)">人员信息</a></li>
 
             </c:when>
             <c:when test="${userType==3}">
@@ -273,7 +273,7 @@
                 <li><a data-href="${ly }/global/check-list?flag=2" data-title="执法记录" href="javascript:void(0)">执法记录</a></li>
                 <li><a data-href="${ly }/global/danger/opinion-list?type=3&flag2=2" data-title="行政处罚" href="javascript:void(0)">行政处罚</a></li>
                 <li><a data-href="${ly }/global/evaluate/lawDoc-list?flag=2" data-title="上传图片视频资料" href="javascript:void(0)">上传图片视频资料</a></li>
-                <li><a data-href="${ly }/global/off-list" data-title="执法人员信息库" href="javascript:void(0)">执法人员信息库</a></li>
+                <li><a data-href="${ly }/global/off-list" data-title="人员信息" href="javascript:void(0)">人员信息</a></li>
             </c:when>
             <c:when test="${userType==4}">
                 <!--村级-->

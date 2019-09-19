@@ -191,7 +191,7 @@
 				<td>${be.danger17}</td>
 				<td>${be.danger18}</td>
 				<td>${be.danger20}</td>
-				<td></td>
+				<td>${be.data}</td>
 				<td></td>
 				<script>
 				   window.a=window.a+'${be.danger20}'*1;

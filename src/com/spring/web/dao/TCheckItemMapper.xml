@@ -1533,13 +1533,12 @@
         AND t3.control = #{control}
         AND t2.user_id in (${user_ids})
         AND t2.depart in (${departs})
-
     </select>
 
 
-    <select id="zhuChartData781" resultType="Integer">
+    <select id="zhuChartData781" resultType="java.util.Map">
         SELECT
-            DISTINCT count(t1.check_id) as counts
+            *
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
@@ -1547,9 +1546,10 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
-        AND t3.control is null
+        AND t3.control = #{control}
         AND t2.user_id in (${user_ids})
         AND t2.depart in (${departs})
+        GROUP BY t1.check_id
     </select>
 
 
@@ -1595,7 +1595,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control = #{control}
@@ -1611,7 +1611,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-        t2. status = 2
+        t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control is null
@@ -1629,7 +1629,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-        t2. status = 2
+        t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control = #{control}
@@ -1645,7 +1645,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-        t2. status = 2
+        t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control = #{control}
@@ -1660,7 +1660,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-        t2. status = 2
+        t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control = #{control}
@@ -1676,7 +1676,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-        t2. status = 2
+        t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control = #{control}
@@ -1694,7 +1694,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control is null
@@ -1711,7 +1711,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control is null
@@ -1726,7 +1726,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control is null
@@ -1742,7 +1742,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control is null
@@ -1763,7 +1763,7 @@
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t2.flag = #{flag}
@@ -1780,7 +1780,7 @@
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND c1.industry  like  CONCAT('%', #{industry},'%')
@@ -1797,7 +1797,7 @@
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t2.flag = #{flag}
@@ -1814,7 +1814,7 @@
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t2.flag = #{flag}
@@ -1831,7 +1831,7 @@
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t2.user_id = #{userId}
@@ -1847,7 +1847,7 @@
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND c1.industry  is null
@@ -1864,7 +1864,7 @@
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND c1.industry  is null
@@ -1881,7 +1881,7 @@
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND c1.industry  is null
@@ -1898,7 +1898,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control = #{control}
@@ -1914,7 +1914,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control is null
@@ -1933,7 +1933,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control = #{control}
@@ -1950,7 +1950,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control is null
@@ -1969,7 +1969,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control = #{control}
@@ -1986,7 +1986,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control is null
@@ -2005,7 +2005,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control = #{control}
@@ -2023,7 +2023,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control = #{control}
@@ -2038,7 +2038,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control is null
@@ -2055,7 +2055,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control = #{control}
@@ -2071,7 +2071,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control is null

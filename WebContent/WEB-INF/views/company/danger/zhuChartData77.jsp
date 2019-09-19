@@ -149,7 +149,7 @@
 				<td>${be.sum}</td>
 				<td>${be.result44}</td>
 				<td></td>
-				<td></td>
+				<td>${be.data}</td>
 				</tr>
 			</c:if>
 

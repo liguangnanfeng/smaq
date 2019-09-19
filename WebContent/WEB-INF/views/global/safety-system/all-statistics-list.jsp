@@ -40,10 +40,10 @@
             <th width="5%">序号</th>
             <th width="25%">企业名称</th>
             <th width="15%">所属行业</th>
-            <th width="8%">风险等级</th>
-            <th width="20%">所在地</th>
-            <th width="14%">规模类型</th>
-            <th width="8%">运行状态</th>
+            <th width="8%">重大风险</th>
+            <th width="20%">较大风险</th>
+            <th width="14%">一般风险</th>
+            <th width="8%">较少风险</th>
         </tr>
         </thead>
         <tbody><%-- <th width="10%">操作</th>--%>
@@ -56,17 +56,10 @@
             <td>${index.index + 1 }</td>
             <td>${be.name}</td>
             <td>${be.industry}</td>
-            <td>${be.dlevel}</td>
-            <td>${be.address}</td>
-            <td>${be.scale}</td>
-            <td>
-            <c:if test="${0 == be.isFreeze }">
-                正常
-            </c:if>
-            <c:if test="${1 == be.isFreeze }">
-                冻结
-            </c:if>
-            </td>
+            <td>${be.red}</td>
+            <td>${be.orange}</td>
+            <td>${be.yellow}</td>
+            <td>${be.blue}</td>
 
             </tr>
         </c:forEach>

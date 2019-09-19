@@ -1018,18 +1018,17 @@ public class GlobalController extends BaseController {
 
         for (int i = 0; i < list.size(); i++) {
 
-            Integer red = aCompanyManualMapper.totalize((Integer) list.get(i).get("uid"),"红色");
+            Integer red = aCompanyManualMapper.totalize((Integer) list.get(i).get("user_id"),"红色");
             list.get(i).put("red",red);
 
-            Integer orange = aCompanyManualMapper.totalize((Integer) list.get(i).get("uid"),"橙色");
+            Integer orange = aCompanyManualMapper.totalize((Integer) list.get(i).get("user_id"),"橙色");
             list.get(i).put("orange",orange);
 
-            Integer yellow = aCompanyManualMapper.totalize((Integer) list.get(i).get("uid"),"黄色");
+            Integer yellow = aCompanyManualMapper.totalize((Integer) list.get(i).get("user_id"),"黄色");
             list.get(i).put("yellow",yellow);
 
-            Integer blue = aCompanyManualMapper.totalizeBlue((Integer) list.get(i).get("uid"));
+            Integer blue = aCompanyManualMapper.totalizeBlue((Integer) list.get(i).get("user_id"));
             list.get(i).put("blue",blue);
-
         }
 
         model.addAttribute("list",list);
@@ -1057,7 +1056,7 @@ public class GlobalController extends BaseController {
 
         // 4 村  3 镇  6 区  7 市
         if (null == list || list.size() == 0){
-            log.error("11111111111");
+
         }else {
             addFlag(user, list);
         }
@@ -1159,13 +1158,25 @@ public class GlobalController extends BaseController {
     /**
      *
      * create by  : 小明！！！
-     * description: TODO    风险分级管控 —— 管控分布
+     * description: TODO    风险分级管控 —— 各类风险分布
      * create time: 2019/9/12 15:30
      */
     @RequestMapping(value = "/safety-system/control-distribution")
     public String controlDistribution(HttpServletRequest request,Model model) throws Exception {
         User user = getLoginUser(request);
 
+        List<Map<String,Object>> list1 = aCompanyManualMapper.findCoordinate(user.getId(), user.getUserType(),"红色");
+
+        List<Map<String,Object>> list2 = aCompanyManualMapper.findCoordinate(user.getId(), user.getUserType(),"橙色");
+
+        List<Map<String,Object>> list3 = aCompanyManualMapper.findCoordinate(user.getId(), user.getUserType(),"黄色");
+
+        List<Map<String,Object>> list4 = aCompanyManualMapper.findCoordinateBlue(user.getId(), user.getUserType());
+
+        model.addAttribute("list1",list1);
+        model.addAttribute("list2",list2);
+        model.addAttribute("list3",list3);
+        model.addAttribute("list4",list4);
 
         return "global/safety-system/control-distribution";
 

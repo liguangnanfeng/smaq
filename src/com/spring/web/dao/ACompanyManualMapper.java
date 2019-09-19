@@ -206,5 +206,9 @@ public interface ACompanyManualMapper {
     Integer totalize(@Param("uid")Integer uid, @Param("level")String level);
 
     Integer totalizeBlue(@Param("uid")Integer uid);
+
+    List<Map<String,Object>> findCoordinate(@Param("userId")Integer userId, @Param("type")Integer type, @Param("dlevel")String dlevel);
+
+    List<Map<String,Object>> findCoordinateBlue(@Param("userId")Integer userId, @Param("type")Integer type);
 }
 

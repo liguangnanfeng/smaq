@@ -194,8 +194,8 @@
 
         console.log('sign:,${sign}')
         // 基于准备好的dom，初始化echarts实例
-        var number2 = ["${number1}", "${number2}", "${number3}", "${number4}", "${number5}", "${number6}", "${number7}", "${number8}", "${number9}", "${number10}", "${number11}", "${number12}", "${number13}", "${number14}","${number15}"];
-        var firstdata2 = ["${double1}", "${double2}", "${double3}", "${double4}", "${double5}", "${double6}", "${double7}", "${double8}", "${double9}", "${double10}", "${double11}", "${double12}", "${double13}", "${double14}","${double15}"];
+        var number2 = ["${number19}", "${number1}", "${number2}", "${number3}", "${number4}", "${number5}", "${number6}", "${number7}", "${number8}", "${number9}", "${number10}", "${number11}", "${number12}", "${number13}", "${number14}","${number15}","${number16}","${number17}","${number18}"];
+        var firstdata2 = ["${double19}","${double1}", "${double2}", "${double3}", "${double4}", "${double5}", "${double6}", "${double7}", "${double8}", "${double9}", "${double10}", "${double11}", "${double12}", "${double13}", "${double14}","${double15}","${double16}","${double17}","${double18}"];
         var x2="",fdata2=[];
         console.log(number);
         firstdata2.map((v,i)=>{
@@ -242,9 +242,9 @@
         },
         xAxis: {
         type: 'category',
-        data: ["基础管理", "生产工艺", "设备设施", "公用工程", "特种设备", "生产现场", "行为环境", "危化管理", "消防安全", "用电安全", "安全设施", "防雷静电", "职业卫生",
-        "专项行业","其他"
-        ],
+                data: ["基础管理", "设计总图", "试生产", "装置运行", "设备安全", "仪表安全", "电气安全", "应急消防", "特殊管控", "行为环境", "生产现场", "公辅工程", "特种设备", "专项行业",
+                        "生产工艺", "设备设施", "危化管理", "安全设施","其他"
+                ],
         axisLabel: {
         interval: 0, //横轴信息全部显示
         rotate: 0, //-30度角倾斜显示

@@ -130,7 +130,7 @@
 		<td>现场</td>
 		<td>基础</td>
 		<td>合计</td>
-		<td>同比%</td>
+		<td>同比</td>
 		</tr>
 		<script>
 		window.a=0;

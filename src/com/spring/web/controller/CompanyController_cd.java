@@ -120,7 +120,6 @@ public class CompanyController_cd extends BaseController {
     public String welcome(Model model, HttpServletRequest request,Integer flage) throws Exception {
         User user = getLoginUser(request);
         Company c = companyMapper.selectByPrimaryKey(user.getId());
-        System.out.println(flage);
         model.addAttribute("c", c);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("type", "1");
@@ -382,7 +381,6 @@ public class CompanyController_cd extends BaseController {
         qccData.setCompanyName(companyName);
         qccData.setStatus(0);
         qccData.setData(data);
-        System.out.println(data);
         qccDataMapper.insertSelective(qccData);
          //Gson gosn = new Gson();
         // QccJson qccJson = gosn.fromJson(data, QccJson.class);
@@ -6235,7 +6233,7 @@ public class CompanyController_cd extends BaseController {
         User user = getLoginUser(request);
         Map map = new HashMap();
         List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
-
+        DecimalFormat df = new DecimalFormat("0.00");
         /*List<ZzjgDepartment> zList = zzjgDepartmentMapper.selectLevel1DangerIds(user.getId());*/
         if (null == list || list.size() == 0){
 
@@ -6266,6 +6264,20 @@ public class CompanyController_cd extends BaseController {
                 Integer count = a + b + c + d + e;
 
                 list.get(i).put("count",count);
+
+                Integer counts = (Integer) list.get(i).get("syn_year") + (Integer)list.get(i).get("eve_year") + (Integer)list.get(i).get("reg_year") + (Integer)list.get(i).get("sea_year") + (Integer)list.get(i).get("els_year") + (Integer)list.get(i).get("bas_year");
+
+                if (null != counts && 0 != counts) {
+
+                    if (null != count && 0 != count) {
+                        String str = df.format((float) count / counts * 100);
+
+                        list.get(i).put("counts",str + "%");
+
+                    } else {
+                        list.get(i).put("counts","0.00%");
+                    }
+                }
             }
         }
 
@@ -6324,9 +6336,26 @@ public class CompanyController_cd extends BaseController {
             }else {
                 number6 += (Integer) list.get(i).get("bas_year");
             }
-
-
         }
+
+        Integer sums = count1 + count2 + count3 + count4 + count5;
+
+        Integer sums1 = number1 + number2 + number3 + number4 + number5 + number6;
+
+        model.addAttribute("sums",sums);
+
+        if (null != sums1 && 0 != sums1) {
+
+            if (null != sums && 0 != sums) {
+                String str = df.format((float) sums / sums1 * 100);
+                model.addAttribute("sums1",str + "%");
+
+            } else {
+                model.addAttribute("sums1","0.00%");
+            }
+        }
+
+
             /*if (null == (Integer) list.get(i).get("total_count")){
                 sum = (Integer) list.get(i).get("danger1") + (Integer)list.get(i).get("danger2") + (Integer) list.get(i).get("danger3") + (Integer) list.get(i).get("danger4") + (Integer) list.get(i).get("danger5");
             }else if (null != (Integer) list.get(i).get("total_count")){
@@ -6845,10 +6874,6 @@ public class CompanyController_cd extends BaseController {
         if (null == sb.toString() || sb.toString().length() == 0){
 
         }else if (null != sb.toString() || sb.toString().length() != 0){
-
-
-            System.out.println(sb.toString());
-            System.out.println(user.getId());
 
             s = tCheckItemMapper.zhuChartData88("基础管理",String.valueOf(user.getId()),sb.toString()); // 生产工艺 隐患数据
 

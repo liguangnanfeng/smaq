@@ -14,7 +14,8 @@
         text-align:center;
         margin:0;
         padding:0;
-        margin-top:3%;
+        margin-top:1%;
+        margin-bottom:1%;
         display:flex;
         justify-content: center;
         <%--        background: #efefef;--%>
@@ -22,16 +23,15 @@
         ul li{
         display: inline-block;
         list-style-type: none;
-        <%--        border-right: 1px solid #efefef;--%>
         text-align: center;
         padding: 3px 0px;
         margin-left: 12px;
-        height: 3.2vw;
-        line-height: 3.2vw;
-        width: 12%;
-        background:#5A98DE;
-        color:#fff;
-        border-radius:3px;
+        height: 2.2vw;
+        line-height: 2.2vw;
+        width: 10%;
+        background: #5A98DE;
+        color: #fff;
+        border-radius: 3px;
         }
         ul li:hover{
         background:#3275BF;
@@ -46,7 +46,7 @@
         width: 100%;
         padding-left: 0 !important;
         color: #111;
-        font-size: 18px;
+        font-size: 15px;
         }
         ul li a img{
         display:block;

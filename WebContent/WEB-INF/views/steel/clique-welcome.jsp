@@ -102,7 +102,7 @@ function showping(){
         <div class="div_company">
           <c:if test="${userId == 35346 }"><p style="margin-top:10px">无锡新三洲特钢集团</p></c:if>
           <c:if test="${userId != 35346 }"><p style="margin-top:10px">${name_ }</p></c:if>
-          <span  style="margin-top:10px"><a data-href="${ly }/steel/company/company-list" data-title="全部企业" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业数量：${number }</a></span>
+          <span  style="margin-top:10px"><a data-href="${ly }/tradeclique/company/company-list" data-title="全部企业" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业数量：${number }</a></span>
           <span style="margin-top:10px">
             <a data-href="${ly }/tradeclique/control-list2" data-title="企业分布图" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业分布图<img alt="" src="${ly }/images/fore/fb.jpg"/></a>
           </span>
@@ -203,11 +203,20 @@ function showping(){
               <%-- <font class="font_tx1 pos-a <c:if test="${mc >0}">blink</c:if>">${mc }</font> --%>
               <font class="font_tx2 pos-a">重大危险源</font>
             </a>
-            <a class="one_tx radius pos-r" data-title="有限（受限）空间作业" onclick="javascript:alert('暂未开通');" style="width:100%;margin-right:0;background:#DF3030;">
-            <img alt="" src="${ly }/images/httb8.png"/>
-            <%-- <font class="font_tx1 pos-a <c:if test="${mc >0}">blink</c:if>">${mc }</font> --%>
-            <font class="font_tx2 pos-a">有限（受限）空间作业</font>
-          </a>
+
+  <a class="one_tx radius pos-r" data-title="易燃易爆有毒作业"  onclick="javascript:alert('暂未开通');" href="javascript:;" style="width:100%;margin-right:0;background:#1450DD;">
+  <font id="gw_font" style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a">0</font>
+  <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="易燃易爆有毒作业">易燃易爆有毒作业</font>
+  </a>
+
+
+
+
+<%--            <a class="one_tx radius pos-r" data-title="易燃易爆有毒作业" onclick="javascript:alert('暂未开通');" style="width:100%;margin-right:0;background:#DF3030;">--%>
+<%--            <img alt="" src="${ly }/images/httb8.png"/>--%>
+<%--            &lt;%&ndash; <font class="font_tx1 pos-a <c:if test="${mc >0}">blink</c:if>">${mc }</font> &ndash;%&gt;--%>
+<%--            <font class="font_tx2 pos-a">易燃易爆有毒作业</font>--%>
+<%--          </a>--%>
           </div>
         </div>
       </div>

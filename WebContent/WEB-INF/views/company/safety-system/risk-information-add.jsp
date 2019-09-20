@@ -216,7 +216,7 @@
         <%--                onclick="img_upload('pic3', null)"--%>
         <img id="pic1" class="pic" src="${ly }/images/gao/aqgz1.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
-        <input class="c" type="checkbox" id="myCheck1" checked="${img0==null||img0=='null'?false:true}" />
+        <input class="c" type="checkbox" id="myCheck1"  />
         <img id="pic2" class="pic" src="${ly }/images/gao/aqgz2.jpg"
         style="width:100px!important;min-height:100px!important;" url=""/>
         <input class="c" type="checkbox" id="myCheck2" />
@@ -245,10 +245,63 @@
 
         </div>
         <script>
+            console.log(${img6==null||img6=='null'});
+            if(${img0==null||img0=='null'}){
+            $('#myCheck1').prop("checked", false);
+
+            }else{
+            $('#myCheck1').prop("checked", true);
+            }
+
+            if(${img1==null||img1=='null'}){
+            $('#myCheck2').prop("checked", false);
+            }else{
+            $('#myCheck2').prop("checked", true);
+            }
+
+            if(${img2==null||img2=='null'}){
+            $('#myCheck3').prop("checked", false);
+            }else{
+            $('#myCheck3').prop("checked", true);
+            }
+
+            if(${img3==null||img3=='null'}){
+            $('#myCheck4').prop("checked", false);
+            }else{
+            $('#myCheck4').prop("checked", true);
+            }
+
+            if(${img4==null||img4=='null'}){
+            $('#myCheck5').prop("checked", false);
+            }else{
+            $('#myCheck5').prop("checked", true);
+            }
+
+            if(${img5==null||img5=='null'}){
+            $('#myCheck6').prop("checked", false);
+            }else{
+            $('#myCheck6').prop("checked", true);
+            }
+
+            if(${img6==null||img6=='null'}){
+            $('#myCheck7').prop("checked", false);
+            }else{
+            $('#myCheck7').prop("checked", true);
+            }
+
+            if(${img7==null||img7=='null'}){
+            $('#myCheck8').prop("checked", false);
+            }else{
+            $('#myCheck8').prop("checked", true);
+            }
+
+            if(${img8==null||img8=='null'}){
+            $('#myCheck9').prop("checked", false);
+            }else{
+            $('#myCheck9').prop("checked", true);
+            }
         let img=null;
-        for(let i=0;i<=8;i++){
-           console.log(${img+i})
-        }
+
 
         </script>
         <style>

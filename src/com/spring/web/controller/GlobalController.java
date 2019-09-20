@@ -1161,9 +1161,12 @@ public class GlobalController extends BaseController {
      * description: TODO    风险分级管控 —— 各类风险分布
      * create time: 2019/9/12 15:30
      */
-    @RequestMapping(value = "/safety-system/control-distribution")
+    @RequestMapping(value = "/safety-system/all-risk-map")
     public String controlDistribution(HttpServletRequest request,Model model) throws Exception {
         User user = getLoginUser(request);
+
+        model.addAttribute("longitude",user.getLongitude());
+        model.addAttribute("latitude",user.getLatitude());
 
         List<Map<String,Object>> list1 = aCompanyManualMapper.findCoordinate(user.getId(), user.getUserType(),"红色");
 
@@ -1178,7 +1181,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("list3",list3);
         model.addAttribute("list4",list4);
 
-        return "global/safety-system/control-distribution";
+        return "global/safety-system/all-risk-map";
 
     }
 

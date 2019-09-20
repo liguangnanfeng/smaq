@@ -158,9 +158,10 @@ body .dis-ib{margin-right:15px;}
               <tr>
                 <td colspan="3">
                   <div class="div-gimg" style="margin-bottom:6px;">
-                        <img alt="" src="${ly }${img0}"/>
-                        <img alt="" src="${ly }${img1}"/>
-                        <img alt="" src="${ly }${img2}"/>
+
+                        <img id="myCheck1" alt="" src="${ly }${img0}"/>
+                        <img id="myCheck2" alt="" src="${ly }${img1}"/>
+                        <img id="myCheck3" alt="" src="${ly }${img2}"/>
                         <img alt="" src="${ly }${img3}"/>
                         <img alt="" src="${ly }${img4}"/>
                         <img alt="" src="${ly }${img5}"/>
@@ -198,7 +199,37 @@ body .dis-ib{margin-right:15px;}
             </table>
           </div>
         </div>
-
+<script>
+  console.log('1111111');
+  console.log(${img0=='null'});
+  if(${img0=='null'}){
+  $('#myCheck1').hide();
+  }
+  if(${img1=='null'}){
+  $('#myCheck2').hide();
+  }
+  if(${img2=='null'}){
+  $('#myCheck3').hide();
+  }
+  if(${img3=='null'}){
+  $('#myCheck4').hide();
+  }
+  if(${img4=='null'}){
+  $('#myCheck5').hide();
+  }
+  if(${img5=='null'}){
+  $('#myCheck6').hide();
+  }
+  if(${img6=='null'}){
+  $('#myCheck7').hide();
+  }
+  if(${img7=='null'}){
+  $('#myCheck8').hide();
+  }
+  if(${img8=='null'}){
+  $('#myCheck9').hide();
+  }
+  </script>
 
 
       </div>

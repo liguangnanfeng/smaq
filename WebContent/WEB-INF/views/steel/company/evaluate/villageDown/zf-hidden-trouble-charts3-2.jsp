@@ -159,23 +159,19 @@
         <td rowspan="2">序号</td>
         <td class="first" rowspan="2"><span class="title1">对象</span><br><span class="title3">受检企业</span></td>
         <td>基础管理</td>
-        <td>设计总图</td>
-        <td>试生产</td>
-        <td>装置运行</td>
-        <td>设备安全</td>
-        <td>仪表安全</td>
-        <td>电气安全</td>
-        <td>应急消防</td>
-        <td>特殊管控</td>
-        <td>行为环境</td>
-        <td>生产现场</td>
-        <td>公辅工程</td>
-        <td>特种设备</td>
-        <td>专项行业</td>
         <td>生产工艺</td>
         <td>设备设施</td>
+        <td>公用工程</td>
+        <td>特种设备</td>
+        <td>生产现场</td>
+        <td>行为环境</td>
         <td>危化管理</td>
+        <td>消防安全</td>
+        <td>用电安全</td>
         <td>安全设施</td>
+        <td>防雷静电</td>
+        <td>职业卫生</td>
+        <td>专项行业</td>
         <td>其他</td>
         <td rowspan="2" class="sum">合计</td>
         <td rowspan="2">排名</td>
@@ -197,21 +193,16 @@
         <td>频次</td>
         <td>频次</td>
         <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
         <script>
         console.log('[{sum10=0, sum11=0, sum12=0, sum13=0, sum14=0, result14=0.00%, result3=0.00%, result4=0.00%, result1=0.00%, result2=0.00%, result9=0.00%, result7=0.00%, result8=0.00%, result5=0.00%, result6=0.00%, result13=0.00%, result12=0.00%, result11=0.00%, result10=0.00%, sum2=0, sum1=0, sum4=0, sum3=0, sum6=0, sum5=0, sum8=0, sum7=0, sum9=0}]');
         window.a = 0;
         </script>
         </tr>
             <c:forEach items="${list}" varStatus="index" var="be">
-                    <c:if test="${index.index<fn:length(list)-1}">
+                    <c:if test="${index.index<fn:length(list)-2}">
                             <tr class="tcontent">
                             <td>${index.index + 1}</td>
                             <td>${be.name}</td>
-                            <td>${be.danger19}</td>
                             <td>${be.danger1}</td>
                             <td>${be.danger2}</td>
                             <td>${be.danger3}</td>
@@ -228,13 +219,10 @@
                             <td>${be.danger14}</td>
                             <td>${be.danger15}</td>
                             <td>${be.danger16}</td>
-                            <td>${be.danger17}</td>
-                            <td>${be.danger18}</td>
-                            <td>${be.danger20}</td>
                             <td></td>
                             <td></td>
                             <script>
-                            window.a=window.a+'${be.danger20}'*1;
+                            window.a=window.a+'${be.danger16}'*1;
                             console.log(window.a);
                             </script>
                             </tr>
@@ -244,7 +232,6 @@
                             <tr>
                             <td>合计</td>
                             <td>---</td>
-                            <td>${be.sum19}</td>
                             <td>${be.sum1}</td>
                             <td>${be.sum2}</td>
                             <td>${be.sum3}</td>
@@ -260,9 +247,6 @@
                             <td>${be.sum13}</td>
                             <td>${be.sum14}</td>
                             <td>${be.sum15}</td>
-                            <td>${be.sum16}</td>
-                            <td>${be.sum17}</td>
-                            <td>${be.sum18}</td>
                             <td class="tdd"></td>
                             <td></td>
                             <td></td>
@@ -275,7 +259,6 @@
                             <tr>
                             <td>占比%</td>
                             <td>---</td>
-                            <td>${be.result19}</td>
                             <td>${be.result1}</td>
                             <td>${be.result2}</td>
                             <td>${be.result3}</td>
@@ -291,9 +274,6 @@
                             <td>${be.result13}</td>
                             <td>${be.result14}</td>
                             <td>${be.result15}</td>
-                            <td>${be.result16}</td>
-                            <td>${be.result17}</td>
-                            <td>${be.result18}</td>
                             <td>--</td>
                             <td></td>
                             <td></td>

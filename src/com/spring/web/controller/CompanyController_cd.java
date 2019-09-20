@@ -5076,7 +5076,7 @@ public class CompanyController_cd extends BaseController {
                         list.get(i).put("danger5",e);
                         sum5 += e;
 
-                        f = tCheckItemMapper.zhuChartData22("电器安全",company.getName(),flag,user.getId()); // 行为环境 隐患数据
+                        f = tCheckItemMapper.zhuChartData22("电气安全",company.getName(),flag,user.getId()); // 行为环境 隐患数据
                         list.get(i).put("danger6",f);
                         sum6 += f;
 
@@ -5154,7 +5154,7 @@ public class CompanyController_cd extends BaseController {
                         list.get(i).put("danger5",e);
                         sum5 += e;
 
-                        f = tCheckItemMapper.zhuChartData22("电器安全",(String)list.get(i).get("name"),flag,user.getId()); // 行为环境 隐患数据
+                        f = tCheckItemMapper.zhuChartData22("电气安全",(String)list.get(i).get("name"),flag,user.getId()); // 行为环境 隐患数据
                         list.get(i).put("danger6",f);
                         sum6 += f;
 
@@ -5233,7 +5233,7 @@ public class CompanyController_cd extends BaseController {
                     list.get(i).put("danger5",e);
                     sum5 += e;
 
-                    f = tCheckItemMapper.zhuChartData23("电器安全",(String)list.get(i).get("name"),flag,user.getId()); // 行为环境 隐患数据
+                    f = tCheckItemMapper.zhuChartData23("电气安全",(String)list.get(i).get("name"),flag,user.getId()); // 行为环境 隐患数据
                     list.get(i).put("danger6",f);
                     sum6 += f;
 

@@ -218,14 +218,14 @@
                         <td><%--${be.sea_year }--%></td>
 
                         <td>${be.count}</td>
-                        <td class="add"><fmt:formatNumber type="number" value="${(be.danger1+be.danger2+be.danger3+be.danger4+be.danger5+be.danger6)/(be.syn_year+be.eve_year+be.reg_year+be.sea_year+be.els_year+be.bas_year)}" pattern="0.00"/> </td>
-                        <script>
+                        <td>${be.counts}</td>
+                        <%--<script>
                         console.log($(".add").text());
                         if(!$(".add").text()){
                         console.log($(".add").text());
                         $(".add").text("");
                         }
-                        </script>
+                        </script>--%>
                         <td></td>
                         </tr>
 
@@ -259,8 +259,8 @@
                         <td><%--${be.count6}--%>0</td>
                         <td></td>
 
-                        <td>${be.count}</td>
-                        <td><fmt:formatNumber type="number" value="${(be.count1+be.count2+be.count3+be.count4+be.count5+be.count6)/(be.number1+be.number2+be.number3+be.number4+be.number5+be.number6) }" pattern="0.00"/> </td>
+                        <td>${sums}</td>
+                        <td>${sums1}</td>
                         <td></td>
                         </tr>
                 </c:if>

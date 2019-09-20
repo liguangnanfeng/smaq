@@ -122,8 +122,18 @@ function pr_() {
               <td class="active text-r ter1">是否构成重大危险源</td>
               <td class="tab_tmr1" >
                 <c:choose>
-                  <c:when test="${c.hazard == 0}">否</c:when>
-                  <c:when test="${c.hazard == 1}">是</c:when>
+                  <c:when test="${c.hazard == 0}">
+                    <select id="hazard">
+                      <option value="1">是</option>
+                      <option value="0" selected="selected">否</option>
+                    </select>
+                  </c:when>
+                  <c:when test="${c.hazard == 1}">
+                    <select id="hazard">
+                      <option value="1" selected="selected">是</option>
+                      <option value="0">否</option>
+                    </select>
+                  </c:when>
                 </c:choose>
               </td>
               <td class="active text-r ter1">企业值班电话</td>
@@ -266,5 +276,26 @@ function pr_() {
       </table> --%>
     </div>
   </div>
+<script>
+  $(function () {
+    $("#hazard").change(function () {
+      var value = $(this).val();
+      $.ajax({
+        "url":"${ly}/steel/updateHazard?hazard="+value,
+        "success":function(){
+          alert("修改成功");
+        },
+        "error":function(){
+          alert("发生错误");
+        }
+      })
+      if(value==0){
+
+      }else{
+        window.location.href="${ly}/company/information/information-edit3";
+      }
+    })
+  })
+</script>
 </body>
 </html>

@@ -2861,8 +2861,8 @@ public class SteelController extends BaseController {
         if (null == flag){
             flag = 1;
         }
-        List<Map<String,Object>> list = null;
 
+        List<Map<String,Object>> list = null;
         Integer sum1 = 0;
         Integer sum2 = 0;
         Integer sum3 = 0;
@@ -2919,8 +2919,8 @@ public class SteelController extends BaseController {
                 sum10 += j;
 
                 Integer count = a + b + c + d + e + f + g + h + i1 + j;
-
                 list.get(i).put("danger11", count);  // 某个公司的所有行业合计
+
 
             }
         }
@@ -4814,6 +4814,26 @@ public class SteelController extends BaseController {
         if (user.getUserType() == 10) {
             dto.setTradeId(user.getId());
         }
+    }
+    @ResponseBody
+    @RequestMapping("updateHazard")
+    public Result updateHazard(HttpServletRequest request, Integer hazard){
+        Result result = new ResultImpl();
+        User user = getLoginUser(request);
+        Company company = new Company();
+        company.setUserId(user.getId());
+        company.setHazard(hazard);
+        int flag1 = companyMapper.updateByPrimaryKeySelective(company);
+        TradeClique tradeClique = new TradeClique();
+        tradeClique.setUserId(user.getId());
+        tradeClique.setHazard(hazard);
+        int flag2 = tradeCliqueMapper.updateByPrimaryKeySelective(tradeClique);
+        if(flag1==1&&flag2==1){
+            result.setStatus("1");
+        }else{
+            result.setStatus("0");
+        }
+        return result;
     }
 
 

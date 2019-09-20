@@ -119,8 +119,7 @@
         },
         xAxis: {
         type: 'category',
-        data: ["化工", "冶金", "有色", "建材", "机械", "轻工", "纺织", "商贸", "烟花", "其他"
-        ],
+        data:${companyNames},
         axisLabel: {
         interval: 0, //横轴信息全部显示
         rotate: 0, //-30度角倾斜显示

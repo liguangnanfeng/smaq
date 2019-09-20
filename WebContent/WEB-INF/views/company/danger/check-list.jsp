@@ -122,7 +122,7 @@
 
         </span>
         </c:if>
-        <span class="r">检查总条数：<strong>${fn:length(list) }</strong> 条；隐患总数量：<strong>${sum}</strong> 条；合格数量：<strong>${sum1}</strong> 条；不合格数量：<strong>${sum2}</strong> 条；已复查数量：<strong>${sum3}</strong> 条</span>
+        <span class="r">检查总次数：<strong>${fn:length(list) }</strong> 条；检查总条数量：<strong>${sum}</strong> 条；合格数量：<strong>${sum1}</strong> 条；隐患数量：<strong>${sum2}</strong> 条；已整改数量：<strong>${sum3}</strong> 条</span>
     </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort">

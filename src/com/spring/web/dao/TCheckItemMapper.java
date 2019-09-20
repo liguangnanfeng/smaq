@@ -418,6 +418,12 @@ public interface TCheckItemMapper {
 
     Integer zhuChartData67(@Param("control")String control, @Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
+    List<Map<String,Object>> selectHiddenSources11(@Param("flag") Integer flag, @Param("userIds") String userIds);
+
+    List<Map<String,Object>> findHiddenSourceCount(@Param("flag") Integer flag, @Param("depart")String depart, @Param("userIds")String userIds, @Param("industry_type")Integer industry_type);
+
+    List<Map<String,Object>> lookHiddenSourceCount(@Param("flag") Integer flag, @Param("check_company")String check_company, @Param("userIds")String userIds, @Param("industry_type")Integer industry_type);
+
 }
 
 

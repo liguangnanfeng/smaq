@@ -216,5 +216,6 @@ public interface ACompanyManualMapper {
     List<Map<String,Object>> findCoordinateBlueByCliequ(@Param("userId")String userId);
 
     List<Map<String,Object>> findControlDataByCliqu(@Param("userId")String userId);
+
 }
 

@@ -634,7 +634,8 @@
 
         T1.del = 0
         AND T4.del = 0
-        and T1.id = #{id};
+        AND T1.id = #{id}
+        ORDER BY riskId
     </select>
 
     <!-- 根据 检查表 ID 查询 a_danger_manual_tbl 表中相对应的数据 现场 -->

@@ -3515,6 +3515,7 @@ public class VillageController extends BaseController {
         } else {
 
         }
+
         ArrayList<ACompanyManual> linkedList = new ArrayList();
         if (null != list && list.size() > 0) {
             for (String level3 : list) {
@@ -3524,14 +3525,7 @@ public class VillageController extends BaseController {
                 }
             }
         }
-        // 进行排序
-        Collections.sort(linkedList, new Comparator<ACompanyManual>() {
-            @Override
-            public int compare(ACompanyManual o1, ACompanyManual o2) {
-                return o2.getLevel2().length() - o1.getLevel2().length();
-            }
-        });
-        log.error(linkedList);
+
         return linkedList;
     }
 

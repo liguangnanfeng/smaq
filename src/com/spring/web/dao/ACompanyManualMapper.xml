@@ -1513,14 +1513,15 @@
         and level3  not LIKE '%基础管理%'
         and del=0
         and measures !=''
-        group by level3;
-
+        group by level3
+        order by riskId
     </select>
     <!--根据基础/高危(备用)获取level3的数据,然后根据level3的数据获取到响应的部门-->
     <select id="selectlevel3BydmNameAndLevel3" resultType="String">
          select level3 from a_company_manual_tbl where uid=#{uid}
          and level1=#{level1} and level3 LIKE CONCAT('%', #{level3},'%')  and del=0 and measures !=''
-         group by level3;
+         group by level3
+         order by riskId
     </select>
 
     <!--根据部门的Uid和level1和level3获取详细信息
@@ -1534,7 +1535,7 @@
         and level1 = #{level1}
         and del=0
         and level3 = #{level3}
-        order by level2 desc ;
+        order by riskId
     </select>
 
     <select id="findManualLevel" parameterType="Integer" resultType="java.util.Map">

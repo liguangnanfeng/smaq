@@ -126,11 +126,16 @@
     </update>
 
     <select id="selectByCheckId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_check_part_tbl
-        where check_id = #{checkId}
-        order by name;
+        SELECT
+            T2.*
+        FROM
+            t_check_item_tbl T1
+        LEFT JOIN t_check_part_tbl T2 ON T2.id = T1.part_id
+        left join a_company_manual_tbl T6 on T6.id = T1.level_id
+        WHERE
+            T1.check_id = #{checkId}
+        ORDER BY
+            riskId
     </select>
 
     <select id="selectDyByCheckId" parameterType="java.lang.Integer"

@@ -279,16 +279,16 @@
     -->
     <select id="selectByCheckId" resultType="java.util.Map">
         select
-        <!--zhangcl 2018.10.28  T1.id, T1.content, T1.reference, T1.part_id partId, T1.check_id checkId, T1.status, T1.memo, T1.files, T1.memo,-->
         T1.id, T1.level_id levelId, T1.content, T1.reference, T1.part_id partId, T1.check_id checkId, T1.status,
         T1.memo, T1.files, T1.memo,
         T1.levels, T2.name
         from
         t_check_item_tbl T1
         left join t_check_part_tbl T2 on T2.id = T1.part_id
+        left join a_company_manual_tbl T6 on T6.id = T1.level_id
         where
         T1.check_id = #{checkId}
-        order by T2.name;
+        order by riskId
 
     </select>
 

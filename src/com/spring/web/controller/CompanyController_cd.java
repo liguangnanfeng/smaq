@@ -7715,6 +7715,9 @@ public class CompanyController_cd extends BaseController {
         /*List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(id);*/
         List<Map<String, Object>> iteml = null;
         if (flag == 1) {
+
+            System.out.println(id);
+
             iteml = tCheckMapper.selectLevels(id);
             for (int i = 0; i < iteml.size(); i++) {
                 if (loginUser.getUserName().equals(iteml.get(i).get("depart"))) {

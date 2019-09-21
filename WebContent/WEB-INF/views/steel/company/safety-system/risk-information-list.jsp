@@ -23,9 +23,9 @@ body .dis-ib{margin-right:15px;}
 </head>
 <body>
   <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-    <span class="c-gray en">&gt;</span> <span>风险分级管控</span> 
-    <span class="c-gray en">&gt;</span> <span>公告警示</span> 
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+    <span class="c-gray en">&gt;</span> <span>风险分级管控</span>
+    <span class="c-gray en">&gt;</span> <span>公告警示</span>
     <span class="c-gray en">&gt;</span> <span><c:if test="${flag == 1}">公司</c:if><c:if test="${flag == 2}">车间</c:if><c:if test="${flag == 3}">岗位</c:if>风险公告牌</span>
   <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
     <%--<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>--%>
@@ -37,7 +37,7 @@ body .dis-ib{margin-right:15px;}
         <select name="" class="sel_area">
           <option value="">全部</option>
         </select>
-      </div> 
+      </div>
       <button class="btn btn-success" type="submit">
         <i class="Hui-iconfont">&#xe665;</i> 查询
       </button>
@@ -46,7 +46,7 @@ body .dis-ib{margin-right:15px;}
       <span class="l">
         <a class="btn btn-primary radius" href="javascript:show_dialog('添加风险公告牌','/company/safety-system/risk-information-add?flag=${flag }')"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加风险公告牌</a>
       </span>
-      <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span> 
+      <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
     </div> --%>
     <div class="mt-20">
       <%-- <table class="table table-border table-bordered table-bg table-hover table-sort tab-ndan">
@@ -189,24 +189,24 @@ body .dis-ib{margin-right:15px;}
             </table>
           </div>
         </div>
-        
-        
-        
+
+
+
       </div>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
   </div>
 </body>

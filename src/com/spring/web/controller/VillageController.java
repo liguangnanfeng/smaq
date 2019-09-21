@@ -1252,13 +1252,34 @@ public class VillageController extends BaseController {
                 sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
             }
 
-            model.addAttribute("sum",tCheckMapper.findDataCounts(user.getId(),flag)); // 总条数
+            Integer number1 = tCheckMapper.findDataCounts(user.getId(),flag);
+            Integer number2 = tCheckMapper.findDataCountSum(user.getId(),1,flag);
+            Integer number3 = tCheckMapper.findDataCountSum(user.getId(),2,flag);
+            Integer number4 = tCheckMapper.findDataCountSum(user.getId(),3,flag);
 
-            model.addAttribute("sum1",tCheckMapper.findDataCountSum(user.getId(),1,flag)); // 合格数据
+            if (null == number1 || number1 == 0){
+                model.addAttribute("sum",0); // 总条数
+            }else if (null != number1 || number1 != 0){
+                model.addAttribute("sum",number1); // 总条数
+            }
 
-            model.addAttribute("sum2", tCheckMapper.findDataCountSum(user.getId(),2,flag)); // 不合格数据
+            if (null == number2 || number2 == 0){
+                model.addAttribute("sum1",0); // 合格数据
+            }else if (null != number2 || number2 != 0){
+                model.addAttribute("sum1",number2); // 合格数据
+            }
 
-            model.addAttribute("sum3",tCheckMapper.findDataCountSum(user.getId(),3,flag)); // 复查数据
+            if (null == number3 || number3 == 0){
+                model.addAttribute("sum2",0); // 不合格数据
+            }else if (null != number3 || number3 != 0){
+                model.addAttribute("sum2",number3); // 不合格数据
+            }
+
+            if (null == number4 || number4 == 0){
+                model.addAttribute("sum3",0); // 复查数据
+            }else if (null != number4 || number4 != 0){
+                model.addAttribute("sum3",number4); // 复查数据
+            }
 
             model.addAttribute("list", list);
 

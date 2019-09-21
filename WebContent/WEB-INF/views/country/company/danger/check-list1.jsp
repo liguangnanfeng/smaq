@@ -125,11 +125,11 @@ body .dis-ib{margin-right:15px;}
                 </c:if>
                 <c:if test="${jcxq != 1 }">
                 	<c:if test="${be.status != 2 || be.flag == 1 }">
-                     <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">检查详情</a><br>
+                     <a style="text-decoration:none" onClick="show_dialog('检查详情_aaaa${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">检查详情</a><br>
                 	</c:if>
                 </c:if>
                 <c:if test="${jcxq == 1 }">
-                	<a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?jcxq=1&flag=${flag }&id=${be.id }')" href="javascript:;">检查详情_</a><br>    
+                	<a style="text-decoration:none" onClick="show_dialog('检查详情_121121${be.id }', '${ly}/company/check-detail?jcxq=1&flag=${flag }&id=${be.id }')" href="javascript:;">检查详情_121121</a><br>
                 </c:if>
                      <%-- <c:if test="${flag == 1 }">
                      <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">检查详情</a><br>

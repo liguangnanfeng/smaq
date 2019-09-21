@@ -8,9 +8,9 @@ var map = new AMap.Map('container', {
   zoom: 13,
   zooms: [3,20],
   viewMode: '3D',
-  pitch: 50,
   expandZoomRange: true,
-  center: mapCenter
+  center: mapCenter,
+
 });
 
 map.plugin(["AMap.RangingTool"], function() {
@@ -52,7 +52,7 @@ var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, -30)});
 function markerClick(e){
 //  infoWindow.setContent(e.target.content);
 //  infoWindow.open(map, e.target.getPosition());
-  
+
   show_dialog("企业详细信息", "/village/company/company-show?userId=" + e)
 }
 
@@ -65,16 +65,21 @@ var placeSearchOptions = { //构造地点查询类
     pageSize: 1,
     pageIndex: 1
 };
-var placeSearch = new AMap.PlaceSearch();
+try {
+    var placeSearch = new AMap.PlaceSearch();
+}catch (e) {
+    console.log(e)
+}
 
+console.log('111')
 $('#mySwitch').on('switch-change', function (e, data) {
   var value = data.value;
   //console.log(e, $el, value);
   if(value){
     map.setLayers([new AMap.TileLayer()]);
   } else {
-    
-    
+
+
     map.setLayers([new AMap.TileLayer.Satellite()]);
   }
 });

@@ -139,7 +139,7 @@
 		<td >其他</td>
 		<td rowspan="2" class="sum">合计</td>
 		<td rowspan="2">排名</td>
-		<td rowspan="2">同比%</td>
+		<td rowspan="2">同比</td>
 		</tr>
 		<tr style="background-color: #F5F9FE;    font-weight: bold;">
 		<td>频次</td>

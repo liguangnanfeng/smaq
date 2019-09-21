@@ -178,21 +178,22 @@
         // 指定图表的配置项和数据
         option = {
         title: [{
-        text: '排查对象分析',
+        text: '排查数据分析',
         left: 'center',
-        },
-        {
-        subtext:'合计：${count}',
-        top:10,
-        right: '15%',
-        subtextStyle:{//副标题内容的样式
-        color:'#333',//绿色
-<%--        fontStyle:'normal',//主标题文字字体风格，默认normal，有italic(斜体),oblique(斜体)--%>
-<%--        fontWeight:"lighter",//可选normal(正常)，bold(加粗)，bolder(加粗)，lighter(变细)，100|200|300|400|500...--%>
-<%--        fontFamily:"san-serif",//主题文字字体，默认微软雅黑--%>
-<%--        fontSize:12//主题文字字体大小，默认为12px--%>
-        },
         }
+<%--        ,--%>
+<%--        {--%>
+<%--        subtext:'合计：${count}',--%>
+<%--        top:10,--%>
+<%--        right: '15%',--%>
+<%--        subtextStyle:{//副标题内容的样式--%>
+<%--        color:'#333',//绿色--%>
+<%--&lt;%&ndash;        fontStyle:'normal',//主标题文字字体风格，默认normal，有italic(斜体),oblique(斜体)&ndash;%&gt;--%>
+<%--&lt;%&ndash;        fontWeight:"lighter",//可选normal(正常)，bold(加粗)，bolder(加粗)，lighter(变细)，100|200|300|400|500...&ndash;%&gt;--%>
+<%--&lt;%&ndash;        fontFamily:"san-serif",//主题文字字体，默认微软雅黑&ndash;%&gt;--%>
+<%--&lt;%&ndash;        fontSize:12//主题文字字体大小，默认为12px&ndash;%&gt;--%>
+<%--        },--%>
+<%--        }--%>
         ],
         tooltip: {
         trigger:'item',

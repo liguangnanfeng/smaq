@@ -203,7 +203,7 @@ function showping(){
             </a>
             <a class="one_tx radius pos-r"  data-title="高危作业隐患企业列表" onClick="showping4()"  href="javascript:;" data-href="${ly }/global/company/toGwCompanyList?danger=1" style="width:100%;margin-right:0;background:#1450DD;" >
             <font id="gw_font" style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a "></font>
-            <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="有限（受限）空间作业">易燃易爆有毒作业</font>
+            <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="有限（受限）空间作业">易燃易爆、有毒作业</font>
             </a>
             <%--<a class="one_tx radius pos-r"  data-title="重大危险源隐患企业列表" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/global/company/toZdCompanyList?hazard=1" style="width:100%;margin-right:0;background:#1450DD;" >--%>
             	<%--<font style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a " id="zd_font"></font>--%>
@@ -309,7 +309,7 @@ function showping(){
   </div>
   <div class="modal-body fal">
 
-  易燃易爆有毒作业无故障
+  易燃易爆、有毒作业无故障
 
 
   </div>

@@ -111,12 +111,18 @@
             function sub2(){
             $("#iframe").attr("src","${ly }/global/tables/tab-yjlist?userId=${userId}" );
             }
-<%--            function sub3(){--%>
-<%--            $("#iframe").attr("src","${ly }/company/product/lightning-list");--%>
-<%--            }--%>
-<%--            function sub4(){--%>
-<%--            $("#iframe").attr("src","${ly }/company/safety-facilities");--%>
-<%--            }--%>
+            function sub3(){
+            $("#iframe").attr("src","/api/safety_Standard/findOne?safetyStandardlistId=170");
+            }
+            function sub4(){
+            $("#iframe").attr("src","/api/safety_Standard/findOne?safetyStandardlistId=176");
+            }
+            function sub5(){
+            $("#iframe").attr("src","https://sec.dicarl.com/company/evaluate/zheng-list");
+            }
+            function sub6(){
+            $("#iframe").attr("src","/api/safety_Standard/findOne?safetyStandardlistId=175");
+            }
             </script>
         </div>
         </body>

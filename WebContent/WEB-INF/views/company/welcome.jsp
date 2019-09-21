@@ -186,7 +186,7 @@
 
     <a class="one_tx radius pos-r" href="${ly}/village/hidden-danger-list?flag=1&status=1"   style="background:#ea4f21;    margin-left: 1%;;margin-right:0">
     <img alt="" src="${ly }/images/httb9.png"/>
-    <font class="font_tx1 pos-a <c:if test="${counts >0}">blink</c:if>">${counts}</font>
+      <font class="font_tx1 pos-a <c:if test="${counts >0}">blink</c:if>">${counts}</font>
     <font class="font_tx2 pos-a">隐患排查</font>
     <%--  onclick="show_dialog('隐患排查', '${ly }/village/check-item3?status=2')"--%>
     </a>
@@ -194,8 +194,9 @@
 
     <a class="one_tx radius pos-r" href="/village/hidden-danger-list?flag=1&status=1"   style="background:#ea4f21;margin-left: 3%;">
     <img alt="" src="${ly }/images/httb9.png"/>
-    <font class="font_tx1 pos-a <c:if test="${counts1 >0}">blink</c:if>">${counts1}</font>
-    <font class="font_tx2 pos-a">隐患治理</font>
+      <font class="font_tx1 pos-a <c:if test="${counts1 >0}">blink</c:if>">${counts1}</font>
+
+      <font class="font_tx2 pos-a">隐患治理</font>
     <%--  onclick="show_dialog('隐患治理', '${ly }/village/check-item3?status=2')"--%>
     </a>
 
@@ -246,7 +247,7 @@
         <%--data-href="${ly }/village/company/gwlist?danger=1"--%>
         <a class="one_tx radius pos-r"  data-title="易燃易爆有毒作业" onclick="showping4()"  href="javascript:;"  style="width:100%;margin-right:0;background:#1450DD;" >
         <font id="gw_font" style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a "></font>
-        <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="易燃易爆有毒作业">易燃易爆有毒作业</font>
+        <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="易燃易爆有毒作业">易燃易爆、有毒作业</font>
         </a>
       </c:when>
       <c:otherwise>
@@ -363,7 +364,7 @@
     <div class="modal-body fal">
     <c:choose>
       <c:when test="${c.danger eq '1'}">
-          易燃易爆有毒作业无故障
+          易燃易爆、有毒作业无故障
       </c:when>
       <c:otherwise>
         关键装置无故障

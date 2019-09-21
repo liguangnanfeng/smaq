@@ -353,6 +353,7 @@ function getCookie(name) {
  *          img_upload(null,400,function(res){alert("图片路径"+src)});
  */
 function img_upload(img_id, width_, callBack) {
+  console.log('1 img_upload');
   create_img_file_();
   $('#img_upload_file').change(function() {
     // this.files[0] 是用户选择的文件
@@ -383,6 +384,7 @@ function img_upload(img_id, width_, callBack) {
 }
 
 function create_img_file_() {
+  console.log('2 create_img_file_');
   /*if((!!window.ActiveXObject || "ActiveXObject" in window) && !(navigator.userAgent.search(/Trident/i) > 0)) {
   alert("浏览器版本过低，请升级浏览器或使用其他浏览器进行操作");
   return false;
@@ -402,6 +404,7 @@ function create_img_file_() {
 }
 
 function lrzImgUpload(obj,width_, callback) {
+  console.log('3 lrzImgUpload');
   lrz(obj.files[0], {
     width : width_
   }).then(function(rst) {
@@ -438,6 +441,7 @@ function lrzImgUpload(obj,width_, callback) {
 }
 
 function ajaxFileUpload(callback) {
+  console.log('4 ajaxFileUpload');
   $.ajaxFileUpload({
       url: getRootPath() + '/ajaxUpload', //用于文件上传的服务器端请求地址
       secureuri: false, //一般设置为false
@@ -469,6 +473,7 @@ function ajaxFileUpload(callback) {
  *          img_upload1(null,400,function(res){alert("图片路径"+src)});
  */
 function img_upload1(img_id, width_, callBack) {
+  console.log('img_upload1');
   create_img_file_();
   $('#img_upload_file').change(function() {
     $("html").mask("处理中。。。");
@@ -506,6 +511,7 @@ function img_upload1(img_id, width_, callBack) {
  * @param width_
  */
 function img_upload2(img_id, width_, callBack) {
+  console.log('img_upload2');
   create_img_file_();
   $('#img_upload_file').change(function() {
     $("html").mask("处理中。。。");

@@ -124,7 +124,7 @@ body .dis-ib{margin-right:15px;}
                 <a style="text-decoration:none" onClick="show_dialog('现场检查记录_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=8')" href="javascript:;">现场检查记录</a><br>
                 </c:if>
                 <c:if test="${be.status != 2 || be.flag == 1}">
-                     <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">检查详情</a><br>
+                     <a style="text-decoration:none" onClick="show_dialog('检查详情_g1g1g1g144545${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">检查详情</a><br>
                      </c:if>
                      <%-- <c:if test="${flag == 1 }">
                      <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">检查详情</a><br>

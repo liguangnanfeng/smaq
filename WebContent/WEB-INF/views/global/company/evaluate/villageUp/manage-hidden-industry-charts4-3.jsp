@@ -160,15 +160,15 @@
         <td>已治理</td>
         <td>未治理</td>
         <td>治理率%</td>
-        <td>同比%</td>
+        <td>同比</td>
         <td>已治理</td>
         <td>未治理</td>
         <td>治理率%</td>
-        <td>同比%</td>
+        <td>同比</td>
         <td>已治理</td>
         <td>未治理</td>
         <td>治理率%</td>
-        <td>同比%</td>
+        <td>同比</td>
         </tr>
             <c:forEach items="${list}" varStatus="index" var="be">
                     <c:if test="${index.index<fn:length(list)-1 }">

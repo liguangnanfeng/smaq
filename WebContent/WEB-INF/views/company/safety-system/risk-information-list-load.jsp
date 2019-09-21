@@ -52,7 +52,7 @@
              <c:when test="${fn:contains(be.fxdj, '红')}"><c:set value="tcol-a" var="cl"/></c:when>
              <c:when test="${fn:contains(be.fxdj, '橙')}"><c:set value="tcol-b" var="cl"/></c:when>
              <c:when test="${fn:contains(be.fxdj, '黄')}"><c:set value="tcol-c" var="cl"/></c:when>
-             <c:when test="${fn:contains(be.fxdj, '蓝')}"><c:set value="tcol-d" var="cl"/></c:when>	               	
+             <c:when test="${fn:contains(be.fxdj, '蓝')}"><c:set value="tcol-d" var="cl"/></c:when>
           </c:choose>
           <td class="text-c ${cl }" style="width:30%;font-size:14px">事故类型</td>
           <td class="text-c ${cl }" style="width:40%;font-size:14px">风险因素</td>
@@ -69,7 +69,7 @@
               <p>${be.fxysZd }</p>
             </c:if>
          <%-- <p>${be.fxysZd }${be.fxys }</p>
-          &lt;%&ndash; <p>${be.fxys }</p>&ndash;%&gt;
+          <%-- <p>${be.fxys }</p>--%>
           </td>--%>
         </tr>
         <tr>
@@ -93,15 +93,48 @@
         <tr>
           <td colspan="3">
             <div class="div-gimg" style="margin-bottom:6px;">
-              <img alt="" src="${ly }/images/gao/aqgz1.jpg"/>
-              <img alt="" src="${ly }/images/gao/aqgz2.jpg"/>
-              <img alt="" src="${ly }/images/gao/aqgz3.jpg"/>
-              <img alt="" src="${ly }/images/gao/aqgz4.jpg"/>
-              <img alt="" src="${ly }/images/gao/aqgz6.jpg"/>
-              <img alt="" src="${ly }/images/gao/l1.jpg"/>
-              <img alt="" src="${ly }/images/gao/l2.jpg"/>
-              <img alt="" src="${ly }/images/gao/l3.jpg"/>
-              <img alt="" src="${ly }/images/gao/l4.jpg" style="margin-right:0;"/>
+  <c:if test="${img0!='null'}">
+  <img ondblclick="showhide()" id="myCheck1" alt="" src="${ly }${img0==null?'/images/gao/aqgz1.jpg':img0}"/>
+</c:if>
+  <c:if test="${img1!='null'}">
+    <img id="myCheck2" alt="" src="${ly }${img1==null?'/images/gao/aqgz2.jpg':img1}"/>
+  </c:if>
+  <c:if test="${img2!='null'}">
+    <img id="myCheck3" alt="" src="${ly }${img2==null?'/images/gao/aqgz3.jpg':img2}"/>
+
+  </c:if>
+  <c:if test="${img3!='null'}">
+    <img id="myCheck4" alt="" src="${ly }${img3==null?'/images/gao/aqgz4.jpg':img3}"/>
+
+  </c:if>
+  <c:if test="${img4!='null'}">
+    <img id="myCheck5" alt="" src="${ly }${img4==null?'/images/gao/aqgz5.jpg':img4}"/>
+
+  </c:if>
+  <c:if test="${img5!='null'}">
+    <img id="myCheck6" alt="" src="${ly }${img5==null?'/images/gao/l1.jpg':img5}"/>
+
+  </c:if>
+  <c:if test="${img6!='null'}">
+    <img id="myCheck7" alt="" src="${ly }${img6==null?'/images/gao/l2.jpg':img6}"/>
+
+  </c:if>
+  <c:if test="${img7!='null'}">
+    <img id="myCheck8" alt="" src="${ly }${img7==null?'/images/gao/l3.jpg':img7}"/>
+
+  </c:if>
+  <c:if test="${img8!='null'}">
+    <img id="myCheck9" alt="" src="${ly }${img8==null?'/images/gao/l4.jpg':img8}" style="margin-right:0;"/>
+  </c:if>
+<%--              <img alt="" src="${ly }/images/gao/aqgz1.jpg"/>--%>
+<%--              <img alt="" src="${ly }/images/gao/aqgz2.jpg"/>--%>
+<%--              <img alt="" src="${ly }/images/gao/aqgz3.jpg"/>--%>
+<%--              <img alt="" src="${ly }/images/gao/aqgz4.jpg"/>--%>
+<%--              <img alt="" src="${ly }/images/gao/aqgz6.jpg"/>--%>
+<%--              <img alt="" src="${ly }/images/gao/l1.jpg"/>--%>
+<%--              <img alt="" src="${ly }/images/gao/l2.jpg"/>--%>
+<%--              <img alt="" src="${ly }/images/gao/l3.jpg"/>--%>
+<%--              <img alt="" src="${ly }/images/gao/l4.jpg" style="margin-right:0;"/>--%>
             </div>
           </td>
         </tr>
@@ -123,5 +156,36 @@
         </tr>
       </table>
     </div>
+  <script>
+  console.log('1111111');
+  console.log(${img0});
+  if(${img0=='null'}){
+  $('#myCheck1').hide();
+  }
+  if(${img1=='null'}){
+  $('#myCheck2').hide();
+  }
+  if(${img2=='null'}){
+  $('#myCheck3').hide();
+  }
+  if(${img3=='null'}){
+  $('#myCheck4').hide();
+  }
+  if(${img4=='null'}){
+  $('#myCheck5').hide();
+  }
+  if(${img5=='null'}){
+  $('#myCheck6').hide();
+  }
+  if(${img6=='null'}){
+  $('#myCheck7').hide();
+  }
+  if(${img7=='null'}){
+  $('#myCheck8').hide();
+  }
+  if(${img8=='null'}){
+  $('#myCheck9').hide();
+  }
+  </script>
   </div>
 </div>

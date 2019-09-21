@@ -2597,6 +2597,7 @@ public class VillageController extends BaseController {
         m.put("companyName", companyName);
         model.addAttribute("list", monitorMapper.selectGroupByMap(m));
         model.addAttribute("companyName", companyName);
+
         return "village/system/monitor-list-supervise";
     }
 

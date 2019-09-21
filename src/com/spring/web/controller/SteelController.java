@@ -4655,10 +4655,11 @@ public class SteelController extends BaseController {
         return "steel/source/company-list";
     }
     /**
-     * 重大危险源源长制————在线监测
+     * 重大危险源源长制————
      */
     @RequestMapping(value = "source/video")
     public String monitorListSupervise(HttpServletRequest request, String companyName, Model model) throws Exception {
+        User user = getLoginUser(request);
 
          return null;
     }
@@ -4835,6 +4836,43 @@ public class SteelController extends BaseController {
         }
         return result;
     }
-    
+
+    /**
+     * 分级管控运行
+     * @param request
+     * @param model
+     * @param dto
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("safety-system/control-operation")
+    public String realTimeMonitoring(HttpServletRequest request,Model model,CompanyListReqDTO dto) throws Exception{
+        User user = getLoginUser(request);
+        StringBuilder sb = new StringBuilder();
+        List<Integer> ids = tradeCliqueMapper.selectCompanyIdsByCqlib(user.getId());
+        for (int i = 0; i < ids.size() ; i++) {
+
+            if (i == ids.size()-1){
+                sb.append("'").append(ids.get(i)).append("'");
+            }else {
+                sb.append("'").append(ids.get(i)).append("',");
+            }
+
+        }
+
+        return "";
+    }
+
+    /**
+     * 各类风险分布
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("safety-system/risk-distribution")
+    public String riskDistribution(HttpServletRequest request,Model model){
+        System.out.println("2");
+        return "";
+    }
 
 }

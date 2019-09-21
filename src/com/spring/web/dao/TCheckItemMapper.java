@@ -344,11 +344,15 @@ public interface TCheckItemMapper {
 
     Integer zfTrouble(@Param("control")String control, @Param("user_ids")String user_ids);
 
-    Integer zfTrouble11(@Param("user_ids")String user_ids);
+    List<Map<String,Object>>  zfTrouble11(@Param("control")String control, @Param("user_ids")String user_ids);
 
     Integer zfHiddenTrouble22(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
+    List<Map<String,Object>> zfHiddenTrouble22GroupBy(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
     Integer zfHiddenTroubleType(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    List<Map<String,Object>> zfHiddenTroubleTypeGroupBy(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer zfHiddenTrouble33(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
 

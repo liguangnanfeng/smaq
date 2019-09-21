@@ -220,4 +220,10 @@ public interface CompanyMapper {
 
     Integer findALL(@Param("userId") Integer userId, @Param("type")Integer type, @Param("isFreeze")Integer isFreeze);
 
+    List<Map<String,Object>> selectIndustrs();
+
+    Integer selectDangerAll(@Param("industry")String industry, @Param("dlevel")String dlevel, @Param("userIds")String userIds);
+
+    Integer selectDangerBlue(@Param("industry")String industry, @Param("userIds")String userIds);
+
 }

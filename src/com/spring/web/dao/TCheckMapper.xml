@@ -762,7 +762,15 @@
 
 
     <select id="findCountAll" parameterType="Integer" resultType="Integer">
-        select count(*) from t_check_tbl where del = 0 and flag = 1 and status = 2 and depart = #{depart} and user_id in (${user_ids}) and type = #{type}
+        SELECT
+            count(*)
+        FROM
+            t_check_tbl
+        WHERE
+            del = 0
+        AND flag = 1
+        AND status = 2
+        AND depart = #{depart} and user_id in (${user_ids}) and type = #{type}
     </select>
 
     <!-- 政府端 绩效分析数据查询  flag = 1 -->
@@ -774,6 +782,7 @@
          LEFT JOIN company_view c1 ON t1.user_id = c1.user_id
         WHERE
             del = 0
+        AND status = 2
         AND t1.flag = #{flag}
         AND c1.industry LIKE CONCAT('%', #{industry},'%')
         AND t1.user_id in (${user_ids})
@@ -787,6 +796,7 @@
          LEFT JOIN company_view c1 ON t1.user_id = c1.user_id
         WHERE
             del = 0
+        AND status = 2
         AND c1.industry LIKE CONCAT('%', #{industry},'%')
         AND t1.user_id in (${user_ids})
     </select>
@@ -801,6 +811,7 @@
          LEFT JOIN company_view c1 ON t1.user_id = c1.user_id
         WHERE
             del = 0
+        AND status = 2
         AND t1.flag = #{flag}
         AND c1.industry LIKE CONCAT('%', #{industry},'%')
         AND t1.user_id = #{user_id}

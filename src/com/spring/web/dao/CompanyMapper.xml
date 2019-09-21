@@ -1954,6 +1954,33 @@
 	</select>
 
 
+	<select id="selectDangerAll" parameterType="Integer" resultType="Integer">
+		SELECT
+			count(*)
+		FROM
+			company_view
+		WHERE
+			is_del = 0
+		AND industry = #{industry}
+		AND dlevel = #{dlevel}
+		AND user_id in (${userIds})
+	</select>
+
+	<select id="selectDangerBlue" parameterType="Integer" resultType="Integer">
+		SELECT
+			count(*)
+		FROM
+			company_view
+		WHERE
+			is_del = 0
+		AND industry = #{industry}
+		AND (dlevel = "蓝色" OR dlevel is null)
+		AND user_id in (${userIds})
+	</select>
+
+	<select id="selectIndustrs" parameterType="Integer" resultType="java.util.Map">
+		SELECT * FROM a_industry_tbl
+	</select>
 
 </mapper>
 

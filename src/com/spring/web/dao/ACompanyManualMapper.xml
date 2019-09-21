@@ -807,6 +807,20 @@
         </where>
     </select>
 
+    <select id="findControlDataByCliqu" parameterType="Integer" resultType="java.util.Map">
+               SELECT
+        c1.name,
+        c1.industry,
+        c1.user_id
+        FROM
+        company_view c1
+        RIGHT JOIN a_company_manual_tbl a1 ON c1.user_id = a1.uid
+        where
+					 c1.user_id in (${userId})
+            AND a1.del = 0
+            GROUP BY
+            a1.uid
+    </select>
 
     <select id="findCoordinate" parameterType="Integer" resultType="java.util.Map">
         SELECT
@@ -834,6 +848,19 @@
         </where>
     </select>
 
+    <select id="findCoordinateByCliequ" parameterType="Integer" resultType="java.util.Map">
+          SELECT
+            c1.user_id,
+            c1. name,
+            u1.longitude,
+            u1.latitude
+            FROM
+            company_view c1
+            LEFT JOIN user_tbl u1 ON c1.user_id = u1.id
+            where
+            c1.is_del = 0 AND c1.dlevel = #{dlevel}
+            and c1.user_id in (${userId})
+    </select>
 
     <select id="findCoordinateBlue" parameterType="Integer" resultType="java.util.Map">
         SELECT
@@ -860,7 +887,19 @@
             AND c1.is_del = 0 AND (c1.dlevel = "蓝色" OR c1.dlevel is null)
         </where>
     </select>
-
+    <select  id="findCoordinateBlueByCliequ" parameterType="Integer" resultType="java.util.Map">
+        SELECT
+        c1.user_id,
+        c1. name,
+        u1.longitude,
+        u1.latitude
+        FROM
+        company_view c1
+        LEFT JOIN user_tbl u1 ON c1.user_id = u1.id
+        where
+        c1.is_del = 0 AND (c1.dlevel = "蓝色" OR c1.dlevel is null)
+        and c1.user_id in (${userId})
+    </select>
 
     <select id="totalize" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM a_company_manual_tbl WHERE uid = #{uid} AND level = #{level}

@@ -174,7 +174,7 @@ body .dis-ib{margin-right:15px;}
                 <td colspan="2">
                   <div class="div-gaoz" style="padding:0;">
                     <div class="xx-gaoz">重要<br>提示</div>
-                    <font class="xx-gaoz1">安全是一种责任、为己为家为他人aagrgagargargarg</font>
+                    <font class="xx-gaoz1">安全是一种责任、为己为家为他人</font>
                   </div>
                 </td>
                 <td>

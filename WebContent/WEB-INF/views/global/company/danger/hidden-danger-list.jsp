@@ -40,7 +40,7 @@
         }
     </style>
     <script type="text/javascript">
-        <%--console.log('${list}');--%>
+        console.log('${host}');
 
         function showpicture(memoImg) {
             //memoImg = "";
@@ -56,21 +56,19 @@
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>隐患统计分析系统</span>
     <span class="c-gray en">&gt;</span> <span>隐患治理记录</span>
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
-       href="javascript:location.replace(location.href);" title="刷新">
-        <i class="Hui-iconfont">&#xe68f;</i>
-    </a>
+    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="javascript:history.go(-1)" title="返回">返回</a>
+
 </nav>
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
         <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}"
            href="${ly }/village/hidden-danger-list?flag=1&status=1">企业自查</a>
-        <a class="btn default ${flag == 4 ? 'btn-primary' : 'radius'}"
-           href="${ly }/village/hidden-danger-list?flag=4">行政检查</a>
-        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
-           href="${ly }/village/hidden-danger-list?flag=3">部门抽查</a>
         <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
-           href="${ly }/village/hidden-danger-list?flag=2">执法检查</a>
+           href="${ly }/village/hidden-danger-list?flag=2">行政检查</a>
+        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
+           href="${ly }/village/hidden-danger-list?flag=3">第三方检查</a>
+        <%--  <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
+             href="${ly }/village/hidden-danger-list?flag=2">执法检查</a>--%>
     </div>
     <%--<div class="text-c">--%>
     <%--<form action="${ly }/village/danger-index-list?flag=${flag}" method="post">--%>
@@ -105,47 +103,46 @@
     <%--</button>--%>
     <%--</form>--%>
     <%--</div>--%>
+    <style>
+        span#list {
+            position: absolute;
+            z-index: 100000;
+            margin-top: 5px;
+            right: 290px;
+        }
+    </style>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <%--<p class="paging">--%>
         <%--<a href="${ly }/village/recheck-list?flag=${flag}&page=${page-1 }">    &lt; 上一页 </a>--%>
         <%--<strong>第${page+1}页/共${count}页</strong>--%>
         <%--<a href="${ly }/village/recheck-list?flag=${flag}&page=${page+1}">下一页 &gt;</a>--%>
         <%--</p>--%>
-    <%--<style>--%>
-    <%--.totalyh{--%>
-        <%--position:absolute;--%>
-
-    <%--}--%>
-    <%--</style>--%>
-     <%--<div class="totalyh">--%>
-        <%--总隐患数:--%>
-    <%--</div>--%>
-<style>
-    span#list {
-    position: absolute;
-    z-index: 100000;
-    margin-top: 5px;
-    right: 290px;
-    }
-</style>
     </div>
     <div class="mt-20">
+        <span id="list">总隐患数: ${fn:length(list) } 条</span>
         <table class="table table-border table-bordered table-bg table-hover table-sort">
-    <span id="list">总隐患数: ${fn:length(list) } 条</span>
-
-    <thead>
+            <thead>
             <tr class="text-c">
-                <th width="5%">检查类型</th>
-                <th width="5%">车间/场所</th>
+                <th width="5%">隐患类型</th>
+                <c:if test="${flag==1}">
+                    <th width="5%">车间/场所</th>
+                </c:if>
+                <c:if test="${flag!=1}">
+                    <th width="5%">公司</th>
+                </c:if>
                 <th width="5%">系统</th>
                 <th width="5%">环节/部位</th>
                 <th width="5%">发生日期</th>
                 <th width="15%">隐患内容</th>
                 <th width="5%">隐患图片</th>
-                <th width="5%">隐患等级</th>
+                <c:if test="${flag==1}">
+                    <th width="5%">隐患等级</th>
+                </c:if>
                 <th width="5%">治理方案</th>
-                <th width="5%">治理结果及日期</th>
-                <th width="5%">治理责任人</th>
+                <%--<th width="5%">治理结果及日期</th>--%>
+                <th width="5%">治理日期</th>
+                <th width="5%">结果</th>
+                <th width="5%">责任人</th>
                 <th width="5%">治理投入</th>
                 <th width="5%">上报</th>
             </tr>
@@ -153,29 +150,41 @@
             <tbody>
             <!-- 循环开始 -->
             <c:set var="x" value="${fn:split('基础检查/现场检查/高危检查','/') }"/>
+
             <c:forEach items="${list }" varStatus="index" var="list">
                 <tr class="text-c">
-                    <c:choose>
-                        <c:when test="${list.type == 1}">
-                            <td>日常</td>
-                        </c:when>
-                        <c:when test="${list.type == 2}">
-                            <td>定期</td>
-                        </c:when>
-                        <c:when test="${list.type == 3}">
-                            <td>季节</td>
-                        </c:when>
-                        <c:when test="${list.type == 4}">
-                            <td>其他</td>
-                        </c:when>
-                        <c:when test="${list.type == 5}">
-                            <td>综合</td>
-                        </c:when>
-                    </c:choose>
+                    <script>
+                        console.log('14:32:','${list}');
+                    </script>
+                        <%--<c:choose>--%>
+                        <%--<c:when test="${list.type == 1}">--%>
+                        <%--<td>日常</td>--%>
+                        <%--</c:when>--%>
+                        <%--<c:when test="${list.type == 2}">--%>
+                        <%--<td>定期</td>--%>
+                        <%--</c:when>--%>
+                        <%--<c:when test="${list.type == 3}">--%>
+                        <%--<td>季节</td>--%>
+                        <%--</c:when>--%>
+                        <%--<c:when test="${list.type == 4}">--%>
+                        <%--<td>其他</td>--%>
+                        <%--</c:when>--%>
+                        <%--<c:when test="${list.type == 5}">--%>
+                        <%--<td>综合</td>--%>
+                        <%--</c:when>--%>
+                        <%--</c:choose>--%>
+                    <c:set var="idx" value="${fn:split(list.levels,'/') }"/>
+                    <td>${idx[0]}</td>
+                    <c:if test="${flag==1}">
+                        <td>${list.depart }</td>
+                    </c:if>
+                    <c:if test="${flag!=1}">
+                        <td>${companyName}</td>
+                    </c:if>
+
                     <c:if test="${list.levels!=null}">
                         <c:set var="item" value="${fn:split(list.levels,'/') }"/>
                     </c:if>
-                    <td>${list.depart }</td>
                     <c:if test="${empty item[1]}">
                         <td>暂无数据</td>
                     </c:if>
@@ -188,66 +197,95 @@
                     <c:if test="${not empty list.level2}">
                         <td>${list.level2 }</td>
                     </c:if>
-                    <%--<c:if test="${list.levels!=null}">
-                        <c:if test="${not empty item[0]}">
-                            <td>${item[1]}</td>
-                            &lt;%&ndash;<c:if test="${not empty item[1]&&not empty item[2]}">
-                                <td>${item[1]}/${item[2]}</td>
-                            </c:if>
-                            <c:if test="${not empty item[1]&& empty item[2]}">
+                        <%--<c:if test="${list.levels!=null}">
+                            <c:if test="${not empty item[0]}">
                                 <td>${item[1]}</td>
+                                &lt;%&ndash;<c:if test="${not empty item[1]&&not empty item[2]}">
+                                    <td>${item[1]}/${item[2]}</td>
+                                </c:if>
+                                <c:if test="${not empty item[1]&& empty item[2]}">
+                                    <td>${item[1]}</td>
+                                </c:if>
+                                <c:if test="${ empty item[1]&& empty item[2]}">
+                                    <td>暂无数据</td>
+                                </c:if>&ndash;%&gt;
                             </c:if>
-                            <c:if test="${ empty item[1]&& empty item[2]}">
+
+                            <c:if test="${empty item[0]}">
                                 <td>暂无数据</td>
-                            </c:if>&ndash;%&gt;
-                        </c:if>
+                                <td>暂无数据</td>
+                            </c:if>
 
-                        <c:if test="${empty item[0]}">
-                            <td>暂无数据</td>
-                            <td>暂无数据</td>
-                        </c:if>
-
-                    </c:if>--%>
+                        </c:if>--%>
                         <%--                    <td>${item[0]}</td>--%>
                         <%--                    <td>${item[1]+item[2] }</td>--%>
                     <td>${list.realTimeStr}</td>
                     <td>${list.content }</td>
-                    <td><c:if test="${list.files!=null}">
-                        <button class="btn radius btn-danger size-S ml-20"
-                                onClick="showpicture(getRootPath()+'${list.files }')">
-                            <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 隐患图片
-                        </button>
+                    <td >
+
+                        <c:if test="${list.recheck_file!=null}">
+                            <button  class="wjj${index.index} btn radius btn-danger size-S ml-20"
+                                     onClick="showpicture(getRootPath()+'${list.recheck_file }')">
+                                <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 隐患图片
+                            </button>
+                        </c:if>
+                    </td>
+
+                    <script>
+                        <%--var wjj ="${list.recheck_file }";--%>
+
+                        <%--if(wjj.indexOf("null") > 0 )--%>
+                        <%--{--%>
+
+                        <%--$(".wjj${index.index}").hide();--%>
+                        <%--//console.log('.wjj${index.index}有字符串');--%>
+                        <%--}--%>
+                        <%--console.log('${list.recheck_file }','${index.index}')--%>
+
+                    </script>
+
+                    <c:if test="${flag==1}">
+                        <td>
+                            <c:choose>
+                                <c:when test="${list.level eq '红色'}"><font class="col-a">${list.level}</font></c:when>
+                                <c:when test="${list.level eq '橙色'}"><font class="col-b">${list.level}</font></c:when>
+                                <c:when test="${list.level eq '黄色'}"><font class="col-c">${list.level}</font></c:when>
+                                <c:when test="${list.level eq '蓝色'}"><font class="col-d">${list.level}</font></c:when>
+                            </c:choose>
+                        </td>
                     </c:if>
-                    </td>
+
+
                     <td>
-                        <c:choose>
-                            <c:when test="${list.flag eq '红色'}"><font class="col-a">${list.flag}</font></c:when>
-                            <c:when test="${list.flag eq '橙色'}"><font class="col-b">${list.flag}</font></c:when>
-                            <c:when test="${list.flag eq '黄色'}"><font class="col-c">${list.flag}</font></c:when>
-                            <c:when test="${list.flag eq '蓝色'}"><font class="col-d">${list.flag}</font></c:when>
-                        </c:choose>
-                    </td>
-                    <td>
+
                         <c:if test="${list.file_address==null}">
                             <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="yulan(this)"
                                href="javascript:;">预览文件</a>
-                            <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="xiazai(this) "
-                               href="javascript:;">下载文件</a>
+                            <a style="text-decoration:none;margin-bottom:5px;display: none" onclick="xiazai(this)"
+                               download="zhilifangan.pdf">下载文件</a>
                         </c:if>
                         <c:if test="${list.file_address!=null}">
                             <a style="text-decoration:none;margin-bottom:5px;display: inline-block"
-                               data-src="${list.file_address}" onclick="yulan(this)" href="javascript:;">预览文件</a>
+                               data-src="${host}${list.file_address}" onclick="yulan(this)" href="javascript:;">预览文件</a>
                             <a style="text-decoration:none;margin-bottom:5px;display: inline-block"
-                               data-src="${list.file_address}" onclick="xiazai(this)" href="javascript:;">下载文件</a>
+                               href="${host}${list.file_address}" download="zhilifangan.pdf">下载文件</a>
                         </c:if>
                         <a style="text-decoration:none" onclick="uploadfile(${list.checkItemId},this)"
                            href="javascript:void(0);">上传文件</a>
                     </td>
 
                     <td>
+                        <fmt:formatDate value="${list.recheck_time == null? '' : list.recheck_time}"
+                                        pattern="yyyy-MM-dd"/>
+
+                            <%--<c:choose>
+                                <c:when test="${list.status eq 2}">不合格</c:when>
+                                <c:when test="${list.status eq 3}">复查合格</c:when>
+                            </c:choose>--%>
+                    </td>
+                    <td>
                         <c:choose>
-                            <c:when test="${list.status eq 2}">未合格</c:when>
-                            <c:when test="${list.status eq 3}">复查通过</c:when>
+                            <c:when test="${list.status eq 1}">复查合格</c:when>
                         </c:choose>
                     </td>
                     <td>${list.fjgkfzr}</td>
@@ -264,6 +302,10 @@
             </tbody>
         </table>
     </div>
+
+    <%--     隐藏的下载按钮--%>
+    <a href="" download="zhilifangan.pdf" style="display: none" id="xzan"></a>
+
     <!-- 弹窗图片 -->
 
 
@@ -321,7 +363,7 @@
     <form enctype="multipart/form-data" id="fm1" method='post'>
         <input type="text" name="itemId" value='' style="display: none" id="fm1_imput"/>
         <input type="file" name="file"
-               accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+               accept=".pdf"
                id="upload" style="display: none">
     </form>
 
@@ -343,16 +385,17 @@
         var form = document.querySelector("#fm1");
         var formdata = new FormData(form);
         $.ajax({
-            url: getRootPath() + "/api/map/B004",    //请求的url地址 
+            url: getRootPath() + "/api/map/B005",    //请求的url地址 
             data: formdata,    //参数值
             type: "POST",   //请求方式
             processData: false,
             contentType: false,
             success: function (res) {
-//请求成功时处理
+                //请求成功时处理
                 if (res.status == 0) {
                     current.prevAll().css('display', 'inline-block');//把隐藏的按钮显示出来
-                    current.prevAll().attr("data-src", getRootPath() + res);//为隐藏的按钮设置属性为返回的路径
+                    current.prevAll().attr("data-src", '${host}' + res.data);//为隐藏的按钮设置属性为返回的路径
+                    current.prev().attr("href", '${host}' + res.data);
                     var file = document.getElementById('upload');
                     file.value = ''; //把file 内容清空
                     layer.msg('上传成功');
@@ -361,7 +404,7 @@
                 }
             },
             error: function (res) {
-//请求出错处理
+                //请求出错处理
                 console.log(res, '请求失败');
                 layer.msg('上传失败');
             }
@@ -376,7 +419,9 @@
 
     function xiazai(dom) {
         var src = $(dom).attr('data-src');
-        window.location.href = src;
+        src = 'localhost:8080' + src
+        $('#xzan').attr('href', src);
+        $('#xzan').click();
 
     }
 
@@ -413,7 +458,7 @@
 
     $(function () {
         $('.table-sort').dataTable({
-            "aaSorting": [[0, "asc"]],//默认第几个排序
+            "aaSorting": [[4, "desc"]],//默认第几个排序
             "bStateSave": false,//状态保存
             "aoColumnDefs": []
         });
@@ -423,6 +468,7 @@
         $(".div_imgp img").attr("src", src);
         $("#modal-plan").modal("show")
     }
+    console.log("14:25")
 </script>
 </body>
 </html>

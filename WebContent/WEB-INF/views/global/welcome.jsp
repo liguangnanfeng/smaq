@@ -117,7 +117,7 @@ function showping(){
             ${district.name }
             <c:if test="${moveD == 1 }">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="${ly }/global/back/global" target="_parent">
+                <a href="${ly }/town/cx/back/gov" target="_parent">
                     <strong style="color:red;">${nameBefore }</strong>
                 </a>
             </c:if>

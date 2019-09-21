@@ -108,7 +108,7 @@
                                         <td>${co.address}</td>
                                         <td>${co.scale}</td>
                                         <td>${co.ifFreeze}</td>
-                                        <td>
+                                        <td >
                                                 <c:if test="${1 == co.is_key }">
                                                         是
                                                 </c:if>
@@ -117,7 +117,7 @@
                                                         否
                                                 </c:if>
                                         </td>
-                                        <td>
+                                        <td id="choose">
                                                 <c:if test="${userType == co.is_controls }">
                                                         是
                                                 </c:if>
@@ -170,6 +170,10 @@
                 flag : isControls
             },function(result){
                 location.reload();
+<%--                layer.closeAll();--%>
+<%--               let c=$("#choose").text();--%>
+<%--               c=="否"?$("#choose").text("是"):$("#choose").text("否");--%>
+<%--                console.log($("#choose").text())--%>
             })
         });
     }

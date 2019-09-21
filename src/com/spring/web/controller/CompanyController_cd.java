@@ -6444,7 +6444,8 @@ public class CompanyController_cd extends BaseController {
         List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
         List<Map<String,Object>> list1 = null;
         StringBuilder sb = new StringBuilder();
-
+        Integer totalCounts = tCheckMapper.dataTotalCounts(user.getId());
+        model.addAttribute("total",totalCounts);
         findComment1(company, list, sb);
 
         /*if (null == flag){
@@ -7791,6 +7792,8 @@ public class CompanyController_cd extends BaseController {
         Integer integer = tCheckMapper.selectHiddenDangerNumber2(id);
 
         if (null == name || "".equals(name)) {
+            System.out.println(loginUser.getId());
+            System.out.println(companyMapper.selectByPrimaryKey(loginUser.getId()).getSafety());
             name = companyMapper.selectByPrimaryKey(loginUser.getId()).getSafety();
         }
         model.addAttribute("dangerInteger",integer);

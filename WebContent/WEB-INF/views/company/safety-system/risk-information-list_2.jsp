@@ -65,7 +65,7 @@ function pr_() {
     </div>
     <div class="mt-20">
       <!-- 加载进来 -->
-      <%-- <div class="div-set">
+       <div class="div-set">
         <div class="top-set">
           <font>安全风险公告牌</font>
           <a class="btn_rbj" style="right:146px;" onClick="show_dialog('编辑风险公告牌', '/company/safety-system/risk-information-add?id=${be.id}&flag=${flag }')" href="javascript:;" title="编辑">编辑</a>
@@ -161,7 +161,7 @@ function pr_() {
                 <td colspan="2">
                   <div class="div-gaoz" style="padding:0;">
                     <div class="xx-gaoz">重要<br>提示</div>
-                    <font class="xx-gaoz1">安全是一种责任、为己为家为他人</font>
+                    <font class="xx-gaoz1">安全是一种责任、为己为家为他人777777777</font>
                   </div>
                 </td>
                 <td>
@@ -177,7 +177,6 @@ function pr_() {
           </div>
         </div> 
       </div>
-        --%>
     </div>
   </div>
 </body>

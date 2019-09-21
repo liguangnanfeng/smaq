@@ -100,7 +100,7 @@ body .dis-ib{margin-right:15px;}
                   </div>
                 </td>
                 <td class="text-c tcol-red" style="width:30%">事故类型</td>
-                <td class="text-c tcol-red" style="width:40%">风险因素</td>
+                <td class="text-c tcol-red" style="width:40%">风险因素3333333333</td>
               </tr>
               <tr>
                 <td rowspan="3" class="td-gao">

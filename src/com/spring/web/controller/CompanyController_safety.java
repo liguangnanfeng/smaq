@@ -2381,6 +2381,11 @@ public class CompanyController_safety extends BaseController {
         m.put("name", name);
         //m.put("flag2", 1);
         AFxgzp be = aFxgzpMapper.selectByName(m);
+        m.put("name", user.getUserName());
+        AFxgzp be1 = aFxgzpMapper.selectByName(m);
+        if(null!=be1&&null!=be.getYjczcs()){
+            be.setYjczcs(be1.getYjczcs());
+        }
         if (null == be || be.getIsedit().intValue() == 0) {//没有公告牌或没有修改过，重新生成
             if (null == be) {
                 be = new AFxgzp();
@@ -2431,6 +2436,12 @@ public class CompanyController_safety extends BaseController {
                 aFxgzpMapper.updateByPrimaryKeySelective(be);
             }
 
+        }
+        if(null!=be&&null!=be.getImgUrl()){
+            String[] imgs = be.getImgUrl().split("&");
+            for(int i=0; i<imgs.length; i++){
+                model.addAttribute("img"+i, imgs[i]);
+            }
         }
         Integer load3 = 1;
         model.addAttribute("be", be);
@@ -2501,6 +2512,12 @@ public class CompanyController_safety extends BaseController {
                 aFxgzpMapper.updateByPrimaryKeySelective(be);
             }
 
+        }
+        if(null != be && null != be.getImgUrl()){
+            String[] imgs = be.getImgUrl().split("&");
+            for(int i = 0; i < imgs.length; i++){
+                model.addAttribute("img"+i, imgs[i]);
+            }
         }
         Integer load3 = 2;
         model.addAttribute("name1",name1);

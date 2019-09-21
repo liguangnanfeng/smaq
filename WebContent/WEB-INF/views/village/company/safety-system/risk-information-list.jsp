@@ -99,7 +99,7 @@ body .dis-ib{margin-right:15px;}
                     <p><b>${be.name }</b></p>
                   </div>
                 </td>
-                <td class="text-c tcol-red" style="width:30%">事故类型</td>
+                <td class="text-c tcol-red" style="width:30%">事故类型4444444</td>
                 <td class="text-c tcol-red" style="width:40%">风险因素</td>
               </tr>
               <tr>

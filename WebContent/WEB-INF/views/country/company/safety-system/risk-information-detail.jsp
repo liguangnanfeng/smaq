@@ -136,7 +136,7 @@ function pr_() {
                 <td colspan="2">
                   <div class="div-gaoz" style="margin-bottom:0;padding:5px 10px;">
                     <b>安全部电话</b>
-                    <font>火警电话：119&emsp;急救电话：120</font>
+                    <font>火警电话：119&emsp;急救电话：1205497998949</font>
                   </div>
                 </td>
               </tr>

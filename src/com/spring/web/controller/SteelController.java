@@ -4540,7 +4540,7 @@ public class SteelController extends BaseController {
         model.addAttribute("gg2", gson.toJson(gg2));
         model.addAttribute("gg3", gson.toJson(gg3));
         model.addAttribute("gg4", gson.toJson(gg4));
-        return "village/safety-system/statistics-list";
+        return "steel/safety-system/statistics-list";
     }
 
     void setcompany_manualCount(String level, Integer[] arr) {
@@ -4871,8 +4871,69 @@ public class SteelController extends BaseController {
      */
     @RequestMapping("safety-system/risk-distribution")
     public String riskDistribution(HttpServletRequest request,Model model){
-        System.out.println("2");
-        return "";
+        User user = getLoginUser(request);
+        StringBuilder sb = new StringBuilder();
+        List<Integer> ids = tradeCliqueMapper.selectCompanyIdsByCqlib(user.getId());
+        for (int i = 0; i < ids.size() ; i++) {
+
+            if (i == ids.size()-1){
+                sb.append("'").append(ids.get(i)).append("'");
+            }else {
+                sb.append("'").append(ids.get(i)).append("',");
+            }
+
+        }
+
+        List<Map<String,Object>> list1 = aCompanyManualMapper.findCoordinateByCliequ(sb.toString(),"红色");
+
+        List<Map<String,Object>> list2 = aCompanyManualMapper.findCoordinateByCliequ(sb.toString(),"橙色");
+
+        List<Map<String,Object>> list3 = aCompanyManualMapper.findCoordinateByCliequ(sb.toString(),"黄色");
+
+        List<Map<String,Object>> list4 = aCompanyManualMapper.findCoordinateBlueByCliequ(sb.toString());
+
+        model.addAttribute("list1",list1);
+        model.addAttribute("list2",list2);
+        model.addAttribute("list3",list3);
+        model.addAttribute("list4",list4);
+
+        return "global/safety-system/all-risk-map";
+    }
+
+    @RequestMapping(value = "all-statistics-list")
+    public String controlData(HttpServletRequest request,Model model) throws Exception {
+        User user = getLoginUser(request);
+        StringBuilder sb = new StringBuilder();
+        List<Integer> ids = tradeCliqueMapper.selectCompanyIdsByCqlib(user.getId());
+        for (int i = 0; i < ids.size() ; i++) {
+
+            if (i == ids.size()-1){
+                sb.append("'").append(ids.get(i)).append("'");
+            }else {
+                sb.append("'").append(ids.get(i)).append("',");
+            }
+
+        }
+        List<Map<String,Object>> list = aCompanyManualMapper.findControlDataByCliqu(sb.toString());
+
+        for (int i = 0; i < list.size(); i++) {
+
+            Integer red = aCompanyManualMapper.totalize((Integer) list.get(i).get("user_id"),"红色");
+            list.get(i).put("red",red);
+
+            Integer orange = aCompanyManualMapper.totalize((Integer) list.get(i).get("user_id"),"橙色");
+            list.get(i).put("orange",orange);
+
+            Integer yellow = aCompanyManualMapper.totalize((Integer) list.get(i).get("user_id"),"黄色");
+            list.get(i).put("yellow",yellow);
+
+            Integer blue = aCompanyManualMapper.totalizeBlue((Integer) list.get(i).get("user_id"));
+            list.get(i).put("blue",blue);
+        }
+
+        model.addAttribute("list",list);
+
+        return "global/safety-system/all-statistics-list";
     }
 
 }

@@ -1122,15 +1122,15 @@ public class GlobalController extends BaseController {
     private void addFlag(User user, List<Map<String, Object>> list) {
         for (int i = 0; i < list.size(); i++) {  // 1.可升可取; 2.不可升不可取; 3.可升不可取; 4.不可升可取
 
-            if (null == (Integer)list.get(i).get("controls")){
+            if (null == (Integer)list.get(i).get("is_controls")){
 
                 list.get(i).put("flag",3);
 
-            }else if (null != (Integer)list.get(i).get("controls") ){
+            }else if (null != (Integer)list.get(i).get("is_controls") ){
                 if (user.getUserType() == 7){ // 如何登录的是 市级 账户
-                    if ((Integer)list.get(i).get("controls") == 7){
+                    if ((Integer)list.get(i).get("is_controls") == 7){
                         list.get(i).put("flag",4);
-                    }else if ((Integer)list.get(i).get("controls") == 6 || (Integer)list.get(i).get("controls") == 3 || (Integer)list.get(i).get("controls") == 4) {
+                    }else if ((Integer)list.get(i).get("is_controls") == 6 || (Integer)list.get(i).get("is_controls") == 3 || (Integer)list.get(i).get("is_controls") == 4) {
                         list.get(i).put("flag",3);
                     }else {
                         list.get(i).put("flag",3);
@@ -1138,11 +1138,11 @@ public class GlobalController extends BaseController {
                 }
 
                 if (user.getUserType() == 6){ // 如何登录的是 区级 账户
-                    if ((Integer)list.get(i).get("controls") == 7){
+                    if ((Integer)list.get(i).get("is_controls") == 7){
                         list.get(i).put("flag",2);
-                    }else if ((Integer)list.get(i).get("controls") == 6){
+                    }else if ((Integer)list.get(i).get("is_controls") == 6){
                         list.get(i).put("flag",4);
-                    }else if ((Integer)list.get(i).get("controls") == 3 || (Integer)list.get(i).get("controls") == 4){
+                    }else if ((Integer)list.get(i).get("is_controls") == 3 || (Integer)list.get(i).get("is_controls") == 4){
                         list.get(i).put("flag",3);
                     }else {
                         list.get(i).put("flag",3);
@@ -1150,13 +1150,13 @@ public class GlobalController extends BaseController {
                 }
 
                 if (user.getUserType() == 3){ // 如何登录的是 镇级 账户
-                    if ((Integer)list.get(i).get("controls") == 7){
+                    if ((Integer)list.get(i).get("is_controls") == 7){
                         list.get(i).put("flag",2);
-                    }else if ((Integer)list.get(i).get("controls") == 6){
+                    }else if ((Integer)list.get(i).get("is_controls") == 6){
                         list.get(i).put("flag",2);
-                    }else if ((Integer)list.get(i).get("controls") == 3){
+                    }else if ((Integer)list.get(i).get("is_controls") == 3){
                         list.get(i).put("flag",4);
-                    }else if ((Integer)list.get(i).get("controls") == 4){
+                    }else if ((Integer)list.get(i).get("is_controls") == 4){
                         list.get(i).put("flag",3);
                     }else {
                         list.get(i).put("flag",3);
@@ -1164,15 +1164,15 @@ public class GlobalController extends BaseController {
                 }
 
                 if (user.getUserType() == 4){ // 如何登录的是 村级 账户
-                    if ((Integer)list.get(i).get("controls") == 7){
+                    if ((Integer)list.get(i).get("is_controls") == 7){
                         list.get(i).put("flag",2);
-                    }else if ((Integer)list.get(i).get("controls") == 6){
+                    }else if ((Integer)list.get(i).get("is_controls") == 6){
                         list.get(i).put("flag",2);
-                    }else if ((Integer)list.get(i).get("controls") == 3){
+                    }else if ((Integer)list.get(i).get("is_controls") == 3){
                         list.get(i).put("flag",2);
-                    }else if ((Integer)list.get(i).get("controls") == 4){
+                    }else if ((Integer)list.get(i).get("is_controls") == 4){
                         list.get(i).put("flag",4);
-                    }else if ((Integer)list.get(i).get("controls") == 0){
+                    }else if ((Integer)list.get(i).get("is_controls") == 0){
                         list.get(i).put("flag",3);
                     }else {
                         list.get(i).put("flag",3);

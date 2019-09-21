@@ -128,7 +128,7 @@
 			<td style="width: 40px;">其他</td>
 			<td rowspan="2" class="sum">合计</td>
 			<td rowspan="2">排名</td>
-			<td rowspan="2">同比%</td>
+			<td rowspan="2">同比</td>
 		</tr>
 		<tr class="f">
 			<td>数量</td>

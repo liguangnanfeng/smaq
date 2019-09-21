@@ -117,16 +117,16 @@
 
 		<td>数量</td>
 		<td>占比%</td>
-		<td>同比%</td>
+		<td>同比</td>
 		<td>数量</td>
 		<td>占比%</td>
 		<td>同比</td>
 		<td>数量</td>
 		<td>占比%</td>
-		<td>同比%</td>
+		<td>同比</td>
 		<td>数量</td>
 		<td>占比%</td>
-		<td>同比%</td>
+		<td>同比</td>
 
 		</tr>
 		<c:forEach items="${list}" varStatus="index" var="be">

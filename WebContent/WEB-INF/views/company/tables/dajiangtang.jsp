@@ -25,7 +25,7 @@
 			main {
 				width:100%;
 				height: 100vw;
-				background: url(/images/companyImg/newimg/safe.jpg) no-repeat center;
+				background: url(/images/companyImg/newimg/safe1.jpg) no-repeat center;
 				background-size: 100% 100%;
 				position: relative;
 			}
@@ -109,7 +109,7 @@
 				display: flex;
 				justify-content: center;
 				position: relative;
-				top: 17%;
+				top: 12%;
 			}
 		.img{
 		   width:60px;

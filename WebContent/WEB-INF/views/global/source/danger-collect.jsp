@@ -164,14 +164,17 @@ function print_() {
         </thead>
         <tbody>
           <!-- 循环-->
-  <script>
-   console.log('${list1}')
-  </script>
+    <script>
+        console.log('${list}')
+    </script>
           <c:forEach items="${list }" varStatus="index" var="be">
             <c:if test='${be[1]!="炼铁分厂"&&be[1]!="炼钢分厂"&&be[1]!="高线分厂"&&be[1]!="一轧分厂"&&be[1]!="二轧分厂"&&be[1]!="物流分部"&&be[1]!="动力分厂"&&be[1]!="制氧分厂"}'>
             <tr class="text-c">
             <td>${index.index + 1 }</td>
-              <td>${be[1]}</td>
+                <script>
+                console.log(${be})
+                </script>
+                <td><a  href="/global/move/company?uid=" target="_parent">${be[1]}</a></td>
             <td>
               <span>${be[2] + be[3] + be[6] + be[7] + be[10] + be[11] + be[14] + be[15]}</span>
              <%--  <span>已整改：${be[3] + be[7] + be[11] + be[15]}</span>

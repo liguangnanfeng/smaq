@@ -265,10 +265,10 @@ $(function(){
                </c:if>
               </c:if>
               <c:if test="${flag == 1}">
-              <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">查看检查记录</a>
+              <a style="text-decoration:none" onClick="show_dialog('检查详情_f2f2f2f2${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }')" href="javascript:;">查看检查记录</a>
               </c:if>
               <c:if test="${flag == 4 || flag == 3}">
-              <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=8')" href="javascript:;">查看检查记录</a>
+              <a style="text-decoration:none" onClick="show_dialog('检查详情_t2t2t2t2${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=8')" href="javascript:;">查看检查记录</a>
               </c:if>
                 <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除检查记录</a>
               

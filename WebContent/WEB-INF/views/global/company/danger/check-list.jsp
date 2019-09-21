@@ -88,7 +88,8 @@ body .dis-ib{margin-right:15px;}
             <%--<th width="10%">${flag == 1 ? '实际检查' : '录入'}时间</th>--%>
             <th width="10%">检查日期</th>
             <th width="10%">检查人员</th>
-            <th width="10%">隐患数量</th>
+            <th width="10%
+">隐患数量</th>
            <%-- <th width="15%">${flag == 1 ? '受检部门' : '检查单位'}</th>--%>
             <th width="10%">操作</th>
           </tr>

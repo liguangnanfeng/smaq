@@ -109,7 +109,7 @@
 
 
             <td>
-                <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.user_id }', '${ly}/global/check-list?flag=${flag }&uid=${be.user_id }&title=${title}$type=${type}&villageId=${villageId}&townId=${townId}&status=${status}&dmName=${dmName} ')" href="javascript:;">查看详情</a>
+                <a style="text-decoration:none" class="href" onClick="show_dialog('检查详情_${be.user_id }', '${ly}/global/check-list?flag=${flag }&uid=${be.user_id }&title=${title}&type=${type}&villageId=${villageId}&townId=${townId}&status=${status}&dmName=${dmName} ')" href="javascript:;">查看详情</a>
             </td>
             </tr>
         </c:forEach>
@@ -143,6 +143,20 @@
         function copy_(id) {
         show_tab('添加自查记录', getRootPath()+'/company/check-copy?id=' + id);
         }
+        $(".href").click(()=>{
+        var dt = setInterval(function(){
+        $(".layui-layer-title").hide();
+        $(".layui-layer-setwin").hide();
+        console.log("hide1");
+        },100);
+        console.log("href");
+        setTimeout(()=>{
+        console.log('stop');
+        clearInterval(dt);
+        },2000);
+        })
+
+
         </script>
         </body>
         </html>

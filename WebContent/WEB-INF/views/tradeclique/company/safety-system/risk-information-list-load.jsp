@@ -48,7 +48,7 @@
              <c:when test="${fn:contains(be.fxdj, '黄')}"><c:set value="tcol-c" var="cl"/></c:when>
              <c:when test="${fn:contains(be.fxdj, '蓝')}"><c:set value="tcol-d" var="cl"/></c:when>	               	
           </c:choose>
-          <td class="text-c ${cl }" style="width:30%;font-size:14px">事故类型1111111</td>
+          <td class="text-c ${cl }" style="width:30%;font-size:14px">事故类型</td>
           <td class="text-c ${cl }" style="width:40%;font-size:14px">风险因素</td>
         </tr>
         <tr>

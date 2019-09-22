@@ -284,9 +284,12 @@
                             </c:choose>--%>
                     </td>
                     <td>
-                        <c:choose>
-                            <c:when test="${list.status eq 1}">复查合格</c:when>
-                        </c:choose>
+                        <c:if test="${list.status == 2}">
+                            未治理
+                        </c:if>
+                        <c:if test="${list.status == 3}">
+                            已治理
+                        </c:if>
                     </td>
                     <td>${list.fjgkfzr}</td>
                     <c:if test="${list.money==null}">

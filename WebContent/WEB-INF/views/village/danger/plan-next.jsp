@@ -158,7 +158,7 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${partL }" var="part" varStatus="pi">
+        <c:forEach items="${partL }" var="part" varStatus="pi">
         <c:set var="x" value="0"/>
         <c:forEach items="${itemL }" var="ch">
             <c:if test="${ch.partId == part.id}">
@@ -171,6 +171,7 @@
            <br><input class="btn btn-primary size-M radius mt-10" type="button" onclick="uploadimg(this)" value="上传图片"/>
          </td>--%>
         <c:set var="y" value="0"/>
+
         <c:forEach items="${itemL}" var="ch">
             <c:if test="${ch.partId == part.id}">
                 <c:if test="${y > 0}">

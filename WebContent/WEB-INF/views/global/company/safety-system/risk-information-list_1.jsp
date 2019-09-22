@@ -171,7 +171,7 @@ function pr_() {
                 <td>
                   <div class="div-gaoz" style="padding:0;">
                     <div class="xx-gaoz">重要<br>提示</div>
-                    <p class="xx-gaoz1" style="width:auto">安全是一种责任、为己为家为他人5t5t5t5t5t</p>
+                    <p class="xx-gaoz1" style="width:auto">安全是一种责任、为己为家为他人</p>
                   </div>
                 </td>
               </tr>

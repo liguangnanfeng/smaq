@@ -27,10 +27,11 @@ body .dis-ib{margin-right:15px;}
     <c:if test="${flag == 2}">
       <span class="c-gray en">&gt;</span> <span>执法记录</span> 
     </c:if>
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
-      <i class="Hui-iconfont">&#xe68f;</i>
+    <a onclick="back()" class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="刷新">
+    返回
     </a>
   </nav>
+
   <div class="page-container">
    <c:if test="${flag != 2}">
    <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
@@ -57,6 +58,7 @@ body .dis-ib{margin-right:15px;}
         <button class="btn btn-success" type="submit">
           <i class="Hui-iconfont">&#xe665;</i> 查询
         </button>
+      </form>
       </form>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -88,8 +90,7 @@ body .dis-ib{margin-right:15px;}
             <%--<th width="10%">${flag == 1 ? '实际检查' : '录入'}时间</th>--%>
             <th width="10%">检查日期</th>
             <th width="10%">检查人员</th>
-            <th width="10%
-">隐患数量</th>
+            <th width="10%">隐患数量</th>
            <%-- <th width="15%">${flag == 1 ? '受检部门' : '检查单位'}</th>--%>
             <th width="10%">操作</th>
           </tr>
@@ -253,6 +254,12 @@ var type = '${type}';
 function copy_(id) {
   show_tab('添加自查记录', getRootPath()+'/company/check-copy?id=' + id);
 }
+<%--    window.onload=function(){--%>
+<%--    $(".layui-layer-title").hide();--%>
+<%--    console.log("hide2");--%>
+<%--    console.log( $(".layui-layer-title").hide())--%>
+<%--    }--%>
+
 </script> 
 </body>
 </html>

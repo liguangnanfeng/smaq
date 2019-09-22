@@ -742,14 +742,14 @@ public class SteelController extends BaseController {
     public  @ResponseBody Result selectCompanyByCqlib8(Model model, HttpServletRequest request){
         Result result = new ResultImpl();
         User user = getLoginUser(request);
-        /*List<Map<String, Object>> list2 = new ArrayList<>();
+        List<Map<String, Object>> list2 = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
         map.put("id", user.getId());
-        map.put("name", user.getUserName());
-        list2.add(map);*/
+        map.put("name", "总部端");
+        list2.add(map);
         List<Map<String, Object>> list1 = tradeCliqueMapper.selectCompanyByCqlib(user.getId());
-        //list2.addAll(list1);
-        result.setMap("list", list1);
+        list2.addAll(list1);
+        result.setMap("list", list2);
         return result;
     }
 
@@ -796,20 +796,20 @@ public class SteelController extends BaseController {
      */
     @RequestMapping(value = "model-list-main")
     public String modelListMain(HttpServletRequest request, Model model, Integer flag, Integer status, Integer plan, Integer userId) throws ParseException {
-        Company company = companyMapper.selectByPrimaryKey(userId); //查询公司
         User user = getLoginUser(request);
+
         Map<String, Object> map1 = new LinkedHashMap<String, Object>();
-        map1.put("level1",company.getName());
+        map1.put("level1",user.getUserName());
 
         List<Map<String, Object>> jiChuItem = new ArrayList<>();
         jiChuItem.add(map1);
-        jiChuItem.addAll(aCompanyManualMapper.findJiChuItem(company.getUserId(), "基础管理"));
+        jiChuItem.addAll(aCompanyManualMapper.findJiChuItem(user.getId(), "基础管理"));
 
         Map<String, Object> map2 = new LinkedHashMap<String, Object>();
-        map2.put("level1", company.getName());
+        map2.put("level1", user.getUserName());
         List<Map<String, Object>> XianChangItem = new ArrayList<>();
         XianChangItem.add(map2);
-        XianChangItem.addAll(aCompanyManualMapper.findJiChuItem(company.getUserId(), "现场管理"));
+        XianChangItem.addAll(aCompanyManualMapper.findJiChuItem(user.getId(), "现场管理"));
 
         for (Map<String, Object> XianChangMap : XianChangItem) {
             Map<Integer, Integer> Xianmap = new LinkedHashMap<Integer, Integer>();
@@ -819,12 +819,12 @@ public class SteelController extends BaseController {
             /*Xianmap.put(3, 0);*/
             Xianmap.put(4, 0);
             String level1 = (String) XianChangMap.get("level1");
-            List<Integer> Xiantypes = tModelMapper.selecttype(level1, company.getUserId(), 2, flag);
+            List<Integer> Xiantypes = tModelMapper.selecttype(level1, user.getId(), 2, flag);
             for (Integer integer : Xiantypes) {
                 Xianmap.put(integer, 1);
             }
             XianChangMap.put("array", Xianmap);
-            Integer count =  tModelMapper.selectDangerCountByDepartAndUserId(level1, company.getUserId(),2);
+            Integer count =  tModelMapper.selectDangerCountByDepartAndUserId(level1, user.getId(),2);
             if(null==count){
                 XianChangMap.put("count", 0);
             }else{
@@ -841,11 +841,11 @@ public class SteelController extends BaseController {
             /*Jimap.put(3, 0);*/
             Jimap.put(4, 0);
             String level1 = (String) jiChuMap.get("level1");
-            List<Integer> Jitypes = tModelMapper.selecttype(level1, company.getUserId(), 1, flag);
+            List<Integer> Jitypes = tModelMapper.selecttype(level1, user.getId(), 1, flag);
             for (Integer integer : Jitypes) {
                 Jimap.put(integer, 1);
             }
-            Integer count =  tModelMapper.selectDangerCountByDepartAndUserId(level1, company.getUserId(),1);
+            Integer count =  tModelMapper.selectDangerCountByDepartAndUserId(level1, user.getId(),1);
             if(null==count){
                 jiChuMap.put("count", 0);
             }else{
@@ -855,36 +855,15 @@ public class SteelController extends BaseController {
             jiChuMap.put("array", Jimap);
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(user.getId());
 
-        List<Integer> ids = tradeCliqueMapper.selectCompanyIdsByCqlib(user.getId());
+        List<Map<String, Object>> list1 = hiddenPlanMapper.selectCountAll(user.getId());
 
-        StringBuilder sb = new StringBuilder();
+        List<Map<String, Object>> hiddenPlanList = hiddenPlanMapper.findDpid(0,user.getId());
 
-            for (int i = 0; i < ids.size() ; i++) {
-
-                if (i == ids.size()-1){
-                    sb.append("'").append(ids.get(i)).append("'");
-                }else {
-                    sb.append("'").append(ids.get(i)).append("',");
-                }
-
-            }
-
-        List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(company.getUserId());
-
-        //List<Map<String, Object>> list1 = hiddenPlanMapper.selectCountAll(company.getUserId());
-
-        List<Map<String, Object>> list1 = hiddenPlanMapper.selectCountAllTraces(sb.toString());//合计的数据
-
-        List<Map<String, Object>> hiddenPlanList = hiddenPlanMapper.findDpid(0,company.getUserId());
-        List<Map<String, Object>> hiddenPlanList2 = new ArrayList<>();//各个分公司合计数据
-        for(Integer id:ids){
-           List<Map<String, Object>> map = hiddenPlanMapper.selectCountAllName(id);
-            hiddenPlanList2.addAll(map);
-        }
         if (hiddenPlanList.size() == 0){
             HiddenPlan hiddenPlan = new HiddenPlan();
-            hiddenPlan.setUid(company.getUserId());
+            hiddenPlan.setUid(user.getId());
             hiddenPlan.setDpid(0);
             hiddenPlan.setUpdate_time(new Date());
             hiddenPlan.setCreate_time(new Date());
@@ -911,27 +890,25 @@ public class SteelController extends BaseController {
 
             Integer a = hiddenPlanMapper.insert(hiddenPlan);
 
-            List<Map<String, Object>> hiddenPlanList1 = hiddenPlanMapper.findDpid(0,company.getUserId());
+            List<Map<String, Object>> hiddenPlanList1 = hiddenPlanMapper.findDpid(0,user.getId());
 
             model.addAttribute("hiddenPlanList",hiddenPlanList1);
         }else {
-            model.addAttribute("hiddenPlanList",hiddenPlanList);
-            model.addAttribute("hiddenPlanList2",hiddenPlanList2);
 
+            model.addAttribute("hiddenPlanList",hiddenPlanList);
         }
+
         model.addAttribute("data",sdf.format(new Date()));
         model.addAttribute("list", list);
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
         model.addAttribute("jiChuItem", jiChuItem);
         model.addAttribute("xianChangItem", XianChangItem);
-       // model.addAttribute("companyName", company.getName());
         model.addAttribute("companyName", user.getUserName());
         model.addAttribute("plan", plan);
         model.addAttribute("list1",list1);
         model.addAttribute("name","合计");
-        model.addAttribute("userId", userId);
-        return "steel/check/model-list-main";
+        return "steel/check/model-list-main1";
 
     }
     /**
@@ -975,7 +952,14 @@ public class SteelController extends BaseController {
     public String troubleList1(HttpServletRequest request, String title, Integer type, String companyName,
                                Integer townId, Integer villageId,
                                Integer status, Integer flag, Model model,String dmName, Integer userId) throws Exception {
-        User user = userMapper.selectByPrimaryKey(userId);
+        User user;
+        if(null == userId){
+            user = getLoginUser(request);
+            model.addAttribute("userId", user.getId());
+        }else{
+            user = userMapper.selectByPrimaryKey(userId);
+            model.addAttribute("userId", userId);
+        }
         Map<String, Object> m = new HashMap<String, Object>();
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
@@ -983,6 +967,36 @@ public class SteelController extends BaseController {
         if (user.getUserType() == 6) {//区
             model.addAttribute("townL", townMapper.selectListByDistrict(m));
         }
+        //信息汇总
+        Integer number1 = tCheckMapper.findDataCounts(user.getId(),flag);
+        Integer number2 = tCheckMapper.findDataCountSum(user.getId(),1,flag);
+        Integer number3 = tCheckMapper.findDataCountSum(user.getId(),2,flag);
+        Integer number4 = tCheckMapper.findDataCountSum(user.getId(),3,flag);
+
+        if (null == number1 || number1 == 0){
+            model.addAttribute("sum",0); // 总条数
+        }else if (null != number1 || number1 != 0){
+            model.addAttribute("sum",number1); // 总条数
+        }
+
+        if (null == number2 || number2 == 0){
+            model.addAttribute("sum1",0); // 合格数据
+        }else if (null != number2 || number2 != 0){
+            model.addAttribute("sum1",number2); // 合格数据
+        }
+
+        if (null == number3 || number3 == 0){
+            model.addAttribute("sum2",0); // 不合格数据
+        }else if (null != number3 || number3 != 0){
+            model.addAttribute("sum2",number3); // 不合格数据
+        }
+
+        if (null == number4 || number4 == 0){
+            model.addAttribute("sum3",0); // 复查数据
+        }else if (null != number4 || number4 != 0){
+            model.addAttribute("sum3",number4); // 复查数据
+        }
+
 
         // 向map集合进行存储
         m.put("type", type);  //
@@ -1037,13 +1051,13 @@ public class SteelController extends BaseController {
         String x = DateFormatUtils.format(d, "yyyy-MM-dd");
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
         model.addAttribute("t", d.getTime());
-        model.addAttribute("userId", userId);
+        //model.addAttribute("userId", userId);
         if (user.getUserType() == 5) {
             // 表示等于5的话就将页面进行跳转
             return "steel/check/check-list";
         }
         // TODO 找到这个界面
-        return "village/danger/check-list";
+        return "steel/check/check-list";
     }
     /**
      * TODO 隐患治理记录, 整改不合格的 新建立的页面
@@ -1056,8 +1070,15 @@ public class SteelController extends BaseController {
      */
     @RequestMapping(value = "hidden-danger-list")
     public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status, Integer userId) {
-        User user = userMapper.selectByPrimaryKey(userId);
-        Company company = companyMapper.selectByPrimaryKey(userId);
+        User user;
+        if(null == userId){
+            user = getLoginUser(request);
+            model.addAttribute("userId", user.getId());
+        }else{
+            user = userMapper.selectByPrimaryKey(userId);
+            model.addAttribute("userId", userId);
+        }
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
         model.addAttribute("userId", user.getId());
@@ -1165,7 +1186,7 @@ public class SteelController extends BaseController {
         model.addAttribute("companyName", user.getUserName());
         model.addAttribute("host", host);
         model.addAttribute("list", list);
-        model.addAttribute("userId", user.getId());
+        //model.addAttribute("userId", user.getId());
         return "steel/check/hidden-danger-list";
     }
 
@@ -4934,6 +4955,50 @@ public class SteelController extends BaseController {
         model.addAttribute("list",list);
 
         return "global/safety-system/all-statistics-list";
+    }
+    /**
+     * TODO 隐患排查治理板块 => 检查设置实施中首页表显示车间
+     * 是根据conpanyManual这张表中的数据车间数据进行查询
+     * 跳转到新一轮的页面进行修改
+     *
+     * @param request 请求
+     * @param model   存储域
+     * @param flag    检查方式 1. 企业自查  2 行政检查 3 部门抽查
+     * @param status
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping(value = "model-list-main2")
+    public String modelListMain2(HttpServletRequest request, Model model, Integer flag, Integer status, Integer plan, Integer userId) throws ParseException {
+        User user = getLoginUser(request);
+        List<Integer> ids = tradeCliqueMapper.selectCompanyIdsByCqlib(user.getId());
+        ids.add(user.getId());
+        StringBuilder sb = new StringBuilder();
+        sb.append("'").append(user.getId()).append("',");
+        for (int i = 0; i < ids.size() ; i++) {
+
+            if (i == ids.size()-1){
+                sb.append("'").append(ids.get(i)).append("'");
+            }else {
+                sb.append("'").append(ids.get(i)).append("',");
+            }
+
+        }
+        List<Map<String, Object>> list1 = hiddenPlanMapper.selectCountAllTraces(sb.toString());//合计的数据
+        List<Map<String, Object>> hiddenPlanList2 = new ArrayList<>();//各个分公司合计数据
+        for(Integer id:ids){
+            List<Map<String, Object>> map = hiddenPlanMapper.selectCountAllName(id);
+            if(id.equals(user.getId()))
+            {
+                map.get(0).put("name", "总部");
+            }
+            hiddenPlanList2.addAll(map);
+        }
+        model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("hiddenPlanList2",hiddenPlanList2);
+        model.addAttribute("list1",list1);
+        return "steel/check/model-list-main";
+
     }
 
 }

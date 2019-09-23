@@ -1233,9 +1233,7 @@ public class VillageController extends BaseController {
         }else{
             m.put("dmName",dmName);
         }
-
         // 进行判断
-
         if (setUserId(user, m)) {
             clearVillageTown(m);
 
@@ -1244,8 +1242,6 @@ public class VillageController extends BaseController {
 
             Integer sum = 0;
             for (int i = 0; i < list.size(); i++) {
-
-                System.out.println((Integer) list.get(i).get("id"));
 
                 DynamicParameter<String, Object> id = tCheckMapper.selectCompany((Integer) list.get(i).get("id"));
                 list.get(i).put("listM",id);
@@ -1280,9 +1276,7 @@ public class VillageController extends BaseController {
             }else if (null != number4 || number4 != 0){
                 model.addAttribute("sum3",number4); // 复查数据
             }
-
             model.addAttribute("list", list);
-
             m.put("dmName",null);
             List<Map<String, Object>> list2 = tCheckMapper.selectList(m);
             for (int i = 0; i < list2.size(); i++) {
@@ -1649,30 +1643,14 @@ public class VillageController extends BaseController {
      */
     @RequestMapping(value = "check-rectification")
     public String checkRectification(Integer id, Model model, Integer flag, Integer number,HttpServletRequest request) throws Exception {
-        //log.error("checkId："+id);
+
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
         Integer type = tc.getType();
-        //log.error("检查表type："+type);
 
         User user = getLoginUser(request);
         // TODO 这里只保存一条数据,并返回到前端
         List<TRectification> list = tRectificationMapper.selectAlls(id);
-        //List<Map> list = tRectificationMapper.selectAlls(id);
-       /* if (null != list && list.size() > 0) {
-            TRectification rectification = new TRectification();
-            rectification.setId(list.get(0).getId());
-            rectification.setCheckId(list.get(0).getCheckId());
-            rectification.setItem1(list.get(0).getItem1());
-            rectification.setItem2(list.get(0).getItem2());
-            rectification.setItem3(list.get(0).getItem3());
-            rectification.setDeadline(list.get(0).getDeadline());
-            rectification.setPlanTime(list.get(0).getPlanTime());
-            rectification.setUserId(list.get(0).getUserId());
-            rectification.setCreateUser(list.get(0).getCreateUser());
-            rectification.setCreateTime(list.get(0).getCreateTime());
-            rectification.setDel(list.get(0).getDel());
 
-        }*/
 
        if(null != list && list.size() > 0){
            model.addAttribute("rectification", list.get(0));
@@ -1684,7 +1662,6 @@ public class VillageController extends BaseController {
 
         DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
         model.addAttribute("check", check);
-        //model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(id, null));
 
         List<Map<String, Object>> iteml = tCheckItemMapper.selectDangerByCheckId(id, null);
         // 判断他是什么类型的然后再添加数据
@@ -1704,11 +1681,8 @@ public class VillageController extends BaseController {
         // 这个是没有用的
         if (type != null && type == 9) {
             for (Map<String, Object> a : iteml) {
-                //log.error("checkNext:"+1);
                 Integer[] ids = new Integer[1];
                 ids[0] = (Integer) a.get("levelId");
-                //log.error("ids:"+ids[0]);
-                //log.error("a:"+a.toString());
                 List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
                 String dangertype = "";
                 String factors = "";
@@ -1717,14 +1691,12 @@ public class VillageController extends BaseController {
                 String level2 = "";
                 String level3 = "";
                 for (ACompanyManual aa : rets) {
-                    //log.error("checkNext:"+2);
                     dangertype = aa.getType();
                     factors = aa.getFactors();
                     measures = aa.getMeasures();
                     level1 = aa.getLevel1();
                     level2 = aa.getLevel2();
                     level3 = aa.getLevel3();
-                    //log.error("type:"+dangertype);
                     break;
                 }
                 a.put("dangerType", dangertype);
@@ -1733,10 +1705,8 @@ public class VillageController extends BaseController {
                 a.put("level1", level1);
                 a.put("level2", level2);
                 a.put("level3", level3);
-                //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
             }
         }
-        //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
         model.addAttribute("itemL", iteml);
 
         model.addAttribute("number", number);
@@ -1745,11 +1715,6 @@ public class VillageController extends BaseController {
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
         return "village/danger/opinion-detail";
-        /*if (type == 9) {
-            return "village/danger/opinion-detailrjcb";
-        } else {
-            return "village/danger/opinion-detail";
-        }*/
 
     }
 
@@ -1797,9 +1762,6 @@ public class VillageController extends BaseController {
         int count = tRecheckMapper.selectByCheckId(checkId).size();
         model.addAttribute("count", count);
         if (null == doc) {// 第一次
-            /*if(check.getFlag() == 3){
-            cgfService.rectificationSave(tr);
-            }*/
             tr = tRectificationMapper.selectByCheckId(checkId);
             model.addAttribute("check", check);
             model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(checkId, null));
@@ -1826,7 +1788,6 @@ public class VillageController extends BaseController {
                 }
             }
         }
-
         TRectification tRectification = tRectificationMapper.selectByCheckId(checkId);
         if (null != tRectification) {
 
@@ -1843,29 +1804,23 @@ public class VillageController extends BaseController {
         model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
 
-        log.error("checkid:" + checkId + ",flag:" + flag + ",checkflag:" + check.getFlag());
-
         // 判断是否整改复查过
         if(null==tRectification){
             model.addAttribute("is_re",0);
         }else{
             model.addAttribute("is_re",1);
         }
-
-
         for (TCheckItem tCheckItem : tCheckItems) {
 
-                if (null != tCheckItem.getDeadline()) {
-                    model.addAttribute("deadline", simpleDateFormat.format(tCheckItem.getDeadline()).toString());
-                }
-                if (null != tCheckItem.getRecheckTime()) {
-                    model.addAttribute("planTime", simpleDateFormat.format(tCheckItem.getRecheckTime()).toString());
-                }
-                break;
+            if (null != tCheckItem.getDeadline()) {
+                model.addAttribute("deadline", simpleDateFormat.format(tCheckItem.getDeadline()).toString());
+            }
+            if (null != tCheckItem.getRecheckTime()) {
+                model.addAttribute("planTime", simpleDateFormat.format(tCheckItem.getRecheckTime()).toString());
+            }
+            break;
 
         }
-
-
         if(check.getFlag()==2){
             // 行政检查
             return "village/danger/opinion-add" + flag + check.getFlag();

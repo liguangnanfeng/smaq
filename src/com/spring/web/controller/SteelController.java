@@ -5082,7 +5082,6 @@ public class SteelController extends BaseController {
 
         list1 = tCheckItemMapper.selectHiddenSources11(3, String.valueOf(user.getId())); // 第三方检查
         Integer number3 = list1.size();
-
         model.addAttribute("number1", number1);
         model.addAttribute("number2", number2);
         model.addAttribute("number3", number3);
@@ -5397,9 +5396,10 @@ public class SteelController extends BaseController {
             }
 
         }
-        Integer number3 = tCheckItemMapper.findTypeByMap(String.valueOf(user.getId()), 3); // 一般隐患
-        Integer number2 = tCheckItemMapper.findTypeByMap(String.valueOf(user.getId()), 2); // 重大隐患
-        Integer number1 = tCheckItemMapper.findTypeByMap(String.valueOf(user.getId()), 1); // 较大隐患
+        Integer number3 = tCheckItemMapper.findTypeByMap(sb.toString(), 3); // 一般隐患
+        Integer number2 = tCheckItemMapper.findTypeByMap(sb.toString(), 2); // 重大隐患
+        Integer number1 = tCheckItemMapper.findTypeByMap(sb.toString(), 1); // 较大隐患
+
 
         model.addAttribute("number1", number1);
         model.addAttribute("number2", number2);

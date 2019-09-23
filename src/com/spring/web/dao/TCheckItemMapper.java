@@ -428,6 +428,14 @@ public interface TCheckItemMapper {
 
     List<Map<String,Object>> lookHiddenSourceCount(@Param("flag") Integer flag, @Param("check_company")String check_company, @Param("userIds")String userIds, @Param("industry_type")Integer industry_type);
 
+    List<Map<String,Object>> zhuChartData781ByCliqu(@Param("control")String control,@Param("user_ids")String user_ids);
+
+    Integer zhuChartData88ByCliqu(@Param("control")String control,@Param("user_ids")String user_ids);
+
+    Integer findFileByMapByCliqu(@Param("user_id") String user_id, @Param("flag") Integer flag);
+
+    Integer zhuChartData124ByCliqu(@Param("control")String control, @Param("user_id")String user_id);
+
 }
 
 

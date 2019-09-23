@@ -194,8 +194,6 @@ public class GlobalController extends BaseController {
             model.addAttribute("name_", trade.getName());
             model.addAttribute("userId", trade.getUserId());
             if (trade.getIsClique() == 1) { //跳转到总部企业
-                //model.addAttribute("list", tradeMapper.selectTradeCompany(user.getId()));//行业端所属企业
-                //log.error("TradeComopany："+tradeMapper.selectTradeCompany(user.getId()));
                 return "tradeclique/clique-main";
             }
 
@@ -224,7 +222,6 @@ public class GlobalController extends BaseController {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("districtId", user.getId());
             List<Map<String, Object>> list = townMapper.selectListByDistrict(m);//设置镇级
-            System.out.println("list:"+list);
             model.addAttribute("list", list);
             model.addAttribute("name_", districtMapper.selectByPrimaryKey(user.getId()).getName());
         }
@@ -243,13 +240,10 @@ public class GlobalController extends BaseController {
         }
         if (userType == 10) { //行业级
             Trade trade = tradeMapper.selectByPrimaryKey(user.getId());
-            //log.error(trade.toString());
             model.addAttribute("userType", userType);
             model.addAttribute("name_", trade.getName());
             model.addAttribute("userId", trade.getUserId());
             if (trade.getIsClique() == 1) { //跳转到总部企业
-                //model.addAttribute("list", tradeMapper.selectTradeCompany(user.getId()));//行业端所属企业
-                //log.error("TradeComopany："+tradeMapper.selectTradeCompany(user.getId()));
                 return "tradeclique/clique-main";
             }
 
@@ -2110,19 +2104,10 @@ public class GlobalController extends BaseController {
                                Integer townId, Integer villageId,
                                Integer status, Integer flag, Model model) throws Exception {
         User user = getLoginUser(request);
-        // 根据登录 ID 查询所有属于这个地区中的所有公司信息
-        //List<Company> companyList = companyMapper.selectAllList(user.getId());
 
         List<Map<String,Object>> map = tCheckItemMapper.findALL(user.getId(), user.getUserType());
         StringBuffer sb = new StringBuffer();
-        /*for (int i = 0; i < companyList.size() ; i++) {
-            if (i == companyList.size()-1){
-                sb.append(companyList.get(i).getUserId());
-            }else {
-                sb.append(companyList.get(i).getUserId()).append(",");
-            }
 
-        }*/
         for (int i = 0; i < map.size() ; i++) {
             if (i == map.size()-1){
                 sb.append(map.get(i).get("user_id"));
@@ -2133,7 +2118,6 @@ public class GlobalController extends BaseController {
         }
 
         String userIds = sb.toString();
-        //System.out.println(userIds);
         List<Map> list = new ArrayList<>();
         if(userIds.length()!=0) {
             list = tCheckItemMapper.selectAll(userIds);
@@ -2142,24 +2126,10 @@ public class GlobalController extends BaseController {
         model.addAttribute("list", list);
 
         return "global/danger/recheck-list";
-
-       /* model.addAttribute("flag", flag);
-        model.addAttribute("status", 1);*/
-        // 只判断是否以检查出过合格的
-
-
-
-        /*for (int i = 0; i < companyList.size(); i++) {
-
-            if (null != status && 1 == status) { //表示的是要查询整改合格的
-                list = tCheckItemMapper.selectRecheckListByRecheckStatus(companyList.get(i).getUserId(), 1);
-            } else {
-                list = tCheckItemMapper.selectRecheckList(companyList.get(i).getUserId());
-            }
-        }*/
-
-
     }
+
+
+
     @RequestMapping(value = "danger-collect")
     public String modelListz(HttpServletRequest request, Integer industryType, Integer townId, Integer villageId, String companyName, Model model, String startTime, String endTime) throws Exception {
         User user = getLoginUser(request);
@@ -2563,7 +2533,6 @@ public class GlobalController extends BaseController {
                                Integer status, Integer flag, Model model,String dmName,Integer uid) throws Exception {
 
         User user = userMapper.selectByPrimaryKey(uid);
-
         Map<String, Object> m = new HashMap<String, Object>();
 
         if (user.getUserType() == 3) {//镇
@@ -2591,7 +2560,6 @@ public class GlobalController extends BaseController {
         if (setUserId(user, m)) {
             clearVillageTown(m);
             List<Map<String, Object>> list = tCheckMapper.selectList(m);
-            //List<Map<String, Object>> list = tCheckMapper.selectList3(m);
             Integer sum = 0;
             for (int i = 0; i < list.size(); i++) {
                 DynamicParameter<String, Object> id = tCheckMapper.selectCompany((Integer) list.get(i).get("id"));
@@ -2633,6 +2601,7 @@ public class GlobalController extends BaseController {
                 set.add(list2.get(i).get("depart"));
             }
         }
+        model.addAttribute("uid",uid);
         model.addAttribute("set",set);
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
@@ -2651,10 +2620,316 @@ public class GlobalController extends BaseController {
             return "global/company/danger/check-list";
         }
         // TODO 找到这个界面
-        return "village/danger/check-list";
+        return "global/company/checkModel/check-list";
     }
 
 
+    /**
+     * create by  : 小明！！！
+     * description: TODO 隐患排查 查看详情
+     * create time: 2019/9/23 9:22
+     */
+    @RequestMapping(value = "check-detail")
+    public String checkDetail(Integer id, Model model, Integer jcxq, HttpServletRequest request, Integer flag, Integer number, Integer uid) throws Exception {
+
+        User loginUser = userMapper.selectByPrimaryKey(uid);
+        // 根据id查询的是检查表信息
+        TCheck tc = tCheckMapper.selectByPrimaryKey(id);
+        Integer type = tc.getType();
+        List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(id);
+        String name = tc.getDapartContact();
+
+        //设置名称
+        if (null == tc.getDapartContact() || tc.getDapartContact().matches("[0-9]{1,}") || "".equals(name)) {
+            // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
+            List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId(id);
+            if (null != integers && integers.size() > 0) {
+                // 这里进行名称的获取,进行全部循环,获取数据的方式,在数据库中进行查询
+                List<String> list = new ArrayList<String>();
+                for (Integer integer : integers) {
+                    if (null != integer) {
+                        ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(integer);
+                        if (null != aCompanyManual && null != aCompanyManual.getFjgkfzr()) {
+                            list.add(aCompanyManual.getFjgkfzr());
+                        }
+                    }
+                }
+                if (list.size() == 0) {
+                    name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                } else {
+                    name = list.get(0);
+                    tc.setCheckCompany(name);
+                }
+                name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+            } else {
+                name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+            }
+
+        }
+
+        model.addAttribute("partL", partL);
+        List<Map<String, Object>> iteml = null;
+        if (flag == 1) {
+            iteml = tCheckMapper.selectLevels(id);
+            for (int i = 0; i < iteml.size(); i++) {
+                if (loginUser.getUserName().equals(iteml.get(i).get("depart"))) {
+                    TCheck tCheck = tCheckMapper.selectByPrimaryKey(id);
+                    if (tCheck.getIndustryType() == 1) { // 基础
+                        iteml = tCheckMapper.selectAllLevel(id);
+                        break;
+                    } else if (tCheck.getIndustryType() == 2) { // 现场
+                        iteml = tCheckMapper.selectAllDanger(id);
+                        break;
+                    }
+                }
+            }
+
+        } else if (flag != 1) {
+            // 根据 ID 查询对应的数据 是 基础 还是 现场
+            TCheck tCheck = tCheckMapper.selectByPrimaryKey(id);
+            if (tCheck.getIndustryType() == 1) { // 基础
+                iteml = tCheckMapper.selectAllLevel(id);
+            } else if (tCheck.getIndustryType() == 2) { // 现场
+                iteml = tCheckMapper.selectAllDanger(id);
+            }
+        }
+
+        //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
+        if (type != null && type == 9) {
+            for (Map<String, Object> a : iteml) {
+                Integer[] ids = new Integer[1];
+                ids[0] = (Integer) a.get("levelId");
+                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
+                String dangertype = "";
+                String factors = "";
+                String measures = "";
+                String level1 = "";
+                String level2 = "";
+                String level3 = "";
+                for (ACompanyManual aa : rets) {
+                    //log.error("checkNext:"+2);
+                    dangertype = aa.getType();
+                    factors = aa.getFactors();
+                    measures = aa.getMeasures();
+                    level1 = aa.getLevel1();
+                    level2 = aa.getLevel2();
+                    level3 = aa.getLevel3();
+                    break;
+                }
+                a.put("dangerType", dangertype);
+                a.put("factors", factors);
+                a.put("measures", measures);
+                a.put("level1", level1);
+                a.put("level2", level2);
+                a.put("level3", level3);
+            }
+        }
+        model.addAttribute("check", tc);
+        model.addAttribute("flag", tc.getFlag());
+        model.addAttribute("itemL", iteml);
+        model.addAttribute("user", loginUser);
+
+        if(null==number){
+            Integer count = tCheckMapper.selectHiddenDangerNumber(id);
+            if(null==count){
+                count = 0;
+            }
+            model.addAttribute("number", count);
+        }else{
+            model.addAttribute("number", number);
+        }
+        Integer integer = tCheckMapper.selectHiddenDangerNumber2(id);
+
+        if (null == name || "".equals(name)) {
+            name = companyMapper.selectByPrimaryKey(loginUser.getId()).getSafety();
+        }
+        model.addAttribute("dangerInteger",integer);
+        model.addAttribute("name", name);
+        // 根据检查记录的id获取详细的信息
+        if (null != tc.getLatitude() && null != tc.getLongitude()) {
+            model.addAttribute("latitude", tc.getLatitude());
+            model.addAttribute("longitude", tc.getLongitude());
+        } else {
+            model.addAttribute("latitude", null);
+            model.addAttribute("longitude", null);
+        }
+        // 判断是否整改复查过
+        TRectification tRectification = tRectificationMapper.selectByCheckId(id);
+        if(null==tRectification){
+            model.addAttribute("is_re",0);
+        }else{
+            model.addAttribute("is_re",1);
+        }
+        model.addAttribute("uid",uid);
+        model.addAttribute("listM", tCheckMapper.selectCompany(id));
+
+        return "global/company/checkModel/plan-detail";
+
+    }
+
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO    政府端 检查详情 整改意见书
+     * create time: 2019/9/23 9:33
+     */
+    @RequestMapping(value = "check-rectification")
+    public String checkRectification(HttpServletRequest request, Integer id, Model model, Integer flag, Integer number,Integer uid) throws Exception {
+
+        TCheck tc = tCheckMapper.selectByPrimaryKey(id);
+        Integer type = tc.getType();
+        User user = userMapper.selectByPrimaryKey(uid);
+        // TODO 这里只保存一条数据,并返回到前端
+        List<TRectification> list = tRectificationMapper.selectAlls(id);
+
+        if(null != list && list.size() > 0){
+            model.addAttribute("rectification", list.get(0));
+        }
+
+        if((null != list && list.size() > 0)){
+            model.addAttribute("rectification", list.get(0));
+        }
+
+        DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
+        model.addAttribute("check", check);
+
+        List<Map<String, Object>> iteml = tCheckItemMapper.selectDangerByCheckId(id, null);
+        // 判断他是什么类型的然后再添加数据
+        Integer industryType = tc.getIndustryType();
+        for (int i = 0; i < iteml.size(); i++) {
+            Integer levelId = (Integer) iteml.get(i).get("levelId");
+            if(null!=levelId){
+                String DangerFlag="";
+                if(flag==1&&!Objects.equals(user.getUserName(),tc.getDepart())){
+                    DangerFlag = aCompanyManualMapper.selectByPrimaryKey(levelId).getFlag();
+                }else{
+                    DangerFlag = queryDangerFlag(levelId, industryType);
+                }
+                iteml.get(i).put("dangerFlag",DangerFlag);
+            }
+        }
+        // 这个是没有用的
+        if (type != null && type == 9) {
+            for (Map<String, Object> a : iteml) {
+                Integer[] ids = new Integer[1];
+                ids[0] = (Integer) a.get("levelId");
+                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
+                String dangertype = "";
+                String factors = "";
+                String measures = "";
+                String level1 = "";
+                String level2 = "";
+                String level3 = "";
+                for (ACompanyManual aa : rets) {
+                    dangertype = aa.getType();
+                    factors = aa.getFactors();
+                    measures = aa.getMeasures();
+                    level1 = aa.getLevel1();
+                    level2 = aa.getLevel2();
+                    level3 = aa.getLevel3();
+                    break;
+                }
+                a.put("dangerType", dangertype);
+                a.put("factors", factors);
+                a.put("measures", measures);
+                a.put("level1", level1);
+                a.put("level2", level2);
+                a.put("level3", level3);
+            }
+        }
+        model.addAttribute("itemL", iteml);
+        model.addAttribute("number", number);
+        model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
+        model.addAttribute("flag", flag);
+        model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
+        model.addAttribute("listM", tCheckMapper.selectCompany(id));
+
+        return "global/company/checkModel/opinion-detail";
+    }
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO    政府端 检查详情 整改意见书(已经有复查)
+     * create time: 2019/9/23 9:56
+     */
+    @RequestMapping(value = "recheck-detail")
+    public String recheckDetail(Integer checkId, Model model, Integer flag, Integer number) throws Exception {
+        Integer id = checkId;
+        DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
+        List<Map> maps = tCheckItemMapper.selectAllByCheckId(checkId);
+        List<TRecheck> tRechecks = tRecheckMapper.selectByCheckId(checkId);
+        Integer id2 = tRechecks.get(0).getId();
+        for (int i = 0; i < maps.size(); i++) {
+            // 这边就不需要记性保存了 因为如果有数据直接查询然后在进行保存
+            TRecheckItem id1 = tRecheckItemMapper.selectByCheckItemId((Integer) maps.get(i).get("id"));
+            if (null != id1) {
+                // 表示是新添加的数据不需要进行保存
+            } else {
+                id1 = new TRecheckItem();
+                id1.setCheckItemId((Integer) maps.get(i).get("id"));
+                id1.setStatus((Integer) maps.get(i).get("status"));
+                id1.setFile((String) maps.get(i).get("recheckFile"));
+                id1.setRecheckId(id2);
+                id1.setMemo((String) maps.get(i).get("memo"));
+                id1.setDeadline((Date) maps.get(i).get("deadline"));
+                tRecheckItemMapper.insertSelective(id1);
+            }
+        }
+        model.addAttribute("number", number);
+        model.addAttribute("flag", flag);
+        model.addAttribute("check", check);
+        model.addAttribute("company", companyMapper.selectByPrimaryKey(Integer.parseInt(String.valueOf(check.get("userId")))));
+
+        List<Map<String, Object>> maps1 = tRecheckItemMapper.selectByCheckId(checkId);
+        model.addAttribute("recheckList", tRechecks);
+        model.addAttribute("itemList", maps1);
+        return "global/company/checkModel/check-fudetail";
+    }
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO    政府端 复查详情
+     * create time: 2019/9/23 10:31
+     */
+    @RequestMapping(value = "fuchadetail")
+    public String fuchadetail(HttpServletRequest request,Model model,Integer checkId, Integer flag, Integer uid, Integer number) {
+        Integer id = checkId;
+        DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
+        List<Map> maps = tCheckItemMapper.selectAllByCheckId(checkId);
+        List<TRecheck> tRechecks = tRecheckMapper.selectByCheckId(checkId);
+
+        Integer id2 = tRechecks.get(0).getId();
+        for (int i = 0; i < maps.size(); i++) {
+            // 这边就不需要记性保存了 因为如果有数据直接查询然后在进行保存
+            TRecheckItem id1 = tRecheckItemMapper.selectByCheckItemId((Integer) maps.get(i).get("id"));
+            if (null != id1) {
+                // 表示是新添加的数据不需要进行保存
+            } else {
+                id1 = new TRecheckItem();
+                id1.setCheckItemId((Integer) maps.get(i).get("id"));
+                id1.setStatus((Integer) maps.get(i).get("status"));
+                id1.setFile((String) maps.get(i).get("recheckFile"));
+                id1.setRecheckId(id2);
+                id1.setMemo((String) maps.get(i).get("memo"));
+                id1.setDeadline((Date) maps.get(i).get("deadline"));
+                tRecheckItemMapper.insertSelective(id1);
+            }
+        }
+        model.addAttribute("number", number);
+        model.addAttribute("flag", flag);
+        model.addAttribute("checkId", checkId);
+        model.addAttribute("check", check);
+        model.addAttribute("company", companyMapper.selectByPrimaryKey(Integer.parseInt(String.valueOf(check.get("userId")))));
+
+        List<Map<String, Object>> maps1 = tRecheckItemMapper.selectByCheckId(checkId);
+        model.addAttribute("recheckList", tRechecks);
+        model.addAttribute("itemList", maps1);
+        return "global/company/checkModel/fuchadetail";
+    }
+    
+    
+    
+    
     /**
      * 重大危险源页面
      */
@@ -2977,7 +3252,6 @@ public class GlobalController extends BaseController {
         model.addAttribute("userId", userId);
         model.addAttribute("company", company);
         model.addAttribute("timenow", new Date());
-        System.out.println("global/danger/opinion-add" + flag + flag2);
         return "global/danger/opinion-add" + flag + flag2;
     }
     @RequestMapping(value = "off-add")
@@ -3138,7 +3412,6 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping(value = "trouble-set")
     public String troubleSet(Integer userId, String url, Model model, HttpServletRequest request) throws Exception {
-        System.out.println("userId:"+userId);
         // TODO 获取登陆的用户的信息
         User user = getLoginUser(request);
         // 判断是否为企业
@@ -3341,7 +3614,6 @@ public class GlobalController extends BaseController {
         String districtId = request.getParameter("districtId"); //获取城市id
         String townId = request.getParameter("townId"); //获取村级id
         String page = request.getParameter("page"); //获取村级i
-        System.out.println("Page:"+page);
         User user = getLoginUser(request); //用户登陆
         if (null != user) { //用户不为空
             Map<String, Object> params = new HashMap<String, Object>();
@@ -3455,9 +3727,7 @@ public class GlobalController extends BaseController {
                 log.error("level1/2/3 : " + level1 + "/" + level2 + "/" + level3);
             }
         }
-        //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
         model.addAttribute("itemL", iteml);
-        //log.error("checkNext:"+33);
         if (tc.getStatus() == 2) {// 已检查
             return "company/danger/plan-detail";
         }
@@ -3470,22 +3740,21 @@ public class GlobalController extends BaseController {
         model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
         return "global/danger/plan-next2";
     }
-    /**
-     * TODO 整改指令书
-     * 获取到了整改指令书
-     * 都不传递就是 现场检查记录
-     * 1 责令限期整改意见书
-     * 2 整改意见复查书
-     * 8 现场检查记录
-     */
+
+
+   /**
+    * create by  : 小明！！！
+    * description: TODO    隐患排查  文书详情
+    * create time: 2019/9/23 10:33
+    */
     @RequestMapping(value = "check-document")
-    public String checkDocument(HttpServletRequest request, Integer checkId, Integer flag, Model model, TRectification tr) throws Exception {
+    public String checkDocument(HttpServletRequest request, Integer checkId, Integer flag, Integer uid, Model model, TRectification tr) throws Exception {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         if (null == flag) {
             flag = 8;// 现场检查记录
         }
-        User user = getLoginUser(request);
+        User user = userMapper.selectByPrimaryKey(uid);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("checkId", checkId);
         m.put("flag", flag);
@@ -3495,9 +3764,6 @@ public class GlobalController extends BaseController {
         int count = tRecheckMapper.selectByCheckId(checkId).size();
         model.addAttribute("count", count);
         if (null == doc) {// 第一次
-            /*if(check.getFlag() == 3){
-            cgfService.rectificationSave(tr);
-            }*/
             tr = tRectificationMapper.selectByCheckId(checkId);
             model.addAttribute("check", check);
             model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(checkId, null));
@@ -3508,7 +3774,7 @@ public class GlobalController extends BaseController {
             model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(checkId, null));
             model.addAttribute("itemL1", tCheckItemMapper.selectDangerByCheckId(checkId, 1));
             model.addAttribute("document", doc);
-            return "global/danger/opinion-detail2";
+            return "global/company/checkModel/opinion-detail2";
         }
         List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(checkId);
 
@@ -3541,15 +3807,12 @@ public class GlobalController extends BaseController {
         model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
 
-        log.error("checkid:" + checkId + ",flag:" + flag + ",checkflag:" + check.getFlag());
-
         // 判断是否整改复查过
         if(null==tRectification){
             model.addAttribute("is_re",0);
         }else{
             model.addAttribute("is_re",1);
         }
-
 
         for (TCheckItem tCheckItem : tCheckItems) {
 
@@ -3563,129 +3826,19 @@ public class GlobalController extends BaseController {
 
         }
 
-
         if(check.getFlag()==2){
             // 行政检查
-            return "global/danger/opinion-add" + flag + check.getFlag();
+            return "global/company/checkModel/opinion-add" + flag + check.getFlag();
         }else {
             // 部门抽查
             if(flag==8){
                 flag=1;
             }
-            return "global/danger/opinion-add" + flag + check.getFlag();
+            return "global/company/checkModel/opinion-add" + flag + check.getFlag();
         }
 
     }
-    /**
-     * TODO 检查表隐患 整改详情,
-     * 保存检查记录的时候，会走这个一下，但是没有进行保存所有没有发送
-     * 但是在查询记录的时候，点击一个整改详情的时候，会
-     */
-    @RequestMapping(value = "check-rectification")
-    public String checkRectification(Integer id, Model model, Integer flag, Integer number,HttpServletRequest request) throws Exception {
-        //log.error("checkId："+id);
-        TCheck tc = tCheckMapper.selectByPrimaryKey(id);
-        Integer type = tc.getType();
-        //log.error("检查表type："+type);
 
-        User user = getLoginUser(request);
-        // TODO 这里只保存一条数据,并返回到前端
-        List<TRectification> list = tRectificationMapper.selectAlls(id);
-        //List<Map> list = tRectificationMapper.selectAlls(id);
-       /* if (null != list && list.size() > 0) {
-            TRectification rectification = new TRectification();
-            rectification.setId(list.get(0).getId());
-            rectification.setCheckId(list.get(0).getCheckId());
-            rectification.setItem1(list.get(0).getItem1());
-            rectification.setItem2(list.get(0).getItem2());
-            rectification.setItem3(list.get(0).getItem3());
-            rectification.setDeadline(list.get(0).getDeadline());
-            rectification.setPlanTime(list.get(0).getPlanTime());
-            rectification.setUserId(list.get(0).getUserId());
-            rectification.setCreateUser(list.get(0).getCreateUser());
-            rectification.setCreateTime(list.get(0).getCreateTime());
-            rectification.setDel(list.get(0).getDel());
-
-        }*/
-
-        if(null != list && list.size() > 0){
-            model.addAttribute("rectification", list.get(0));
-        }
-
-        if((null != list && list.size() > 0)){
-            model.addAttribute("rectification", list.get(0));
-        }
-
-        DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
-        model.addAttribute("check", check);
-        //model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(id, null));
-
-        List<Map<String, Object>> iteml = tCheckItemMapper.selectDangerByCheckId(id, null);
-        // 判断他是什么类型的然后再添加数据
-        Integer industryType = tc.getIndustryType();
-        for (int i = 0; i < iteml.size(); i++) {
-            Integer levelId = (Integer) iteml.get(i).get("levelId");
-            if(null!=levelId){
-                String DangerFlag="";
-                if(flag==1&&!Objects.equals(user.getUserName(),tc.getDepart())){
-                    DangerFlag = aCompanyManualMapper.selectByPrimaryKey(levelId).getFlag();
-                }else{
-                    DangerFlag = queryDangerFlag(levelId, industryType);
-                }
-                iteml.get(i).put("dangerFlag",DangerFlag);
-            }
-        }
-        // 这个是没有用的
-        if (type != null && type == 9) {
-            for (Map<String, Object> a : iteml) {
-                //log.error("checkNext:"+1);
-                Integer[] ids = new Integer[1];
-                ids[0] = (Integer) a.get("levelId");
-                //log.error("ids:"+ids[0]);
-                //log.error("a:"+a.toString());
-                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
-                String dangertype = "";
-                String factors = "";
-                String measures = "";
-                String level1 = "";
-                String level2 = "";
-                String level3 = "";
-                for (ACompanyManual aa : rets) {
-                    //log.error("checkNext:"+2);
-                    dangertype = aa.getType();
-                    factors = aa.getFactors();
-                    measures = aa.getMeasures();
-                    level1 = aa.getLevel1();
-                    level2 = aa.getLevel2();
-                    level3 = aa.getLevel3();
-                    //log.error("type:"+dangertype);
-                    break;
-                }
-                a.put("dangerType", dangertype);
-                a.put("factors", factors);
-                a.put("measures", measures);
-                a.put("level1", level1);
-                a.put("level2", level2);
-                a.put("level3", level3);
-                //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
-            }
-        }
-        //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
-        model.addAttribute("itemL", iteml);
-
-        model.addAttribute("number", number);
-        model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
-        model.addAttribute("flag", flag);
-        model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
-        model.addAttribute("listM", tCheckMapper.selectCompany(id));
-        return "village/danger/opinion-detail";
-        /*if (type == 9) {
-            return "village/danger/opinion-detailrjcb";
-        } else {
-            return "village/danger/opinion-detail";
-        }*/
-
-    }
     /**
      *  从id 获取这条记录的风险等级
      * @param levelId     level_tbl/danger_manual_tbl的id
@@ -4094,7 +4247,6 @@ public class GlobalController extends BaseController {
             model.setTitle(checkItem.getTemplate()); // 计划检查名
             model.setUserId(user.getId());    // 企业id
             model.setFlag(checkItem.getFlag());     //检查方式 1. 企业自查  2 行政检查  3 部门检查
-            System.out.println(checkItem.getFlag());
             model.setType(checkItem.getTitle());//  检查类型  日常, 定期, 临时
             if (-2 == checkItem.getCheckType() || -1 == checkItem.getCheckType()) { //只有现场才会存储部门
                 model.setPart(checkItem.getCheckLevels().get(0).getLevel1()); // 被检查的部门

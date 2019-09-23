@@ -170,7 +170,7 @@
         <button onClick="add3()"
                 class="btn btn-success radius" title="编辑清单网址" type="button" style="padding: 0 50px;">编辑网址
         </button>
-    <a class="btn btn-success radius r btn_hid" onclick="back2()"  style="line-height: 1.6em; margin-top: 3px"  href="javascript:void(0)" title="返回">返回</a>
+<%--    <a class="btn btn-success radius r btn_hid" onclick="back2()"  style="line-height: 1.6em; margin-top: 3px"  href="javascript:void(0)" title="返回">返回</a>--%>
     </div>
 <script>
     function back2(){

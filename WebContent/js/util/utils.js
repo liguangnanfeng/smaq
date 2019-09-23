@@ -149,11 +149,18 @@ function ref_ifm() {
 /**
  * 关闭弹窗
  */
-function close_dialog(callback) {
-  layer.closeAll();
-  callback();
+function close_dialog() {
+  parent.layer.closeAll();
+ // callback();
 }
-
+function back(){
+  parent.layer.closeAll();
+}
+// function back(){
+//   let index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+//   parent.layer.close(index); //再执行关闭
+//   console.log('index:',index)
+// }
 /**
  * 导航栏关闭页面
  */

@@ -126,6 +126,7 @@
             </select>
     </div>
     <div class="mt-20">
+        <span id="list">总隐患数: ${fn:length(list) } 条</span>
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
             <tr class="text-c">

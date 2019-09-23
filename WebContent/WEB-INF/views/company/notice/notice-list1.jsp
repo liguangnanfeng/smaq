@@ -335,14 +335,14 @@ $(function(){
       </div>
     </div>
   </div>
-  <div class="panel panel-default" style="width:100%;margin-top:15px;">
-    <div class="panel-body" style="padding:8px">
-      <a class="title_xw div_xinw" data-href="http://www.hupinwang.com/info" data-title="护品网" onclick="Hui_admin_tab(this)" href="javascript:;">
-        <font>获取更多信息</font>
-        <i class="Hui-iconfont iconxw">&#xe6d5;</i>
-      </a>
-    </div>
-  </div>
+<%--  <div class="panel panel-default" style="width:100%;margin-top:15px;">--%>
+<%--    <div class="panel-body" style="padding:8px">--%>
+<%--      <a class="title_xw div_xinw" data-href="http://www.hupinwang.com/info" data-title="护品网" onclick="Hui_admin_tab(this)" href="javascript:;">--%>
+<%--        <font>获取更多信息</font>--%>
+<%--        <i class="Hui-iconfont iconxw">&#xe6d5;</i>--%>
+<%--      </a>--%>
+<%--    </div>--%>
+<%--  </div>--%>
   </c:if>
   <c:if test="${session_user.userType==6}">
     <div class="panel panel-default" style="width:100%;">

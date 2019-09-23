@@ -40,7 +40,7 @@
             color:#FF3939;
             }
         span.time {
-            font-size: 25px;
+            font-size: 16px;
             position: relative;
         }
 
@@ -346,7 +346,10 @@
             var myDate = new Date();
             var mytime=myDate.toLocaleTimeString();     //获取当前时间
             var a=myDate.toLocaleDateString();      //获取日期与时间
-            console.log(a);
-            $("#time").text('日期：'+a);
+            let y=myDate.getFullYear();    //获取完整的年份(4位,1970-????)
+            let m=myDate.getMonth()+1;       //获取当前月份(0-11,0代表1月)
+            let d=myDate.getDate();        //获取当前日(1-31)
+            let date=y+'-'+m+'-'+d;
+            $("#time").text('日期：'+date);
             </script>
         </html>

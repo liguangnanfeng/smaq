@@ -126,6 +126,7 @@
             </select>
     </div>
     <div class="mt-20">
+        <span id="list">总隐患数: ${fn:length(list) } 条</span>
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
             <tr class="text-c">
@@ -272,6 +273,8 @@
                     <td>
                         <c:choose>
                             <c:when test="${list.status eq 1}">合格</c:when>
+                            <c:when test="${list.status eq 2}">不合格</c:when>
+                            <c:when test="${list.status eq 3}">复查合格</c:when>
                         </c:choose>
                     </td>
                     <td>${list.fjgkfzr}</td>

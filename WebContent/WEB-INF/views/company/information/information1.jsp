@@ -119,21 +119,11 @@ function pr_() {
               </td>
             </tr>
             <tr>
-              <td class="active text-r ter1">是否构成重大危险源${c.hazard}</td>
+              <td class="active text-r ter1">是否构成重大危险源</td>
               <td class="tab_tmr1" >
                 <c:choose>
-                  <c:when test="${c.hazard == 0}">
-                    <select id="hazard">
-                      <option value="1">是</option>
-                      <option value="0" selected="selected">否</option>
-                    </select>
-                  </c:when>
-                  <c:when test="${c.hazard == 1}">
-                    <select id="hazard">
-                      <option value="1" selected="selected">是</option>
-                      <option value="0">否</option>
-                    </select>
-                  </c:when>
+                  <c:when test="${c.hazard == 0}">否</c:when>
+                  <c:when test="${c.hazard == 1}">是</c:when>
                 </c:choose>
               </td>
               <td class="active text-r ter1">企业值班电话</td>

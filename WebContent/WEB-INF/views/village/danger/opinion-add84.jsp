@@ -108,16 +108,16 @@ function opente(){
           contenteditable="true">&nbsp;<fmt:formatDate value="${empty check ? timenow : check.realTime }" pattern="dd" /></span></u> <span
           style="vertical-align: bottom;"><span>日</span></span> <u><span
           style="border-bottom: 1px solid #333; vertical-align: text-bottom;; width: 5%; display: inline-block; text-align: center;"
-          contenteditable="true">&nbsp;</span></u> <span style="vertical-align: bottom;"><span>时</span></span> <u><span
+          contenteditable="true"><fmt:formatDate value="${empty check ? timenow : check.realTime }" pattern="HH"/></span></u> <span style="vertical-align: bottom;"><span>时</span></span> <u><span
           style="border-bottom: 1px solid #333; vertical-align: text-bottom;; width: 5%; display: inline-block; text-align: center;"
-          contenteditable="true">&nbsp;</span></u> <span style="vertical-align: bottom;"><span>分至</span></span> <u><span
+          contenteditable="true"><fmt:formatDate value="${empty check ? timenow : check.realTime }" pattern="mm"/></span></u> <span style="vertical-align: bottom;"><span>分至</span></span> <u><span
           style="border-bottom: 1px solid #333; vertical-align: text-bottom;; width: 5%; display: inline-block; text-align: center;"
           contenteditable="true">&nbsp;<fmt:formatDate value="${empty check ? timenow : check.realTime }" pattern="dd" /></span></u> <span
           style="vertical-align: bottom;"><span>日</span></span> <u><span
           style="border-bottom: 1px solid #333; vertical-align: text-bottom;; width: 5%; display: inline-block; text-align: center;"
-          contenteditable="true">&nbsp;</span></u> <span style="vertical-align: bottom;"><span>时</span></span> <u><span
+          contenteditable="true"><fmt:formatDate value="${empty check ? timenow : check.realTime }" pattern="HH"/></span></u> <span style="vertical-align: bottom;"><span>时</span></span> <u><span
           style="border-bottom: 1px solid #333; vertical-align: text-bottom;; width: 5%; display: inline-block; text-align: center;"
-          contenteditable="true">&nbsp;</span></u> <span style="vertical-align: bottom;"><span>分</span></span>
+          contenteditable="true"><fmt:formatDate value="${empty check ? timenow : check.realTime }" pattern="mm"/></span></u> <span style="vertical-align: bottom;"><span>分</span></span>
       </p>
       <p class="MsoNormal" style="text-indent: 23.0000pt; text-align: left;">
         <span style="vertical-align: bottom;"><span>我们是</span></span> <u><span

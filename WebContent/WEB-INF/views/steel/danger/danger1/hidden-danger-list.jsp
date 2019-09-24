@@ -38,19 +38,6 @@
         .div_imgp img {
             max-width: 100%
         }
-        #selectBranch{
-            position: absolute;
-            top: 142px;
-            right: 286px;
-            width: 100px;
-            height: 32px;
-            padding: 4px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            box-shadow: 5px 5px 5px #fff;
-            color: black;
-            border-radius: 5px;
-        }
     </style>
     <script type="text/javascript">
         console.log('${host}');
@@ -71,15 +58,15 @@
     <span class="c-gray en">&gt;</span> <span>隐患治理记录</span>
     <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="javascript:history.go(-1)" title="返回">返回</a>
 
-    </nav>
+</nav>
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
         <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}"
-           href="${ly }/steel/hidden-danger-list?flag=1&status=1&userId=${userId}">企业自查</a>
+           href="${ly }/village/hidden-danger-list?flag=1&status=1">企业自查</a>
         <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
-           href="${ly }/steel/hidden-danger-list?flag=2&userId=${userId}">行政检查</a>
+           href="${ly }/village/hidden-danger-list?flag=2">行政检查</a>
         <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
-           href="${ly }/steel/hidden-danger-list?flag=3&userId=${userId}">第三方检查</a>
+           href="${ly }/village/hidden-danger-list?flag=3">第三方检查</a>
         <%--  <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
              href="${ly }/village/hidden-danger-list?flag=2">执法检查</a>--%>
     </div>
@@ -116,18 +103,24 @@
     <%--</button>--%>
     <%--</form>--%>
     <%--</div>--%>
+    <style>
+    span#list {
+    position: absolute;
+    z-index: 100000;
+    margin-top: 5px;
+    right: 290px;
+    }
+    </style>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <%--<p class="paging">--%>
         <%--<a href="${ly }/village/recheck-list?flag=${flag}&page=${page-1 }">    &lt; 上一页 </a>--%>
         <%--<strong>第${page+1}页/共${count}页</strong>--%>
         <%--<a href="${ly }/village/recheck-list?flag=${flag}&page=${page+1}">下一页 &gt;</a>--%>
         <%--</p>--%>
-            <select id="selectBranch">
-            </select>
     </div>
     <div class="mt-20">
-        <span id="list">总隐患数: ${fn:length(list) } 条</span>
-        <table class="table table-border table-bordered table-bg table-hover table-sort">
+    <span id="list">总隐患数: ${fn:length(list) } 条</span>
+    <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
             <tr class="text-c">
                 <th width="5%">隐患类型</th>
@@ -157,8 +150,12 @@
             <tbody>
             <!-- 循环开始 -->
             <c:set var="x" value="${fn:split('基础检查/现场检查/高危检查','/') }"/>
+
             <c:forEach items="${list }" varStatus="index" var="list">
                 <tr class="text-c">
+                <script>
+                console.log('14:32:','${list}');
+                </script>
                     <%--<c:choose>--%>
                         <%--<c:when test="${list.type == 1}">--%>
                             <%--<td>日常</td>--%>
@@ -224,13 +221,29 @@
                         <%--                    <td>${item[1]+item[2] }</td>--%>
                     <td>${list.realTimeStr}</td>
                     <td>${list.content }</td>
-                    <td><c:if test="${list.files!=null}">
-                        <button class="btn radius btn-danger size-S ml-20"
-                                onClick="showpicture(getRootPath()+'${list.files }')">
+                    <td >
+
+                    <c:if test="${list.recheck_file!=null}">
+                        <button  class="wjj${index.index} btn radius btn-danger size-S ml-20"
+                                onClick="showpicture(getRootPath()+'${list.recheck_file }')">
                             <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 隐患图片
                         </button>
                     </c:if>
                     </td>
+
+                <script>
+                <%--var wjj ="${list.recheck_file }";--%>
+
+                <%--if(wjj.indexOf("null") > 0 )--%>
+                <%--{--%>
+
+                <%--$(".wjj${index.index}").hide();--%>
+                <%--//console.log('.wjj${index.index}有字符串');--%>
+                <%--}--%>
+                <%--console.log('${list.recheck_file }','${index.index}')--%>
+
+                </script>
+
                     <c:if test="${flag==1}">
                         <td>
                             <c:choose>
@@ -271,11 +284,12 @@
                             </c:choose>--%>
                     </td>
                     <td>
-                        <c:choose>
-                            <c:when test="${list.status eq 1}">合格</c:when>
-                            <c:when test="${list.status eq 2}">不合格</c:when>
-                            <c:when test="${list.status eq 3}">复查合格</c:when>
-                        </c:choose>
+                        <c:if test="${list.status == 2}">
+                            未治理
+                        </c:if>
+                        <c:if test="${list.status == 3}">
+                            已治理
+                        </c:if>
                     </td>
                     <td>${list.fjgkfzr}</td>
                     <c:if test="${list.money==null}">
@@ -290,7 +304,6 @@
             <!-- 循环结束 -->
             </tbody>
         </table>
-        <!--企业列表-->
     </div>
 
     <%--     隐藏的下载按钮--%>
@@ -447,38 +460,6 @@
     }
 
     $(function () {
-        //展示特钢的各个分厂
-        $.ajax({
-            url:"${ly}/steel/company-list8",
-            type:"get",
-            success:function (data) {
-                var html="";
-                for(var i=0; i<data.map.list.length; i++){
-                    if(data.map.list[i]["id"]==${userId}){
-                        html += '<option value="'+data.map.list[i]["id"]+'" selected="selected">'+data.map.list[i]["name"]+'</option>';
-                    }else{
-                        html += '<option value="'+data.map.list[i]["id"]+'">'+data.map.list[i]["name"]+'</option>';
-                    }
-
-                }
-                $("#selectBranch").html(html);
-            },
-            error:function(){
-                alert("error");
-            }
-        });
-        $("#selectBranch").change(function () {
-            var flag = ${flag};
-            if(flag==1)
-            {
-                window.location.href="${ly }/steel/hidden-danger-list?flag=${flag}&status=1&userId="+$(this).val();
-            }
-            else
-            {
-                window.location.href="${ly }/steel/hidden-danger-list?flag=${flag}&userId="+$(this).val();
-            }
-            //window.location.href="${ly }/steel/model-list-main?flag=${flag}&userId="+$(this).val();
-        })
         $('.table-sort').dataTable({
             "aaSorting": [[4, "desc"]],//默认第几个排序
             "bStateSave": false,//状态保存
@@ -490,6 +471,7 @@
         $(".div_imgp img").attr("src", src);
         $("#modal-plan").modal("show")
     }
+    console.log("14:25")
 </script>
 </body>
 </html>

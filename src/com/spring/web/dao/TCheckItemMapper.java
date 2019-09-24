@@ -255,9 +255,17 @@ public interface TCheckItemMapper {
 
     Integer findRecheckFileByMap(@Param("status")Integer status, @Param("user_id")Integer user_id, @Param("flag")Integer flag,@Param("depart")String depart);
 
+    Integer findRecheckNews(@Param("status")Integer status, @Param("user_id")Integer user_id, @Param("flag")Integer flag,@Param("depart")String depart);
+
+    Integer findRecheckBasics(@Param("status")Integer status, @Param("user_id")Integer user_id, @Param("flag")Integer flag,@Param("depart")String depart);
+
     Integer findMapzhuChartData2(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
     Integer zhuChartData123(@Param("control")String control, @Param("depart")String depart, @Param("user_id")Integer user_id);
+
+    Integer zhu123ChartDataNews(@Param("control")String control, @Param("depart")String depart, @Param("user_id")Integer user_id);
+
+    Integer zhu123ChartDataBasics(@Param("depart")String depart, @Param("user_id")Integer user_id);
 
     Integer zhuChartData1231(@Param("depart")String depart, @Param("user_id")Integer user_id);
 
@@ -265,9 +273,17 @@ public interface TCheckItemMapper {
 
     Integer zhuChartData22(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
+    Integer zhu22ChartDataNow(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zhu22ChartDataBasic(@Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
     Integer zhuChartData221(@Param("depart")String depart, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
     Integer zhuChartData23(@Param("control")String control, @Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zhu23ChartDataNows(@Param("control")String control, @Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zhu23ChartDataBasics(@Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
     Integer zhuChartData231(@Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
@@ -279,7 +295,11 @@ public interface TCheckItemMapper {
 
     Integer findTypeByBasic(@Param("user_ids") String user_ids, @Param("flag") Integer flag, @Param("depart") String depart);
 
-    Integer findFileByMap(@Param("user_id") Integer user_id, @Param("flag") Integer flag);
+    Integer findFileByMap(@Param("user_id") Integer user_id, @Param("flag") Integer flag,@Param("depart") String depart);
+
+    Integer findFinishCount(@Param("user_id") Integer user_id, @Param("flag") Integer flag,@Param("depart") String depart);
+
+    Integer findFinishBasic(@Param("user_id") Integer user_id, @Param("flag") Integer flag,@Param("depart") String depart);
 
     Integer zhuChartData77(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
@@ -303,7 +323,7 @@ public interface TCheckItemMapper {
 
     Integer zhu124ChartData(@Param("control")String control, @Param("user_id")Integer user_id,@Param("depart")String depart);
 
-    Integer zhuChartDataBasic(@Param("user_id")Integer user_id,@Param("depart")String depart);
+    Integer zhu124ChartDataBasic(@Param("user_id")Integer user_id,@Param("depart")String depart);
 
     Integer zhuChartData1241(@Param("user_id")Integer user_id);
 
@@ -432,7 +452,15 @@ public interface TCheckItemMapper {
 
     List<Map<String,Object>> zhuChartData661(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
+    List<Map<String,Object>> zhuFinichChartDataNow(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    List<Map<String,Object>> zhuFinichChartDataBasics(@Param("depart")String depart, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
     List<Map<String,Object>> zhuChartData671(@Param("control")String control, @Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    List<Map<String,Object>> zhu671ChartDataNow(@Param("control")String control, @Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    List<Map<String,Object>> zhu671ChartDataBasics(@Param("check_company")String check_company, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer zhuChartData66(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
@@ -443,6 +471,14 @@ public interface TCheckItemMapper {
     List<Map<String,Object>> findHiddenSourceCount(@Param("flag") Integer flag, @Param("depart")String depart, @Param("userIds")String userIds, @Param("industry_type")Integer industry_type);
 
     List<Map<String,Object>> lookHiddenSourceCount(@Param("flag") Integer flag, @Param("check_company")String check_company, @Param("userIds")String userIds, @Param("industry_type")Integer industry_type);
+
+    List<Map<String,Object>> zhuChartData781ByCliqu(@Param("control")String control,@Param("user_ids")String user_ids);
+
+    Integer zhuChartData88ByCliqu(@Param("control")String control,@Param("user_ids")String user_ids);
+
+    Integer findFileByMapByCliqu(@Param("user_id") String user_id, @Param("flag") Integer flag);
+
+    Integer zhuChartData124ByCliqu(@Param("control")String control, @Param("user_id")String user_id);
 
 }
 

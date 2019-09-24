@@ -563,7 +563,8 @@
 
     <select id="findCheckCompany" resultType="java.util.Map">
         SELECT
-            check_company AS name
+            check_company AS name,
+            depart
         FROM
             `t_check_tbl`
         WHERE
@@ -708,6 +709,17 @@
             t2.status = 2
         AND t2.del = 0
         AND t2.user_id = #{user_id}
+    </select>
+
+    <select id="dataTotalCountsByCliqu" resultType="Integer">
+        SELECT
+            count(*)
+        FROM
+            t_check_tbl t2
+        WHERE
+            t2. STATUS = 2
+        AND t2.del = 0
+        AND t2.user_id in (${user_id})
     </select>
 
     <select id="selectCompany" resultType="com.spring.web.ibatis.DynamicParameter">

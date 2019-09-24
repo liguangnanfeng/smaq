@@ -126,4 +126,6 @@ public interface TCheckMapper {
     Integer findDataCountSum(@Param("user_id")Integer user_id,@Param("status")Integer status,@Param("flag")Integer flag);
 
     Integer dataTotalCounts(@Param("user_id")Integer user_id);
+
+    Integer dataTotalCountsByCliqu(@Param("user_id")String user_id);
 }

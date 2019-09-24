@@ -1112,10 +1112,13 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
+        AND t1.status = 2
+        AND c1.del = 0
         AND t2.depart = #{depart}
         AND t2.user_id = #{user_id}
         AND c1.flag = #{flag}
     </select>
+
 
 
     <!-- 隐患数据分析 饼状图  1. 较大; 2.重大; 3.一般和较小 -->
@@ -1181,7 +1184,46 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
+        AND t1.status = 3
         AND t1. status = #{status}
+        AND t2.user_id = #{user_id}
+        AND t3.flag = #{flag}
+        AND t2.depart = #{depart}
+        AND t1.recheck_file != ''
+    </select>
+
+
+    <select id="findRecheckNews" resultType="Integer">
+        SELECT
+            DISTINCT count(t1.check_id)
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 3
+        AND t1.status = #{status}
+        AND t2.user_id = #{user_id}
+        AND t3.flag = #{flag}
+        AND t2.depart = #{depart}
+        AND t1.recheck_file != ''
+    </select>
+
+
+    <select id="findRecheckBasics" resultType="Integer">
+        SELECT
+            DISTINCT count(t1.check_id)
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
+        WHERE
+            t2.status = 2
+        AND t1.status = 3
+        AND t2.del = 0
+        AND t1.status = #{status}
         AND t2.user_id = #{user_id}
         AND t3.flag = #{flag}
         AND t2.depart = #{depart}
@@ -1353,8 +1395,6 @@
 
 
 
-
-
     <!-- 隐患治理数据分析 饼状图 -->
     <select id="findFileByMap" resultType="Integer">
         SELECT
@@ -1364,14 +1404,68 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
+            t2.status = 2
+        AND t2.del = 0
+        AND t1.status = 3
+        AND t2.user_id = #{user_id}
+        AND t3.flag = #{flag}
+        AND t2.depart != #{depart}
+        AND t1.recheck_file != ''
+    </select>
+
+
+    <select id="findFinishCount" resultType="Integer">
+        SELECT
+            DISTINCT count(t1.check_id)
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
+        WHERE
             t2. status = 2
         AND t2.del = 0
-        AND t1. status = 3
+        AND t1.status = 3
         AND t2.user_id = #{user_id}
+        AND t2.depart = #{depart}
         AND t3.flag = #{flag}
         AND t1.recheck_file != ''
     </select>
 
+
+    <select id="findFinishBasic" resultType="Integer">
+        SELECT
+            DISTINCT count(t1.check_id)
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 3
+        AND t2.user_id = #{user_id}
+        AND t2.depart = #{depart}
+        AND t3.flag = #{flag}
+        AND t1.recheck_file != ''
+    </select>
+
+
+
+    <select id="findFileByMapByCliqu" resultType="Integer">
+        SELECT
+            DISTINCT count(t1.check_id)
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2.status = 2
+        AND t2.del = 0
+        AND t1.status = 3
+        AND t2.user_id in (${user_id})
+        AND t3.flag = #{flag}
+        AND t1.recheck_file != ''
+    </select>
 
 
 
@@ -1383,7 +1477,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t1.status = 2
         AND t3.control = #{control}
@@ -1401,7 +1495,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.depart = #{depart}
@@ -1410,7 +1504,7 @@
     </select>
 
 
-    <select id="zhuChartData661" resultType="Integer">
+    <select id="zhuChartData661" resultType="java.util.Map">
         SELECT
             *
         FROM
@@ -1418,7 +1512,24 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
+        AND t2.del = 0
+        AND t3.control = #{control}
+        AND t2.depart = #{depart}
+        AND t2.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+        GROUP BY t1.check_id
+    </select>
+
+    <select id="zhuFinichChartDataNow" resultType="java.util.Map">
+        SELECT
+            *
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
+        WHERE
+            t2.status = 2
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.depart = #{depart}
@@ -1428,6 +1539,21 @@
     </select>
 
 
+    <select id="zhuFinichChartDataBasics" resultType="java.util.Map">
+        SELECT
+            *
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
+        WHERE
+            t2.status = 2
+        AND t2.del = 0
+        AND t2.depart = #{depart}
+        AND t2.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+        GROUP BY t1.check_id
+    </select>
 
 
 
@@ -1439,7 +1565,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.user_id in (${user_ids})
@@ -1453,7 +1579,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.user_id in (${user_ids})
@@ -1467,7 +1593,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.user_id in (${user_ids})
@@ -1485,7 +1611,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.flag = #{flag}
@@ -1502,7 +1628,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.flag = #{flag}
@@ -1521,7 +1647,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.flag = #{flag}
@@ -1536,7 +1662,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.flag = #{flag}
@@ -1554,7 +1680,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t3.control is null
         AND t2.user_id in (${user_ids})
@@ -1570,7 +1696,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t3.control is null
         AND t2.flag = #{flag}
@@ -1589,7 +1715,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.check_company = #{check_company}
@@ -1597,7 +1723,7 @@
         AND t2.user_id in (${user_ids})
     </select>
 
-    <select id="zhuChartData671" resultType="Integer">
+    <select id="zhuChartData671" resultType="java.util.Map">
         SELECT
             *
         FROM
@@ -1605,7 +1731,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.check_company = #{check_company}
@@ -1613,6 +1739,43 @@
         AND t2.user_id in (${user_ids})
         GROUP BY t1.check_id
     </select>
+
+
+    <select id="zhu671ChartDataNow" resultType="java.util.Map">
+        SELECT
+            *
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
+        WHERE
+            t2.status = 2
+        AND t2.del = 0
+        AND t3.control = #{control}
+        AND t2.check_company = #{check_company}
+        AND t2.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+        GROUP BY t1.check_id
+    </select>
+
+
+    <select id="zhu671ChartDataBasics" resultType="java.util.Map">
+        SELECT
+            *
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
+        WHERE
+            t2.status = 2
+        AND t2.del = 0
+        AND t2.check_company = #{check_company}
+        AND t2.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+        GROUP BY t1.check_id
+    </select>
+
+
 
 
     <!-- 排查对象分析 柱状图 flag == 1-->
@@ -1624,7 +1787,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.user_id in (${user_ids})
@@ -1640,7 +1803,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.user_id in (${user_ids})
@@ -1648,6 +1811,20 @@
         GROUP BY t1.check_id
     </select>
 
+    <select id="zhuChartData781ByCliqu" resultType="java.util.Map">
+        SELECT
+            *
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2.status = 2
+        AND t2.del = 0
+        AND t3.control = #{control}
+        AND t2.user_id in (${user_ids})
+        GROUP BY t1.check_id
+    </select>
 
     <select id="zhuChartData521" resultType="java.util.Map">
         SELECT
@@ -1657,7 +1834,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
         WHERE
-		t2. status = 2
+		  t2.status = 2
         AND t2.del = 0
         AND t3.control = #{control}
         AND t2.user_id in (${user_ids})
@@ -1674,7 +1851,7 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
         WHERE
-		t2. status = 2
+		  t2.status = 2
         AND t2.del = 0
         AND t2.user_id in (${user_ids})
         AND t2.depart = #{depart}
@@ -1731,7 +1908,7 @@
         AND t2.depart in (${departs})
     </select>
 
-
+    <!-- 隐患数据分析 柱状图 flag = 1-->
     <select id="zhu521ChartData" resultType="Integer">
         SELECT
            DISTINCT count(t1.check_id) as counts
@@ -1748,7 +1925,7 @@
         AND t2.depart = #{depart}
     </select>
 
-
+    <!-- 隐患数据分析 柱状图 flag = 1-->
     <select id="zhu5211ChartDataBasic" resultType="Integer">
         SELECT
            DISTINCT count(t1.check_id) as counts
@@ -1763,8 +1940,6 @@
         AND t2.user_id in (${user_ids})
         AND t2.depart = #{depart}
     </select>
-
-
 
     <select id="zhuChartData881" resultType="Integer">
         SELECT
@@ -2029,6 +2204,7 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
+        AND t3.del = 0
         AND t1.status = 2
         AND c1.industry  is null
         AND t2.user_id in (${user_ids})
@@ -2105,6 +2281,46 @@
         AND t2.user_id = #{user_id}
     </select>
 
+
+    <select id="zhu22ChartDataNow" resultType="Integer">
+        SELECT
+           DISTINCT count(t1.check_id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
+        WHERE
+            t2.status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t3.control = #{control}
+        AND t2.depart = #{depart}
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
+
+    <select id="zhu22ChartDataBasic" resultType="Integer">
+        SELECT
+           DISTINCT count(t1.check_id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
+        WHERE
+            t2.status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t2.depart = #{depart}
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
+
+
+
+
+
     <select id="zhuChartData221" resultType="Integer">
         SELECT
            DISTINCT count(t1.check_id) as counts
@@ -2140,6 +2356,44 @@
         AND t2.flag = #{flag}
         AND t2.user_id = #{user_id}
     </select>
+
+
+
+    <select id="zhu23ChartDataNows" resultType="Integer">
+        SELECT
+            DISTINCT count(t1.check_id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
+        WHERE
+            t2.status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t3.control = #{control}
+        AND t2.check_company = #{check_company}
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
+
+    <select id="zhu23ChartDataBasics" resultType="Integer">
+        SELECT
+            DISTINCT count(t1.check_id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
+        WHERE
+            t2.status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t2.check_company = #{check_company}
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
+
 
     <select id="zhuChartData231" resultType="Integer">
         SELECT
@@ -2188,9 +2442,8 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status = 3
+        AND t1.status in ('2','3')
         AND t3.control = #{control}
-        AND t2.depart != #{depart}
         AND t2.user_id = #{user_id}
     </select>
 
@@ -2205,14 +2458,14 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status = 3
+        AND t1.status in ('2','3')
         AND t3.control = #{control}
         AND t2.user_id = #{user_id}
         AND t2.depart = #{depart}
     </select>
 
 
-    <select id="zhuChartDataBasic" resultType="Integer">
+    <select id="zhu124ChartDataBasic" resultType="Integer">
         SELECT
             DISTINCT count(t1.check_id) as counts
         FROM
@@ -2222,12 +2475,10 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status = 3
+        AND t1.status in ('2','3')
         AND t2.user_id = #{user_id}
         AND t2.depart = #{depart}
     </select>
-
-
 
 
     <select id="zhuChartData1241" resultType="Integer">
@@ -2262,6 +2513,44 @@
         AND t2.depart = #{depart}
         AND t2.user_id = #{user_id}
     </select>
+
+
+    <select id="zhu123ChartDataNews" resultType="Integer">
+        SELECT
+            DISTINCT count(t1.check_id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
+        WHERE
+            t2.status = 2
+        AND t2.del = 0
+        AND t1.status = 3
+        AND t3.control = #{control}
+        AND t2.depart = #{depart}
+        AND t2.user_id = #{user_id}
+    </select>
+
+
+
+    <select id="zhu123ChartDataBasics" resultType="Integer">
+        SELECT
+            DISTINCT count(t1.check_id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
+        WHERE
+            t2.status = 2
+        AND t2.del = 0
+        AND t1.status = 3
+        AND t2.depart = #{depart}
+        AND t2.user_id = #{user_id}
+    </select>
+
+
+
+
 
     <select id="zhuChartData1231" resultType="Integer">
         SELECT
@@ -2374,7 +2663,6 @@
         left join smaq.a_company_manual_tbl t3 on t1.level_id=t3.id
         where t2.status = #{status}
         and t2.del = #{del}
-
         <if test="control != null">
             and t3.control = #{control}
         </if>
@@ -2428,7 +2716,6 @@
         left join smaq.a_company_manual_tbl c1 on c1.id=t1.level_id
         where t2.status = #{status}
         and t2.del = #{del}
-
         <if test="flag != null">
             and t2.flag = #{flag}
         </if>
@@ -3088,7 +3375,6 @@
         and T2.del= 0
         and T2.flag=#{flag}
         and T1.recheck_file is not null
-
         <if test="type==6">
             and T5.district_id = #{userId}
         </if>
@@ -3103,7 +3389,6 @@
             #{userId}
             )
         </if>
-
         order by T2.real_time desc;
     </select>
 

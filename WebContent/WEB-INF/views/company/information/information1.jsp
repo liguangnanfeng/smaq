@@ -119,7 +119,7 @@ function pr_() {
               </td>
             </tr>
             <tr>
-              <td class="active text-r ter1">是否构成重大危险源${c.hazard}</td>
+              <td class="active text-r ter1">是否构成重大危险源</td>
               <td class="tab_tmr1" >
                 <c:choose>
                   <c:when test="${c.hazard == 0}">否</c:when>

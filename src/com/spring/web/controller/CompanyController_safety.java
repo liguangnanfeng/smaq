@@ -2219,6 +2219,7 @@ public class CompanyController_safety extends BaseController {
                     for (int i = 0; i < img.length; i++) {
                         model.addAttribute("img" + i, img[i]);
                     }
+                    model.addAttribute("img", ggp.getImgUrl());
                 }
             }
             if (null == ggp || ggp.getIsedit().intValue() == 0) {//没有公告牌或没有修改过，重新生成
@@ -2442,6 +2443,7 @@ public class CompanyController_safety extends BaseController {
             for(int i=0; i<imgs.length; i++){
                 model.addAttribute("img"+i, imgs[i]);
             }
+            model.addAttribute("img", be.getImgUrl());
         }
         Integer load3 = 1;
         model.addAttribute("be", be);
@@ -2518,6 +2520,7 @@ public class CompanyController_safety extends BaseController {
             for(int i = 0; i < imgs.length; i++){
                 model.addAttribute("img"+i, imgs[i]);
             }
+            model.addAttribute("img", be.getImgUrl());
         }
         Integer load3 = 2;
         model.addAttribute("name1",name1);
@@ -2557,6 +2560,7 @@ public class CompanyController_safety extends BaseController {
                 for (int i = 0; i < img.length; i++) {
                     model.addAttribute("img" + i, img[i]);
                 }
+                model.addAttribute("img", ggp.getImgUrl());
             }
         }
         return "company/safety-system/risk-information-add";

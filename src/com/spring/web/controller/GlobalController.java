@@ -2048,24 +2048,8 @@ public class GlobalController extends BaseController {
         }
         return "global/evaluate/lawDoc-list";
     }
-    @RequestMapping("danger/opinion-list")
-    public String opinionList(Model model, String companyName, HttpServletRequest request, Integer type, Integer flag2)
-            throws Exception {
-        User user = getLoginUser(request);
-        Map<String, Object> m = new HashMap<String, Object>();
-        setUserId(user, m);
-        m.put("companyName", companyName);
-        m.put("type", type);
-        m.put("flag2", flag2);
-        model.addAttribute("list", tCheckDocumentMapper.selectTable(m));
-        model.addAttribute("type", type);
-        model.addAttribute("flag2", flag2);
-        model.addAttribute("companyName", companyName);
-        if (type == 1) {
-            return "global/danger/opinion-list2";
-        }
-        return "global/danger/opinion-list";
-    }
+
+
     /**
      * 政府端隐患排查信息查询 ！！！
      */
@@ -2770,6 +2754,31 @@ public class GlobalController extends BaseController {
 
     /**
      * create by  : 小明！！！
+     * description: TODO    行政文书
+     * create time: 2019/9/23 11:46
+     */
+    @RequestMapping("danger/opinion-list")
+    public String opinionList(Model model, String companyName, HttpServletRequest request, Integer type, Integer flag2, Integer uid)
+            throws Exception {
+        User user = userMapper.selectByPrimaryKey(uid);
+        Map<String, Object> m = new HashMap<String, Object>();
+        setUserId(user, m);
+        m.put("companyName", companyName);
+        m.put("type", type);
+        m.put("flag2", flag2);
+        model.addAttribute("list", tCheckDocumentMapper.selectTable(m));
+        model.addAttribute("type", type);
+        model.addAttribute("flag2", flag2);
+        model.addAttribute("companyName", companyName);
+        if (type == 1) {
+            return "global/danger/opinion-list2";
+        }
+        return "global/danger/opinion-list";
+    }
+
+
+    /**
+     * create by  : 小明！！！
      * description: TODO    政府端 检查详情 整改意见书
      * create time: 2019/9/23 9:33
      */
@@ -3390,7 +3399,6 @@ public class GlobalController extends BaseController {
                     + URLEncoder.encode("/village/check-add?flag=" + flag + "&userId=" + userId, "utf-8");
         }
         model.addAttribute("company", companyMapper.selectByPrimaryKey(userId));
-//        if (null == industryId) {// 确认检查标准
         model.addAttribute("ind1", tIndustryMapper.selectByPrimaryKey(tc.getIndustry1()));// 基础检查类别
         if (StringUtils.isNotEmpty(tc.getIndustry2())) {
             model.addAttribute("ind2L", tIndustryMapper.selectByIds(tc.getIndustry2()));// 现场检查类别
@@ -3398,12 +3406,7 @@ public class GlobalController extends BaseController {
         if (StringUtils.isNotBlank(tc.getIndustry3())) {
             model.addAttribute("ind3L", tIndustryMapper.selectByIds(tc.getIndustry3()));// 高危检查类别
         }
-//            return "village/danger/check-add1";
-//        }
-        // 确定标题等
-//        Map<String, Object> m = new HashMap<String, Object>();
-//        m.put("userId", user.getId());
-//        model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
+
         return "global/danger/check-add2";
     }
     /**
@@ -3513,12 +3516,13 @@ public class GlobalController extends BaseController {
         model.addAttribute("list", companyMapper.selectCompanyList(m));
         return "global/danger/companyLoad";
     }
+
     /**
      * 行政文书详情
      */
     @RequestMapping("danger/opinion-detail")
-    public String opinionDetail(Model model, HttpServletRequest request, Integer id) throws Exception {
-        User user = getLoginUser(request);
+    public String opinionDetail(Model model, HttpServletRequest request, Integer id, Integer uid) throws Exception {
+        User user = userMapper.selectByPrimaryKey(uid);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("userId", user.getId());
         TCheckDocument d = tCheckDocumentMapper.selectByPrimaryKey(id);
@@ -3529,7 +3533,7 @@ public class GlobalController extends BaseController {
             model.addAttribute("rectification", tRectificationMapper.selectByCheckId(d.getCheckId()));
         }
         model.addAttribute("document", tCheckDocumentMapper.selectByPrimaryKey(id));
-        return "global/danger/opinion-detail2";
+        return "global/company/checkModel/opinion-detail2";
     }
 
     /**
@@ -3801,6 +3805,7 @@ public class GlobalController extends BaseController {
         }
         model.addAttribute("flag2", check.getFlag());
         model.addAttribute("check", check);
+        model.addAttribute("uid", uid);
         model.addAttribute("checkId", checkId);
         model.addAttribute("userId", check.getUserId());
         model.addAttribute("rectification", tRectification);
@@ -3815,7 +3820,6 @@ public class GlobalController extends BaseController {
         }
 
         for (TCheckItem tCheckItem : tCheckItems) {
-
             if (null != tCheckItem.getDeadline()) {
                 model.addAttribute("deadline", simpleDateFormat.format(tCheckItem.getDeadline()).toString());
             }
@@ -3823,7 +3827,6 @@ public class GlobalController extends BaseController {
                 model.addAttribute("planTime", simpleDateFormat.format(tCheckItem.getRecheckTime()).toString());
             }
             break;
-
         }
 
         if(check.getFlag()==2){
@@ -3838,6 +3841,88 @@ public class GlobalController extends BaseController {
         }
 
     }
+
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO    政府端 行政文书保存
+     * create time: 2019/9/23 11:22
+     */
+    @RequestMapping("danger/opinion-save")
+    public @ResponseBody
+    AppResult opinionSave(Model model, Integer userId,Integer uid, HttpServletRequest request, TCheckDocument tCheckDocument)
+            throws Exception {
+        AppResult result = new AppResultImpl();
+        User user = userMapper.selectByPrimaryKey(uid);
+        tCheckDocument.setUserId(userId);
+        tCheckDocument.setCreateUser(user.getId());
+        tCheckDocument.setDel(0);
+        tCheckDocument.setCreateTime(new Date());
+        tCheckDocumentMapper.insertSelective(tCheckDocument);
+        result.setStatus("0");
+        result.setData(tCheckDocument);
+        return result;
+    }
+
+
+
+    /**
+     * TODO  隐患列表 复查(实施复查)
+     */
+    @RequestMapping(value = "recheck-add")//修改 wz0114
+    public String recheckAdd(Integer checkId, Model model, Integer uid) throws Exception {
+
+        TCheck tc = tCheckMapper.selectByPrimaryKey(checkId);
+        Integer type = tc.getType();
+        List<Map<String, Object>> iteml = tCheckItemMapper.selectDangerByCheckId(checkId, 2);
+        if (type != null && type == 9) {
+            for (Map<String, Object> a : iteml) {
+                Integer[] ids = new Integer[1];
+                ids[0] = (Integer) a.get("levelId");
+                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
+                String dangertype = "";
+                String factors = "";
+                String measures = "";
+                String level1 = "";
+                String level2 = "";
+                String level3 = "";
+                for (ACompanyManual aa : rets) {
+                    dangertype = aa.getType();
+                    factors = aa.getFactors();
+                    measures = aa.getMeasures();
+                    level1 = aa.getLevel1();
+                    level2 = aa.getLevel2();
+                    level3 = aa.getLevel3();
+                    break;
+                }
+                a.put("dangerType", dangertype);
+                a.put("factors", factors);
+                a.put("measures", measures);
+                a.put("level1", level1);
+                a.put("level2", level2);
+                a.put("level3", level3);
+
+            }
+        }
+
+        model.addAttribute("itemL", iteml);
+
+        Integer id = checkId;
+        DynamicParameter<String, Object> check = tCheckMapper.selectCompany(id);
+        model.addAttribute("check", check);
+        model.addAttribute("company", companyMapper.selectByPrimaryKey(Integer.parseInt(String.valueOf(check.get("userId")))));
+        model.addAttribute("now", new Date());
+
+        if (type == 9) {
+            return "company/danger/check-fuaddrjcb";
+        } else {
+            return "company/danger/check-fuadd";
+        }
+    }
+
+
+
+
 
     /**
      *  从id 获取这条记录的风险等级
@@ -3927,7 +4012,6 @@ public class GlobalController extends BaseController {
                     + URLEncoder.encode("/global/check-add2?flag=" + flag + "&userId=" + userId, "utf-8");
         }
         model.addAttribute("company", companyMapper.selectByPrimaryKey(userId));
-//        if (null == industryId) {// 确认检查标准
         model.addAttribute("ind1", tIndustryMapper.selectByPrimaryKey(tc.getIndustry1()));// 基础检查类别
         if (StringUtils.isNotEmpty(tc.getIndustry2())) {
             model.addAttribute("ind2L", tIndustryMapper.selectByIds(tc.getIndustry2()));// 现场检查类别
@@ -3935,12 +4019,6 @@ public class GlobalController extends BaseController {
         if (StringUtils.isNotBlank(tc.getIndustry3())) {
             model.addAttribute("ind3L", tIndustryMapper.selectByIds(tc.getIndustry3()));// 高危检查类别
         }
-//            return "village/danger/check-add1";
-//        }
-        // 确定标题等
-//        Map<String, Object> m = new HashMap<String, Object>();
-//        m.put("userId", user.getId());
-//        model.addAttribute("jcL", officialsMapper.selectList(m));// 执法人员
         return "global/checkModel/model-add6";
     }
     /**
@@ -4393,38 +4471,23 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping(value = "plan-next")//生成检查表，modify by zhangcl 2018.10.27
     public String checkNext(Integer id, Integer type, Model model, HttpServletRequest request, Integer userId) throws Exception {
-        //log.error("checkNext checkid : "+id);
-        User user = getLoginUser(request);
 
+        User user = getLoginUser(request);
         CheckItemS checkItemByModelId = saveMessageService.findCheckItemByModelId(id);
         if (null == checkItemByModelId) {
             return "village/danger/plan-next";
         }
         TCheck tc = tCheckMapper.selectByPrimaryKey(checkItemByModelId.getCheckId());
-
-        //log.error("tCheckMapper检查表信息:"+tc.toString());
         type = tc.getType();// add wz 190110
-
         List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(checkItemByModelId.getCheckId());
-        //log.error("tCheckPartMapper条目信息:"+partL.toString());
-
-
-
-        //
         model.addAttribute("userId",userId);
         model.addAttribute("check", tc);
         model.addAttribute("partL", partL);
-        //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
         List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(checkItemByModelId.getCheckId());
-        //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
-
         if (type != null && type == 9) {
             for (Map<String, Object> a : iteml) {
-                //log.error("checkNext:"+1);
                 Integer[] ids = new Integer[1];
                 ids[0] = (Integer) a.get("levelId");
-                //log.error("ids:"+ids[0]);
-                //log.error("a:"+a.toString());
                 List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
                 String dangertype = "";
                 String factors = "";
@@ -4433,14 +4496,12 @@ public class GlobalController extends BaseController {
                 String level2 = "";
                 String level3 = "";
                 for (ACompanyManual aa : rets) {
-                    //log.error("checkNext:"+2);
                     dangertype = aa.getType();
                     factors = aa.getFactors();
                     measures = aa.getMeasures();
                     level1 = aa.getLevel1();
                     level2 = aa.getLevel2();
                     level3 = aa.getLevel3();
-                    //log.error("type:"+dangertype);
                     break;
                 }
                 a.put("dangerType", dangertype);
@@ -4452,9 +4513,7 @@ public class GlobalController extends BaseController {
                 log.error("level1/2/3 : " + level1 + "/" + level2 + "/" + level3);
             }
         }
-        //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString());
         model.addAttribute("itemL", iteml);
-        //log.error("checkNext:"+33);
         if (tc.getStatus() == 2) {// 已检查
             return "company/danger/plan-detail";
         }
@@ -4463,7 +4522,6 @@ public class GlobalController extends BaseController {
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("userId", user.getId());
-
         Set<String> set = new LinkedHashSet<String>();
 
         for (Map<String, Object> stringObjectMap : iteml) {
@@ -4474,10 +4532,6 @@ public class GlobalController extends BaseController {
                 set.add(split[1]);
             }
         }
-        //String departName = "";
-        /*for (String s : set) {
-            departName+=s+"/";
-        }*/
         Object[] objects =  set.toArray();
         String departName = Arrays.toString(objects);
 
@@ -4492,10 +4546,28 @@ public class GlobalController extends BaseController {
 
     }
 
-    @RequestMapping(value = "model-list-main")
-    public String modelListMain(HttpServletRequest request, Integer userId, Model model, Integer flag, Integer status, Integer plan) throws ParseException {
+    /**
+     * 检查表隐患 整改计划保存
+     */
+    @RequestMapping(value = "rectification-save")
+    public @ResponseBody
+    Result rectificationSave(TRectification tr, HttpServletRequest request, Integer uid) {
+        Result result = new ResultImpl();
+        try {
+            tr.setCreateUser(userMapper.selectByPrimaryKey(uid).getId());
+            cgfService.rectificationSave(tr);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setStatus("1");
+            result.setMap("message", "系统出错");
+        }
+        return result;
+    }
 
-        User user = userMapper.selectByPrimaryKey(userId);
+    @RequestMapping(value = "model-list-main")
+    public String modelListMain(HttpServletRequest request, Integer userId, Integer uid, Model model, Integer flag, Integer status, Integer plan) throws ParseException {
+
+        User user = userMapper.selectByPrimaryKey(uid);
 
         Map<String, Object> map1 = new LinkedHashMap<String, Object>();
         map1.put("level1",user.getUserName());
@@ -7930,14 +8002,12 @@ public class GlobalController extends BaseController {
                                Integer status, Integer flag, Model model,String dmName) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
-
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
         }
         if (user.getUserType() == 6) {//区
             model.addAttribute("townL", townMapper.selectListByDistrict(m));
         }
-
         // 向map集合进行存储
         m.put("type", type);  //
         m.put("flag", flag);  // 1
@@ -7952,32 +8022,23 @@ public class GlobalController extends BaseController {
         }else{
             m.put("dmName",dmName);
         }
-
         // 进行判断
-
         if (setUserId(user, m)) {
             clearVillageTown(m);
-
             List<Map<String, Object>> list = tCheckMapper.selectList(m);
-            //List<Map<String, Object>> list = tCheckMapper.selectList3(m);
-
             Integer sum = 0;
             for (int i = 0; i < list.size(); i++) {
                 DynamicParameter<String, Object> id = tCheckMapper.selectCompany((Integer) list.get(i).get("id"));
                 list.get(i).put("listM",id);
                 sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
-
             }
             model.addAttribute("sum", sum);
             model.addAttribute("list", list);
-
-
             m.put("dmName",null);
             List<Map<String, Object>> list2 = tCheckMapper.selectList(m);
             for (int i = 0; i < list2.size(); i++) {
                 set.add(list2.get(i).get("depart"));
             }
-
         }
         model.addAttribute("set",set);
         model.addAttribute("type", type);

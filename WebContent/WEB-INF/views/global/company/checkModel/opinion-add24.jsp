@@ -29,7 +29,7 @@
             <button onClick="pr_()" class="btn radius" type="button">
                 <i class="Hui-iconfont mr-10">&#xe652;</i>打印
             </button>
-            <button onClick="top.show_tab('检查文书', '${ly }/village/check-list?flag=4')" class="btn radius" type="button">
+            <button onClick="top.show_tab('检查文书', '${ly }/global/check-list?flag=4')" class="btn radius" type="button">
                 <i class="Hui-iconfont mr-10">&#xe66b;</i>返回列表
             </button>
             <%-- <button onClick="top.show_tab('检查文书', '${ly }/village/danger/opinion-list?type=1&flag2=4')" class="btn radius" type="button" >
@@ -38,8 +38,8 @@
         </div>
         <div class="row cl mb-20">
           <div class="tabBar clearfix">
-            <a href="/village/check-document?checkId=${check.id}&flag=8">现场检查记录</a>
-            <a href="/village/check-document?checkId=${check.id}&flag=1">责令限期整改意见书</a>
+            <a href="/global/check-document?checkId=${check.id}&flag=8&uid=${uid}">现场检查记录</a>
+            <a href="/global/check-document?checkId=${check.id}&flag=1&uid=${uid}">责令限期整改意见书</a>
             <a class="current" href="JavaScript:void(0)">整改复查意见书</a>
           </div>
         </div>
@@ -199,7 +199,7 @@
       return;
     }
     $(".dustbin").hide();
-    $.post(getRootPath() + "/village/danger/opinion-save", {
+    $.post(getRootPath() + "/global/danger/opinion-save", {
           userId: userId,
           checkId : checkId,
           copy: $("#container").html(),

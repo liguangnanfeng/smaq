@@ -31,33 +31,33 @@
 
     </nav>
 <div class="page-container">
-    <c:if test="${flag != 2}">
+    <%--<c:if test="${flag != 2}">
         <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
             <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/global/hidden-company-list?flag=1&status=2">企业自查</a>
             <a class="btn default ${flag == 4 ? 'btn-primary' : 'radius'}" href="${ly }/global/hidden-company-list?flag=4&status=2">行政检查</a>
             <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/global/hidden-company-list?flag=3&status=2">部门抽查</a>
-                <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
+                &lt;%&ndash; <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> &ndash;%&gt;
         </div>
-    </c:if>
-    <div class="text-c">
-        <form action="${ly }/village/check-list?flag=${flag}" method="post">
-            <%--<div class="dis-ib">
+    </c:if>--%>
+    <%--<div class="text-c">
+        <form action="${ly }/global/check-list?flag=${flag}" method="post">
+            &lt;%&ndash;<div class="dis-ib">
             <span>检查表名称：</span>
-           <%-- <input type="text" value="${title}" name="title" class="input-text mb-5 mt-5" style="width:150px;">--%>
+           &lt;%&ndash; <input type="text" value="${title}" name="title" class="input-text mb-5 mt-5" style="width:150px;">&ndash;%&gt;
             </div>
-            <%--        <div class="dis-ib">--%>
-            <%--          <span>检查状态：</span>--%>
-            <%--          <select class="input-text mb-5 mt-5" name="status" style="width:150px;">--%>
-            <%--            <option value="">请选择</option>--%>
-            <%--            <option value="1" <c:if test="${status == 1}"> selected</c:if>>未检查</option>--%>
-            <%--            <option value="2" <c:if test="${status == 2}"> selected</c:if>>已检查</option>--%>
-            <%--          </select>--%>
-            <%--          </div>--%>
-            <%--<button class="btn btn-success" type="submit">
+            &lt;%&ndash;        <div class="dis-ib">&ndash;%&gt;
+            &lt;%&ndash;          <span>检查状态：</span>&ndash;%&gt;
+            &lt;%&ndash;          <select class="input-text mb-5 mt-5" name="status" style="width:150px;">&ndash;%&gt;
+            &lt;%&ndash;            <option value="">请选择</option>&ndash;%&gt;
+            &lt;%&ndash;            <option value="1" <c:if test="${status == 1}"> selected</c:if>>未检查</option>&ndash;%&gt;
+            &lt;%&ndash;            <option value="2" <c:if test="${status == 2}"> selected</c:if>>已检查</option>&ndash;%&gt;
+            &lt;%&ndash;          </select>&ndash;%&gt;
+            &lt;%&ndash;          </div>&ndash;%&gt;
+            &lt;%&ndash;<button class="btn btn-success" type="submit">
             <i class="Hui-iconfont">&#xe665;</i> 查询
-            </button>--%>
+            </button>&ndash;%&gt;
         </form>
-    </div>
+    </div>--%>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
         <!--   <c:if test="${flag == 2}">

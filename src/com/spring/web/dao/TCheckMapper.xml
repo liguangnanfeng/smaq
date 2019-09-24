@@ -705,7 +705,7 @@
         FROM
             t_check_tbl t2
         WHERE
-            t2. STATUS = 2
+            t2.status = 2
         AND t2.del = 0
         AND t2.user_id = #{user_id}
     </select>

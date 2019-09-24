@@ -35,7 +35,7 @@
             <button onClick="pr_()" class="btn radius" type="button">
                 <i class="Hui-iconfont mr-10">&#xe652;</i>打印
             </button>
-            <button onClick="top.show_tab('检查文书', '${ly }/village/check-list?flag=2')" class="btn radius" type="button" >
+            <button onClick="top.show_tab('检查文书', '${ly }/global/check-list?flag=2')" class="btn radius" type="button" >
                 <i class="Hui-iconfont mr-10">&#xe66b;</i>返回列表
             </button>
             <%-- <button onClick="top.show_tab('检查文书', '${ly }/village/opinion-show?flag2=2')" class="btn radius" type="button" >
@@ -44,13 +44,13 @@
         </div>
         <div class="row cl mb-20">
           <div class="tabBar clearfix">
-            <a href="/village/check-document?checkId=${check.id}&flag=8">现场检查记录</a>
+            <a href="/global/check-document?checkId=${check.id}&flag=8&uid=${uid}">现场检查记录</a>
             <a class="current" href="JavaScript:void(0)">责令限期整改意见书</a>
               <c:if test="${is_fu==1}">
-                  <a  href="/village/check-document?checkId=${check.id}&flag=2">整改复查意见书</a>
+                  <a  href="/global/check-document?checkId=${check.id}&flag=2&uid=${uid}">整改复查意见书</a>
               </c:if>
               <c:if test="${is_fu==0}">
-                  <a href="javascript:void(0)" onclick="layer.msg('请先进行复查');setTimeout(function(){window.location.href='${ly}/company/recheck-add?checkId=${check.id}'},1000)">整改复查意见书</a>
+                  <a href="javascript:void(0)" onclick="layer.msg('请先进行复查');setTimeout(function(){window.location.href='${ly}/globel/recheck-add?checkId=${check.id}&uid=${uid}'},1000)">整改复查意见书</a>
 <%--                  <a href="javascript:void(0)" onclick="layer.alert('请先进行复查')">整改复查意见书</a>--%>
               </c:if>
 
@@ -276,7 +276,7 @@ function save_() {
     return;
   	}
   $(".dustbin").hide();
-  $.post(getRootPath() + "/village/danger/opinion-save", {
+  $.post(getRootPath() + "/global/danger/opinion-save", {
       userId: userId,
       checkId : checkId,
       copy: $("#container").html(),

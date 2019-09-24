@@ -273,7 +273,11 @@ public interface TCheckItemMapper {
 
     Integer selectHiddenSources(@Param("flag") Integer flag, @Param("userIds") String userIds);
 
-    Integer findTypeByMap(@Param("user_ids") String user_ids, @Param("flag") Integer flag);
+    Integer findTypeByMap(@Param("user_ids") String user_ids, @Param("flag") Integer flag, @Param("depart") String depart);
+
+    Integer findTypeByCompany(@Param("user_ids") String user_ids, @Param("flag") Integer flag, @Param("depart") String depart);
+
+    Integer findTypeByBasic(@Param("user_ids") String user_ids, @Param("flag") Integer flag, @Param("depart") String depart);
 
     Integer findFileByMap(@Param("user_id") Integer user_id, @Param("flag") Integer flag);
 
@@ -287,11 +291,19 @@ public interface TCheckItemMapper {
 
     Integer zhuChartData88(@Param("control")String control,@Param("user_ids")String user_ids, @Param("departs")String departs);
 
+    Integer zhu521ChartData(@Param("control")String control,@Param("user_ids")String user_ids, @Param("depart")String depart);
+
+    Integer zhu5211ChartDataBasic(@Param("user_ids")String user_ids, @Param("depart")String depart);
+
     Integer zhuChartData881(@Param("user_ids")String user_ids, @Param("departs")String departs);
 
     Integer zhuChartData891(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
-    Integer zhuChartData124(@Param("control")String control, @Param("user_id")Integer user_id);
+    Integer zhuChartData124(@Param("control")String control, @Param("user_id")Integer user_id,@Param("depart")String depart);
+
+    Integer zhu124ChartData(@Param("control")String control, @Param("user_id")Integer user_id,@Param("depart")String depart);
+
+    Integer zhuChartDataBasic(@Param("user_id")Integer user_id,@Param("depart")String depart);
 
     Integer zhuChartData1241(@Param("user_id")Integer user_id);
 
@@ -413,6 +425,10 @@ public interface TCheckItemMapper {
     List<Map<String,Object>> findControlData(@Param("userId")Integer userId, @Param("type")Integer type);
 
     List<Map<String,Object>> zhuChartData781(@Param("control")String control,@Param("user_ids")String user_ids, @Param("departs")String departs);
+
+    List<Map<String,Object>> zhuChartData521(@Param("control")String control,@Param("user_ids")String user_ids, @Param("depart")String depart);
+
+    List<Map<String,Object>> zhuChartDataBasic(@Param("user_ids")String user_ids, @Param("depart")String depart);
 
     List<Map<String,Object>> zhuChartData661(@Param("control")String control, @Param("depart")String depart, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 

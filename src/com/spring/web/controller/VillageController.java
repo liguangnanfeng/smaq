@@ -3786,9 +3786,7 @@ public class VillageController extends BaseController {
                         TLevel tLevel = tLevelMapper.selectByPrimaryKey(Integer.parseInt(id));
                         TCheckPart tCheckPart = new TCheckPart();
                         tCheckPart.setCheckId(tCheckId);
-
                         tCheckPart.setName(tLevel.getName());  //岗位/部位信息
-
                         tCheckPartMapper.insertSelective(tCheckPart);
                         TCheckItem tCheckItem = new TCheckItem();
                         tCheckItem.setLevelId(Integer.parseInt(id));     // companyManualTbl的id
@@ -3800,14 +3798,12 @@ public class VillageController extends BaseController {
                         tCheckItem.setCheckId(tCheckId);
                         tCheckItemMapper.insertSelective(tCheckItem);
                     }
-
                 }
             }
 
             if (null != inputItems && inputItems.size() > 0) {
                 // 保存自定义内容
                 for (Map<String, String> mapStr : inputItems) {
-
                     TCheckPart tCheckPart = new TCheckPart();
                     tCheckPart.setCheckId(tCheckId);
                     tCheckPart.setName("全公司");  //岗位/部位信息
@@ -3821,7 +3817,6 @@ public class VillageController extends BaseController {
                     tCheckItem.setPartId(tCheckPart.getId());
                     tCheckItem.setCheckId(tCheckId);
                     tCheckItemMapper.insertSelective(tCheckItem);
-
                 }
 
             }

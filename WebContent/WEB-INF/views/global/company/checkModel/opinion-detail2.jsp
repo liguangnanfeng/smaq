@@ -31,7 +31,7 @@ function pr_() {
             </button>
             <c:choose>
                 <c:when test="${document.flag >2 && document.flag < 8}">
-                <button onClick="top.show_tab('行政处罚', '/village/danger/opinion-list?type=3&flag2=2')" class="btn radius" type="button">
+                <button onClick="top.show_tab('行政处罚', '/global/danger/opinion-list?type=3&flag2=2&uid=${uid}')" class="btn radius" type="button">
                     <i class="Hui-iconfont mr-10">&#xe66b;</i>返回列表
                 </button>
                 <%-- <button onClick="top.show_tab('检查文书', '${ly }/village/opinion-show?flag2=2')" class="btn radius" type="button" >
@@ -39,7 +39,7 @@ function pr_() {
                 </button> --%>
                 </c:when>
                 <c:otherwise>
-                <button onClick="top.show_tab('检查文书', '${ly }/village/check-list?flag=${document.flag2}')" class="btn radius" type="button" >
+                <button onClick="top.show_tab('检查文书', '${ly }/global/check-list?flag=${document.flag2}&uid=${uid}')" class="btn radius" type="button" >
                     <i class="Hui-iconfont mr-10">&#xe66b;</i>返回列表
                 </button>
                 <c:if test="${document.flag2==2 }">
@@ -63,10 +63,10 @@ function pr_() {
               <div class="tabBar clearfix">
               <c:choose>
                 <c:when test="${document.flag == 8}">
-                  <a class="current" href='/village/check-document?checkId=${document.checkId}&flag=8'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
+                  <a class="current" href='/global/check-document?checkId=${document.checkId}&flag=8&uid=${uid}'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
                 </c:when>
                 <c:otherwise>
-                  <a href='/village/check-document?checkId=${document.checkId}&flag=8'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
+                  <a href='/global/check-document?checkId=${document.checkId}&flag=8&uid=${uid}'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
                 </c:otherwise>
                </c:choose>
                 <%-- <c:if test="${document.flag2 != 3}"> --%>
@@ -75,7 +75,7 @@ function pr_() {
                     <a href="javascript:void(0)" onclick="layer.alert('本次检查没有隐患，无需整改')">${document.flag2 == 3 ? '隐患整改意见书' : '责令限期整改意见书'}</a>
                     </c:when>
                     <c:otherwise>
-                    <a ${document.flag == 1 ? 'class="current"' : ''} href='/village/check-document?checkId=${document.checkId}&flag=1'>${document.flag2 == 3 ? '隐患整改意见书' : '责令限期整改意见书'}</a>
+                    <a ${document.flag == 1 ? 'class="current"' : ''} href='/global/check-document?checkId=${document.checkId}&flag=1&uid=${uid}'>${document.flag2 == 3 ? '隐患整改意见书' : '责令限期整改意见书'}</a>
                     </c:otherwise>
                 </c:choose>
                 <%-- </c:if> --%>
@@ -85,7 +85,7 @@ function pr_() {
                     <a href="javascript:void(0)" onclick="layer.alert('本次检查没有隐患，无需整改')">整改复查意见书</a>
                     </c:when>
                     <c:otherwise>
-                    <a ${document.flag == 2 ? 'class="current"' : ''} href='/village/check-document?checkId=${document.checkId}&flag=2'>整改复查意见书</a>
+                    <a ${document.flag == 2 ? 'class="current"' : ''} href='/global/check-document?checkId=${document.checkId}&flag=2&uid=${uid}'>整改复查意见书</a>
                     </c:otherwise>
                 </c:choose>
               </div>

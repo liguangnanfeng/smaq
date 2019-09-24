@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+global<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/taglibs.jsp"%>
 <!DOCTYPE HTML>
 <html>
@@ -31,7 +31,7 @@
             <button onClick="pr_()" class="btn radius" type="button">
                 <i class="Hui-iconfont mr-10">&#xe652;</i>打印
             </button>
-            <button onClick="top.show_tab('检查文书', '${ly }/village/check-list?flag=2')" class="btn radius" type="button">
+            <button onClick="top.show_tab('检查文书', '${ly }/global/check-list?flag=2')" class="btn radius" type="button">
                 <i class="Hui-iconfont mr-10">&#xe66b;</i>返回列表
             </button>
             <%-- <button onClick="top.show_tab('检查文书', '${ly }/village/opinion-show?flag2=2')" class="btn radius" type="button" >
@@ -55,8 +55,8 @@
                     <a href="javascript:void(0)" onclick="layer.alert('本次检查没有隐患，无需整改')">整改复查意见书</a>
                     </c:when>
                     <c:otherwise>
-                    <a href="/village/check-document?checkId=${check.id}&flag=1">隐患整改意见书</a>
-                    <a href="/village/check-document?checkId=${check.id}&flag=2">整改复查意见书</a>
+                    <a href="/global/check-document?checkId=${check.id}&flag=1&uid=${uid}">隐患整改意见书</a>
+                    <a href="/global/check-document?checkId=${check.id}&flag=2&uid=${uid}">整改复查意见书</a>
                     </c:otherwise>
                 </c:choose>
             </c:if>

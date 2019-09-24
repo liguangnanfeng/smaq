@@ -35,7 +35,7 @@ function opente(){
       <button onClick="pr_()" class="btn radius" type="button">
         <i class="Hui-iconfont mr-10">&#xe652;</i>打印
       </button>
-      <button onClick="top.show_tab('检查文书', '${ly }/village/check-list?flag=4')" class="btn radius" type="button">
+      <button onClick="top.show_tab('检查文书', '${ly }/global/check-list?flag=4')" class="btn radius" type="button">
         <i class="Hui-iconfont mr-10">&#xe66b;</i>返回列表
       </button>
       <%-- <button onClick="top.show_tab('检查文书', '${ly }/village/danger/opinion-list?type=1&flag2=4')" class="btn radius" type="button" >
@@ -57,8 +57,8 @@ function opente(){
               <a href="javascript:void(0)" onclick="layer.alert('本次检查没有隐患，无需整改')">整改复查意见书</a>
             </c:when>
             <c:otherwise>
-              <a href="/village/check-document?checkId=${check.id}&flag=1">责令限期整改意见书</a>
-              <a href="/village/check-document?checkId=${check.id}&flag=2">整改复查意见书</a>
+              <a href="/global/check-document?checkId=${check.id}&flag=1&uid=${uid}">责令限期整改意见书</a>
+              <a href="/global/check-document?checkId=${check.id}&flag=2&uid=${uid}">整改复查意见书</a>
             </c:otherwise>
           </c:choose>
         </c:if>

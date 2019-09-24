@@ -5385,6 +5385,7 @@ public class SteelController extends BaseController {
     public String yhAnalysis(HttpServletRequest request, Model model) {
         User user = getLoginUser(request);
         List<Integer> ids = tradeCliqueMapper.selectCompanyIdsByCqlib(user.getId());
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
         StringBuilder sb = new StringBuilder();
         sb.append("'").append(user.getId()).append("',");
         for (int i = 0; i < ids.size(); i++) {
@@ -5396,9 +5397,9 @@ public class SteelController extends BaseController {
             }
 
         }
-        Integer number3 = tCheckItemMapper.findTypeByMap(sb.toString(), 3); // 一般隐患
-        Integer number2 = tCheckItemMapper.findTypeByMap(sb.toString(), 2); // 重大隐患
-        Integer number1 = tCheckItemMapper.findTypeByMap(sb.toString(), 1); // 较大隐患
+        Integer number3 = tCheckItemMapper.findTypeByMap(sb.toString(), 3,company.getName()); // 一般隐患
+        Integer number2 = tCheckItemMapper.findTypeByMap(sb.toString(), 2,company.getName()); // 重大隐患
+        Integer number1 = tCheckItemMapper.findTypeByMap(sb.toString(), 1,company.getName()); // 较大隐患
 
 
         model.addAttribute("number1", number1);

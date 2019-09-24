@@ -22,13 +22,13 @@
   	}
     
     function save_() {
-      $.post(getRootPath() + "/village/danger/opinion-save", {
+      $.post(getRootPath() + "/global/danger/opinion-save", {
           userId: '${userId }',
   		  copy: $("#container").html(),
           flag: 6,
           flag2 : 2
       }, function(reuslt) {
-        	window.location.href = getRootPath() + "/village/danger/opinion-detail?id="+reuslt.data.id;
+        	window.location.href = getRootPath() + "/global/danger/opinion-detail?uid=${uid}&id="+reuslt.data.id;
       })
   	}  
     </script>
@@ -43,7 +43,7 @@
             <button onClick="pr_()" class="btn radius" type="button">
                 <i class="Hui-iconfont mr-10">&#xe652;</i>打印
             </button>
-             <button onClick="top.show_tab('检查文书', '${ly }/village/check-list?flag=2')" class="btn radius" type="button">
+             <button onClick="top.show_tab('检查文书', '${ly }/global/check-list?flag=2')" class="btn radius" type="button">
                 <i class="Hui-iconfont mr-10">&#xe66b;</i>返回列表
             </button>
             <%-- <button onClick="top.show_tab('检查文书', '${ly }/village/opinion-show?flag2=2')" class="btn radius" type="button" >

@@ -330,7 +330,7 @@ $(function(){
       })
       </script> 
     </div>
-<%--    <div class="row cl">
+  <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">是否构成重大危险源：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <div class="one_yxuan">
@@ -342,7 +342,7 @@ $(function(){
           <font>否</font>
         </div>
       </div> 
-    </div> --%>
+    </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">风险等级：</label>
       <div class="formControls col-xs-8 col-sm-9">

@@ -2384,12 +2384,12 @@ public class CompanyController_safety extends BaseController {
         AFxgzp be = aFxgzpMapper.selectByName(m);
         m.put("name", user.getUserName());
         AFxgzp be1 = aFxgzpMapper.selectByName(m);
-        if(null!=be1&&null!=be.getYjczcs()){
+       if(null!=be1&&null!=be.getYjczcs()){
             be.setYjczcs(be1.getYjczcs());
         }
         if (null == be || be.getIsedit().intValue() == 0) {//没有公告牌或没有修改过，重新生成
             if (null == be) {
-                be = new AFxgzp();
+                //be = new AFxgzp();
             }
             be.setFlag(2);
             be.setUid(user.getId());

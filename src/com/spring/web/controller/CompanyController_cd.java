@@ -285,16 +285,16 @@ public class CompanyController_cd extends BaseController {
         Regulation regulationComp = regulationGet(user.getId());
         if (company.getHazard() == null) {
             if (regulationComp.getCisDanger() != null) {
-                company.setHazard(regulationComp.getCisDanger());
-                companyMapper.updateByPrimaryKey(company);
+                //company.setHazard(regulationComp.getCisDanger());
+                //companyMapper.updateByPrimaryKey(company);
             }
         } else {
             if (regulationComp.getCisDanger() == null) {
-                 company.setHazard(0);
+                 //company.setHazard(0);
             } else {
-                company.setHazard(regulationComp.getCisDanger());
+                //company.setHazard(regulationComp.getCisDanger());
             }
-            companyMapper.updateByPrimaryKey(company);
+            //companyMapper.updateByPrimaryKey(company);
         }
 
         if (null != company.getRegionId()) {

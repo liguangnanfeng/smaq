@@ -2383,14 +2383,12 @@ public class CompanyController_safety extends BaseController {
         //m.put("flag2", 1);
         AFxgzp be = aFxgzpMapper.selectByName(m);
         m.put("name", user.getUserName());
-        AFxgzp be1 = aFxgzpMapper.selectByName(m);
-        if(null!=be1&&null!=be.getYjczcs()){
-            be.setYjczcs(be1.getYjczcs());
-        }
+        AFxgzp be1 = aFxgzpMapper.selectByName(m);//查询公司级
         if (null == be || be.getIsedit().intValue() == 0) {//没有公告牌或没有修改过，重新生成
             if (null == be) {
                 be = new AFxgzp();
             }
+            //be = new AFxgzp();
             be.setFlag(2);
             be.setUid(user.getId());
             be.setGlzrr(company.getSafetyM());//责任人默认为安全管理员
@@ -2431,12 +2429,6 @@ public class CompanyController_safety extends BaseController {
 
             setGgpXx(acL_f, be, adanerTypeList);
 
-            if (null == be.getId()) {
-                aFxgzpMapper.insertSelective(be);
-            } else {
-                aFxgzpMapper.updateByPrimaryKeySelective(be);
-            }
-
         }
         if(null!=be&&null!=be.getImgUrl()){
             String[] imgs = be.getImgUrl().split("&");
@@ -2444,6 +2436,14 @@ public class CompanyController_safety extends BaseController {
                 model.addAttribute("img"+i, imgs[i]);
             }
             model.addAttribute("img", be.getImgUrl());
+        }
+        if(null!=be1&&null!=be.getYjczcs()){
+            be.setYjczcs(be1.getYjczcs());
+        }
+        if (null == be.getId()) {
+            aFxgzpMapper.insertSelective(be);
+        } else {
+            aFxgzpMapper.updateByPrimaryKeySelective(be);
         }
         Integer load3 = 1;
         model.addAttribute("be", be);

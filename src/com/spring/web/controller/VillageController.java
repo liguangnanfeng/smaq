@@ -2252,11 +2252,13 @@ public class VillageController extends BaseController {
                     if(null!=levelId1){
                         levelId=  tLevelMapper.selectByPrimaryKey(levelId1).getLevel2();
                     }
-
                 }else if (null!=map.get("industryType")&&2==map.get("industryType")){
-                     levelId = aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2();
+                    if (null == (Integer) map.get("levelId")){
+                        continue;
+                    }else {
+                        levelId = aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2();
+                    }
                 }
-
                 if(StringUtils.isBlank(levelId)){
                     map.put("level2",levelId);
                 }

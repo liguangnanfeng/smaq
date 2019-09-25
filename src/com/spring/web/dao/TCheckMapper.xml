@@ -797,21 +797,6 @@
         AND depart = #{depart} and user_id in (${user_ids}) and type = #{type}
     </select>
 
-    <!-- 政府端 绩效分析数据查询  flag = 1 -->
-    <select id="zfPerformanceCount" resultType="Integer">
-        SELECT
-            count(*)
-        FROM
-            t_check_tbl t1
-         LEFT JOIN company_view c1 ON t1.user_id = c1.user_id
-        WHERE
-            del = 0
-        AND status = 2
-        AND t1.flag = #{flag}
-        AND c1.industry LIKE CONCAT('%', #{industry},'%')
-        AND t1.user_id in (${user_ids})
-    </select>
-
     <select id="zfCount" resultType="Integer">
         SELECT
             count(*)
@@ -827,6 +812,21 @@
 
 
     <!-- 政府端 绩效分析数据查询  flag = 1 -->
+    <select id="zfPerformanceCount" resultType="Integer">
+        SELECT
+            count(*)
+        FROM
+            t_check_tbl t1
+         LEFT JOIN company_view c1 ON t1.user_id = c1.user_id
+        WHERE
+            t1.del = 0
+        AND status = 2
+        AND t1.flag = #{flag}
+        AND c1.industry LIKE CONCAT('%', #{industry},'%')
+        AND t1.user_id in (${user_ids})
+    </select>
+
+    <!-- 政府端 绩效分析数据查询  flag = 1 -->
     <select id="zfPerformanceCount22" resultType="Integer">
         SELECT
             count(*)
@@ -834,7 +834,7 @@
             t_check_tbl t1
          LEFT JOIN company_view c1 ON t1.user_id = c1.user_id
         WHERE
-            del = 0
+            t1.del = 0
         AND status = 2
         AND t1.flag = #{flag}
         AND c1.industry LIKE CONCAT('%', #{industry},'%')

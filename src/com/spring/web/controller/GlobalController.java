@@ -39,10 +39,7 @@ import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.*;
 
 @Controller
@@ -270,7 +267,14 @@ public class GlobalController extends BaseController {
             model.addAttribute("counts",0);
             model.addAttribute("counts1",0);
         }else {
-            Integer counts = tCheckMapper.findAllCounte(sb.toString()); // 排查数据
+
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String startTime = df.format(new Date().getTime()-15*24*60*60*1000);
+
+            Date startTime1 = df.parse(startTime);
+            Date endTime = new Date();
+
+            Integer counts = tCheckMapper.findAllCounte(sb.toString(),startTime1,endTime); // 排查数据
             Integer counts1 = tCheckItemMapper.findAllCounte(sb.toString()); // 治理数据
 
             model.addAttribute("counts",counts);
@@ -4939,8 +4943,6 @@ public class GlobalController extends BaseController {
                     sb.append("'").append(ids.get(i)).append("',");
                 }
             }
-
-            System.out.println(sb.toString());
 
             Integer a = tCheckMapper.zfCount("化工",sb.toString()); // 化工行业 数据
             model.addAttribute("danger1",a);

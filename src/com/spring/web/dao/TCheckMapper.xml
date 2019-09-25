@@ -822,20 +822,7 @@
             del = 0
         AND status = 2
         AND c1.industry LIKE CONCAT('%', #{industry},'%')
-       <if test="type==6">
-            AND district_id = #{userId}
-        </if>
-        <if test="type==3">
-            AND town_id = #{userId}
-        </if>
-        <if test="type==4">
-            AND village_id = #{userId}
-        </if>
-        <if test="type==10">
-            AND  user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
-            #{userId}
-            )
-        </if>
+        AND t1.user_id in (${user_ids})
     </select>
 
 
@@ -913,10 +900,11 @@
        SELECT
        count(*)
        FROM
-       t_check_tbl t1
+       t_check_tbl
        WHERE
-       del = 0 AND status = 2
-       AND t1.user_id in (${userIds})
+       del = 0 AND status = 1 AND type = 2
+       AND create_time BETWEEN #{startTime} AND #{endTime}
+       AND user_id in (${userIds})
     </select>
 
 

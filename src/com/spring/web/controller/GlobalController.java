@@ -4940,6 +4940,8 @@ public class GlobalController extends BaseController {
                 }
             }
 
+            System.out.println(sb.toString());
+
             Integer a = tCheckMapper.zfCount("化工",sb.toString()); // 化工行业 数据
             model.addAttribute("danger1",a);
 

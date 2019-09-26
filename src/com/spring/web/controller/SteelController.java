@@ -5101,6 +5101,10 @@ public class SteelController extends BaseController {
             list =  hiddenPlanMapper.selectDpids(String.valueOf((Integer) map.get("user_id")));
             sb = new StringBuilder();
             total = total + tCheckMapper.dataTotalCounts((Integer) map.get("user_id"));//统计各个分厂的总数
+
+
+            System.out.println("user:" + map.get("user_id"));
+
             findComment1(company, list, sb);
             list1 = tCheckItemMapper.selectHiddenSources11(1,String.valueOf((Integer) map.get("user_id"))); // 企业自查
             number1 = number1 + list1.size();
@@ -5111,20 +5115,31 @@ public class SteelController extends BaseController {
             if (null == sb.toString() || sb.toString().length() == 0){
 
             }else if (null != sb.toString() && sb.toString().length() != 0){
+
                 for (int t = 0; t < list.size(); t++) {
+
                     if (null == list.get(t).get("name") && (Integer)list.get(t).get("dpid") == 0){
+
+                        System.out.println(company.getName());
+
                         list2 = tCheckItemMapper.zhuChartData521("基础管理",String.valueOf(map.get("user_id")),company.getName()); // 生产工艺 隐患数据
                         sumS = sumS + list2.size();
+
                         list2 = tCheckItemMapper.zhuChartDataBasic(String.valueOf(map.get("user_id")),company.getName()); // 生产工艺 隐患数据
                         sumS = sumS + list2.size();
+
                         list2 = tCheckItemMapper.zhuChartData521("设计总图",String.valueOf(map.get("user_id")),company.getName()); // 生产工艺 隐患数据
                         sumA = sumA + list2.size();
+
                         list2 = tCheckItemMapper.zhuChartData521("试生产",String.valueOf(map.get("user_id")),company.getName()); // 设备设施 隐患数据
                         sumB = sumB + list2.size();
+
                         list2 = tCheckItemMapper.zhuChartData521("装置运行",String.valueOf(map.get("user_id")),company.getName()); // 特种设备 隐患数据
                         sumC = sumC + list2.size();
+
                         list2 = tCheckItemMapper.zhuChartData521("设备安全",String.valueOf(map.get("user_id")),company.getName()); // 消防安全 隐患数据
                         sumD = sumD + list2.size();
+
                         list2 = tCheckItemMapper.zhuChartData521("仪表安全",String.valueOf(map.get("user_id")),company.getName()); // 用电安全 隐患数据
                         sumE = sumE + list2.size();
 
@@ -5170,6 +5185,11 @@ public class SteelController extends BaseController {
 
                     }
                 }
+
+/*
+                System.out.println(sb.toString());*/
+
+
                 list2 = tCheckItemMapper.zhuChartData781("基础管理",String.valueOf(map.get("user_id")),sb.toString()); // 生产工艺 隐患数据
                 sumS = sumS + list2.size();
 
@@ -5249,7 +5269,7 @@ public class SteelController extends BaseController {
         model.addAttribute("q", sumQ);
         model.addAttribute("r", sumR);
         model.addAttribute("total", total);
-        Integer count = sumA + sumB + sumC +sumD + sumE + sumF + sumG + sumH + sumI + sumJ + sumK + sumL + sumO + sumP + sumQ + sumR + sumS;
+        Integer count = sumA + sumB + sumC +sumD + sumE + sumF + sumG + sumH + sumI + sumJ + sumK +sumL + sumM + sumN + sumO +sumP + sumQ  + sumR + sumR;
         model.addAttribute("count",count);
 
         DecimalFormat df = new DecimalFormat("0.00");
@@ -5625,7 +5645,7 @@ public class SteelController extends BaseController {
         model.addAttribute("p", sumP);
         model.addAttribute("q", sumQ);
         model.addAttribute("r", sumR);
-        count = sumA +  sumB + sumC +sumD + sumE + sumF + sumG + sumH + sumI + sumJ + sumK + sumL + sumO + sumP + sumQ + sumR + sumS;
+        count = sumA +  sumB + sumC +sumD + sumE + sumF + sumG + sumH + sumI + sumJ + sumK + sumL + sumM + sumN +sumO +sumP +sumQ +sumR;
         model.addAttribute("count",count);
 
         DecimalFormat df = new DecimalFormat("0.00");

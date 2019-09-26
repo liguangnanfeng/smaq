@@ -136,7 +136,7 @@
                     <li><a data-href="${ly }/steel/model-list-main?flag=1" data-title="检查设置实施" href="javascript:void(0)">检查设置实施</a></li>
                     <li><a data-href="${ly }/steel/check-list?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
                     <li><a data-href="${ly }/steel/hidden-danger-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
-                    <li><a data-href="${ly }/steel/jx-analysis" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
+                    <li><a data-href="${ly }/company/jx-analysis" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
                     <li><a data-href="${ly }/steel/yh-analysis?flag=1" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
                     <li><a data-href="${ly }/steel/zl-analysis" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
                </ul>

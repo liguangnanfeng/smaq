@@ -313,7 +313,6 @@
         t1.del = 0
         AND t1.uid = #{uid,jdbcType=INTEGER} AND t1.flag = 1 AND t1.level = 2 and t1.pid in (${pids})
         ORDER BY parName ASC
-
     </select>
 
     <select id="selectNotEmpy" resultType="java.util.Map">

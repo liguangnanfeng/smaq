@@ -402,6 +402,10 @@ public interface TCheckItemMapper {
 
     Integer zhengFuChartData88(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
+    Integer zhengFu88ChartDataNews(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer zhengFu88ChartDataBasics(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
     Integer zhengFuChartData882(@Param("control")String control, @Param("user_ids")String user_ids);
 
     Integer zhengFuChartData881(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
@@ -417,6 +421,10 @@ public interface TCheckItemMapper {
     Integer zfData881(@Param("user_ids")String user_ids);
 
     Integer zhengFuChartData99(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zhengFu99ChartDataNews(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    Integer zhengFu99ChartDataBasics(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
     Integer zhengFuChartData991(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
@@ -438,19 +446,35 @@ public interface TCheckItemMapper {
 
     Integer manageHiddenCompany(@Param("status")Integer status, @Param("user_ids")String user_ids, @Param("flag")Integer flag);
 
+    Integer manageNewsHiddenCompany(@Param("status")Integer status, @Param("user_ids")String user_ids, @Param("flag")Integer flag);
+
+    Integer manageBasicsHiddenCompany(@Param("status")Integer status, @Param("user_ids")String user_ids, @Param("flag")Integer flag);
+
     Integer manageHiddenNows(@Param("status")Integer status, @Param("user_ids")String user_ids, @Param("flag")Integer flag);
 
     Integer manageHiddenBasic(@Param("status")Integer status, @Param("user_ids")String user_ids, @Param("flag")Integer flag);
 
     Integer manageHiddenCompany11(@Param("status")Integer status, @Param("user_id")Integer user_id, @Param("flag")Integer flag);
 
+    Integer manageHiddenCompanyNews(@Param("status")Integer status, @Param("user_id")Integer user_id, @Param("flag")Integer flag);
+
+    Integer manageHiddenCompanyBasics(@Param("status")Integer status, @Param("user_id")Integer user_id, @Param("flag")Integer flag);
+
     Integer manageHiddenDanger(@Param("status")Integer status, @Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer manageNewsHiddenDanger(@Param("status")Integer status, @Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer manageBasicsHiddenDanger(@Param("status")Integer status, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer manageHiddenDanger11(@Param("status")Integer status, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer manageHiddenIndustry11(@Param("status")Integer status, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer manageHiddenIndustry(@Param("status")Integer status, @Param("industry")String industry, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer manageHiddenIndustryNowS(@Param("status")Integer status, @Param("industry")String industry, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer manageHiddenIndustryBasicS(@Param("status")Integer status, @Param("industry")String industry, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer getTotalPage(@Param("userId") Integer userId, @Param("type") Integer type);
 

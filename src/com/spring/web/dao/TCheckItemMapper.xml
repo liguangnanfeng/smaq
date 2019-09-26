@@ -1230,6 +1230,24 @@
         AND t1.recheck_file != ''
     </select>
 
+
+    <select id="manageHiddenCompanySpecial" resultType="Integer">
+        SELECT
+        DISTINCT count(t1.check_id)
+        FROM
+        smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+        t2. status = 2
+        AND t2.del = 0
+        AND t1. status = #{status}
+        AND t2.user_id in (${user_ids})
+        AND t3.flag = #{flag}
+        AND t1.recheck_file != ''
+    </select>
+
+
     <!-- 政府端 隐患治理数据分析 企业 -->
     <select id="manageHiddenCompany" resultType="Integer">
         SELECT
@@ -1238,6 +1256,39 @@
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1. status = #{status}
+        AND t2.user_id in (${user_ids})
+        AND t3.flag = #{flag}
+        AND t1.recheck_file != ''
+    </select>
+
+
+    <select id="manageNewsHiddenCompany" resultType="Integer">
+        SELECT
+            DISTINCT count(t1.check_id)
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1. status = #{status}
+        AND t2.user_id in (${user_ids})
+        AND t3.flag = #{flag}
+        AND t1.recheck_file != ''
+    </select>
+
+    <select id="manageBasicsHiddenCompany" resultType="Integer">
+        SELECT
+            DISTINCT count(t1.check_id)
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
         WHERE
             t2. status = 2
         AND t2.del = 0
@@ -1300,6 +1351,40 @@
     </select>
 
 
+    <select id="manageHiddenCompanyNews" resultType="Integer">
+        SELECT
+            DISTINCT count(t1.check_id)
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1. status = #{status}
+        AND t2.user_id = #{user_id}
+        AND t3.flag = #{flag}
+        AND t1.recheck_file != ''
+    </select>
+
+
+    <select id="manageHiddenCompanyBasics" resultType="Integer">
+        SELECT
+            DISTINCT count(t1.check_id)
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1. status = #{status}
+        AND t2.user_id = #{user_id}
+        AND t3.flag = #{flag}
+        AND t1.recheck_file != ''
+    </select>
+
+
     <!-- 政府端 隐患治理数据分析 风险 -->
     <select id="manageHiddenDanger" resultType="Integer">
         SELECT
@@ -1311,12 +1396,42 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
-        <if test="control != '其他' ">
-            AND t3.control = #{control}
-        </if>
-        <if test="control == '其他' ">
-            AND t3.control is null
-        </if>
+        AND t1. status = #{status}
+        AND t3.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+        AND t1.recheck_file != ''
+    </select>
+
+
+    <select id="manageNewsHiddenDanger" resultType="Integer">
+        SELECT
+        DISTINCT count(t1.check_id)
+        FROM
+        smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
+        WHERE
+        t2. status = 2
+        AND t2.del = 0
+        AND t3.control = #{control}
+        AND t1. status = #{status}
+        AND t3.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+        AND t1.recheck_file != ''
+    </select>
+
+
+
+    <select id="manageBasicsHiddenDanger" resultType="Integer">
+        SELECT
+        DISTINCT count(t1.check_id)
+        FROM
+        smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
+        WHERE
+        t2. status = 2
+        AND t2.del = 0
         AND t1. status = #{status}
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
@@ -1422,6 +1537,57 @@
         AND t1.recheck_file != ''
     </select>
 
+
+    <select id="manageHiddenIndustryNowS" resultType="Integer">
+        SELECT
+        DISTINCT count(t1.check_id)
+        FROM
+        smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
+        LEFT JOIN smaq.company_view c1 ON c1.user_id = t2.user_id
+        WHERE
+        t2. status = 2
+        AND t2.del = 0
+        AND t1. status = #{status}
+        <if test="industry != '其他'" >
+            AND c1.industry like CONCAT('%',#{industry},'%')
+        </if>
+        <if test="industry == '其他'" >
+            AND c1.industry is null
+        </if>
+        AND t3.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+        AND t1.recheck_file != ''
+    </select>
+
+
+
+    <select id="manageHiddenIndustryBasicS" resultType="Integer">
+        SELECT
+        DISTINCT count(t1.check_id)
+        FROM
+        smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
+        LEFT JOIN smaq.company_view c1 ON c1.user_id = t2.user_id
+        WHERE
+        t2. status = 2
+        AND t2.del = 0
+        AND t1. status = #{status}
+        <if test="industry != '其他'" >
+            AND c1.industry like CONCAT('%',#{industry},'%')
+        </if>
+        <if test="industry == '其他'" >
+            AND c1.industry is null
+        </if>
+        AND t3.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+        AND t1.recheck_file != ''
+    </select>
+
+
+
     <!-- 政府端 隐患治理数据分析 行业 其他 -->
     <select id="manageHiddenIndustry11" resultType="Integer">
         SELECT
@@ -1470,7 +1636,7 @@
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
-        LEFT JOIN smaq.company_view c1 ON c1.user_id = t3.uid
+        LEFT JOIN smaq.company_view c1 ON c1.user_id = t2.user_id
         WHERE
             t2. status = 2
         AND t2.del = 0
@@ -1491,7 +1657,7 @@
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
-        LEFT JOIN smaq.company_view c1 ON c1.user_id = t3.uid
+        LEFT JOIN smaq.company_view c1 ON c1.user_id = t2.user_id
         WHERE
             t2. status = 2
         AND t2.del = 0
@@ -2180,6 +2346,42 @@
         AND t2.user_id in (${user_ids})
     </select>
 
+
+    <select id="zhengFu88ChartDataNews" resultType="Integer">
+        SELECT
+          DISTINCT count(t1.check_id) as counts
+        FROM
+        smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
+        WHERE
+        t2.status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t3.control = #{control}
+        AND t2.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+    </select>
+
+
+
+    <select id="zhengFu88ChartDataBasics" resultType="Integer">
+        SELECT
+          DISTINCT count(t1.check_id) as counts
+        FROM
+        smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
+        WHERE
+        t2.status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t2.flag = #{flag}
+        AND t2.user_id in (${user_ids})
+    </select>
+
+
+
     <select id="zhengFuChartData882" resultType="Integer">
         SELECT
         DISTINCT count(t1.check_id) as counts
@@ -2258,6 +2460,38 @@
     </select>
 
 
+    <select id="zhengFu99ChartDataNews" resultType="Integer">
+        SELECT
+        DISTINCT count(t1.check_id) as counts
+        FROM
+        smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
+        WHERE
+        t2.status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t3.control = #{control}
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
+
+    <select id="zhengFu99ChartDataBasics" resultType="Integer">
+        SELECT
+        DISTINCT count(t1.check_id) as counts
+        FROM
+        smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
+        WHERE
+        t2.status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t2.flag = #{flag}
+        AND t2.user_id = #{user_id}
+    </select>
+
     <!-- 政府端 隐患数据分析 风险 flag = 1-->
     <select id="zhengFuChartData881" resultType="Integer">
          SELECT
@@ -2333,7 +2567,6 @@
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
-        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
         WHERE
             t2.status = 2
@@ -2366,7 +2599,6 @@
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
-        LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
         LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
         WHERE
             t2.status = 2
@@ -2376,6 +2608,7 @@
         AND c1.industry  like  CONCAT('%', #{industry},'%')
         AND t2.user_id = #{user_id}
     </select>
+
 
     <select id="zhengFuChartDataDanger2" parameterType="INTEGER" resultType="INTEGER">
       SELECT
@@ -2742,7 +2975,7 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status = 3
+        AND t1.status in ('2','3')
         AND t3.control = #{control}
         AND t2.depart = #{depart}
         AND t2.user_id = #{user_id}
@@ -2759,7 +2992,7 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status = 3
+        AND t1.status in ('2','3')
         AND t3.control = #{control}
         AND t2.depart = #{depart}
         AND t2.user_id = #{user_id}
@@ -2777,7 +3010,7 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status = 3
+        AND t1.status in ('2','3')
         AND t2.depart = #{depart}
         AND t2.user_id = #{user_id}
     </select>

@@ -188,7 +188,7 @@ public interface TCheckItemMapper {
      * @param userId 公司id
      * @return
      */
-    List<Map> selectListBystatus(@Param("userId") Integer userId,@Param("flag") Integer flag);
+    List<Map> selectListBystatus(@Param("userId") Integer userId,@Param("flag") Integer flag,@Param("breaken") Integer breaken);
 
     /**
      * 隐患治理记录之行政检查
@@ -196,14 +196,14 @@ public interface TCheckItemMapper {
      * @param flag
      * @return
      */
-    List<Map> selectXZListBystatus(@Param("userId") Integer userId,@Param("flag") Integer flag);
+    List<Map> selectXZListBystatus(@Param("userId") Integer userId,@Param("flag") Integer flag,@Param("breaken") Integer breaken);
     /**
      * 隐患治理记录之部门抽查
      * @param userId
      * @param flag
      * @return
      */
-    List<Map> selectBMCCListBystatus(@Param("userId") Integer userId,@Param("flag") Integer flag);
+    List<Map> selectBMCCListBystatus(@Param("userId") Integer userId,@Param("flag") Integer flag,@Param("breaken") Integer breaken);
 
     /**
      * 根据合格不合格区生成图表

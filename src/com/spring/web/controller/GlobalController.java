@@ -4798,7 +4798,7 @@ public class GlobalController extends BaseController {
      * @return
      */
     @RequestMapping(value = "hidden-danger-list")
-    public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status, Integer uid) {
+    public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status, Integer uid,Integer breaken) {
 
         User user = userMapper.selectByPrimaryKey(uid);
 
@@ -4807,11 +4807,15 @@ public class GlobalController extends BaseController {
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
         model.addAttribute("userId", user.getId());
-
+        if (null == breaken){
+            breaken = 1;
+        }else {
+            breaken = 2;
+        }
         List<Map> list = new ArrayList<>();
         if (flag == 1) {
 
-            list = tCheckItemMapper.selectListBystatus(user.getId(), flag);
+            list = tCheckItemMapper.selectListBystatus(user.getId(), flag, breaken);
 
             for (Map map : list) {
                 Date realTime = (Date) map.get("realTime");
@@ -4866,7 +4870,7 @@ public class GlobalController extends BaseController {
             }
         } else if (flag == 2) {
             // 表示的是行政检查
-            list = tCheckItemMapper.selectXZListBystatus(user.getId(), flag);
+            list = tCheckItemMapper.selectXZListBystatus(user.getId(), flag, breaken);
             for (Map map : list) {
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -4892,7 +4896,7 @@ public class GlobalController extends BaseController {
             }
         } else if (flag == 3) {
             // 表示的是部门抽查
-            list = tCheckItemMapper.selectBMCCListBystatus(user.getId(), flag);
+            list = tCheckItemMapper.selectBMCCListBystatus(user.getId(), flag,breaken);
             for (Map map : list) {
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");

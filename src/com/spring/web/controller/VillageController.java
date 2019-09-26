@@ -1235,6 +1235,7 @@ public class VillageController extends BaseController {
         }
         // 进行判断
         if (setUserId(user, m)) {
+            System.out.println(m);
             clearVillageTown(m);
 
             List<Map<String, Object>> list = tCheckMapper.selectList(m);
@@ -2800,12 +2801,23 @@ public class VillageController extends BaseController {
         if (null != villageId) {
             m.put("villageId", villageId);
         }
-        setUserId(user, m);
+        //setUserId(user, m);
         if (StringUtils.isNotBlank(level)) {
             level = utf8Str(level);
         }
-        m.put("companyName", companyName);
-        m.put("level", level);
+        if(user.getId()==35346){
+            model.addAttribute("tradeId",user.getId());
+        }
+        if(null != companyName) {
+            m.put("companyName", companyName);
+        }
+        if(null!=level) {
+            if(level.equals("red")) {
+                m.put("level", "红色");
+            }else{
+                m.put("level", "橙色");
+            }
+        }
         model.addAttribute("list", aCompanyManualMapper.selectByMap2(m));
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
@@ -2815,8 +2827,8 @@ public class VillageController extends BaseController {
         }
         model.addAttribute("m", m);
         //log.error("2018.12.4 debug 10 zhangcl");
-        log.error("level：" + level.toString());
-        if (level.equals("红色")) {
+        //log.error("level：" + level.toString());
+        if (level.equals("red")) {
             return "village/safety-system/control-list";
         } else {
             return "village/safety-system/control-list1";
@@ -2832,18 +2844,29 @@ public class VillageController extends BaseController {
                                   String companyName, String level) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
+
         if (null != townId) {
             m.put("townId", townId);
         }
         if (null != villageId) {
             m.put("villageId", villageId);
         }
-        setUserId(user, m);
+        //setUserId(user, m);
         if (StringUtils.isNotBlank(level)) {
             level = utf8Str(level);
         }
-        m.put("companyName", companyName);
-        m.put("level", level);
+        if(level.equals("red")){
+            m.put("level", "红色");
+        }else{
+            m.put("level", "橙色");
+        }
+        if(user.getId()==35346){
+            m.put("tradeId", user.getId());
+        }
+        if(null != companyName) {
+            m.put("companyName", companyName);
+        }
+        System.out.println(m);
         //model.addAttribute("list", aCompanyManualMapper.selectByMap3(m));
         List<Map<String, Object>> list = aCompanyManualMapper.selectByMap3(m);
         model.addAttribute("list", list);
@@ -2865,7 +2888,7 @@ public class VillageController extends BaseController {
         }
         model.addAttribute("m", m);
         //log.error("list："+aCompanyManualMapper.selectByMap3(m));
-        if (level.equals("红色")) {
+        if (level.equals("red")) {
             return "village/safety-system/control-listmenu";
         } else {
             return "village/safety-system/control-listmenu1";

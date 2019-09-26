@@ -3225,7 +3225,6 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("flag", flag);
         model.addAttribute("industryType", industryType);
         model.addAttribute("template", template);
-
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("flag", flag);
         if (null != industryType) {
@@ -3239,10 +3238,33 @@ public class CompanyController_cd extends BaseController {
         }
         status = status == null ? 2 : status;
         m.put("status", status);
-        if (setUserId(user, m)) {
+        if (user.getId() != 35346) {
+            if (setUserId(user, m)) {
+                clearVillageTown(m);
+                List<Map<String, Object>> list = tCheckMapper.selectListTwo(m);
+                if (flag == 1) {
+                    List list1 = new ArrayList();
+                    for (Map<String, Object> stringObjectMap : list) {
+                        int industry = (Integer) stringObjectMap.get("industryType");
+                        if (industryType == industry) {
+                            list1.add(stringObjectMap);
+                        }
+                    }
+                    model.addAttribute("list", list1);
+
+                } else {
+                    model.addAttribute("list", list);
+                }
+
+                Integer sum = 0;
+                for (int i = 0; i < list.size(); i++) {
+                    sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
+                }
+                model.addAttribute("sum", sum);
+            }
+        }else{
             clearVillageTown(m);
             List<Map<String, Object>> list = tCheckMapper.selectListTwo(m);
-
             if (flag == 1) {
                 List list1 = new ArrayList();
                 for (Map<String, Object> stringObjectMap : list) {
@@ -3263,6 +3285,7 @@ public class CompanyController_cd extends BaseController {
             }
             model.addAttribute("sum", sum);
         }
+
 
         return "company/danger/check-list-szss";
     }
@@ -7497,14 +7520,14 @@ public class CompanyController_cd extends BaseController {
         Company company = companyMapper.selectByPrimaryKey(user.getId());
 
 
-        Integer numbers1 = tCheckItemMapper.findFinishCount(user.getId(),3,company.getName()); // 一般隐患
-        Integer numbers2 = tCheckItemMapper.findFinishBasic(user.getId(),3,company.getName()); // 一般隐患
+        Integer numbers1 = tCheckItemMapper.findFinishCount(user.getId(),3,company.getName()); // 一般隐患 现场管理
+        Integer numbers2 = tCheckItemMapper.findFinishBasic(user.getId(),3,company.getName()); // 一般隐患 基础管理
 
-        Integer numbers3 = tCheckItemMapper.findFinishCount(user.getId(),2,company.getName()); // 一般隐患
-        Integer numbers4 = tCheckItemMapper.findFinishBasic(user.getId(),2,company.getName()); // 一般隐患
+        Integer numbers3 = tCheckItemMapper.findFinishCount(user.getId(),2,company.getName()); // 一般隐患  现场管理
+        Integer numbers4 = tCheckItemMapper.findFinishBasic(user.getId(),2,company.getName()); // 一般隐患  基础管理
 
-        Integer numbers5 = tCheckItemMapper.findFinishCount(user.getId(),1,company.getName()); // 一般隐患
-        Integer numbers6 = tCheckItemMapper.findFinishBasic(user.getId(),1,company.getName()); // 一般隐患
+        Integer numbers5 = tCheckItemMapper.findFinishCount(user.getId(),1,company.getName()); // 一般隐患  现场管理
+        Integer numbers6 = tCheckItemMapper.findFinishBasic(user.getId(),1,company.getName()); // 一般隐患  基础管理
 
         Integer number4 = tCheckItemMapper.findFileByMap(user.getId(),3,company.getName()); // 一般隐患
         Integer number5 = tCheckItemMapper.findFileByMap(user.getId(),2,company.getName()); // 重大隐患

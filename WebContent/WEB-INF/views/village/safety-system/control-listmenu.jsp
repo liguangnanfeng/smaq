@@ -116,7 +116,7 @@ $(function() {
             <td>${be.companyName }</td>
             <td><strong>${be.companyNum }</strong></td>
 			<td>
-				<form action="${ly }/village/safety-system/control-list?level=${be.level }" method="post">
+				<form action="${ly }/village/safety-system/control-list?level=red" method="post">
         			<div class="dis-ib">
           				<input type="text" name="companyName" value="${be.companyName }" class="input-text mb-5 mt-5" style="display:none">
         			</div>
@@ -124,8 +124,7 @@ $(function() {
          				 查看详情
         			</button>
       			</form>
-			
-			</td>
+            </td>
           </tr>
           </c:forEach>
         </tbody>

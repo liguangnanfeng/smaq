@@ -138,11 +138,11 @@
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
         <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}"
-           href="${ly }/company/model-list-main?flag=1">企业自查</a>
+           href="${ly }/steel/model-list-main?flag=1">企业自查</a>
         <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
-           href="${ly }/company/model-list-cx2?flag=2&type=1&template=2">行政检查</a>
+           href="${ly }/steel/model-list-cx2?flag=2&type=1&template=2">行政检查</a>
         <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
-           href="${ly }/company/model-list-cx2?flag=3&type=1&template=2">第三方检查</a>
+           href="${ly }/steel/model-list-cx2?flag=3&type=1&template=2">第三方检查</a>
         <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
     </div>
     <div id="tab-index-cartegory">
@@ -212,12 +212,12 @@
 
                                                    href="${ly}/company/model-list-showAll?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-2&template=${status[0]+1}&flag=${flag}&status=2"
                                                   <%-- onClick="showAll('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}','2')"--%>
-                                                href="javascript:;">实施</a>
+                                                href="javascript:;">实施1</a>
                                             </c:if>
                                             <c:if test="${index2.index!=2}">
                                                 <a style="text-decoration:none"
                                                 onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
-                                                href="javascript:;">实施</a>
+                                                href="javascript:;">实施2</a>
                                             </c:if>
                                         </c:if>
                                         <c:if test="${status[1]==0}">
@@ -227,13 +227,13 @@
                                                class="used"
                                                 onClick="layer.msg('没有要检查的整改项')"
                                                <%--onClick="szss_list('${be.level1 }',2,'${status[0]+1}','${flag}')"--%>
-                                               href="javascript:;">实施</a>
+                                               href="javascript:;">实施3</a>
                                     </c:if>
                                             <c:if test="${index2.index!=2}">
                                                 <a style="text-decoration:none"
                                                 class="used"
                                                 onClick="layer.msg('没有要检查的整改项')"
-                                                href="javascript:;">实施</a></c:if>
+                                                href="javascript:;">实施4</a></c:if>
                                         </c:if>
                                     </td>
                                 </c:forEach>
@@ -242,13 +242,13 @@
                                         <a style="text-decoration:none;"
                                            class="used"
                                            onClick="layer.msg('没有要复查整改的项')"
-                                           href="javascript:;">实施
+                                           href="javascript:;">实施5
                                         </a>
                                     </c:if>
                                     <c:if test="${be.count!=0}">
                                         <a style="text-decoration:none"
                                            onClick="szss_list('${be.level1 }',-2,${status[0]+1},'${flag}')"
-                                           href="javascript:;">实施
+                                           href="javascript:;">实施6
                                         </a>
                                     </c:if>
 
@@ -320,7 +320,7 @@
                                         <a style="text-decoration:none"
                                            class="used"
                                            onClick="layer.msg('没有要复查整改的项')"
-                                           href="javascript:;">实施
+                                           href="javascript:;">实施101
                                         </a>
                                     </c:if>
                                     <c:if test="${be.count!=0}">

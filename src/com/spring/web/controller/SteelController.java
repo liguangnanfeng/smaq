@@ -5107,7 +5107,7 @@ public class SteelController extends BaseController {
             total = total + tCheckMapper.dataTotalCounts((Integer) map.get("user_id"));//统计各个分厂的总数
 
 
-            System.out.println("user:" + map.get("user_id"));
+            //System.out.println("user:" + map.get("user_id"));
 
             findComment1(company, list, sb);
             list1 = tCheckItemMapper.selectHiddenSources11(1,String.valueOf((Integer) map.get("user_id"))); // 企业自查
@@ -5649,7 +5649,7 @@ public class SteelController extends BaseController {
         model.addAttribute("p", sumP);
         model.addAttribute("q", sumQ);
         model.addAttribute("r", sumR);
-        count = sumA +  sumB + sumC +sumD + sumE + sumF + sumG + sumH + sumI + sumJ + sumK + sumL + sumM + sumN +sumO +sumP +sumQ +sumR;
+        count = sumA + sumB + sumC +sumD + sumE + sumF + sumG + sumH + sumI + sumJ + sumK +sumL + sumM + sumN + sumO +sumP + sumQ  + sumR + sumS;
         model.addAttribute("count",count);
 
         DecimalFormat df = new DecimalFormat("0.00");

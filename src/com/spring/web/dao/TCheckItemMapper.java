@@ -378,13 +378,25 @@ public interface TCheckItemMapper {
 
     List<Map<String,Object>>  zfTrouble11(@Param("control")String control, @Param("user_ids")String user_ids);
 
+    List<Map<String,Object>>  zf11TroubleNews(@Param("control")String control, @Param("user_ids")String user_ids);
+
+    List<Map<String,Object>>  zf11TroubleBasics(@Param("user_ids")String user_ids);
+
     Integer zfHiddenTrouble22(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
     List<Map<String,Object>> zfHiddenTrouble22GroupBy(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
+    List<Map<String,Object>> zfHiddenTroubleNews(@Param("control")String control, @Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
+    List<Map<String,Object>> zfHiddenTroubleBasics(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
+
     Integer zfHiddenTroubleType(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     List<Map<String,Object>> zfHiddenTroubleTypeGroupBy(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    List<Map<String,Object>> zfHiddenTroubleTypeNews(@Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    List<Map<String,Object>> zfHiddenTroubleTypeBasics(@Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer zfHiddenTrouble33(@Param("flag")Integer flag, @Param("user_id")Integer user_id);
 
@@ -397,6 +409,10 @@ public interface TCheckItemMapper {
     Integer zhengFuChartData8812(@Param("user_ids")String user_ids);
 
     Integer zfData88(@Param("control")String control, @Param("user_ids")String user_ids);
+
+    Integer zf88DataNows(@Param("control")String control, @Param("user_ids")String user_ids);
+
+    Integer zf88DataBasics(@Param("user_ids")String user_ids);
 
     Integer zfData881(@Param("user_ids")String user_ids);
 
@@ -422,6 +438,10 @@ public interface TCheckItemMapper {
 
     Integer manageHiddenCompany(@Param("status")Integer status, @Param("user_ids")String user_ids, @Param("flag")Integer flag);
 
+    Integer manageHiddenNows(@Param("status")Integer status, @Param("user_ids")String user_ids, @Param("flag")Integer flag);
+
+    Integer manageHiddenBasic(@Param("status")Integer status, @Param("user_ids")String user_ids, @Param("flag")Integer flag);
+
     Integer manageHiddenCompany11(@Param("status")Integer status, @Param("user_id")Integer user_id, @Param("flag")Integer flag);
 
     Integer manageHiddenDanger(@Param("status")Integer status, @Param("control")String control, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
@@ -438,7 +458,15 @@ public interface TCheckItemMapper {
 
     Integer manageHiddenDanger22(@Param("status")Integer status, @Param("controls")String controls,@Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
+    Integer manage22HiddenNews(@Param("status")Integer status, @Param("controls")String controls,@Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer manage22HiddenBasics(@Param("status")Integer status,@Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
     Integer manageHiddenIndustry22(@Param("status")Integer status, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer manage22HiddenIndustryNews(@Param("status")Integer status, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
+
+    Integer manage22HiddenIndustryBasics(@Param("status")Integer status, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer findAllCounte(@Param("userIds")String userIds);
 

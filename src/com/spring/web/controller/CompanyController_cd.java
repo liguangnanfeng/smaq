@@ -36,13 +36,11 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.net.URLEncoder;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.*;
 
 /**
@@ -130,7 +128,13 @@ public class CompanyController_cd extends BaseController {
             model.addAttribute("industry", 5);
         }
 
-        Integer counts = tCheckMapper.findAllCounte(String.valueOf(user.getId())); // 排查数据
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String startTime = df.format(new Date().getTime()-15*24*60*60*1000);
+
+        Date startTime1 = df.parse(startTime);
+        Date endTime = new Date();
+
+        Integer counts = tCheckMapper.findAllCounte(String.valueOf(user.getId()),startTime1,endTime); // 排查数据
         Integer counts1 = tCheckItemMapper.findAllCounte(String.valueOf(user.getId())); // 治理数据
 
         model.addAttribute("counts",counts);

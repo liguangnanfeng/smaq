@@ -4,6 +4,7 @@ import com.spring.web.ibatis.DynamicParameter;
 import com.spring.web.model.TCheck;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -111,7 +112,7 @@ public interface TCheckMapper {
 
     Integer zfPerformanceCount3(@Param("userId")Integer userId);
 
-    Integer findAllCounte(@Param("userIds")String userIds);
+    Integer findAllCounte(@Param("userIds")String userIds, @Param("startTime")Date startTime, @Param("endTime")Date endTime);
 
     Integer selectGreateDanger(@Param("control")String control, @Param("user_id")Integer user_id);
 

@@ -6285,8 +6285,8 @@ public class CompanyController_cd extends BaseController {
 
         ss1 = tCheckItemMapper.zhu123ChartDataBasics(company.getName(),user.getId()); // 生产工艺 隐患数据
 
-        ss = tCheckItemMapper.zhu123ChartDataNews("基础管理",company.getName(),user.getId()); // 生产工艺 隐患数据
-        model.addAttribute("ss",ss + ss1);
+        ss = tCheckItemMapper.zhu123ChartDataNews("基础管理",company.getName(),user.getId()) + ss1; // 生产工艺 隐患数据
+        model.addAttribute("ss",ss);
 
         aa = tCheckItemMapper.zhu123ChartDataNews("设计总图",company.getName(),user.getId()); // 生产工艺 隐患数据
         model.addAttribute("aa",aa);

@@ -1545,7 +1545,7 @@
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
-        LEFT JOIN smaq.company_view c1 ON c1.user_id = t3.uid
+        LEFT JOIN smaq.company_view c1 ON c1.user_id = t2.user_id
         WHERE
         t2. status = 2
         AND t2.del = 0
@@ -1570,7 +1570,7 @@
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
-        LEFT JOIN smaq.company_view c1 ON c1.user_id = t3.uid
+        LEFT JOIN smaq.company_view c1 ON c1.user_id = t2.user_id
         WHERE
         t2. status = 2
         AND t2.del = 0
@@ -1636,7 +1636,7 @@
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
-        LEFT JOIN smaq.company_view c1 ON c1.user_id = t3.uid
+        LEFT JOIN smaq.company_view c1 ON c1.user_id = t2.user_id
         WHERE
             t2. status = 2
         AND t2.del = 0
@@ -1657,7 +1657,7 @@
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
-        LEFT JOIN smaq.company_view c1 ON c1.user_id = t3.uid
+        LEFT JOIN smaq.company_view c1 ON c1.user_id = t2.user_id
         WHERE
             t2. status = 2
         AND t2.del = 0
@@ -2975,7 +2975,7 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status = 3
+        AND t1.status in ('2','3')
         AND t3.control = #{control}
         AND t2.depart = #{depart}
         AND t2.user_id = #{user_id}
@@ -2992,7 +2992,7 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status = 3
+        AND t1.status in ('2','3')
         AND t3.control = #{control}
         AND t2.depart = #{depart}
         AND t2.user_id = #{user_id}
@@ -3010,7 +3010,7 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status = 3
+        AND t1.status in ('2','3')
         AND t2.depart = #{depart}
         AND t2.user_id = #{user_id}
     </select>

@@ -116,7 +116,7 @@
         <!-- 风险评估 -->
         <c:if test="${leftBasic== 2}">
             <ul id="startnav">
-            <li><a onclick="sub11()" data-title="评估操作" href="javascript:void(0)">评估操作</a></li>
+            <li><a onclick="sub11()" data-title="评估操作" href="/company/safety-system/assess7">评估操作</a></li>
             <li><a onclick="sub2()" data-title="评估结果" href="javascript:void(0)">评估结果</a></li>
             <li><a onclick="sub3()" data-title="风险分布表" href="javascript:void(0)">风险分布表</a></li>
             <li><a data-title="风险分布图" href="javascript:void(0)" onclick="firstAcitive(this)">风险分布图</a></li>
@@ -142,7 +142,7 @@
 <%--            x=true;--%>
             console.log('x:',x)
             });
-            $("#iframe").contents().find("#bback").hide();
+           // $("#iframe").contents().find("#bback").hide();
 
             <%--            if(x===false) {--%>
 <%--            $("#iframe").contents().find("nav>a:eq(2)").hide();--%>
@@ -163,7 +163,7 @@
             }
 
             function sub11(){
-            $("#iframe").attr("src", "${ly}/company/safety-system/control-list2?flag=1");
+            $("#iframe").attr("src", "${ly}/company/safety-system/assess7");
             }
             function sub2(){
             $("#iframe").attr("src", "${ly }/company/safety-system/control-list2?flag=2");

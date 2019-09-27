@@ -184,7 +184,7 @@
 
 
 
-    <a class="one_tx radius pos-r" href="${ly}/village/check-list?flag=1&status=2"   style="background:#ea4f21;    margin-left: 1%;;margin-right:0">
+    <a class="one_tx radius pos-r" href="${ly}/village/check-list?flag=1&status=2&button=2"   style="background:#ea4f21;    margin-left: 1%;;margin-right:0">
     <img alt="" src="${ly }/images/httb9.png"/>
       <font class="font_tx1 pos-a <c:if test="${counts >0}">blink</c:if>">${counts}</font>
     <font class="font_tx2 pos-a">隐患排查</font>

@@ -137,7 +137,7 @@
 		</script>
 		<tr>
 			<td>1</td>
-			<td>公司级</td>
+			<td>${company}</td>
 			<td>${numbers1}</td>
 			<td>${numbers11}</td>
 			<td>${rate1}</td>
@@ -213,8 +213,8 @@
 				<td>${be.result3}</td>
 				<td></td>
 
-				<td class="sum1"></td>
-				<td class="sum2"></td>
+				<td class="sum1">${sub}</td>
+				<td class="sum2">${sub1}</td>
 				<td></td>
 				<td></td>
 				<td></td>

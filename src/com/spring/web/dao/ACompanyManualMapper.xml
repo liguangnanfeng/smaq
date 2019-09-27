@@ -1475,9 +1475,11 @@
     <!--根据公司id和风险点进行查询-->
     <select id="findJiChuItem" resultType="java.util.Map">
         select dmid,level1
-        from a_company_manual_tbl
-        where uid=#{uid}  and  level3 LIKE CONCAT('%', #{name},'%')
-        and del=0
+        from a_company_manual_tbl a1
+        right join zzjg_department_tbl z1 on a1.dmid = z1.id
+        where a1.uid=#{uid}  and  a1.level3 LIKE CONCAT('%', #{name},'%')
+        and a1.del=0
+        and z1.del=0
         group By level1;
     </select>
 

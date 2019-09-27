@@ -578,10 +578,13 @@
                 }
                 if (flag != 1) {
                     // show_tab('现场检查记录_' + checkId, '/village/check-document?checkId=' + checkId + '&flag=8')
-                    parent.location.reload();
+                    //parent.location.reload();
+                show_tab('文书' + checkId, '/village/check-document?checkId=' + checkId + '&flag=1');
+                console.log('1')
                 } else {
                     if(sessionStorage.getItem('flag')){
-    location.replace(location.href);
+                            console.log('2')
+                            location.replace(location.href);
                         <%--var l_flag = parseInt(sessionStorage.getItem('flag'))  ;--%>
                         <%--var l_dmname =sessionStorage.getItem('dmname').replace(/\s*/g,"");--%>
                         <%--var l_industryType = parseInt(sessionStorage.getItem('industryType'));--%>
@@ -590,6 +593,7 @@
                       <%--show_tab(x, url)--%>
                     }else{
                         close_dialog(function () {
+    console.log('3')
                             parent.location.reload();
                         })
                     }

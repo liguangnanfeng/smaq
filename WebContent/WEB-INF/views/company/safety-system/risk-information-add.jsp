@@ -17,81 +17,13 @@
         .input-text{position:relative}
         .txtarea_sq{height:150px;width:550px;}
         </style>
-        <script type="text/javascript">
+        <script>
 
-        console.log('img0-8');
-        console.log('${img0},${img1},${img2},${img3},${img4},${img5},${img6},${img7},${img8}');
-        var id_ = '${be.id}', flag = '${be.flag}';
+
         function show(){
         $("#win-show").modal("show");
         }
 
-        function save() {
-        var obj = $("#form").serializeObject();
-        if(obj.name == '') {
-        layer.alert("请输入风险名称");
-        return false;
-        }
-        if(obj.fxdj == '') {
-        layer.alert("请选择风险等级");
-        return false;
-        }
-        if(obj.glzrr == '') {
-        layer.alert("请输入管理负责人");
-        return false;
-        }
-        if(obj.sglx == '') {
-        layer.alert("请输入事故类型");
-        return false;
-        }
-        if(obj.fxys == '') {
-        layer.alert("请输入风险因素");
-        return false;
-        }
-        if(obj.yjczcs == '') {
-        layer.alert("请输入应急防范措施");
-        return false;
-        }
-
-        if (obj.fxdj.length < 1 || obj.fxdj.length == 1 ){
-        obj.fxdj = obj.fxdj;
-        } else {
-        obj.fxdj = obj.fxdj.join(",");
-        }
-
-        var i = layer.load();
-        obj.id = id_;
-        obj.flag = flag;
-        obj.isedit = 1;
-        let img="";
-        let a=null;
-        for(let i=1;i<=9;i++){
-            let x=$('#myCheck'+i).prop('checked');
-            if(x){
-                     a=$("#pic"+i).attr("src");
-                    if(i===1){
-                    img=img+a;
-                    }else{
-                    img=img+'&'+a;
-                    }
-            }else{
-                     a='null';
-                    if(i===1){
-                    img=img+a;
-                    }else{
-                    img=img+'&'+a;
-                    }
-            }
-        }
-            console.log('img---------------');
-            console.log(img);
-        obj.imgUrl=img;
-        $.post("/company/safety-system/risk-information-save", obj, function(result) {
-        layer.close(i);
-        parent.location.reload();
-        console.log(result)
-        })
-        }
 
 
         </script>
@@ -199,108 +131,61 @@
         margin-top:17px;
         }
         .a{
-        width:550px;
+        width:626px;
         }
         .c{
         position:relative;
-        top:-47px;
-        left:-20px;
+        top: -40px;
+        left: -4px;
+        }
+        .d{
+        cursor:pointer;
+        margin-top:23px;
+        margin-bottom: 7px;
         }
         </style>
-        <script>
-        console.log('img0:',${img0});
-        </script>
+
         <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">图例编辑：</label>
-        <div class="formControls col-xs-8 col-sm-9 a">
-        <%--                onclick="img_upload('pic3', null)"--%>
-        <img id="pic1" class="pic" src="${ly }/images/gao/aqgz1.jpg"
-        style="width:100px!important;min-height:100px!important;" url=""/>
-        <input class="c" type="checkbox" id="myCheck1"  />
-        <img id="pic2" class="pic" src="${ly }/images/gao/aqgz2.jpg"
-        style="width:100px!important;min-height:100px!important;" url=""/>
-        <input class="c" type="checkbox" id="myCheck2" />
-        <img id="pic3" class="pic" src="${ly }/images/gao/aqgz3.jpg"
-        style="width:100px!important;min-height:100px!important;" url=""/>
-        <input class="c" type="checkbox" id="myCheck3" />
-        <img id="pic4" class="pic" src="${ly }/images/gao/aqgz4.jpg"
-        style="width:100px!important;min-height:100px!important;" url=""/>
-        <input class="c" type="checkbox" id="myCheck4" />
-        <img id="pic5" class="pic" src="${ly }/images/gao/aqgz6.jpg"
-        style="width:100px!important;min-height:100px!important;" url=""/>
-        <input class="c" type="checkbox" id="myCheck5"/>
-        <img id="pic6" class="pic" src="${ly }/images/gao/l1.jpg"
-        style="width:100px!important;min-height:100px!important;" url=""/>
-        <input class="c" type="checkbox" id="myCheck6"/>
-        <img id="pic7" class="pic" src="${ly }/images/gao/l2.jpg"
-        style="width:100px!important;min-height:100px!important;" url=""/>
-        <input class="c" type="checkbox" id="myCheck7"/>
-        <img id="pic8" class="pic" src="${ly }/images/gao/l3.jpg"
-        style="width:100px!important;min-height:100px!important;" url=""/>
-        <input class="c" type="checkbox" id="myCheck8"/>
-        <img id="pic9" class="pic" src="${ly }/images/gao/l4.jpg"
-        style="width:100px!important;min-height:100px!important;" url=""/>
-        <input class="c" type="checkbox" id="myCheck9"/>
+        <div id="dangerImg" class="formControls col-xs-8 col-sm-9 a">
         </div>
 
         </div>
         <script>
-            console.log(${img6==null||img6=='null'});
-            if(${img0==null||img0=='null'}){
-            $('#myCheck1').prop("checked", false);
+        let imgg=new Array();
+        let inputt=new Array();
+        let m=null;
+        let p=null;
+        for(let i=1;i<=50;i++){
+                imgg[i]=new Image();
+                m=imgg[i];
+                m.width="90";
+                m.height="117";
+                $(m).addClass("d");
+                m.id="img"+i;
+                m.src="/images/dangerImg/img"+i+".png";
+                if(m) $("#dangerImg").append(m);
+                inputt[i]=document.createElement("input");
+                p=inputt[i];
+                p.id="myCheck"+i;
+                p.type="checkbox";
+                $(p).addClass("c");
+                $("#img"+i).after(p);
 
-            }else{
-            $('#myCheck1').prop("checked", true);
-            }
-
-            if(${img1==null||img1=='null'}){
-            $('#myCheck2').prop("checked", false);
-            }else{
-            $('#myCheck2').prop("checked", true);
-            }
-
-            if(${img2==null||img2=='null'}){
-            $('#myCheck3').prop("checked", false);
-            }else{
-            $('#myCheck3').prop("checked", true);
-            }
-
-            if(${img3==null||img3=='null'}){
-            $('#myCheck4').prop("checked", false);
-            }else{
-            $('#myCheck4').prop("checked", true);
-            }
-
-            if(${img4==null||img4=='null'}){
-            $('#myCheck5').prop("checked", false);
-            }else{
-            $('#myCheck5').prop("checked", true);
-            }
-
-            if(${img5==null||img5=='null'}){
-            $('#myCheck6').prop("checked", false);
-            }else{
-            $('#myCheck6').prop("checked", true);
-            }
-
-            if(${img6==null||img6=='null'}){
-            $('#myCheck7').prop("checked", false);
-            }else{
-            $('#myCheck7').prop("checked", true);
-            }
-
-            if(${img7==null||img7=='null'}){
-            $('#myCheck8').prop("checked", false);
-            }else{
-            $('#myCheck8').prop("checked", true);
-            }
-
-            if(${img8==null||img8=='null'}){
-            $('#myCheck9').prop("checked", false);
-            }else{
-            $('#myCheck9').prop("checked", true);
-            }
-        let img=null;
+        }
+        console.log("初始化img");
+        console.log('${img}')
+        let imgs='${img}';
+        var imgss = imgs.split("&");// 在每个逗号(&)处进行分解
+        imgss.map((val,idx)=>{
+            let i=idx+1;
+            console.log(val)
+                if(val==null||val==='null'){
+                $('#myCheck'+i).prop("checked", false);
+                }else{
+                $('#myCheck'+i).prop("checked", true);
+                }
+        });
 
 
         </script>
@@ -312,12 +197,87 @@
         </style>
         <div class="row cl aa">
         <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-        <button onClick="save()" class="btn btn-primary radius" type="button" style="padding: 0 70px;">
+        <button id="save2" class="btn btn-primary radius" type="button" style="padding: 0 70px;">
         <i class="Hui-iconfont">&#xe632;</i>生成公告牌
         </button>
         </div>
         </div>
         </form>
         </div>
+
+        <script>
+        $("#save2").on("click",()=>{
+        var obj = $("#form").serializeObject();
+        var id_ = '${be.id}', flag = '${be.flag}';
+        if(obj.name == '') {
+        layer.alert("请输入风险名称");
+        return false;
+        }
+        if(obj.fxdj == '') {
+        layer.alert("请选择风险等级");
+        return false;
+        }
+        if(obj.glzrr == '') {
+        layer.alert("请输入管理负责人");
+        return false;
+        }
+        if(obj.sglx == '') {
+        layer.alert("请输入事故类型");
+        return false;
+        }
+        if(obj.fxys == '') {
+        layer.alert("请输入风险因素");
+        return false;
+        }
+        if(obj.yjczcs == '') {
+        layer.alert("请输入应急防范措施");
+        return false;
+        }
+
+        if (obj.fxdj.length < 1 || obj.fxdj.length == 1 ){
+        obj.fxdj = obj.fxdj;
+        } else {
+        obj.fxdj = obj.fxdj.join(",");
+        }
+
+        var i = layer.load();
+        obj.id = id_;
+        obj.flag = flag;
+        obj.isedit = 1;
+        let img="";
+        let a=null;
+        let x=null;
+        for(let i=1;i<=50;i++){
+
+        x=$('#myCheck'+i).prop('checked');
+        if(x){
+        a=$("#img"+i).attr("src");
+        if(i===1){
+        img=img+a;
+        }else{
+        img=img+'&'+a;
+        }
+        }else{
+        a='null';
+        if(i===1){
+        img=img+a;
+        }else{
+        img=img+'&'+a;
+        }
+        }
+        }
+
+        console.log('img---------------');
+        console.log(img);
+        obj.imgUrl=img;
+        $.post("/company/safety-system/risk-information-save", obj, function(result) {
+        layer.close(i);
+        parent.location.reload();
+        console.log(result)
+        })
+        })
+
+
+        </script>
         </body>
         </html>

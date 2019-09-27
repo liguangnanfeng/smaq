@@ -161,4 +161,6 @@ public interface ZzjgDepartmentMapper {
     List<Map<String,Object>> findAllCount(@Param("uid")Integer uid);
 
     List<Map<String,Object>> findAllLevel1(@Param("uid")Integer uid);
+
+    ZzjgDepartment selectNows(@Param("id")Integer id, @Param("uid")Integer uid);
 }

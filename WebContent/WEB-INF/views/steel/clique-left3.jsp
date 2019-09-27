@@ -119,9 +119,15 @@
 <%--      <li><a data-href="${ly }/steel/safety-system/control-operation" data-title="分级管控运行" href="javascript:void(0)">分级管控运行</a></li>--%>
 <%--      <li><a data-href="${ly }/steel/safety-system/risk-distribution" data-title="各类风险分布" href="javascript:void(0)">各类风险分布</a></li>--%>
 <%--      --%>
-      <li><a data-href="${ly }/village/safety-system/control-listmenu?level=red" data-title="重大风险汇总" href="javascript:void(0)">重大风险汇总</a></li>
+
+<%--      <li><a data-href="${ly }/village/safety-system/control-listmenu?level=红色" data-title="重大风险汇总" href="javascript:void(0)">重大风险汇总</a></li>--%>
+<%--      <li><a data-href="${ly }/village/safety-system/control-listmenu?level=橙色" data-title="较大风险汇总" href="javascript:void(0)">较大风险汇总</a></li>--%>
+
+
+            <li><a data-href="${ly }/village/safety-system/control-listmenu?level=red" data-title="重大风险汇总" href="javascript:void(0)">重大风险汇总</a></li>
       <li><a data-href="${ly }/village/safety-system/control-listmenu?level=orange" data-title="较大风险汇总" href="javascript:void(0)">较大风险汇总</a></li>
       <li><a data-href="${ly }/steel/safety-system/statistics-list" data-title="数据分析" href="javascript:void(0)">数据分析</a></li>
+
       </ul>
             </dd>
         </dl>
@@ -136,9 +142,13 @@
                     <li><a data-href="${ly }/steel/model-list-main?flag=1" data-title="检查设置实施" href="javascript:void(0)">检查设置实施</a></li>
                     <li><a data-href="${ly }/steel/check-list?flag=1&status=2" data-title="隐患排查记录" href="javascript:void(0)">隐患排查记录</a></li>
                     <li><a data-href="${ly }/steel/hidden-danger-list?flag=1&status=1" data-title="隐患治理记录" href="javascript:void(0)">隐患治理记录</a></li>
-                    <li><a data-href="${ly }/company/jx-analysis" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
-                    <li><a data-href="${ly }/steel/yh-analysis?flag=1" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
-                    <li><a data-href="${ly }/steel/zl-analysis" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
+      <li><a data-href="${ly }/steel/jx-analysis" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>
+      <li><a data-href="${ly }/steel/yh-analysis?flag=1" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>
+      <li><a data-href="${ly }/steel/zl-analysis" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>
+
+  <%--                    <li><a data-href="${ly }/steel/pc-analysis?flag=1" data-title="排查数据分析" href="javascript:void(0)">排查数据分析</a></li>--%>
+<%--                    <li><a data-href="${ly }/steel/yh-all-analysis?flag=1" data-title="隐患数据分析" href="javascript:void(0)">隐患数据分析</a></li>--%>
+<%--                    <li><a data-href="${ly }/steel/zl-all-analysis" data-title="治理数据分析" href="javascript:void(0)">治理数据分析</a></li>--%>
                </ul>
          </dd>
       </dl>
@@ -159,18 +169,18 @@
         </dl>
 
         <!---------------------------------------职业卫生健康--------------------------------------------------------------------------->
-        <dl>
-            <dt>
-                <i class="Hui-iconfont">&#xe687;</i>职业卫生健康
-                <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-            </dt>
-            <dd>
-                <ul>
-                    <li><a data-href="${ly }/company/labor/labor-list" data-title="劳保用品配备" href="javascript:void(0)">劳保用品配备</a></li>
-                    <li><a data-href="${ly }/company/threeLeft?leftBasic=10" data-title="管理档案台账" href="javascript:void(0)">管理档案台账</a></li>
-                </ul>
-            </dd>
-        </dl>
+<%--        <dl>--%>
+<%--            <dt>--%>
+<%--                <i class="Hui-iconfont">&#xe687;</i>职业卫生健康--%>
+<%--                <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--%>
+<%--            </dt>--%>
+<%--            <dd>--%>
+<%--                <ul>--%>
+<%--                    <li><a data-href="${ly }/company/labor/labor-list" data-title="劳保用品配备" href="javascript:void(0)">劳保用品配备</a></li>--%>
+<%--                    <li><a data-href="${ly }/company/threeLeft?leftBasic=10" data-title="管理档案台账" href="javascript:void(0)">管理档案台账</a></li>--%>
+<%--                </ul>--%>
+<%--            </dd>--%>
+<%--        </dl>--%>
         <!---------------------------------------行政执法检查--------------------------------------------------------------------------->
         <dl>
             <dt>
@@ -213,20 +223,20 @@
                 </ul>
             </dd>
         </dl>
-        <dl>
-      <dt>
-      <i class="Hui-iconfont">&#xe653;</i>领导关注信息
-      <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-       </dt>
-            <dd>
-           <ul>
-      <li><a data-href="${ly }/global/notice-list" data-title="一周监管动态" href="javascript:void(0)">一周监管动态</a></li>
-      <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=1" data-title="隐患排查治理数据" href="javascript:void(0)">排查治理数据</a></li>
-      <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=2" data-title="重大事故隐患数据" href="javascript:void(0)">重大隐患数据</a></li>
-      <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=3" data-title="行政执法数据" href="javascript:void(0)">行政执法数据</a></li>
-      </ul>
-      </dd>
-      </dl>
+<%--        <dl>--%>
+<%--      <dt>--%>
+<%--      <i class="Hui-iconfont">&#xe653;</i>领导关注信息--%>
+<%--      <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--%>
+<%--       </dt>--%>
+<%--            <dd>--%>
+<%--           <ul>--%>
+<%--      <li><a data-href="${ly }/global/notice-list" data-title="一周监管动态" href="javascript:void(0)">一周监管动态</a></li>--%>
+<%--      <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=1" data-title="隐患排查治理数据" href="javascript:void(0)">排查治理数据</a></li>--%>
+<%--      <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=2" data-title="重大事故隐患数据" href="javascript:void(0)">重大隐患数据</a></li>--%>
+<%--      <li><a data-href="${ly }/village/danger-collect-guanzhu?isZhongDa=3" data-title="行政执法数据" href="javascript:void(0)">行政执法数据</a></li>--%>
+<%--      </ul>--%>
+<%--      </dd>--%>
+<%--      </dl>--%>
       <!---------------------------------------------------------------------安全培训中心------------------------------------------------->
       <dl>
       <dt>

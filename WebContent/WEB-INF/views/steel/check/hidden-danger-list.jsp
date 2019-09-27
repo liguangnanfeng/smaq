@@ -125,6 +125,13 @@
             <select id="selectBranch">
             </select>
     </div>
+    <style>
+      #list{
+    position: absolute;
+    right: 453px;
+    margin-top: 6px;
+        }
+    </style>
     <div class="mt-20">
         <span id="list">总隐患数: ${fn:length(list) } 条</span>
         <table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -203,7 +210,7 @@
                         <%--<c:if test="${list.levels!=null}">
                             <c:if test="${not empty item[0]}">
                                 <td>${item[1]}</td>
-                                &lt;%&ndash;<c:if test="${not empty item[1]&&not empty item[2]}">
+                                <%--<c:if test="${not empty item[1]&&not empty item[2]}">
                                     <td>${item[1]}/${item[2]}</td>
                                 </c:if>
                                 <c:if test="${not empty item[1]&& empty item[2]}">
@@ -211,15 +218,15 @@
                                 </c:if>
                                 <c:if test="${ empty item[1]&& empty item[2]}">
                                     <td>暂无数据</td>
-                                </c:if>&ndash;%&gt;
-                            </c:if>
+                                </c:if>--%>
+
 
                             <c:if test="${empty item[0]}">
                                 <td>暂无数据</td>
                                 <td>暂无数据</td>
                             </c:if>
 
-                        </c:if>--%>
+<%--                        //</c:if>&ndash;%&gt;--%>
                         <%--                    <td>${item[0]}</td>--%>
                         <%--                    <td>${item[1]+item[2] }</td>--%>
                     <td>${list.realTimeStr}</td>

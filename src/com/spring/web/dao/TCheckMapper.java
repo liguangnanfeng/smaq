@@ -25,6 +25,8 @@ public interface TCheckMapper {
     /*政府端检查指定公司的所有的检查记录*/
     List<Map<String, Object>> selectList(Map<String, Object> m);
 
+    List<Map<String, Object>> findSelectList(Map<String, Object> m);
+
     /**
      * 根据条件查询只有检查不合格的进行显示
      * @param m
@@ -129,4 +131,6 @@ public interface TCheckMapper {
     Integer dataTotalCounts(@Param("user_id")Integer user_id);
 
     Integer dataTotalCountsByCliqu(@Param("user_id")String user_id);
+
+    Integer selectAllUsers(@Param("userId")Integer userId, @Param("depart")String depart);
 }

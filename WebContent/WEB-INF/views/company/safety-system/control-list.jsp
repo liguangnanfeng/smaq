@@ -21,6 +21,10 @@
     .col-b,.col-a,.col-c,.col-d{margin:0;padding:0 15px;height:25px;line-height:25px;}
   </style>
   <script type="text/javascript">
+    $(function(){
+    $("nav").width($("table").width())
+    });
+
       var dmid = 0;
 
       function copy_(fjgkfzr,gkcs,gkzt,level2,level,factors,flag,uid) {

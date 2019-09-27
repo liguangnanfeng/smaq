@@ -111,7 +111,7 @@
            <a class="btn btn-primary radius" data-title="添加线下检查记录" data-href="${ly }/village/check-add3?flag=3"
               onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont"
                                                                    style="font-size:15px;">&#xe600;</i> 添加线下检查记录</a>
-               </c:if> 
+               </c:if>
         <c:if test="${flag == 4}">
             <a class="btn btn-primary radius" data-title="添加线下检查记录" data-href="${ly }/village/check-add3?flag=4"
                onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加线下检查记录</a>
@@ -135,7 +135,7 @@
 
         </span>
         </c:if>
-        <<span class="r">检查总次数：<strong>${fn:length(list) }</strong> 条；检查总条数量：<strong>${sum}</strong> 条；合格数量：<strong>${sum1}</strong> 条；隐患数量：<strong>${sum2}</strong> 条；已整改数量：<strong>${sum3}</strong> 条</span>
+        <span class="r">检查总次数：<strong>${fn:length(list) }</strong> 条；检查总条数量：<strong>${sum}</strong> 条；合格数量：<strong>${sum1}</strong> 条；隐患数量：<strong>${sum2}</strong> 条；已整改数量：<strong>${sum3}</strong> 条</span>
     </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort">

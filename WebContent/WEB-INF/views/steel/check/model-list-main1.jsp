@@ -138,19 +138,30 @@
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
         <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}"
-           href="${ly }/steel/model-list-main?flag=1">企业自查</a>
+           href="${ly }/company/model-list-main?flag=1">企业自查</a>
         <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
-           href="${ly }/steel/model-list-cx2?flag=2&type=1&template=2">行政检查</a>
+           href="${ly }/company/model-list-cx2?flag=2&type=1&template=2">行政检查</a>
         <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
-           href="${ly }/steel/model-list-cx2?flag=3&type=1&template=2">第三方检查</a>
+           href="${ly }/company/model-list-cx2?flag=3&type=1&template=2">第三方检查</a>
         <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
     </div>
     <div id="tab-index-cartegory">
         <div class="tabBar">
-            <span class="selected"> 现场管理</span>
-            <span>基础管理</span>
-			  <span >排查计划</span>
-        </div>
+            <span class="selected yhout"> 现场管理</span>
+             <span class="yhout">基础管理</span>
+			  <span class="yhout">排查计划</span>
+<%--             <span onclick="yh()" class="" >隐患汇总</span>--%>
+<%--    ${ly}/steel/model-list-main2?flag=1&userId=789    --%>
+ <script>
+    function yh(){
+         $("#iframe").show();
+    }
+    $(".yhout").on("click",()=>{
+    $("#iframe").hide();
+    })
+
+</script>
+    </div>
         <c:if test="${flag == 1}">
             <div class="cl pd-5 bg-1 bk-gray mt-20">
      		<span class="r">日期：<strong>${data}</strong>
@@ -212,12 +223,12 @@
 
                                                    href="${ly}/company/model-list-showAll?dmname=${be.level1 }&dmid=${be.dmid }&checkType=${status[0]}&industryType=-2&template=${status[0]+1}&flag=${flag}&status=2"
                                                   <%-- onClick="showAll('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}','2')"--%>
-                                                href="javascript:;">实施1</a>
+                                                href="javascript:;">实施</a>
                                             </c:if>
                                             <c:if test="${index2.index!=2}">
                                                 <a style="text-decoration:none"
                                                 onClick="ss('${be.level1 }','${be.dmid }',${status[0]},-2,${status[0]+1},'${flag}')"
-                                                href="javascript:;">实施2</a>
+                                                href="javascript:;">实施</a>
                                             </c:if>
                                         </c:if>
                                         <c:if test="${status[1]==0}">
@@ -227,13 +238,13 @@
                                                class="used"
                                                 onClick="layer.msg('没有要检查的整改项')"
                                                <%--onClick="szss_list('${be.level1 }',2,'${status[0]+1}','${flag}')"--%>
-                                               href="javascript:;">实施3</a>
+                                               href="javascript:;">实施</a>
                                     </c:if>
                                             <c:if test="${index2.index!=2}">
                                                 <a style="text-decoration:none"
                                                 class="used"
                                                 onClick="layer.msg('没有要检查的整改项')"
-                                                href="javascript:;">实施4</a></c:if>
+                                                href="javascript:;">实施</a></c:if>
                                         </c:if>
                                     </td>
                                 </c:forEach>
@@ -242,13 +253,13 @@
                                         <a style="text-decoration:none;"
                                            class="used"
                                            onClick="layer.msg('没有要复查整改的项')"
-                                           href="javascript:;">实施5
+                                           href="javascript:;">实施
                                         </a>
                                     </c:if>
                                     <c:if test="${be.count!=0}">
                                         <a style="text-decoration:none"
                                            onClick="szss_list('${be.level1 }',-2,${status[0]+1},'${flag}')"
-                                           href="javascript:;">实施6
+                                           href="javascript:;">实施
                                         </a>
                                     </c:if>
 
@@ -320,7 +331,7 @@
                                         <a style="text-decoration:none"
                                            class="used"
                                            onClick="layer.msg('没有要复查整改的项')"
-                                           href="javascript:;">实施101
+                                           href="javascript:;">实施
                                         </a>
                                     </c:if>
                                     <c:if test="${be.count!=0}">
@@ -338,9 +349,16 @@
                     </table>
                 </div>
             </div>
+    <style>
+    .a{
+    position: absolute;
+    right: 283px;
+    margin-top: 6px;
+    }
+    </style>
 			           <div class="tabCon tabCon1">
                 <div class="text-c mt-20">
-                    <h3>${companyName}隐患排查计划表</h3><a href="${ly}/steel/model-list-main2?flag=1&userId=789">隐患汇总</a>
+                    <h3>${companyName}隐患排查计划表</h3>
                 <button onClick="pr_()" class="btn btn-primary radius" type="button">
                 <i class="Hui-iconfont">&#xe652;</i>打印
                 </button>
@@ -470,9 +488,20 @@
                     </table>
                 </div>
             </div>
+    <iframe   frameborder="no"  id="iframe"   width="98%"   height="700px" src="${ly}/steel/model-list-main2?flag=1&userId=789"></iframe>
+
     </div>
-
-
+<style>
+ .i{
+    border:1px solid #ccc;
+    padding:10px;
+    }
+</style>
+    <script>
+    let i=$("#iframe");
+    i.hide();
+    i.addClass("i")
+    </script>
     <%--    &lt;%&ndash; 添加标准检查设置  定位&ndash;%&gt;--%>
     <%--        <c:if test="${not empty jiChuItem}">--%>
     <%--            <div class="mt-20">--%>
@@ -681,7 +710,8 @@
                 HUItab("#tab-index-cartegory .tabBar span", "#tab-index-cartegory .tabCon", "selected", "click", "2")
             }else{
                 HUItab("#tab-index-cartegory .tabBar span", "#tab-index-cartegory .tabCon", "selected", "click", "0")
-            }
+
+             }
 
         })
     });

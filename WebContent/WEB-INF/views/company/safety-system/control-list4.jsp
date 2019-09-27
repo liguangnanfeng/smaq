@@ -138,7 +138,7 @@
 
         #imgform {
             margin: 0 auto;
-            width: 500px
+            width: 628px;
         }
         .contarName{
             text-align: center;
@@ -298,7 +298,7 @@
         <i class="Hui-iconfont">&#xe68f;</i>
     </a>
 
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
+<%--    <a id="aback" class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>--%>
 	 <a class="btn btn-success radius r " style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;"
        href="javascript:print();" title="打印">
         打印
@@ -322,6 +322,7 @@
     <img id="fxt" src="" class="jt"/>
     <img id="fxt1" src="" class="jt"style="display:none;"/>
     </a>
+
 </div>
 
     <div id="modal-plan2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

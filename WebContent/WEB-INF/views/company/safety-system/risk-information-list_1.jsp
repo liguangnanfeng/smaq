@@ -143,24 +143,7 @@ function pr_() {
               <tr>
                 <td colspan="3">
                   <div class="div-gimg" style="margin-bottom:6px;">
-                        <img ondblclick="showhide()" id="myCheck1" alt="" src="${ly }${img0==null?'/images/gao/aqgz1.jpg':img0}"/>
-                        <img id="myCheck2" alt="" src="${ly }${img1==null?'/images/gao/aqgz2.jpg':img1}"/>
-                        <img id="myCheck3" alt="" src="${ly }${img2==null?'/images/gao/aqgz3.jpg':img2}"/>
-                        <img id="myCheck4" alt="" src="${ly }${img3==null?'/images/gao/aqgz4.jpg':img3}"/>
-                        <img id="myCheck5" alt="" src="${ly }${img4==null?'/images/gao/aqgz5.jpg':img4}"/>
-                        <img id="myCheck6" alt="" src="${ly }${img5==null?'/images/gao/l1.jpg':img5}"/>
-                        <img id="myCheck7" alt="" src="${ly }${img6==null?'/images/gao/l2.jpg':img6}"/>
-                        <img id="myCheck8" alt="" src="${ly }${img7==null?'/images/gao/l3.jpg':img7}"/>
-                        <img id="myCheck9" alt="" src="${ly }${img8==null?'/images/gao/l4.jpg':img8}" style="margin-right:0;"/>
-<%--                    <img ondblclick="showhide()" alt="" src="${ly }/images/gao/aqgz1.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/aqgz2.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/aqgz3.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/aqgz4.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/aqgz6.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/l1.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/l2.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/l3.jpg"/>--%>
-<%--                    <img alt="" src="${ly }/images/gao/l4.jpg" style="margin-right:0;"/>--%>
+
                   </div>
                 </td>
               </tr>
@@ -196,9 +179,16 @@ function pr_() {
     </div>
   </div>
 </body>
+  <style>
+  .g{
+   width:90px!important;
+    height:117px!important;
+  margin-bottom: 0.5%;
+  }
+  </style>
 <script type="text/javascript">
-  console.log('img0-8::');
-  console.log('${img0},${img1},${img2},${img3},${img4},${img5},${img6},${img7},${img8}');
+  console.log('img::');
+  console.log('${img}');
 
   function del(id) {
   $.post("/company/safety-system/risk-information-save", {
@@ -210,34 +200,24 @@ function pr_() {
 }
 </script>
   <script>
-  console.log('1111111');
-  console.log(${img0=='null'});
-  if(${img0=='null'}){
-  $('#myCheck1').hide();
-  }
-  if(${img1=='null'}){
-  $('#myCheck2').hide();
-  }
-  if(${img2=='null'}){
-  $('#myCheck3').hide();
-  }
-  if(${img3=='null'}){
-  $('#myCheck4').hide();
-  }
-  if(${img4=='null'}){
-  $('#myCheck5').hide();
-  }
-  if(${img5=='null'}){
-  $('#myCheck6').hide();
-  }
-  if(${img6=='null'}){
-  $('#myCheck7').hide();
-  }
-  if(${img7=='null'}){
-  $('#myCheck8').hide();
-  }
-  if(${img8=='null'}){
-  $('#myCheck9').hide();
-  }
+  let img='${img}';
+  let imgs='${img}';
+  var imgss = imgs.split("&");// 在每个逗号(&)处进行分解
+  let ig=new Array();
+  let g=null;
+  imgss.map((val,idx)=>{
+    let i=idx+1;
+      if(val!=null&&val!='null'){
+      ig[i]=new Image();
+      g=ig[i];
+      g.id='myCheck'+i;
+      g.src=val;
+      $(g).addClass("g");
+      $(".div-gimg").append(g);
+      }
+
+  });
+<%--  <img id="myCheck2" alt="" src="${ly }${img1==null?'/images/gao/aqgz2.jpg':img1}"/>--%>
+
   </script>
 </html>

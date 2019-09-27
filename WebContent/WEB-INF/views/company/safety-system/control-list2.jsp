@@ -35,19 +35,19 @@ function pr_() {
 </head>
 <body>
  <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-    <span class="c-gray en">&gt;</span> <span>风险分级管控</span> 
-    <span class="c-gray en">&gt;</span> <span>风险评估</span> 
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+    <span class="c-gray en">&gt;</span> <span>风险分级管控</span>
+    <span class="c-gray en">&gt;</span> <span>风险评估</span>
   <c:if test="${flag == 1}">
-    <span class="c-gray en">&gt;</span> <span>评估结果</span> 
+    <span class="c-gray en">&gt;</span> <span>评估结果</span>
   </c:if>
   <c:if test="${flag == 3}">
-    <span class="c-gray en">&gt;</span> <span>风险分布表</span> 
+    <span class="c-gray en">&gt;</span> <span>风险分布表</span>
   </c:if>
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>
     </a>
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
+<%--    <a  id="bback"    class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>--%>
   </nav>
   <div class="text-c mt-20">
     <button onClick="pr_()" class="btn btn-primary radius" type="button">
@@ -64,9 +64,8 @@ function pr_() {
              较小风险：<strong>${fn:length(list44) }</strong> 条；
              未辨识风险：<strong>${fn:length(list55) }</strong> 条；
             </span>
-
     	</div>
-      <table class="table table-border table-bordered table-bg table-hover table-sort">  
+      <table class="table table-border table-bordered table-bg table-hover table-sort">
         <%-- <c:if test="${flag == 1}">
         <thead>
           <tr class="text-c">
@@ -96,7 +95,7 @@ function pr_() {
           </c:forEach>
         </tbody>
         </c:if> --%>
-        
+
         <%-- <c:if test="${flag == 2}"> --%>
         <thead>
           <tr class="text-c">

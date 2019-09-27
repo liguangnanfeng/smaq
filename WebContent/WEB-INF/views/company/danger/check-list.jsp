@@ -98,7 +98,7 @@
            <a class="btn btn-primary radius" data-title="添加线下检查记录" data-href="${ly }/village/check-add3?flag=3"
               onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont"
                                                                    style="font-size:15px;">&#xe600;</i> 添加线下检查记录</a>
-               </c:if> 
+               </c:if>
         <c:if test="${flag == 4}">
             <a class="btn btn-primary radius" data-title="添加线下检查记录" data-href="${ly }/village/check-add3?flag=4"
                onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加线下检查记录</a>

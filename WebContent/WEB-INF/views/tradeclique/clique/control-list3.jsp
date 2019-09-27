@@ -15,7 +15,7 @@
 <meta name="description" content="风险分级管控   隐患排查治理智能化平台">
 
 <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
-<link rel="stylesheet" type="text/css" href="http://webapi.amap.com/css/v1.4.1/style1509024629605.css">
+<link rel="stylesheet" type="text/css" href="https://webapi.amap.com/css/v1.4.1/style1509024629605.css">
 <style type="text/css">
 .ter1{width:15%}
 .tab_tmr1{width:35%}
@@ -161,7 +161,7 @@ body .dis-ib{margin-right:15px;}
 
 </body>
 
-<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.1&key=441462b46b736497a5f2a377aafb5b69&plugin=AMap.PolyEditor"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.1&key=441462b46b736497a5f2a377aafb5b69&plugin=AMap.PolyEditor"></script>
 <script type="text/javascript">
 var jw = '${user.longitude},${user.latitude}';
 var userId = ${user.id};

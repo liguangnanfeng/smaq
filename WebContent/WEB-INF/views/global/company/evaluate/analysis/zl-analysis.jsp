@@ -107,8 +107,10 @@
 
 
         myChart.on('click', function(params) {
+            layer.load(0, {
+            shade: [1,'#fff'] //0.1透明度的白色背景
+            });
         window.location.href = url;
-
         });
         </script>
 
@@ -195,7 +197,9 @@
 
         var url2 = '${ly }/global/manage-hidden-danger';
         myChart2.on('click', function(params) {
-        window.location.href = url2;
+            layer.load(0, {
+            shade: [1,'#fff'] //0.1透明度的白色背景
+            });            window.location.href = url2;
 
         });
         </script>
@@ -284,7 +288,10 @@
         myChart3.setOption(option3);
         var url3 = '${ly }/global/manage-hidden-industry';
         myChart3.on('click', function(params) {
-        window.location.href = url3;
+<%--            layer.load(0, {--%>
+<%--            shade: [1,'#fff'] //0.1透明度的白色背景--%>
+<%--            });--%>
+            window.location.href = url3;
 
         });
         </script>

@@ -193,7 +193,7 @@ function adddan(){
       <div class="formControls col-xs-8 col-sm-9">
         <select class="sel_area sel03" id="cisDanger" >
           <option value="">请选择</option>
-          <option value="1" <c:if test="${r.cisDanger==1 }">selected="selected"</c:if>>是</option>
+          <option value="1" onclick="javascript:show_dialog('两重点一重大','/company/information/information-edit3')" <c:if test="${r.cisDanger==1 }">selected="selected"</c:if>>是</option>
           <option value="0" <c:if test="${r.cisDanger==0 }">selected="selected"</c:if>>否</option>
         </select>
       </div>
@@ -207,6 +207,7 @@ function adddan(){
             <option <c:if test="${r.dangerLvl=='一级' }">selected="selected"</c:if>>一级</option>
             <option <c:if test="${r.dangerLvl=='二级' }">selected="selected"</c:if>>二级</option>
             <option <c:if test="${r.dangerLvl=='三级' }">selected="selected"</c:if>>三级</option>
+            <option <c:if test="${r.dangerLvl=='四级' }">selected="selected"</c:if>>四级</option>
           </select>
         </div>
       </div>

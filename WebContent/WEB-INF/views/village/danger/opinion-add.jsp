@@ -37,7 +37,7 @@ function search() {
       <div class="formControls col-xs-8 col-sm-9">
         <input type="search" id="companyName" class="input-text mb-5 mt-5" style="width: 500px;" placeholder="请输入企业名称进行过滤">
         <button type="button" class="btn btn-primary radius" onclick="search()">搜索</button>
-      </div> 
+      </div>
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">确定受检企业：</label>
@@ -53,8 +53,8 @@ function search() {
       </div>
     </div>
   </form>
-  
-  
+
+
 </div>
 </body>
 <script type="text/javascript">

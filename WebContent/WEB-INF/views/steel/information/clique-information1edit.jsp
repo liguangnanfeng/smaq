@@ -16,10 +16,10 @@
 <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
 <link rel="stylesheet" href="https://cache.amap.com/lbs/static/AMap.PlaceSearchRender1120.css"/>
 <link rel="stylesheet" type="text/css" href="http://webapi.amap.com/css/v1.4.1/style1509024629605.css">
-
+    
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.3&key=441462b46b736497a5f2a377aafb5b69"></script>
 <style type="text/css">
-body .amap-sug-result{z-index:9999}
+body .amap-sug-result{z-index:9999} 
 .input-text{position:relative}
 .txtarea_sq{height:100px;width:350px;}
 .inhide{display:none;}
@@ -98,7 +98,7 @@ $(function(){
               });
             });
         </script>
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">企业地址：</label>
@@ -107,56 +107,56 @@ $(function(){
         <select id="city" class="sel_area"></select>
         <select id="region" class="sel_area"></select>
         <input type="hidden" id="globalRegionId" value="${empty c.regionId ? 1874 : c.regionId}">
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">详细地址：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="hidden" id="jw" value="<c:if test="${!empty u.longitude}">${u.longitude },${u.latitude }</c:if>">
         <textarea id="address" class="textarea txtarea_sq" readonly="readonly" onclick="openmap()">${c.address }</textarea>
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">法定代表人：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="legal" value="${c.legal }" style="width:350px" class="input-text required" >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">法定代表人联系手机：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="legalContact" value="${c.legalContact }" style="width:350px" class="input-text required" >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">注册资本：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="capital" value="${c.capital }" style="width:350px" class="input-text required" >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">成立时间：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="establish" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" value="${c.establish }" class="input-text " style="width:350px;">
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">营业期限：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="business" value="${c.business }" style="width:350px" class="input-text required" >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">经营范围：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <textarea id="scope" class="textarea txtarea_sq" maxlength="500">${c.scope }</textarea>
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">统一社会信用代码：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="license" value="${c.license }" style="width:350px" class="input-text required" >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">登记机关：</label>
@@ -165,7 +165,7 @@ $(function(){
         <select class="sel_area" id="city1"></select>
         <select class="sel_area" id="authority"></select>
         <input type="hidden" id="reg_region" value="${empty c.regRegion ? 222 : c.regRegion}">
-      </div>
+      </div> 
     </div>
     <!-- <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">经济类型：</label>
@@ -183,13 +183,13 @@ $(function(){
           <option>其他经济</option>
         </select>
         <script type="text/javascript">var economic = '${c.economic}';$("#economic").val(economic);</script>
-      </div>
-   </div> -->--%>
+      </div> 
+    </div> -->
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">固定资产：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="fixed" value="${c.fixed }" style="width:350px" class="input-text required" >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">所属行业：</label>
@@ -200,7 +200,7 @@ $(function(){
           <select class="sel_area" id="industry2_2">
             <option value="">请选择</option>
           </select>
-      </div>
+      </div> 
     </div>
     <script type="text/javascript" src="${ly }/js/fxgk/industry.js?v=180920"></script>
     <script type="text/javascript">
@@ -217,7 +217,7 @@ $(function(){
               })
             }
           })
-
+          
           if(industry2 != '') {
             $("#industry2_2").val(industry2.split(" > ")[1]);
             industry2 = '';
@@ -226,7 +226,7 @@ $(function(){
           $("#industry").removeAttr("disabled").css("background-color","white");
         }
       })
-
+      
       $("#industry2_2").change(function() {
         var v = $(this).val();
         $("#industry").val('').removeAttr("disabled").css("background-color","white");
@@ -240,7 +240,7 @@ $(function(){
           })
         }
       })
-
+      
       $.each(industry2List, function(i, item) {
         $("#industry2_").append("<option>" + item.name + "</option>");
       })
@@ -254,13 +254,13 @@ $(function(){
       <label class="form-label col-xs-4 col-sm-2">员工人数：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="staff" value="${c.staff }" style="width:350px" class="input-text required ll-numberbox " >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">上年销售收入：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="income" value="${c.income }" style="width:350px" class="input-text required" >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">监管行业：</label>
@@ -268,11 +268,11 @@ $(function(){
           <select class="sel_area" id="industry">
             <option value="">请选择</option>
            <c:forEach items="${list1 }" var="be">
-            <option>${be.name }</option>
-           </c:forEach>
+            <option>${be.name }</option>  
+           </c:forEach> 
            </select>
            <script type="text/javascript">$("#industry").val('${c.industry}');</script>
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">规模类型：</label>
@@ -284,7 +284,7 @@ $(function(){
             <option value="小微">小微</option>
           </select>
           <script type="text/javascript">$("#scale").val('${c.scale}');</script>
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">是否高危作业：</label>
@@ -297,7 +297,7 @@ $(function(){
           <input class="check_gao" type="radio" name="danger" value="0" <c:if test="${c.danger == 0}">checked</c:if>/>
           <font>否</font>
         </div>
-      </div>
+      </div> 
     </div>
     <div class="row cl" style="display: none;" id="dangers_">
       <label class="form-label col-xs-4 col-sm-2">高危行业：</label>
@@ -328,20 +328,21 @@ $(function(){
           $("#dangers_").hide();
         }
       })
-      </script>
+      </script> 
     </div>
     <div class="row cl">
+<%--  onclick="window.location.href('连接')"--%>
       <label class="form-label col-xs-4 col-sm-2">是否构成重大危险源：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <div class="one_yxuan">
-          <input class="check_gao" type="radio" name="hazard" value="1" <c:if test="${c.hazard == 1}">checked</c:if> onchange=""/>
-          <font>是</font>
+          <input onclick="javascript:show_dialog('两重点一重大','${ly }/company/information/information-edit3')" class="check_gao"  type="radio" name="hazard" value="1" <c:if test="${c.hazard == 1}">checked</c:if>/>
+  <font>是</font>
         </div>
         <div class="one_yxuan">
           <input class="check_gao" type="radio" name="hazard" value="0" <c:if test="${c.hazard == 0}">checked</c:if>/>
           <font>否</font>
         </div>
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">风险等级：</label>
@@ -349,65 +350,65 @@ $(function(){
         <select class="sel_area" id="dlevel">
           <option value="">请选择</option>
           <c:forEach items="${list2 }" var="be">
-              <option>${be.name }</option>
-             </c:forEach>
+              <option>${be.name }</option>  
+             </c:forEach> 
           </select>
            <script type="text/javascript">$("#dlevel").val('${c.dlevel}');</script>
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">主要负责人：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="charge" value="${c.charge }" style="width:350px" class="input-text required " >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">主要负责人联系手机：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="chargeContact" value="${c.chargeContact }" style="width:350px" class="input-text required ll-numberbox " >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">专职安全员：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="safety" value="${c.safety }" style="width:350px" class="input-text required " >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">专职安全员联系手机：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="safetyContact" value="${c.safetyContact }" style="width:350px" class="input-text required  ll-numberbox " >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">安全管理部门负责人：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="safetyM" value="${c.safetyM }" style="width:350px" class="input-text required " >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2"><!-- 安全管理 -->部门负责人联系手机：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="safetyMContact" value="${c.safetyMContact }" style="width:350px" class="input-text required  ll-numberbox " >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">企业值班电话：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="duty" value="${c.duty }" style="width:350px" class="input-text required  ll-numberbox " >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">企业邮政编码：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="postage" value="${c.postage }" style="width:350px" class="input-text required  ll-numberbox " >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">企业邮箱：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="email" value="${c.email }" style="width:350px" class="input-text required " >
-      </div>
+      </div> 
     </div>
     <div class="row cl">
       <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
@@ -437,7 +438,7 @@ $(function(){
               </div>
               <div class="div_map" id="map_div1"  style="width: 96%;margin-left:2%;"></div>
             </div>
-
+            
         </div>
     </div>
 </div>
@@ -475,38 +476,38 @@ function selectQccData() {
   	        $("#establish").val(data.StartDate.substring(0, 10));
   	        $("#scope").val(data.Scope);
   	        $("#license").val(data.CreditCode);
-
+  	        
   	      	//console.log(data.EconKind);
   	        //console.log(data.BelongOrg);
   	        if(data.EconKind){
-  	          	$("#regType option").each(function(){
+  	          	$("#regType option").each(function(){  
             		if($(this).text() == data.EconKind){
                		$(this).prop("selected", true);
-             		}
-     	      	});
+             		}  
+     	      	}); 
   	        }
   	        if(data.EconKind){
-  	          	$("#authority option").each(function(){
+  	          	$("#authority option").each(function(){  
   	         		if($(this).text() == data.BelongOrg){
   	            		$(this).prop("selected", true);
-  	          		}
-  	  	      	});
+  	          		}  
+  	  	      	}); 
   	        }
-
+  	        
   	        if(data.ContactInfo.Email){
 	          	$("#email").val(data.ContactInfo.Email);
 	        }
-
+	        
 	        if(data.ContactInfo.PhoneNumber){
 	          	$("#duty").val(data.ContactInfo.PhoneNumber);
 	        }
-
+	        
 	        $("#charge").val(data.OperName);
-
+	        
           } else {
             layer.alert(item.Message);
           }
-
+          
 	  } else {
 	      //console.log(result.map.message);
 	      layer.alert("获取数据失败！");
@@ -537,19 +538,19 @@ function openmap(){
   $("#win-mmap").modal("show");
   if($("#addressMap1").val() == '') {
     layer.msg('详细地址与经纬度自动检索中。。。');
-
+    
     setTimeout(function() {
       //关键字查询
       placeSearch.search(address == '' ? cname : address, function(status, result) {
         layer.closeAll();
         if (status === 'complete' && result.info === 'OK') {
-
+          
           var tips = result.poiList.pois[0];
           var lnglatXY = tips.location.lng + "," + tips.location.lat;
-
+          
           $("#search").val(tips.address + "(" + tips.name + ")");
           $("#addressMap1").val(lnglatXY);
-
+          
           if(null == marker1) {
             marker1 = new AMap.Marker({
               icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
@@ -559,13 +560,13 @@ function openmap(){
           } else {
             marker1.setPosition(lnglatXY.split(","));
           }
-
+          
           map.setCenter(new AMap.LngLat(lnglatXY.split(',')[0], lnglatXY.split(',')[1]));
         } else {
           layer.alert("自动检索失败，请输入详细地址手动查询");
         }
       });
-
+      
     }, 2000);
   }
 }

@@ -4383,7 +4383,6 @@ public class CompanyController_cd extends BaseController {
             list = tCheckMapper.findCheckCompany(String.valueOf(user.getId()),3);
         }
 
-
         Map<String,Object> map = new HashMap<>();
 
         Integer count1 = 0;
@@ -4481,7 +4480,9 @@ public class CompanyController_cd extends BaseController {
     @RequestMapping(value = "zhuChartData77")
     public String zhuChartData77 (HttpServletRequest request, Model model){
         User user = getLoginUser(request);
-        List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        /*List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());*/
+        List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
         List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
         DecimalFormat df = new DecimalFormat("0.00");
         Map<String,Object> map = new HashMap<>();
@@ -4490,20 +4491,43 @@ public class CompanyController_cd extends BaseController {
         Integer count2 = 0;
         Integer count3 = 0;
         Integer sum = 0;
+        Integer a = 0;
+        Integer b = 0;
+        Integer c = 0;
         if (null == list || list.size() == 0){
 
         }else if (null != list && list.size() != 0){
 
             for (int i = 0; i < list.size(); i++) {
 
-                System.out.println(list.get(i).get("name"));
+                if (null == list.get(i).get("name") && (Integer)list.get(i).get("dpid") == 0) {
+                    list.get(i).put("name",company.getName());
 
-                Integer  a = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),user.getId(),3); // 一般
-                list.get(i).put("danger1",a);
-                Integer  b = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),user.getId(),1); // 较大
-                list.get(i).put("danger2",b);
-                Integer  c = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),user.getId(),2); // 重大
-                list.get(i).put("danger3",c);
+                    Integer a1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),3); // 一般
+                    Integer a2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),3); // 一般
+                    a = a1 + a2;
+                    list.get(i).put("danger1",a);
+
+                    Integer b1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),1); // 较大
+                    Integer b2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),1); // 较大
+                    b = b1 + b2;
+                    list.get(i).put("danger2",b);
+
+                    Integer c1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),2); // 重大
+                    Integer c2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),2); // 重大
+                    c = c1 + c2;
+                    list.get(i).put("danger3",c);
+
+                }else if (null != list.get(i).get("name") && (Integer)list.get(i).get("dpid") != 0){
+
+                    a = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),user.getId(),3); // 一般
+                    list.get(i).put("danger1",a);
+                    b = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),user.getId(),1); // 较大
+                    list.get(i).put("danger2",b);
+                    c = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),user.getId(),2); // 重大
+                    list.get(i).put("danger3",c);
+
+                }
 
                 count1 += a;
                 count2 += b;

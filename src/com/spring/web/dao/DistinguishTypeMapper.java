@@ -16,5 +16,7 @@ public interface DistinguishTypeMapper {
     DistinguishType selectNums(@Param("dep_id")Integer dep_id,@Param("flag") Integer flag, @Param("user_id")Integer user_id);
 
     DistinguishType selectByPrimaryKey(@Param("id")Integer id);
+
+    void deleteAll(@Param("dep_id")Integer dep_id,@Param("del")Integer del);
 }
 

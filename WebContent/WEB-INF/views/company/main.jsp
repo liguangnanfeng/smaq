@@ -88,4 +88,9 @@ dt a:hover{text-decoration: none;}
     </ul>
   </div>
 </body>
+  <script>
+  $(function(){
+  $("nav").width($("table").width())
+  });
+  </script>
 </html>

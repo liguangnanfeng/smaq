@@ -126,7 +126,7 @@
         </script>
         <div>
             <p class="contarName">${compangName}车间风险分布图
-            <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a></p>
+            <a class="btn btn-success radius r" id="aback" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a></p>
         <div class="row cl mt-15">
         <label class="form-label col-xs-4 col-sm-2" style="width:9%;text-align:right;">资料上传：</label>
         <div class="formControls col-xs-8 col-sm-9" style="width:300px;">

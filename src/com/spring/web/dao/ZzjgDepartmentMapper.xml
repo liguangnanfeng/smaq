@@ -48,6 +48,14 @@
     </select>
 
 
+    <select id="selectNows"  resultType="Integer" >
+        SELECT
+            *
+        FROM
+            zzjg_department_tbl
+        WHERE
+	        id = #{id} AND uid = #{uid} AND level = 1 AND del = 0 AND flag = 1
+    </select>
 
 
 

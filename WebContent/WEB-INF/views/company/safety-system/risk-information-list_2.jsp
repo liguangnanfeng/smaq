@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="${ly}/styles/print-tab.css"/>
 <link rel="stylesheet" type="text/css" href="${ly}/styles/print-tab.css" media="print" />
 <link rel="stylesheet" type="text/css" media="print"  href="${ly}/js/H-ui.admin_v3.0/static/h-ui/css/H-ui.css" />
-<script type="text/javascript" src="${ly}/js/H-ui.admin_v3.0/lib/layer/2.4/layer.js"></script> 
+<script type="text/javascript" src="${ly}/js/H-ui.admin_v3.0/lib/layer/2.4/layer.js"></script>
 <title>风险分级管控   隐患排查治理智能化平台</title>
 <meta name="keywords" content="风险分级管控   隐患排查治理智能化平台">
 <meta name="description" content="风险分级管控   隐患排查治理智能化平台">
@@ -30,7 +30,7 @@ function load_() {
   $(".mt-20").html("加载中").load("/company/safety-system/fxggp-load .div-set", {
     name : $("#name").val()
   })
-  
+
   $("#name").change(function() {
     load_();
   })
@@ -45,10 +45,10 @@ function pr_() {
 </head>
 <body>
   <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-    <span class="c-gray en">&gt;</span> <span>风险分级管控</span> 
-    <span class="c-gray en">&gt;</span> <span>公告警示</span> 
-    <span class="c-gray en">&gt;</span> <span>车间风险公告牌</span> 
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+    <span class="c-gray en">&gt;</span> <span>风险分级管控</span>
+    <span class="c-gray en">&gt;</span> <span>公告警示</span>
+    <span class="c-gray en">&gt;</span> <span>车间风险公告牌</span>
     <%--<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>--%>
   <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;" href="javascript:history.back(-1)" title="返回">返回</a>
   </nav>
@@ -61,11 +61,11 @@ function pr_() {
           <option>${be }</option>
           </c:forEach>
         </select>
-      </div> 
+      </div>
     </div>
     <div class="mt-20">
       <!-- 加载进来 -->
-      <%-- <div class="div-set">
+       <div class="div-set">
         <div class="top-set">
           <font>安全风险公告牌</font>
           <a class="btn_rbj" style="right:146px;" onClick="show_dialog('编辑风险公告牌', '/company/safety-system/risk-information-add?id=${be.id}&flag=${flag }')" href="javascript:;" title="编辑">编辑</a>
@@ -145,15 +145,7 @@ function pr_() {
               <tr>
                 <td colspan="3">
                   <div class="div-gimg" style="margin-bottom:6px;">
-                    <img alt="" src="${ly }/images/gao/aqgz1.jpg"/>
-                    <img alt="" src="${ly }/images/gao/aqgz2.jpg"/>
-                    <img alt="" src="${ly }/images/gao/aqgz3.jpg"/>
-                    <img alt="" src="${ly }/images/gao/aqgz4.jpg"/>
-                    <img alt="" src="${ly }/images/gao/aqgz6.jpg"/>
-                    <img alt="" src="${ly }/images/gao/l1.jpg"/>
-                    <img alt="" src="${ly }/images/gao/l2.jpg"/>
-                    <img alt="" src="${ly }/images/gao/l3.jpg"/>
-                    <img alt="" src="${ly }/images/gao/l4.jpg" style="margin-right:0;"/>
+
                   </div>
                 </td>
               </tr>
@@ -175,9 +167,9 @@ function pr_() {
               </tr>
             </table>
           </div>
-        </div> 
+        </div>
       </div>
-        --%>
+
     </div>
   </div>
 </body>
@@ -191,4 +183,27 @@ function del(id) {
   })
 }
 </script>
+
+  <script>
+  let img='${img}';
+  console.log('img:',img)
+  let imgs='${img}';
+  var imgss = imgs.split("&");// 在每个逗号(&)处进行分解
+  let ig=new Array();
+  let g=null;
+  imgss.map((val,idx)=>{
+  let i=idx+1;
+  if(val!=null&&val!='null'){
+  ig[i]=new Image();
+  g=ig[i];
+  g.id='myCheck'+i;
+  g.src=val;
+  $(g).addClass("g");
+  $(".div-gimg").append(g);
+  }
+
+  });
+  <%--  <img id="myCheck2" alt="" src="${ly }${img1==null?'/images/gao/aqgz2.jpg':img1}"/>--%>
+
+  </script>
 </html>

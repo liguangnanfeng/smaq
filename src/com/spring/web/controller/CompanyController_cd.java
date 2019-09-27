@@ -4246,7 +4246,7 @@ public class CompanyController_cd extends BaseController {
     public String modelListMain(HttpServletRequest request, Model model, Integer flag, Integer status, Integer plan) throws ParseException {
 
         User user = getLoginUser(request);
-
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
         Map<String, Object> map1 = new LinkedHashMap<String, Object>();
         map1.put("level1",user.getUserName());
 
@@ -4346,7 +4346,7 @@ public class CompanyController_cd extends BaseController {
 
             model.addAttribute("hiddenPlanList",hiddenPlanList);
         }
-
+        model.addAttribute("company",company.getName());
         model.addAttribute("data",sdf.format(new Date()));
         model.addAttribute("list", list);
         model.addAttribute("flag", flag);
@@ -4691,7 +4691,7 @@ public class CompanyController_cd extends BaseController {
         Integer numbers33 = 0;
 
         Map<String,Object> map1 = new HashMap<>();
-
+        model.addAttribute("company",company.getName());
 
         numbers1 = tCheckItemMapper.findRecheckNews(3,user.getId(),3,company.getName()); // 一般和较小 合格 已治理
         Integer numbers4 = tCheckItemMapper.findRecheckBasics(3,user.getId(),3,company.getName()); // 一般和较小 合格 已治理
@@ -6306,7 +6306,7 @@ public class CompanyController_cd extends BaseController {
 
         Map<String,Object> map1 = new HashMap<>();
 
-
+        model.addAttribute("company",company.getName());
         ss1 = tCheckItemMapper.zhu123ChartDataBasics(company.getName(),user.getId()); // 生产工艺 隐患数据
 
         ss = tCheckItemMapper.zhu123ChartDataNews("基础管理",company.getName(),user.getId()) + ss1; // 生产工艺 隐患数据

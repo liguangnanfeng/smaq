@@ -563,7 +563,7 @@
         where
         T1.del = 0 and T1.level != ""
             and T1.uid = #{userId}
-            order by find_in_set(T1.level,'红色,橙色,黄色,蓝色')
+            order by SUBSTRING_INDEX(level3,'/',1),find_in_set(T1.level,'红色,橙色,黄色,蓝色')
     </select>
 
 
@@ -684,7 +684,7 @@
         <if test="userId != null">
             and T1.uid = #{userId}
         </if>
-        order by riskId asc, dmid asc , find_in_set(T1.level,'红色,橙色,黄色,蓝色')
+        order by SUBSTRING_INDEX(level3,'/',1), dmid asc ,find_in_set(T1.level,'红色,橙色,黄色,蓝色')
     </select>
 
 

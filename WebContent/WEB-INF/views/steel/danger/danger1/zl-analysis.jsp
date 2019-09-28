@@ -184,7 +184,7 @@
             }
             }
             myChart2.setOption(option2);
-            var url2="${ly }/company/zhuChartData123";
+            var url2="${ly }/steel/zhuChartData123";
             myChart2.on('click', function(p) {
             window.location.href =url2;
             })

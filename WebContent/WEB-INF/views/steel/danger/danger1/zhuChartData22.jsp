@@ -122,7 +122,7 @@
 		<table class=".table table-hover"  style="margin: auto;"  cellpadding="2">
 		<tr class="tit">
 		<td rowspan="2">序号</td>
-		<td class="first" rowspan="2" ><span class="title1">对象</span><br><span class="title3">部门</span></td>
+		<td class="first" rowspan="2" ><span class="title1">对象</span><br><span class="title3">公司</span></td>
       <script>
 		console.log('${list}');
 		</script>

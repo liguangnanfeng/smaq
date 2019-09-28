@@ -42,9 +42,9 @@
         <body style="height: 100vh;">
         <div class="select-btn">
         <a class="sbtn btn-default" id="chaBtn0"  href="###">汇总</a>
-        <a class="sbtn" id="chaBtn1"  href="${ly }/company/zhuChartData22?flag=1">企业自查</a>
-        <a class="sbtn" id="chaBtn2" href="${ly }/company/zhuChartData22?flag=2">行政检查</a>
-        <a class="sbtn" id="chaBtn3" href="${ly }/company/zhuChartData22?flag=3">第三方检查</a>
+        <a class="sbtn" id="chaBtn1"  href="${ly }/steel/zhuChartData22?flag=1">企业自查</a>
+        <a class="sbtn" id="chaBtn2" href="${ly }/steel/zhuChartData22?flag=2">行政检查</a>
+        <a class="sbtn" id="chaBtn3" href="${ly }/steel/zhuChartData22?flag=3">第三方检查</a>
         </div>
         <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
         <div id="main2" style="width: 90%;height:400px;margin: 50px auto 0 auto;"></div>
@@ -58,15 +58,15 @@
         var url='';
         if('${flag}'==1){
         $("#chaBtn1").addClass('btn-default');
-        url='${ly }/company/zhuChartData22?flag=1';
+        url='${ly }/steel/zhuChartData22?flag=1';
         }
         if('${flag}'==2){
         $("#chaBtn2").addClass('btn-default');
-        url='${ly }/company/zhuChartData22?flag=2';
+        url='${ly }/steel/zhuChartData22?flag=2';
         }
         if('${flag}'==3){
         $("#chaBtn3").addClass('btn-default');
-        url='${ly }/company/zhuChartData22?flag=3';
+        url='${ly }/steel/zhuChartData22?flag=3';
         }
         function addgjs() {
         show_dialog(" ", "/company/yh-analysis?flag=1");
@@ -186,7 +186,7 @@
         <%--3隐患等级数据分析--%>
         <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var url3 = '${ly }/company/zhuChartData77';
+        var url3 = '${ly }/steel/zhuChartData77';
 
         var option3 = {
         title:{

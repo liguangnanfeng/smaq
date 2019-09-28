@@ -50,9 +50,9 @@
         <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
         <div class="select-btn">
         <a class="sbtn btn-default" id="chaBtn0"  href="###">汇总</a>
-        <a class="sbtn" id="chaBtn1"  href="${ly }/company/zhuChartData66?flag=1">企业自查</a>
-        <a class="sbtn" id="chaBtn2" href="${ly }/company/zhuChartData66?flag=2">行政检查</a>
-        <a class="sbtn" id="chaBtn3" href="${ly }/company/zhuChartData66?flag=3">第三方检查</a>
+        <a class="sbtn" id="chaBtn1"  href="${ly }/steel/zhuChartData66?flag=1">企业自查</a>
+        <a class="sbtn" id="chaBtn2" href="${ly }/steel/zhuChartData66?flag=2">行政检查</a>
+        <a class="sbtn" id="chaBtn3" href="${ly }/steel/zhuChartData66?flag=3">第三方检查</a>
         </div>
         <div id="main2" style="width: 90%;height:400px;margin: 50px auto 0 auto;"></div>
 <%--        <iframe id="colum" src=""></iframe>--%>
@@ -62,9 +62,9 @@
         <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         window.onload = function() {
-        var u1 = '${ly }/company/danger-chart-jx';
-        var u2 = '${ly }/company/zhuChartData55?flag=2';
-        var u3 = '${ly }/company/zhuChartData55?flag=3';
+        var u1 = '${ly }/steel/danger-chart-jx';
+        var u2 = '${ly }/steel/zhuChartData55?flag=2';
+        var u3 = '${ly }/steel/zhuChartData55?flag=3';
         var option = {
         title:{
         text:'排查绩效分析',
@@ -162,7 +162,7 @@
          url='${ly }/company/zhuChartData66?flag=3';
         }
             function addgjs() {
-                show_dialog(" ", "/company/jx-analysis?flag=1");
+                show_dialog(" ", "/steel/jx-analysis?flag=1");
             }
         // 基于准备好的dom，初始化echarts实例
         var number = ["${s}","${a}", "${b}", "${c}", "${d}", "${e}", "${f}", "${g}", "${h}", "${i}", "${j}", "${k}", "${l}", "${m}", "${n}", "${o}", "${p}", "${q}", "${r}"];

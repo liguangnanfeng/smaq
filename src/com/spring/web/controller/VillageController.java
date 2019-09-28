@@ -40,6 +40,7 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -1208,9 +1209,13 @@ public class VillageController extends BaseController {
     @RequestMapping(value = "check-list")//flag:3 部门抽查
     public String troubleList1(HttpServletRequest request, String title, Integer type, String companyName,
                                Integer townId, Integer villageId,
-                               Integer status, Integer flag, Model model,String dmName) throws Exception {
+                               Integer status, Integer flag, Model model,String dmName,Integer button) throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
+
+        if (null == button){
+            button = 1;
+        }
 
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
@@ -1237,9 +1242,21 @@ public class VillageController extends BaseController {
         if (setUserId(user, m)) {
             System.out.println(m);
             clearVillageTown(m);
+            List<Map<String, Object>> list = null;
 
-            List<Map<String, Object>> list = tCheckMapper.selectList(m);
-            //List<Map<String, Object>> list = tCheckMapper.selectList3(m);
+            if (button == 1){
+                list = tCheckMapper.selectList(m);
+            }else if (button != 1) {
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String startTime = df.format(new Date().getTime()-15*24*60*60*1000);
+
+                Date startTime1 = df.parse(startTime);
+                Date endTime = new Date();
+                m.put("startTime",startTime);
+                m.put("endTime",endTime);
+                m.put("type",2);
+                list = tCheckMapper.findSelectList(m);
+            }
 
             Integer sum = 0;
             for (int i = 0; i < list.size(); i++) {

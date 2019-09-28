@@ -75,7 +75,7 @@ $(function() {
             <th>姓名</th>
             <th>联系手机</th>
             <th>所属车间/部位</th>
-<%--            <th>安全区域</th>--%>
+            <th>安全区域</th>
             <th>职务</th>
             <th>权限</th>
             <th>操作</th>
@@ -108,17 +108,24 @@ $(function() {
             <td>${be.name }</td>
             <td>${be.mobile }</td>
             <td>${be.dpname } / ${be.dname }</td>
-<%--            <td><button style="  display: inline-block;--%>
+            <td>
+<%--              <span style="  display: inline-block;--%>
 <%--              margin: 1px 0;--%>
 <%--              line-height: 18px;--%>
 <%--              background: red!important;--%>
 <%--              padding: 0 2px;--%>
-<%--              border-radius: 4px;"  class="rrx">1</button><button style="   display: inline-block;--%>
-<%--              margin: 1px 0;--%>
-<%--              line-height: 18px;--%>
-<%--              background: green!important;--%>
-<%--              padding: 0 2px;--%>
-<%--              border-radius: 4px;" class="ggx">2</button></td>--%>
+<%--              width:40px;--%>
+<%--              height:18px;--%>
+<%--              border-radius: 4px;"  class="rrx"></span>--%>
+              <span style="   display: inline-block;
+              margin: 1px 0;
+              width:40px;
+              height:18px;
+              line-height: 18px;
+              background: green!important;
+              padding: 0 2px;
+              border-radius: 4px;" class="ggx"></span>
+              </td>
             <td>${be.position }</td>
             <td>
               <%-- test里面是布尔值

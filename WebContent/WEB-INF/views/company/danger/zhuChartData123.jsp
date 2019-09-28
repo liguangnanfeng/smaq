@@ -158,7 +158,7 @@
 		</tr>
 			<tr>
 				<td>1</td>
-				<td>公司级</td>
+				<td>${company}</td>
 				<td>${ss}</td>
 				<td>${aa}</td>
 				<td>${bb}</td>

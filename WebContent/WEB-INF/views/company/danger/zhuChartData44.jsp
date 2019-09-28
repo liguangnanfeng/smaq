@@ -87,7 +87,7 @@
 		</style>
 		</head>
 		<body>
-		<script>console.log('${list}')</script>
+<%--		<script>console.log('${list}')</script>--%>
 		<nav class="breadcrumb">
 		<c:set var="x1" value="${fn:split('企业自查/ /第三方检查/行政检查','/') }"/>
 		<i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
@@ -132,9 +132,12 @@
 		<td>治理率%</td>
 		<td>同比</td>
 		</tr>
+		<script>
+		window.s11=0;window.s22=0;
+		</script>
 		<tr>
 			<td>1</td>
-			<td>公司级</td>
+			<td>${company}</td>
 			<td>${numbers1}</td>
 			<td>${numbers11}</td>
 			<td>${rate1}</td>
@@ -156,9 +159,14 @@
 			<td></td>
 			<td>${datas}</td>
 		</tr>
+
 		<c:forEach items="${list}" varStatus="index" var="be">
 			<c:if test="${index.index<fn:length(list)-1 }">
 				<tr>
+				<script>
+				//window.s22+='${be.number2}'*1;
+				console.log("开始：",'${be.number1}');
+				</script>
 				<td>${index.index + 2}</td>
 				<td>${be.name}</td>
 				<td>${be.danger1}</td>
@@ -182,7 +190,9 @@
 				<td></td>
 				<td>${be.data}</td>
 				</tr>
+
 			</c:if>
+
 
 			<c:if test="${index.index>fn:length(list)-2 }">
 				<tr>
@@ -203,11 +213,17 @@
 				<td>${be.result3}</td>
 				<td></td>
 
+				<td class="sum1">${sub}</td>
+				<td class="sum2">${sub1}</td>
 				<td></td>
 				<td></td>
 				<td></td>
-				<td></td>
-				<td></td>
+				<script>
+
+				console.log("结果：",window.s11);
+				 //$(".sum1").text(window.s11);
+				 //$(".sum2").text(window.s22);
+				</script>
 				</tr>
 			</c:if>
 			<c:if test="${index.index>fn:length(list)-2 }">

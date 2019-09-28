@@ -333,27 +333,7 @@
         <a style="color:#fff;"  data-href="${ly }/global/tables/yjmanage_center"  data-title="应急救援中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急救援中心</a>
         </dt>
         </dl>
-        <dl>
-        <dt>
-        <a style="color:#fff" data-href="/global/Standard" href="javascript:void(0)" data-title="安全生产标准化"><i class="Hui-iconfont">&#xe687;</i>安全生产标准化</a>
-        </dt>
-        </dl>
-        <dl>
-        <dt>
-        <i class="Hui-iconfont">&#xe687;</i>重大危险源长制
-        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-        </dt>
-        <dd>
-        <ul>
-        <li><a data-href="${ly }/global/source/company-list" data-title="全部企业" onclick="javascript:void(0)">全部企业</a></li>
-        <li><a data-href="${ly }/global/source/video" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
-        <li><a data-href="${ly }/global/source/company-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
-<%--        <li><a data-href="${ly }/global/greate-danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>--%>
-                <li><a data-href="${ly }/global/source/danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>
-        <li><a data-href="${ly }/global/source/danger-chart" data-title="分类统计" href="javascript:void(0)">分类统计</a></li>
-        </ul>
-        </dd>
-        </dl>
+
 
 
 
@@ -407,6 +387,7 @@
         <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
+
         <%--<c:if test="${userType==4||userType==10}">--%>
             <%--<div class="div_omenu">--%>
             <%--<div  class="div_otop">信息推送<i class="Hui-iconfont top-iconfont">&#xe6d5;</i></div>--%>
@@ -446,6 +427,31 @@
         </ul>
         </dd>
         </dl>
+
+        <dl>
+        <dt>
+        <a style="color:#fff" data-href="/global/Standard" href="javascript:void(0)" data-title="安全生产标准化"><i class="Hui-iconfont">&#xe687;</i>安全生产标准化</a>
+        </dt>
+        </dl>
+
+
+        <dl>
+        <dt>
+        <i class="Hui-iconfont">&#xe687;</i>重大危险源长制
+        <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+        </dt>
+        <dd>
+        <ul>
+        <li><a data-href="${ly }/global/source/company-list" data-title="全部企业" onclick="javascript:void(0)">全部企业</a></li>
+        <li><a data-href="${ly }/global/source/video" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
+        <li><a data-href="${ly }/global/source/company-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
+        <%--        <li><a data-href="${ly }/global/greate-danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>--%>
+        <li><a data-href="${ly }/global/source/danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>
+        <li><a data-href="${ly }/global/source/danger-chart" data-title="分类统计" href="javascript:void(0)">分类统计</a></li>
+        </ul>
+        </dd>
+        </dl>
+
         </div>
         </aside>
         <script type="text/javascript" src="${ly }/js/plugins/websocket/swfobject.js"></script>

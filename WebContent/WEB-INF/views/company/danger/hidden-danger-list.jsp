@@ -40,8 +40,6 @@
         }
     </style>
     <script type="text/javascript">
-        console.log('${host}');
-
         function showpicture(memoImg) {
             //memoImg = "";
             if (memoImg.length !== 0) {
@@ -56,19 +54,30 @@
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>隐患统计分析系统</span>
     <span class="c-gray en">&gt;</span> <span>隐患治理记录</span>
-    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="javascript:history.go(-1)" title="返回">返回</a>
+    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="/company/welcome" title="返回">首页</a>
 
 </nav>
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
-        <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}"
+        <a id="check1" class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}"
            href="${ly }/village/hidden-danger-list?flag=1&status=1">企业自查</a>
-        <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
+        <a id="check2" class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
            href="${ly }/village/hidden-danger-list?flag=2">行政检查</a>
-        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
+        <a id="check3" class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
            href="${ly }/village/hidden-danger-list?flag=3">第三方检查</a>
         <%--  <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
              href="${ly }/village/hidden-danger-list?flag=2">执法检查</a>--%>
+   <script>
+    let searchURL = window.location.search;
+    searchURL = searchURL.substring(1, searchURL.length);
+    substring = "breaken";
+    let b= searchURL.includes(substring);   // true
+    if(b){
+    $("#check1").attr("href","/village/hidden-danger-list?flag=1&status=1&breaken=2");
+    $("#check2").attr("href","/village/hidden-danger-list?flag=2&breaken=2");
+    $("#check3").attr("href","/village/hidden-danger-list?flag=3&breaken=2")
+    }
+   </script>
     </div>
     <%--<div class="text-c">--%>
     <%--<form action="${ly }/village/danger-index-list?flag=${flag}" method="post">--%>
@@ -106,7 +115,6 @@
     <style>
     span#list {
     position: absolute;
-    z-index: 100000;
     margin-top: 5px;
     right: 290px;
     }
@@ -136,7 +144,7 @@
                 <th width="15%">隐患内容</th>
                 <th width="5%">隐患图片</th>
                 <c:if test="${flag==1}">
-                    <th width="5%">隐患等级</th>
+                    <th width="6%">隐患等级</th>
                 </c:if>
                 <th width="5%">治理方案</th>
                 <%--<th width="5%">治理结果及日期</th>--%>
@@ -154,7 +162,6 @@
             <c:forEach items="${list }" varStatus="index" var="list">
                 <tr class="text-c">
                 <script>
-                console.log('14:32:','${list}');
                 </script>
                     <%--<c:choose>--%>
                         <%--<c:when test="${list.type == 1}">--%>
@@ -247,10 +254,9 @@
                     <c:if test="${flag==1}">
                         <td>
                             <c:choose>
-                                <c:when test="${list.level eq '红色'}"><font class="col-a">${list.level}</font></c:when>
-                                <c:when test="${list.level eq '橙色'}"><font class="col-b">${list.level}</font></c:when>
-                                <c:when test="${list.level eq '黄色'}"><font class="col-c">${list.level}</font></c:when>
-                                <c:when test="${list.level eq '蓝色'}"><font class="col-d">${list.level}</font></c:when>
+                                <c:when test="${list.level eq '红色'}">重大隐患</c:when>
+                                <c:when test="${list.level eq '橙色'}">较大隐患</c:when>
+                                <c:when test="${list.level ne '橙色' && list.level ne '红色'}">一般及较小隐患</c:when>
                             </c:choose>
                         </td>
                     </c:if>

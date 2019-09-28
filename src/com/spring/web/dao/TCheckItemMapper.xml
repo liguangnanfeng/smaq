@@ -1128,12 +1128,44 @@
             t2. status = 2
         AND t2.del = 0
         AND t1.status = 2
-        AND c1.del = 0
         AND t2.depart = #{depart}
         AND t2.user_id = #{user_id}
         AND c1.flag = #{flag}
     </select>
 
+
+    <select id="findHiddenLevelNews"  resultType="Integer">
+        SELECT
+             DISTINCT count(t1.check_id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%现场%"
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t2.depart = #{depart}
+        AND t2.user_id = #{user_id}
+        AND t3.flag = #{flag}
+    </select>
+
+
+    <select id="findHiddenLevelBasics"  resultType="Integer">
+        SELECT
+             DISTINCT count(t1.check_id) as counts
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status = 2
+        AND t2.depart = #{depart}
+        AND t2.user_id = #{user_id}
+        AND t3.flag = #{flag}
+    </select>
 
 
     <!-- 隐患数据分析 饼状图  1. 较大; 2.重大; 3.一般和较小 -->

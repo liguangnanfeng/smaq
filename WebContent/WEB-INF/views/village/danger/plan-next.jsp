@@ -644,7 +644,14 @@
     //新版跳转
     if ($(":radio[value='2']:checked").length > 0) {
     // top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);
-    top.show_tab("检查详情" + checkId, '/company/check-detail?flag=' + flag + '&id=' + checkId);
+    //top.show_tab("检查详情" + checkId, '/company/check-detail?flag=' + flag + '&id=' + checkId);
+    console.log(checkId);
+    var cid='${check.id}';
+    sessionStorage.setItem('flag1',flag);
+    sessionStorage.setItem('id1',checkId);
+    console.log("-------------------flag-----------------checkId---------------")
+    console.log(flag,checkId)
+    top.show_tab("安全生产行政执法文书" + checkId, '/village/check-document?checkId='+cid);
     } else {
     var url = '${ly }/company/model-list-cx2?flag='+flag+'&type=1&template=2';
     top.show_tab(x, url);

@@ -64,18 +64,28 @@
     <c:if test="${flag == 2}">
         <span class="c-gray en">&gt;</span> <span>执法记录</span>
     </c:if>
-    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="javascript:history.go(-1)" title="返回">返回</a>
+    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="/company/welcome" title="返回">首页</a>
 
     </nav>
 <div class="page-container">
 
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
-        <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=1&status=2">企业自查</a>
-        <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2&status=2">行政检查</a>
-        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=3&status=2">第三方检查</a>
+        <a id="check1" class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=1&status=2">企业自查</a>
+        <a id="check2" class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2&status=2">行政检查</a>
+        <a id="check3" class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=3&status=2">第三方检查</a>
         <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
     </div>
-
+    <script>
+    let searchURL = window.location.search;
+    searchURL = searchURL.substring(1, searchURL.length);
+    substring = "button";
+    let b= searchURL.includes(substring);   // true
+    if(b){
+    $("#check1").attr("href","/village/check-list?flag=1&status=2&button=2");
+    $("#check2").attr("href","/village/check-list?flag=2&status=2&button=2");
+    $("#check3").attr("href","/village/check-list?flag=3&status=2&button=2")
+    }
+    </script>
     <div class="text-c">
         <form action="${ly }/village/check-list?flag=${flag}" method="post">
             <div class="dis-ib">
@@ -98,7 +108,7 @@
            <a class="btn btn-primary radius" data-title="添加线下检查记录" data-href="${ly }/village/check-add3?flag=3"
               onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont"
                                                                    style="font-size:15px;">&#xe600;</i> 添加线下检查记录</a>
-               </c:if> 
+               </c:if>
         <c:if test="${flag == 4}">
             <a class="btn btn-primary radius" data-title="添加线下检查记录" data-href="${ly }/village/check-add3?flag=4"
                onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加线下检查记录</a>

@@ -389,7 +389,7 @@
     <c:forEach items="${hiddenPlanList}" varStatus="index" var="be">
     <tr class="text-c">
     <td>1</td>
-    <td>公司级</td>
+    <td>${company}</td>
         <td onClick="inputC(this,1,'${be.c}',0)">${be.syn_month }</td>
         <td>${be.syn_year }</td>
         <td onClick="inputC(this,3,'${be.c}',0)">${be.syn_ratio }</td>

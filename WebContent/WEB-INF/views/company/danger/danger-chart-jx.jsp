@@ -191,7 +191,7 @@
                 <c:if test="${index.index<fn:length(list)-2 }">
                         <tr class="text-c">
                         <td>${index.index + 1}</td>
-                        <td>${be.name==null?'¹«Ë¾¼¶':be.name }</td>
+                        <td>${be.name==null ? company :be.name }</td>
 
                         <td>${be.syn_year != null ? be.syn_year : 0 }</td>
                         <td>${be.danger1 != null ? be.danger1 : 0 }</td>

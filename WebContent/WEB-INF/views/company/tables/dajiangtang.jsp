@@ -173,7 +173,7 @@
 		console.log($("body").height());
 
 		var w=$('main').height();
-		$('main').height(w*0.4015625)
+		$('main').height(w*0.3220125)
 
 		var H=window.innerWidth;
 			if(H<=1080){

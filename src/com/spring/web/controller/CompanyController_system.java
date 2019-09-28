@@ -5,6 +5,7 @@
 package com.spring.web.controller;
 
 import com.spring.web.BaseController;
+import com.spring.web.dao.DistinguishTypeMapper;
 import com.spring.web.dao.HiddenPlanMapper;
 import com.spring.web.ibatis.LlHashMap;
 import com.spring.web.model.User;
@@ -59,6 +60,9 @@ public class CompanyController_system extends BaseController {
 
     @Autowired
     private HiddenPlanMapper hiddenPlanMapper;
+
+    @Autowired
+    private DistinguishTypeMapper distinguishTypeMapper;
 
     /** 组织架构 开始 */
 
@@ -122,6 +126,7 @@ public class CompanyController_system extends BaseController {
         Date d = new Date();
         dto.setUtime(d);
         dto.setUid(getLoginUser(request).getId());
+
         if(null == dto.getId()) {
             dto.setCtime(d);
             dto.setDel(0);
@@ -130,11 +135,26 @@ public class CompanyController_system extends BaseController {
             
             result.setMap("obj", dto);
         } else {
-            zzjgDepartmentMapper.updateByPrimaryKeySelective(dto);
+
+            ZzjgDepartment zzjgDepartment = zzjgDepartmentMapper.selectNows(dto.getId(),user.getId());
+            if (null == zzjgDepartment){
+                zzjgDepartmentMapper.updateByPrimaryKeySelective(dto);
+            }else if (null != zzjgDepartment){
+                Integer number = tCheckMapper.selectAllUsers(dto.getId(),zzjgDepartment.getName());
+                if (null == number || number == 0){
+                    zzjgDepartmentMapper.updateByPrimaryKeySelective(dto);
+                }else {
+                    result.setMess("该车间已生成检查信息无法删除！！！");
+
+                    return result;
+                }
+            }
         }
 
         if (dto.getDel() == 1){
             hiddenPlanMapper.deleteDate(dto.getId(),user.getId());
+
+            distinguishTypeMapper.deleteAll(dto.getId(),1);
         }
         return result;
     }

@@ -57,11 +57,16 @@
             top: 10%;
         } main{
             width:100%;
-            height: 100vw;
-            background: url(/images/companyImg/newimg/yj1.jpg) no-repeat center;
-            background-size: 100% 100%;
-<%--            margin-top: 22px;--%>
+            margin-top: 4%;
+<%--            background: url(/images/companyImg/newimg/yj1.jpg) no-repeat center;--%>
+<%--            background-size: 100% 100%;--%>
             position: relative;
+            }
+            main img{
+            width: 100%;
+            margin-top: -9%;
+            position: relative;
+            z-index: -111;
             }
             #topleft {
             display: flex;
@@ -118,11 +123,11 @@
 
         <main>
             <div class="com"><span class="time2" style="color:#64FFFF">${userName}</span></div>
-
+            <img src="/images/companyImg/newimg/yj1.jpg"/>
             </main>
             <script>
-                var w=$('main').height();
-                $('main').height(w*0.4015625)
+<%--                var w=$('main').height();--%>
+<%--                $('main').height(w*0.4015625)--%>
 
             </script>
             <div class="func">

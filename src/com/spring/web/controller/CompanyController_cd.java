@@ -4246,7 +4246,7 @@ public class CompanyController_cd extends BaseController {
     public String modelListMain(HttpServletRequest request, Model model, Integer flag, Integer status, Integer plan) throws ParseException {
 
         User user = getLoginUser(request);
-
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
         Map<String, Object> map1 = new LinkedHashMap<String, Object>();
         map1.put("level1",user.getUserName());
 
@@ -4346,7 +4346,7 @@ public class CompanyController_cd extends BaseController {
 
             model.addAttribute("hiddenPlanList",hiddenPlanList);
         }
-
+        model.addAttribute("company",company.getName());
         model.addAttribute("data",sdf.format(new Date()));
         model.addAttribute("list", list);
         model.addAttribute("flag", flag);
@@ -4382,7 +4382,6 @@ public class CompanyController_cd extends BaseController {
         }else if (flag == 3){
             list = tCheckMapper.findCheckCompany(String.valueOf(user.getId()),3);
         }
-
 
         Map<String,Object> map = new HashMap<>();
 
@@ -4481,7 +4480,9 @@ public class CompanyController_cd extends BaseController {
     @RequestMapping(value = "zhuChartData77")
     public String zhuChartData77 (HttpServletRequest request, Model model){
         User user = getLoginUser(request);
-        List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        /*List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());*/
+        List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
         List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
         DecimalFormat df = new DecimalFormat("0.00");
         Map<String,Object> map = new HashMap<>();
@@ -4490,20 +4491,43 @@ public class CompanyController_cd extends BaseController {
         Integer count2 = 0;
         Integer count3 = 0;
         Integer sum = 0;
+        Integer a = 0;
+        Integer b = 0;
+        Integer c = 0;
         if (null == list || list.size() == 0){
 
         }else if (null != list && list.size() != 0){
 
             for (int i = 0; i < list.size(); i++) {
 
-                System.out.println(list.get(i).get("name"));
+                if (null == list.get(i).get("name") && (Integer)list.get(i).get("dpid") == 0) {
+                    list.get(i).put("name",company.getName());
 
-                Integer  a = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),user.getId(),3); // 一般
-                list.get(i).put("danger1",a);
-                Integer  b = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),user.getId(),1); // 较大
-                list.get(i).put("danger2",b);
-                Integer  c = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),user.getId(),2); // 重大
-                list.get(i).put("danger3",c);
+                    Integer a1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),3); // 一般
+                    Integer a2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),3); // 一般
+                    a = a1 + a2;
+                    list.get(i).put("danger1",a);
+
+                    Integer b1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),1); // 较大
+                    Integer b2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),1); // 较大
+                    b = b1 + b2;
+                    list.get(i).put("danger2",b);
+
+                    Integer c1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),2); // 重大
+                    Integer c2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),2); // 重大
+                    c = c1 + c2;
+                    list.get(i).put("danger3",c);
+
+                }else if (null != list.get(i).get("name") && (Integer)list.get(i).get("dpid") != 0){
+
+                    a = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),user.getId(),3); // 一般
+                    list.get(i).put("danger1",a);
+                    b = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),user.getId(),1); // 较大
+                    list.get(i).put("danger2",b);
+                    c = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),user.getId(),2); // 重大
+                    list.get(i).put("danger3",c);
+
+                }
 
                 count1 += a;
                 count2 += b;
@@ -4667,48 +4691,53 @@ public class CompanyController_cd extends BaseController {
         Integer numbers33 = 0;
 
         Map<String,Object> map1 = new HashMap<>();
+        model.addAttribute("company",company.getName());
 
-
-        numbers1 = tCheckItemMapper.findRecheckNews(3,user.getId(),3,company.getName()); // 一般和较小 合格 已治理
+        Integer numbers41 = tCheckItemMapper.findRecheckNews(3,user.getId(),3,company.getName()); // 一般和较小 合格 已治理
         Integer numbers4 = tCheckItemMapper.findRecheckBasics(3,user.getId(),3,company.getName()); // 一般和较小 合格 已治理
-        model.addAttribute("numbers1",numbers1 + numbers4);
-        sign1 = numbers1 + numbers4;
+        numbers1 = numbers41 + numbers4;
+        model.addAttribute("numbers1",numbers1);
+        sign1 = numbers1;
 
 
-        numbers11 = tCheckItemMapper.findRecheckNews(2,user.getId(),3,company.getName()); // 一般和较小 不合格 未治理
+        Integer numbers51 = tCheckItemMapper.findRecheckNews(2,user.getId(),3,company.getName()); // 一般和较小 不合格 未治理
         Integer numbers5 = tCheckItemMapper.findRecheckBasics(2,user.getId(),3,company.getName()); // 一般和较小 不合格 未治理
-        model.addAttribute("numbers11",numbers11 + numbers5);
-        sign11 = numbers11 + numbers5;
+        numbers11 =  numbers51+ numbers5;
+        model.addAttribute("numbers11",numbers11);
+        sign11 = numbers11;
 
-        Integer add1 = numbers1 + numbers11 + numbers5 + numbers4;
+        Integer add1 = numbers1 + numbers11;
 
 
-        numbers2 = tCheckItemMapper.findRecheckNews(3,user.getId(),1,company.getName()); // 较大 合格 已治理
+        Integer numbers61 = tCheckItemMapper.findRecheckNews(3,user.getId(),1,company.getName()); // 较大 合格 已治理
         Integer numbers6 = tCheckItemMapper.findRecheckBasics(3,user.getId(),1,company.getName()); // 较大 合格 已治理
-        model.addAttribute("numbers2",numbers2 + numbers6);
-        sign2 = numbers2 + numbers6;
+        numbers2 = numbers6+ numbers61;
+        model.addAttribute("numbers2",numbers2);
+        sign2 = numbers2;
 
 
-        numbers22 = tCheckItemMapper.findRecheckNews(2,user.getId(),1,company.getName()); // 较大 不合格 未治理
+        Integer numbers71 = tCheckItemMapper.findRecheckNews(2,user.getId(),1,company.getName()); // 较大 不合格 未治理
         Integer numbers7 = tCheckItemMapper.findRecheckBasics(2,user.getId(),1,company.getName()); // 较大 不合格 未治理
-        model.addAttribute("numbers22",numbers22 + numbers7);
-        sign22 = numbers22 + numbers7;
+        numbers22 = numbers7 + numbers71;
+        model.addAttribute("numbers22",numbers22);
+        sign22 = numbers22;
 
-        Integer add2 = numbers2 + numbers22 + numbers6 + numbers7;
+        Integer add2 = numbers2 + numbers22;
 
 
-
-        numbers3 = tCheckItemMapper.findRecheckNews(3,user.getId(),2,company.getName()); // 重大 合格 已治理
+        Integer numbers81 = tCheckItemMapper.findRecheckNews(3,user.getId(),2,company.getName()); // 重大 合格 已治理
         Integer numbers8 = tCheckItemMapper.findRecheckBasics(3,user.getId(),2,company.getName()); // 重大 合格 已治理
-        model.addAttribute("numbers3",numbers3 + numbers8);
-        sign3 = numbers3 + numbers8;
+        numbers3 = numbers8 + numbers81;
+        model.addAttribute("numbers3",numbers3);
+        sign3 = numbers3;
 
-        numbers33 = tCheckItemMapper.findRecheckNews(2,user.getId(),2,company.getName()); // 重大 不合格 未治理
+        Integer numbers91 = tCheckItemMapper.findRecheckNews(2,user.getId(),2,company.getName()); // 重大 不合格 未治理
         Integer numbers9 = tCheckItemMapper.findRecheckBasics(2,user.getId(),2,company.getName()); // 重大 不合格 未治理
-        model.addAttribute("numbers33",numbers33 + numbers9);
-        sign33 = numbers33 + numbers9;
+        numbers33 = numbers9 + numbers91;
+        model.addAttribute("numbers33",numbers33);
+        sign33 = numbers33;
 
-        Integer add3 = numbers3 + numbers33 + numbers8 + numbers9;
+        Integer add3 = numbers3 + numbers33;
 
         DecimalFormat df = new DecimalFormat("0.00");
 
@@ -4760,88 +4789,93 @@ public class CompanyController_cd extends BaseController {
 
             for (int i = 0; i < list.size(); i++) {
 
-                Integer  a = tCheckItemMapper.findRecheckFileByMap(3,user.getId(),3,(String) list.get(i).get("name")); // 一般和较小 合格 已治理
-                list.get(i).put("danger1",a);
-
-                Integer  a1 = tCheckItemMapper.findRecheckFileByMap(2,user.getId(),3,(String) list.get(i).get("name")); // 一般和较小 不合格 未治理
-                list.get(i).put("danger11",a1);
-
-                count1 = a + a1 ;
-
-                Integer  b = tCheckItemMapper.findRecheckFileByMap(3,user.getId(),1,(String) list.get(i).get("name")); // 较大 合格 已治理
-                list.get(i).put("danger2",b);
-
-                Integer  b1 = tCheckItemMapper.findRecheckFileByMap(2,user.getId(),1,(String) list.get(i).get("name")); // 较大 不合格 未治理
-                list.get(i).put("danger22",b1);
-
-                count2  = b + b1;
-
-                Integer  c = tCheckItemMapper.findRecheckFileByMap(3,user.getId(),2,(String) list.get(i).get("name")); // 重大 合格 已治理
-                list.get(i).put("danger3",c);
-
-                Integer  c1 = tCheckItemMapper.findRecheckFileByMap(2,user.getId(),2,(String) list.get(i).get("name")); // 重大 不合格 未治理
-                list.get(i).put("danger33",c1);
-
-                count3  = c + c1;
-
-                sign1 += a;
-                sign2 += b;
-                sign3 += c;
-
-                sign11 += a1;
-                sign22 += b1;
-                sign33 += c1;
-
-                Integer sum = count1 + count2 + count3;
-
-                if (null != count1 && count1 != 0){  // 一般和较小 治理率
-                    String str = df.format((float)a / count1 * 100);
-                    list.get(i).put("result11",str + "%");
-                }else {
-                    list.get(i).put("result11","0.00%");
-                }
-
-                if (null != count2 && count2 != 0){ // 较大 治理率
-                    String str = df.format((float)b / count2 * 100);
-                    list.get(i).put("result22",str + "%");
-                }else {
-                    list.get(i).put("result22","0.00%");
-                }
-
-                if (null != count3 && count3 != 0){ // 重大 治理率
-                    String str = df.format((float)c / count3 * 100);
-                    list.get(i).put("result33",str + "%");
-                }else {
-                    list.get(i).put("result33","0.00%");
-                }
-
-                Integer number1 = a + b + c; // 已治理 合计
-                list.get(i).put("number1",number1);
-
-                Integer number2 = a1 + b1 + c1;  // 未治理 合计
-                list.get(i).put("number2",number2);
-
-                Integer number = number1 + number2;
-
-                if (null != number && number != 0){
-                    String str = df.format((float)number1 / number * 100);
-                    list.get(i).put("number",str + "%");  // 治理率 合计
-                }else {
-                    list.get(i).put("number","0.00%");
-                }
-
-                Map<String,Object> map2 = new HashMap<>();
-
                 if (list.get(i).get("name").equals(company.getName())){
-
-                    map2.put("name",company.getName());
-                    map2.put("sum",sum);
+                    continue;
                 }else {
-                    map2.put("name",list.get(i).get("name"));
-                    map2.put("sum",sum);
+                    Integer  a = tCheckItemMapper.findRecheckFileByMap(3,user.getId(),3,(String) list.get(i).get("name")); // 一般和较小 合格 已治理
+                    list.get(i).put("danger1",a);
 
+                    Integer  a1 = tCheckItemMapper.findRecheckFileByMap(2,user.getId(),3,(String) list.get(i).get("name")); // 一般和较小 不合格 未治理
+                    list.get(i).put("danger11",a1);
+
+                    count1 = a + a1 ;
+
+                    Integer  b = tCheckItemMapper.findRecheckFileByMap(3,user.getId(),1,(String) list.get(i).get("name")); // 较大 合格 已治理
+                    list.get(i).put("danger2",b);
+
+                    Integer  b1 = tCheckItemMapper.findRecheckFileByMap(2,user.getId(),1,(String) list.get(i).get("name")); // 较大 不合格 未治理
+                    list.get(i).put("danger22",b1);
+
+                    count2  = b + b1;
+
+                    Integer  c = tCheckItemMapper.findRecheckFileByMap(3,user.getId(),2,(String) list.get(i).get("name")); // 重大 合格 已治理
+                    list.get(i).put("danger3",c);
+
+                    Integer  c1 = tCheckItemMapper.findRecheckFileByMap(2,user.getId(),2,(String) list.get(i).get("name")); // 重大 不合格 未治理
+                    list.get(i).put("danger33",c1);
+
+                    count3  = c + c1;
+
+                    sign1 += a;
+                    sign2 += b;
+                    sign3 += c;
+
+                    sign11 += a1;
+                    sign22 += b1;
+                    sign33 += c1;
+
+                    Integer sum = count1 + count2 + count3;
+
+                    if (null != count1 && count1 != 0){  // 一般和较小 治理率
+                        String str = df.format((float)a / count1 * 100);
+                        list.get(i).put("result11",str + "%");
+                    }else {
+                        list.get(i).put("result11","0.00%");
+                    }
+
+                    if (null != count2 && count2 != 0){ // 较大 治理率
+                        String str = df.format((float)b / count2 * 100);
+                        list.get(i).put("result22",str + "%");
+                    }else {
+                        list.get(i).put("result22","0.00%");
+                    }
+
+                    if (null != count3 && count3 != 0){ // 重大 治理率
+                        String str = df.format((float)c / count3 * 100);
+                        list.get(i).put("result33",str + "%");
+                    }else {
+                        list.get(i).put("result33","0.00%");
+                    }
+
+                    Integer number1 = a + b + c; // 已治理 合计
+                    list.get(i).put("number1",number1);
+
+                    Integer number2 = a1 + b1 + c1;  // 未治理 合计
+                    list.get(i).put("number2",number2);
+
+                    Integer number = number1 + number2;
+
+                    if (null != number && number != 0){
+                        String str = df.format((float)number1 / number * 100);
+                        list.get(i).put("number",str + "%");  // 治理率 合计
+                    }else {
+                        list.get(i).put("number","0.00%");
+                    }
+
+                    Map<String,Object> map2 = new HashMap<>();
+
+                    if (list.get(i).get("name").equals(company.getName())){
+
+                        map2.put("name",company.getName());
+                        map2.put("sum",sum);
+                    }else {
+                        map2.put("name",list.get(i).get("name"));
+                        map2.put("sum",sum);
+
+                    }
+                    list1.add(map2);
                 }
-                list1.add(map2);
+
             }
 
             Collections.sort(list1, new Comparator<Map<String, Object>>() {
@@ -4889,6 +4923,13 @@ public class CompanyController_cd extends BaseController {
                 list.remove(i);
             }
         }
+
+        Integer sub = sign1 + sign2 + sign3;
+
+        Integer sub1 = sign11 + sign22 + sign33;
+
+        model.addAttribute("sub",sub);
+        model.addAttribute("sub1",sub1);
 
         Integer sum1 = sign1 + sign11;
         Integer sum2 = sign2 + sign22;
@@ -6282,7 +6323,7 @@ public class CompanyController_cd extends BaseController {
 
         Map<String,Object> map1 = new HashMap<>();
 
-
+        model.addAttribute("company",company.getName());
         ss1 = tCheckItemMapper.zhu123ChartDataBasics(company.getName(),user.getId()); // 生产工艺 隐患数据
 
         ss = tCheckItemMapper.zhu123ChartDataNews("基础管理",company.getName(),user.getId()) + ss1; // 生产工艺 隐患数据
@@ -6574,6 +6615,8 @@ public class CompanyController_cd extends BaseController {
 
         User user = getLoginUser(request);
         Map map = new HashMap();
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        model.addAttribute("company",company.getName());
         List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
         DecimalFormat df = new DecimalFormat("0.00");
         /*List<ZzjgDepartment> zList = zzjgDepartmentMapper.selectLevel1DangerIds(user.getId());*/
@@ -6697,23 +6740,6 @@ public class CompanyController_cd extends BaseController {
             }
         }
 
-
-            /*if (null == (Integer) list.get(i).get("total_count")){
-                sum = (Integer) list.get(i).get("danger1") + (Integer)list.get(i).get("danger2") + (Integer) list.get(i).get("danger3") + (Integer) list.get(i).get("danger4") + (Integer) list.get(i).get("danger5");
-            }else if (null != (Integer) list.get(i).get("total_count")){
-                sum = (Integer) list.get(i).get("danger1") + (Integer)list.get(i).get("danger2") + (Integer) list.get(i).get("danger3") + (Integer) list.get(i).get("danger4") + (Integer) list.get(i).get("danger5") + (Integer) list.get(i).get("total_count");
-            }
-            if (i == list.size()-1){
-                sb1.append(sum);
-            }else {
-                sb1.append(sum).append(",");
-            }*/
-        /*String[] str = sb1.toString().split(",");
-        Integer count6 = Integer.parseInt(str[0]);
-        Integer count7 = Integer.parseInt(str[1]);
-        Integer count8 = Integer.parseInt(str[2]);
-        Integer count9 = Integer.parseInt(str[3]);
-        Integer count10 = Integer.parseInt(str[4]);*/
         Map map1 = new HashMap();
         Integer sum = count1 + count2 + count3 + count4 + count5;
 

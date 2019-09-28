@@ -174,8 +174,8 @@
     <i class="Hui-iconfont">&#xe652;</i>打印预览
     </button>
 
-    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="${ly }/company/model-list-main?flag=1"
-    title="返回">返回</a>
+<%--    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="${ly }/company/model-list-main?flag=1"--%>
+<%--    title="返回">返回</a>--%>
         <%-- <button onClick="top.show_tab('排查治理记录', '${ly }/village/check-list?flag=${flag }')" class="btn btn-success radius" type="button" style="padding: 0 15px;margin-right: 20px">
             <i class="Hui-iconfont mr-10">&#xe652;</i>返回排查治理记录列表
         </button> --%>
@@ -564,6 +564,7 @@
             deadline: $("#deadline").val(),
             planTime: $("#planTime").val()
         }, function (result) {
+
             layer.close(i);
             if (result.status == '1') {
                 layer.alert(result.map.message);
@@ -578,10 +579,18 @@
                 }
                 if (flag != 1) {
                     // show_tab('现场检查记录_' + checkId, '/village/check-document?checkId=' + checkId + '&flag=8')
-                    parent.location.reload();
+                    //parent.location.reload();
+                //show_tab('文书' + checkId, '/village/check-document?checkId=' + checkId + '&flag=1');
+    console.log('--------------------------r----------------------r2---------------------------')
+    let f1=sessionStorage.getItem('flag1');
+    let i1=sessionStorage.getItem('id1');
+    console.log(f1,i1);
+    top.show_tab("检查详情" + checkId, '/company/check-detail?flag=' + f1 + '&id=' + i1);
+                console.log('1')
                 } else {
                     if(sessionStorage.getItem('flag')){
-    location.replace(location.href);
+                            console.log('2')
+                            location.replace(location.href);
                         <%--var l_flag = parseInt(sessionStorage.getItem('flag'))  ;--%>
                         <%--var l_dmname =sessionStorage.getItem('dmname').replace(/\s*/g,"");--%>
                         <%--var l_industryType = parseInt(sessionStorage.getItem('industryType'));--%>
@@ -590,6 +599,7 @@
                       <%--show_tab(x, url)--%>
                     }else{
                         close_dialog(function () {
+    console.log('3')
                             parent.location.reload();
                         })
                     }

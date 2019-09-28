@@ -461,22 +461,7 @@ public class CompanyController_safety extends BaseController {
             List<Map<Object, Object>> zzjg1 = null;
             List<ACompanyManual> list = null;
             List acL = null;
-            /*if (type == null) {*/
-                /*if (null == number){ // 设置
-                    String dangerIds = "1"; // 现场
-                    zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
-                    if (null == zzjg || zzjg.size() == 0){
-                        dangerIds = "2";
-                        zzjg = this.zzjgDepartmentMapper.selectLevel1All(user.getId(),dangerIds);
-                        if (null == zzjg || zzjg.size() == 0){
-                           number = 3;
-                        }else if (null != zzjg || zzjg.size() != 0){
-                            number = 2;
-                        }
-                    }else if (null != zzjg){
-                        number = 1;
-                    }
-                }*/
+
             if (null == types || Integer.parseInt(types) == 1 || Integer.parseInt(types) == 2 || Integer.parseInt(types) == 3) {
                 if (null == number && null == types){
                     number = 3;
@@ -612,19 +597,7 @@ public class CompanyController_safety extends BaseController {
                 model.addAttribute("zzjg",zzjg);
                 model.addAttribute("type", type);
                 return "company/safety-system/risk-list1";
-                /* if (null == flag){
-                    flag = 2;
-                }
-                if (flag == 1){
-                    zzjg = this.zzjgDepartmentMapper.selectAllName(user.getId(),type);
-                    flag = 1;
-                }else if (flag == 2){
-                    zzjg = this.zzjgDepartmentMapper.selectNotEmpy(user.getId(),type);
-                    flag = 2;
-                }*/
-                /*acL = this.aCompanyManualMapper.selectByMapGroupByLevel1Level2(m);*/
-                /*model.addAttribute("dL", acL);*/
-                /*model.addAttribute("flags",flag);*/
+
             }
         }
     }

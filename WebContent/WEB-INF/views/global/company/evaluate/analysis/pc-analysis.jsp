@@ -45,22 +45,30 @@
 
         <div class="select-btn">
         <a class="sbtn btn-default" id="chaBtn0"  href="###">汇总</a>
-        <a class="sbtn" id="chaBtn1"  href="${ly }/global/zf-performance-industry?flag=1">企业自查</a>
-        <a class="sbtn" id="chaBtn2" href="${ly }/global/zf-performance-industry?flag=2">行政检查</a>
-        <a class="sbtn" id="chaBtn3" href="${ly }/global/zf-performance-industry?flag=3">第三方检查</a>
+        <a class="sbtn" onclick="tz('#chaBtn1')" id="chaBtn1"  data-href="${ly }/global/zf-performance-industry?flag=1">企业自查</a>
+        <a class="sbtn" onclick="tz('#chaBtn2')" id="chaBtn2" data-href="${ly }/global/zf-performance-industry?flag=2">行政检查</a>
+        <a class="sbtn" onclick="tz('#chaBtn3')" id="chaBtn3" data-href="${ly }/global/zf-performance-industry?flag=3">第三方检查</a>
         </div>
         <div id="main" style="width: 90%;height:400px;margin: 50px auto 0 auto;"></div>
+<script src="https://sec.dicarl.com/js/H-ui.admin_v3.0/lib/layer/2.4/layer.js"></script>
+<script>
+        function tz(p){
+        layer.load(0, {
+        shade: [1,'#fff'] //0.1透明度的白色背景
+        });
+        window.location.href=$(p).data("href")
+        }
 
-
+</script>
         <%--柱状图2--%>
 
 
 
         <div class="select-btn">
         <a class="sbtn btn-default" id="chaBtn0"  href="###">汇总</a>
-        <a class="sbtn" id="chaBtn11"  href="${ly }/global/zf-check-hidden-trouble?flag=1">企业自查</a>
-        <a class="sbtn" id="chaBtn22" href="${ly }/global/zf-check-hidden-trouble?flag=2">行政检查</a>
-        <a class="sbtn" id="chaBtn33" href="${ly }/global/zf-check-hidden-trouble?flag=3">第三方检查</a>
+        <a class="sbtn" onclick="tz('#chaBtn11')" id="chaBtn11"  href="${ly }/global/zf-check-hidden-trouble?flag=1">企业自查</a>
+        <a class="sbtn" onclick="tz('#chaBtn22')" id="chaBtn22" href="${ly }/global/zf-check-hidden-trouble?flag=2">行政检查</a>
+        <a class="sbtn" onclick="tz('#chaBtn33')" id="chaBtn33" href="${ly }/global/zf-check-hidden-trouble?flag=3">第三方检查</a>
         </div>
         <div id="main2" style="width: 90%;height:60%;margin: 100px auto 0 auto;"></div>
 

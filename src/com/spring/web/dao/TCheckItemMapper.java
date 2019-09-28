@@ -253,6 +253,10 @@ public interface TCheckItemMapper {
 
     Integer findHiddenLevelTypeByMap(@Param("depart")String depart, @Param("user_id")Integer user_id, @Param("flag")Integer flag);
 
+    Integer findHiddenLevelNews(@Param("depart")String depart, @Param("user_id")Integer user_id, @Param("flag")Integer flag);
+
+    Integer findHiddenLevelBasics(@Param("depart")String depart, @Param("user_id")Integer user_id, @Param("flag")Integer flag);
+
     Integer findRecheckFileByMap(@Param("status")Integer status, @Param("user_id")Integer user_id, @Param("flag")Integer flag,@Param("depart")String depart);
 
     Integer findRecheckNews(@Param("status")Integer status, @Param("user_id")Integer user_id, @Param("flag")Integer flag,@Param("depart")String depart);

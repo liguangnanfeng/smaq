@@ -122,7 +122,7 @@
             </main>
             <script>
                 var w=$('main').height();
-                $('main').height(w*0.4015625)
+                $('main').height(w*0.322012)
 
             </script>
             <div class="func">

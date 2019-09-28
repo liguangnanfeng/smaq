@@ -2236,13 +2236,17 @@ public class SteelController extends BaseController {
         Map<String, Object> map1 = new HashMap<>();
         map1.put("user_id", user.getId());
         map1.put("user_name", user.getUserName());
-        companyMaps.add(map1);
+        companyMaps.add(map1); //查出所有的公司
         List<Map<String,Object>> list = null;
         List<Map<String, Object>> list2 = new ArrayList<>();
+        List<Map<String, Object>> totalList = new ArrayList<>();
+        List<Map<String, Object>> zanlist = new ArrayList<>();
         for(Map<String, Object> map:companyMaps){
             danger1 = 0; danger2 = 0; danger3 = 0; danger4 = 0; danger5 = 0;
             plan1 = 0; plan2 = 0; plan3 = 0; plan4 = 0; plan5 = 0; plan6 = 0;
+
             list =  hiddenPlanMapper.selectDpids(String.valueOf((Integer) map.get("user_id")));//查询当前公司的各个车间
+
             if (null == list || list.size() == 0){
 
             }else if (null != list && list.size() != 0){
@@ -2333,8 +2337,10 @@ public class SteelController extends BaseController {
 
         Integer sums1 = number1 + number2 + number3 + number4 + number5 + number6;
 
+        map1.put("sums", sums);
+        map1.put("sums1", sums1);
         model.addAttribute("sums",sums);
-
+        totalList.add(map1);
         if (null != sums1 && 0 != sums1) {
 
             if (null != sums && 0 != sums) {
@@ -2378,9 +2384,11 @@ public class SteelController extends BaseController {
         map1.put("result44",result44+"%");
         map1.put("result55",result55+"%");
         map1.put("result66",result66+"%");
-
-       list2.add(map1);
+        zanlist.add(map1);
+       //list2.add(map1);
        model.addAttribute("list", list2);
+       model.addAttribute("list1", totalList);
+       model.addAttribute("list2", zanlist);
        System.out.println(list2);
         return "steel/danger/danger1/danger-chart-jx";
 
@@ -2404,6 +2412,8 @@ public class SteelController extends BaseController {
         List<Map<String,Object>> list = null;
         List<Map<String,Object>> list1 = new ArrayList<>();
         List<Map<String,Object>> list2 = new ArrayList<>();
+        List<Map<String, Object>> totallist = new ArrayList<>();
+        List<Map<String, Object>> zanlist = new ArrayList<>();
         for(Map<String, Object> map:companyMaps){
             danger1 = 0; danger2 = 0;
             if (flag ==1){
@@ -2455,9 +2465,9 @@ public class SteelController extends BaseController {
         map1 = new HashMap<>();
         map1.put("count1", count1);
         map1.put("count2", count2);
-        list2.add(map1);
         Integer sum   = count1 + count2;
-
+        map1.put("sum", sum);
+        totallist.add(map1);
         DecimalFormat df = new DecimalFormat("0.00");
         map1 = new HashMap<>();
         if (null != sum && 0 != sum){
@@ -2480,9 +2490,11 @@ public class SteelController extends BaseController {
             map1.put("result1","0.00%"); // 所有车间 现场风险 占比总数
             map1.put("result2","0.00%"); // 所有车间 基础风险 占比总数
         }
-        list2.add(map1);
+        zanlist.add(map1);
+        //list2.add(map1);
         model.addAttribute("list", list2);
-        System.out.println(list2);
+        model.addAttribute("list1", totallist);
+        model.addAttribute("list2", zanlist);
         return "steel/danger/danger1/zhuChartData55";
 
     }
@@ -5820,12 +5832,12 @@ public class SteelController extends BaseController {
             //System.out.println("user:" + map.get("user_id"));
 
             findComment1(company, list, sb);
-            list1 = tCheckItemMapper.selectHiddenSources11(1,String.valueOf((Integer) map.get("user_id"))); // 企业自查
-            number1 = number1 + list1.size();
-            list1 = tCheckItemMapper.selectHiddenSources11(2,String.valueOf((Integer) map.get("user_id"))); // 行政检查
-            number2 = number2 + list.size();
-            list1 = tCheckItemMapper.selectHiddenSources11(3,String.valueOf((Integer) map.get("user_id"))); // 第三方检查
-            number3 = number3 + list.size();
+           // list1 = tCheckItemMapper.selectHiddenSources11(1,String.valueOf((Integer) map.get("user_id"))); // 企业自查
+            //number1 = number1 + list1.size();
+            //list1 = tCheckItemMapper.selectHiddenSources11(2,String.valueOf((Integer) map.get("user_id"))); // 行政检查
+            //number2 = number2 + list.size();
+            //list1 = tCheckItemMapper.selectHiddenSources11(3,String.valueOf((Integer) map.get("user_id"))); // 第三方检查
+           // number3 = number3 + list.size();
             if (null == sb.toString() || sb.toString().length() == 0){
 
             }else if (null != sb.toString() && sb.toString().length() != 0){
@@ -5987,7 +5999,17 @@ public class SteelController extends BaseController {
         DecimalFormat df = new DecimalFormat("0.00");
 
         selectCounts2(model, count, sumA, sumB, sumC, sumD, sumE, sumF, sumG, sumH, sumI, sumJ, sumK, sumL, sumM, sumN, sumO, sumP, sumQ, sumR, sumS, df);
-
+         sb = new StringBuilder();
+         for(int i =0; i< companyMaps.size(); i++){
+             if (i == companyMaps.size() - 1) {
+                 sb.append("'").append(companyMaps.get(i).get("user_id")).append("'");
+             } else {
+                 sb.append("'").append(companyMaps.get(i).get("user_id")).append("',");
+             }
+         }
+        number1 = tCheckItemMapper.selectHiddenSources11(1,sb.toString()).size();// 企业自查
+        number2 = tCheckItemMapper.selectHiddenSources11(2,sb.toString()).size();// 企业自查
+        number3 = tCheckItemMapper.selectHiddenSources11(3,sb.toString()).size();// 企业自查
         model.addAttribute("number1",number1);
         model.addAttribute("number2",number2);
         model.addAttribute("number3",number3);
@@ -6668,38 +6690,10 @@ public class SteelController extends BaseController {
         map1.put("user_id", user.getId());
         map1.put("user_name", user.getUserName());
         companyMaps.add(map1);
-        List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
-        List<Map<String, Object>> list = null;
-        DecimalFormat df = new DecimalFormat("0.00");
         for(Map<String, Object> map:companyMaps){
-            danger1 = 0; danger2 = 0; danger3 = 0;
-            list = zzjgDepartmentMapper.findAllLevel1((Integer) map.get("user_id"));//查询该公司的所有车间
 
-            if (null == list || list.size() == 0){
 
-            }else if (null != list && list.size() != 0){
-                for (int i = 0; i < list.size(); i++) {
-                    danger1 = danger1 + tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),(Integer) map.get("user_id"),3);
-
-                    danger2 = danger2 + tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),(Integer) map.get("user_id"),2);
-
-                    danger3 = danger3 + tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),(Integer) map.get("user_id"),1);
-
-                }
-            }
-            count1 = count1 + danger1;
-            count2 = count2 + danger2;
-            count3 = count3 + danger3;
-            Integer sum = danger1 + danger2 + danger3;
-            map1 = new HashMap<>();
-            map1.put("name", (String) map.get("user_name"));
-            map1.put("danger1", danger1);
-            map1.put("danger2", danger2);
-            map1.put("danger3", danger3);
-            map1.put("sum", sum);
-            list1.add(map1);
         }
-        System.out.println(list1);
-        return "";
+        return "steel/danger/danger1/zhuChartData77";
     }
 }

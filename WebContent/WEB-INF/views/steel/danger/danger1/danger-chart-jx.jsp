@@ -188,7 +188,7 @@
             console.log(`${list}`);
             </script>
         <c:forEach items="${list}" varStatus="index" var="be">
-                <c:if test="${index.index<fn:length(list)-2 }">
+
                         <tr class="text-c">
                         <td>${index.index + 1}</td>
                         <td>${be.name==null?'公司级':be.name }</td>
@@ -228,9 +228,8 @@
                         </script>--%>
                         <td></td>
                         </tr>
-
-                </c:if>
-                <c:if test="${index.index==fn:length(list)-2 }">
+           </c:forEach>
+        <c:forEach items="${list1}" varStatus="index" var="be">
                         <tr class="text-c">
                         <td></td>
                         <td>合计</td>
@@ -259,12 +258,13 @@
                         <td><%--${be.count6}--%>0</td>
                         <td></td>
 
-                        <td>${sums}</td>
-                        <td>${sums1}</td>
+                        <td>${be.sums}</td>
+                        <td>${be.sums1}</td>
                         <td></td>
                         </tr>
-                </c:if>
-                <c:if test="${index.index>fn:length(list)-2 }">
+
+        </c:forEach>
+        <c:forEach items="${list2}" varStatus="index" var="be">
                         <tr class="text-c">
                         <td></td>
                         <td>占比</td>
@@ -297,8 +297,9 @@
                         <td></td>
                         <td></td>
                         </tr>
-                </c:if>
         </c:forEach>
+
+
         <!-- 循环结束 -->
         </tbody>
         </table>

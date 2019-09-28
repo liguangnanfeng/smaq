@@ -35,7 +35,7 @@ function showpicture(src, obj){
 
   $("#modal-plan2 .div_imgp").html('');
   $.each(src.split(","), function(i, item) {
-    $(".div_imgp").append('<div class="div_imgp">' + 
+    $(".div_imgp").append('<div class="div_imgp">' +
         '<img src="'+item+'" class="img-responsive mt-20" >' +
         '</div>');
   })
@@ -64,7 +64,7 @@ function uploadpicture(obj){
 <body>
 <div class="page-container">
   <div class="div_pdetail">
-  
+
    <c:choose>
     <c:when test="${check.flag == 1}">
       <button onClick="pr_()" class="btn btn-primary radius" type="button">
@@ -125,10 +125,10 @@ function uploadpicture(obj){
           </td>
             <td class="text-c">${be.levels }</td>
 
-          
+
           <!--<td class="text-c">zhangcl ${be.id }</td>-->
-          
-          
+
+
           <td class="text-c"><%-- ${be.content } --%>
           <c:if test="${!empty be.memo }">${be.memo }</c:if>
           <c:if test="${!empty be.files }"><img alt="" src="${be.files }" style="max-height:100px;cursor:pointer;" onClick="showpicture('${be.files}')"/></c:if>
@@ -232,14 +232,14 @@ function uploadpicture(obj){
                   <label class="form-label col-xs-4 col-sm-2" style="width:20%;text-align:right;">复查描述：</label>
                   <div class="formControls col-xs-8 col-sm-9" style="width:70%;">
                     <textarea id="memo" class="textarea txtarea_sq" style="width:350px;" maxlength="500"></textarea>
-                  </div> 
+                  </div>
                 </div>
                 <div class="row cl mt-15">
                 <label class="form-label col-xs-4 col-sm-2" style="width:20%;text-align:right;">复查图片：</label>
                 <div class="formControls col-xs-8 col-sm-9" style="width:70%;">
                   <img id="pic3" src="${ly }/images/zwtp.jpg" style="width:200px;min-height:200px;" url=""/>
                   <a href="javascript:void(0);" onclick="img_upload('pic3', null)" class="btn btn-primary radius upload-btn mt-10"><i class="Hui-iconfont">&#xe642;</i> 上传图片</a>
-                </div> 
+                </div>
               </div>
               </div>
               <div class="modal-footer">
@@ -249,7 +249,7 @@ function uploadpicture(obj){
           </div>
       </div>
   </div>
-  
+
   <!-- 弹窗图片 -->
   <div id="modal-plan2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -290,7 +290,7 @@ $(function(){
     td.attr("data-status", s);
     $(":checkbox[data-i='"+td.attr("data-i")+"'][name='"+(s=='2'?'isxian':'isli')+"']").prop("checked", true);
     $(":checkbox[data-i='"+td.attr("data-i")+"'][name='"+(s=='2'?'isli':'isxian')+"']").prop("checked", false);
-    
+
     check_time();
   })
 })
@@ -313,7 +313,7 @@ function article_save_submit() {
     layer.alert("请选择未整改项期限");
     return false;
   }
-  
+
   if($("#cheker").val() == '') {
     layer.alert("检查人不能为空");
     return false;
@@ -328,7 +328,7 @@ function article_save_submit() {
     layer.alert("被检查部门负责人不能为空");
     return false;
   }
-  
+
   var ind = layer.load();
   var obj = new Object();
   var recheck = new Object();
@@ -338,7 +338,7 @@ function article_save_submit() {
   recheck.checker = $("#checker").val();
   recheck.checkCompany = $("#checkCompany").val();
   recheck.dapartContact = $("#dapartContact").val();
-  
+
   obj.recheck = recheck;
   obj.nextTime= $("#nextTime").val();
   var list = new Array();
@@ -355,9 +355,9 @@ function article_save_submit() {
     list.push(it);
   })
   obj.list = list;
-  
+
   //alert(JSON.stringify(obj));
-  
+
   $.ajax({
     type : "POST",
     url : getRootPath() + '/company/recheck-save',
@@ -370,22 +370,21 @@ function article_save_submit() {
     	//alert(JSON.stringify(result));
       layer.close(ind);
       if(result.status == '0') {
-  <%--location.replace(location.href);--%>
         top.ref_ifm();
   let flag=1;
-  <%--//新版跳转--%>
-  <%--console.log("wjjjjj")--%>
   console.log($(":radio[value='2']:checked").length);
   if ($(":radio[value='2']:checked").length > 0) {
   console.log('不合格')
   <%--top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);--%>
-  top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);
+  //top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);
+  var i1=sessionStorage.getItem('id1');
+  top.show_tab("治理意见表_" + checkId, '/village/check-document?checkId=' +i1);
+
   } else {
   console.log('合格')
-  var url = '/company/recheck-detail?checkId=' + checkId+'&flag=' + flag + '&number=${be.c }';
-  <%--var url = '/company/recheck-detail?checkId=${be.id}&flag=${flag}&number=${be.c }';--%>
-  <%--top.show_tab(url);--%>
-  window.location.href = url
+  //var url = '/company/recheck-detail?checkId=' + checkId+'&flag=' + flag + '&number=${be.c }';
+  //window.location.href = url
+
   }
 
   <%--parent.location.reload();--%>

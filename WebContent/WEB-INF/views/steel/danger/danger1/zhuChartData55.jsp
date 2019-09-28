@@ -137,7 +137,6 @@
 		</script>
 
 		<c:forEach items="${list}" varStatus="index" var="be">
-			<c:if test="${index.index<fn:length(list)-1 }">
 				<tr>
 
 					<td>${index.index + 1}</td>
@@ -151,9 +150,9 @@
 						console.log('${be.sum}');
 					</script>
 				</tr>
-			</c:if>
+		</c:forEach>
 
-			<c:if test="${index.index>fn:length(list)-2 }">
+		<c:forEach items="${list1}" varStatus="index" var="be">
 				<tr>
 					<td>合计</td>
 					<td>---</td>
@@ -166,8 +165,8 @@
 					</script>
 				</tr>
 
-			</c:if>
-			<c:if test="${index.index>fn:length(list)-2 }">
+		</c:forEach>
+        <c:forEach items="${list2}" varStatus="index" var="be">
 				<tr>
 					<td>占比%</td>
 					<td>---</td>
@@ -176,9 +175,9 @@
 					<td>---</td>
 					<td></td>
 				</tr>
-			</c:if>
-
 		</c:forEach>
+
+
 	</table>
 </div>
 </body>

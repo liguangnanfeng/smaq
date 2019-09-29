@@ -34,10 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.*;
 
 @Controller
@@ -166,6 +163,15 @@ public class SteelController extends BaseController {
             model.addAttribute("number", userIds.split(",").length);//企业数量
         }
 
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String startTime = df.format(new Date().getTime()-15*24*60*60*1000);
+
+        Date startTime1 = df.parse(startTime);
+        Date endTime = new Date();
+
+        Integer counts = tCheckMapper.findAllCounte(String.valueOf(user.getId()),startTime1,endTime); // 排查数据
+        Integer counts1 = tCheckItemMapper.findAllCounte(String.valueOf(user.getId())); // 治理数据
+
         m.put("tradeId", null);
         model.addAttribute("name_", tradeMapper.selectByPrimaryKey(user.getId()).getName());
         model.addAttribute("dangerC", tCheckItemMapper.selectCount(m));// 隐患情况汇总
@@ -173,6 +179,8 @@ public class SteelController extends BaseController {
         model.addAttribute("mc", monitorMapper.selectCount(m));
         model.addAttribute("count", count);
         model.addAttribute("userId", user.getId());
+        model.addAttribute("counts1", counts1);
+        model.addAttribute("counts", counts);
         Trade trade = tradeMapper.selectByPrimaryKey(user.getId());
         if (trade.getIsClique() == 1) {//行业端集团型企业
             return "steel/clique-welcome";
@@ -2232,11 +2240,13 @@ public class SteelController extends BaseController {
         Integer danger4 = 0;  Integer count4 = 0; Integer plan4 = 0;  Integer number4 = 0;
         Integer danger5 = 0;  Integer count5 = 0; Integer plan5 = 0;  Integer number5 = 0;
         Integer count11 = 0;  Integer count22 = 0;Integer plan6 = 0;  Integer number6 = 0;
-        List<Map<String, Object>> companyMaps = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
+        List<Map<String, Object>> companyMaps = new ArrayList<>();
+        List<Map<String, Object>> companyMaps1 = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
         Map<String, Object> map1 = new HashMap<>();
         map1.put("user_id", user.getId());
         map1.put("user_name", user.getUserName());
         companyMaps.add(map1); //查出所有的公司
+        companyMaps.addAll(companyMaps1);
         List<Map<String,Object>> list = null;
         List<Map<String, Object>> list2 = new ArrayList<>();
         List<Map<String, Object>> totalList = new ArrayList<>();
@@ -2404,11 +2414,13 @@ public class SteelController extends BaseController {
         User user = getLoginUser(request);
         Integer danger1 = 0; Integer count1 = 0;
         Integer danger2 = 0; Integer count2 = 0;
-        List<Map<String, Object>> companyMaps = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
+        List<Map<String, Object>> companyMaps = new ArrayList<>();
+        List<Map<String, Object>> companyMaps1 = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
         Map<String, Object> map1 = new HashMap<>();
         map1.put("user_id", user.getId());
         map1.put("user_name", user.getUserName());
         companyMaps.add(map1);
+        companyMaps.addAll(companyMaps1);
         List<Map<String,Object>> list = null;
         List<Map<String,Object>> list1 = new ArrayList<>();
         List<Map<String,Object>> list2 = new ArrayList<>();
@@ -2528,11 +2540,13 @@ public class SteelController extends BaseController {
         Integer danger17 = 0;      Integer sumQ = 0;
         Integer danger18 = 0;      Integer sumR = 0;
         Integer danger20 = 0;
-        List<Map<String, Object>> companyMaps = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
+        List<Map<String, Object>> companyMaps = new ArrayList<>();
+        List<Map<String, Object>> companyMaps1 = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
         Map<String, Object> map1 = new HashMap<>();
         map1.put("user_id", user.getId());
         map1.put("user_name", user.getUserName());
         companyMaps.add(map1);
+        companyMaps.addAll(companyMaps1);
         List<Map<String,Object>> list = null;
         List<Map<String,Object>> companylist = new ArrayList<Map<String, Object>>();
         List<Map<String, Object>> sortlist = new ArrayList<>();
@@ -2907,11 +2921,13 @@ public class SteelController extends BaseController {
         Integer danger17 = 0;      Integer sumQ = 0;
         Integer danger18 = 0;      Integer sumR = 0;
         Integer danger20 = 0;
-        List<Map<String, Object>> companyMaps = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
+        List<Map<String, Object>> companyMaps = new ArrayList<>();
+        List<Map<String, Object>> companyMaps1 = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
         Map<String, Object> map1 = new HashMap<>();
         map1.put("user_id", user.getId());
         map1.put("user_name", user.getUserName());
         companyMaps.add(map1);
+        companyMaps.addAll(companyMaps1);
         List<Map<String,Object>> list = null;
         List<Map<String,Object>> companylist = new ArrayList<Map<String, Object>>();
         List<Map<String, Object>> sortlist = new ArrayList<>();
@@ -3434,11 +3450,13 @@ public class SteelController extends BaseController {
         Integer danger17 = 0;      Integer sumQ = 0;
         Integer danger18 = 0;      Integer sumR = 0;
         Integer danger20 = 0;
-        List<Map<String, Object>> companyMaps = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
+        List<Map<String, Object>> companyMaps = new ArrayList<>();
+        List<Map<String, Object>> companyMaps1 = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
         Map<String, Object> map1 = new HashMap<>();
         map1.put("user_id", user.getId());
         map1.put("user_name", user.getUserName());
         companyMaps.add(map1);
+        companyMaps.addAll(companyMaps1);
         List<Map<String,Object>> list = null; //查询车间
         List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
         Map<String, Object> map2 = null;
@@ -5675,7 +5693,7 @@ public class SteelController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping("safety-system/risk-distribution")
+    @RequestMapping("/safety-system/all-risk-map1")
     public String riskDistribution(HttpServletRequest request, Model model) {
         User user = getLoginUser(request);
         StringBuilder sb = new StringBuilder();
@@ -6670,6 +6688,7 @@ public class SteelController extends BaseController {
         model.addAttribute("p", sumP);
         model.addAttribute("q", sumQ);
         model.addAttribute("r", sumR);
+        //System.out.println(num1+num2+num3);
         DecimalFormat df = new DecimalFormat("0.00");
         selectCounts3(model, sumS, sumA, sumB, sumC, sumD, sumE, sumF, sumG, sumH, sumI, sumJ, sumK, sumL, sumM, sumN, sumO, sumP, sumQ, sumR, count, df);
         return "steel/danger/danger1/zl-analysis";
@@ -6682,18 +6701,192 @@ public class SteelController extends BaseController {
     @RequestMapping(value = "zhuChartData77")
     public String zhuChartData77 (HttpServletRequest request, Model model){
         User user = getLoginUser(request);
-        Integer danger1 = 0; Integer count1 = 0;
-        Integer danger2 = 0; Integer count2 = 0;
-        Integer danger3 = 0; Integer count3 = 0;
-        List<Map<String, Object>> companyMaps = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
-        Map<String, Object> map1 = new HashMap<>();
-        map1.put("user_id", user.getId());
-        map1.put("user_name", user.getUserName());
-        companyMaps.add(map1);
-        for(Map<String, Object> map:companyMaps){
+        Company company = companyMapper.selectByPrimaryKey(user.getId());//查询所有企业
+        /*List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());*/
+        List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));//查询所有车间
+        List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
+        DecimalFormat df = new DecimalFormat("0.00");
+        Map<String,Object> map = new HashMap<>();
+
+        Integer count1 = 0;
+        Integer count2 = 0;
+        Integer count3 = 0;
+        Integer sum = 0;
+        Integer a = 0;
+        Integer b = 0;
+        Integer c = 0;
+        if (null == list || list.size() == 0){
+
+        }else if (null != list && list.size() != 0){
+
+            for (int i = 0; i < list.size(); i++) {
+
+                if (null == list.get(i).get("name") && (Integer)list.get(i).get("dpid") == 0) {
 
 
+                    list.get(i).put("name",company.getName());
+
+                    Integer a1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),3); // 一般
+                    Integer a2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),3); // 一般
+                    a = a1 + a2;
+                    list.get(i).put("danger1",a);
+
+                    Integer b1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),1); // 较大
+                    Integer b2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),1); // 较大
+                    b = b1 + b2;
+                    list.get(i).put("danger2",b);
+
+                    Integer c1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),2); // 重大
+                    Integer c2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),2); // 重大
+                    c = c1 + c2;
+                    list.get(i).put("danger3",c);
+
+                }else if (null != list.get(i).get("name") && (Integer)list.get(i).get("dpid") != 0){
+
+                    a = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),company.getUserId(),3); // 一般
+                    list.get(i).put("danger1",a);
+                    b = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),company.getUserId(),1); // 较大
+                    list.get(i).put("danger2",b);
+                    c = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),company.getUserId(),2); // 重大
+                    list.get(i).put("danger3",c);
+
+                }
+
+                count1 += a;
+                count2 += b;
+                count3 += c;
+
+                sum = a + b + c;
+
+                list.get(i).put("sum", sum); // 某个车间所有隐患的 合计
+
+                if (null != sum && sum != 0){
+                    String str = df.format((float)a / sum * 100);// 一般 横占比
+                    list.get(i).put("result11",str + "%");
+
+                    String str1 = df.format((float)b / sum * 100); // 较大 横占比
+
+                    list.get(i).put("result22",str + "%");
+
+                    String str2 = df.format((float)c / sum * 100); // 重大 横占比
+
+                    list.get(i).put("result33",str + "%");
+                }else {
+
+                    list.get(i).put("result11", "0.00%");
+                    list.get(i).put("result22", "0.00%");
+                    list.get(i).put("result33", "0.00%");
+                }
+
+                Map<String,Object> map1 = new HashMap<>();
+
+                map1.put("name",list.get(i).get("name"));
+                map1.put("sum",sum);
+
+                list1.add(map1);
+            }
+
+            Collections.sort(list1, new Comparator<Map<String, Object>>() {
+
+                public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+
+                    Integer name1 = Integer.valueOf(o1.get("sum").toString()) ;
+
+                    Integer name2 = Integer.valueOf(o2.get("sum").toString()) ;
+
+                    return name1.compareTo(name2);
+
+                }
+            });
+
+            for (int i = 0; i < list1.size(); i++) {
+
+                list1.get(i).put("data",list1.size()-i);
+
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+
+                for (int j = 0; j < list1.size(); j++) {
+
+                    if (null != list.get(i).get("name") &&  null != list1.get(j).get("name")){
+
+                        if (list.get(i).get("name").equals(list1.get(j).get("name"))){
+
+                            list.get(i).put("data",list1.get(j).get("data"));
+
+                            break;
+                        }
+                    }
+                }
+            }
         }
+
+        for (int i = 0; i < list.size(); i++) {
+            Integer sums = count1 + count2 + count3;
+            if (null != sums && 0 != sums){
+                if (null != list.get(i).get("sum") && 0 != list.get(i).get("sum")){
+                    String s = df.format((float)(Integer)list.get(i).get("sum") / sums * 100);
+                    list.get(i).put("result44",s + "%");
+                }else {
+                    list.get(i).put("result44","0.00%");
+                }
+            }
+        }
+
+        Integer sums = count1 + count2 + count3;
+
+        if (null != sums && 0 != sums){
+
+            if (null != count1 && 0 != count1){
+                String s = df.format((float)count1 / sums * 100);
+                map.put("result1",s + "%"); // 一般 竖占比
+
+            }else {
+                map.put("result1","0.00%"); // 一般 竖占比
+            }
+
+            if (null != count2 && 0 != count2){
+                String s = df.format((float)count2 / sums * 100);
+                map.put("result2",s + "%"); // 较大 竖占比
+            }else {
+                map.put("result2","0.00%"); // 较大 竖占比
+            }
+
+            if (null != count3 && 0 != count3){
+                String s = df.format((float)count3 / sums * 100);
+                map.put("result3",s + "%"); // 重大 竖占比
+            }else {
+                map.put("result3","0.00%"); // 重大 竖占比
+            }
+
+        }else {
+            map.put("result1","0.00%"); // 一般 竖占比
+            map.put("result2","0.00%"); // 较大 竖占比
+            map.put("result3","0.00%"); // 重大 竖占比
+        }
+
+        map.put("count1",count1); // 所有 一般隐患数据
+        map.put("count2",count2); // 所有 较大隐患数据
+        map.put("count3",count3); // 所有 重大隐患数据
+
+        list.add(map);
+
+        model.addAttribute("sums",sums);
+        model.addAttribute("data",new Date());
+        list.remove(1);
+        model.addAttribute("list",list);
         return "steel/danger/danger1/zhuChartData77";
+    }
+
+    @RequestMapping(value = "/safety-system/all-risk-map")
+    public String controlDistribution(HttpServletRequest request,Model model) throws Exception {
+        User user = getLoginUser(request);
+
+        model.addAttribute("longitude",user.getLongitude());
+        model.addAttribute("latitude",user.getLatitude());
+        List<Map<String, Object>> list1 = aCompanyManualMapper.findCompanyByCliqu(user.getId());
+        model.addAttribute("list1",list1);
+        return "steel/safety-system/all-risk-map";
     }
 }

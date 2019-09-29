@@ -217,5 +217,7 @@ public interface ACompanyManualMapper {
 
     List<Map<String,Object>> findControlDataByCliqu(@Param("userId")String userId);
 
+    List<Map<String,Object>> findCompanyByCliqu(@Param("id") Integer tid);//显示全部企业
+
 }
 

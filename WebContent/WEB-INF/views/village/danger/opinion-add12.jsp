@@ -283,7 +283,12 @@ function save_() {
       flag: 1,
       flag2 : 2
     }, function(reuslt) {
-      location.reload();
+    console.log('--------------------------r----------123------------r2---------------------------')
+    var f1=sessionStorage.getItem('flag1');
+    var i1=sessionStorage.getItem('id1');
+
+    top.show_tab("整改意见书", '/village/check-rectification?flag=' + f1 + '&id=' + i1+'&book');
+
     })
 }
 var serious_i = ${serList};

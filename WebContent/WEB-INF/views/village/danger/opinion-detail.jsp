@@ -32,6 +32,8 @@
         .div_pdetail {
             width: 100%;
             font-size: 15px;
+    display: flex;
+    justify-content: space-between;
         }
 
         .div_pdetail font {
@@ -173,7 +175,9 @@
     <button onClick="pr_()" class="btn btn-primary radius btn_hid" type="button">
     <i class="Hui-iconfont">&#xe652;</i>打印预览
     </button>
-
+    <button id="back"   onclick="top.show_tab('检查文书', '/village/check-list?flag=2')" class="btn radius" type="button">
+    <i class="Hui-iconfont mr-10"></i>返回列表
+    </button>
 <%--    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="${ly }/company/model-list-main?flag=1"--%>
 <%--    title="返回">返回</a>--%>
         <%-- <button onClick="top.show_tab('排查治理记录', '${ly }/village/check-list?flag=${flag }')" class="btn btn-success radius" type="button" style="padding: 0 15px;margin-right: 20px">
@@ -196,11 +200,22 @@
 
 
     <c:if test="${empty rectification}">
-        <h2 class="text-c mb-10">隐患整改意见表</h2>
+        <h2 class="ss  text-c mb-10">隐患整改意见表</h2>
     </c:if>
     <c:if test="${!empty rectification}">
-        <h2 class="text-c mb-10">隐患整改意见书</h2>
+        <h2 class="ss  text-c mb-10">隐患整改意见书</h2>
     </c:if>
+
+    <script>
+    let searchURL = window.location.search;
+    searchURL = searchURL.substring(1, searchURL.length);
+    substring = "book";
+    b= searchURL.includes(substring);   // true
+    if(b){
+    $(".ss").text("隐患整改意见书");
+    }
+    </script>
+
     <div class="div_pdetail">
         <font>受检${check.flag == 1 ? '部门' : '单位'}：${check.depart }</font>
         <label>检查日期：<fmt:formatDate value="${check.realTime }" pattern="yyyy年MM月dd日"/></label>
@@ -580,12 +595,8 @@
                 if (flag != 1) {
                     // show_tab('现场检查记录_' + checkId, '/village/check-document?checkId=' + checkId + '&flag=8')
                     //parent.location.reload();
-                //show_tab('文书' + checkId, '/village/check-document?checkId=' + checkId + '&flag=1');
-    console.log('--------------------------r----------------------r2---------------------------')
-    let f1=sessionStorage.getItem('flag1');
-    let i1=sessionStorage.getItem('id1');
-    console.log(f1,i1);
-    top.show_tab("检查详情" + checkId, '/company/check-detail?flag=' + f1 + '&id=' + i1);
+    show_tab('文书' + checkId, '/village/check-document?checkId=' + checkId + '&flag=1');
+
                 console.log('1')
                 } else {
                     if(sessionStorage.getItem('flag')){
@@ -625,7 +636,8 @@
 <script>
 
     function pr_() {
-    $('.btn_hid').css('display','none')
+    $('.btn_hid').css('display','none');
+    $('#back').css('display','none');
     $(".page-container").jqprint();
     setTimeout(function () {
     $('.btn_hid').css('display','inline-block')

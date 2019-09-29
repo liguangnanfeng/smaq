@@ -104,7 +104,7 @@ function showping(){
           <c:if test="${userId != 35346 }"><p style="margin-top:10px">${name_ }</p></c:if>
           <span  style="margin-top:10px"><a data-href="${ly }/steel/company/company-list" data-title="全部企业" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业数量：${number }</a></span>
           <span style="margin-top:10px">
-            <a data-href="${ly }/tradeclique/control-list2" data-title="企业分布图" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业分布图<img alt="" src="${ly }/images/fore/fb.jpg"/></a>
+            <a data-href="${ly }/steel/safety-system/all-risk-map" data-title="企业分布图" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业分布图<img alt="" src="${ly }/images/fore/fb.jpg"/></a>
           </span>
         </div>
         <div class="div_company2">
@@ -137,13 +137,13 @@ function showping(){
   </a>
   <a class="one_tx radius pos-r" href="/steel/check-list?flag=1&status=2&userId=789" style="background:#ea4f21;margin-right:2%;margin-left:1%">
   <img alt="" src="${ly }/images/httb9.png"/>
-  <font class="font_tx1 pos-a" ></font>
+    <font class="font_tx1 pos-a <c:if test="${counts >0}">blink</c:if>">${counts}</font>
   <font class="font_tx2 pos-a">隐患排查</font>
   </a>
 
   <a class="one_tx radius pos-r" href="/steel/hidden-danger-list?flag=1&status=1&userId=789"  style="background:#ea4f21;margin-right:2%">
   <img alt="" src="${ly }/images/httb9.png"/>
-  <font class="font_tx1 pos-a "></font>
+    <font class="font_tx1 pos-a <c:if test="${counts1 >0}">blink</c:if>">${counts1}</font>
   <font class="font_tx2 pos-a">隐患治理</font>
   </a>
   <%--  <c:if test="${zdsgyh >0}">blink</c:if>  这是闪烁的特效--%>

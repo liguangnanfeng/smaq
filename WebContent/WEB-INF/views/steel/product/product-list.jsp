@@ -39,8 +39,8 @@ body .dis-ib{margin-right:15px;}
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <span class="l">
-        <a class="btn btn-primary radius" href="javascript:show_dialog('添加主要生产产品','${ly }/steel/product/product-add')"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加主要生产产品</a>
-        <a class="btn btn-primary radius" href="${ly}/village/download?filename=主要产品.xlsx&fileurl=${ly}/upload/主要产品.xlsx">主要产品批量模版</a>
+        <a class="btn btn-primary radius" href="javascript:show_dialog('添加主要生产产品','${ly }/company/product/product-add')"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加主要生产产品</a>
+        <a class="btn btn-primary radius" href="${ly}/company/downloadall?filename=人员模板.xlsx&fileurl=${ly}/upload/product.xlsx">主要产品批量模版</a>
         <button class="btn btn-primary radius" type="button" onclick="comapnyImportBoxShow()">导入主要产品</button>
       </span>
       <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span> 

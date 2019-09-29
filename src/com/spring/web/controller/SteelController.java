@@ -982,7 +982,7 @@ public class SteelController extends BaseController {
             }
             model.addAttribute("sum", sum);
         }
-        return "company/danger/model-list-cx";
+        return "steel/danger/model-list-cx";
     }
 
     /**

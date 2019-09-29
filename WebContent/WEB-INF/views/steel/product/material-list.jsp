@@ -40,7 +40,7 @@ body .dis-ib{margin-right:15px;}
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <span class="l">
         <a class="btn btn-primary radius" href="javascript:show_dialog('添加主要原辅材料','${ly }/steel/product/material-add')"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加主要原辅材料</a>
-        <a class="btn btn-primary radius" href="${ly}/village/download?filename=原辅材料.xlsx&fileurl=${ly}/upload/原辅材料.xlsx">原辅材料批量模版</a>
+        <a class="btn btn-primary radius" href="${ly}/company/downloadall?filename=人员模板.xlsx&fileurl=${ly}/upload/materials.xlsx">原辅材料批量模版</a>
          <button class="btn btn-primary radius" type="button" onclick="comapnyImportBoxShow()">导入原辅材料</button>
       </span>
       <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span> 
@@ -158,7 +158,7 @@ function comapnyImportBoxShow(flag) {
 function comapnyImportSave() {
   var index = layer.load();
   $.ajaxFileUpload({
-    url: getRootPath() + '/steel/importMarerialExcel',
+    url: getRootPath() + '/company/materialsExcel',
     secureuri: false, //一般设置为false
     fileElementId: 'file',
     dataType: 'json',

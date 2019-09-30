@@ -1559,4 +1559,14 @@
          left join user_tbl on company_tbl.user_id = user_tbl.id
          where user_name=#{companyName}
     </select>
+    <select id="findCompanyByCliqu" parameterType="Integer" resultType="java.util.Map">
+        select user_name, longitude, latitude
+        from user_tbl
+        left join trade_company_tbl
+        on user_tbl.id  = trade_company_tbl.uid
+        where tid = #{id, jdbcType=INTEGER}
+        union select user_name, longitude, latitude
+       from user_tbl
+       where id = #{id, jdbcType=INTEGER}
+    </select>
 </mapper>

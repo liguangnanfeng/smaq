@@ -56,7 +56,7 @@ function pr_() {
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <span class="l">
         <a class="btn btn-primary radius" data-title="添加主要设备" data-href="${ly }/tradeclique/product/mequipment-add" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加主要设备</a>
-          <a class="btn btn-primary radius" href="${ly}/village/download?filename=主要设备设施.xlsx&fileurl=${ly}/upload/主要设备设施.xlsx">批量导入主要设备设施下载</a>
+          <a class="btn btn-primary radius" href="${ly}/company/download?filename=主要设备模板.xlsx&fileurl=${ly}/upload/majorequipment.xlsx">批量导入主要设备设施下载</a>
           <button class="btn btn-primary radius" type="button" onclick="comapnyImportBoxShow()">导入主要设备</button>
         <a class="btn btn-success radius ml-10" onclick="pr_()"><i class="Hui-iconfont" style="font-size:15px;">&#xe652;</i> 打印</a>
     	<!--<button class="btn btn-success radius ml-10" type="button" onclick="majorequipmentImportBoxShow()">批量导入主要设备</button>
@@ -195,7 +195,7 @@ function comapnyImportBoxShow(flag) {
 function comapnyImportSave() {
     var index = layer.load();
     $.ajaxFileUpload({
-        url: getRootPath() + '/steel/importMequipmentExcel',
+        url: getRootPath() + '/company/importMajorequipmentExcel',
         secureuri: false, //一般设置为false
         fileElementId: 'file',
         dataType: 'json',

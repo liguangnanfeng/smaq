@@ -1845,12 +1845,14 @@ public class VillageController extends BaseController {
         }
         if(check.getFlag()==2){
             // 行政检查
+            System.out.println("village/danger/opinion-add" + flag + check.getFlag());
             return "village/danger/opinion-add" + flag + check.getFlag();
         }else {
             // 部门抽查
             if(flag==8){
                 flag=1;
             }
+            System.out.println("village/danger/opinion-add" + flag + check.getFlag());
             return "village/danger/opinion-add" + flag + check.getFlag();
         }
 
@@ -1862,6 +1864,7 @@ public class VillageController extends BaseController {
     @RequestMapping(value = "check-document-save")
     public @ResponseBody
     Result checkDocumentSave(Integer checkId, Integer flag, String copy, HttpServletRequest request) {
+
         Result result = new ResultImpl();
         TCheck c = tCheckMapper.selectByPrimaryKey(checkId);
         Map<String, Object> m = new HashMap<String, Object>();

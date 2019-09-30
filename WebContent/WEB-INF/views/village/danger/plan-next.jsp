@@ -624,6 +624,8 @@
     var x = "企业自查";
     if (flag == 2) {
     x = "行政检查";
+
+
     }
     if (flag == 3) {
     x = "部门抽查";
@@ -650,8 +652,20 @@
     sessionStorage.setItem('flag1',flag);
     sessionStorage.setItem('id1',checkId);
     console.log("-------------------flag-----------------checkId---------------")
-    console.log(flag,checkId)
+    console.log(flag,checkId);
+    if(flag==2){
     top.show_tab("安全生产行政执法文书" + checkId, '/village/check-document?checkId='+cid);
+    }
+    if(flag==3){
+    top.show_tab("检查详情" + checkId, '/company/check-detail?flag=' + flag + '&id=' + checkId);
+    }
+
+
+
+
+
+
+
     } else {
     var url = '${ly }/company/model-list-cx2?flag='+flag+'&type=1&template=2';
     top.show_tab(x, url);

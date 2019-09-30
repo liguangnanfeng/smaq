@@ -356,7 +356,6 @@ $(function () {
         var x = str.replace(/，/ig,',').split(",");
         $("#id1").html(x[0]);
         $("#id2").html(x[1]);
-
     }
 )
 
@@ -400,8 +399,14 @@ function save_() {
       copy: $("#container").html(),
       flag: 1,
       flag2 : 3
-    }, function(reuslt) {
-      location.reload();
+    }, function(result) {
+    console.log('--------------------------r----------------------r2---------------------------');
+    console.log(result)
+    var f1=sessionStorage.getItem('flag1');
+    var i1=sessionStorage.getItem('id1');
+    console.log(f1,i1)
+    top.show_tab("检查详情" + checkId, '/company/check-detail?flag=' + f1 + '&id=' + i1);
+    //location.reload();
     })
 }
 </script>

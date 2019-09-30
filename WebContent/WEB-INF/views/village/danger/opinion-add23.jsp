@@ -49,7 +49,7 @@
             <c:if test="${flag2 != 3}">
                 <a href="/village/check-document?checkId=${check.id}&flag=8">现场检查记录</a>
             </c:if>
-            <a href="/village/check-document?checkId=${check.id}&flag=1">隐患整改意见书</a>
+            <a href="/village/check-document?checkId=${check.id}">隐患整改意见书</a>
             <a class="current" href="JavaScript:void(0)">隐患整改复查意见书</a>
         </div>
     </div>
@@ -283,8 +283,11 @@
             flag: flag,
             flag2: flag2
         }, function (reuslt) {
-            location.reload();
-        })
+    var f1=sessionStorage.getItem('flag1');
+    var i1=sessionStorage.getItem('id1');
+    top.show_tab("检查详情" + checkId, '/company/check-detail?flag=' + f1 + '&id=' + i1);
+    console.log("3")
+    })
     }
 </script>
 <script type="text/javascript" src="${ly }/js/check/opinion2.js"></script>

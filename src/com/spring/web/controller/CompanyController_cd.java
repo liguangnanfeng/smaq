@@ -4483,6 +4483,7 @@ public class CompanyController_cd extends BaseController {
         Company company = companyMapper.selectByPrimaryKey(user.getId());
         /*List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());*/
         List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));
+        System.out.println(list);
         List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
         DecimalFormat df = new DecimalFormat("0.00");
         Map<String,Object> map = new HashMap<>();
@@ -4503,21 +4504,21 @@ public class CompanyController_cd extends BaseController {
                 if (null == list.get(i).get("name") && (Integer)list.get(i).get("dpid") == 0) {
                     list.get(i).put("name",company.getName());
 
-                    Integer a1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),3); // 一般
-                    Integer a2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),3); // 一般
+                    Integer a1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),3); //一般 现场检查
+                    Integer a2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),3); // 一般 基础检查
                     a = a1 + a2;
                     list.get(i).put("danger1",a);
 
-                    Integer b1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),1); // 较大
-                    Integer b2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),1); // 较大
+                    Integer b1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),1); // 较大   现场检查
+                    Integer b2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),1); // 较大 基础检查
                     b = b1 + b2;
                     list.get(i).put("danger2",b);
-
-                    Integer c1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),2); // 重大
-                    Integer c2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),2); // 重大
+                    System.out.println((String) list.get(i).get("name"));
+                    Integer c1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),2); // 重大  现场检查
+                    Integer c2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),2); // 重大 基础检查
                     c = c1 + c2;
+                    System.out.println(c1+":"+c2);
                     list.get(i).put("danger3",c);
-
                 }else if (null != list.get(i).get("name") && (Integer)list.get(i).get("dpid") != 0){
 
                     a = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),user.getId(),3); // 一般

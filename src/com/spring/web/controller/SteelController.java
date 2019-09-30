@@ -6700,182 +6700,154 @@ public class SteelController extends BaseController {
      */
     @RequestMapping(value = "zhuChartData77")
     public String zhuChartData77 (HttpServletRequest request, Model model){
+
         User user = getLoginUser(request);
-        Company company = companyMapper.selectByPrimaryKey(user.getId());//查询所有企业
-        /*List<Map<String,Object>> list = zzjgDepartmentMapper.findAllLevel1(user.getId());*/
-        List<Map<String,Object>> list =  hiddenPlanMapper.selectDpids(String.valueOf(user.getId()));//查询所有车间
-        List<Map<String,Object>> list1 = new ArrayList<Map<String, Object>>();
-        DecimalFormat df = new DecimalFormat("0.00");
-        Map<String,Object> map = new HashMap<>();
-
-        Integer count1 = 0;
-        Integer count2 = 0;
-        Integer count3 = 0;
+        Integer danger1 = 0; Integer count1 = 0;
+        Integer danger2 = 0; Integer count2 = 0;
+        Integer danger3 = 0; Integer count3 = 0;
         Integer sum = 0;
-        Integer a = 0;
-        Integer b = 0;
-        Integer c = 0;
-        if (null == list || list.size() == 0){
+        List<Map<String, Object>> companyMaps = new ArrayList<>();
+        List<Map<String, Object>> companyMaps1 = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("user_id", user.getId());
+        map1.put("user_name", user.getUserName());
+        companyMaps.add(map1);
+        companyMaps.addAll(companyMaps1);
+        List<Map<String, Object>> list1 = new ArrayList<>();
+        List<Map<String, Object>> list2 = new ArrayList<>();
+        List<Map<String, Object>> list3 = new ArrayList<>();
+        List<Map<String, Object>> list4 = new ArrayList<>();
+        List<Map<String, Object>> list = null;
+        DecimalFormat df = new DecimalFormat("0.00");
+        //统计数据
+        for(Map<String, Object> map:companyMaps){
+            danger1 = 0; danger2 = 0; danger3 = 0;
+            list =   hiddenPlanMapper.selectDpids(String.valueOf((Integer) map.get("user_id")));
 
-        }else if (null != list && list.size() != 0){
+            if (null == list || list.size() == 0){
 
-            for (int i = 0; i < list.size(); i++) {
+            }else if (null != list && list.size() != 0){
+                for (int i = 0; i < list.size(); i++) {
+                    if (null == list.get(i).get("name") && (Integer)list.get(i).get("dpid") == 0) {
+                        list.get(i).put("name",map.get("user_name"));
+                        danger1 = danger1 + tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"), (Integer) map.get("user_id"), 3);//一般隐患
+                        danger1 = danger1 + tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"), (Integer) map.get("user_id"), 3);//
 
-                if (null == list.get(i).get("name") && (Integer)list.get(i).get("dpid") == 0) {
+                        danger2 = danger2 + tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"), (Integer) map.get("user_id"), 1); // 较大
+                        danger2 = danger2 + tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"), (Integer) map.get("user_id"), 1); //
 
+                        danger3 = danger3 + tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"), (Integer) map.get("user_id"), 2);
+                        danger3 = danger3 + tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"), (Integer) map.get("user_id"), 2);
 
-                    list.get(i).put("name",company.getName());
+                    }else if (null != list.get(i).get("name") && (Integer)list.get(i).get("dpid") != 0){
 
-                    Integer a1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),3); // 一般
-                    Integer a2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),3); // 一般
-                    a = a1 + a2;
-                    list.get(i).put("danger1",a);
+                        danger1 = danger1 + tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),(Integer) map.get("user_id"),3);
 
-                    Integer b1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),1); // 较大
-                    Integer b2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),1); // 较大
-                    b = b1 + b2;
-                    list.get(i).put("danger2",b);
+                        danger2 = danger2 + tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),(Integer) map.get("user_id"),1);
 
-                    Integer c1 = tCheckItemMapper.findHiddenLevelNews((String) list.get(i).get("name"),user.getId(),2); // 重大
-                    Integer c2 = tCheckItemMapper.findHiddenLevelBasics((String) list.get(i).get("name"),user.getId(),2); // 重大
-                    c = c1 + c2;
-                    list.get(i).put("danger3",c);
+                        danger3 = danger3 + tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),(Integer) map.get("user_id"),2);
 
-                }else if (null != list.get(i).get("name") && (Integer)list.get(i).get("dpid") != 0){
-
-                    a = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),company.getUserId(),3); // 一般
-                    list.get(i).put("danger1",a);
-                    b = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),company.getUserId(),1); // 较大
-                    list.get(i).put("danger2",b);
-                    c = tCheckItemMapper.findHiddenLevelTypeByMap((String) list.get(i).get("name"),company.getUserId(),2); // 重大
-                    list.get(i).put("danger3",c);
+                    }
 
                 }
-
-                count1 += a;
-                count2 += b;
-                count3 += c;
-
-                sum = a + b + c;
-
-                list.get(i).put("sum", sum); // 某个车间所有隐患的 合计
-
-                if (null != sum && sum != 0){
-                    String str = df.format((float)a / sum * 100);// 一般 横占比
-                    list.get(i).put("result11",str + "%");
-
-                    String str1 = df.format((float)b / sum * 100); // 较大 横占比
-
-                    list.get(i).put("result22",str + "%");
-
-                    String str2 = df.format((float)c / sum * 100); // 重大 横占比
-
-                    list.get(i).put("result33",str + "%");
-                }else {
-
-                    list.get(i).put("result11", "0.00%");
-                    list.get(i).put("result22", "0.00%");
-                    list.get(i).put("result33", "0.00%");
-                }
-
-                Map<String,Object> map1 = new HashMap<>();
-
-                map1.put("name",list.get(i).get("name"));
-                map1.put("sum",sum);
-
-                list1.add(map1);
             }
+            map1 = new HashMap<>();
+            Integer sum1 = danger1 + danger2 + danger3;
+            if (null != sum1 && sum1 != 0){  // 一般和较小 治理率
+                String str = df.format((float)danger1 / sum1 * 100);
+                map1.put("result11",str + "%");
+            }else {
+                map1.put("result11","0.00%");
+            }
+            if (null != sum1 && sum1 != 0){  // 一般和较小 治理率
+                String str = df.format((float)danger2 / sum1 * 100);
+                map1.put("result22",str + "%");
+            }else {
+                map1.put("result22","0.00%");
+            }
+            if (null != sum1 && sum1 != 0){  // 一般和较小 治理率
+                String str = df.format((float)danger3 / sum1 * 100);
+                map1.put("result33",str + "%");
+            }else {
+                map1.put("result33","0.00%");
+            }
+            count1 = count1 +danger1;
+            count2 = count2 + danger2;
+            count3 = count3 + danger3;
+            map1.put("name", map.get("user_name"));
+            map1.put("danger1", danger1);
+            map1.put("danger2", danger2);
+            map1.put("danger3", danger3);
+            map1.put("sum", sum1);
+            list1.add(map1);
+            map1 = new HashMap<>();
+            map1.put("name", map.get("user_name"));
+            map1.put("sum", sum1);
+            list3.add(map1);
+        }
+        Collections.sort(list3, new Comparator<Map<String, Object>>() {
 
-            Collections.sort(list1, new Comparator<Map<String, Object>>() {
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
 
-                public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+                Integer name1 = Integer.valueOf(o1.get("sum").toString()) ;
 
-                    Integer name1 = Integer.valueOf(o1.get("sum").toString()) ;
+                Integer name2 = Integer.valueOf(o2.get("sum").toString()) ;
 
-                    Integer name2 = Integer.valueOf(o2.get("sum").toString()) ;
-
-                    return name1.compareTo(name2);
-
-                }
-            });
-
-            for (int i = 0; i < list1.size(); i++) {
-
-                list1.get(i).put("data",list1.size()-i);
+                return name1.compareTo(name2);
 
             }
+        });
+        for (int i = 0; i < list3.size(); i++) {
 
-            for (int i = 0; i < list.size(); i++) {
+            list3.get(i).put("data",list1.size()-i);
 
-                for (int j = 0; j < list1.size(); j++) {
+        }
+        for (int i = 0; i < list1.size(); i++) {
+            for (int j = 0; j < list3.size(); j++) {
 
-                    if (null != list.get(i).get("name") &&  null != list1.get(j).get("name")){
+                if (null != list1.get(i).get("name") &&  null != list3.get(j).get("name")){
 
-                        if (list.get(i).get("name").equals(list1.get(j).get("name"))){
+                    if (list1.get(i).get("name").equals(list3.get(j).get("name"))){
 
-                            list.get(i).put("data",list1.get(j).get("data"));
+                        list1.get(i).put("data",list3.get(j).get("data"));
 
-                            break;
-                        }
+                        break;
                     }
                 }
             }
         }
-
-        for (int i = 0; i < list.size(); i++) {
-            Integer sums = count1 + count2 + count3;
-            if (null != sums && 0 != sums){
-                if (null != list.get(i).get("sum") && 0 != list.get(i).get("sum")){
-                    String s = df.format((float)(Integer)list.get(i).get("sum") / sums * 100);
-                    list.get(i).put("result44",s + "%");
-                }else {
-                    list.get(i).put("result44","0.00%");
-                }
-            }
-        }
-
-        Integer sums = count1 + count2 + count3;
-
-        if (null != sums && 0 != sums){
-
-            if (null != count1 && 0 != count1){
-                String s = df.format((float)count1 / sums * 100);
-                map.put("result1",s + "%"); // 一般 竖占比
-
-            }else {
-                map.put("result1","0.00%"); // 一般 竖占比
-            }
-
-            if (null != count2 && 0 != count2){
-                String s = df.format((float)count2 / sums * 100);
-                map.put("result2",s + "%"); // 较大 竖占比
-            }else {
-                map.put("result2","0.00%"); // 较大 竖占比
-            }
-
-            if (null != count3 && 0 != count3){
-                String s = df.format((float)count3 / sums * 100);
-                map.put("result3",s + "%"); // 重大 竖占比
-            }else {
-                map.put("result3","0.00%"); // 重大 竖占比
-            }
-
+        //计算比例
+        map1 = new HashMap<>();
+        map1.put("count1", count1);
+        map1.put("count2", count2);
+        map1.put("count3", count3);
+        sum = count1 + count2 + count3;
+        map1.put("sum", sum);
+        list2.add(map1);
+        map1 = new HashMap<>();
+        Integer add14 = count1 + count2 + count3;
+        if (null != add14 && add14 != 0){  // 一般和较小 治理率
+            String str = df.format((float)count1 / add14 * 100);
+            map1.put("result1",str + "%");
         }else {
-            map.put("result1","0.00%"); // 一般 竖占比
-            map.put("result2","0.00%"); // 较大 竖占比
-            map.put("result3","0.00%"); // 重大 竖占比
+            map1.put("result1","0.00%");
         }
-
-        map.put("count1",count1); // 所有 一般隐患数据
-        map.put("count2",count2); // 所有 较大隐患数据
-        map.put("count3",count3); // 所有 重大隐患数据
-
-        list.add(map);
-
-        model.addAttribute("sums",sums);
-        model.addAttribute("data",new Date());
-        list.remove(1);
-        model.addAttribute("list",list);
+        if (null != add14 && add14 != 0){  // 一般和较小 治理率
+            String str = df.format((float)count2 / add14 * 100);
+            map1.put("result2",str + "%");
+        }else {
+            map1.put("result2","0.00%");
+        }
+        if (null != add14 && add14 != 0){  // 一般和较小 治理率
+            String str = df.format((float)count3 / add14 * 100);
+            map1.put("result3",str + "%");
+        }else {
+            map1.put("result3","0.00%");
+        }
+        list4.add(map1);
+        model.addAttribute("list1", list1);
+        model.addAttribute("list2", list2);
+        model.addAttribute("list4", list4);
         return "steel/danger/danger1/zhuChartData77";
     }
 
@@ -6888,5 +6860,219 @@ public class SteelController extends BaseController {
         List<Map<String, Object>> list1 = aCompanyManualMapper.findCompanyByCliqu(user.getId());
         model.addAttribute("list1",list1);
         return "steel/safety-system/all-risk-map";
+    }
+
+
+    @RequestMapping(value = "zhuChartData44")
+    public String zhuChartData44 (HttpServletRequest request, Model model){
+
+        User user = getLoginUser(request);
+        Integer danger11 = 0; Integer danger12 = 0; Integer count11 = 0; Integer count12 = 0;//已治理 未治理  一般隐患
+        Integer danger21 = 0; Integer danger22 = 0; Integer count21 = 0; Integer count22 = 0;//已治理 未治理  较大隐患
+        Integer danger31 = 0; Integer danger32 = 0; Integer count31 = 0; Integer count32 = 0;//已治理 未治理  重大隐患
+        List<Map<String, Object>> companyMaps = new ArrayList<>();
+        List<Map<String, Object>> companyMaps1 = tradeCliqueMapper.selectCompanyMapByCqlib(user.getId());
+        DecimalFormat df = new DecimalFormat("0.00");
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("user_id", user.getId());
+        map1.put("user_name", user.getUserName());
+        companyMaps.add(map1);
+        companyMaps.addAll(companyMaps1);
+        List<Map<String, Object>> list1 = new ArrayList<>();
+        List<Map<String, Object>> list2 = new ArrayList<>();
+        List<Map<String, Object>> list3 = new ArrayList<>();
+        List<Map<String, Object>> list4 = new ArrayList<>();
+        List<Map<String, Object>> list = null;
+
+        for(Map<String, Object> map:companyMaps){
+            danger11 = 0; danger12 =0;
+            danger21 = 0; danger22 = 0;
+            danger31 = 0; danger32 = 0;
+            list = zzjgDepartmentMapper.findAllLevel1((Integer) map.get("user_id"));
+            danger11 = danger11 + tCheckItemMapper.findRecheckNews(3,(Integer) map.get("user_id"),3,(String) map.get("user_name")); //一般 较小 合格
+            danger11 = danger11 + tCheckItemMapper.findRecheckBasics(3, (Integer) map.get("user_id"),3,(String) map.get("user_name"));//一般 合格
+            danger12 = danger12 + tCheckItemMapper.findRecheckNews(2,(Integer) map.get("user_id"),3,(String) map.get("user_name"));
+            danger12 = danger12 + tCheckItemMapper.findRecheckBasics(2,(Integer) map.get("user_id"),3,(String) map.get("user_name"));
+            danger21 = danger21 + tCheckItemMapper.findRecheckNews(3,(Integer) map.get("user_id"),1,(String) map.get("user_name"));
+            danger21 = danger21 + tCheckItemMapper.findRecheckBasics(3,(Integer) map.get("user_id"),1,(String) map.get("user_name"));
+            danger22 = danger22 + tCheckItemMapper.findRecheckNews(2,(Integer) map.get("user_id"),1,(String) map.get("user_name"));
+            danger22 = danger22 + tCheckItemMapper.findRecheckBasics(2,(Integer) map.get("user_id"),1,(String) map.get("user_name"));
+            danger31 = danger31 + tCheckItemMapper.findRecheckNews(3,(Integer) map.get("user_id"),2,(String) map.get("user_name"));
+            danger31 = danger31 + tCheckItemMapper.findRecheckBasics(3,(Integer) map.get("user_id"),2,(String) map.get("user_name")); // 重大 合格 已治理
+            danger32 = danger32 + tCheckItemMapper.findRecheckNews(2,(Integer) map.get("user_id"),2,(String) map.get("user_name"));
+            danger32 = danger32 + tCheckItemMapper.findRecheckBasics(2,(Integer) map.get("user_id"),2,(String) map.get("user_name"));
+             if (null == list || list.size() == 0){
+
+             }else if (null != list || list.size() != 0){
+
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).get("name").equals((String) map.get("user_name"))){
+                        continue;
+                    }else {
+                        danger11 = danger11 + tCheckItemMapper.findRecheckFileByMap(3,(Integer) map.get("user_id"),3,(String) list.get(i).get("name"));
+                        danger12 = danger12 + tCheckItemMapper.findRecheckFileByMap(2,(Integer) map.get("user_id"),3,(String) list.get(i).get("name"));
+                        danger21 = danger21 + tCheckItemMapper.findRecheckFileByMap(3,(Integer) map.get("user_id"),1,(String) list.get(i).get("name"));
+                        danger22 = danger22 + tCheckItemMapper.findRecheckFileByMap(2,(Integer) map.get("user_id"),1,(String) list.get(i).get("name"));
+                        danger31 = danger31 + tCheckItemMapper.findRecheckFileByMap(3,(Integer) map.get("user_id"),2,(String) list.get(i).get("name"));
+                        danger32 = danger32 + tCheckItemMapper.findRecheckFileByMap(2,(Integer) map.get("user_id"),2,(String) list.get(i).get("name"));
+
+                    }
+                }
+            }
+            map1 = new HashMap<>();
+             //计算百分比
+             Integer add11 = danger11 + danger12;
+            if (null != add11 && add11 != 0){  // 一般和较小 治理率
+                String str = df.format((float)danger11 / add11 * 100);
+                map1.put("result11",str + "%");
+            }else {
+                map1.put("result11","0.00%");
+            }
+            Integer add22 = danger21 + danger22;
+            if (null != add22 && add22 != 0){  // 一般和较小 治理率
+                String str = df.format((float)danger21 / add22 * 100);
+                map1.put("result22",str + "%");
+            }else {
+                map1.put("result22","0.00%");
+            }
+            Integer add33 = danger31 + danger32;
+            if (null != add33 && add33 != 0){  // 一般和较小 治理率
+                String str = df.format((float)danger31 / add33 * 100);
+                map1.put("result33",str + "%");
+            }else {
+                map1.put("result33","0.00%");
+            }
+             map1.put("name",(String) map.get("user_name"));
+             map1.put("danger11", danger11);
+             map1.put("danger12", danger12);
+             map1.put("danger21", danger21);
+             map1.put("danger22", danger22);
+             map1.put("danger31", danger31);
+             map1.put("danger32", danger32);
+             Integer sum1 = danger11 + danger21 + danger31;
+             Integer sum2 = danger12 + danger22 + danger32;
+             map1.put("sum1", sum1);
+             map1.put("sum2", sum2);
+             count11 = count11 + danger11;
+             count12 = count12 + danger12;
+             count21 = count21 + danger21;
+             count22 = count22 + danger22;
+             count31 = count31 + danger31;
+             count32 = count32 + danger32;
+             list1.add(map1);
+             map1 = new HashMap<>();
+             map1.put("name",(String) map.get("user_name"));
+             map1.put("sum", sum1);
+             list3.add(map1);
+
+        }
+        map1 = new HashMap<>();
+        map1.put("count11", count11);
+        map1.put("count12", count12);
+        map1.put("count21", count21);
+        map1.put("count22", count22);
+        map1.put("count31", count31);
+        map1.put("count32", count32);
+        Integer sum1 = count11 + count21 + count31;
+        Integer sum2 = count12 + count22 + count32;
+        Integer add44 = count11 + danger12;
+        if (null != add44 && add44 != 0){  // 一般和较小 治理率
+            String str = df.format((float)count11 / add44 * 100);
+            map1.put("result1",str + "%");
+        }else {
+            map1.put("result1", "0.00%");
+        }
+        Integer add55 = count21 + danger22;
+        if (null != add55 && add55 != 0){  // 一般和较小 治理率
+            String str = df.format((float)count21 / add55 * 100);
+            map1.put("result2",str + "%");
+        }else {
+            map1.put("result2","0.00%");
+        }
+        Integer add66 = count31 + danger32;
+        if (null != add66 && add66 != 0){  // 一般和较小 治理率
+            String str = df.format((float)count31 / add66 * 100);
+            map1.put("result3",str + "%");
+        }else {
+            map1.put("result3","0.00%");
+        }
+        map1.put("sum1", sum1);
+        map1.put("sum2", sum2);
+        list2.add(map1);
+        Integer add77 = count11 + count21 + count31;
+        Integer add88 = count12 + count22 + count32;
+        map1 = new HashMap<>();
+        if (null != add77 && add77 != 0){  // 一般和较小 治理率
+            String str = df.format((float)count11 / add77 * 100);
+            map1.put("proportion11",str + "%");
+        }else {
+            map1.put("proportion11","0.00%");
+        }
+        if (null != add77 && add77 != 0){  // 一般和较小 治理率
+            String str = df.format((float)count21 / add77 * 100);
+            map1.put("proportion22",str + "%");
+        }else {
+            map1.put("proportion22","0.00%");
+        }
+        if (null != add77 && add77 != 0){  // 一般和较小 治理率
+            String str = df.format((float)count31 / add77 * 100);
+            map1.put("proportion33",str + "%");
+        }else {
+            map1.put("proportion33","0.00%");
+        }
+        if (null != add88 && add88 != 0){  // 一般和较小 治理率
+            String str = df.format((float)count12 / add88 * 100);
+            map1.put("proportion44",str + "%");
+        }else {
+            map1.put("proportion44","0.00%");
+        }
+        if (null != add88 && add88 != 0){  // 一般和较小 治理率
+            String str = df.format((float)count22 / add88 * 100);
+            map1.put("proportion55",str + "%");
+        }else {
+            map1.put("proportion55","0.00%");
+        }
+        if (null != add88 && add88 != 0){  // 一般和较小 治理率
+            String str = df.format((float)count32 / add88 * 100);
+            map1.put("proportion66",str + "%");
+        }else {
+            map1.put("proportion66","0.00%");
+        }
+        Collections.sort(list3, new Comparator<Map<String, Object>>() {
+
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+
+                Integer name1 = Integer.valueOf(o1.get("sum").toString()) ;
+
+                Integer name2 = Integer.valueOf(o2.get("sum").toString()) ;
+
+                return name1.compareTo(name2);
+
+            }
+        });
+        for (int i = 0; i < list3.size(); i++) {
+
+            list3.get(i).put("data",list1.size()-i);
+
+        }
+        for (int i = 0; i < list1.size(); i++) {
+            for (int j = 0; j < list3.size(); j++) {
+
+                if (null != list1.get(i).get("name") &&  null != list3.get(j).get("name")){
+
+                    if (list1.get(i).get("name").equals(list3.get(j).get("name"))){
+
+                        list1.get(i).put("data",list3.get(j).get("data"));
+
+                        break;
+                    }
+                }
+            }
+        }
+        list4.add(map1);
+        model.addAttribute("list3", list4);
+        model.addAttribute("list1", list1);
+        model.addAttribute("list2", list2);
+        return "steel/danger/danger1/zhuChartData44";
     }
 }

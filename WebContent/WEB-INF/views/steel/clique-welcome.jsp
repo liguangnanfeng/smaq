@@ -34,7 +34,11 @@ body .lianj_com img{margin-right:6px;margin-left:6px;}
 .div_zhe{width:100%;}
 .change_zhe{float: right;margin-top: 20px;}
 body .iconxw{transform: rotate(-90deg);float:right;margin-right:-5px;margin-top: -3px;}
-</style>
+  .fal{
+  font-size:22px;
+  text-align:center
+  }
+  </style>
 <script type="text/javascript">
 var chart = null;
 $(function () {
@@ -52,6 +56,14 @@ function showping(){
   $("#win-ping").modal("show")}
   function showping2(){
   $("#win-ping2").modal("show")}
+  function showping3(){
+  $("#win-ping3").modal("show")
+
+  }
+  function showping4(){
+  $("#win-ping4").modal("show")
+
+  }
 </script>
 </head>
 <body>
@@ -104,7 +116,8 @@ function showping(){
           <c:if test="${userId != 35346 }"><p style="margin-top:10px">${name_ }</p></c:if>
           <span  style="margin-top:10px"><a data-href="${ly }/steel/company/company-list" data-title="全部企业" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业数量：${number }</a></span>
           <span style="margin-top:10px">
-            <a data-href="${ly }/steel/safety-system/all-risk-map" data-title="企业分布图" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业分布图<img alt="" src="${ly }/images/fore/fb.jpg"/></a>
+
+            <a data-href="${ly }/villageAdd/source/company-map" data-title="企业分布图" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业分布图<img alt="" src="${ly }/images/fore/fb.jpg"/></a>
           </span>
         </div>
         <div class="div_company2">
@@ -137,14 +150,15 @@ function showping(){
   </a>
   <a class="one_tx radius pos-r" href="/steel/check-list?flag=1&status=2&userId=789" style="background:#ea4f21;margin-right:2%;margin-left:1%">
   <img alt="" src="${ly }/images/httb9.png"/>
-    <font class="font_tx1 pos-a <c:if test="${counts >0}">blink</c:if>">${counts}</font>
+  <font class="font_tx1 pos-a <c:if test="${counts >0}">blink</c:if>">${counts}</font>
   <font class="font_tx2 pos-a">隐患排查</font>
   </a>
 
   <a class="one_tx radius pos-r" href="/steel/hidden-danger-list?flag=1&status=1&userId=789"  style="background:#ea4f21;margin-right:2%">
   <img alt="" src="${ly }/images/httb9.png"/>
-    <font class="font_tx1 pos-a <c:if test="${counts1 >0}">blink</c:if>">${counts1}</font>
+  <font class="font_tx1 pos-a <c:if test="${counts1 >0}">blink</c:if>">${counts1}</font>
   <font class="font_tx2 pos-a">隐患治理</font>
+
   </a>
   <%--  <c:if test="${zdsgyh >0}">blink</c:if>  这是闪烁的特效--%>
   <%--  onclick="show_dialog('隐患治理', '${ly }/global/check-item3?status=2')"--%>
@@ -198,13 +212,13 @@ function showping(){
         <div class="div_tx div_yh pos-a" style="height:315px;padding: 15px 20px;">
           <div class="title_xw pos-r" style="border-bottom:1px solid #F6F6F6;color:#FB0005;"><div class="bt_yuj" style="width:180px">在线监测预警.报警</div></div>
           <div class="list_zd">
-            <a class="one_tx radius pos-r" data-title="重大危险源" onclick="javascript:alert('暂未开通');" style="width:100%;margin-right:0;background:#1450DD;">
+            <a class="one_tx radius pos-r" data-title="重大危险源" onClick="showping3()" style="width:100%;margin-right:0;background:#1450DD;">
               <img alt="" src="${ly }/images/httb7.png"/>
               <%-- <font class="font_tx1 pos-a <c:if test="${mc >0}">blink</c:if>">${mc }</font> --%>
               <font class="font_tx2 pos-a">重大危险源</font>
             </a>
 
-  <a class="one_tx radius pos-r" data-title="易燃易爆有毒作业"  onclick="javascript:alert('暂未开通');" href="javascript:;" style="width:100%;margin-right:0;background:#1450DD;">
+  <a class="one_tx radius pos-r" data-title="易燃易爆有毒作业" onClick="showping4()"  href="javascript:;" style="width:100%;margin-right:0;background:#1450DD;">
   <font id="gw_font" style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a">0</font>
   <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="易燃易爆有毒作业">易燃易爆、有毒作业</font>
   </a>
@@ -536,16 +550,49 @@ function showping(){
       </div>
     </div>
   </div>
-  <div class="panel panel-default" style="width:100%;margin-right:10px;float:right;margin-top:15px;">
-    <div class="panel-body" style="padding:8px">
-      <a class="title_xw div_xinw pos-r" data-href="http://www.hupinwang.com/info" data-title="护品网" onclick="Hui_admin_tab(this)" href="javascript:;">
-        <font>获取更多信息</font>
-        <i class="Hui-iconfont iconxw">&#xe6d5;</i>
-      </a>
-    </div>
+<%--  <div class="panel panel-default" style="width:100%;margin-right:10px;float:right;margin-top:15px;">--%>
+<%--    <div class="panel-body" style="padding:8px">--%>
+<%--      <a class="title_xw div_xinw pos-r" data-href="http://www.hupinwang.com/info" data-title="护品网" onclick="Hui_admin_tab(this)" href="javascript:;">--%>
+<%--        <font>获取更多信息</font>--%>
+<%--        <i class="Hui-iconfont iconxw">&#xe6d5;</i>--%>
+<%--      </a>--%>
+<%--    </div>--%>
+<%--  </div>--%>
+  </div>
+  <%--重点部位--%>
+  <div id="win-ping3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:400px">
+  <div class="modal-content radius">
+  <div class="modal-header">
+  <h3 class="modal-title">在线监测预警.报警</h3>
+  <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+  </div>
+  <div class="modal-body fal">
+
+  重大危险源无报警
+
   </div>
   </div>
-  
+  </div>
+  </div>
+
+  <%--关键设备--%>
+  <div id="win-ping4" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:400px">
+  <div class="modal-content radius">
+  <div class="modal-header">
+  <h3 class="modal-title">在线监测预警.报警</h3>
+  <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+  </div>
+  <div class="modal-body fal">
+
+  易燃易爆、有毒作业无故障
+
+
+  </div>
+  </div>
+  </div>
+  </div>
   
   
   

@@ -42,8 +42,8 @@
             <th width="15%">所属行业</th>
             <th width="8%">重大风险</th>
             <th width="20%">较大风险</th>
-            <th width="14%">一般风险</th>
-            <th width="8%">较少风险</th>
+            <th width="14%">一般和较低风险</th>
+            <th width="8%">低风险</th>
         </tr>
         </thead>
         <tbody><%-- <th width="10%">操作</th>--%>

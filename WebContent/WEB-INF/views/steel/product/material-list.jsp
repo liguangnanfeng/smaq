@@ -27,7 +27,7 @@ body .dis-ib{margin-right:15px;}
   </nav>
   <div class="page-container">
     <div class="text-c">
-      <form action="${ly }/steel/product/material-list" method="post">
+      <form action="${ly }/company/product/material-list" method="post">
         <div class="dis-ib">
           <span>原辅材料名称：</span>
           <input type="text" value="${materialName }" id="maName" name="materialName" class="input-text mb-5 mt-5" style="width:150px;">
@@ -39,9 +39,12 @@ body .dis-ib{margin-right:15px;}
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <span class="l">
-        <a class="btn btn-primary radius" href="javascript:show_dialog('添加主要原辅材料','${ly }/steel/product/material-add')"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加主要原辅材料</a>
-        <a class="btn btn-primary radius" href="${ly}/company/downloadall?filename=人员模板.xlsx&fileurl=${ly}/upload/materials.xlsx">原辅材料批量模版</a>
-         <button class="btn btn-primary radius" type="button" onclick="comapnyImportBoxShow()">导入原辅材料</button>
+        <a class="btn btn-primary radius" href="javascript:show_dialog('添加主要原辅材料','${ly }/company/product/material-add')"<%-- data-title="添加主要原辅材料" data-href="${ly }/company/product/material-add" onclick="Hui_admin_tab(this)" href="javascript:;" --%>><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加主要原辅材料</a>
+      </span>
+
+      <span class="l isAll">
+         <button class="btn btn-success radius ml-10" type="button" onclick="sequipmentImportBoxShow()">批量导入原辅材料</button>
+         <a class="btn btn-success" href="${ly}/company/downloadall?filename=人员模板.xlsx&fileurl=${ly}/upload/materials.xlsx">批量导入模板</a>
       </span>
       <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span> 
     </div>
@@ -83,12 +86,13 @@ body .dis-ib{margin-right:15px;}
       </table>
     </div>
   </div>
-  <div id="comapnyImportBox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+  <div id="seqipumentImportBox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content radius">
 
         <div class="modal-header">
-          <h3 class="modal-title">导入原辅材料</h3>
+          <h3 class="modal-title">导入特种设备</h3>
           <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
         </div>
 
@@ -104,7 +108,7 @@ body .dis-ib{margin-right:15px;}
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary" onclick="comapnyImportSave()">保存</button>
+          <button class="btn btn-primary" onclick="sequipmentImportSave()">保存</button>
           <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
         </div>
       </div>
@@ -121,62 +125,55 @@ $(function() {
     ]
     });
 });
-/*批量导入*/
-function comapnyImportBoxShow() {
-
-  $("#comapnyImportBox").modal("show");
-}
 /*编辑*/
 function admin_edit(id){
-  show_tab("编辑主要原辅材料", getRootPath() + "/steel/product/material-edit?id=" + id);
+  show_tab("编辑主要原辅材料", getRootPath() + "/company/product/material-edit?id=" + id);
 }
+
+
+
+function sequipmentImportBoxShow() {
+    $("#seqipumentImportBox").modal("show");
+}
+
+function sequipmentImportSave() {
+    var index = layer.load();
+    $.ajaxFileUpload({
+        url: getRootPath() + '/company/materialsExcel',
+        secureuri: false, //一般设置为false
+        fileElementId: 'file',
+        dataType: 'json',
+        async: false,
+        success: function (data, status) {
+            layer.close(index);
+            var status = data.status;
+            if (status != '1') {
+                layer.alert("导入成功", {}, function (ind) {
+                    layer.close(ind);
+                    window.location.reload();
+                });
+            }else {
+                layer.alert(data.map.message ,{}, function (ind) {
+                    layer.close(ind);
+                    window.location.reload();
+                });
+            }
+        },
+        error: function (data, status, e) {
+            layer.close(index);
+            alert("导入失败！请检查数据");
+        }
+    })
+}
+
+
 
 /*删除*/
 function del(id){
-  $.post(getRootPath()+"/steel/product/deleteMaterial",{
+  $.post(getRootPath()+"/company/product/deleteMaterial",{
     id:id,
   },function(reuslt){
     location.reload()
-  })
-}
-
-function comapnyImportBoxShow(flag) {
-  window.sperson_flag = flag;
-  if(flag == 1) {
-    $("#comapnyImportBox .modal-title").text("导入安全管理人员");
-  }
-  if(flag == 2) {
-    $("#comapnyImportBox .modal-title").text("导入危险化学品安全管理人员");
-  }
-  if(flag == 3) {
-    $("#comapnyImportBox .modal-title").text("导入持证上岗人员");
-  }
-  $("#comapnyImportBox").modal("show");
-}
-
-
-function comapnyImportSave() {
-  var index = layer.load();
-  $.ajaxFileUpload({
-    url: getRootPath() + '/company/materialsExcel',
-    secureuri: false, //一般设置为false
-    fileElementId: 'file',
-    dataType: 'json',
-    async: false,
-    success: function (data, status) {
-      layer.close(index);
-      var status = data.status;
-      if (status == '0') {
-        layer.alert("导入成功");
-        $("#comapnyImportBox").modal("hide");
-      }else {
-        layer.alert(data.map.message);
-      }
-    },
-    error: function (data, status, e) {
-      layer.close(index);
-      alert("导入失败！请检查数据");
-    }
   })
 }
 // /*查询*/

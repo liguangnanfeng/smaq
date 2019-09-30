@@ -132,101 +132,76 @@
 		<td>治理率%</td>
 		<td>同比</td>
 		</tr>
-		<tr>
-			<td>1</td>
-			<td>公司级</td>
-			<td>${numbers1}</td>
-			<td>${numbers11}</td>
-			<td>${rate1}</td>
-			<td></td>
-
-			<td>${numbers2}</td>
-			<td>${numbers22}</td>
-			<td>${rate2}</td>
-			<td></td>
-
-			<td>${numbers3}</td>
-			<td>${numbers33}</td>
-			<td>${rate3}</td>
-			<td></td>
-
-			<td>${flag1}</td>
-			<td>${flag2}</td>
-			<td>${number66}</td>
-			<td></td>
-			<td>${datas}</td>
-		</tr>
-		<c:forEach items="${list}" varStatus="index" var="be">
-			<c:if test="${index.index<fn:length(list)-1 }">
+		<c:forEach items="${list1}" varStatus="index" var="be">
 				<tr>
 				<td>${index.index + 2}</td>
 				<td>${be.name}</td>
-				<td>${be.danger1}</td>
 				<td>${be.danger11}</td>
+				<td>${be.danger12}</td>
 				<td>${be.result11}</td>
 				<td></td>
 
-				<td>${be.danger2}</td>
+				<td>${be.danger21}</td>
 				<td>${be.danger22}</td>
 				<td>${be.result22}</td>
 				<td></td>
 
-				<td>${be.danger3}</td>
-				<td>${be.danger33}</td>
+				<td>${be.danger31}</td>
+				<td>${be.danger32}</td>
 				<td>${be.result33}</td>
 				<td></td>
 
-				<td>${be.number1}</td>
-				<td>${be.number2}</td>
+				<td>${be.sum1}</td>
+				<td>${be.sum2}</td>
 				<td>${be.number}</td>
 				<td></td>
 				<td>${be.data}</td>
 				</tr>
-			</c:if>
+		</c:forEach>
+	     <c:forEach items="${list2}" varStatus="index" var="be">
 
-			<c:if test="${index.index>fn:length(list)-2 }">
 				<tr>
 				<td>合计</td>
 				<td>---</td>
-				<td>${be.sign1}</td>
-				<td>${be.sign11}</td>
+				<td>${be.count11}</td>
+				<td>${be.count12}</td>
 				<td>${be.result1}</td>
 				<td></td>
 
-				<td>${be.sign2}</td>
-				<td>${be.sign22}</td>
+				<td>${be.count21}</td>
+				<td>${be.count22}</td>
 				<td>${be.result2}</td>
 				<td></td>
 
-				<td>${be.sign3}</td>
-				<td>${be.sign33}</td>
+				<td>${be.count31}</td>
+				<td>${be.count32}</td>
 				<td>${be.result3}</td>
 				<td></td>
 
-				<td></td>
-				<td></td>
+				<td>${be.sum1}</td>
+				<td>${be.sum2}</td>
 				<td></td>
 				<td></td>
 				<td></td>
 				</tr>
-			</c:if>
-			<c:if test="${index.index>fn:length(list)-2 }">
+		 </c:forEach>
+	<c:forEach items="${list3}" varStatus="index" var="be">
 				<tr>
 				<td>占比%</td>
 				<td>---</td>
+				<td></td>
+				<td></td>
 				<td>${be.proportion11}</td>
-				<td>${be.proportion44}</td>
-				<td></td>
 				<td></td>
 
+				<td></td>
+				<td></td>
 				<td>${be.proportion22}</td>
-				<td>${be.proportion55}</td>
-				<td></td>
 				<td></td>
 
-				<td>${be.proportion33}</td>
-				<td>${be.proportion66}</td>
 				<td></td>
+				<td></td>
+				<td>${be.proportion33}</td>
 				<td></td>
 
 				<td></td>
@@ -236,9 +211,8 @@
 				<td></td>
 
 				</tr>
-			</c:if>
+	</c:forEach>
 
-		</c:forEach>
 
 		</table>
 		<script>

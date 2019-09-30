@@ -129,8 +129,7 @@
 		<td>同比</td>
 
 		</tr>
-		<c:forEach items="${list}" varStatus="index" var="be">
-			<c:if test="${index.index<fn:length(list)-1 }">
+		<c:forEach items="${list1}" varStatus="index" var="be">
 				<tr>
 				<td>${index.index + 1}</td>
 				<td>${be.name}</td>
@@ -151,9 +150,8 @@
 				<td></td>
 				<td>${be.data}</td>
 				</tr>
-			</c:if>
-
-			<c:if test="${index.index>fn:length(list)-2 }">
+		</c:forEach>
+	<c:forEach items="${list2}" varStatus="index" var="be">
 				<tr>
 				<td>合计</td>
 				<td>---</td>
@@ -169,13 +167,13 @@
 				<td></td>
 				<td></td>
 
-				<td>${sums}</td>
+				<td>${be.sum}</td>
 				<td></td>
 				<td></td>
 				<td></td>
 				</tr>
-			</c:if>
-			<c:if test="${index.index>fn:length(list)-2 }">
+	</c:forEach>
+	<c:forEach items="${list4}" varStatus="index" var="be">
 				<tr>
 				<td>占比%</td>
 				<td>---</td>
@@ -197,9 +195,10 @@
 				<td></td>
 
 				</tr>
-			</c:if>
+	</c:forEach>
 
-		</c:forEach>
+
+
 
 		</table>
 		</div>

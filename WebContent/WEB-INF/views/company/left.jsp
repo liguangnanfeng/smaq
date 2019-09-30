@@ -644,7 +644,7 @@
         <%--        <a style="color:#fff;"  data-href="${ly }/api/safety_Standard/findAll?parendId=0&flag=1" data-title="运行操作系统"--%>
         <%--        href="javascript:void(0)"><i class="Hui-iconfont">&#xe639;</i>安全生产标准化</a>--%>
 
-        <a style="color:#fff;"  data-href="${ly }/company/tables/yjmanage_center"  data-title="应急管理中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急管理中心</a>
+        <a style="color:#fff;"  data-href="${ly }/company/tables/yjmanage_center"  data-title="应急监控中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急监控中心</a>
         </dt>
         <%--        <dd>--%>
         <%--        <ul>--%>

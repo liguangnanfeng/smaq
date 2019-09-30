@@ -232,7 +232,13 @@
           flag: flag,
           flag2 : flag2
       }, function(reuslt) {
-          location.reload();
+    console.log('--------------------------r----------op22------------r2---------------------------')
+    var f1=sessionStorage.getItem('flag1');
+    var searchURL = window.location.search;
+    searchURL = searchURL.substring(1, searchURL.length);
+    var i1 = searchURL.split("&")[0].split("=")[1];
+    top.show_tab("整改复查意见书", '/village/check-rectification?flag=' + f1 + '&id=' + i1+'&book');
+          //location.reload();
       })
   }
 </script>

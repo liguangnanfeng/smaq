@@ -15,6 +15,13 @@
         width: 100%;
         height: 100%;
         }
+        .font{
+        font-size: 15px;
+        padding-left: 10px;
+        padding-top: 3px;
+        padding-right: 2px;
+        font-weight: 400;
+        }
         </style>
         </head>
         <body>
@@ -22,21 +29,28 @@
         <!-- 加载地图JSAPI脚本 -->
         <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=da3f11570a7a5d170923792f72357543&plugin=AMap.PolyEditor"></script>
         <script>
-        var mapCenter = [120.299, 31.568];
-        var a1='${longitude}',a2='${latitude}';
-        if(a1 && a2){
-         mapCenter[0] = '${longitude}';
-         mapCenter[1] = '${latitude}';
-        }
+        var mapCenter = [];
+        console.log('${list}');
         console.log('默认坐标:');
         console.log('${longitude}','${latitude}');
-
+        let x='';let y='';
+        <c:forEach items="${list1}" varStatus="index" var="be">
+            x='${be.longitude}'; y='${be.latitude}';
+        </c:forEach>
+        if(x && y){
+        console.log("${list1}")
+        console.log("hello!");
+        mapCenter[0] = x;
+        mapCenter[1] = y;
+        }
+        console.log(x,y)
         var map = new AMap.Map('container', {
         resizeEnable: true, //是否监控地图容器尺寸变化
-        zoom:11, //初始化地图层级
+        zoom: 116, //初始化地图层级
         center:mapCenter //初始化地图中心点
         });
         // 创建两个点标记
+
         <c:forEach items="${list1}" varStatus="index" var="be">
             let xx${index.index}='${be.longitude}';let yy${index.index}='${be.latitude}';
             if(xx${index.index}&&yy${index.index}){
@@ -46,40 +60,33 @@
             });
             map.add(m${index.index});
             }
-        </c:forEach>
-       <c:forEach items="${list2}" varStatus="index2" var="be2">
-           let mm${index2.index}='${be2.longitude}';let nn${index2.index}='${be2.latitude}';
-           if(mm${index2.index}&&nn${index2.index}){
-            let n${index2.index} = new AMap.Marker({
-            position: [${be2.longitude}, ${be2.latitude}],
-           icon: "/images/dw/or_b2.png"
+            //添加marker标记
+            function addMarker() {
+            map.clearMap();
+            marker${index.index} = new AMap.Marker({
+            map: map,
+            position: ['${be.longitude}', '${be.latitude}']
             });
-
-            map.add(n${index2.index});
-           }
-       </c:forEach>
-
-        <c:forEach items="${list3}" varStatus="index3" var="be3">
-            let pp${index3.index}='${be3.longitude}';let oo${index3.index}='${be3.latitude}';
-            if(pp${index3.index}&&oo${index3.index}){
-            let p${index3.index} = new AMap.Marker({
-            position: [${be3.longitude}, ${be3.latitude}],
-            icon: "/images/dw/ye_b2.png"
+            //鼠标点击marker弹出自定义的信息窗体
+            AMap.event.addListener(marker${index.index}, 'click', function () {
+            infoWindow${index.index}.open(map, marker${index.index}.getPosition());
             });
-            map.add(p${index3.index});
             }
+            addMarker();
+            //实例化信息窗体
+            infoWindow${index.index} = new AMap.InfoWindow({
+            isCustom: false,  //使用自定义窗体
+            content: '<div class="font">${be.user_name}</div>',
+            offset: new AMap.Pixel(10, -35)
+            });
+            infoWindow${index.index}.open(map, marker${index.index}.getPosition());
+
         </c:forEach>
 
-        <c:forEach items="${list4}" varStatus="index4" var="bee">
-            let qq${index4.index}='${bee.longitude}';let rr${index4.index}='${bee.latitude}';
-            if(qq${index4.index}&&rr${index4.index}){
-            let q${index4.index} = new AMap.Marker({
-            position: [${bee.longitude}, ${bee.latitude}],
-            icon: "/images/dw/bl_b2.png"
-            });
-            map.add(q${index4.index});
-            }
-       </c:forEach>
+
+
+
+
 
         </script>
         </body>

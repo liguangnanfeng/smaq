@@ -170,7 +170,7 @@
 			<c:if test="${index.index<fn:length(list)-1 }">
 				<tr>
 				<td>${index.index + 1}</td>
-				<td>${be.name==null?'公司级':be.name}</td>
+				<td style="width:126px;word-wrap: break-word;word-break: break-all;overflow: hidden;">${be.name==null?'公司级':be.name}</td>
 				<td>${be.danger19}</td>
 				<td>${be.danger1}</td>
 				<td>${be.danger2}</td>

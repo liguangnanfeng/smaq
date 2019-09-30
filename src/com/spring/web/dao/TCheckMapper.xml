@@ -867,6 +867,30 @@
     </select>
 
 
+    <select id="zhengfuCountBasic" resultType="java.util.Map">
+       SELECT
+		COUNT(if(c1.industry like '%化工%', 'Y', null)) AS danger1,
+		COUNT(if(c1.industry like '%冶金%', 'Y', null)) AS danger2,
+		COUNT(if(c1.industry like '%有色%', 'Y', null)) AS danger3,
+		COUNT(if(c1.industry like '%建材%', 'Y', null)) AS danger4,
+		COUNT(if(c1.industry like '%机械%', 'Y', null)) AS danger5,
+		COUNT(if(c1.industry like '%轻工%', 'Y', null)) AS danger6,
+		COUNT(if(c1.industry like '%纺织%', 'Y', null)) AS danger7,
+		COUNT(if(c1.industry like '%商贸%', 'Y', null)) AS danger8,
+		COUNT(if(c1.industry like '%烟花%', 'Y', null)) AS danger9,
+		COUNT(if(c1.industry like '%其他%', 'Y', null)) AS danger10
+       FROM
+            t_check_tbl t1
+         LEFT JOIN company_view c1 ON t1.user_id = c1.user_id
+        WHERE
+            t1.del = 0
+        AND t1.status = 2
+        AND t1.user_id in (${user_ids})
+    </select>
+
+
+
+
     <!-- 政府端 绩效分析数据查询  flag = 1 -->
     <select id="zfPerformanceCount" resultType="Integer">
         SELECT

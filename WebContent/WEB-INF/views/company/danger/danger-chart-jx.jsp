@@ -100,6 +100,32 @@
             font-size: 15px;
 
             }
+            .title1{
+            position: absolute;
+            top: 11px;
+            right: 7px;
+            }
+            .title2{
+            position: absolute;
+            top: 44px;
+            left: 9px;
+            }
+            th[class=first]:before {
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 153px;
+            top: 0;
+            left: 0;
+            background-color: #ddd;
+            display: block;
+            transform: rotate(-62deg);
+            transform-origin: top;
+            }
+            th[class=first]{
+            width: 120px;
+            position:relative;
+            }
         </style>
 
         </head>
@@ -146,9 +172,8 @@
         <thead>
         <tr class="text-c">
         <th width="45px" rowspan="2">序号</th>
-        <%--<th rowspan="2" class="inline"><span--%>
-        <%--class="title2">检查方式</span><br><span class="title1">部门名称</span></th>--%>
-        <th colspan="1">检查方式</th>
+        <th rowspan="2" class="first"><span
+        class="title1">检查方式</span><br><span class="title2">部门名称</span></th>
         <th colspan="3">综合检查</th>
         <th colspan="3">日常检查</th>
         <th colspan="3">定期检查</th>
@@ -158,7 +183,7 @@
         <th colspan="3">累计</th>
         </tr>
         <tr class="text-c">
-        <th>部门名称</th>
+
         <th>计划</th>
         <th>实绩</th>
         <th>同比</th>
@@ -191,7 +216,7 @@
                 <c:if test="${index.index<fn:length(list)-2 }">
                         <tr class="text-c">
                         <td>${index.index + 1}</td>
-                        <td>${be.name==null ? company :be.name }</td>
+                        <td style="width:126px;word-wrap: break-word;word-break: break-all;overflow: hidden;">${be.name==null?'公司级':be.name }</td>
 
                         <td>${be.syn_year != null ? be.syn_year : 0 }</td>
                         <td>${be.danger1 != null ? be.danger1 : 0 }</td>

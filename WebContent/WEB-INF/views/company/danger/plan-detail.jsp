@@ -188,7 +188,7 @@
             <%--显示第三方检查检查文书--%>
             <c:if test="${flag==3 }">
                 <c:if test="${is_re==1}">
-                    <button onClick="show_dialog('检查文书','/village/check-document?checkId=${check.id }')"
+                    <button onClick="show_dialog('检查文书','/village/check-document?checkId=${check.id }&flag=1')"
                             class="btn btn-success radius" type="button" style="padding: 0 70px;">检查文书
                     </button>
                     <%--                <button onClick="location.href = '/village/check-document?checkId=${check.id }'"--%>

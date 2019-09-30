@@ -347,6 +347,8 @@
     </div>
 </body>
 <script type="text/javascript">
+    console.log('document.copy')
+    console.log('${document.copy}')
 var checkId = ${checkId};
 var userId = ${company.userId };
 var rectificationId = '${rectification.id}';

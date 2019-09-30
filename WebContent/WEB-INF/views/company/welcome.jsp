@@ -61,9 +61,16 @@
     function showping2(){
     $("#win-ping2").modal("show")}
     function showping3(){
-    $("#win-ping3").modal("show")}
+
+     // window.location.href="/village/to_monitor-list?flag=2"
+      show_dialog('重大危险源', '/village/to_monitor-list?flag=2')
+      //show_tab("","")
+    //$("#win-ping3").modal("show")
+      }
     function showping4(){
-    $("#win-ping4").modal("show")}
+      window.location.href="/village/company/zdlist?hazard=1&yzz=1"
+      //$("#win-ping4").modal("show")
+      }
 
     </script>
     </head>

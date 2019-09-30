@@ -46,11 +46,11 @@
         data: [
         {
         name: '一般隐患',
-        value: '${number6}',
+        value: '${number4}',
         },
         {
         name: '较大隐患',
-        value: '${number4}',
+        value: '${number6}',
         },
         {
         name: '重大隐患',

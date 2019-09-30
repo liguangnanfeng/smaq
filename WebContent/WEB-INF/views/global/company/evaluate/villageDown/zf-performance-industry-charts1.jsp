@@ -44,7 +44,7 @@
         }
 
         td[class=first] {
-        width: 155px;
+        width: 136px;
         }
 
         td[class=first]:before {
@@ -192,7 +192,7 @@
         <c:forEach items="${list}" varStatus="index" var="be">
             <c:if test="${index.index<fn:length(list)-1 }">
                 <tr>
-                <td>${index.index + 1}</td>
+                <td >${index.index + 1}</td>
                 <td>${be.name}</td>
                 <td>${be.danger1}</td>
                 <td>${be.danger2}</td>
@@ -258,7 +258,6 @@
         <script>
         $(".tdd").text(window.a);
         </script>
-
         </table>
         </div>
         </div>

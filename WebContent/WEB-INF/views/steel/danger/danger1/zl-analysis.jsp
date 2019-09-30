@@ -93,7 +93,7 @@
         }
         var myChart = echarts.init(document.getElementById('main'));
         myChart.setOption(option);
-        var url = '${ly }/company/zhuChartData44';
+        var url = '${ly }/steel/zhuChartData44';
         myChart.on('click', function(params) {
         window.location.href = url;
 

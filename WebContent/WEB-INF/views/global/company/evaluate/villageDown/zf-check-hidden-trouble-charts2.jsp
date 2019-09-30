@@ -43,7 +43,7 @@
         }
 
         td[class=first] {
-        width: 155px;
+        width: 130px;
         }
 
         td[class=first]:before {
@@ -209,7 +209,7 @@
                     <c:if test="${index.index<fn:length(list)-1}">
                             <tr class="tcontent">
                             <td>${index.index + 1}</td>
-                            <td>${be.name}</td>
+                            <td style="width:130px;word-wrap: break-word;word-break: break-all;overflow: hidden;">${be.name}</td>
                             <td>${be.danger19}</td>
                             <td>${be.danger1}</td>
                             <td>${be.danger2}</td>

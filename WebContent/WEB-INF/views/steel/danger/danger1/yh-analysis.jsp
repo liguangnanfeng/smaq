@@ -58,15 +58,15 @@
         var url='';
         if('${flag}'==1){
         $("#chaBtn1").addClass('btn-default');
-        url='${ly }/steel/zhuChartData22?flag=1';
+        url='${ly }/company/zhuChartData22?flag=1';
         }
         if('${flag}'==2){
         $("#chaBtn2").addClass('btn-default');
-        url='${ly }/steel/zhuChartData22?flag=2';
+        url='${ly }/company/zhuChartData22?flag=2';
         }
         if('${flag}'==3){
         $("#chaBtn3").addClass('btn-default');
-        url='${ly }/steel/zhuChartData22?flag=3';
+        url='${ly }/company/zhuChartData22?flag=3';
         }
         function addgjs() {
         show_dialog(" ", "/company/yh-analysis?flag=1");
@@ -186,7 +186,7 @@
         <%--3隐患等级数据分析--%>
         <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var url3 = '${ly }/steel/zhuChartData77';
+        var url3 = '${ly }/company/zhuChartData77';
 
         var option3 = {
         title:{

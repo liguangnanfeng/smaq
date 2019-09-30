@@ -141,7 +141,7 @@
 		<tr>
 
 		<td>${index.index + 1}</td>
-		<td>${be.name}</td>
+		<td style="width:126px;word-wrap: break-word;word-break: break-all;overflow: hidden;">${be.name}</td>
 		<td>${be.danger1}</td>
 		<td>${be.danger2}</td>
 		<td>${be.sum}</td>

@@ -75,33 +75,56 @@
 
         <%--        柱状图1--%>
         <script>
-<%--        console.log("flag:","${flag}");--%>
-<%--        var url='';--%>
-<%--        if('${flag}'==1){--%>
-<%--        $("#chaBtn1").addClass('btn-default');--%>
-<%--        url="${ly }/global/zf-hidden-industry?flag=1"--%>
-<%--        }--%>
-<%--        if('${flag}'==2){--%>
-<%--        $("#chaBtn2").addClass('btn-default');--%>
-<%--        url="${ly }/global/zf-hidden-industry?flag=2"--%>
-<%--        }--%>
-<%--        if('${flag}'==3){--%>
-<%--        $("#chaBtn3").addClass('btn-default');--%>
-<%--        url="${ly }/global/zf-hidden-industry?flag=3"--%>
-<%--        }--%>
 
 
 
-        // 基于准备好的dom，初始化echarts实例
-        let number = ["${danger1}", "${danger2}", "${danger3}", "${danger4}", "${danger5}", "${danger6}", "${danger7}", "${danger8}", "${danger9}", "${danger10}"];
-        var firstdata = ["${result1}", "${result2}", "${result3}", "${result4}", "${result5}", "${result6}", "${result7}", "${result8}", "${result9}", "${result10}"];
-        var x="",fdata=[];
-        console.log(number);
-        firstdata.map((v,i)=>{
-        x=v*100;
-        fdata.push(x);
-        });
-        console.log('fdata:',fdata)
+console.log('${list}');
+console.log('${lists}');
+            let listCount=[];
+            let listRate=[];
+            let lists;
+            <c:forEach items="${list}" varStatus="index" var="be">
+                    console.log('${be.danger1}');
+                    a1='${be.danger1}'; a2='${be.danger2}'; a3='${be.danger3}'; a4='${be.danger4}'; a5='${be.danger5}';
+                    a6='${be.danger6}'; a7='${be.danger7}'; a8='${be.danger8}'; a9='${be.danger9}'; a10='${be.danger10}';
+                    let a=a1*1+a2*1+a3*1+a4*1+a5*1+a6*1+a7*1+a8*1+a9*1+a10*1;
+                    listCount=[a1,a2,a3,a4,a5,a6,a7,a8,a9,a10];
+                    listCount.map((v,i)=>{
+                    x1= (v/a).toFixed(2);
+                    x1=x1*100;
+                    listRate.push(x1)
+                    });
+                    console.log('listCount:',listCount);
+                    console.log('listRate:',listRate);
+            </c:forEach>
+
+            <c:forEach items="${lists}" varStatus="index" var="be">
+                    let list2={
+                    '${be.name19}':'${be.number19}','${be.name1}':'${be.number1}', '${be.name2}':'${be.number2}', '${be.name3}':'${be.number3}', '${be.name4}':'${be.number4}',
+                    '${be.name5}':'${be.number5}', '${be.name6}':'${be.number6}', '${be.name7}':'${be.number7}', '${be.name8}':'${be.number8}',
+                    '${be.name9}':'${be.number9}', '${be.name10}':'${be.number10}', '${be.name11}':'${be.number11}', '${be.name12}':'${be.number12}',
+                    '${be.name13}':'${be.number13}', '${be.name14}':'${be.number14}', '${be.name15}':'${be.number15}', '${be.name16}':'${be.number16}'
+                    , '${be.name17}':'${be.number17}', '${be.name18}':'${be.number18}'
+                    }
+                    let listRateb=[
+                    '${be.double19}','${be.double1}','${be.double2}','${be.double3}','${be.double4}','${be.double5}','${be.double6}','${be.double7}','${be.double8}',
+                    '${be.double9}','${be.double10}','${be.double11}','${be.double12}','${be.double13}','${be.double14}','${be.double15}','${be.double16}','${be.double17}',
+                    '${be.double18}',
+                    ];
+            </c:forEach>
+            <%--        data:["","", "", "", "设备安全", "", "", "", "",--%>
+            <%--        "", "", "", "", "",--%>
+            <%--        "", "", "", "",""--%>
+            <%--        ],--%>
+            listCount2=[
+            list2.基础管理,list2.设计总图,list2.试生产,list2.装置运行,list2.设备安全,list2.仪表安全,list2.电气安全,list2.应急消防,list2.特殊管控,
+            list2.行为环境,list2.生产现场,list2.公辅工程,list2.特种设备,list2.专项行业,list2.生产工艺,list2.设备设施,list2.危化管理,list2.安全设施,
+            list2.其他
+            ];
+
+            let listRate2 = Array.from(listRateb,x=>x*100);
+            console.log('listCount2:',listCount2)
+            console.log('listRate2:',listRate2)
         var myChart = echarts.init(document.getElementById('main'));
         // 使用刚指定的配置项和数据显示图表。
         // 指定图表的配置项和数据
@@ -127,10 +150,10 @@
         trigger:'item',
         padding:[20,10,20,10],
         formatter: function (params) {
-        var value=params.value.toFixed(2);
+        var value=params.value;
         var name=params.name;
         var index=params.dataIndex;
-        var num=number[index];
+        var num=listCount[index];
         var tip='<section>'+name+'</section><section>占比: '+value+'%</section><section>数量: '+num+'</section>';
         return '<div class="showBox">' + tip + '</div>';
         }
@@ -162,7 +185,7 @@
         },
         series: {
         type: 'bar',
-        data: fdata,
+        data: listRate,
         itemStyle: {
         normal: {
         color: '#C0504D'
@@ -211,20 +234,7 @@
 
 
         <script>
-        console.log("flag:","${flag}");
-        var url2='';
 
-        console.log('sign:,${sign}')
-        // 基于准备好的dom，初始化echarts实例
-        var number2 = ["${number19}", "${number1}", "${number2}", "${number3}", "${number4}", "${number5}", "${number6}", "${number7}", "${number8}", "${number9}", "${number10}", "${number11}", "${number12}", "${number13}", "${number14}","${number15}","${number16}","${number17}","${number18}"];
-        var firstdata2 = ["${double19}","${double1}", "${double2}", "${double3}", "${double4}", "${double5}", "${double6}", "${double7}", "${double8}", "${double9}", "${double10}", "${double11}", "${double12}", "${double13}", "${double14}","${double15}","${double16}","${double17}","${double18}"];
-        var x2="",fdata2=[];
-        console.log(number);
-        firstdata2.map((v,i)=>{
-        x2=v*100;
-        fdata2.push(x2);
-        });
-        console.log('fdata2:',fdata2)
         var myChart2 = echarts.init(document.getElementById('main2'));
         // 使用刚指定的配置项和数据显示图表。
         // 指定图表的配置项和数据
@@ -251,10 +261,10 @@
         padding:[20,10,20,10],
         formatter: function (params) {
         console.log(params);
-        var value2=params.value.toFixed(2);
+        var value2=params.value;
         var name2=params.name;
         var index2=params.dataIndex;
-        var num2=number2[index2];
+        var num2=listCount2[index2];
         var tip2='<section>'+name2+'</section><section>占比: '+value2+'%</section><section>数量: '+num2+'</section>';
         return '<div class="showBox">' + tip2 + '</div>';
         }
@@ -287,7 +297,7 @@
         },
         series: {
         type: 'bar',
-        data: fdata2,
+        data: listRate2,
         itemStyle: {
         normal: {
         color: '#C0504D'
@@ -297,31 +307,7 @@
         }
         myChart2.setOption(option2, true);
 
-<%--        // 监听事件--%>
-<%--        $("#chaBtn11").click(() => {--%>
-<%--        url='${ly }/company/zhuChartData66?flag=1';--%>
-<%--        $("#chaBtn11").addClass('btn-default')--%>
-<%--        $("#chaBtn22").removeClass('btn-default')--%>
-<%--        $("#chaBtn33").removeClass('btn-default')--%>
-<%--        })--%>
-<%--        $("#chaBtn22").click(() => {--%>
-<%--        url='${ly }/company/zhuChartData66?flag=2';--%>
 
-<%--        $("#chaBtn22").addClass('btn-default')--%>
-<%--        $("#chaBtn11").removeClass('btn-default')--%>
-<%--        $("#chaBtn33").removeClass('btn-default')--%>
-<%--        })--%>
-
-<%--        $("#chaBtn33").click(() => {--%>
-<%--        url='${ly }/company/zhuChartData66?flag=3';--%>
-<%--        $("#chaBtn33").addClass('btn-default')--%>
-<%--        $("#chaBtn11").removeClass('btn-default')--%>
-<%--        $("#chaBtn22").removeClass('btn-default')--%>
-<%--        });--%>
-
-<%--        myChart2.on('click', function(p) {--%>
-<%--        window.location.href =url2;--%>
-<%--        })--%>
         </script>
 
 

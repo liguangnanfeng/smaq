@@ -43,19 +43,19 @@
         }
 
         td[class=first] {
-        width: 155px;
+        width: 130px!important;
         }
 
         td[class=first]:before {
             content: "";
             position: absolute;
             width: 1px;
-            height: 187px;
+            height: 162px;
             top: 0;
             left: 0;
             background-color: #ddd;
             display: block;
-            transform: rotate(-59deg);
+            transform: rotate(-53deg);
             transform-origin: top;
             }
 
@@ -209,7 +209,7 @@
                     <c:if test="${index.index<fn:length(list)-1}">
                             <tr class="tcontent">
                             <td>${index.index + 1}</td>
-                            <td>${be.name}</td>
+                            <td style="width:130px;word-wrap: break-word;word-break: break-all;overflow: hidden;">${be.name}</td>
                             <td>${be.danger19}</td>
                             <td>${be.danger1}</td>
                             <td>${be.danger2}</td>

@@ -27,16 +27,16 @@
 		width: 120px;
 		}
 		td[class=first]:before {
-        content: "";
-        position: absolute;
-        width: 1px;
-        height: 143px;
-        top: 0;
-        left: 0;
-        background-color: #ddd;
-        display: block;
-        transform: rotate(-58deg);
-        transform-origin: top;
+		content: "";
+		position: absolute;
+		width: 1px;
+		height: 154px;
+		top: 0;
+		left: 0;
+		background-color: #ddd;
+		display: block;
+		transform: rotate(-61deg);
+		transform-origin: top;
 		}
 		.title{
 		margin-top: 43px;
@@ -83,6 +83,9 @@
 		}
 		#time{
 		font-size:15px;
+		}
+		.content td{
+		padding:5px
 		}
 		</style>
 		</head>
@@ -133,11 +136,12 @@
 		<td>同比</td>
 		</tr>
 		<script>
-		window.s11=0;window.s22=0;
+console.log('${list}')
+		console.log('${data}')
 		</script>
-		<tr>
+		<tr class="content">
 			<td>1</td>
-			<td>${company}</td>
+			<td style="width:126px;word-wrap: break-word;word-break: break-all;overflow: hidden;">${company}</td>
 			<td>${numbers1}</td>
 			<td>${numbers11}</td>
 			<td>${rate1}</td>
@@ -163,12 +167,8 @@
 		<c:forEach items="${list}" varStatus="index" var="be">
 			<c:if test="${index.index<fn:length(list)-1 }">
 				<tr>
-				<script>
-				//window.s22+='${be.number2}'*1;
-				console.log("开始：",'${be.number1}');
-				</script>
 				<td>${index.index + 2}</td>
-				<td>${be.name}</td>
+				<td style="width:126px;word-wrap: break-word;word-break: break-all;overflow: hidden;">${be.name}</td>
 				<td>${be.danger1}</td>
 				<td>${be.danger11}</td>
 				<td>${be.result11}</td>
@@ -213,14 +213,13 @@
 				<td>${be.result3}</td>
 				<td></td>
 
-				<td class="sum1">${sub}</td>
-				<td class="sum2">${sub1}</td>
+				<td class="sum1"></td>
+				<td class="sum2"></td>
 				<td></td>
 				<td></td>
 				<td></td>
 				<script>
 
-				console.log("结果：",window.s11);
 				 //$(".sum1").text(window.s11);
 				 //$(".sum2").text(window.s22);
 				</script>

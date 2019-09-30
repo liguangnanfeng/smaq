@@ -212,7 +212,7 @@
     substring = "book";
     b= searchURL.includes(substring);   // true
     if(b){
-    $(".ss").text("隐患整改意见书");
+    $(".ss").text("整改复查意见书");
     }
     </script>
 

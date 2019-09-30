@@ -340,7 +340,13 @@
             </div>
 			           <div class="tabCon tabCon1">
                 <div class="text-c mt-20">
-                    <h3>${companyName}隐患排查计划表</h3>
+                    <h3 id="h3"></h3>
+    <script>
+    let myDate = new Date();
+    let y= myDate.getFullYear();
+    let t='${companyName}'+y+'年度隐患排查计划表'
+    $("#h3").text(t)
+    </script>
                 <button onClick="pr_()" class="btn btn-primary radius" type="button">
                 <i class="Hui-iconfont">&#xe652;</i>打印
                 </button>
@@ -389,7 +395,7 @@
     <c:forEach items="${hiddenPlanList}" varStatus="index" var="be">
     <tr class="text-c">
     <td>1</td>
-    <td>${company}</td>
+    <td>公司级</td>
         <td onClick="inputC(this,1,'${be.c}',0)">${be.syn_month }</td>
         <td>${be.syn_year }</td>
         <td onClick="inputC(this,3,'${be.c}',0)">${be.syn_ratio }</td>

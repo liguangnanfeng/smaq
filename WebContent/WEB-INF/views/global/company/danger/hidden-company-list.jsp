@@ -82,12 +82,13 @@
             <thead>
             <tr class="text-c">
                 <th width="5%">序号</th>
-                <th width="20%">企业名称</th>
-                <th width="10%">企业类型</th>
-                <th width="10%">法人代表</th>
-                <th width="10%">联系方式</th>
-                <th width="10%">所属行业</th>
-                <th width="10%">操作</th>
+                <th width="15%">企业名称</th>
+                <th width="15%">所属行业</th>
+                <th width="8%">风险等级</th>
+                <th width="15%">所在地</th>
+                <th width="14%">规模类型</th>
+                <th width="8%">运行状态</th>
+                <th width="15%">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -95,21 +96,22 @@
             <script>
 
             </script>
-            <c:forEach items="${map }" varStatus="index" var="be">
+            <c:forEach items="${list }" varStatus="index" var="be">
                 <tr class="text-c">
                     <td>${index.index + 1 }</td>
                     <td>${be.name}</td>
-                    <td>${be.reg_type}</td>
-                    <td>${be.legal}</td>
+                    <td>${be.industry2 }</td>
+                    <td>${be.dlevel }</td>
+                    <td>${be.regionName} ${be.address }</td>
+                    <td>${be.scale}</td>
+                    <c:if test="${0 == be.count }">
+                        <td>未运行</td>
+                    </c:if>
+                    <c:if test="${0 != be.count }">
+                        <td>正常</td>
+                    </c:if>
                     <td>
-                            <%--${be.status == 1 ? '未检查' : '已检查'}--%>
-                            ${be.legal_contact}
-                    </td>
-                    <td>${be.industry }</td>
-
-
-                    <td>
-                        <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.user_id }', '${ly}/global/hidden-danger-list?flag=${flag }&uid=${be.user_id }&status=${status} ')" href="javascript:;">查看详情</a>
+                        <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.userId }', '${ly}/global/hidden-danger-list?flag=${flag }&uid=${be.userId }&status=${status} ')" href="javascript:;">查看详情</a>
                     </td>
                 </tr>
             </c:forEach>

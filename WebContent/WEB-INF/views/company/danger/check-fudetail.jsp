@@ -115,7 +115,7 @@ function showpicture2(src, obj){
 <%--        </c:choose>--%>
 <%--      </c:if>--%>
   </div>
-  <h2 class="text-c mb-10">隐患整改复查书</h2>
+  <h2 class="text-c mb-10">隐患整改复查意见书</h2>
   <!-- 循环 -->
   <c:forEach items="${recheckList }" var="p">
   <div class="f-l div_pdetail mt-20">

@@ -184,10 +184,10 @@
 			</tr>
 
 		<c:forEach items="${list}" varStatus="index" var="be">
-			<c:if test="${index.index<fn:length(list)-2 }">
+			<c:if test="${index.index<fn:length(list)-1 }">
 				<tr>
 					<td>${index.index + 2}</td>
-					<td>${be.name}</td>
+					<td style="width:126px;word-wrap: break-word;word-break: break-all;overflow: hidden;">${be.name}</td>
 					<td>${be.danger19}</td>
 					<td>${be.danger1}</td>
 					<td>${be.danger2}</td>
@@ -211,10 +211,11 @@
 					<td>${be.data}</td>
 					<td></td>
 					</tr>
-				</c:if>
 				<script>
-				 window.a=window.a+'${be.danger20}'*1;
+				window.a=window.a+'${be.danger20}'*1;
 				</script>
+				</c:if>
+
 
 
 			<c:if test="${index.index>fn:length(list)-2 }">

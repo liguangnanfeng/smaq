@@ -127,13 +127,15 @@
 		<td>数量</td>
 		<td>占比%</td>
 		<td>同比</td>
-
+<script>
+console.log('${list}')
+</script>
 		</tr>
 		<c:forEach items="${list}" varStatus="index" var="be">
 			<c:if test="${index.index<fn:length(list)-1 }">
 				<tr>
 				<td>${index.index + 1}</td>
-				<td>${be.name}</td>
+				<td style="width:126px;word-wrap: break-word;word-break: break-all;overflow: hidden;">${be.name}</td>
 				<td>${be.danger1}</td>
 				<td>${be.result11}</td>
 				<td></td>

@@ -18,13 +18,17 @@
             }
             </style>
         <body style="height: 100vh;">
-        <script>
-        var a1={
-        一般:'${result11}',
-        较大:'${result22}',
-        重大:'${result33}'
-        }
-        console.log('a1:',a1);
+            <c:forEach items="${list}" varStatus="index" var="be">
+                    <script>
+                var a1='${be.result11}',a2='${be.result22}',a3= '${be.result33}';
+                var b1='${be.resusts1}',b2='${be.resusts2}',b3= '${be.resusts3}';
+                var c1='${be.resusts4}',c2='${be.resusts5}',c3= '${be.resusts6}';
+
+                    </script>
+            </c:forEach>
+            <script>
+            console.log('${list}')
+
         </script>
         <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
         <div id="main" class="m" style="width: 33%;height:70%;display:inline-block"></div>
@@ -56,15 +60,15 @@
         data: [
             {
             name: '一般隐患',
-            value: '${result11!=null?result11:0}',
+            value: a1?a1:'0'
             },
             {
             name: '较大隐患',
-            value:'${result22!=null?result22:0}',
+            value:a2?a2:'0',
             },
             {
             name: '重大隐患',
-            value: '${result33!=null?result33:0}',
+            value: a3?a3:'0',
             }
         ],
         itemStyle: {
@@ -147,15 +151,15 @@
         data: [
         {
         name: '一般隐患',
-        value: '${resusts1!=null?resusts1:0}',
+        value: b1?b1:'0',
         },
         {
         name: '较大隐患',
-        value:'${resusts2!=null?resusts2:0}',
+        value: b2?b2:'0',
         },
         {
         name: '重大隐患',
-        value: '${resusts3!=null?resusts3:0}',
+        value: b3?b3:'0',
         }
         ],
         itemStyle: {
@@ -239,15 +243,15 @@
         data: [
             {
             name: '一般隐患',
-            value: '${resusts4!=null?resusts4:"0"}',
+            value: c1?c1:'0,'
             },
             {
             name: '较大隐患',
-            value:'${resusts5!=null?resusts5:"0"}',
+            value: c2?c2:'0',
             },
             {
             name: '重大隐患',
-            value: '${resusts6!=null?resusts6:"0"}',
+            value: c3?c3:'0',
             }
         ],
         itemStyle: {

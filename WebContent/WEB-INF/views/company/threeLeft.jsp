@@ -132,23 +132,12 @@
             <script>
             let x=null;
             function loadFram3(){
-            x=false;
             $("#iframe").contents().find("#aback").attr("href","javascript:void(0)")
             $("#iframe").contents().find("#aback").on("click",function(){
-            console.log("click");
             $(".children_div").hide();
             $("#startnav").show();
             $("#iframe").attr("src", "${ly }/company/safety-system/control-list2?flag=1");
-<%--            x=true;--%>
-            console.log('x:',x)
             });
-           // $("#iframe").contents().find("#bback").hide();
-
-            <%--            if(x===false) {--%>
-<%--            $("#iframe").contents().find("nav>a:eq(2)").hide();--%>
-<%--            console.log('hide button')--%>
-<%--            }--%>
-
             }
             function firstAcitive(v){
             $("#iframe").attr("src", "${ly }/api/map/control-list4");
@@ -466,8 +455,8 @@
         </c:if>
         <c:if test="${leftBasic == 12}">
             <ul>
-            <li><a onclick="sub1()" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
-            <li><a onclick="sub2()" data-title="报警设备" href="javascript:void(0)">报警设备</a></li>
+            <li style="width:13%"><a onclick="sub1()" data-title="实时监控" href="javascript:void(0)">重大危险源</a></li>
+            <li style="width:13%"><a onclick="sub2()" data-title="报警设备" href="javascript:void(0)">易燃易爆、有毒作业</a></li>
             </ul>
             <iframe src="${ly}/village/to_monitor-list?flag=2" onload="loadFrame()" scrolling="no" id="iframe"
             frameborder="0" width="100%" height="700px" ></iframe>
@@ -503,7 +492,7 @@
             <li><a onclick="sub1()" data-title="设备设施管理" href="javascript:void(0)">设备设施管理</a></li>
             <li><a onclick="sub2()" data-title="人员管理" href="javascript:void(0)">人员管理</a></li>
             <li><a onclick="sub6()" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
-            <li><a onclick="sub3()" data-title="在线检测" href="javascript:void(0)">在线检测</a></li>
+            <li><a onclick="sub3()" data-title="在线检测" href="javascript:void(0)">在线监测</a></li>
             <li><a onclick="sub4()" data-title="风险分布图" href="javascript:void(0)">风险分布图</a></li>
             <li><a onclick="sub5()" data-title="公示" href="javascript:void(0)">公示</a></li>
             </ul>
@@ -518,7 +507,7 @@
             $("#iframe").attr("src", "${ly }/company/source/equipment?type=1" );
             }
             function sub2(){
-            $("#iframe").attr("src", "${ly }/company/source/staff" );
+            $("#iframe").attr("src", "${ly }/company/system/user-list" );
             }
             function sub3(){
             $("#iframe").attr("src", "${ly }/company/threeLeft?leftBasic=12");

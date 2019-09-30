@@ -108,7 +108,7 @@
             <div class="topleftmod">
             <img style="display: flex;" width="60" height="60" src="/images/companyImg/newimg/logo.png" />
             <span class="logo" style="">
-            <span class="antai">应急管理中心</span>
+            <span class="antai">应急监控中心</span>
             <span class="webadd">www.antai.com</span>
             </span>
             </div>
@@ -123,7 +123,7 @@
 
         <main>
             <div class="com"><span class="time2" style="color:#64FFFF">${userName}</span></div>
-            <img src="/images/companyImg/newimg/yj1.jpg"/>
+            <img src="/images/companyImg/newimg/demo.png"/>
             </main>
             <script>
 <%--                var w=$('main').height();--%>

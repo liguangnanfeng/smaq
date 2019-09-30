@@ -49,7 +49,7 @@
             <c:if test="${flag2 != 3}">
                 <a href="/village/check-document?checkId=${check.id}&flag=8">现场检查记录</a>
             </c:if>
-            <a href="/village/check-document?checkId=${check.id}">隐患整改意见书</a>
+            <a href="/village/check-document?checkId=${check.id}&flag=1">隐患整改意见书</a>
             <a class="current" href="JavaScript:void(0)">隐患整改复查意见书</a>
         </div>
     </div>

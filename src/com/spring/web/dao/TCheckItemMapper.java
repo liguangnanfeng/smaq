@@ -442,6 +442,8 @@ public interface TCheckItemMapper {
 
     Integer zhengFuDanger(@Param("industry")String industry, @Param("user_ids")String user_ids);
 
+    List<Map<String,Object>> zhengFuDangerBasics(@Param("user_ids")String user_ids);
+
     Integer zhengFuDanger11(@Param("user_ids")String user_ids);
 
     Integer zhengFuChartDataDanger22(@Param("flag")Integer flag, @Param("industry")String industry, @Param("user_id")Integer user_id);

@@ -378,12 +378,22 @@ function article_save_submit() {
   <%--top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);--%>
   //top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);
   var i1=sessionStorage.getItem('id1');
-  top.show_tab("治理意见表_" + checkId, '/village/check-document?checkId=' +i1);
+<%--如果你是第三方复查=>/village/check-document?checkId=42870&flag=2--%>
+<%--  这里区分一下自查和行政和第三方--%>
+  var searchURL = window.location.search;
+  searchURL = searchURL.substring(1, searchURL.length);
+  var t = searchURL.split("&")[0].split("=")[1];
+  if(flag==1){
+  top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);
+
+  }else{
+  top.show_tab("文书" + checkId, '/village/check-document?checkId=' +checkId+'&flag=2');
+  }
 
   } else {
   console.log('合格')
-  //var url = '/company/recheck-detail?checkId=' + checkId+'&flag=' + flag + '&number=${be.c }';
-  //window.location.href = url
+  var url = '/company/recheck-detail?checkId=' + checkId+'&flag=' + flag + '&number=${be.c }';
+  window.location.href = url
 
   }
 

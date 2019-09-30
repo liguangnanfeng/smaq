@@ -64,7 +64,10 @@ function pr_() {
               <c:choose>
                 <c:when test="${document.flag == 8}">
                   <a class="current" href='/village/check-document?checkId=${document.checkId}&flag=8'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
-                </c:when>
+              </c:when>
+                  <c:when test="${document.flag == 1}">
+<%--                      <a class="current" href='/village/check-document?checkId=${document.checkId}&flag=8'>&lt;%&ndash; ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} &ndash;%&gt;现场检查记录</a>--%>
+                  </c:when>
                 <c:otherwise>
                   <a href='/village/check-document?checkId=${document.checkId}&flag=8'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
                 </c:otherwise>

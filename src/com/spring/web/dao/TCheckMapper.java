@@ -104,6 +104,8 @@ public interface TCheckMapper {
 
     Integer zfCount(@Param("industry")String industry, @Param("user_ids")String user_ids);
 
+    List<Map<String,Object>> zhengfuCountBasic(@Param("user_ids")String user_ids);
+
     Integer zfCount11(@Param("user_ids")String user_ids);
 
     Integer zfPerformanceCount33(@Param("flag")Integer flag, @Param("user_id")Integer user_id);

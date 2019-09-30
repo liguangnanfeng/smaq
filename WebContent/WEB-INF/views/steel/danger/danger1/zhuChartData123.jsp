@@ -84,33 +84,33 @@
 	<a class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
 </nav>
 <div class="containerx">
+	<div class="center text-c mt-20 "><h3 class="center">隐患治理对象分析</h3></div>
 	<section class="title">
-		<div class="flexspa">
-			<div class="text-c mt-20 "><h3 class="center">隐患治理对象分析</h3></div>
-			<span id="time">
-		</span>
+		<div class="flexspa center">
+			<div class="text-c mt-20 "></div>
+			<span id="time"> </span>
 		</div>
 	</section>
 
-	<script>
-		var searchURL = window.location.search;
-		searchURL = searchURL.substring(1, searchURL.length);
-		var targetPageId = searchURL.split("&")[0].split("=")[1];
-		console.log('targetPageId:',targetPageId);
-		var title="";
-		if(targetPageId==1){
-			title="企业自查对象分析";
-			console.log('title:',title);
-		}
-		if(targetPageId==2){
-			title="行政检查对象分析";   console.log('title:',title);
-		}
-		if(targetPageId==3){
-			title="第三方检查绩效分析";   console.log('title:',title);
-		}
-		$(".center").text(title);
-		$(".aaa").text(title);
-	</script>
+<%--	<script>--%>
+<%--		var searchURL = window.location.search;--%>
+<%--		searchURL = searchURL.substring(1, searchURL.length);--%>
+<%--		var targetPageId = searchURL.split("&")[0].split("=")[1];--%>
+<%--		console.log('targetPageId:',targetPageId);--%>
+<%--		var title="";--%>
+<%--		if(targetPageId==1){--%>
+<%--			title="企业自查对象分析";--%>
+<%--			console.log('title:',title);--%>
+<%--		}--%>
+<%--		if(targetPageId==2){--%>
+<%--			title="行政检查对象分析";   console.log('title:',title);--%>
+<%--		}--%>
+<%--		if(targetPageId==3){--%>
+<%--			title="第三方检查绩效分析";   console.log('title:',title);--%>
+<%--		}--%>
+<%--		$(".center").text(title);--%>
+<%--		$(".aaa").text(title);--%>
+<%--	</script>--%>
 	</section>
 	<table class=".table table-hover"  style="margin: auto;"  cellpadding="2">
 		<tr style="background-color: #F5F9FE;font-weight: bold;">

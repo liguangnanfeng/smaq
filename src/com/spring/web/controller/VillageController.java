@@ -1689,7 +1689,11 @@ public class VillageController extends BaseController {
                 if(null!=levelId){
                     String DangerFlag="";
                     if(flag==1&&!Objects.equals(user.getUserName(),tc.getDepart())){
-                        DangerFlag = aCompanyManualMapper.selectByPrimaryKey(levelId).getFlag();
+                        if (null == levelId || levelId == 0){
+                            continue;
+                        }else if (null != levelId && levelId != 0){
+                            DangerFlag = aCompanyManualMapper.selectByPrimaryKey(levelId).getFlag();
+                        }
                     }else{
                         DangerFlag = queryDangerFlag(levelId, industryType);
                     }

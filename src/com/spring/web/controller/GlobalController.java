@@ -2492,9 +2492,9 @@ public class GlobalController extends BaseController {
                                Integer status, Integer flag, Model model,String dmName) throws Exception {
 
         User user = getLoginUser(request);
-
-        List<Map<String,Object>> map = tCheckItemMapper.findALL(user.getId(), user.getUserType());
-        model.addAttribute("map",map);
+        CompanyListReqDTO dto = new CompanyListReqDTO();
+        dto.setIsFreeze("1");
+        cgfService.selectCompanyWithPage(dto, user, model);
         model.addAttribute("flag",flag);
         model.addAttribute("title",title);
         model.addAttribute("type",type);
@@ -4779,8 +4779,9 @@ public class GlobalController extends BaseController {
 
         User user = getLoginUser(request);
 
-        List<Map<String,Object>> map = tCheckItemMapper.findALL(user.getId(), user.getUserType());
-        model.addAttribute("map",map);
+        CompanyListReqDTO dto = new CompanyListReqDTO();
+        dto.setIsFreeze("1");
+        cgfService.selectCompanyWithPage(dto, user, model);
         model.addAttribute("flag",flag);
         model.addAttribute("status",status);
 
@@ -4931,7 +4932,12 @@ public class GlobalController extends BaseController {
         User user = getLoginUser(request);
         StringBuilder sb = new StringBuilder();
         List<Integer> ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询所有的公司
+
+        CompanyListReqDTO dto = new CompanyListReqDTO();
+        dto.setIsFreeze("1");
+        cgfService.selectCompanyWithPage(dto, user, model);
         DecimalFormat df = new DecimalFormat("0.00");
+
         List<Map<String, Object>> list = null;
         Integer now = 0;
         Integer now1 = 0;

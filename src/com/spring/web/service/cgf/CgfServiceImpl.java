@@ -1119,9 +1119,9 @@ public class CgfServiceImpl implements CgfService {
         }
         dto.setIndustry2(industry2);
         List<Integer> userIds = getCompanyUserIdsWithPage(dto, user);
+        System.out.println("userIds:"+userIds);
         //log.error("userIds："+userIds.toString());
         String all_userIds = dto.getUserIds();
-
         if ("-1".equals(all_userIds)) {
             model.addAttribute("total", 0);
         } else {
@@ -1130,6 +1130,7 @@ public class CgfServiceImpl implements CgfService {
         if (userIds.size() > 0) {
             dto.setUserIds(StringUtils.join(userIds, ","));
 //            dto.setUserIds(getUserIdsByPage(userIds, dto));
+            System.out.println(dto);
             model.addAttribute("list", companyMapper.selectByIds(dto));
         }
         dto.setUserIds(all_userIds);
@@ -1193,6 +1194,7 @@ public class CgfServiceImpl implements CgfService {
                     ll.add(list.get(from));
                 }
             }
+            System.out.println("ll:"+ll);
             return ll;
         } else {
             String[] userIds = dto.getUserIds().split(",");

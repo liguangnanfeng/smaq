@@ -5480,8 +5480,14 @@ public class SteelController extends BaseController {
     @RequestMapping(value = "source/video")
     public String monitorListSupervise(HttpServletRequest request, String companyName, Model model) throws Exception {
         User user = getLoginUser(request);
-
-        return null;
+        Map<String, Object> m = new HashMap<>();
+        m.put("tradeId", user.getId());
+        if(null != companyName){
+            m.put("companyName", companyName);
+        }
+        model.addAttribute("list", monitorMapper.selectGroupByMap(m));
+        model.addAttribute("companyName", companyName);
+        return "village/system/monitor-list-supervise";
     }
 
     /**

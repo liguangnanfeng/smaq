@@ -1417,7 +1417,9 @@ public class GlobalController extends BaseController {
         }
         //获取所有符合条件的user_id
         if(StringUtils.isBlank(dto.getUserIds()) || "-1".equals(dto.getUserIds())){
+            System.out.println(dto);
             List<Integer> allUserIds = companyMapper.selectIdsByCompany_view(dto);
+            System.out.println(allUserIds);
             if (allUserIds.size() == 0) {
                 dto.setUserIds("-1");
             } else {

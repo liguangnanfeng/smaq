@@ -1204,7 +1204,7 @@
 
 	<select id="selectIdsByCompany_view" resultType="java.lang.Integer">
 		select
-		T1.user_id
+		distinct T1.user_id
 		from company_view T1
 		<where>
 			T1.is_del = '0'
@@ -1688,7 +1688,7 @@
 
 	<select id="selectByIds" resultType="java.util.HashMap">
 		select
-		T1.user_id userId,
+		distinct T1.user_id userId,
 		T1.name, T1.industry, T1.industry2, T1.scale, T1.dlevel, T1.address, T1.is_key
 		isKey, T1.dangers, T1.charge,
 		T1.is_freeze isFreeze, T1.village_name villageName, T1.town_name townName, T1.controls,

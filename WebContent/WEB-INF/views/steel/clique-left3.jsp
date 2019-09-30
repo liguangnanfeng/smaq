@@ -265,7 +265,7 @@
       <dd>
       <ul>
       <li><a data-href="${ly }/steel/source/company-list2" data-title="全部企业" href="javascript:void(0)">全部企业</a></li>
-      <li><a data-href="${ly }/villageAdd/source/video" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
+      <li><a data-href="${ly }/steel/source/video" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
       <li><a data-href="${ly }/steel/safety-system/all-risk-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
       <li><a data-href="${ly }/villageAdd/source/danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>
       <li><a data-href="${ly }/villageAdd/source/danger-chart" data-title="分类统计" href="javascript:void(0)">分类统计</a></li>

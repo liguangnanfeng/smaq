@@ -99,6 +99,9 @@
         <a class="sbtn" onclick="tz('#chaBtn1')" id="chaBtn1"  data-href="${ly }/global/zf-performance-industry?flag=1">企业自查</a>
         <a class="sbtn" onclick="tz('#chaBtn2')" id="chaBtn2" data-href="${ly }/global/zf-performance-industry?flag=2">行政检查</a>
         <a class="sbtn" onclick="tz('#chaBtn3')" id="chaBtn3" data-href="${ly }/global/zf-performance-industry?flag=3">第三方检查</a>
+
+
+                <a style="text-decoration:none"  onClick="fluch()" href="javascript:;">刷新</a>
         </div>
         <div id="main" style="width: 90%;height:400px;margin: 50px auto 0 auto;"></div>
 <script src="https://sec.dicarl.com/js/H-ui.admin_v3.0/lib/layer/2.4/layer.js"></script>
@@ -279,6 +282,18 @@
         }
         }
         myChart2.setOption(option2, true);
+
+
+        function fluch() {
+            layer.confirm("要删除该记录？", function () {
+                $.post(getRootPath() + "/global/clear/session?sessionFlag=list1", {
+                }, function (reuslt) {
+                    location.reload();
+                })
+            })
+        }
+
+
 
 
         </script>

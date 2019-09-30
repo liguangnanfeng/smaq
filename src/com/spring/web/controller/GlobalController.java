@@ -4939,7 +4939,7 @@ public class GlobalController extends BaseController {
         Integer userId = (Integer)request.getSession().getAttribute("userId2");
         request.getSession().setMaxInactiveInterval(60*60*24);
 
-        if (null == userId || userId == user.getId()){
+        if (null == userId || userId != user.getId()){
             lists1 = null;
         }
 
@@ -8225,8 +8225,7 @@ public class GlobalController extends BaseController {
 
         request.getSession().setMaxInactiveInterval(60*60*24);
 
-
-        List<Map<String,Object>> list77 = (List<Map<String,Object>>) request.getSession().getAttribute("list33");
+        List<Map<String,Object>> list77 = (List<Map<String,Object>>) request.getSession().getAttribute("list77");
         Integer userId = (Integer) request.getSession().getAttribute("userId77");
         if (null == userId || userId != user.getId()){
             list77 = null;
@@ -8277,7 +8276,6 @@ public class GlobalController extends BaseController {
                     Integer sumc13 = tCheckItemMapper.manageHiddenIndustry(2,(String)list.get(i).get("industry"),2,sb.toString()); // 重大 不合格 未治理
                     Integer c1 = sumc11 + sumc12 + sumc13;
                     list.get(i).put("industry33",c1);
-
 
                     count1 = a + a1;
                     count2  = b + b1;
@@ -8375,6 +8373,42 @@ public class GlobalController extends BaseController {
 
         }
 
+    }
+
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO    清空缓存
+     * create time: 2019/9/30 17:54
+     */
+    @RequestMapping(value = "/clear/session")
+    public @ResponseBody Result checkDel(HttpServletRequest request, String sessionFlag) throws Exception {
+        Result result = new ResultImpl();
+
+        if (sessionFlag.equals("list1")){
+
+            request.getSession().setAttribute(sessionFlag,null);
+            request.getSession().setAttribute("list11",null);
+            request.getSession().setAttribute("list22",null);
+
+        }else if (sessionFlag.equals("list3")){
+
+            request.getSession().setAttribute(sessionFlag,null);
+            request.getSession().setAttribute("list33",null);
+            request.getSession().setAttribute("list44",null);
+
+        }if (sessionFlag.equals("list5")){
+
+            request.getSession().setAttribute(sessionFlag,null);
+            request.getSession().setAttribute("list55",null);
+            request.getSession().setAttribute("list66",null);
+            request.getSession().setAttribute("list77",null);
+        }
+
+
+        result.setStatus("1");
+        result.setMess("数据更新成功。");
+        return result;
     }
 
 

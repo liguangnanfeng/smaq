@@ -1109,6 +1109,7 @@ public class GlobalController extends BaseController {
         if (null == list || list.size() == 0){
 
         }else {
+
             addFlag(user, list);
         }
         model.addAttribute("list",list);

@@ -1109,6 +1109,7 @@ public class GlobalController extends BaseController {
         if (null == list || list.size() == 0){
 
         }else {
+
             addFlag(user, list);
         }
         model.addAttribute("list",list);
@@ -4941,7 +4942,7 @@ public class GlobalController extends BaseController {
         Integer userId = (Integer)request.getSession().getAttribute("userId2");
         request.getSession().setMaxInactiveInterval(60*60*24);
 
-        if (null == userId || userId == user.getId()){
+        if (null == userId || userId != user.getId()){
             lists1 = null;
         }
 
@@ -6102,7 +6103,7 @@ public class GlobalController extends BaseController {
         }
 
         if ((null == list11 || list11.size() == 0)){
-            if (user.getUserType() == 4){ // 如果登录的账户是村级账号
+            if (user.getUserType() == 4  || user.getUserType() == 10){ // 如果登录的账户是村级账号
                 // 根据登录账户 ID 查询该区域下的所有公司信息
                 list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
 
@@ -6246,7 +6247,7 @@ public class GlobalController extends BaseController {
 
             model.addAttribute("data",new Date());
             Integer uerId = (Integer)request.getSession().getAttribute("userId");
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
                 list.add(map);
                 model.addAttribute("list",list);
                 request.getSession().setAttribute("list11",list);
@@ -6264,7 +6265,7 @@ public class GlobalController extends BaseController {
 
         }else {
 
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
                 model.addAttribute("list",list11);
                 model.addAttribute("data",new Date());
                 return "global/company/evaluate/villageDown/zf-performance-industry-charts1";
@@ -6429,7 +6430,7 @@ public class GlobalController extends BaseController {
         }
 
         if (null == list22 || list22.size() == 0){
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
                 list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
 
                 if (null == list || list.size() == 0){
@@ -6768,7 +6769,7 @@ public class GlobalController extends BaseController {
 
             model.addAttribute("data",new Date());
 
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
                 list.add(map);
                 model.addAttribute("list",list);
                 request.getSession().setAttribute("list22",list);
@@ -6785,7 +6786,7 @@ public class GlobalController extends BaseController {
             }
         }else {
 
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
 
                 model.addAttribute("list",list22);
                 model.addAttribute("data",new Date());
@@ -6852,7 +6853,7 @@ public class GlobalController extends BaseController {
 
         if (null == list44 || list44.size() == 0){
 
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
 
                 list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
 
@@ -7152,7 +7153,7 @@ public class GlobalController extends BaseController {
 
             model.addAttribute("data",new Date());
 
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
                 list.add(map);
                 model.addAttribute("list",list);
                 request.getSession().setAttribute("list44",list);
@@ -7170,7 +7171,7 @@ public class GlobalController extends BaseController {
 
         }else {
 
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
                 model.addAttribute("list",list44);
                 model.addAttribute("data",new Date());
                 request.getSession().setAttribute("userId44",user.getId());
@@ -7407,7 +7408,7 @@ public class GlobalController extends BaseController {
         }
 
         if (null == list33 || list33.size() == 0){
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
 
                 list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
 
@@ -7543,7 +7544,7 @@ public class GlobalController extends BaseController {
 
             model.addAttribute("data",new Date());
 
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
                 list.add(map);
                 model.addAttribute("list",list);
                 request.getSession().setAttribute("list33",list);
@@ -7561,7 +7562,7 @@ public class GlobalController extends BaseController {
 
         }else {
 
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
                 model.addAttribute("list",list33);
                 model.addAttribute("data",new Date());
                 request.getSession().setAttribute("flag33",flag);
@@ -7625,7 +7626,7 @@ public class GlobalController extends BaseController {
 
         if (null == list55 || list55.size() == 0){
 
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
 
                 list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
 
@@ -7817,7 +7818,7 @@ public class GlobalController extends BaseController {
 
             model.addAttribute("data",new Date());
 
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
                 list.add(map);
                 model.addAttribute("list",list);
                 request.getSession().setAttribute("list55",list);
@@ -7835,7 +7836,7 @@ public class GlobalController extends BaseController {
 
         }else {
 
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
                 model.addAttribute("list",list55);
                 model.addAttribute("data",new Date());
                 request.getSession().setAttribute("flag55",flag);
@@ -8152,7 +8153,7 @@ public class GlobalController extends BaseController {
             model.addAttribute("list",list);
             request.getSession().setAttribute("list66",list);
             request.getSession().setAttribute("userId66",user.getId());
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
                 return "global/company/evaluate/villageDown/manage-hidden-danger-charts4-2";
             }else {
                 return "global/company/evaluate/villageUp/manage-hidden-danger-charts4-2";
@@ -8162,7 +8163,7 @@ public class GlobalController extends BaseController {
             model.addAttribute("data",new Date());
             model.addAttribute("list",list66);
             request.getSession().setAttribute("userId66",user.getId());
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
                 return "global/company/evaluate/villageDown/manage-hidden-danger-charts4-2";
             }else {
                 return "global/company/evaluate/villageUp/manage-hidden-danger-charts4-2";
@@ -8227,8 +8228,7 @@ public class GlobalController extends BaseController {
 
         request.getSession().setMaxInactiveInterval(60*60*24);
 
-
-        List<Map<String,Object>> list77 = (List<Map<String,Object>>) request.getSession().getAttribute("list33");
+        List<Map<String,Object>> list77 = (List<Map<String,Object>>) request.getSession().getAttribute("list77");
         Integer userId = (Integer) request.getSession().getAttribute("userId77");
         if (null == userId || userId != user.getId()){
             list77 = null;
@@ -8279,7 +8279,6 @@ public class GlobalController extends BaseController {
                     Integer sumc13 = tCheckItemMapper.manageHiddenIndustry(2,(String)list.get(i).get("industry"),2,sb.toString()); // 重大 不合格 未治理
                     Integer c1 = sumc11 + sumc12 + sumc13;
                     list.get(i).put("industry33",c1);
-
 
                     count1 = a + a1;
                     count2  = b + b1;
@@ -8358,7 +8357,7 @@ public class GlobalController extends BaseController {
             model.addAttribute("list",list);
             request.getSession().setAttribute("list77",list);
             request.getSession().setAttribute("userId77",user.getId());
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
                 return "global/company/evaluate/villageDown/manage-hidden-industry-charts4-3";
             }else {
                 return "global/company/evaluate/villageUp/manage-hidden-industry-charts4-3";
@@ -8369,7 +8368,7 @@ public class GlobalController extends BaseController {
             model.addAttribute("list",list77);
             model.addAttribute("data",new Date());
             request.getSession().setAttribute("userId77",user.getId());
-            if (user.getUserType() == 4){
+            if (user.getUserType() == 4 || user.getUserType() == 10){
                 return "global/company/evaluate/villageDown/manage-hidden-industry-charts4-3";
             }else {
                 return "global/company/evaluate/villageUp/manage-hidden-industry-charts4-3";
@@ -8377,6 +8376,42 @@ public class GlobalController extends BaseController {
 
         }
 
+    }
+
+
+    /**
+     * create by  : 小明！！！
+     * description: TODO    清空缓存
+     * create time: 2019/9/30 17:54
+     */
+    @RequestMapping(value = "/clear/session")
+    public @ResponseBody Result checkDel(HttpServletRequest request, String sessionFlag) throws Exception {
+        Result result = new ResultImpl();
+
+        if (sessionFlag.equals("list1")){
+
+            request.getSession().setAttribute(sessionFlag,null);
+            request.getSession().setAttribute("list11",null);
+            request.getSession().setAttribute("list22",null);
+
+        }else if (sessionFlag.equals("list3")){
+
+            request.getSession().setAttribute(sessionFlag,null);
+            request.getSession().setAttribute("list33",null);
+            request.getSession().setAttribute("list44",null);
+
+        }if (sessionFlag.equals("list5")){
+
+            request.getSession().setAttribute(sessionFlag,null);
+            request.getSession().setAttribute("list55",null);
+            request.getSession().setAttribute("list66",null);
+            request.getSession().setAttribute("list77",null);
+        }
+
+
+        result.setStatus("1");
+        result.setMess("数据更新成功。");
+        return result;
     }
 
 

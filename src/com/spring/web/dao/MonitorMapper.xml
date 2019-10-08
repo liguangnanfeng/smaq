@@ -441,7 +441,7 @@
         count( * ) AS count 
     FROM
         monitor_tbl T1
-        LEFT JOIN company_view T2 ON T1.user_id = T2.user_id 
+        LEFT JOIN company_view T2 ON T1.user_id = T2.user_id and T1.del=0
     <where>
       T1.del = 0
         <if test="userId != null">and T1.user_id = #{userId} </if>

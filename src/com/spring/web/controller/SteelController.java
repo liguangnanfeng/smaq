@@ -1135,7 +1135,6 @@ public class SteelController extends BaseController {
         }
         List<Map> list = new ArrayList<>();
         if (flag == 1) {
-
             list = tCheckItemMapper.selectListBystatus(user.getId(), flag, breaken);
 
             for (Map map : list) {

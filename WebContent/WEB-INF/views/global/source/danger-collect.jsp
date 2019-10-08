@@ -174,7 +174,7 @@ function print_() {
                 <script>
                 console.log(${be})
                 </script>
-                <td><a  href="/global/move/company?uid=" target="_parent">${be[1]}</a></td>
+                <td><a  href="/global/move/company?uid=${be[0]}" target="_parent">${be[1]}</a></td>
             <td>
               <span>${be[2] + be[3] + be[6] + be[7] + be[10] + be[11] + be[14] + be[15]}</span>
              <%--  <span>已整改：${be[3] + be[7] + be[11] + be[15]}</span>

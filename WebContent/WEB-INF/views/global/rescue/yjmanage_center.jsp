@@ -58,7 +58,7 @@
         } main{
             width:100%;
             height: 100vw;
-            background: url(/images/companyImg/newimg/yj.jpg) no-repeat center;
+            background: url(/images/companyImg/newimg/demo.png) no-repeat center;
             background-size: 100% 100%;
 <%--            margin-top: 22px;--%>
             position: relative;
@@ -103,7 +103,7 @@
             <div class="topleftmod">
             <img style="display: flex;" width="60" height="60" src="/images/companyImg/newimg/logo.png" />
             <span class="logo" style="">
-            <span class="antai">应急救援中心</span>
+            <span class="antai">应急监控中心</span>
             <span class="webadd">www.antai.com</span>
             </span>
             </div>

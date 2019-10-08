@@ -143,7 +143,8 @@
         <ul>
             <li><a data-href="${ly }/global/safety-system/statistics-list" data-title="风险数据分析" href="javascript:void(0)">风险数据分析</a></li>
             <li><a data-href="${ly }/global/safety-system/control-operation" data-title="分级管控运行" href="javascript:void(0)">分级管控运行</a></li>
-            <li><a data-href="${ly }/global/safety-system/all-risk-map" data-title="各类风险分布" href="javascript:void(0)">各类风险分布</a></li>
+<%--            <li><a data-href="${ly }/global/safety-system/all-risk-map" data-title="各类风险分布" href="javascript:void(0)">各类风险分布</a></li>--%>
+            <li><a data-href="${ly }/global/company/company-map" data-title="各类风险分布" href="javascript:void(0)">各类风险分布</a></li>
 
             <%--<li><a data-href="${ly }/global/safety-system/control-listmenu?level=红色" data-title="重大风险汇总" href="javascript:void(0)">重大风险汇总</a></li>
             <li><a data-href="${ly }/global/safety-system/control-listmenu?level=橙色" data-title="较大风险汇总" href="javascript:void(0)">较大风险汇总</a></li>
@@ -443,11 +444,11 @@
         <dd>
         <ul>
         <li><a data-href="${ly }/global/source/company-list" data-title="全部企业" onclick="javascript:void(0)">全部企业</a></li>
-        <li><a data-href="${ly }/global/source/video" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
+        <li><a data-href="${ly }/village/company/zdlist?hazard=1" data-title="在线监测" href="javascript:void(0)">在线检测</a></li>
         <li><a data-href="${ly }/global/source/company-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
         <%--        <li><a data-href="${ly }/global/greate-danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>--%>
-        <li><a data-href="/village/to_monitor-list?flag=1" data-title="实时监控" href="javascript:void(0)" class="l_active">实时监控</a></li>
-        <li><a data-href="${ly }/global/source/danger-collect" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
+        <li><a data-href="${ly }/global/source/danger-collect" data-title="隐患排查" href="javascript:void(0)">隐患排查</a></li>
+            <li><a data-href="${ly }/village/to_monitor-list?flag=1" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
         <li><a data-href="${ly }/global/source/danger-chart" data-title="分类统计" href="javascript:void(0)">分类统计</a></li>
         </ul>
         </dd>

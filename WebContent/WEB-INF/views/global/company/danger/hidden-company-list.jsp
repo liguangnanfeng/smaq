@@ -75,7 +75,7 @@
             onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加线下检查记录</a>
         </c:if>  -->
         </span>
-        <span class="r">共有数据：<strong>${fn:length(map) }</strong> 条</span>
+        <span class="r">共有企业:<strong>${fn:length(list) }</strong>家, 共有数据:<strong>${count}</strong> 条</span>
     </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort">

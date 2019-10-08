@@ -148,13 +148,13 @@ function showping(){
   <font class="font_tx1 pos-a <c:if test="${count[1]+count[2] +count[3] >0}">blink</c:if>">${count[1]+count[2] +count[3]  }</font>
   <font class="font_tx2 pos-a">检测检验</font>
   </a>
-  <a class="one_tx radius pos-r" href="/steel/check-list?flag=1&status=2&userId=789" style="background:#ea4f21;margin-right:2%;margin-left:1%">
+  <a class="one_tx radius pos-r" href="/steel/check-list?flag=1&status=2&userId=35346" style="background:#ea4f21;margin-right:2%;margin-left:1%">
   <img alt="" src="${ly }/images/httb9.png"/>
   <font class="font_tx1 pos-a <c:if test="${counts >0}">blink</c:if>">${counts}</font>
   <font class="font_tx2 pos-a">隐患排查</font>
   </a>
 
-  <a class="one_tx radius pos-r" href="/steel/hidden-danger-list?flag=1&status=1&userId=789"  style="background:#ea4f21;margin-right:2%">
+  <a class="one_tx radius pos-r" href="/steel/hidden-danger-list?flag=1&status=1&userId=35346"  style="background:#ea4f21;margin-right:2%">
   <img alt="" src="${ly }/images/httb9.png"/>
   <font class="font_tx1 pos-a <c:if test="${counts1 >0}">blink</c:if>">${counts1}</font>
   <font class="font_tx2 pos-a">隐患治理</font>
@@ -213,7 +213,7 @@ function showping(){
           <div class="title_xw pos-r" style="border-bottom:1px solid #F6F6F6;color:#FB0005;"><div class="bt_yuj" style="width:180px">在线监测预警.报警</div></div>
           <div class="list_zd">
             <a class="one_tx radius pos-r" data-title="重大危险源" onClick="showping3()" style="width:100%;margin-right:0;background:#1450DD;">
-              <img alt="" src="${ly }/images/httb7.png"/>
+              <img alt="" src="https://v.yuntus.com/cloudv/f2c6ee4edd00bdd125991511ad2e3eaf"/>
               <%-- <font class="font_tx1 pos-a <c:if test="${mc >0}">blink</c:if>">${mc }</font> --%>
               <font class="font_tx2 pos-a">重大危险源</font>
             </a>

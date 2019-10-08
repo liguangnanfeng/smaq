@@ -58,7 +58,7 @@
         } main{
             width:100%;
             height: 100vw;
-            background: url(/images/companyImg/newimg/yj.jpg) no-repeat center;
+            background: url(/images/companyImg/newimg/demo.png) no-repeat center;
             background-size: 100% 100%;
 <%--            margin-top: 22px;--%>
             position: relative;
@@ -103,7 +103,7 @@
             <div class="topleftmod">
             <img style="display: flex;" width="60" height="60" src="/images/companyImg/newimg/logo.png" />
             <span class="logo" style="">
-            <span class="antai">应急管理中心</span>
+            <span class="antai">应急监控中心</span>
             <span class="webadd">www.antai.com</span>
             </span>
             </div>
@@ -283,7 +283,7 @@
             </style>
             <c:choose>
                 <c:when test="${c.hazard eq '1'}">
-                    <a class="one_tx radius pos-r aa"  data-title="重大危险源" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/village/company/zdlist?hazard=1" style="background:#1450DD;" >
+                    <a class="one_tx radius pos-r aa"  data-title="重大危险源" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="https://v.yuntus.com/cloudv/f2c6ee4edd00bdd125991511ad2e3eaf" style="background:#1450DD;" >
                     <font style="width: 95%;text-align: center;left:auto;" id="zd_font" class="font_tx1 pos-a "></font>
                     <font style="left:5px;width:88%;text-align:center;" class="font_tx2 pos-a" title="重大危险源">重大危险源</font>
                     </a>
@@ -297,9 +297,9 @@
             </c:choose>
             <c:choose>
                 <c:when test="${c.danger eq '1'}">
-                    <a class="one_tx radius pos-r aa"  data-title="有限（受限）空间作业" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/village/company/gwlist?danger=1" style="background:#1450DD;" >
+                    <a class="one_tx radius pos-r aa"  data-title="有限（受限）空间作业" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/village/company/zdlist?hazard=1" style="background:#1450DD;" >
                     <font id="gw_font" style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a "></font>
-                    <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="有限（受限）空间作业">有限（受限）空间作业</font>
+                    <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="有限（受限）空间作业">易燃易爆,有毒作业</font>
                     </a>
                 </c:when>
                 <c:otherwise>

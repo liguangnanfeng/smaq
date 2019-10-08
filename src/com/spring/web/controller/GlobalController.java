@@ -1102,7 +1102,6 @@ public class GlobalController extends BaseController {
 
         /*Integer totalzc = companyMapper.findALL(user.getId(), user.getUserType(),0); // 正常
         Integer totalwyx = companyMapper.findALL(user.getId(), user.getUserType(),1); // 冻结*/
-
         List<Map<String,Object>> list = tCheckItemMapper.findCompany(user.getId(), user.getUserType());
 
         // 4 村  3 镇  6 区  7 市
@@ -1545,6 +1544,7 @@ public class GlobalController extends BaseController {
             m.put("userIds", StringUtils.join(userIds, ","));
         }
         model.addAttribute("list", monitorMapper.selectGroupByMap(m));
+        //System.out.println(monitorMapper.selectGroupByMap(m));
         model.addAttribute("companyName", companyName);
         return "global/system/monitor-list-supervise";
     }
@@ -1607,6 +1607,7 @@ public class GlobalController extends BaseController {
         m.put("startTime", startTime);
         m.put("endTime", endTime);
         m.put("industryType", industryType);
+
         List<Map<String, Object>> list = tCheckItemMapper.selectDangerCollectByCompany(m);
         model.addAttribute("list1",list);
         if (user.getUserType() == 6) {
@@ -3974,9 +3975,18 @@ public class GlobalController extends BaseController {
         List<DynamicParameter<String, Object>> mlist = companyMapper.selectCompanyList(m);
         model.addAttribute("list", mlist);
         model.addAttribute("m", m);*/
-        dto.setIndustry2(utf8Str(dto.getIndustry2()));
-        dto.setDlevel(utf8Str(dto.getDlevel()));
-        dto.setIndustry(utf8Str(dto.getIndustry()));
+        //System.out.println("Indu:"+URLDecoder.decode(dto.getIndustry2(), "UTF-8"));
+        //dto.setIndustry2(URLDecoder.decode(dto.getIndustry2(), "UTF-8"));
+        //System.out.println(URLDecoder.decode(URLDecoder.decode(dto.getDlevel(), "UTF-8")));
+        if(dto.getIndustry2()!=null) {
+            dto.setIndustry2(URLDecoder.decode(dto.getIndustry2(), "UTF-8"));
+        }
+        if(dto.getDlevel()!=null) {
+            dto.setDlevel(URLDecoder.decode(dto.getDlevel(), "UTF-8"));
+        }
+        if(dto.getIndustry()!=null) {
+            dto.setIndustry(URLDecoder.decode(dto.getIndustry(), "UTF-8"));
+        }
         cgfService.selectCompanyWithPage(dto, user, model);
 
         if (user.getUserType().intValue() == 3) {
@@ -4780,12 +4790,22 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping(value = "hidden-company-list")
     public String hiddenCompanyList(HttpServletRequest request, Model model,Integer flag, Integer status) throws Exception {
-
+        //System.out.println("****");
         User user = getLoginUser(request);
-
+        StringBuilder sb = new StringBuilder();
+        List<Integer> ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询该账户下所有公司id
+        for (int i = 0; i < ids.size(); i++) {
+            if (i == ids.size()-1){
+                sb.append("'").append(ids.get(i)).append("'");
+            }else {
+                sb.append("'").append(ids.get(i)).append("',");
+            }
+        }
+        Integer counts1 = tCheckItemMapper.findAllCounte(sb.toString()); // 治理数据
         CompanyListReqDTO dto = new CompanyListReqDTO();
         dto.setIsFreeze("1");
         cgfService.selectCompanyWithPage(dto, user, model);
+        model.addAttribute("count", counts1);
         model.addAttribute("flag",flag);
         model.addAttribute("status",status);
 

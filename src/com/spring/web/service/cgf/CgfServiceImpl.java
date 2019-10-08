@@ -1031,6 +1031,9 @@ public class CgfServiceImpl implements CgfService {
             dto.setUserIds(StringUtils.join(userIds, ","));
 //            dto.setUserIds(getUserIdsByPage(userIds, dto));
             list = companyMapper.selectByIds(dto);
+            for(Map<String, Object> map : list){ //计算每个公司数量
+                //Integer counts1 = tCheckItemMapper.findAllCounte(); // 治理数据
+            }
             model.addAttribute("list", list);
         }
         Integer falg = 0;
@@ -1110,6 +1113,7 @@ public class CgfServiceImpl implements CgfService {
      * @param model
      */
     public void selectCompanyWithPage(CompanyListReqDTO dto, User user, Model model) {
+        System.out.println("dto:"+dto);
         String industry2 = null;
         if (StringUtils.isNotBlank(dto.getIndustry2_())) {
             industry2 = dto.getIndustry2_();
@@ -1119,7 +1123,6 @@ public class CgfServiceImpl implements CgfService {
         }
         dto.setIndustry2(industry2);
         List<Integer> userIds = getCompanyUserIdsWithPage(dto, user);
-        System.out.println("userIds:"+userIds);
         //log.error("userIds："+userIds.toString());
         String all_userIds = dto.getUserIds();
         if ("-1".equals(all_userIds)) {
@@ -1130,8 +1133,12 @@ public class CgfServiceImpl implements CgfService {
         if (userIds.size() > 0) {
             dto.setUserIds(StringUtils.join(userIds, ","));
 //            dto.setUserIds(getUserIdsByPage(userIds, dto));
-            System.out.println(dto);
-            model.addAttribute("list", companyMapper.selectByIds(dto));
+            List<Map<String,Object>> list = companyMapper.selectByIds(dto);
+            for(Map<String, Object> map:list){
+                Integer counts1 = tCheckItemMapper.findAllCounte(String.valueOf((Integer)map.get("userId"))); // 治理数据
+                map.put("count", counts1);
+            }
+            model.addAttribute("list", list);
         }
         dto.setUserIds(all_userIds);
         model.addAttribute("dto", dto);
@@ -1194,7 +1201,6 @@ public class CgfServiceImpl implements CgfService {
                     ll.add(list.get(from));
                 }
             }
-            System.out.println("ll:"+ll);
             return ll;
         } else {
             String[] userIds = dto.getUserIds().split(",");

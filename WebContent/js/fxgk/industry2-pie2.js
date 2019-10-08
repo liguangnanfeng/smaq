@@ -41,7 +41,7 @@ $(function() {
       })
       item[0] = item[0] +"(" + item[1] + ",规上企业" + d_scale[i][1] + "家。)";
     })
-    
+
     //替换化工文字
      $.each(dataL, function(i, item) {
        if(item[0].indexOf("危险化学品生产、经营、使用") > 0) {
@@ -91,11 +91,11 @@ $(function() {
           point: {
             events: {
                 legendItemClick: function(e) {
-                  show_dialog(this.name.split("(")[0] + "行业_企业列表", "/global/company/company-tab-detail?villageId="+villageId+"&townId="+townId+"&districtId="+districtId+"&industry2=" + this.name.split("(")[0]);
-                  return false; 
+                  show_dialog(this.name.split("(")[0] + "行业_企业列表", "/global/company/company-tab-detail?villageId="+villageId+"&townId="+townId+"&districtId="+districtId+"&industry2=" + encodeURI(encodeURI(this.name.split("(")[0])));
+                  return false;
                 },
                 click:function(e){
-                  show_dialog(this.name.split("(")[0] + "行业_企业列表", "/global/company/company-tab-detail?villageId="+villageId+"&townId="+townId+"&districtId="+districtId+"&industry2=" + this.name.split("(")[0]);
+                  show_dialog(this.name.split("(")[0] + "行业_企业列表", "/global/company/company-tab-detail?villageId="+villageId+"&townId="+townId+"&districtId="+districtId+"&industry2=" + encodeURI(encodeURI(this.name.split("(")[0])));
                 }
             }
         },
@@ -118,7 +118,7 @@ $(function() {
         data : d
       }]
     });
-    
+
     //监管行业
     $('#container4').highcharts({
       credits : {
@@ -158,11 +158,11 @@ $(function() {
           point: {
             events: {
               legendItemClick: function(e) {
-                show_dialog(this.name.split("(")[0].replace('危化品生产、经营、使用','危险化学品生产、经营、使用') + "_企业列表", "/global/company/company-tab-detail?villageId="+villageId+"&townId="+townId+"&districtId="+districtId+"&industry=" + this.name.split("(")[0].replace('危化品生产、经营、使用','危险化学品生产、经营、使用'));
-                return false; 
+                show_dialog(this.name.split("(")[0].replace('危化品生产、经营、使用','危险化学品生产、经营、使用') + "_企业列表", "/global/company/company-tab-detail?villageId="+villageId+"&townId="+townId+"&districtId="+districtId+"&industry=" + encodeURI(encodeURI(this.name.split("(")[0].replace('危化品生产、经营、使用','危险化学品生产、经营、使用'))));
+                return false;
               },
               click:function(e){
-                show_dialog(this.name.split("(")[0].replace('危化品生产、经营、使用','危险化学品生产、经营、使用') + "_企业列表", "/global/company/company-tab-detail?villageId="+villageId+"&townId="+townId+"&districtId="+districtId+"&industry=" + this.name.split("(")[0].replace('危化品生产、经营、使用','危险化学品生产、经营、使用'));
+                show_dialog(this.name.split("(")[0].replace('危化品生产、经营、使用','危险化学品生产、经营、使用') + "_企业列表", "/global/company/company-tab-detail?villageId="+villageId+"&townId="+townId+"&districtId="+districtId+"&industry=" + encodeURI(encodeURI(this.name.split("(")[0].replace('危化品生产、经营、使用','危险化学品生产、经营、使用'))));
               }
             }
           },
@@ -178,14 +178,14 @@ $(function() {
           showInLegend : true,
         }
       },
-      
+
       series : [{
         type : 'pie',
         name : '企业行业占比',
         data : dataL
       }]
     });
-    
+
     //企业风险等级
     $('#container2').highcharts({
       credits : {
@@ -195,7 +195,7 @@ $(function() {
         plotBackgroundColor : null,
         plotBorderWidth : null,
         plotShadow : false,
-      },  
+      },
       colors : ['#FF0000', '#FFA160', '#FFF000', '#0000FF'],
       title : {
         text : '风险等级统计',
@@ -224,11 +224,11 @@ $(function() {
           point: {
             events: {
                 legendItemClick: function(e) {
-                  show_dialog(this.name.split("(")[0] + "风险_企业列表", "/global/company/company-tab-detail?villageId="+villageId+"&townId="+townId+"&districtId="+districtId+"&dlevel='" + this.name.split("(")[0] + "'");
-                  return false; 
+                  show_dialog(this.name.split("(")[0] + "风险_企业列表", "/global/company/company-tab-detail?villageId="+villageId+"&townId="+townId+"&districtId="+districtId+"&dlevel='" + encodeURI(encodeURI(this.name.split("(")[0] + "'")));
+                  return false;
                 },
                 click: function(e){
-                  show_dialog(this.name.split("(")[0] + "风险_企业列表", "/global/company/company-tab-detail?villageId="+villageId+"&townId="+townId+"&districtId="+districtId+"&dlevel='" + this.name.split("(")[0] + "'");
+                  show_dialog(this.name.split("(")[0] + "风险_企业列表", "/global/company/company-tab-detail?villageId="+villageId+"&townId="+townId+"&districtId="+districtId+"&dlevel='" + encodeURI(encodeURI(this.name.split("(")[0] + "'")));
                 }
             }
         },
@@ -250,7 +250,7 @@ $(function() {
         data : dataD
       }]
     });
-    
+
     //规上企业 行业
     /*$('#container5').highcharts({
       credits : {
@@ -288,7 +288,7 @@ $(function() {
             events: {
                 legendItemClick: function(e) {
                   show_dialog(this.name.split("(")[0] + "行业_企业列表", "/village/company/company-tab-detail?industry2=" + this.name.split("(")[0]);
-                  return false; 
+                  return false;
                 },
                 click:function(e){
                   show_dialog(this.name.split("(")[0] + "行业_企业列表", "/village/company/company-tab-detail?industry2=" + this.name.split("(")[0]);

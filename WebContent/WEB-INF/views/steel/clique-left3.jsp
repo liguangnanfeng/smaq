@@ -246,7 +246,7 @@
       <!---------------------------------------------------------------------应急管理中心---------------------------------------------------------->
       <dl>
       <dt>
-      <a style="color:#fff;"  data-href="${ly }/steel/tables/yjmanage_center"  data-title="应急管理中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急管理中心</a>
+      <a style="color:#fff;"  data-href="${ly }/steel/tables/yjmanage_center"  data-title="应急管理中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急监控中心</a>
       </dt>
       </dl>
       <!------------------------------------------------------------------------------------------------------------------------------------------->
@@ -265,9 +265,10 @@
       <dd>
       <ul>
       <li><a data-href="${ly }/steel/source/company-list2" data-title="全部企业" href="javascript:void(0)">全部企业</a></li>
-      <li><a data-href="${ly }/steel/source/video" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
+      <li><a data-href="${ly }/village/company/zdlist?hazard=1" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
       <li><a data-href="${ly }/steel/safety-system/all-risk-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
       <li><a data-href="${ly }/villageAdd/source/danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>
+          <li><a data-href="#" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
       <li><a data-href="${ly }/villageAdd/source/danger-chart" data-title="分类统计" href="javascript:void(0)">分类统计</a></li>
       </ul>
       </dd>

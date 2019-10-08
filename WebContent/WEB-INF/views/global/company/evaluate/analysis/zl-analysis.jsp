@@ -18,6 +18,13 @@
             }
             </style>
         <body style="height: 100vh;">
+            <div style="right: 0; position: absolute; top: 0;">
+            <a  onClick="fluch()" class="btn btn-success radius r" style="line-height: 1.6em; margin: 11px;" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont"></i>
+            </a>
+            </div>
+
+
             <c:forEach items="${list}" varStatus="index" var="be">
                     <script>
                 var a1='${be.result11}',a2='${be.result22}',a3= '${be.result33}';
@@ -38,7 +45,12 @@
         <%--饼状图1--%>
         <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-
+            function fluch() {
+            $.post(getRootPath() + "/global/clear/session?sessionFlag=list5", {
+            }, function (reuslt) {
+            location.reload();
+            })
+            }
         var option = {
         title:{ text:'地区数据分析',
         left:'center',

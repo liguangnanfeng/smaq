@@ -1,4 +1,4 @@
-    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <!DOCTYPE HTML>
         <html>
         <script type="text/javascript">
@@ -143,9 +143,8 @@
         <ul>
             <li><a data-href="${ly }/global/safety-system/statistics-list" data-title="风险数据分析" href="javascript:void(0)">风险数据分析</a></li>
             <li><a data-href="${ly }/global/safety-system/control-operation" data-title="分级管控运行" href="javascript:void(0)">分级管控运行</a></li>
-<%--            <li><a data-href="${ly }/global/safety-system/all-risk-map" data-title="各类风险分布" href="javascript:void(0)">各类风险分布</a></li>--%>
-            <li><a data-href="${ly }/global/company/company-map" data-title="各类风险分布" href="javascript:void(0)">各类风险分布</a></li>
-
+           <%--  <li><a data-href="${ly }/global/safety-system/all-risk-map" data-title="各类风险分布" href="javascript:void(0)">各类风险分布</a></li>--%>
+           <li><a data-href="${ly }/global/company/company-map" data-title="各类风险分布" href="javascript:void(0)">各类风险分布</a></li>
             <%--<li><a data-href="${ly }/global/safety-system/control-listmenu?level=红色" data-title="重大风险汇总" href="javascript:void(0)">重大风险汇总</a></li>
             <li><a data-href="${ly }/global/safety-system/control-listmenu?level=橙色" data-title="较大风险汇总" href="javascript:void(0)">较大风险汇总</a></li>
             <li><a data-href="${ly }/global/safety-system/statistics-list" data-title="数据分析" href="javascript:void(0)">数据分析</a></li>--%>
@@ -331,7 +330,7 @@
         </dl>
         <dl>
         <dt>
-        <a style="color:#fff;"  data-href="${ly }/global/tables/yjmanage_center"  data-title="应急救援中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急救援中心</a>
+        <a style="color:#fff;"  data-href="${ly }/global/tables/yjmanage_center"  data-title="应急监控中心" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6c1;</i>应急监控中心</a>
         </dt>
         </dl>
 
@@ -384,7 +383,7 @@
 
         <dl>
         <dt>
-        <i class="Hui-iconfont">&#xe61d;</i>账号设置管理
+        <i class="Hui-iconfont">&#xe61d;</i>系统设置管理
         <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
         </dt>
         <dd>
@@ -444,11 +443,10 @@
         <dd>
         <ul>
         <li><a data-href="${ly }/global/source/company-list" data-title="全部企业" onclick="javascript:void(0)">全部企业</a></li>
-        <li><a data-href="${ly }/village/company/zdlist?hazard=1" data-title="在线监测" href="javascript:void(0)">在线检测</a></li>
+        <li><a data-href="${ly }/village/company/zdlist?hazard=1" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
         <li><a data-href="${ly }/global/source/company-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
-        <%--        <li><a data-href="${ly }/global/greate-danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>--%>
         <li><a data-href="${ly }/global/source/danger-collect" data-title="隐患排查" href="javascript:void(0)">隐患排查</a></li>
-            <li><a data-href="${ly }/village/to_monitor-list?flag=1" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
+         <li><a data-href="/village/to_monitor-list?flag=1" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
         <li><a data-href="${ly }/global/source/danger-chart" data-title="分类统计" href="javascript:void(0)">分类统计</a></li>
         </ul>
         </dd>

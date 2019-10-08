@@ -21,7 +21,7 @@ body .dis-ib{margin-right:15px;}
     <div class="text-c">
       <form action="" method="post">
         <div class="dis-ib">
-            <span>企业规模123：</span>
+            <span>企业规模：</span>
             <input type="text" value="${dto.page }" name="page" id="page" style="display: none;">
             <input type="text" value="${dto.rows }" name="rows" id="rows" style="display: none;">
             <input type="text" value="${dto.doubleDanger }" name="doubleDanger"  style="display: none;">

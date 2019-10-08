@@ -62,7 +62,7 @@ body .dis-ib{margin-right:15px;}
             <%-- <td>${be.code }</td> --%>
             <%-- <td>${be.memo }</td> --%>
             <td>
-         	  <a style="text-decoration:none" href="${ly}/village/to_monitor-list?flag=2&userId=${be.userId }">查看详情${be.userId}</a>
+         	  <a style="text-decoration:none" href="${ly}/village/to_monitor-list?flag=2&userId=${be.userId }">查看详情</a>
             </td>
           </tr>
           </c:forEach>

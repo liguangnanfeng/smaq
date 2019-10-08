@@ -229,7 +229,7 @@ $(function(){
            <a style="color:black;display: inline-block;margin: -18px 0px;
            line-height: 46px;width:180px;background-color: #eee;
            border: 0px solid #ddd;padding:3px 3px;
-           border-radius: 0px;text-decoration:none" href="/global/move/company?uid=55" target="_parent">
+           border-radius: 0px;text-decoration:none" href="/global/move/company?uid=${co.userId}" target="_parent">
                 <c:choose>
                     <c:when test="${session_user.userType == 4 }">
                     <c:if test="${co.isKey == '1' && not empty sk}"><label style="color:#DF2E30">【重点企业】</label></c:if>

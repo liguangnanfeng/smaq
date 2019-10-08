@@ -1,11 +1,11 @@
-        <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿        <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <%@ include file="/WEB-INF/views/taglibs.jsp"%>
     <!DOCTYPE html>
         <html>
         <head>
         <meta charset="utf-8">
         <%@ include file="/WEB-INF/inc/back-header.inc"%>
-        <title>应急管理中心</title>
+        <title>应急监控中心</title>
         </head>
 
         <style>
@@ -286,34 +286,14 @@
                 }
 
             </style>
-            <c:choose>
-                <c:when test="${c.hazard eq '1'}">
                     <a class="one_tx radius pos-r aa"  data-title="重大危险源" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/village/company/zdlist?hazard=1" style="background:#1450DD;" >
                     <font style="width: 95%;text-align: center;left:auto;" id="zd_font" class="font_tx1 pos-a "></font>
                     <font style="left:5px;width:88%;text-align:center;" class="font_tx2 pos-a" title="重大危险源">重大危险源</font>
                     </a>
-                </c:when>
-                <c:otherwise>
-                    <a class="one_tx radius pos-r aa"  data-title="重点部位关键装置实时监控" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="/village/to_monitor-list?flag=1" style="background:#1450DD;" >
-                    <font style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a "></font>
-                    <font style="left:5px;width:88%;text-align:center;" class="font_tx2 pos-a" title="重点部位">重点部位</font>
-                    </a>
-                </c:otherwise>
-            </c:choose>
-            <c:choose>
-                <c:when test="${c.danger eq '1'}">
-                    <a class="one_tx radius pos-r aa"  data-title="有限（受限）空间作业" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/village/company/gwlist?danger=1" style="background:#1450DD;" >
+                    <a class="one_tx radius pos-r aa"  data-title="易燃易爆,有毒作业" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="https://v.yuntus.com/cloudv/f2c6ee4edd00bdd125991511ad2e3eaf" style="background:#1450DD;" >
                     <font id="gw_font" style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a "></font>
-                    <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="有限（受限）空间作业">有限（受限）空间作业</font>
+                    <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="易燃易爆,有毒作业">易燃易爆,有毒作业</font>
                     </a>
-                </c:when>
-                <c:otherwise>
-                    <a class="one_tx radius pos-r aa"  data-title="重点部位关键装置实时监控" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="/village/to_monitor-list?flag=2" style="background:#1450DD;" >
-                    <font style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a "></font>
-                    <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="关键装置">关键装置</font>
-                    </a>
-                </c:otherwise>
-            </c:choose>
             <%-- <a class="one_tx radius pos-r" data-title="河道污染" onclick="Hui_admin_tab(this)" href="javascript:void(0)" data-href="${ly }/village/company/wwlist?danger=1" style="width:100%;margin-right:0;background:#DF3030;">
             <img alt="" src="${ly }/images/httb8.png"/>
             <font class="font_tx1 pos-a "></font>

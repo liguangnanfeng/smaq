@@ -102,7 +102,11 @@
                         <c:forEach items="${list }" varStatus="index" var="co">
                                 <tr class="text-c">
                                         <td>${index.index + 1 }</td>
-                                        <td>${co.name}</td>
+                                        <td> <a style="color:black;display: inline-block;margin: -18px 0px;
+                            line-height: 46px;width:180px;background-color: #eee;
+                            border: 0px solid #ddd;padding:3px 3px;
+                            border-radius: 0px;text-decoration:none" href="/global/move/company?uid=${co.userId}" target="_parent">
+                            ${co.name}</a></td>
                                         <td>${co.industry}</td>
                                         <td>${co.dlevel}</td>
                                         <td>${co.address}</td>
@@ -118,11 +122,11 @@
                                                 </c:if>
                                         </td>
                                         <td id="choose">
-                                                <c:if test="${userType == co.is_controls }">
+                                                <c:if test="${userType == co.is_controls || userType==10 }">
                                                         是
                                                 </c:if>
 
-                                                <c:if test="${userType != co.is_controls }">
+                                                <c:if test="${userType != co.is_controls && userType!=10}">
                                                         否
                                                 </c:if>
                                         </td>

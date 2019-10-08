@@ -240,11 +240,14 @@
                     </td>
                     <c:if test="${flag==1}">
                         <td>
+                        <script>
+                         console.log("${list}")
+                        </script>
                             <c:choose>
-                                <c:when test="${list.level eq '红色'}"><font class="col-a">${list.level}</font></c:when>
-                                <c:when test="${list.level eq '橙色'}"><font class="col-b">${list.level}</font></c:when>
-                                <c:when test="${list.level eq '黄色'}"><font class="col-c">${list.level}</font></c:when>
-                                <c:when test="${list.level eq '蓝色'}"><font class="col-d">${list.level}</font></c:when>
+                                <c:when test="${list.level =='红色'}"><font class="col-a">一级</font></c:when>
+                                <c:when test="${list.level == '橙色'}"><font class="col-b">二级</font></c:when>
+                                <c:when test="${list.level == '黄色'}"><font class="col-c">三级</font></c:when>
+                                <c:when test="${list.level == '蓝色'}"><font class="col-d">三级</font></c:when>
                             </c:choose>
                         </td>
                     </c:if>

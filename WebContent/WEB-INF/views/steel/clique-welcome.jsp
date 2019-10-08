@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/taglibs.jsp"%>
 <!DOCTYPE HTML>
 <html>
@@ -117,7 +117,7 @@ function showping(){
           <span  style="margin-top:10px"><a data-href="${ly }/steel/company/company-list" data-title="全部企业" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业数量：${number }</a></span>
           <span style="margin-top:10px">
 
-            <a data-href="${ly }/villageAdd/source/company-map" data-title="企业分布图" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业分布图<img alt="" src="${ly }/images/fore/fb.jpg"/></a>
+            <a data-href="${ly }/global/company/company-map" data-title="企业分布图" onclick="Hui_admin_tab(this)" href="javascript:;" class="lianj_com">企业分布图<img alt="" src="${ly }/images/fore/fb.jpg"/></a>
           </span>
         </div>
         <div class="div_company2">
@@ -138,7 +138,7 @@ function showping(){
   <font class="font_tx1 pos-a <c:if test="${count[4] + count[5] + count[8] >0}">blink</c:if>">${count[4] + count[5] + count[8]}</font>
   <font class="font_tx2 pos-a">安全许可</font>
   </a>
-  <a class="one_tx radius pos-r" data-title="持证上岗" data-href="${ly }/village/warning/sperson-list?isTime=3&home=1"  onclick="Hui_admin_tab(this)" href="javascript:;" style="margin-right:2%;background:#46D1E5;">
+  <a class="one_tx radius pos-r" data-title="持证上岗" data-href="${ly }/village/warning/sperson-list?isTime=3&home=1"  onclick="Hui_admin_tab(this)" style="margin-right:2%;background:#46D1E5;">
   <img alt="" src="${ly }/images/httb1.png"/>
   <font class="font_tx1 pos-a <c:if test="${count[0] >0}">blink</c:if>">${count[0]}</font>
   <font class="font_tx2 pos-a">安全培训</font>
@@ -148,13 +148,13 @@ function showping(){
   <font class="font_tx1 pos-a <c:if test="${count[1]+count[2] +count[3] >0}">blink</c:if>">${count[1]+count[2] +count[3]  }</font>
   <font class="font_tx2 pos-a">检测检验</font>
   </a>
-  <a class="one_tx radius pos-r" href="/steel/check-list?flag=1&status=2&userId=35346" style="background:#ea4f21;margin-right:2%;margin-left:1%">
+  <a class="one_tx radius pos-r" data-title="隐患排查" data-href="/steel/check-list?flag=1&status=2&userId=35346" onclick="Hui_admin_tab(this)" style="background:#ea4f21;margin-right:2%;margin-left:1%">
   <img alt="" src="${ly }/images/httb9.png"/>
   <font class="font_tx1 pos-a <c:if test="${counts >0}">blink</c:if>">${counts}</font>
   <font class="font_tx2 pos-a">隐患排查</font>
   </a>
 
-  <a class="one_tx radius pos-r" href="/steel/hidden-danger-list?flag=1&status=1&userId=35346"  style="background:#ea4f21;margin-right:2%">
+  <a class="one_tx radius pos-r" data-title="隐患治理" data-href="/steel/hidden-danger-list?flag=1&status=1&userId=35346"  onclick="Hui_admin_tab(this)" style="background:#ea4f21;margin-right:2%">
   <img alt="" src="${ly }/images/httb9.png"/>
   <font class="font_tx1 pos-a <c:if test="${counts1 >0}">blink</c:if>">${counts1}</font>
   <font class="font_tx2 pos-a">隐患治理</font>
@@ -163,7 +163,7 @@ function showping(){
   <%--  <c:if test="${zdsgyh >0}">blink</c:if>  这是闪烁的特效--%>
   <%--  onclick="show_dialog('隐患治理', '${ly }/global/check-item3?status=2')"--%>
 
-  <a class="one_tx radius pos-r" href="javascript:;"   onclick="show_dialog('重大隐患', '${ly }/village/check-item3?status=2')" style="background:#ea4f21;margin-right:0">
+  <a class="one_tx radius pos-r" data-title="重大隐患" href="javascript:;"   data-href="${ly }/village/check-item3?status=2" onclick="Hui_admin_tab(this)" style="background:#ea4f21;margin-right:0">
   <img alt="" src="${ly }/images/httb9.png"/>
   <font class="font_tx1 pos-a <c:if test="${zdsgyh >0}">blink</c:if>">${zdsgyh }</font>
   <font class="font_tx2 pos-a">重大隐患</font>
@@ -212,16 +212,16 @@ function showping(){
         <div class="div_tx div_yh pos-a" style="height:315px;padding: 15px 20px;">
           <div class="title_xw pos-r" style="border-bottom:1px solid #F6F6F6;color:#FB0005;"><div class="bt_yuj" style="width:180px">在线监测预警.报警</div></div>
           <div class="list_zd">
-            <a class="one_tx radius pos-r" data-title="重大危险源" onClick="showping3()" style="width:100%;margin-right:0;background:#1450DD;">
-              <img alt="" src="https://v.yuntus.com/cloudv/f2c6ee4edd00bdd125991511ad2e3eaf"/>
+            <a class="one_tx radius pos-r"  data-title="重大危险源"  data-href="${ly }/village/company/zdlist?hazard=1" onclick="Hui_admin_tab(this)"  style="width:100%;margin-right:0;background:#1450DD;">
+              <img alt="" src="${ly }/images/httb7.png"/>
               <%-- <font class="font_tx1 pos-a <c:if test="${mc >0}">blink</c:if>">${mc }</font> --%>
               <font class="font_tx2 pos-a">重大危险源</font>
             </a>
 
-  <a class="one_tx radius pos-r" data-title="易燃易爆有毒作业" onClick="showping4()"  href="javascript:;" style="width:100%;margin-right:0;background:#1450DD;">
-  <font id="gw_font" style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a">0</font>
-  <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="易燃易爆有毒作业">易燃易爆、有毒作业</font>
-  </a>
+            <a class="one_tx radius pos-r"  data-title="易燃易爆、有毒作业" data-href="https://v.yuntus.com/cloudv/f2c6ee4edd00bdd125991511ad2e3eaf"  onclick="Hui_admin_tab(this)" style="width:100%;margin-right:0;background:#1450DD;">
+              <font id="gw_font" style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a">0</font>
+              <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="易燃易爆有毒作业">易燃易爆、有毒作业</font>
+            </a>
 
 
 

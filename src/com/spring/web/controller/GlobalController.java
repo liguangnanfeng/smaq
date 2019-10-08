@@ -3707,61 +3707,17 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping(value = "plan-next2")//生成检查表，modify by zhangcl 2018.10.27
     public String checkNext2(Integer id, Integer type, Model model, HttpServletRequest request) throws Exception {
-        //log.error("checkNext checkid : "+id);
         User user = getLoginUser(request);
-
         TCheck tc = tCheckMapper.selectCheckBymodelIdAndStatus(id, 0);
-
-        //log.error("tCheckMapper检查表信息:"+tc.toString());
         type = tc.getType();// add wz 190110
-
         List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(tc.getId());
-        //log.error("tCheckPartMapper条目信息:"+partL.toString());
         for (TCheckPart a : partL) {
             String levels = a.getLevels();
-            //log.error("levels:"+levels);
         }
-
         model.addAttribute("check", tc);
         model.addAttribute("partL", partL);
-        //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
         List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(tc.getId());
-        //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
-
-        if (type != null && type == 9) {
-            for (Map<String, Object> a : iteml) {
-                //log.error("checkNext:"+1);
-                Integer[] ids = new Integer[1];
-                ids[0] = (Integer) a.get("levelId");
-                //log.error("ids:"+ids[0]);
-                //log.error("a:"+a.toString());
-                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
-                String dangertype = "";
-                String factors = "";
-                String measures = "";
-                String level1 = "";
-                String level2 = "";
-                String level3 = "";
-                for (ACompanyManual aa : rets) {
-                    //log.error("checkNext:"+2);
-                    dangertype = aa.getType();
-                    factors = aa.getFactors();
-                    measures = aa.getMeasures();
-                    level1 = aa.getLevel1();
-                    level2 = aa.getLevel2();
-                    level3 = aa.getLevel3();
-                    //log.error("type:"+dangertype);
-                    break;
-                }
-                a.put("dangerType", dangertype);
-                a.put("factors", factors);
-                a.put("measures", measures);
-                a.put("level1", level1);
-                a.put("level2", level2);
-                a.put("level3", level3);
-                log.error("level1/2/3 : " + level1 + "/" + level2 + "/" + level3);
-            }
-        }
+        selectMeaths1(type, iteml);
         model.addAttribute("itemL", iteml);
         if (tc.getStatus() == 2) {// 已检查
             return "company/danger/plan-detail";
@@ -3776,8 +3732,40 @@ public class GlobalController extends BaseController {
         return "global/danger/plan-next2";
     }
 
+    private void selectMeaths1(Integer type, List<Map<String, Object>> iteml) {
+        if (type != null && type == 9) {
+            for (Map<String, Object> a : iteml) {
+                Integer[] ids = new Integer[1];
+                ids[0] = (Integer) a.get("levelId");
+                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
+                String dangertype = "";
+                String factors = "";
+                String measures = "";
+                String level1 = "";
+                String level2 = "";
+                String level3 = "";
+                for (ACompanyManual aa : rets) {
+                    dangertype = aa.getType();
+                    factors = aa.getFactors();
+                    measures = aa.getMeasures();
+                    level1 = aa.getLevel1();
+                    level2 = aa.getLevel2();
+                    level3 = aa.getLevel3();
+                    break;
+                }
+                a.put("dangerType", dangertype);
+                a.put("factors", factors);
+                a.put("measures", measures);
+                a.put("level1", level1);
+                a.put("level2", level2);
+                a.put("level3", level3);
+                log.error("level1/2/3 : " + level1 + "/" + level2 + "/" + level3);
+            }
+        }
+    }
 
-   /**
+
+    /**
     * create by  : 小明！！！
     * description: TODO    隐患排查  文书详情
     * create time: 2019/9/23 10:33
@@ -3963,7 +3951,6 @@ public class GlobalController extends BaseController {
      */
     private  String  queryDangerFlag(int levelId,int industryType){
         String level = "";
-
         if(industryType==1){
             Integer flag = tLevelMapper.selectByPrimaryKey(levelId).getFlag();
             level=flag+"";
@@ -3972,34 +3959,18 @@ public class GlobalController extends BaseController {
         }
         return level;
     }
+
+
     /**
-     * 企业统计详情
+     * create by  : 小明！！！
+     * description: TODO    首页 企业分类统计 饼图数据
+     * create time: 2019/10/8 14:48
      */
     @RequestMapping(value = "company/company-tab-detail")
     public String companyTab(Model model, HttpServletRequest request, CompanyListReqDTO dto,
                              String scale) throws Exception {
         User user = getLoginUser(request);
-        /*Map<String, Object> m = new HashMap<String, Object>();
-        m.put("districtId", districtId);
-        m.put("townId", townId);
-        m.put("villageId", villageId);
-        setUserId(user, m);
-        if(StringUtils.isNotBlank(industry)) {
-            m.put("industry", utf8Str(industry));
-        }
-        if(StringUtils.isNotBlank(dlevel)) {
-            m.put("dlevel", "'" + utf8Str(dlevel) + "'");
-        }
-        if(StringUtils.isNotBlank(industry2)) {
-            m.put("industry2", utf8Str(industry2));
-        }
-        m.put("scale", scale);
-        List<DynamicParameter<String, Object>> mlist = companyMapper.selectCompanyList(m);
-        model.addAttribute("list", mlist);
-        model.addAttribute("m", m);*/
-        //System.out.println("Indu:"+URLDecoder.decode(dto.getIndustry2(), "UTF-8"));
-        //dto.setIndustry2(URLDecoder.decode(dto.getIndustry2(), "UTF-8"));
-        //System.out.println(URLDecoder.decode(URLDecoder.decode(dto.getDlevel(), "UTF-8")));
+
         if(dto.getIndustry2()!=null) {
             dto.setIndustry2(URLDecoder.decode(dto.getIndustry2(), "UTF-8"));
         }
@@ -4009,8 +3980,8 @@ public class GlobalController extends BaseController {
         if(dto.getIndustry()!=null) {
             dto.setIndustry(URLDecoder.decode(dto.getIndustry(), "UTF-8"));
         }
+        dto.setIsFreeze("1");
         cgfService.selectCompanyWithPage(dto, user, model);
-
         if (user.getUserType().intValue() == 3) {
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("townId", dto.getTownId());
@@ -4024,11 +3995,15 @@ public class GlobalController extends BaseController {
 
         return "global/company/company-tab-detail";
     }
+
+
     @RequestMapping("getCompanyByPageCount")
     public int getPageCount(HttpServletRequest request){
 
         return 0;
     }
+
+
     /**
      * 添加行政、委托检查表 flag 2 行政执法 3 委托 4 行政检查 userId 企业id
      * 查询企业
@@ -4524,35 +4499,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("check", tc);
         model.addAttribute("partL", partL);
         List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(checkItemByModelId.getCheckId());
-        if (type != null && type == 9) {
-            for (Map<String, Object> a : iteml) {
-                Integer[] ids = new Integer[1];
-                ids[0] = (Integer) a.get("levelId");
-                List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
-                String dangertype = "";
-                String factors = "";
-                String measures = "";
-                String level1 = "";
-                String level2 = "";
-                String level3 = "";
-                for (ACompanyManual aa : rets) {
-                    dangertype = aa.getType();
-                    factors = aa.getFactors();
-                    measures = aa.getMeasures();
-                    level1 = aa.getLevel1();
-                    level2 = aa.getLevel2();
-                    level3 = aa.getLevel3();
-                    break;
-                }
-                a.put("dangerType", dangertype);
-                a.put("factors", factors);
-                a.put("measures", measures);
-                a.put("level1", level1);
-                a.put("level2", level2);
-                a.put("level3", level3);
-                log.error("level1/2/3 : " + level1 + "/" + level2 + "/" + level3);
-            }
-        }
+        selectMeaths1(type, iteml);
         model.addAttribute("itemL", iteml);
         if (tc.getStatus() == 2) {// 已检查
             return "company/danger/plan-detail";
@@ -4564,14 +4511,7 @@ public class GlobalController extends BaseController {
         m.put("userId", user.getId());
         Set<String> set = new LinkedHashSet<String>();
 
-        for (Map<String, Object> stringObjectMap : iteml) {
-
-            String levels = (String) stringObjectMap.get("levels");
-            if(levels.contains("/")){
-                String[] split = levels.split("/");
-                set.add(split[1]);
-            }
-        }
+        selectmeadths2(iteml, set);
         Object[] objects =  set.toArray();
         String departName = Arrays.toString(objects);
 
@@ -4584,6 +4524,16 @@ public class GlobalController extends BaseController {
             return "village/danger/plan-next";
         }
 
+    }
+
+    private void selectmeadths2(List<Map<String, Object>> iteml, Set<String> set) {
+        for (Map<String, Object> stringObjectMap : iteml) {
+            String levels = (String) stringObjectMap.get("levels");
+            if(levels.contains("/")){
+                String[] split = levels.split("/");
+                set.add(split[1]);
+            }
+        }
     }
 
     /**
@@ -4627,7 +4577,6 @@ public class GlobalController extends BaseController {
             Xianmap.put(5, 0);
             Xianmap.put(1, 0);
             Xianmap.put(2, 0);
-            /*Xianmap.put(3, 0);*/
             Xianmap.put(4, 0);
             String level1 = (String) XianChangMap.get("level1");
             List<Integer> Xiantypes = tModelMapper.selecttype(level1, user.getId(), 2, flag);
@@ -4641,9 +4590,32 @@ public class GlobalController extends BaseController {
             }else{
                 XianChangMap.put("count", count);
             }
-
         }
+        selectMeadths4(flag, user, jiChuItem);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(user.getId());
 
+        List<Map<String, Object>> list1 = hiddenPlanMapper.selectCountAll(user.getId());
+
+        List<Map<String, Object>> hiddenPlanList = hiddenPlanMapper.findDpid(0,user.getId());
+
+        selectMeadths3(model, user, hiddenPlanList);
+
+        model.addAttribute("data",sdf.format(new Date()));
+        model.addAttribute("list", list);
+        model.addAttribute("flag", flag);
+        model.addAttribute("status", status);
+        model.addAttribute("jiChuItem", jiChuItem);
+        model.addAttribute("xianChangItem", XianChangItem);
+        model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("plan", plan);
+        model.addAttribute("list1",list1);
+        model.addAttribute("name","合计");
+        return "company/danger/model-list-main";
+
+    }
+
+    private void selectMeadths4(Integer flag, User user, List<Map<String, Object>> jiChuItem) {
         for (Map<String, Object> jiChuMap: jiChuItem) {
             Map<Integer, Integer> Jimap = new LinkedHashMap<Integer, Integer>();
             Jimap.put(5, 0);
@@ -4665,13 +4637,9 @@ public class GlobalController extends BaseController {
 
             jiChuMap.put("array", Jimap);
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(user.getId());
+    }
 
-        List<Map<String, Object>> list1 = hiddenPlanMapper.selectCountAll(user.getId());
-
-        List<Map<String, Object>> hiddenPlanList = hiddenPlanMapper.findDpid(0,user.getId());
-
+    private void selectMeadths3(Model model, User user, List<Map<String, Object>> hiddenPlanList) {
         if (hiddenPlanList.size() == 0){
             HiddenPlan hiddenPlan = new HiddenPlan();
             hiddenPlan.setUid(user.getId());
@@ -4708,20 +4676,8 @@ public class GlobalController extends BaseController {
 
             model.addAttribute("hiddenPlanList",hiddenPlanList);
         }
-
-        model.addAttribute("data",sdf.format(new Date()));
-        model.addAttribute("list", list);
-        model.addAttribute("flag", flag);
-        model.addAttribute("status", status);
-        model.addAttribute("jiChuItem", jiChuItem);
-        model.addAttribute("xianChangItem", XianChangItem);
-        model.addAttribute("companyName", user.getUserName());
-        model.addAttribute("plan", plan);
-        model.addAttribute("list1",list1);
-        model.addAttribute("name","合计");
-        return "company/danger/model-list-main";
-
     }
+
     /**
      * 检查历史
      * TODO 排查治理记录 隐患排查记录(只需要已经检查过的,没有不合格记录的)
@@ -4756,33 +4712,8 @@ public class GlobalController extends BaseController {
         }else{
             m.put("dmName",dmName);
         }
-
         // 进行判断
-
-        if (setUserId(user, m)) {
-            clearVillageTown(m);
-
-            List<Map<String, Object>> list = tCheckMapper.selectList(m);
-            //List<Map<String, Object>> list = tCheckMapper.selectList3(m);
-
-            Integer sum = 0;
-            for (int i = 0; i < list.size(); i++) {
-                DynamicParameter<String, Object> id = tCheckMapper.selectCompany((Integer) list.get(i).get("id"));
-                list.get(i).put("listM",id);
-                sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
-
-            }
-            model.addAttribute("sum", sum);
-            model.addAttribute("list", list);
-
-
-            m.put("dmName",null);
-            List<Map<String, Object>> list2 = tCheckMapper.selectList(m);
-            for (int i = 0; i < list2.size(); i++) {
-                set.add(list2.get(i).get("depart"));
-            }
-
-        }
+        selectMeadths5(model, user, m, set);
         model.addAttribute("set",set);
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
@@ -4802,6 +4733,26 @@ public class GlobalController extends BaseController {
         }
         // TODO 找到这个界面
         return "global/other/check-list";
+    }
+
+    private void selectMeadths5(Model model, User user, Map<String, Object> m, Set set) {
+        if (setUserId(user, m)) {
+            clearVillageTown(m);
+            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            Integer sum = 0;
+            for (int i = 0; i < list.size(); i++) {
+                DynamicParameter<String, Object> id = tCheckMapper.selectCompany((Integer) list.get(i).get("id"));
+                list.get(i).put("listM",id);
+                sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
+            }
+            model.addAttribute("sum", sum);
+            model.addAttribute("list", list);
+            m.put("dmName",null);
+            List<Map<String, Object>> list2 = tCheckMapper.selectList(m);
+            for (int i = 0; i < list2.size(); i++) {
+                set.add(list2.get(i).get("depart"));
+            }
+        }
     }
 
 
@@ -8048,7 +7999,6 @@ public class GlobalController extends BaseController {
 
             list.add(map1);
         }
-
         Integer count1 = 0;
         Integer count2 = 0;
         Integer count3 = 0;
@@ -8382,16 +8332,13 @@ public class GlobalController extends BaseController {
             }else {
                 map.put("number333","0.00%");
             }
-
             map.put("sign1",sign1);
             map.put("sign2",sign2);
             map.put("sign3",sign3);
             map.put("sign11",sign11);
             map.put("sign22",sign22);
             map.put("sign33",sign33);
-
             list.add(map);
-
             model.addAttribute("data",new Date());
             model.addAttribute("list",list);
             request.getSession().setAttribute("list77",list);
@@ -8401,9 +8348,7 @@ public class GlobalController extends BaseController {
             }else {
                 return "global/company/evaluate/villageUp/manage-hidden-industry-charts4-3";
             }
-
         }else {
-
             model.addAttribute("list",list77);
             model.addAttribute("data",new Date());
             request.getSession().setAttribute("userId77",user.getId());
@@ -8412,9 +8357,7 @@ public class GlobalController extends BaseController {
             }else {
                 return "global/company/evaluate/villageUp/manage-hidden-industry-charts4-3";
             }
-
         }
-
     }
 
 
@@ -8428,26 +8371,21 @@ public class GlobalController extends BaseController {
         Result result = new ResultImpl();
 
         if (sessionFlag.equals("list1")){
-
             request.getSession().setAttribute(sessionFlag,null);
             request.getSession().setAttribute("list11",null);
             request.getSession().setAttribute("list22",null);
 
         }else if (sessionFlag.equals("list3")){
-
             request.getSession().setAttribute(sessionFlag,null);
             request.getSession().setAttribute("list33",null);
             request.getSession().setAttribute("list44",null);
 
         }if (sessionFlag.equals("list5")){
-
             request.getSession().setAttribute(sessionFlag,null);
             request.getSession().setAttribute("list55",null);
             request.getSession().setAttribute("list66",null);
             request.getSession().setAttribute("list77",null);
         }
-
-
         result.setStatus("1");
         result.setMess("数据更新成功。");
         return result;
@@ -8483,9 +8421,6 @@ public class GlobalController extends BaseController {
     @RequestMapping(value = "Standard")
     public String Standard(HttpServletRequest request, Model model){
           User user = getLoginUser(request);
-//        List<Map<String,Object>> list2 = tCheckItemMapper.selectBasicMessage(user.getId(), user.getUserType(), 20);
-//        //List<Map<String, Object>> list2 = tCheckItemMapper.getData(user.getId(), user.getUserType(), 0);
-//        model.addAttribute("list", list2);
          Integer total = tCheckItemMapper.getTotalPage(user.getId(), user.getUserType());
          model.addAttribute("total", total);
         return "global/other/standard-list";
@@ -8659,34 +8594,13 @@ public class GlobalController extends BaseController {
         model.addAttribute("company", company);
         model.addAttribute("user", userMapper.selectByPrimaryKey(company.getUserId()));
         model.addAttribute("v", userMapper.selectByPrimaryKey(company.getVillageId()));
-
-
-
-        /* List<Map<String, Object>> list = aCompanyManualMapper.selectRed(m2);*/
         List<Map<String, Object>> list2 = aCompanyManualMapper.selectByMapTwo(m);
         List<Map<String, Object>> list = aCompanyManualMapper.selectRed(user.getId());
-
-
         model.addAttribute("list", list);
         model.addAttribute("list2", list2);
 
         Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
-        for (Map<String, Object> m1 : list) {
-            String level1 = null == m1.get("level1") ? "" : m1.get("level1").toString();
-            //log.error("level1：-----------start------------"+level1);
-            String level2 = null == m1.get("level2") ? "" : m1.get("level2").toString();
-            //log.error("level2："+level2);
-            LinkedHashSet<String> l2s = levmap.get(level1);
-            if (null == l2s) {
-                l2s = new LinkedHashSet<String>();
-                //log.error("level1："+level1);
-                levmap.put(level1, l2s);
-                //log.error("levmap："+levmap.toString());
-            }
-            l2s.add(level2);
-            //log.error("l2s：------------end-----------"+l2s.toString());
-        }
-        //log.error("levmap："+levmap.toString());
+        selectMeadths33(list, levmap);
         model.addAttribute("treeMap", levmap);
         model.addAttribute("flag", flag);
 
@@ -8700,7 +8614,6 @@ public class GlobalController extends BaseController {
         m.put("level", "橙色");
         List<Map<String, Object>> list22 = aCompanyManualMapper.selectByMap(m);
         model.addAttribute("list22", list22);
-
 
         m.put("level", "黄色");
         List<Map<String, Object>> list33 = aCompanyManualMapper.selectByMap(m);
@@ -8716,7 +8629,6 @@ public class GlobalController extends BaseController {
 
         Integer number = list11.size() + list22.size() +  list33.size() + list44.size() + list55.size();
 
-
         model.addAttribute("number", number);
         if (flag.equals("2")) {
             //log.error("zhangcl 2018.10.18 controlList3,area_range="+company.getAreaRange());
@@ -8725,6 +8637,19 @@ public class GlobalController extends BaseController {
             return "company/safety-system/control-list2";
         }
 
+    }
+
+    private void selectMeadths33(List<Map<String, Object>> list, Map<String, LinkedHashSet<String>> levmap) {
+        for (Map<String, Object> m1 : list) {
+            String level1 = null == m1.get("level1") ? "" : m1.get("level1").toString();
+            String level2 = null == m1.get("level2") ? "" : m1.get("level2").toString();
+            LinkedHashSet<String> l2s = levmap.get(level1);
+            if (null == l2s) {
+                l2s = new LinkedHashSet<String>();
+                levmap.put(level1, l2s);
+            }
+            l2s.add(level2);
+        }
     }
 
     @RequestMapping(value = "tables/tab-yjlist")
@@ -8819,23 +8744,7 @@ public class GlobalController extends BaseController {
             m.put("dmName",dmName);
         }
         // 进行判断
-        if (setUserId(user, m)) {
-            clearVillageTown(m);
-            List<Map<String, Object>> list = tCheckMapper.selectList(m);
-            Integer sum = 0;
-            for (int i = 0; i < list.size(); i++) {
-                DynamicParameter<String, Object> id = tCheckMapper.selectCompany((Integer) list.get(i).get("id"));
-                list.get(i).put("listM",id);
-                sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
-            }
-            model.addAttribute("sum", sum);
-            model.addAttribute("list", list);
-            m.put("dmName",null);
-            List<Map<String, Object>> list2 = tCheckMapper.selectList(m);
-            for (int i = 0; i < list2.size(); i++) {
-                set.add(list2.get(i).get("depart"));
-            }
-        }
+        selectMeadths5(model, user, m, set);
         model.addAttribute("set",set);
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
@@ -8872,12 +8781,29 @@ public class GlobalController extends BaseController {
             model.addAttribute("name_", trade.getName());
             model.addAttribute("loginUserId", user.getId());
             if(trade.getIsClique() == 1){//集团型企业
-                //model.addAttribute("list", tradeMapper.selectTradeCompany(user.getId()));
-                //log.error("TradeCompany："+tradeMapper.selectTradeCompany(user.getId()));
                 return "steel/clique-main";
             }
 
         }
+        selectMeadths11(model, user);
+        if(user.getUserType()==4){//乡
+            model.addAttribute("name_", villageMapper.selectByPrimaryKey(user.getId()).getName());
+            model.addAttribute("loginUserId", user.getId());
+        }
+        selectMeadths22(model, user);
+        return "redirect:/global/main";
+    }
+
+    private void selectMeadths22(Model model, User user) {
+        if(user.getUserType()==9){//安泰
+            model.addAttribute("list", districtMapper.selectDistrict());
+            model.addAttribute("list1", tradeMapper.selectTrade());
+            model.addAttribute("name_", user.getUserName());
+            model.addAttribute("loginUserId", user.getId());
+        }
+    }
+
+    private void selectMeadths11(Model model, User user) {
         if(user.getUserType()==6){//区
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("districtId", user.getId());
@@ -8885,7 +8811,6 @@ public class GlobalController extends BaseController {
             model.addAttribute("list", list);
             model.addAttribute("name_", districtMapper.selectByPrimaryKey(user.getId()).getName());
             model.addAttribute("loginUserId", user.getId());
-
         }
         if(user.getUserType()==3){//镇
             Map<String, Object> m = new HashMap<String, Object>();
@@ -8894,22 +8819,7 @@ public class GlobalController extends BaseController {
             model.addAttribute("list", list);
             model.addAttribute("name_", townMapper.selectByPrimaryKey(user.getId()).getName());
             model.addAttribute("loginUserId", user.getId());
-
         }
-        if(user.getUserType()==4){//乡
-            model.addAttribute("name_", villageMapper.selectByPrimaryKey(user.getId()).getName());
-//            if(user.getUserName().equals("港口")) {//港口特殊账号
-//                return "gang/main";
-//            }
-            model.addAttribute("loginUserId", user.getId());
-        }
-        if(user.getUserType()==9){//安泰
-            model.addAttribute("list", districtMapper.selectDistrict());
-            model.addAttribute("list1", tradeMapper.selectTrade());
-            model.addAttribute("name_", user.getUserName());
-            model.addAttribute("loginUserId", user.getId());
-        }
-        return "redirect:/global/main";
     }
 
 }

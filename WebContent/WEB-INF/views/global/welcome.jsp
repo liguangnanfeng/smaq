@@ -114,7 +114,7 @@ function showping(){
         </div>
         <div class="div_company">
           <p style="margin-top:10px">
-            ${district.name }
+            ${name }
             <c:if test="${moveD == 1 }">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="${ly }/town/cx/back/gov" target="_parent">

@@ -297,6 +297,8 @@ public class GlobalController extends BaseController {
             model.addAttribute("count", count);
 
             model.addAttribute("loginUserId", user.getId());
+
+            model.addAttribute("name", user.getUserName());
         }
         if (user.getUserType() == 6) { //县级市
             Map<String, Object> m = new HashMap<String, Object>();
@@ -325,6 +327,7 @@ public class GlobalController extends BaseController {
                 model.addAttribute("moveD", 1);
                 model.addAttribute("nameBefore", userMapper.selectByPrimaryKey(moveBeforeUser.getId()).getUserName());
             }
+            model.addAttribute("name", user.getUserName());
 
         }
         if (user.getUserType() == 3) { //镇级
@@ -353,6 +356,7 @@ public class GlobalController extends BaseController {
                 model.addAttribute("moveD", 1);
                 model.addAttribute("nameBefore", districtMapper.selectByPrimaryKey(moveBeforeUser.getId()).getName());
             }
+            model.addAttribute("name", user.getUserName());
         }
         if (user.getUserType() == 4) { //村级
             Map<String, Object> m = new HashMap<String, Object>();
@@ -387,6 +391,7 @@ public class GlobalController extends BaseController {
                 model.addAttribute("moveD", 1);
                 model.addAttribute("nameBefore", townMapper.selectByPrimaryKey(moveBeforeUser.getId()).getName());
             }
+            model.addAttribute("name", user.getUserName());
 
         }
         if (user.getUserType() == 10) { //行业级
@@ -415,6 +420,7 @@ public class GlobalController extends BaseController {
             if (trade.getIsClique() == 1) {//行业端集团型企业
                 return "tradeclique/clique-welcome";
             }
+            model.addAttribute("name", user.getUserName());
         }
         model.addAttribute("userType", user.getUserType());
         return "global/welcome";
@@ -2528,7 +2534,6 @@ public class GlobalController extends BaseController {
 
         User user = userMapper.selectByPrimaryKey(uid);
         Map<String, Object> m = new HashMap<String, Object>();
-
         if (null == button){
             button = 1;
         }
@@ -3840,7 +3845,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("checkId", checkId);
         model.addAttribute("userId", check.getUserId());
         model.addAttribute("rectification", tRectification);
-        model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
+        model.addAttribute("company", companyMapper.selectByPrimaryKey(uid));
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
 
         // 判断是否整改复查过

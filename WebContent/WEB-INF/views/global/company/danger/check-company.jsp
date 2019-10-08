@@ -112,7 +112,7 @@
             </c:if>
 
             <td>
-                <a style="text-decoration:none" class="href" onClick="show_dialog('检查详情_${be.userId }', '${ly}/global/check-list?flag=${flag }&uid=${be.userId }&title=${title}&type=${type}&villageId=${villageId}&townId=${townId}&status=${status}&dmName=${dmName} ')" href="javascript:;">查看详情</a>
+                <a style="text-decoration:none" class="href" onClick="show_dialog('检查详情_${be.userId }', '${ly}/global/check-list?flag=${flag }&uid=${be.userId }&title=${title}&type=${type}&villageId=${villageId}&townId=${townId}&status=${status}&dmName=${dmName}&button=${button} ')" href="javascript:;">查看详情</a>
             </td>
             </tr>
         </c:forEach>

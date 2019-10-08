@@ -169,13 +169,13 @@ function showping(){
               </a>
 
 
-              <a class="one_tx radius pos-r" data-title="隐患排查" data-href="/global/check-company?flag=1&status=2&button=2" onclick="Hui_admin_tab(this)" style="background:#ea4f21;margin-right:2%;margin-left:1%">
+              <a class="one_tx radius pos-r" data-title="隐患排查" data-href="/global/check-company?flag=1&status=2" onclick="Hui_admin_tab(this)" style="background:#ea4f21;margin-right:2%;margin-left:1%">
               <img alt="" src="${ly }/images/httb9.png"/>
                 <font class="font_tx1 pos-a <c:if test="${counts >0}">blink</c:if>">${counts}</font>
               <font class="font_tx2 pos-a">隐患排查</font>
               </a>
 
-              <a class="one_tx radius pos-r" data-title="隐患治理" data-href="/global/hidden-company-list?flag=1&status=1&breaken=2" onclick="Hui_admin_tab(this)" style="background:#ea4f21;margin-right:2%">
+              <a class="one_tx radius pos-r" data-title="隐患治理" data-href="/global/hidden-company-list?flag=1&status=1" onclick="Hui_admin_tab(this)" style="background:#ea4f21;margin-right:2%">
               <img alt="" src="${ly }/images/httb9.png"/>
                 <font class="font_tx1 pos-a <c:if test="${counts1 >0}">blink</c:if>">${counts1}</font>
               <font class="font_tx2 pos-a">隐患治理</font>
@@ -197,13 +197,13 @@ function showping(){
         <div class="div_tx div_yh pos-a" style="height:313px;padding: 13px 20px 0px;">
           <div class="title_xw pos-r" style="border-bottom:1px solid #F6F6F6;color:#FB0005;"><div class="bt_yuj" style="width:180px">在线监测预警.报警</div></div>
           <div class="list_zd">
-            <a class="one_tx radius pos-r"  data-title="重大危险源"  data-href="${ly }/village/company/zdlist?hazard=1" onclick="Hui_admin_tab(this)" style="width:100%;margin-right:0;background:#1450DD;" >
+            <a class="one_tx radius pos-r"  data-title="重大危险源隐患企业列表" onClick="showping3()"  href="javascript:;" data-href="https://v.yuntus.com/cloudv/f2c6ee4edd00bdd125991511ad2e3eaf" style="width:100%;margin-right:0;background:#1450DD;" >
             <font style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a " id="zd_font"></font>
             <font style="left:5px;width:88%;text-align:center;" class="font_tx2 pos-a" title="重大危险源">重大危险源</font>
             </a>
-            <a class="one_tx radius pos-r"  data-title="易燃易爆、有毒作业"  data-href="https://v.yuntus.com/cloudv/f2c6ee4edd00bdd125991511ad2e3eaf" onclick="Hui_admin_tab(this)" style="width:100%;margin-right:0;background:#1450DD;" >
+            <a class="one_tx radius pos-r"  data-title="高危作业隐患企业列表" onClick="showping4()"  href="javascript:;" data-href="${ly }/village/company/zdlist?hazard=1" style="width:100%;margin-right:0;background:#1450DD;" >
             <font id="gw_font" style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a "></font>
-            <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="易燃易爆、有毒作业">易燃易爆、有毒作业</font>
+            <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="有限（受限）空间作业">易燃易爆、有毒作业</font>
             </a>
             <%--<a class="one_tx radius pos-r"  data-title="重大危险源隐患企业列表" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/global/company/toZdCompanyList?hazard=1" style="width:100%;margin-right:0;background:#1450DD;" >--%>
             	<%--<font style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a " id="zd_font"></font>--%>

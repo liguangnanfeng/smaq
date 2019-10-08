@@ -2494,7 +2494,7 @@ public class GlobalController extends BaseController {
     @RequestMapping(value = "check-company")
     public String checkCompany(HttpServletRequest request, String title, Integer type, String companyName,
                                Integer townId, Integer villageId,
-                               Integer status, Integer flag, Model model,String dmName) throws Exception {
+                               Integer status, Integer flag, Model model,String dmName,Integer button) throws Exception {
 
         User user = getLoginUser(request);
         CompanyListReqDTO dto = new CompanyListReqDTO();
@@ -2507,6 +2507,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("townId",townId);
         model.addAttribute("dmName",dmName);
         model.addAttribute("status",status);
+        model.addAttribute("button",button);
 
         return "global/company/danger/check-company";
     }
@@ -2523,10 +2524,14 @@ public class GlobalController extends BaseController {
     @RequestMapping(value = "check-list")//flag:3 部门抽查
     public String troubleList1(HttpServletRequest request, String title, Integer type, String companyName,
                                Integer townId, Integer villageId,
-                               Integer status, Integer flag, Model model,String dmName,Integer uid) throws Exception {
+                               Integer status, Integer flag, Model model,String dmName,Integer uid,Integer button) throws Exception {
 
         User user = userMapper.selectByPrimaryKey(uid);
         Map<String, Object> m = new HashMap<String, Object>();
+
+        if (null == button){
+            button = 1;
+        }
 
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
@@ -2552,7 +2557,24 @@ public class GlobalController extends BaseController {
         // 进行判断
         if (setUserId(user, m)) {
             clearVillageTown(m);
-            List<Map<String, Object>> list = tCheckMapper.selectList(m);
+            List<Map<String, Object>> list = null;
+
+            if (button == 1){
+                list = tCheckMapper.selectList(m);
+            }else if (button != 1) {
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String startTime = df.format(new Date().getTime()-15*24*60*60*1000);
+
+                Date startTime1 = df.parse(startTime);
+                Date endTime = new Date();
+                m.put("startTime",startTime);
+                m.put("endTime",endTime);
+                m.put("type",2);
+                list = tCheckMapper.findSelectList(m);
+            }
+
+
+
             Integer sum = 0;
             for (int i = 0; i < list.size(); i++) {
                 DynamicParameter<String, Object> id = tCheckMapper.selectCompany((Integer) list.get(i).get("id"));
@@ -4826,9 +4848,7 @@ public class GlobalController extends BaseController {
     public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status, Integer uid,Integer breaken) {
 
         User user = userMapper.selectByPrimaryKey(uid);
-
         Company company = companyMapper.selectByPrimaryKey(uid);
-
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
         model.addAttribute("userId", user.getId());

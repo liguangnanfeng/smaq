@@ -449,24 +449,7 @@ public class BaseController implements Serializable {
         } else {
             userId = companyMapper.selectByCompany_view(m);
         }
-/*         String key = gson.toJson(m);
-         Element el = encacheUtil.getData(key);
 
-         if(null == el) {
-             if (user.getUserType() == 10) {//行业
-                 userId = companyMapper.selectByCompany_trade(m);
-             } else {
-                 userId = companyMapper.selectByCompany_view(m);
-             }
-             encacheUtil.ehcachePut(key, userId);
-         } else {
-             userId = (List<Integer>) el.getObjectValue();
-         }*/
-
-//         m.put("villageId", null);
-//         m.put("townId", null);
-//         m.put("districtId", null);
-//         m.put("tradeId", null);
         if(userId.size() == 0) {
             m.put("userIds", "-1");
             return false;

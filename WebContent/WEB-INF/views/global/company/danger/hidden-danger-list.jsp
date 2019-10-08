@@ -40,6 +40,17 @@
         }
     </style>
     <script type="text/javascript">
+    window.onload=()=>{
+    let searchURL = window.location.search;
+    searchURL = searchURL.substring(1, searchURL.length);
+    var t = searchURL.split("&")[3].split("=")[1];
+    console.log('t:',t)
+    if(t==2){
+    $("#abtn1").attr("href","${ly }/global/hidden-danger-list?flag=1&uid=${userId }&breaken=2")
+    $("#abtn2").attr("href","${ly }/global/hidden-danger-list?flag=2&uid=${userId }&breaken=2")
+    $("#abtn3").attr("href","${ly }/global/hidden-danger-list?flag=3&uid=${userId }&breaken=2")
+    }
+    }
         console.log('${host}');
 
         function showpicture(memoImg) {
@@ -61,11 +72,11 @@
 </nav>
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
-        <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}"
+        <a id="abtn1" class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}"
            href="${ly }/global/hidden-danger-list?flag=1&status=1&uid=${userId }">企业自查</a>
-        <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
+        <a id="abtn2" class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
            href="${ly }/global/hidden-danger-list?flag=2&uid=${userId }">行政检查</a>
-        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
+        <a id="abtn3" class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
            href="${ly }/global/hidden-danger-list?flag=3&uid=${userId }">第三方检查</a>
         <%--  <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
              href="${ly }/village/hidden-danger-list?flag=2">执法检查</a>--%>

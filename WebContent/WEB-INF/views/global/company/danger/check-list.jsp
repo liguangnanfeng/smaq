@@ -26,6 +26,7 @@
     </style>
 </head>
 <script>
+
     console.log("我是check-list,c");
     // 根据部门名称进行查询
     function queryButton() {
@@ -70,11 +71,25 @@
 <div class="page-container">
 
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
-        <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/global/check-list?flag=1&status=2&uid=${uid}">企业自查</a>
-        <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/global/check-list?flag=2&status=2&uid=${uid}">行政检查</a>
-        <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/global/check-list?flag=3&status=2&uid=${uid}">第三方检查</a>
+        <a id="abtn1" class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/global/check-list?flag=1&status=2&uid=${uid}">企业自查</a>
+        <a id="abtn2" class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/global/check-list?flag=2&status=2&uid=${uid}">行政检查</a>
+        <a id="abtn3" class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/global/check-list?flag=3&status=2&uid=${uid}">第三方检查</a>
         <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
     </div>
+
+    <script>
+    window.onload=()=>{
+    let searchURL = window.location.search;
+    searchURL = searchURL.substring(1, searchURL.length);
+    var t = searchURL.split("&")[8].split("=")[1];
+    console.log('t:',t)
+    if(t==2){
+    $("#abtn1").attr("href","${ly }/global/check-list?flag=1&status=2&uid=${uid}&button=2")
+    $("#abtn2").attr("href","${ly }/global/check-list?flag=2&status=2&uid=${uid}&button=2")
+    $("#abtn3").attr("href","${ly }/global/check-list?flag=3&status=2&uid=${uid}&button=2")
+    }
+    }
+    </script>
 
     <div class="text-c">
         <form action="${ly }/village/check-list?flag=${flag}" method="post">

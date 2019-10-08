@@ -1123,24 +1123,7 @@ public class VillageController extends BaseController {
     public String companyTab(Model model, HttpServletRequest request, CompanyListReqDTO dto,
                              String scale) throws Exception {
         User user = getLoginUser(request);
-        /*Map<String, Object> m = new HashMap<String, Object>();
-        m.put("districtId", districtId);
-        m.put("townId", townId);
-        m.put("villageId", villageId);
-        setUserId(user, m);
-        if(StringUtils.isNotBlank(industry)) {
-            m.put("industry", utf8Str(industry));
-        }
-        if(StringUtils.isNotBlank(dlevel)) {
-            m.put("dlevel", "'" + utf8Str(dlevel) + "'");
-        }
-        if(StringUtils.isNotBlank(industry2)) {
-            m.put("industry2", utf8Str(industry2));
-        }
-        m.put("scale", scale);
-        List<DynamicParameter<String, Object>> mlist = companyMapper.selectCompanyList(m);
-        model.addAttribute("list", mlist);
-        model.addAttribute("m", m);*/
+
         dto.setIndustry2(utf8Str(dto.getIndustry2()));
         dto.setDlevel(utf8Str(dto.getDlevel()));
         dto.setIndustry(utf8Str(dto.getIndustry()));

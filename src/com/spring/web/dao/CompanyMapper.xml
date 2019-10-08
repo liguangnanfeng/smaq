@@ -1253,19 +1253,19 @@
 			<if test="isFreeze != null and isFreeze != ''">
 				<if test="isFreeze == 0">
 					AND T1.user_id NOT IN (SELECT
-					T4.uid
+					T4.user_id
 					FROM
-					a_company_manual_tbl T4
+					company_view T4
 					WHERE
-					T4.del = 0)
+					T4.is_del = 0)
 				</if>
 				<if test="isFreeze == 1">
 					AND T1.user_id IN (SELECT
-					T4.uid
+					T4.user_id
 					FROM
-					a_company_manual_tbl T4
+					company_view T4
 					WHERE
-					T4.del = 0)
+					T4.is_del = 0)
 				</if>
 			</if>
 			<if test="key1 != null">
@@ -1347,19 +1347,19 @@
 			<if test="isFreeze != null and isFreeze != ''">
 				<if test="isFreeze == 0">
 					AND T1.user_id NOT IN (SELECT
-					T4.uid
+					T4.user_id
 					FROM
-					a_company_manual_tbl T4
+					company_view T4
 					WHERE
-					T4.del = 0)
+					T4.is_del = 0)
 				</if>
 				<if test="isFreeze == 1">
 					AND T1.user_id IN (SELECT
-					T4.uid
+					T4.user_id
 					FROM
-					a_company_manual_tbl T4
+					company_view_tbl T4
 					WHERE
-					T4.del = 0)
+					T4.is_del = 0)
 				</if>
 			</if>
 			<if test="key1 != null">

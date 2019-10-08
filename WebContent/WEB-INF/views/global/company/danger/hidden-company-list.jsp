@@ -94,7 +94,19 @@
             <tbody>
             <!-- 循环-->
             <script>
-
+            var breaken;
+            let searchURL = window.location.search;
+            searchURL = searchURL.substring(1, searchURL.length);
+            let x=searchURL.includes('breaken');
+            if(x){
+            var t = searchURL.split("&")[2].split("=")[1];
+            if(t){
+            breaken=2;
+            }
+            }else{
+            breaken=1;
+            }
+            console.log('t:', t);
             </script>
             <c:forEach items="${list }" varStatus="index" var="be">
                 <tr class="text-c">
@@ -111,7 +123,7 @@
                         <td>正常</td>
                     </c:if>
                     <td>
-                        <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.userId }', '${ly}/global/hidden-danger-list?flag=${flag }&uid=${be.userId }&status=${status} ')" href="javascript:;">查看详情</a>
+                        <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.user_id }', '${ly}/global/hidden-danger-list?flag=${flag }&uid=${be.user_id }&status=${status}&breaken='+breaken)" href="javascript:;">查看详情</a>
                     </td>
                 </tr>
             </c:forEach>

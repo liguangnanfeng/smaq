@@ -94,6 +94,19 @@
         <tbody>
         <!-- 循环-->
         <script>
+        var button;
+        let searchURL = window.location.search;
+        searchURL = searchURL.substring(1, searchURL.length);
+        let x=searchURL.includes('button');
+        if(x){
+        var t = searchURL.split("&")[2].split("=")[1];
+        if(t){
+        button=2;
+        }
+        }else{
+        button=1;
+        }
+        console.log('t:', t);
 
         </script>
         <c:forEach items="${list }" varStatus="index" var="be">
@@ -112,7 +125,7 @@
             </c:if>
 
             <td>
-                <a style="text-decoration:none" class="href" onClick="show_dialog('检查详情_${be.userId }', '${ly}/global/check-list?flag=${flag }&uid=${be.userId }&title=${title}&type=${type}&villageId=${villageId}&townId=${townId}&status=${status}&dmName=${dmName}&button=${button} ')" href="javascript:;">查看详情</a>
+                <a style="text-decoration:none" class="href" onClick="show_dialog('检查详情_${be.user_id }', '${ly}/global/check-list?flag=${flag }&uid=${be.user_id }&title=${title}&type=${type}&villageId=${villageId}&townId=${townId}&status=${status}&dmName=${dmName}&button='+button)" href="javascript:;">查看详情</a>
             </td>
             </tr>
         </c:forEach>

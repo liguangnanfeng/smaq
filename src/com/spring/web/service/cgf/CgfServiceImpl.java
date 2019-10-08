@@ -1113,7 +1113,6 @@ public class CgfServiceImpl implements CgfService {
      * @param model
      */
     public void selectCompanyWithPage(CompanyListReqDTO dto, User user, Model model) {
-        System.out.println("dto:"+dto);
         String industry2 = null;
         if (StringUtils.isNotBlank(dto.getIndustry2_())) {
             industry2 = dto.getIndustry2_();

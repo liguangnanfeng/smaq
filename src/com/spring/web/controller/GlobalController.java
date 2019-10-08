@@ -2497,9 +2497,9 @@ public class GlobalController extends BaseController {
                                Integer status, Integer flag, Model model,String dmName,Integer button) throws Exception {
 
         User user = getLoginUser(request);
-        CompanyListReqDTO dto = new CompanyListReqDTO();
-        dto.setIsFreeze("1");
-        cgfService.selectCompanyWithPage(dto, user, model);
+        List<Map<String, Object>> list = tCheckItemMapper.findALL(user.getId(),user.getUserType());
+
+        model.addAttribute("list",list);
         model.addAttribute("flag",flag);
         model.addAttribute("title",title);
         model.addAttribute("type",type);
@@ -4812,9 +4812,8 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping(value = "hidden-company-list")
     public String hiddenCompanyList(HttpServletRequest request, Model model,Integer flag, Integer status) throws Exception {
-        //System.out.println("****");
         User user = getLoginUser(request);
-        StringBuilder sb = new StringBuilder();
+        /*StringBuilder sb = new StringBuilder();
         List<Integer> ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询该账户下所有公司id
         for (int i = 0; i < ids.size(); i++) {
             if (i == ids.size()-1){
@@ -4823,11 +4822,11 @@ public class GlobalController extends BaseController {
                 sb.append("'").append(ids.get(i)).append("',");
             }
         }
-        Integer counts1 = tCheckItemMapper.findAllCounte(sb.toString()); // 治理数据
-        CompanyListReqDTO dto = new CompanyListReqDTO();
-        dto.setIsFreeze("1");
-        cgfService.selectCompanyWithPage(dto, user, model);
-        model.addAttribute("count", counts1);
+        Integer counts1 = tCheckItemMapper.findAllCounte(sb.toString()); // 治理数据*/
+        List<Map<String, Object>> list = tCheckItemMapper.findALL(user.getId(),user.getUserType());
+
+        model.addAttribute("list",list);
+        //model.addAttribute("count", counts1);
         model.addAttribute("flag",flag);
         model.addAttribute("status",status);
 

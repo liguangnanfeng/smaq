@@ -122,38 +122,68 @@
                                                 </c:if>
                                         </td>
                                         <td id="choose">
-                                                <c:if test="${userType == co.is_controls || userType==10 }">
-                                                        是
+                                                <c:if test="${userType == 10 }">
+                                                        <c:if test="${userType == co.is_controls}">
+                                                                是
+                                                        </c:if>
+
+                                                        <c:if test="${userType != co.is_controls}">
+                                                                否
+                                                        </c:if>
                                                 </c:if>
 
-                                                <c:if test="${userType != co.is_controls && userType!=10}">
-                                                        否
+                                                <c:if test="${userType != 10 }">
+                                                        <c:if test="${userType == co.is_industrys}">
+                                                                是
+                                                        </c:if>
+
+                                                        <c:if test="${userType != co.is_industrys}">
+                                                                否
+                                                        </c:if>
                                                 </c:if>
+
                                         </td>
                                         <td>
-                                                <c:if test="${1 == co.flag }">
-                                                        <a style="text-decoration:none" onClick="user_isControls(${co.userId },1)" href="javascript:;">设为本级管控</a>
+                                                <c:if test="${userType == 10 }">
+                                                        <c:if test="${co.is_industrys == 10}">
+                                                                <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >设为本级管控</a>
 
-                                                        <a style="text-decoration:none" onClick="user_isControls(${co.userId },0)" href="javascript:;">取消本级管控</a>
+                                                                <a style="text-decoration:none" onClick="user_isControls(${co.userId },0)" href="javascript:;">取消本级管控</a>
+                                                        </c:if>
+
+                                                        <c:if test="${co.is_industrys == 0}">
+                                                                <a style="text-decoration:none" onClick="user_isControls(${co.userId },1)" href="javascript:;">设为本级管控</a>
+
+                                                                <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >取消本级管控</a>
+                                                        </c:if>
                                                 </c:if>
 
-                                                <c:if test="${2 == co.flag }">
-                                                        <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >设为本级管控</a>
+                                                <c:if test="${userType != 10 }">
+                                                        <c:if test="${1 == co.flag }">
+                                                                <a style="text-decoration:none" onClick="user_isControls(${co.userId },1)" href="javascript:;">设为本级管控</a>
 
-                                                        <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >取消本级管控</a>
+                                                                <a style="text-decoration:none" onClick="user_isControls(${co.userId },0)" href="javascript:;">取消本级管控</a>
+                                                        </c:if>
+
+                                                        <c:if test="${2 == co.flag }">
+                                                                <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >设为本级管控</a>
+
+                                                                <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >取消本级管控</a>
+                                                        </c:if>
+
+                                                        <c:if test="${3 == co.flag }">
+                                                                <a style="text-decoration:none" onClick="user_isControls(${co.userId },1)" href="javascript:;">设为本级管控</a>
+
+                                                                <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >取消本级管控</a>
+                                                        </c:if>
+
+                                                        <c:if test="${4 == co.flag }">
+                                                                <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >设为本级管控</a>
+
+                                                                <a style="text-decoration:none" onClick="user_isControls(${co.userId },0)" href="javascript:;">取消本级管控</a>
+                                                        </c:if>
                                                 </c:if>
 
-                                                <c:if test="${3 == co.flag }">
-                                                        <a style="text-decoration:none" onClick="user_isControls(${co.userId },1)" href="javascript:;">设为本级管控</a>
-
-                                                        <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >取消本级管控</a>
-                                                </c:if>
-
-                                                <c:if test="${4 == co.flag }">
-                                                        <a style="text-decoration:none;  cursor: default;opacity: 0.2" onclick="return false;" >设为本级管控</a>
-
-                                                        <a style="text-decoration:none" onClick="user_isControls(${co.userId },0)" href="javascript:;">取消本级管控</a>
-                                                </c:if>
                                         </td>
                                 </tr>
                         </c:forEach>

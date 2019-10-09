@@ -1108,7 +1108,6 @@ public class GlobalController extends BaseController {
         if (null == list || list.size() == 0){
 
         }else {
-
             addFlag(user, list);
         }
         model.addAttribute("list",list);
@@ -1161,22 +1160,6 @@ public class GlobalController extends BaseController {
                         list.get(i).put("flag",3);
                     }
                 }
-
-                if (user.getUserType() == 4){ // 如何登录的是 村级 账户
-                    if ((Integer)list.get(i).get("is_controls") == 7){
-                        list.get(i).put("flag",2);
-                    }else if ((Integer)list.get(i).get("is_controls") == 6){
-                        list.get(i).put("flag",2);
-                    }else if ((Integer)list.get(i).get("is_controls") == 3){
-                        list.get(i).put("flag",2);
-                    }else if ((Integer)list.get(i).get("is_controls") == 4){
-                        list.get(i).put("flag",4);
-                    }else if ((Integer)list.get(i).get("is_controls") == 0){
-                        list.get(i).put("flag",3);
-                    }else {
-                        list.get(i).put("flag",3);
-                    }
-                }
             }
         }
     }
@@ -1194,10 +1177,18 @@ public class GlobalController extends BaseController {
         Company company = new Company();
         company.setUserId(userId);
 
-        if (flag == 1){
-            company.setIsControls(user.getUserType());
-        }else if (flag == 0){
-            company.setIsControls(0);
+        if (user.getUserType() != 10){
+            if (flag == 1){
+                company.setIsControls(user.getUserType());
+            }else if (flag == 0){
+                company.setIsControls(0);
+            }
+        }else if (user.getUserType() == 10){
+            if (flag == 1){
+                company.setIsIndustrys(user.getUserType());
+            }else if (flag == 0){
+                company.setIsIndustrys(0);
+            }
         }
         companyMapper.updateByPrimaryKeySelective(company);
 

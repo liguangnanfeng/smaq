@@ -122,7 +122,7 @@
                                                 </c:if>
                                         </td>
                                         <td id="choose">
-                                                <c:if test="${userType == 10 }">
+                                                <c:if test="${userType != 10 }">
                                                         <c:if test="${userType == co.is_controls}">
                                                                 是
                                                         </c:if>
@@ -132,12 +132,12 @@
                                                         </c:if>
                                                 </c:if>
 
-                                                <c:if test="${userType != 10 }">
-                                                        <c:if test="${userType == co.is_industrys}">
+                                                <c:if test="${userType == 10 }">
+                                                        <c:if test="${10 == co.is_industrys}">
                                                                 是
                                                         </c:if>
 
-                                                        <c:if test="${userType != co.is_industrys}">
+                                                        <c:if test="${0 == co.is_industrys}">
                                                                 否
                                                         </c:if>
                                                 </c:if>
@@ -159,6 +159,7 @@
                                                 </c:if>
 
                                                 <c:if test="${userType != 10 }">
+
                                                         <c:if test="${1 == co.flag }">
                                                                 <a style="text-decoration:none" onClick="user_isControls(${co.userId },1)" href="javascript:;">设为本级管控</a>
 

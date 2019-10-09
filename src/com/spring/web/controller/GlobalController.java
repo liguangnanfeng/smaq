@@ -1166,6 +1166,22 @@ public class GlobalController extends BaseController {
                         list.get(i).put("flag",3);
                     }
                 }
+
+                if (user.getUserType() == 4){ // 如何登录的是 村级 账户
+                    if ((Integer)list.get(i).get("is_controls") == 7){
+                        list.get(i).put("flag",2);
+                    }else if ((Integer)list.get(i).get("is_controls") == 6){
+                        list.get(i).put("flag",2);
+                    }else if ((Integer)list.get(i).get("is_controls") == 3){
+                        list.get(i).put("flag",2);
+                    }else if ((Integer)list.get(i).get("is_controls") == 4){
+                        list.get(i).put("flag",4);
+                    }else if ((Integer)list.get(i).get("is_controls") == 0){
+                        list.get(i).put("flag",3);
+                    }else {
+                        list.get(i).put("flag",3);
+                    }
+                }
             }
         }
     }

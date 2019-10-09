@@ -67,7 +67,7 @@
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>隐患统计分析系统</span>
     <span class="c-gray en">&gt;</span> <span>隐患治理记录</span>
-    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="javascript:history.go(-1)" title="返回">返回</a>
+    <a onclick="back()" class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="###" title="返回">返回</a>
 
 </nav>
 <div class="page-container">
@@ -164,9 +164,9 @@
 
             <c:forEach items="${list }" varStatus="index" var="list">
                 <tr class="text-c">
-                    <script>
-                        console.log('14:32:','${list}');
-                    </script>
+                <script>
+                console.log('${list}')
+                </script>
                         <%--<c:choose>--%>
                         <%--<c:when test="${list.type == 1}">--%>
                         <%--<td>日常</td>--%>
@@ -295,9 +295,10 @@
                             </c:choose>--%>
                     </td>
                     <td>
-                        <c:choose>
-                            <c:when test="${list.status eq 1}">复查合格</c:when>
-                        </c:choose>
+                <c:choose>
+                    <c:when test="${list.status eq 2}">未治理</c:when>
+                    <c:when test="${list.status eq 3}">已治理</c:when>
+                </c:choose>
                     </td>
                     <td>${list.fjgkfzr}</td>
                     <c:if test="${list.money==null}">

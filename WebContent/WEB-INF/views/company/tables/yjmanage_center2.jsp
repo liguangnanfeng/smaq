@@ -126,8 +126,6 @@
             <img src="/images/companyImg/newimg/demo.png"/>
             </main>
             <script>
-<%--                var w=$('main').height();--%>
-<%--                $('main').height(w*0.4015625)--%>
 
             </script>
             <div class="func">
@@ -276,7 +274,7 @@
             <div class="modal-content radius">
             <div class="modal-header">
             <h3 class="modal-title" style="color:red">在线监测预警.报警</h3>
-            <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+            <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
             </div>
             <div class="modal-body">
             <style>
@@ -304,7 +302,7 @@
                 <c:when test="${c.danger eq '1'}">
                     <a class="one_tx radius pos-r aa"  data-title="有限（受限）空间作业" onclick="Hui_admin_tab(this)" href="javascript:;" data-href="${ly }/village/company/gwlist?danger=1" style="background:#1450DD;" >
                     <font id="gw_font" style="width: 95%;text-align: center;left:auto;" class="font_tx1 pos-a "></font>
-                    <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="有限（受限）空间作业">有限（受限）空间作业</font>
+                    <font style="left:13px;width:88%;text-align:center;" class="font_tx2 pos-a" title="易燃、易爆有毒作业">易燃、易爆有毒作业</font>
                     </a>
                 </c:when>
                 <c:otherwise>

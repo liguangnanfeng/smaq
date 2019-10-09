@@ -95,7 +95,7 @@ function showpicture2(src, obj){
       <%--</button>--%>
     </c:otherwise>
     </c:choose>
-    <a class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
+    <a onclick="back()" class="btn btn-success radius r bit_hid" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:void(0)" title="返回">返回</a>
 
     <%-- <button onClick="top.show_tab('排查治理记录', '${ly }/village/check-list?flag=${flag }')" class="btn btn-success radius" type="button" style="padding: 0 15px;margin-right: 20px">
        <i class="Hui-iconfont mr-10">&#xe652;</i>返回排查治理记录列表

@@ -1167,13 +1167,6 @@
 
 
 
-
-
-
-
-
-
-
 	<select id="selectByCompany_view" resultType="java.lang.Integer">
 		select
 		user_id
@@ -1207,7 +1200,7 @@
 		distinct T1.user_id
 		from company_view T1
 		<where>
-			T1.is_del = '0'
+			T1.is_del = 0
 			<if test="industry != null and industry != ''">
 				and T1.industry = #{industry}
 			</if>

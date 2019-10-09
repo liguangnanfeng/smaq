@@ -20,9 +20,9 @@
 <body>
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-    <span class="c-gray en">&gt;</span> <span>${flag!=2 ? '隐患排查治理系统' : '行政执法系统'}</span>
+    <span class="c-gray en">&gt;</span> <span></span>
     <c:if test="${flag != 2}">
-        <span class="c-gray en">&gt;</span> <span>隐患排查记录</span>
+        <span class="c-gray en">&gt;</span> <span>隐患治理记录</span>
     </c:if>
     <c:if test="${flag == 2}">
         <span class="c-gray en">&gt;</span> <span>执法记录</span>
@@ -123,7 +123,7 @@
                         <td>正常</td>
                     </c:if>
                     <td>
-                        <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.user_id }', '${ly}/global/hidden-danger-list?flag=${flag }&uid=${be.user_id }&status=${status}&breaken='+breaken)" href="javascript:;">查看详情</a>
+                        <a style="text-decoration:none" onClick="show_dialog('', '${ly}/global/hidden-danger-list?flag=${flag }&uid=${be.user_id }&status=${status}&breaken='+breaken)" href="javascript:;">查看详情</a>
                     </td>
                 </tr>
             </c:forEach>

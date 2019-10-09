@@ -174,7 +174,7 @@
     <i class="Hui-iconfont">&#xe652;</i>打印预览
     </button>
 
-    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="${ly }/global/model-list-main?flag=1&uid=${uid}"
+    <a class="btn btn-success radius r btn_hid" onclick="back()" style="line-height: 1.6em; margin-top: 3px" href="###"
     title="返回">返回</a>
         <%-- <button onClick="top.show_tab('排查治理记录', '${ly }/village/check-list?flag=${flag }')" class="btn btn-success radius" type="button" style="padding: 0 15px;margin-right: 20px">
             <i class="Hui-iconfont mr-10">&#xe652;</i>返回排查治理记录列表

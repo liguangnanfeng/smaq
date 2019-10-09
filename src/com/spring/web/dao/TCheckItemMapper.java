@@ -482,9 +482,9 @@ public interface TCheckItemMapper {
 
     Integer manageHiddenIndustryBasicS(@Param("status")Integer status, @Param("industry")String industry, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
-    Integer getTotalPage(@Param("userId") Integer userId, @Param("type") Integer type);
+    Integer getTotalPage(@Param("userId") Integer userId, @Param("type") Integer type, @Param("companyName") String companyName);
 
-    List<Map<String, Object>> getData(@Param("userId") Integer userId, @Param("type") Integer type, @Param("start") Integer start);
+    List<Map<String, Object>> getData(@Param("userId") Integer userId, @Param("type") Integer type, @Param("start") Integer start, @Param("companyName") String companyName);
 
     Integer manageHiddenDanger22(@Param("status")Integer status, @Param("controls")String controls,@Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
@@ -537,6 +537,8 @@ public interface TCheckItemMapper {
     Integer findFileByMapByCliqu(@Param("user_id") String user_id, @Param("flag") Integer flag);
 
     Integer zhuChartData124ByCliqu(@Param("control")String control, @Param("user_id")String user_id);
+
+    String  selectLastOperateTimeById(@Param("userId") Integer userId);
 
 }
 

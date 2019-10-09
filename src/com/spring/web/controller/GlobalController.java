@@ -297,6 +297,8 @@ public class GlobalController extends BaseController {
             model.addAttribute("count", count);
 
             model.addAttribute("loginUserId", user.getId());
+
+            model.addAttribute("name", user.getUserName());
         }
         if (user.getUserType() == 6) { //县级市
             Map<String, Object> m = new HashMap<String, Object>();
@@ -325,6 +327,7 @@ public class GlobalController extends BaseController {
                 model.addAttribute("moveD", 1);
                 model.addAttribute("nameBefore", userMapper.selectByPrimaryKey(moveBeforeUser.getId()).getUserName());
             }
+            model.addAttribute("name", user.getUserName());
 
         }
         if (user.getUserType() == 3) { //镇级
@@ -353,6 +356,7 @@ public class GlobalController extends BaseController {
                 model.addAttribute("moveD", 1);
                 model.addAttribute("nameBefore", districtMapper.selectByPrimaryKey(moveBeforeUser.getId()).getName());
             }
+            model.addAttribute("name", user.getUserName());
         }
         if (user.getUserType() == 4) { //村级
             Map<String, Object> m = new HashMap<String, Object>();
@@ -387,6 +391,7 @@ public class GlobalController extends BaseController {
                 model.addAttribute("moveD", 1);
                 model.addAttribute("nameBefore", townMapper.selectByPrimaryKey(moveBeforeUser.getId()).getName());
             }
+            model.addAttribute("name", user.getUserName());
 
         }
         if (user.getUserType() == 10) { //行业级
@@ -415,6 +420,7 @@ public class GlobalController extends BaseController {
             if (trade.getIsClique() == 1) {//行业端集团型企业
                 return "tradeclique/clique-welcome";
             }
+            model.addAttribute("name", user.getUserName());
         }
         model.addAttribute("userType", user.getUserType());
         return "global/welcome";
@@ -2519,7 +2525,6 @@ public class GlobalController extends BaseController {
 
         User user = userMapper.selectByPrimaryKey(uid);
         Map<String, Object> m = new HashMap<String, Object>();
-
         if (null == button){
             button = 1;
         }
@@ -3819,7 +3824,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("checkId", checkId);
         model.addAttribute("userId", check.getUserId());
         model.addAttribute("rectification", tRectification);
-        model.addAttribute("company", companyMapper.selectByPrimaryKey(user.getId()));
+        model.addAttribute("company", companyMapper.selectByPrimaryKey(uid));
         model.addAttribute("serList", gson.toJson(tItemSeriousMapper.selectbylid(null)));
 
         // 判断是否整改复查过
@@ -8411,34 +8416,57 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping(value = "Standard")
     public String Standard(HttpServletRequest request, Model model){
-          User user = getLoginUser(request);
-         Integer total = tCheckItemMapper.getTotalPage(user.getId(), user.getUserType());
-         model.addAttribute("total", total);
         return "global/other/standard-list";
     }
     /**
-     * 获取公司信息数据
+     * 分页获取所公司信息数据
      */
     @RequestMapping(value="/getData", method = RequestMethod.POST)
-    public @ResponseBody  Result getData(HttpServletRequest request, Model model, Integer page){
+    public @ResponseBody  Result getData(HttpServletRequest request, Model model, Integer page, String companyName) {
         User user = getLoginUser(request);
         Result result = new ResultImpl();
-        Integer start = page *10;
-        List<Map<String, Object>> list = tCheckItemMapper.getData(user.getId(), user.getUserType(), start);
+        Integer start = page * 10;
+        if ("".equals(companyName.trim())) {//如果为空串则直接
+            companyName = null;
+        }
+        List<Map<String, Object>> list = tCheckItemMapper.getData(user.getId(), user.getUserType(), start, companyName);
+        for (Map<String, Object> map : list) {
+            String time = tCheckItemMapper.selectLastOperateTimeById((Integer) map.get("userId"));
+            if (time == null) {
+                map.put("time", "暂无操作时间");
+            } else {
+                map.put("time", tCheckItemMapper.selectLastOperateTimeById((Integer) map.get("userId")));
+            }
+        }
         result.setMap("list", list);
         result.setStatus("0");
         return result;
     }
-    /**
-     *获取当前账号下所有公司的分页
-     */
-    @RequestMapping("/getTotalPage")
-    @ResponseBody
-    public Integer getTotalPage(HttpServletRequest request, Model model){
+    @RequestMapping(value="/getTotalPage", method = RequestMethod.POST)
+    public @ResponseBody  Result getTotalPage(HttpServletRequest request, Model model, Integer page, String companyName) {
         User user = getLoginUser(request);
-        Integer total = tCheckItemMapper.getTotalPage(user.getId(), user.getUserType());
+        if("".equals(companyName)){
+            companyName = null;
+        }
+        Integer total = tCheckItemMapper.getTotalPage(user.getId(), user.getUserType(), companyName);
         Integer totalPage = total/10+1;
-        return totalPage;
+        Result result = new ResultImpl();
+        result.setMap("totals", total);//总条数
+        result.setMap("totalPage", totalPage);
+        return result;
+    }
+    @RequestMapping(value = "/tab-biaozhunC")
+    public String findOneTwo(Integer safetyStandardlistId, Integer sort, Model model, HttpServletRequest request) {
+        if (null == sort) {
+            sort = 1;
+        }
+        List<TSafetyStandard> tSafetyStandard = tSafetyStandardMapper.findByparentId(safetyStandardlistId, sort);
+        TSafetyStandard one = tSafetyStandardMapper.findOne(safetyStandardlistId);
+        model.addAttribute("fuId", one.getParentId());
+        model.addAttribute("list", tSafetyStandard);
+        model.addAttribute("parentId", safetyStandardlistId);
+        model.addAttribute("sort", sort);
+        return "company/tables/tab-biaozhunC";
     }
     /**
      * 根据条件查询安全生产标准化数据
@@ -8459,11 +8487,25 @@ public class GlobalController extends BaseController {
         map.put("flag", flag);
         List<TSafetyStandard> TSafetyStandardlist = tSafetyStandardMapper.findAll(map);
         // 判断是否有顺序,有书序就按照顺序来,没有就是倒序
+
         model.addAttribute("sort", sort);
         model.addAttribute("companyName", companyMapper.selectByPrimaryKey(userId).getName());
         model.addAttribute("list", TSafetyStandardlist);
-        return "company/tables/tab-biaozhun2";
+        model.addAttribute("userId", userId);
+        return "global/company/tables/tab-biaozhun2";
 
+    }
+
+    @RequestMapping(value = "/findByParentId")
+    public String findByParentId(Integer safetyStandardlistId, Model model, Integer sort) {
+        if (null == sort) {
+            sort = 1;
+        }
+        List<TSafetyStandard> TSafetyStandard = tSafetyStandardMapper.findByparentId(safetyStandardlistId, sort);
+        model.addAttribute("list", TSafetyStandard);
+        model.addAttribute("parentId", safetyStandardlistId);
+        model.addAttribute("sort", sort);
+        return "global/company/tables/tab-biaozhunB";
     }
 
     /**

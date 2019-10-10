@@ -2550,7 +2550,12 @@ public class GlobalController extends BaseController {
                                Integer townId, Integer villageId,
                                Integer status, Integer flag, Model model,String dmName,Integer uid,Integer button) throws Exception {
 
-        User user = userMapper.selectByPrimaryKey(uid);
+        User user = null;
+        if (null == uid){
+            user = getLoginUser(request);
+        }else if (null != uid){
+            user = userMapper.selectByPrimaryKey(uid);
+        }
         Map<String, Object> m = new HashMap<String, Object>();
         if (null == button){
             button = 1;
@@ -2810,7 +2815,13 @@ public class GlobalController extends BaseController {
     @RequestMapping("danger/opinion-list")
     public String opinionList(Model model, String companyName, HttpServletRequest request, Integer type, Integer flag2, Integer uid)
             throws Exception {
-        User user = userMapper.selectByPrimaryKey(uid);
+
+        User user = null;
+        if (null == uid){
+            user = getLoginUser(request);
+        }else if (null != uid){
+            user = userMapper.selectByPrimaryKey(uid);
+        }
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
         m.put("companyName", companyName);
@@ -3572,7 +3583,12 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping("danger/opinion-detail")
     public String opinionDetail(Model model, HttpServletRequest request, Integer id, Integer uid) throws Exception {
-        User user = userMapper.selectByPrimaryKey(uid);
+        User user = null;
+        if (null == uid){
+            user = getLoginUser(request);
+        }else if (null != uid){
+            user = userMapper.selectByPrimaryKey(uid);
+        }
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("userId", user.getId());
         TCheckDocument d = tCheckDocumentMapper.selectByPrimaryKey(id);

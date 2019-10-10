@@ -5010,7 +5010,6 @@ public class CompanyController_cd extends BaseController {
         map.put("sign22",sign22); // 较大隐患 未治理 合计 竖
         map.put("sign33",sign33); // 重大隐患 未治理 合计 竖
 
-
         list.add(map);
 
         model.addAttribute("data",new Date());

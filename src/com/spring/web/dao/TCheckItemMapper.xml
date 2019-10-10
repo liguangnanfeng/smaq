@@ -1224,12 +1224,10 @@
         WHERE
             t2. status = 2
         AND t2.del = 0
-        AND t1.status = 3
-        AND t1. status = #{status}
+        AND t1.status = #{status}
         AND t2.user_id = #{user_id}
         AND t3.flag = #{flag}
         AND t2.depart = #{depart}
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1241,14 +1239,12 @@
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND (t1.levels like "%现场%" OR t1.levels like "%高危%")
         WHERE
-            t2. status = 2
+            t2.status = 2
         AND t2.del = 0
-        AND t1.status = 3
         AND t1.status = #{status}
         AND t2.user_id = #{user_id}
         AND t3.flag = #{flag}
         AND t2.depart = #{depart}
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1261,13 +1257,11 @@
         RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
         WHERE
             t2.status = 2
-        AND t1.status = 3
         AND t2.del = 0
         AND t1.status = #{status}
         AND t2.user_id = #{user_id}
         AND t3.flag = #{flag}
         AND t2.depart = #{depart}
-        AND t1.recheck_file != ''
     </select>
 
 

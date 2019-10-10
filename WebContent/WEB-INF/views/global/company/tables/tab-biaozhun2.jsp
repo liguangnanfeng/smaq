@@ -348,7 +348,7 @@
             show_tab('安全标准化', url)
         } else {
             var p_id = parseInt(id);
-            show_tab('安全标准化', '${ly}/global/findByParentId?safetyStandardlistId=' + p_id);
+            show_tab('安全标准化', '${ly}/global/findByParentId?safetyStandardlistId=' + p_id+"&userId=${userId}");
         } 
 		 
 	}

@@ -192,7 +192,7 @@
 
         <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
         <a href="#" class="btn btn-success radius"
-           onClick=" show_tab('安全标准化', '${ly}/global/findAll?parendId=0&flag=1')">返回</a>
+           onClick=" show_tab('安全标准化', '${ly}/global/findAll?parendId=0&flag=1&userId=${userId}')">返回</a>
        </div>
     <div class="mt-20 my_flex f_j_c f_wrap" style="width:100%;">
         <%--        <table class="table table-border table-bordered table-bg table-hover table-sort">--%>
@@ -377,7 +377,7 @@
             <%--});--%>
         }else{
             var p_id = parseInt(id);
-            show_tab('安全标准化', '${ly}/api/safety_Standard/tab-biaozhunC?safetyStandardlistId='+p_id)
+            show_tab('安全标准化', '${ly}/global/tab-biaozhunC?safetyStandardlistId='+p_id+"&userId=${userId}")
         }
     }
 

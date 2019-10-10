@@ -54,9 +54,6 @@ public class TSafetyStandardController extends BaseController {
         map.put("flag", flag);
 
         List<TSafetyStandard> TSafetyStandardlist = tSafetyStandardMapper.findAll(map);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateTime=df.format(new Date());
-        tSafetyStandardMapper.UpdateOperatorTime(dateTime, parendId, user.getId());
         // 判断是否有顺序,有书序就按照顺序来,没有就是倒序
         model.addAttribute("sort", sort);
         model.addAttribute("companyName", user.getUserName());
@@ -151,7 +148,10 @@ public class TSafetyStandardController extends BaseController {
             }
             tSafetyStandard.setDel(0);
             tSafetyStandardMapper.insertSelective(tSafetyStandard);
-
+            //记录操作时间
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dateTime=df.format(new Date());
+            tSafetyStandardMapper.UpdateOperatorTime(dateTime, tSafetyStandard.getId());
             result.setMess("保存成功");
             result.setStatus("0");
             result.setObject(tSafetyStandard.getId());
@@ -181,6 +181,9 @@ public class TSafetyStandardController extends BaseController {
                 tSafetyStandard.setOder(0);
             }
             tSafetyStandardMapper.updateTSafetyStandard(tSafetyStandard);
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dateTime=df.format(new Date());
+            tSafetyStandardMapper.UpdateOperatorTime(dateTime, tSafetyStandard.getId());
             result.setStatus("0");
             result.setMess("修改成功");
             return result;
@@ -438,6 +441,9 @@ public class TSafetyStandardController extends BaseController {
                     }
                     one.setFiles(url + realPath1);
                     tSafetyStandardMapper.updateTSafetyStandard(one);
+                    SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String dateTime=df1.format(new Date());
+                    tSafetyStandardMapper.UpdateOperatorTime(dateTime, one.getId());
                 } else {
                     result.setStatus("1");
                     result.setMessage("请上传pdf格式的文件。");

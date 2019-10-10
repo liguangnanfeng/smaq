@@ -530,6 +530,17 @@ public class GlobalController extends BaseController {
         model.addAttribute("userName", companyMapper.selectByPrimaryKey(user.getId()).getName());
         model.addAttribute("loginUserId", user.getId());
         model.addAttribute("flage", 1);
+        //排除特钢
+        if(35346 == uid){
+            Trade trade = tradeMapper.selectByPrimaryKey(uid);
+            //log.error(trade.toString());
+            model.addAttribute("name_", trade.getName());
+            model.addAttribute("userId", trade.getUserId());
+            if (trade.getIsClique() == 1) { //跳转到总部企业
+                return "steel/clique-main";
+            }
+            return "trade/main";
+        }
         return "company/main";
     }
     /**
@@ -2641,10 +2652,8 @@ public class GlobalController extends BaseController {
         d = DateConvertUtil.formateDate(x, "yyyy-MM-dd");
         model.addAttribute("t", d.getTime());
         if (user.getUserType() == 5) {
-            // 表示等于5的话就将页面进行跳转
             return "global/company/danger/check-list";
         }
-        // TODO 找到这个界面
         return "global/company/checkModel/check-list";
     }
 
@@ -8401,6 +8410,14 @@ public class GlobalController extends BaseController {
         return "global/rescue/yjmanage_center";
     }
 
+    @RequestMapping(value = "/findOne")
+    public String findOne(Integer safetyStandardlistId, Model model, HttpServletRequest request) {
+
+        TSafetyStandard TSafetyStandard = tSafetyStandardMapper.findOne(safetyStandardlistId);
+        model.addAttribute("item", TSafetyStandard);
+        return "global/company/tables/tab-detail";
+    }
+
     /**
      * 查询该账号下基本信息
      * @param request
@@ -8449,7 +8466,7 @@ public class GlobalController extends BaseController {
         return result;
     }
     @RequestMapping(value = "/tab-biaozhunC")
-    public String findOneTwo(Integer safetyStandardlistId, Integer sort, Model model, HttpServletRequest request) {
+    public String findOneTwo(Integer safetyStandardlistId, Integer sort, Model model, HttpServletRequest request, Integer userId) {
         if (null == sort) {
             sort = 1;
         }
@@ -8459,7 +8476,8 @@ public class GlobalController extends BaseController {
         model.addAttribute("list", tSafetyStandard);
         model.addAttribute("parentId", safetyStandardlistId);
         model.addAttribute("sort", sort);
-        return "company/tables/tab-biaozhunC";
+        model.addAttribute("userId", userId);
+        return "global/company/tables/tab-biaozhunC";
     }
     /**
      * 根据条件查询安全生产标准化数据
@@ -8480,10 +8498,6 @@ public class GlobalController extends BaseController {
         map.put("flag", flag);
         List<TSafetyStandard> TSafetyStandardlist = tSafetyStandardMapper.findAll(map);
         // 判断是否有顺序,有书序就按照顺序来,没有就是倒序
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateTime=df.format(new Date());
-        System.out.println(dateTime+":"+parentId+":"+userId);
-        tSafetyStandardMapper.UpdateOperatorTime(dateTime, parentId, userId);
         model.addAttribute("sort", sort);
         model.addAttribute("companyName", companyMapper.selectByPrimaryKey(userId).getName());
         model.addAttribute("list", TSafetyStandardlist);
@@ -8493,7 +8507,7 @@ public class GlobalController extends BaseController {
     }
 
     @RequestMapping(value = "/findByParentId")
-    public String findByParentId(Integer safetyStandardlistId, Model model, Integer sort) {
+    public String findByParentId(Integer safetyStandardlistId, Model model, Integer sort, Integer userId) {
         if (null == sort) {
             sort = 1;
         }
@@ -8501,6 +8515,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("list", TSafetyStandard);
         model.addAttribute("parentId", safetyStandardlistId);
         model.addAttribute("sort", sort);
+        model.addAttribute("userId", userId);
         return "global/company/tables/tab-biaozhunB";
     }
 

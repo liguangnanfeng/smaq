@@ -5495,7 +5495,8 @@ public class SteelController extends BaseController {
     @SuppressWarnings("unchecked")
     @RequestMapping("source/company-map")
     public String coMap(Model model, HttpServletRequest request) throws Exception {
-
+        User user = getLoginUser(request);
+        List<Map<String, Object>> list = companyMapper.selectDangerCompanyByCliqu(user.getId());
         return null;
     }
 

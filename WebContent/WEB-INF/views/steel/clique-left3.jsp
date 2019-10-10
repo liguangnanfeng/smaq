@@ -218,6 +218,7 @@
                 <ul>
                     <li><a data-href="${ly }/company/threeLeft?leftBasic=11" data-title="在线检测" href="javascript:void(0)">在线检测</a></li>
                     <li><a data-href="${ly }/village/to_monitor-list?flag=1" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
+                    <li><a data-href="#" data-title="操作指南" href="javascript:void(0)">操作指南</a></li>
                     <li><a data-href="${ly }/company/system/change-psw" data-title="修改密码" href="javascript:void(0)">修改密码</a></li>
                     <li><a data-href="${ly }/company/system/change-userName" data-title="修改登录" href="javascript:void(0)">修改登录</a></li>
                 </ul>
@@ -266,7 +267,8 @@
       <ul>
       <li><a data-href="${ly }/steel/source/company-list2" data-title="全部企业" href="javascript:void(0)">全部企业</a></li>
       <li><a data-href="${ly }/village/company/zdlist?hazard=1" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
-      <li><a data-href="${ly }/global/source/company-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
+<%--      <li><a data-href="${ly }/global/source/company-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>--%>
+          <li><a data-href="${ly }/steel/source/company-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
       <li><a data-href="${ly }/villageAdd/source/danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>
       <li><a data-href="${ly }/village/to_monitor-list?flag=1" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
       <li><a data-href="${ly }/villageAdd/source/danger-chart" data-title="分类统计" href="javascript:void(0)">分类统计</a></li>

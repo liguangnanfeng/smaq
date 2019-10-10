@@ -196,4 +196,10 @@
         from t_safety_standard_tbl where userId=#{userId} and parentId= #{parentId} order by  oder asc,id asc;
     </select>
 
+    <update id="UpdateOperatorTime">
+        update t_safety_standard_tbl
+        set  operate_time = #{time}
+        where parentId = #{parentId} and userId = #{userId}
+    </update>
+
 </mapper>

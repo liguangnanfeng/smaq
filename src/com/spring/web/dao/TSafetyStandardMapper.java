@@ -4,6 +4,7 @@ import com.spring.web.model.TSafetyStandard;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +58,9 @@ public interface TSafetyStandardMapper {
      */
     void deleteTSafetyStandard(Integer safetyStandardlistId);
 
+
     List<TSafetyStandard> findAllByUserId(@Param("userId")Integer id,@Param("parentId") Integer parentId);
+
+    boolean UpdateOperatorTime(@Param("time") String date, @Param("parentId")Integer parentId, @Param("userId")Integer userId);//更新操作时间
 
 }

@@ -226,4 +226,6 @@ public interface CompanyMapper {
 
     Integer selectDangerBlue(@Param("industry")String industry, @Param("userIds")String userIds);
 
+    List<Map<String, Object>> selectDangerCompanyByCliqu(@Param("userId") Integer userId);
+
 }

@@ -8496,7 +8496,10 @@ public class GlobalController extends BaseController {
         map.put("flag", flag);
         List<TSafetyStandard> TSafetyStandardlist = tSafetyStandardMapper.findAll(map);
         // 判断是否有顺序,有书序就按照顺序来,没有就是倒序
-
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateTime=df.format(new Date());
+        System.out.println(dateTime+":"+parentId+":"+userId);
+        tSafetyStandardMapper.UpdateOperatorTime(dateTime, parentId, userId);
         model.addAttribute("sort", sort);
         model.addAttribute("companyName", companyMapper.selectByPrimaryKey(userId).getName());
         model.addAttribute("list", TSafetyStandardlist);

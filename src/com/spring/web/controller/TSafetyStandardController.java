@@ -37,12 +37,12 @@ public class TSafetyStandardController extends BaseController {
     /**
      * 根据条件查询安全生产标准化数据
      *
-     * @param parentId 父级id
+     * @param parendId 父级id
      * @param flag     1: A级  2: B级
      * @return
      */
     @RequestMapping(value = "/findAll")
-    public String findAll(Integer parentId, Integer flag, HttpServletRequest request, Model model, Integer sort) {
+    public String findAll(Integer parendId, Integer flag, HttpServletRequest request, Model model, Integer sort) {
         User user = getLoginUser(request);
         if (null == sort) {
             sort = 1;
@@ -50,11 +50,13 @@ public class TSafetyStandardController extends BaseController {
         HashMap<String, Object> map = new HashMap<>();
 
         map.put("userId", user.getId());
-        map.put("parentId", parentId);
+        map.put("parentId", parendId);
         map.put("flag", flag);
 
         List<TSafetyStandard> TSafetyStandardlist = tSafetyStandardMapper.findAll(map);
-
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateTime=df.format(new Date());
+        tSafetyStandardMapper.UpdateOperatorTime(dateTime, parendId, user.getId());
         // 判断是否有顺序,有书序就按照顺序来,没有就是倒序
         model.addAttribute("sort", sort);
         model.addAttribute("companyName", user.getUserName());

@@ -106,7 +106,7 @@ $(function() {
             html += "<td>"+list[i]['industry']+"</td>";//行业
             html += "<td class=dj"+i+">"+list[i]['dlevel']+"</td>";//标准化等级
             html += "<td>"+list[i]['time']+"</td>"; //操作时间
-            html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
+            html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parentId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
             html += '</tr>';
 
 
@@ -163,7 +163,7 @@ $(function() {
           html += "<td>"+list[i]['industry']+"</td>";//行业
           html += "<td class=dj"+i+">"+list[i]['dlevel']+"</td>";//标准化等级
           html += "<td>"+list[i]['time']+"</td>"; //操作时间
-          html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
+          html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parentId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
           html += '</tr>';
 
 
@@ -211,7 +211,7 @@ $(function() {
               html += "<td>"+list[i]['industry']+"</td>";//行业
               html += "<td class=dj"+i+">"+list[i]['dlevel']+"</td>";//标准化等级
               html += "<td>"+list[i]['time']+"</td>"; //操作时间
-              html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
+              html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parentId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
               html += '</tr>';
             }
 
@@ -260,7 +260,7 @@ $(function() {
             html += "<td>"+list[i]['industry']+"</td>";//行业
             html += "<td class=dj"+i+">"+list[i]['dlevel']+"</td>";//标准化等级
             html += "<td>"+list[i]['time']+"</td>"; //操作时间
-            html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parendId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
+            html += "<td>"+"<a style= 'text-decoration:none' href='${ly }/global/findAll?parentId=0&flag=1&userId="+list[i]['userId']+"' title='查看详情'>查看详情</a></td>";//查看详情
             html += '</tr>';
           }
           html += ' </tbody>\n' +

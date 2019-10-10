@@ -2560,7 +2560,15 @@ public class GlobalController extends BaseController {
         if (null == button){
             button = 1;
         }
-
+        if (null == title || title.length() == 0){
+            title = null;
+        }
+        if (null == dmName || dmName.length() == 0){
+            dmName = null;
+        }
+        if (null == companyName || companyName.length() == 0){
+            companyName = null;
+        }
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
         }

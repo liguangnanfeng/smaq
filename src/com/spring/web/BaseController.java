@@ -468,21 +468,24 @@ public class BaseController implements Serializable {
     }
 
     protected void setUserId2(User user, Map<String, Object> m) {
-        if (user.getUserType() == 4) {
+        if (user.getUserType() == 4) { // 村
             m.put("villageId", user.getId());
         }
         if (user.getUserType() == 5) {
             m.put("userId", user.getId());
         }
-        if (user.getUserType() == 3) {
+        if (user.getUserType() == 7) { // 市
+            m.put("userId", user.getId());
+        }
+        if (user.getUserType() == 3) { // 镇
             m.put("townId", user.getId());
         }
-        if (user.getUserType() == 6) {
+        if (user.getUserType() == 6) { //区
             m.put("districtId", user.getId());
         }
         if (user.getUserType() == 9) {
         }
-        if (user.getUserType() == 10) {
+        if (user.getUserType() == 10) { // 惠山化工
             m.put("tradeId", user.getId());
         }
     }

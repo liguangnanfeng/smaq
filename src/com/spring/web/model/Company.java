@@ -323,6 +323,8 @@ public class Company {
 
     private Integer isControls;
 
+    private Integer isIndustrys;
+
     public Integer getIsControls() {
         return isControls;
     }
@@ -331,11 +333,16 @@ public class Company {
         this.isControls = isControls;
     }
 
-    public Company(Integer isControls) {
-        this.isControls = isControls;
+    public Integer getIsIndustrys() {
+        return isIndustrys;
     }
 
-    public Company(Integer userId, Integer villageId, String name, String regType, String regType2, Integer regionId, String address, String legal, String legalContact, String capital, String establish, String business, String scope, String license, Integer regRegion, String authority, String economic, String fixed, Integer staff, String income, String industry, Integer danger, String dangers, Integer hazard, String dlevel, String charge, String chargeContact, String safety, String safetyContact, String safetyM, String safetyMContact, String duty, String postage, String email, String pic1, String pic2, Integer isKey, String industry2, String scale, String areaRange, Integer isControls) {
+    public void setIsIndustrys(Integer isIndustrys) {
+        this.isIndustrys = isIndustrys;
+    }
+
+
+    public Company(Integer userId, Integer villageId, String name, String regType, String regType2, Integer regionId, String address, String legal, String legalContact, String capital, String establish, String business, String scope, String license, Integer regRegion, String authority, String economic, String fixed, Integer staff, String income, String industry, Integer danger, String dangers, Integer hazard, String dlevel, String charge, String chargeContact, String safety, String safetyContact, String safetyM, String safetyMContact, String duty, String postage, String email, String pic1, String pic2, Integer isKey, String industry2, String scale, String areaRange, Integer isControls, Integer isIndustrys) {
         this.userId = userId;
         this.villageId = villageId;
         this.name = name;
@@ -377,6 +384,7 @@ public class Company {
         this.scale = scale;
         this.areaRange = areaRange;
         this.isControls = isControls;
+        this.isIndustrys = isIndustrys;
     }
 
     /**

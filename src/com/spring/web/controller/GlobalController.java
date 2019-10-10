@@ -1114,7 +1114,6 @@ public class GlobalController extends BaseController {
         if (null == list || list.size() == 0){
 
         }else {
-
             addFlag(user, list);
         }
         model.addAttribute("list",list);
@@ -1200,10 +1199,18 @@ public class GlobalController extends BaseController {
         Company company = new Company();
         company.setUserId(userId);
 
-        if (flag == 1){
-            company.setIsControls(user.getUserType());
-        }else if (flag == 0){
-            company.setIsControls(0);
+        if (user.getUserType() != 10){
+            if (flag == 1){
+                company.setIsControls(user.getUserType());
+            }else if (flag == 0){
+                company.setIsControls(0);
+            }
+        }else if (user.getUserType() == 10){
+            if (flag == 1){
+                company.setIsIndustrys(user.getUserType());
+            }else if (flag == 0){
+                company.setIsIndustrys(0);
+            }
         }
         companyMapper.updateByPrimaryKeySelective(company);
 

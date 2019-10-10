@@ -1949,7 +1949,7 @@ public class CompanyController_safety extends BaseController {
     @RequestMapping(value = "control-addCoordinate", method = RequestMethod.POST)
     @ResponseBody
     public Result selectCoordinate(HttpServletRequest request, Map<String, Object> map, Integer id, String images, String coordinate, String color) throws Exception {
-
+        log.error("王八碟111");
         String s ;
 
         // 数据解析
@@ -2033,7 +2033,9 @@ public class CompanyController_safety extends BaseController {
             importPhoto.setPhoto_color(color);
             importPhotoMapper.updateByInportPhoto(importPhoto);
 
-            result.setMess("编辑成功。");
+            log.error("王八碟");
+
+           result.setMess("编辑成功。");
 
         } catch (IOException e) {
             e.printStackTrace();

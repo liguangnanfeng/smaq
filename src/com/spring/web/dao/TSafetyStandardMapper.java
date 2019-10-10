@@ -61,6 +61,7 @@ public interface TSafetyStandardMapper {
 
     List<TSafetyStandard> findAllByUserId(@Param("userId")Integer id,@Param("parentId") Integer parentId);
 
-    boolean UpdateOperatorTime(@Param("time") String date, @Param("parentId")Integer parentId, @Param("userId")Integer userId);//更新操作时间
+
+    boolean UpdateOperatorTime(@Param("time") String date, @Param("id")Integer id);//更新操作时间
 
 }

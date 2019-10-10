@@ -102,7 +102,7 @@ $(function() {
           for(var i=0; i<list.length; i++){
             html += ' <tr class="text-c">';
             html += '<td>'+(i+1)+'</td>';//序号
-            html += '<td><span ondblclick="window.open(\'/fore/company?un='+list[i]['name']+'\')">'+list[i]['name']+'</span></td>';//企业名称
+            html += "<td><a href='/global/move/company?uid="+list[i]['userId']+"' target='_parent'>"+list[i]['name']+"</a></td>";//企业名称
             html += "<td>"+list[i]['industry']+"</td>";//行业
             html += "<td class=dj"+i+">"+list[i]['dlevel']+"</td>";//标准化等级
             html += "<td>"+list[i]['time']+"</td>"; //操作时间
@@ -159,7 +159,7 @@ $(function() {
         for(var i=0; i<list.length; i++){
           html += ' <tr class="text-c">';
           html += '<td>'+(i+1)+'</td>';//序号
-          html += "<td>"+list[i]['name']+"</td>";//企业名称
+          html += "<td><a href='/global/move/company?uid="+list[i]['userId']+"' target='_parent'>"+list[i]['name']+"</a></td>";//企业名称
           html += "<td>"+list[i]['industry']+"</td>";//行业
           html += "<td class=dj"+i+">"+list[i]['dlevel']+"</td>";//标准化等级
           html += "<td>"+list[i]['time']+"</td>"; //操作时间
@@ -207,7 +207,7 @@ $(function() {
             for(var i=0; i<list.length; i++){
               html += ' <tr class="text-c">';
               html += '<td>'+parseInt(10*currentPage+i+1)+'</td>';//序号
-              html += "<td>"+list[i]['name']+"</td>";//企业名称
+              html += "<td><a href='/global/move/company?uid="+list[i]['userId']+"' target='_parent'>"+list[i]['name']+"</a></td>";//企业名称
               html += "<td>"+list[i]['industry']+"</td>";//行业
               html += "<td class=dj"+i+">"+list[i]['dlevel']+"</td>";//标准化等级
               html += "<td>"+list[i]['time']+"</td>"; //操作时间
@@ -256,7 +256,7 @@ $(function() {
           for(var i=0; i<list.length; i++){
             html += ' <tr class="text-c">';
             html += '<td>'+parseInt(10*currentPage+i+1)+'</td>';//序号
-            html += "<td>"+list[i]['name']+"</td>";//企业名称
+            html += "<td><a href='/global/move/company?uid="+list[i]['userId']+"' target='_parent'>"+list[i]['name']+"</a></td>";//企业名称
             html += "<td>"+list[i]['industry']+"</td>";//行业
             html += "<td class=dj"+i+">"+list[i]['dlevel']+"</td>";//标准化等级
             html += "<td>"+list[i]['time']+"</td>"; //操作时间

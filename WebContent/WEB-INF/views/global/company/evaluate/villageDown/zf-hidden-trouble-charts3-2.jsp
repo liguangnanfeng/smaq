@@ -182,25 +182,25 @@
         <td rowspan="2">同比</td>
         </tr>
         <tr style="background-color: #F5F9FE;    font-weight: bold;">
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
-        <td>频次</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
+            <td>数量</td>
         <script>
         console.log('[{sum10=0, sum11=0, sum12=0, sum13=0, sum14=0, result14=0.00%, result3=0.00%, result4=0.00%, result1=0.00%, result2=0.00%, result9=0.00%, result7=0.00%, result8=0.00%, result5=0.00%, result6=0.00%, result13=0.00%, result12=0.00%, result11=0.00%, result10=0.00%, sum2=0, sum1=0, sum4=0, sum3=0, sum6=0, sum5=0, sum8=0, sum7=0, sum9=0}]');
         window.a = 0;

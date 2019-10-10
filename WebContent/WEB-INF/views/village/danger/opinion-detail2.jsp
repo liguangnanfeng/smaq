@@ -56,7 +56,10 @@ function pr_() {
             </c:choose>
             
         </div>
-        
+        <script>
+    console.log('document.flag')
+    console.log('${document.flag}')
+    </script>
         <c:if test="${document.flag == 1 || document.flag == 2 || document.flag == 8}">
         
             <div class="row cl mb-20">
@@ -66,10 +69,14 @@ function pr_() {
                   <a class="current" href='/village/check-document?checkId=${document.checkId}&flag=8'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
               </c:when>
                   <c:when test="${document.flag == 1}">
-<%--                      <a class="current" href='/village/check-document?checkId=${document.checkId}&flag=8'>&lt;%&ndash; ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} &ndash;%&gt;现场检查记录</a>--%>
+
+                      <a  href='/village/check-document?checkId=${document.checkId}&flag=8'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
+
                   </c:when>
                 <c:otherwise>
-                  <a href='/village/check-document?checkId=${document.checkId}&flag=8'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
+
+                    <a href='/village/check-document?checkId=${document.checkId}&flag=8'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
+
                 </c:otherwise>
                </c:choose>
                 <%-- <c:if test="${document.flag2 != 3}"> --%>

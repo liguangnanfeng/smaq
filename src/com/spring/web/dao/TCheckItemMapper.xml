@@ -3447,6 +3447,34 @@
     </select>
 
 
+
+    <select id="findNumbers" parameterType="Integer" resultType="java.util.Map">
+        SELECT * FROM company_view c1
+        RIGHT JOIN t_check_tbl t1 ON c1.user_id = t1.user_id
+        <where>
+            <if test="type==6">
+                c1.district_id = #{userId}
+            </if>
+            <if test="type==3">
+                c1.town_id = #{userId}
+            </if>
+            <if test="type==4">
+                c1.village_id = #{userId}
+            </if>
+            <if test="type==10">
+                c1.user_id IN ( SELECT uid FROM trade_company_tbl WHERE tid =
+                #{userId}
+                )
+            </if>
+            AND c1.user_id not IN (789,791,793,795,790,792,794,796)
+            AND c1.is_del = 0
+        </where>
+        GROUP BY t1.user_id
+    </select>
+
+
+
+
     <select id="findCompany" parameterType="Integer" resultType="java.util.Map">
         SELECT
             a1.name,

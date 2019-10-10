@@ -132,6 +132,8 @@ public interface TCheckMapper {
 
     Integer dataTotalCounts(@Param("user_id")Integer user_id);
 
+    Integer dataTotalZhengfu(@Param("userIds")String userIds);
+
     Integer dataTotalCountsByCliqu(@Param("user_id")String user_id);
 
     Integer selectAllUsers(@Param("userId")Integer userId, @Param("depart")String depart);

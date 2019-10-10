@@ -366,6 +366,8 @@ public interface TCheckItemMapper {
 
     List<Map<String,Object>> findALL(@Param("userId")Integer userId, @Param("type")Integer type);
 
+    List<Map<String,Object>> findNumbers(@Param("userId")Integer userId, @Param("type")Integer type);
+
     List<Map<String,Object>> findCompany(@Param("userId")Integer userId, @Param("type")Integer type);
 
     List<Map<String, Object>> selectBasicMessage(@Param("userId") Integer userId, @Param("type") Integer type, @Param("start") Integer start);

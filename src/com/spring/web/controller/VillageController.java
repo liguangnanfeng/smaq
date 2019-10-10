@@ -1232,11 +1232,11 @@ public class VillageController extends BaseController {
             }else if (button != 1) {
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 String startTime = df.format(new Date().getTime()-15*24*60*60*1000);
-
                 Date startTime1 = df.parse(startTime);
                 Date endTime = new Date();
                 m.put("startTime",startTime);
                 m.put("endTime",endTime);
+                m.put("flag",1);
                 m.put("type",2);
                 list = tCheckMapper.findSelectList(m);
             }

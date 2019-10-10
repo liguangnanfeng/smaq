@@ -1199,7 +1199,7 @@ public class VillageController extends BaseController {
         if (null == button){
             button = 1;
         }
-
+        model.addAttribute("button",button);
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
         }
@@ -2197,7 +2197,7 @@ public class VillageController extends BaseController {
         }else {
             breaken = 2;
         }
-
+        model.addAttribute("breaken",breaken);
         List<Map> list = new ArrayList<>();
         if (flag == 1) {
 

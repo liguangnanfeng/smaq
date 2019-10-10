@@ -2600,11 +2600,11 @@ public class GlobalController extends BaseController {
             }else if (button != 1) {
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 String startTime = df.format(new Date().getTime()-15*24*60*60*1000);
-
                 Date startTime1 = df.parse(startTime);
                 Date endTime = new Date();
                 m.put("startTime",startTime);
                 m.put("endTime",endTime);
+                m.put("flag",1);
                 m.put("type",2);
                 list = tCheckMapper.findSelectList(m);
             }
@@ -2654,6 +2654,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("set",set);
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
+        model.addAttribute("button", button);
         model.addAttribute("companyName", companyName);
         model.addAttribute("title", title);
         model.addAttribute("status", status);
@@ -4818,7 +4819,6 @@ public class GlobalController extends BaseController {
         }
         Integer counts1 = tCheckItemMapper.findAllCounte(sb.toString()); // 治理数据*/
         List<Map<String, Object>> list = tCheckItemMapper.findNumbers(user.getId(),user.getUserType());
-
         model.addAttribute("list",list);
         //model.addAttribute("count", counts1);
         model.addAttribute("flag",flag);
@@ -4953,6 +4953,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("companyName", user.getUserName());
         model.addAttribute("host", host);
         model.addAttribute("list", list);
+        model.addAttribute("breaken", breaken);
 
         return "global/company/danger/hidden-danger-list";
     }

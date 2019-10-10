@@ -993,7 +993,7 @@
        FROM
        t_check_tbl
        WHERE
-       del = 0 AND status = 1 AND type = 2
+       del = 0 AND status = 1 AND type = 2 AND flag = 1
        AND create_time BETWEEN #{startTime} AND #{endTime}
        AND user_id in (${userIds})
     </select>

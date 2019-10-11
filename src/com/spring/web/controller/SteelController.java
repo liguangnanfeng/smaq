@@ -1164,12 +1164,12 @@ public class SteelController extends BaseController {
         }
         List<Map> list = new ArrayList<>();
         if (flag == 1) {
-            if(35346 == user.getId()){
+            /*if(35346 == user.getId()){
                 list = tCheckItemMapper.selectListBystatus2(user.getId(), flag, breaken);
             }else {
                 list = tCheckItemMapper.selectListBystatus(user.getId(), flag, breaken);
-            }
-            //list = tCheckItemMapper.selectListBystatus2(userId, flag, breaken);
+            }*/
+            list = tCheckItemMapper.selectListBystatus2(user.getId(), flag, breaken);
             for (Map map : list) {
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");

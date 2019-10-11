@@ -33,13 +33,9 @@
         var dmName = $("[name='dmName']").val();
         alert(dmName);
         $.ajax({
-
                 url:"${ly }/village/check-list",
-
             }
         )
-
-
     }
 
     /*删除*/
@@ -65,33 +61,21 @@
     <c:if test="${flag == 2}">
         <span class="c-gray en">&gt;</span> <span>执法记录</span>
     </c:if>
-    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="javascript:history.go(-1)" title="返回">返回</a>
+    <a onclick="back()" class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="#" title="返回">返回</a>
 
 </nav>
 <div class="page-container">
 
-    <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
+    <div id="spTab" class="btn-group www" style="text-align: center;margin-bottom: 20px;">
         <a id="abtn1" class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}" href="${ly }/global/check-list?flag=1&status=2&uid=${uid}">企业自查</a>
         <a id="abtn2" class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/global/check-list?flag=2&status=2&uid=${uid}">行政检查</a>
         <a id="abtn3" class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}" href="${ly }/global/check-list?flag=3&status=2&uid=${uid}">第三方检查</a>
         <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
     </div>
 
-    <script>
-    window.onload=()=>{
-    let searchURL = window.location.search;
-    searchURL = searchURL.substring(1, searchURL.length);
-    var t = searchURL.split("&")[8].split("=")[1];
-    console.log('t:',t)
-    if(t==2){
-    $("#abtn1").attr("href","${ly }/global/check-list?flag=1&status=2&uid=${uid}&button=2")
-    $("#abtn2").attr("href","${ly }/global/check-list?flag=2&status=2&uid=${uid}&button=2")
-    $("#abtn3").attr("href","${ly }/global/check-list?flag=3&status=2&uid=${uid}&button=2")
-    }
-    }
-    </script>
 
-    <div class="text-c">
+
+    <div class="text-c www">
         <form action="${ly }/village/check-list?flag=${flag}" method="post">
             <div class="dis-ib">
                 <span>检查表名称：</span>
@@ -102,6 +86,18 @@
             </button>
         </form>
     </div>
+    <script>
+    let searchURL = window.location.search;
+    searchURL = searchURL.substring(1, searchURL.length);
+    var t = searchURL.split("&")[8].split("=")[1];
+    console.log('t:',t)
+    if(t==2){
+    $(".www").hide()
+    <%--    $("#abtn1").attr("href","${ly }/global/check-list?flag=1&status=2&uid=${uid}&button=2")--%>
+    <%--    $("#abtn2").attr("href","${ly }/global/check-list?flag=2&status=2&uid=${uid}&button=2")--%>
+    <%--    $("#abtn3").attr("href","${ly }/global/check-list?flag=3&status=2&uid=${uid}&button=2")--%>
+    }
+    </script>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
       <span class="l">
       <!--   <c:if test="${flag == 2}">

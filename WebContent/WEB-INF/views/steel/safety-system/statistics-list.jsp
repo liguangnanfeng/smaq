@@ -153,8 +153,8 @@ var chart = Highcharts.chart('container', {
       data: [
           {name:'重大风险',y:${flag1[0]} ,url:'http://www.baidu.com'},
           {name:'较大风险',y:${flag1[1]} ,url:'http://www.baidu.com'},
-          {name:'一般风险',y:${flag1[2]} ,url:'http://www.baidu.com'},
-          {name:'较低风险',y:${flag1[3]} ,url:'http://www.baidu.com'}
+          {name:'一般和较低风险',y:${flag1[2]} ,url:'http://www.baidu.com'},
+          {name:'低风险',y:${flag1[3]} ,url:'http://www.baidu.com'}
       ]
   }]
 });

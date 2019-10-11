@@ -27,7 +27,7 @@
         <c:if test="${flag == 2}">
             <span class="c-gray en">&gt;</span> <span>执法记录</span>
         </c:if>
-        <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="javascript:history.go(-1)" title="返回">返回</a>
+<%--        <a onclick="back()" class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="#" title="返回">返回</a>--%>
 
         </nav>
         <div class="page-container">
@@ -75,7 +75,7 @@
             onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加线下检查记录</a>
         </c:if>  -->
         </span>
-        <span class="r">共有数据：<strong>${fn:length(map) }</strong> 条</span>
+        <span class="r">共有企业：<strong>${fn:length(list) }</strong> 家</span>
         </div>
         <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -116,7 +116,7 @@
             <td>${be.industry2 }</td>
             <td>${be.dlevel }</td>
             <td>${be.regionName} ${be.address }</td>
-            <td>${be.scale}</td>
+            <td>${be.reg_type}</td>
             <c:if test="${0 == be.count }">
                     <td>未运行</td>
             </c:if>

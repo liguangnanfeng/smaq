@@ -8209,7 +8209,7 @@ public class GlobalController extends BaseController {
             }
 
         }
-
+        System.out.println(sb.toString());
         String string = "化工,冶金,有色,建材,机械,轻工,纺织,商贸,烟花,其他";
 
         String[] strs = string.split(",");

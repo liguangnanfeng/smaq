@@ -44,7 +44,14 @@ function addyan1(){
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>
     </a>
-  <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
+  <a onclick="back()" class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="#" title="返回">返回</a>
+  <script>
+  function aback(){
+    let index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+     parent.layer.close(index); //再执行关闭
+    console.log('index:',index)
+  }
+  </script>
   </nav>
 <div class="page-container">
     <div class="HuiTab">

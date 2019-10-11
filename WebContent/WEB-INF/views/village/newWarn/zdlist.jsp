@@ -33,9 +33,9 @@ body .dis-ib{margin-right:15px;}
 <body>
 <c:if test="${yzz != 1 }">
   <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-    <span class="c-gray en">&gt;</span> <span>安全监管</span> 
-    <span class="c-gray en">&gt;</span> <span>重大危险源</span> 
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+    <span class="c-gray en">&gt;</span> <span>安全监管</span>
+    <span class="c-gray en">&gt;</span> <span>重大危险源</span>
     <%--<c:if test="${not empty from && from == '1' }">--%>
     	<%--<a class="btn btn-success radius r" style="line-height: 1.6em;    margin-left: 10px; margin-top: 3px" href="${ly }/village/company/toZdCompanyList" title="返回">--%>
     		<%--返回--%>
@@ -44,15 +44,15 @@ body .dis-ib{margin-right:15px;}
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>
     </a>
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
+    <a onclick="back()" class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:void(0)" title="返回">返回</a>
   </nav>
 </c:if>
 <c:if test="${yzz == 1 }">
   <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-    <span class="c-gray en">&gt;</span> <span>重大危险源源长制</span> 
-    <span class="c-gray en">&gt;</span> <span>管控措施</span> 
-    <span class="c-gray en">&gt;</span> <span>在线监测</span> 
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+    <span class="c-gray en">&gt;</span> <span>重大危险源源长制</span>
+    <span class="c-gray en">&gt;</span> <span>管控措施</span>
+    <span class="c-gray en">&gt;</span> <span>在线监测</span>
     <span class="c-gray en">&gt;</span> <span>报警栏信息</span>
     <%--<c:if test="${not empty from && from == '1' }">--%>
     	<%--<a class="btn btn-success radius r" style="line-height: 1.6em;    margin-left: 10px; margin-top: 3px" href="${ly }/village/company/toZdCompanyList" title="返回">--%>
@@ -62,11 +62,12 @@ body .dis-ib{margin-right:15px;}
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>
     </a>
-    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:history.back(-1)" title="返回">返回</a>
+    <a onclick="back()" class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:void(0)" title="返回">返回</a>
+
   </nav>
 </c:if>
   <div class="page-container">
-  
+
   	<div class="text-c">
      <%--  <form action="${ly }/village/company/company-list-zg?hazard=1" method="post"> --%>
         <div class="dis-ib">
@@ -84,7 +85,7 @@ body .dis-ib{margin-right:15px;}
         </button> -->
       <!-- </form> -->
     </div>
-    
+
     <div class="text-c" style="display:none;">
      <%--  <form action="${ly }/village/company/company-list-zg?hazard=1" method="post"> --%>
         <div class="dis-ib">

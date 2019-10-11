@@ -148,7 +148,7 @@ function showping(){
   <font class="font_tx1 pos-a <c:if test="${count[1]+count[2] +count[3] >0}">blink</c:if>">${count[1]+count[2] +count[3]  }</font>
   <font class="font_tx2 pos-a">检测检验</font>
   </a>
-  <a class="one_tx radius pos-r" data-title="隐患排查" data-href="/steel/check-list?flag=1&status=2&userId=35346" onclick="Hui_admin_tab(this)" style="background:#ea4f21;margin-right:2%;margin-left:1%">
+  <a class="one_tx radius pos-r" data-title="隐患排查" data-href="/steel/check-list?flag=1&status=2&button=2" onclick="Hui_admin_tab(this)" style="background:#ea4f21;margin-right:2%;margin-left:1%">
   <img alt="" src="${ly }/images/httb9.png"/>
   <font class="font_tx1 pos-a <c:if test="${counts >0}">blink</c:if>">${counts}</font>
   <font class="font_tx2 pos-a">隐患排查</font>

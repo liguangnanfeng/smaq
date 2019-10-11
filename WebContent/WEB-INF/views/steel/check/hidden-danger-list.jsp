@@ -202,7 +202,7 @@
                         <td>${item[1]}</td>
                     </c:if>
                     <c:if test="${empty list.level2}">
-                        <td>暂无数据</td>
+                        <td>暂无数据2</td>
                     </c:if>
                     <c:if test="${not empty list.level2}">
                         <td>${list.level2 }</td>

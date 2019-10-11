@@ -1223,7 +1223,6 @@ public class VillageController extends BaseController {
         }
         // 进行判断
         if (setUserId(user, m)) {
-            System.out.println(m);
             clearVillageTown(m);
             List<Map<String, Object>> list = null;
 
@@ -1777,7 +1776,6 @@ public class VillageController extends BaseController {
             model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(checkId, null));
             model.addAttribute("itemL1", tCheckItemMapper.selectDangerByCheckId(checkId, 1));
             model.addAttribute("document", doc);
-            System.out.println("village/danger/opinion-detail2");
             return "village/danger/opinion-detail2";
         }
         List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(checkId);

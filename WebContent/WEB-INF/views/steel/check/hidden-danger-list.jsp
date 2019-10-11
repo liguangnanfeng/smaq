@@ -69,7 +69,7 @@
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
     <span class="c-gray en">&gt;</span> <span>隐患统计分析系统</span>
     <span class="c-gray en">&gt;</span> <span>隐患治理记录</span>
-    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="javascript:history.go(-1)" title="返回">返回</a>
+    <a onclick="back()" class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:void(0)" title="返回">返回</a>
 
     </nav>
 <div class="page-container">
@@ -244,10 +244,10 @@
                          console.log("${list}")
                         </script>
                             <c:choose>
-                                <c:when test="${list.level =='红色'}"><font class="col-a">一级</font></c:when>
-                                <c:when test="${list.level == '橙色'}"><font class="col-b">二级</font></c:when>
-                                <c:when test="${list.level == '黄色'}"><font class="col-c">三级</font></c:when>
-                                <c:when test="${list.level == '蓝色'}"><font class="col-d">三级</font></c:when>
+                                <c:when test="${list.level =='红色'}"><font class="col-a">重大风险</font></c:when>
+                                <c:when test="${list.level == '橙色'}"><font class="col-b">较大风险</font></c:when>
+                                <c:when test="${list.level == '黄色'}"><font class="col-c">一般和较低风险</font></c:when>
+                                <c:when test="${list.level == '蓝色'}"><font class="col-d">低风险</font></c:when>
                             </c:choose>
                         </td>
                     </c:if>

@@ -77,9 +77,9 @@
     <c:if test="${flag == 2}">
         <span class="c-gray en">&gt;</span> <span>执法记录</span>
     </c:if>
-    <a onclick="back()" class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href=" " title="返回">返回</a>
+    <a onclick="back()" class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:void(0)" title="返回">返回</a>
 
-</nav>
+    </nav>
 <div class="page-container">
 
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">

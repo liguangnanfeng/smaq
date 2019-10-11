@@ -1316,7 +1316,6 @@
         AND t1. status = #{status}
         AND t2.user_id in (${user_ids})
         AND t3.flag = #{flag}
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1334,7 +1333,6 @@
         AND t1. status = #{status}
         AND t2.user_id in (${user_ids})
         AND t3.flag = #{flag}
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1351,7 +1349,6 @@
         AND t1. status = #{status}
         AND t2.user_id in (${user_ids})
         AND t3.flag = #{flag}
-        AND t1.recheck_file != ''
     </select>
 
     <select id="manageBasicsHiddenCompany" resultType="Integer">
@@ -1367,7 +1364,6 @@
         AND t1. status = #{status}
         AND t2.user_id in (${user_ids})
         AND t3.flag = #{flag}
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1384,7 +1380,6 @@
         AND t1. status = #{status}
         AND t2.user_id in (${user_ids})
         AND t3.flag = #{flag}
-        AND t1.recheck_file != ''
     </select>
 
     <select id="manageHiddenBasic" resultType="Integer">
@@ -1400,7 +1395,6 @@
         AND t1. status = #{status}
         AND t2.user_id in (${user_ids})
         AND t3.flag = #{flag}
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1419,7 +1413,6 @@
         AND t1. status = #{status}
         AND t2.user_id = #{user_id}
         AND t3.flag = #{flag}
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1436,7 +1429,6 @@
         AND t1. status = #{status}
         AND t2.user_id = #{user_id}
         AND t3.flag = #{flag}
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1453,7 +1445,6 @@
         AND t1. status = #{status}
         AND t2.user_id = #{user_id}
         AND t3.flag = #{flag}
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1471,7 +1462,6 @@
         AND t1. status = #{status}
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1489,7 +1479,6 @@
         AND t1. status = #{status}
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1507,7 +1496,6 @@
         AND t1. status = #{status}
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1526,7 +1514,6 @@
         AND t1. status = #{status}
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1545,7 +1532,6 @@
         AND (t3.control in (${controls}) OR t3.control is null)
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1563,7 +1549,6 @@
         AND (t3.control in (${controls}) OR t3.control is null)
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1580,7 +1565,6 @@
         AND t1. status = #{status}
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1593,7 +1577,7 @@
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
-        LEFT JOIN smaq.company_view c1 ON c1.user_id = t3.uid
+        LEFT JOIN smaq.company_tbl c1 ON c1.user_id = t3.uid
         WHERE
             t2. status = 2
         AND t2.del = 0
@@ -1601,7 +1585,6 @@
         AND c1.industry like CONCAT('%',#{industry},'%')
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1612,7 +1595,7 @@
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND (t1.levels like "%现场%" OR t1.levels like "%高危%")
-        LEFT JOIN smaq.company_view c1 ON c1.user_id = t2.user_id
+        LEFT JOIN smaq.company_tbl c1 ON c1.user_id = t2.user_id
         WHERE
         t2. status = 2
         AND t2.del = 0
@@ -1620,7 +1603,6 @@
         AND c1.industry like CONCAT('%',#{industry},'%')
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1632,7 +1614,7 @@
         smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
-        LEFT JOIN smaq.company_view c1 ON c1.user_id = t2.user_id
+        LEFT JOIN smaq.company_tbl c1 ON c1.user_id = t2.user_id
         WHERE
         t2. status = 2
         AND t2.del = 0
@@ -1640,7 +1622,6 @@
         AND c1.industry like CONCAT('%',#{industry},'%')
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1653,7 +1634,7 @@
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
-        LEFT JOIN smaq.company_view c1 ON c1.user_id = t3.uid
+        LEFT JOIN smaq.company_tbl c1 ON c1.user_id = t3.uid
         WHERE
             t2. status = 2
         AND t2.del = 0
@@ -1661,7 +1642,6 @@
         AND c1.industry is null
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1673,7 +1653,7 @@
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         LEFT JOIN smaq.a_company_manual_tbl t3 ON t1.level_id = t3.id
-        LEFT JOIN smaq.company_view c1 ON c1.user_id = t3.uid
+        LEFT JOIN smaq.company_tbl c1 ON c1.user_id = t3.uid
         WHERE
             t2. status = 2
         AND t2.del = 0
@@ -1682,7 +1662,6 @@
                OR c1.industry like "%轻工%" OR c1.industry like "%纺织%" OR c1.industry like "%商贸%" OR c1.industry like "%烟花%" OR c1.industry is null)
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1693,7 +1672,7 @@
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         RIGHT JOIN a_danger_manual_tbl t3 ON t1.level_id = t3.id AND (t1.levels like "%现场%" OR t1.levels like "%高危%")
-        LEFT JOIN smaq.company_view c1 ON c1.user_id = t2.user_id
+        LEFT JOIN smaq.company_tbl c1 ON c1.user_id = t2.user_id
         WHERE
             t2. status = 2
         AND t2.del = 0
@@ -1702,7 +1681,6 @@
                OR c1.industry like "%轻工%" OR c1.industry like "%纺织%" OR c1.industry like "%商贸%" OR c1.industry like "%烟花%" OR c1.industry is null)
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1714,7 +1692,7 @@
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
         RIGHT JOIN t_level_tbl t3 ON t1.level_id = t3.id AND t1.levels like "%基础%"
-        LEFT JOIN smaq.company_view c1 ON c1.user_id = t2.user_id
+        LEFT JOIN smaq.company_tbl c1 ON c1.user_id = t2.user_id
         WHERE
             t2. status = 2
         AND t2.del = 0
@@ -1723,7 +1701,6 @@
                OR c1.industry like "%轻工%" OR c1.industry like "%纺织%" OR c1.industry like "%商贸%" OR c1.industry like "%烟花%" OR c1.industry is null)
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1743,7 +1720,6 @@
         AND t2.user_id = #{user_id}
         AND t3.flag = #{flag}
         AND t2.depart != #{depart}
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1761,7 +1737,6 @@
         AND t2.user_id = #{user_id}
         AND t2.depart = #{depart}
         AND t3.flag = #{flag}
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1779,7 +1754,6 @@
         AND t2.user_id = #{user_id}
         AND t2.depart = #{depart}
         AND t3.flag = #{flag}
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -1797,7 +1771,6 @@
         AND t1.status = 3
         AND t2.user_id in (${user_id})
         AND t3.flag = #{flag}
-        AND t1.recheck_file != ''
     </select>
 
 
@@ -3146,7 +3119,6 @@
     -->
     <select id="selectRecheckFileByMap" resultType="com.spring.web.ibatis.DynamicParameter"
             parameterType="java.util.Map">
-
         select DATE_FORMAT(t2.real_time, '%Y-%m') time,
         sum(case t1.status when 3 then 1 else 0 end ) a,
         sum(case t1.status when 2 then 1 else 0 end ) b
@@ -3162,15 +3134,14 @@
             <if test="flag !=null">
                 and t3.flag=#{flag}
             </if>
-
             <if test="depart !=null">
                 and t2.depart = #{depart}
             </if>
-
-            and t1.recheck_file != ''
         </where>
         group by time;
     </select>
+
+
     <!--   排查数据分析之隐患类型   -->
     <select id="selectHiddenDangerTypeByMap" resultType="com.spring.web.ibatis.DynamicParameter"
             parameterType="java.util.Map">
@@ -3386,7 +3357,6 @@
         AND t1.status = 2
         AND t1. status = 2
         AND t3.flag = #{flag}
-        AND t1.recheck_file != ''
         <if test="type!=9">
             <if test="type==6">
                 AND t4.district_id = #{userId}
@@ -3870,7 +3840,6 @@
         AND t2.del = 0
         AND t1.status = 2
         AND t1. status = 2
-        AND t1.recheck_file != ''
         <if test="type==6">
             AND t4.district_id = #{userId}
         </if>

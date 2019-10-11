@@ -794,6 +794,17 @@
         AND t2.user_id = #{user_id}
     </select>
 
+    <select id="dataTotalZhengfu" resultType="Integer">
+        SELECT
+            count(*)
+        FROM
+            t_check_tbl t2
+        WHERE
+            t2.status = 2
+        AND t2.del = 0
+        AND t2.user_id in (${userIds})
+    </select>
+
     <select id="dataTotalCountsByCliqu" resultType="Integer">
         SELECT
             count(*)
@@ -1009,7 +1020,7 @@
        FROM
        t_check_tbl
        WHERE
-       del = 0 AND status = 1 AND type = 2
+       del = 0 AND status = 1 AND type = 2 AND flag = 1
        AND create_time BETWEEN #{startTime} AND #{endTime}
        AND user_id in (${userIds})
     </select>

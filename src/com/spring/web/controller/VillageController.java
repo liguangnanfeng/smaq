@@ -1199,7 +1199,7 @@ public class VillageController extends BaseController {
         if (null == button){
             button = 1;
         }
-
+        model.addAttribute("button",button);
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
         }
@@ -1231,11 +1231,11 @@ public class VillageController extends BaseController {
             }else if (button != 1) {
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 String startTime = df.format(new Date().getTime()-15*24*60*60*1000);
-
                 Date startTime1 = df.parse(startTime);
                 Date endTime = new Date();
                 m.put("startTime",startTime);
                 m.put("endTime",endTime);
+                m.put("flag",1);
                 m.put("type",2);
                 list = tCheckMapper.findSelectList(m);
             }
@@ -2195,7 +2195,7 @@ public class VillageController extends BaseController {
         }else {
             breaken = 2;
         }
-
+        model.addAttribute("breaken",breaken);
         List<Map> list = new ArrayList<>();
         if (flag == 1) {
 

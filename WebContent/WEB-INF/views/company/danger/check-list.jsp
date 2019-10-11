@@ -76,17 +76,24 @@
         <%-- <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}" href="${ly }/village/check-list?flag=2">执法检查</a> --%>
     </div>
     <script>
+    $(function () {
     let searchURL = window.location.search;
     searchURL = searchURL.substring(1, searchURL.length);
     substring = "button";
     let b= searchURL.includes(substring);   // true
+    console.log(b)
     if(b){
-    $("#check1").attr("href","/village/check-list?flag=1&status=2&button=2");
-    $("#check2").attr("href","/village/check-list?flag=2&status=2&button=2");
-    $("#check3").attr("href","/village/check-list?flag=3&status=2&button=2")
+    <%--    $("#check1").attr("href","/village/check-list?flag=1&status=2&button=2");--%>
+    <%--    $("#check2").attr("href","/village/check-list?flag=2&status=2&button=2");--%>
+    <%--    $("#check3").attr("href","/village/check-list?flag=3&status=2&button=2");--%>
+    console.log('hello!')
+    $("#spTab").hide();
+    $("#text-c").hide();
+
     }
+    });
     </script>
-    <div class="text-c">
+    <div class="text-c" id="text-c">
         <form action="${ly }/village/check-list?flag=${flag}" method="post">
             <div class="dis-ib">
                 <span>检查表名称：</span>
@@ -308,6 +315,7 @@
                         </c:if>
 
                         <c:if test="${flag!=1}">
+
                             <a style="text-decoration:none"
                                onClick="location.href = '/village/check-document?checkId=${be.id}'" href="javascript:;">文书详情</a><br>
                         </c:if>

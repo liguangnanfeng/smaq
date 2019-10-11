@@ -2521,7 +2521,7 @@ public class GlobalController extends BaseController {
                                Integer status, Integer flag, Model model,String dmName,Integer button) throws Exception {
 
         User user = getLoginUser(request);
-        List<Map<String, Object>> list = tCheckItemMapper.findALL(user.getId(),user.getUserType());
+        List<Map<String, Object>> list = tCheckItemMapper.findNumbers(user.getId(),user.getUserType());
 
         model.addAttribute("list",list);
         model.addAttribute("flag",flag);
@@ -2550,12 +2550,25 @@ public class GlobalController extends BaseController {
                                Integer townId, Integer villageId,
                                Integer status, Integer flag, Model model,String dmName,Integer uid,Integer button) throws Exception {
 
-        User user = userMapper.selectByPrimaryKey(uid);
+        User user = null;
+        if (null == uid){
+            user = getLoginUser(request);
+        }else if (null != uid){
+            user = userMapper.selectByPrimaryKey(uid);
+        }
         Map<String, Object> m = new HashMap<String, Object>();
         if (null == button){
             button = 1;
         }
-
+        if (null == title || title.length() == 0){
+            title = null;
+        }
+        if (null == dmName || dmName.length() == 0){
+            dmName = null;
+        }
+        if (null == companyName || companyName.length() == 0){
+            companyName = null;
+        }
         if (user.getUserType() == 3) {//镇
             model.addAttribute("villageL", villageMapper.selectListByTown(m));
         }
@@ -2587,16 +2600,14 @@ public class GlobalController extends BaseController {
             }else if (button != 1) {
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 String startTime = df.format(new Date().getTime()-15*24*60*60*1000);
-
                 Date startTime1 = df.parse(startTime);
                 Date endTime = new Date();
                 m.put("startTime",startTime);
                 m.put("endTime",endTime);
+                m.put("flag",1);
                 m.put("type",2);
                 list = tCheckMapper.findSelectList(m);
             }
-
-
 
             Integer sum = 0;
             for (int i = 0; i < list.size(); i++) {
@@ -2643,6 +2654,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("set",set);
         model.addAttribute("type", type);
         model.addAttribute("flag", flag);
+        model.addAttribute("button", button);
         model.addAttribute("companyName", companyName);
         model.addAttribute("title", title);
         model.addAttribute("status", status);
@@ -2812,7 +2824,13 @@ public class GlobalController extends BaseController {
     @RequestMapping("danger/opinion-list")
     public String opinionList(Model model, String companyName, HttpServletRequest request, Integer type, Integer flag2, Integer uid)
             throws Exception {
-        User user = userMapper.selectByPrimaryKey(uid);
+
+        User user = null;
+        if (null == uid){
+            user = getLoginUser(request);
+        }else if (null != uid){
+            user = userMapper.selectByPrimaryKey(uid);
+        }
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
         m.put("companyName", companyName);
@@ -3574,7 +3592,12 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping("danger/opinion-detail")
     public String opinionDetail(Model model, HttpServletRequest request, Integer id, Integer uid) throws Exception {
-        User user = userMapper.selectByPrimaryKey(uid);
+        User user = null;
+        if (null == uid){
+            user = getLoginUser(request);
+        }else if (null != uid){
+            user = userMapper.selectByPrimaryKey(uid);
+        }
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("userId", user.getId());
         TCheckDocument d = tCheckDocumentMapper.selectByPrimaryKey(id);
@@ -4795,8 +4818,7 @@ public class GlobalController extends BaseController {
             }
         }
         Integer counts1 = tCheckItemMapper.findAllCounte(sb.toString()); // 治理数据*/
-        List<Map<String, Object>> list = tCheckItemMapper.findALL(user.getId(),user.getUserType());
-
+        List<Map<String, Object>> list = tCheckItemMapper.findNumbers(user.getId(),user.getUserType());
         model.addAttribute("list",list);
         //model.addAttribute("count", counts1);
         model.addAttribute("flag",flag);
@@ -4931,6 +4953,7 @@ public class GlobalController extends BaseController {
         model.addAttribute("companyName", user.getUserName());
         model.addAttribute("host", host);
         model.addAttribute("list", list);
+        model.addAttribute("breaken", breaken);
 
         return "global/company/danger/hidden-danger-list";
     }
@@ -4947,9 +4970,10 @@ public class GlobalController extends BaseController {
         User user = getLoginUser(request);
         List<Map<String, Object>> list = null;
         StringBuilder sb = new StringBuilder();
-
         List<Map<String, Object>> lists1 = (List<Map<String, Object>>)request.getSession().getAttribute("list1");
         List<Map<String, Object>> lists2= (List<Map<String, Object>>)request.getSession().getAttribute("list2");
+        Integer counts1= (Integer)request.getSession().getAttribute("counts1");
+        Integer counts2= (Integer)request.getSession().getAttribute("counts2");
         Integer userId = (Integer)request.getSession().getAttribute("userId2");
         request.getSession().setMaxInactiveInterval(60*60*24);
 
@@ -4979,6 +5003,8 @@ public class GlobalController extends BaseController {
                         sb.append("'").append(ids.get(i)).append("',");
                     }
                 }
+                Integer totalCounts = tCheckMapper.dataTotalZhengfu(sb.toString());
+                model.addAttribute("count",totalCounts);
 
                 List<Map<String, Object>> list1 = tCheckMapper.zhengfuCountBasic(sb.toString()); // 化工行业 数据
 
@@ -5129,7 +5155,7 @@ public class GlobalController extends BaseController {
 
                 Integer count1 = number1 + number2 + number3 + number4 + number5 + number6 + number7 + number8 + number9 + number10 + number11 + number12 + number13 + number14 + number15 + number16 + number17 + number18 + number19;
 
-                map1.put("count1",count1);
+                model.addAttribute("count1",count1);
 
                 findCounts2(model, df, number1, number2, number3, number4, number5, number6, number7, number8, number9, number10, number11, number12, number13, number14, number15, number16, number17, number18, number19, count1, map1);
 
@@ -5137,11 +5163,15 @@ public class GlobalController extends BaseController {
 
                 model.addAttribute("lists",lists);
                 request.getSession().setAttribute("list2",lists);
+                request.getSession().setAttribute("counts1",totalCounts);
+                request.getSession().setAttribute("counts2",count1);
                 request.getSession().setAttribute("userId2",user.getId());
             }
 
         }else if (null != lists1 && lists1.size() != 0 && null != lists2 && lists2.size() != 0 ){
 
+            model.addAttribute("count",counts1);
+            model.addAttribute("count1",counts2);
             model.addAttribute("list",lists1);
             model.addAttribute("lists",lists2);
             request.getSession().setAttribute("userId2",user.getId());
@@ -5262,6 +5292,8 @@ public class GlobalController extends BaseController {
         List<Map<String, Object>> list = null;
         List<Map<String,Object>> list3 = (List<Map<String,Object>>)request.getSession().getAttribute("list3");
         List<Map<String,Object>> list4 = (List<Map<String,Object>>)request.getSession().getAttribute("list4");
+        Integer counts3 = (Integer)request.getSession().getAttribute("counts3");
+        Integer counts4 = (Integer)request.getSession().getAttribute("counts4");
         Integer userid = (Integer) request.getSession().getAttribute("userId3");
         request.getSession().setMaxInactiveInterval(60*60*24);
 
@@ -5292,44 +5324,10 @@ public class GlobalController extends BaseController {
 
                 model.addAttribute("list",list);
 
+                Integer count = Integer.parseInt(String.valueOf(list.get(0).get("danger1"))) + Integer.parseInt(String.valueOf(list.get(0).get("danger2"))) + Integer.parseInt(String.valueOf(list.get(0).get("danger3"))) + Integer.parseInt(String.valueOf(list.get(0).get("danger4"))) + Integer.parseInt(String.valueOf(list.get(0).get("danger5"))) + Integer.parseInt(String.valueOf(list.get(0).get("danger6"))) + Integer.parseInt(String.valueOf(list.get(0).get("danger7"))) + Integer.parseInt(String.valueOf(list.get(0).get("danger8"))) + Integer.parseInt(String.valueOf(list.get(0).get("danger9"))) + Integer.parseInt(String.valueOf(list.get(0).get("danger10")));
+                model.addAttribute("count",count);
                 request.getSession().setAttribute("list3",list);
                 request.getSession().setAttribute("userId3",user.getId());
-
-                /*Integer a = tCheckItemMapper.zhengFuDanger("化工", sb.toString()); // 化工行业 数据
-                model.addAttribute("danger1",a);
-
-                Integer  b = tCheckItemMapper.zhengFuDanger("冶金",sb.toString()); // 冶金行业 数据
-                model.addAttribute("danger2",b);
-
-                Integer  c = tCheckItemMapper.zhengFuDanger("有色",sb.toString()); // 有色行业 数据
-                model.addAttribute("danger3",c);
-
-                Integer  d = tCheckItemMapper.zhengFuDanger("建材",sb.toString()); // 建材行业 数据
-                model.addAttribute("danger4",d);
-
-                Integer  e = tCheckItemMapper.zhengFuDanger("机械",sb.toString()); // 机械行业 数据
-                model.addAttribute("danger5",e);
-
-                Integer  f = tCheckItemMapper.zhengFuDanger("轻工",sb.toString()); // 轻工行业 数据
-                model.addAttribute("danger6",f);
-
-                Integer  g = tCheckItemMapper.zhengFuDanger("纺织",sb.toString()); // 纺织行业 数据
-                model.addAttribute("danger7",g);
-
-                Integer  h = tCheckItemMapper.zhengFuDanger("商贸",sb.toString()); // 商贸行业 数据
-                model.addAttribute("danger8",h);
-
-                Integer  i1 = tCheckItemMapper.zhengFuDanger("烟花",sb.toString()); // 烟花行业 数据
-                model.addAttribute("danger9",i1);
-
-                Integer  j = tCheckItemMapper.zhengFuDanger("其他",sb.toString()); // 其他行业 数据
-                model.addAttribute("danger10",j);
-
-                Integer count = a + b + c + d + e + f + g + h + i1 + j ;
-
-                model.addAttribute("count",count);
-
-                findCounts3(model, df, a, b, c, d, e, f, g, h, i1, j, count);*/
 
                 List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();
 
@@ -5471,17 +5469,21 @@ public class GlobalController extends BaseController {
 
                 Integer count1 = number1 + number2 + number3 + number4 + number5 + number6 + number7 + number8 + number9 + number10 + number11 + number12 + number13 + number14 + number15 + number16 + number17 + number18 + number19;
 
-                //model.addAttribute("count1",count1);
+                model.addAttribute("count1",count1);
 
                 findCounts2(model, df, number1, number2, number3, number4, number5, number6, number7, number8, number9, number10, number11, number12, number13, number14, number15, number16, number17, number18, number19, count1, map1);
 
                 lists.add(map1);
 
                 model.addAttribute("lists",lists);
+                request.getSession().setAttribute("counts3",count);
+                request.getSession().setAttribute("counts4",count1);
                 request.getSession().setAttribute("list4",lists);
             }
         }else {
 
+            model.addAttribute("count",counts3);
+            model.addAttribute("count1",counts4);
             model.addAttribute("list",list3);
             model.addAttribute("lists",list4);
             request.getSession().setAttribute("userId3",user.getId());

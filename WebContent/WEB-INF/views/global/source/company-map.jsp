@@ -240,6 +240,7 @@
 
         $scope.markerList = new Array();
         mapList = $scope.companyList;
+        console.log('data1:',data)
         for (var i = 0; i < mapList.length; i++) {
         var marker = new AMap.Marker({
         content: "<div class='mark "+ mapList[i].dicolorCss +"' data='" + data + "'>" + mapList[i].id + "</div>",
@@ -256,6 +257,8 @@
         if (document.querySelector(".mark") != null) {
         $(".mark").each(function(index, element) {
         var data = JSON.stringify($(".mark").eq(index).attr("data"));
+        console.log('data2:',data)
+
         var html = "<div class='mkbt' ng-click='showItemId(" + data + ")'></a>";
         var template = angular.element(html);
         var mobileDialogElement = $compile(template)($scope);
@@ -375,6 +378,8 @@
         var dicolorCss = mapList[m].getExtData().dicolorCss;
         mapList[m].setContent("<div id='mark" + mapList[m].getExtData().id + "' class='mark  "+ dicolorCss +"'>" + (count) + "</div>");
         var data = JSON.stringify(mapList[m].getExtData());
+        console.log('data3:',data)
+
         var html = "<div class='mkbt' ng-click='showItemId(" + data + ")'></a>";
         var template = angular.element(html);
         var mobileDialogElement = $compile(template)($scope);
@@ -423,7 +428,7 @@
         var mapList = $scope.companyList;
         for (var i = 0; i < mapList.length; i++) {
         var data = JSON.stringify(mapList[i]);
-
+        console.log('data4:',data)
         var marker = new AMap.Marker({
         content: "<div class='mark "+ mapList[i].dicolorCss +"' data='" + data + "'>" + mapList[i].id + "</div>",
         position: [mapList[i].longitude, mapList[i].latitude],
@@ -439,17 +444,23 @@
         $scope.$watch('$viewContentLoaded', function() {
         var time = setInterval(function() {
         if (document.querySelector(".mark") != null) {
-        $(".mark").each(function(index, element) {
-        var data = JSON.stringify($(".mark").eq(index).attr("data"));
-        var html = "<div class='mkbt' ng-click='showItemId(" + data + ")'></a>";
-        var template = angular.element(html);
-        var mobileDialogElement = $compile(template)($scope);
-        $(".mark").eq(index).append(mobileDialogElement);
+            $(".mark").each(function(index, element) {
+            var data = JSON.stringify($(".mark").eq(index).attr("data"));
+            var html = "<div class='mkbt' ng-click='showItemId(" + data + ")'></a>";
+            var template = angular.element(html);
+            var mobileDialogElement = $compile(template)($scope);
+            $(".mark").eq(index).append(mobileDialogElement);
+            wjj()
+        console.log('页面加载完毕！')
         });
         clearInterval(time);
         }
         }, 1000);
         });
+        function wjj(){
+        $scope.searchBtn();
+        console.log('searchBtn')
+        }
         });
         </script>
         <script src="${ly}/js/myMap.js"></script>

@@ -121,20 +121,21 @@
              <span class="l">
 
 
-      <form action="${ly }/steel/check-list?flag=${flag}&userId=${userId}&button=${button}" method="post">
-          <select class="sel_area isShow" id="partNamme"  name="dmName"  style="position:relative;top:3px">
-            <option value="">全部</option>
-            <c:forEach items="${set }" var="be">
-                <option value="${be}">${be}</option>
-            </c:forEach>
-     </select>
-            <button class="btn btn-success" type="submit">
-                <i class="Hui-iconfont">&#xe665;</i> 查询
-            </button>
-        </form>
+<%--      <form action="${ly }/steel/check-list?flag=${flag}&userId=${userId}&button=${button}" method="post">--%>
+<%--          <select class="sel_area isShow" id="partNamme"  name="dmName"  style="position:relative;top:3px">--%>
+<%--            <option value="">全部</option>--%>
+<%--            <c:forEach items="${set }" var="be">--%>
+<%--                <option value="${be}">${be}</option>--%>
+<%--            </c:forEach>--%>
+<%--     </select>--%>
+<%--            <button class="btn btn-success" type="submit">--%>
+<%--                <i class="Hui-iconfont">&#xe665;</i> 查询--%>
+<%--            </button>--%>
+<%--        </form>--%>
 
         </span>
         </c:if>
+        <span class="r">未排查记录：<strong>${fn:length(list) }</strong> 条</span>
 <%--        <span class="r">检查总次数：<strong>${fn:length(list) }</strong> 条；检查总条数量：<strong>${sum4}</strong> 条；合格数量：<strong>${sum1}</strong> 条；隐患数量：<strong>${sum2}</strong> 条；已整改数量：<strong>${sum3}</strong> 条</span>--%>
     </div>
     <div class="mt-20">

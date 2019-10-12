@@ -1130,13 +1130,17 @@ public class GlobalController extends BaseController {
      */
     @RequestMapping(value = "/safety-system/control-operation")
 
-    public String realTimeMonitoring(HttpServletRequest request,Model model,CompanyListReqDTO dto) throws Exception {
+    public String realTimeMonitoring(HttpServletRequest request,Model model,CompanyListReqDTO dto, Integer control) throws Exception {
 
         User user = getLoginUser(request);
 
+        if(null == control){
+            control = 2;
+        }
+
         /*Integer totalzc = companyMapper.findALL(user.getId(), user.getUserType(),0); // 正常
         Integer totalwyx = companyMapper.findALL(user.getId(), user.getUserType(),1); // 冻结*/
-        List<Map<String,Object>> list = tCheckItemMapper.findCompany(user.getId(), user.getUserType());
+        List<Map<String,Object>> list = tCheckItemMapper.findCompany(user.getId(), user.getUserType(),control);
 
         // 4 村  3 镇  6 区  7 市
         if (null == list || list.size() == 0){
@@ -1146,7 +1150,7 @@ public class GlobalController extends BaseController {
         }
         model.addAttribute("list",list);
         model.addAttribute("userType",user.getUserType());
-
+        model.addAttribute("control", control);
         return "global/safety-system/check-company";
 
     }

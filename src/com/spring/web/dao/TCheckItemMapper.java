@@ -370,7 +370,7 @@ public interface TCheckItemMapper {
 
     List<Map<String,Object>> findNumbers(@Param("userId")Integer userId, @Param("type")Integer type);
 
-    List<Map<String,Object>> findCompany(@Param("userId")Integer userId, @Param("type")Integer type);
+    List<Map<String,Object>> findCompany(@Param("userId")Integer userId, @Param("type")Integer type, @Param("control") Integer control);
 
     List<Map<String, Object>> selectBasicMessage(@Param("userId") Integer userId, @Param("type") Integer type, @Param("start") Integer start);
 
@@ -503,6 +503,8 @@ public interface TCheckItemMapper {
     Integer manage22HiddenIndustryBasics(@Param("status")Integer status, @Param("flag")Integer flag, @Param("user_ids")String user_ids);
 
     Integer findAllCounte(@Param("userIds")String userIds);
+
+    Integer findAllCounteByCliqu(@Param("userIds")String userIds);
 
     List<Map<String,Object>> findControlData(@Param("userId")Integer userId, @Param("type")Integer type);
 

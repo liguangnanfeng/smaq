@@ -3513,6 +3513,9 @@
                 #{userId}
                 )
             </if>
+            <if test="control!=2">
+                and a1.is_controls = #{control}
+            </if>
             AND c1.is_del = 0
             AND c1.user_id not IN (789,791,793,795,790,792,794,796)
         </where>
@@ -4026,6 +4029,18 @@
             t2. status = 2
         AND t2.del = 0
         AND t1.status in (2)
+        AND t2.user_id in (${userIds})
+    </select>
+    <select id="findAllCounteByCliqu" resultType="Integer">
+        SELECT
+            count(t1.id)
+        FROM
+            smaq.t_check_item_tbl t1
+        LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
+        WHERE
+            t2. status = 2
+        AND t2.del = 0
+        AND t1.status in (2,3)
         AND t2.user_id in (${userIds})
     </select>
     <select id="selectLastOperateTimeById" parameterType="Integer" resultType="String">

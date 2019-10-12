@@ -1776,6 +1776,7 @@ public class VillageController extends BaseController {
             model.addAttribute("itemL", tCheckItemMapper.selectDangerByCheckId(checkId, null));
             model.addAttribute("itemL1", tCheckItemMapper.selectDangerByCheckId(checkId, 1));
             model.addAttribute("document", doc);
+            System.out.println("village/danger/opinion-detail2");
             return "village/danger/opinion-detail2";
         }
         List<TCheckItem> tCheckItems = tCheckItemMapper.selectItemByCheckId(checkId);

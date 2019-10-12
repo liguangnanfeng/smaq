@@ -41,7 +41,7 @@
                 </div>
         </c:if>--%>
         <div class="text-c">
-                <form action="${ly }/village/check-list?flag=${flag}" method="post">
+                <form action="${ly }/global/safety-system/control-operation" method="post">
                         <%--<div class="dis-ib">
                         <span>检查表名称：</span>
                        &lt;%&ndash; <input type="text" value="${title}" name="title" class="input-text mb-5 mt-5" style="width:150px;">&ndash;%&gt;
@@ -57,6 +57,32 @@
                         <%--<button class="btn btn-success" type="submit">
                         <i class="Hui-iconfont">&#xe665;</i> 查询
                         </button>--%>
+                                <div class="dis-ib">
+                                        <span>本级管控：</span>
+                                        <span class="select-box inline">
+                        <select id="villageId" name="control" class="select" style="width:100px;">
+                                <c:if test="${control==2}">
+                                <option value="2" selected="selected">全部</option>
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                                </c:if>
+                                <c:if test="${control==1}">
+                                        <option value="2">全部</option>
+                                        <option value="1" selected="selected">是</option>
+                                        <option value="0">否</option>
+                                </c:if>
+
+                                <c:if test="${control==0}">
+                                        <option value="2">全部</option>
+                                        <option value="1">是</option>
+                                        <option value="0" selected="selected">否</option>
+                                </c:if>
+                        </select>
+            </span></div>
+                                <button class="btn btn-success" type="submit">
+                                        <i class="Hui-iconfont">&#xe665;</i> 查询
+                                </button>
+
                 </form>
         </div>
         <div class="cl pd-5 bg-1 bk-gray mt-20">

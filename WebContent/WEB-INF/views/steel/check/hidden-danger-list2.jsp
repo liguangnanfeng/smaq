@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/views/taglibs.jsp" %>
 <!DOCTYPE HTML>
 <html>
@@ -75,11 +75,11 @@
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
         <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}"
-           href="${ly }/steel/hidden-danger-list?flag=1&status=1">企业自查</a>
+           href="${ly }/steel/hidden-danger-list?flag=1&status=1&breaken=${breaken}">企业自查</a>
         <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
-           href="${ly }/steel/hidden-danger-list?flag=2">行政检查</a>
+           href="${ly }/steel/hidden-danger-list?flag=2&breaken=${breaken}">行政检查</a>
         <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
-           href="${ly }/steel/hidden-danger-list?flag=3">第三方检查</a>
+           href="${ly }/steel/hidden-danger-list?flag=3&breaken=${breaken}">第三方检查</a>
         <%--  <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
              href="${ly }/village/hidden-danger-list?flag=2">执法检查</a>--%>
     </div>
@@ -122,8 +122,8 @@
         <%--<strong>第${page+1}页/共${count}页</strong>--%>
         <%--<a href="${ly }/village/recheck-list?flag=${flag}&page=${page+1}">下一页 &gt;</a>--%>
         <%--</p>--%>
-             <%--  <select id="selectBranch">
-            </select>--%>
+            <select id="selectBranch">
+            </select>
     </div>
     <style>
       #list{
@@ -202,7 +202,7 @@
                         <td>${item[1]}</td>
                     </c:if>
                     <c:if test="${empty list.level2}">
-                        <td>暂无数据</td>
+                        <td>暂无数据2</td>
                     </c:if>
                     <c:if test="${not empty list.level2}">
                         <td>${list.level2 }</td>

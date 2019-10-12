@@ -179,7 +179,7 @@ public class SteelController extends BaseController {
             }
         }
         Integer counts = tCheckMapper.findAllCounte(sb.toString(),startTime1,endTime); // 排查数据
-        Integer counts1 = tCheckItemMapper.findAllCounteByCliqu(sb.toString()); // 治理数据
+        Integer counts1 = tCheckItemMapper.findAllCounte(sb.toString()); // 治理数据
 
         m.put("tradeId", null);
         model.addAttribute("name_", tradeMapper.selectByPrimaryKey(user.getId()).getName());
@@ -1282,10 +1282,14 @@ public class SteelController extends BaseController {
                 list3.addAll(list);
             }
         }
+        model.addAttribute("breaken", breaken);
         String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
         model.addAttribute("companyName", user.getUserName());
         model.addAttribute("host", host);
         model.addAttribute("list", list3);
+        if(2==breaken){
+            return "steel/check/hidden-danger-list2";
+        }
         //model.addAttribute("userId", user.getId());
         return "steel/check/hidden-danger-list";
     }
@@ -7363,5 +7367,32 @@ public class SteelController extends BaseController {
         model.addAttribute("list1", list1);
         model.addAttribute("list2", list2);
         return "steel/danger/danger1/zhuChartData44";
+    }
+    @RequestMapping("opinion-show")
+    public String opinionShow(Model model, String companyName, HttpServletRequest request, Integer flag, Integer flag2)
+            throws Exception {
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
+        setUserId(user, m);
+        System.out.println(m);
+        m.remove("tradeId");
+        StringBuilder sb = new StringBuilder();
+        sb.append(user.getId()).append(",");
+        List<Integer> ids = tradeCliqueMapper.selectCompanyIdsByCqlib(user.getId());
+        for (int i = 0; i < ids.size(); i++) {
+            if (i == ids.size()-1){
+                sb.append("'").append(ids.get(i)).append("'");
+            }else {
+                sb.append("'").append(ids.get(i)).append("',");
+            }
+        }
+        m.put("companyName", companyName);
+        m.put("flag2", flag2);
+        m.put("userIds", sb.toString());
+        model.addAttribute("list", tCheckDocumentMapper.selectTable(m));
+        model.addAttribute("flag", null == flag ? 8 : flag);
+        model.addAttribute("companyName", companyName);
+        model.addAttribute("flag2", flag2);
+        return "village/danger/opinion-show";
     }
 }

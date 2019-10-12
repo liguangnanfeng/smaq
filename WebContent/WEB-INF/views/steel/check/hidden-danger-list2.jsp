@@ -75,11 +75,11 @@
 <div class="page-container">
     <div id="spTab" class="btn-group" style="text-align: center;margin-bottom: 20px;">
         <a class="btn default ${flag == 1 ? 'btn-primary' : 'radius'}"
-           href="${ly }/steel/hidden-danger-list?flag=1&status=1">企业自查</a>
+           href="${ly }/steel/hidden-danger-list?flag=1&status=1&breaken=${breaken}">企业自查</a>
         <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
-           href="${ly }/steel/hidden-danger-list?flag=2">行政检查</a>
+           href="${ly }/steel/hidden-danger-list?flag=2&breaken=${breaken}">行政检查</a>
         <a class="btn default ${flag == 3 ? 'btn-primary' : 'radius'}"
-           href="${ly }/steel/hidden-danger-list?flag=3">第三方检查</a>
+           href="${ly }/steel/hidden-danger-list?flag=3&breaken=${breaken}">第三方检查</a>
         <%--  <a class="btn default ${flag == 2 ? 'btn-primary' : 'radius'}"
              href="${ly }/village/hidden-danger-list?flag=2">执法检查</a>--%>
     </div>

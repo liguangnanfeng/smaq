@@ -2686,7 +2686,6 @@ public class GlobalController extends BaseController {
         Integer type = tc.getType();
         List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(id);
         String name = tc.getDapartContact();
-
         //设置名称
         if (null == tc.getDapartContact() || tc.getDapartContact().matches("[0-9]{1,}") || "".equals(name)) {
             // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
@@ -2712,9 +2711,7 @@ public class GlobalController extends BaseController {
             } else {
                 name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
             }
-
         }
-
         model.addAttribute("partL", partL);
         List<Map<String, Object>> iteml = null;
         if (flag == 1) {
@@ -2725,7 +2722,7 @@ public class GlobalController extends BaseController {
                     if (tCheck.getIndustryType() == 1) { // 基础
                         iteml = tCheckMapper.selectAllLevel(id);
                         break;
-                    } else if (tCheck.getIndustryType() == 2) { // 现场
+                    } else if (tCheck.getIndustryType() != 1) { // 现场
                         iteml = tCheckMapper.selectAllDanger(id);
                         break;
                     }
@@ -2737,12 +2734,10 @@ public class GlobalController extends BaseController {
             TCheck tCheck = tCheckMapper.selectByPrimaryKey(id);
             if (tCheck.getIndustryType() == 1) { // 基础
                 iteml = tCheckMapper.selectAllLevel(id);
-            } else if (tCheck.getIndustryType() == 2) { // 现场
+            } else if (tCheck.getIndustryType() != 1) { // 现场
                 iteml = tCheckMapper.selectAllDanger(id);
             }
         }
-
-        //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
         if (type != null && type == 9) {
             for (Map<String, Object> a : iteml) {
                 Integer[] ids = new Integer[1];
@@ -2755,7 +2750,6 @@ public class GlobalController extends BaseController {
                 String level2 = "";
                 String level3 = "";
                 for (ACompanyManual aa : rets) {
-                    //log.error("checkNext:"+2);
                     dangertype = aa.getType();
                     factors = aa.getFactors();
                     measures = aa.getMeasures();
@@ -2812,7 +2806,6 @@ public class GlobalController extends BaseController {
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
 
         return "global/company/checkModel/plan-detail";
-
     }
 
 
@@ -4865,14 +4858,14 @@ public class GlobalController extends BaseController {
                 }
                 map.put("realTimeStr", format);
 
-                if("全公司".equals(map.get("depart"))){
+                if(company.getName().equals(map.get("depart")) && null != map.get("levelId")){
                     Integer checkId = (Integer) map.get("checkId");
                     map.put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
                     Integer industryType = (Integer) map.get("industryType");
-                    if(null!=industryType&&1==industryType){
-                        map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
-                    }else if (null!=map.get("industryType")&&2==map.get("industryType")){
-                        map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                    if(null != industryType && 1 == industryType){
+                        map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getName());
+                    }else if (null != map.get("industryType") && 1 != map.get("industryType")){
+                        map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getName());
                     }
                 }
 

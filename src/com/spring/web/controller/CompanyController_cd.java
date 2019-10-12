@@ -8258,10 +8258,8 @@ public class CompanyController_cd extends BaseController {
         // 根据id查询的是检查表信息
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
         Integer type = tc.getType();
-        //log.error("检查表type："+type);
         List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(id);
         String name = tc.getDapartContact();
-
         //设置名称
         if (null == tc.getDapartContact() || tc.getDapartContact().matches("[0-9]{1,}") || "".equals(name)) {
             // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
@@ -8287,17 +8285,10 @@ public class CompanyController_cd extends BaseController {
             } else {
                 name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
             }
-
         }
-
         model.addAttribute("partL", partL);
-        //model.addAttribute("itemL", tCheckItemMapper.selectByCheckId(id));
-        /*List<Map<String, Object>> iteml = tCheckItemMapper.selectByCheckId(id);*/
         List<Map<String, Object>> iteml = null;
         if (flag == 1) {
-
-            System.out.println(id);
-
             iteml = tCheckMapper.selectLevels(id);
             for (int i = 0; i < iteml.size(); i++) {
                 if (loginUser.getUserName().equals(iteml.get(i).get("depart"))) {
@@ -8305,31 +8296,25 @@ public class CompanyController_cd extends BaseController {
                     if (tCheck.getIndustryType() == 1) { // 基础
                         iteml = tCheckMapper.selectAllLevel(id);
                         break;
-                    } else if (tCheck.getIndustryType() == 2) { // 现场
+                    } else if (tCheck.getIndustryType() != 1) { // 现场
                         iteml = tCheckMapper.selectAllDanger(id);
                         break;
                     }
                 }
             }
-
         } else if (flag != 1) {
             // 根据 ID 查询对应的数据 是 基础 还是 现场
             TCheck tCheck = tCheckMapper.selectByPrimaryKey(id);
             if (tCheck.getIndustryType() == 1) { // 基础
                 iteml = tCheckMapper.selectAllLevel(id);
-            } else if (tCheck.getIndustryType() == 2) { // 现场
+            } else if (tCheck.getIndustryType() != 1) { // 现场
                 iteml = tCheckMapper.selectAllDanger(id);
             }
         }
-
-        //log.error("tCheckItemMapper条目结果信息:"+iteml.toString());
         if (type != null && type == 9) {
             for (Map<String, Object> a : iteml) {
-                //log.error("checkNext:"+1);
                 Integer[] ids = new Integer[1];
                 ids[0] = (Integer) a.get("levelId");
-                //log.error("ids:"+ids[0]);
-                //log.error("a:"+a.toString());
                 List<ACompanyManual> rets = aDangerManualMapper.selectByIds(ids);
                 String dangertype = "";
                 String factors = "";
@@ -8338,14 +8323,12 @@ public class CompanyController_cd extends BaseController {
                 String level2 = "";
                 String level3 = "";
                 for (ACompanyManual aa : rets) {
-                    //log.error("checkNext:"+2);
                     dangertype = aa.getType();
                     factors = aa.getFactors();
                     measures = aa.getMeasures();
                     level1 = aa.getLevel1();
                     level2 = aa.getLevel2();
                     level3 = aa.getLevel3();
-                    //log.error("type:"+dangertype);
                     break;
                 }
                 a.put("dangerType", dangertype);
@@ -8354,10 +8337,8 @@ public class CompanyController_cd extends BaseController {
                 a.put("level1", level1);
                 a.put("level2", level2);
                 a.put("level3", level3);
-                //log.error("level1/2/3 : "+level1+"/"+level2+"/"+level3);
             }
         }
-        //log.error("tCheckItemMapper条目结果信息2:"+iteml.toString()); 隐患
         model.addAttribute("check", tc);
         model.addAttribute("flag", tc.getFlag());
         model.addAttribute("itemL", iteml);
@@ -8375,8 +8356,6 @@ public class CompanyController_cd extends BaseController {
         Integer integer = tCheckMapper.selectHiddenDangerNumber2(id);
 
         if (null == name || "".equals(name)) {
-            System.out.println(loginUser.getId());
-            System.out.println(companyMapper.selectByPrimaryKey(loginUser.getId()).getSafety());
             name = companyMapper.selectByPrimaryKey(loginUser.getId()).getSafety();
         }
         model.addAttribute("dangerInteger",integer);
@@ -8389,7 +8368,6 @@ public class CompanyController_cd extends BaseController {
             model.addAttribute("latitude", null);
             model.addAttribute("longitude", null);
         }
-
         // 判断是否整改复查过
         TRectification tRectification = tRectificationMapper.selectByCheckId(id);
         if(null==tRectification){
@@ -8397,7 +8375,6 @@ public class CompanyController_cd extends BaseController {
         }else{
             model.addAttribute("is_re",1);
         }
-
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
 
         return "company/danger/plan-detail";

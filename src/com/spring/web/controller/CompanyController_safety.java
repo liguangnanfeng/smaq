@@ -513,11 +513,8 @@ public class CompanyController_safety extends BaseController {
                 }else {
                     parName = "";
                 }
-
                 // 根据公司 ID 查询所有的现场风险信息
                 Integer nowCount = aCompanyManualMapper.selectCountNow(user.getId(),"现场管理");
-
-
                 model.addAttribute("nowCount",nowCount);
                 model.addAttribute("count1",count1);
                 model.addAttribute("parName",parName);
@@ -529,7 +526,6 @@ public class CompanyController_safety extends BaseController {
                 model.addAttribute("number", number);
                 model.addAttribute("zzjgDep", zzjg);
                 model.addAttribute("acL", acL);
-
                 return "company/safety-system/risk-list1";
             } else {
                 /*String dangerId = null;
@@ -3288,7 +3284,6 @@ public class CompanyController_safety extends BaseController {
         ACompanyManual aCompanyManual;
         StringBuffer sb = new StringBuffer();
         StringBuffer sb1 = new StringBuffer();
-
         for (int i = 0; i < list1.size(); i++) {
             if (i == list1.size()-1){
                 sb.append(list1.get(i).getRiskId());
@@ -3296,17 +3291,14 @@ public class CompanyController_safety extends BaseController {
                 sb.append(list1.get(i).getRiskId()).append(",");
             }
         }
-
         for (int i = 0; i < ids.length; i++) {
             if (sb.toString().contains(String.valueOf(ids[i]))){
-
             }else {
                 if (i == ids.length-1){
                     sb1.append(ids[i]);
                 }else {
                     sb1.append(ids[i]).append(",");
                 }
-
             }
         }
         if (sb1.toString().length() != 0) {

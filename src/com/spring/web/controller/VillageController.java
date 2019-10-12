@@ -2212,18 +2212,18 @@ public class VillageController extends BaseController {
                 }
                 map.put("realTimeStr", format);
 
-                if("全公司".equals(map.get("depart"))){
+                if(company.getName().equals(map.get("depart")) && null != map.get("levelId")){
                     Integer checkId = (Integer) map.get("checkId");
                     map.put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
                     Integer industryType = (Integer) map.get("industryType");
-                    if(null!=industryType&&1==industryType){
-                        map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
-                    }else if (null!=map.get("industryType")&&2==map.get("industryType")){
-                        map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                    if(null != industryType && 1 == industryType){
+                        map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getName());
+                    }else if (null != map.get("industryType") && 1 != map.get("industryType")){
+                        map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getName());
                     }
                 }
 
-                if(null==map.get("fjgkfzr")||"".equals(map.get("fjgkfzr"))){
+                if(null == map.get("fjgkfzr") || "" . equals(map.get("fjgkfzr"))){
                     String name = "";
                     TCheck tc = tCheckMapper.selectByPrimaryKey((Integer) map.get("checkId"));
                     // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个

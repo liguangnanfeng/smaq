@@ -217,7 +217,6 @@ public interface CompanyMapper {
      */
     List<Map<String, Object>> selectCompanyCliq(Map<String, Object> map);
 
-
     Integer findALL(@Param("userId") Integer userId, @Param("type")Integer type, @Param("isFreeze")Integer isFreeze);
 
     List<Map<String,Object>> selectIndustrs();
@@ -227,5 +226,17 @@ public interface CompanyMapper {
     Integer selectDangerBlue(@Param("industry")String industry, @Param("userIds")String userIds);
 
     List<Map<String, Object>> selectDangerCompanyByCliqu(@Param("userId") Integer userId);
+
+    List<Integer> selectCompanyIdVillage(@Param("villageId") Integer villageId);
+
+    List<Map<String, Object>> selectListsCompanyIdVillage(@Param("villageId") Integer villageId);
+
+    List<Integer> selectTownCompanyId(@Param("townId") Integer townId);
+
+    List<Integer> selectDistrictCompanyId(@Param("districtId") Integer districtId);
+
+    List<Integer> selectTidCompanyId(@Param("tid") Integer tid);
+
+    List<Map<String, Object>> selectListsTidCompanyId(@Param("tid") Integer tid);
 
 }

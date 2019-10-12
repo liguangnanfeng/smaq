@@ -180,7 +180,7 @@
             <div class="modal-content radius">
             <div class="modal-header">
             <h3 class="modal-title">修改名称</h3>
-            <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+            <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
             </div>
             <div class="modal-body" style="height: 200px; overflow-y: auto">
             <div class="form form-horizontal">
@@ -331,11 +331,11 @@
 
         function dataArr(arr) {
         if (arr && arr.length > 0) {
-        var newA = []
+        var newA = [];
         for (var i = 0; i < arr.length; i++) {
-        var str = ''
+        var str = '';
         str = "'ex':" + arr[i].ex + ",'ey':" + arr[i].ey + ",'name':" + arr[i].name + ",'x':" + arr[i].x + ",'y':" +
-        arr[i].y+",'color':"+arr[i].color
+        arr[i].y+",'color':"+arr[i].color;
         newA.push(str)
         }
         }
@@ -343,13 +343,24 @@
         }
 
         <%-- 截图 --%>
-        layer.msg('标注比较耗时,请耐心等待 ! 不要做其他操作!', {
-        time: 1000, //1s后自动关闭
-        });
+<%--        layer.msg('标注比较耗时,请耐心等待 ! 不要做其他操作!', {--%>
+<%--        time: 1000, //1s后自动关闭--%>
+<%--        });--%>
+        var index = layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
         setTimeout(function () {
+        setTimeout(()=>{
+        layer.close(index);
+        },1000);
+        console.log(document.querySelector(".imageLabel-jisuan"));
         html2canvas(document.querySelector(".imageLabel-jisuan"), {
-        useCORS: true, allowTaint: false, foreignObjectRendering: true, taintTest: true, scale: 1
+<%--        useCORS: true,--%>
+<%--        allowTaint: false,--%>
+<%--        foreignObjectRendering: true,--%>
+<%--        taintTest: true,--%>
+<%--        scale: 1--%>
         }).then(function (canvas) {
+        console.log('开始截图中');
+        console.log(canvas);
         var image = canvas.toDataURL("image/png", 0.1);
         $.ajax({
         type: "POST",
@@ -362,13 +373,19 @@
         flag:1
         },
         success: function (result) { //服务器成功响应处理函数
-        window.location.reload()
+        window.location.reload();
+        console.log('success')
         },
         error: function (data, status, e) {//服务器响应失败处理函数
         alert("文件上传失败");
         }
         })
-        });
+        }).catch((e)=>{
+        console.log('err:',e);
+        layer.close(index);
+        layer.msg('出错了！')
+
+        })
         }, 1000);
 
 
@@ -376,6 +393,9 @@
         })
         })
         }
+
+
+
         </script>
         </body>
         </html>

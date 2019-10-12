@@ -256,7 +256,16 @@ public class GlobalController extends BaseController {
     public String welcome(Model model, HttpServletRequest request) throws Exception {
         User user = getLoginUser(request);
         StringBuilder sb = new StringBuilder();
-        List<Integer> ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询该账户下所有公司id
+        List<Integer> ids = null;
+        if (user.getUserType() == 4){ // 村级账户
+            ids = companyMapper.selectCompanyIdVillage(user.getId());
+        }else if (user.getUserType() == 3){ // 镇级账户
+            ids = companyMapper.selectTownCompanyId(user.getId());
+        }else if (user.getUserType() == 6){ // 区级账户
+            ids = companyMapper.selectDistrictCompanyId(user.getId());
+        }else if (user.getUserType() == 10){ // 惠山化工账号
+            ids = companyMapper.selectTidCompanyId(user.getId());
+        }
         for (int i = 0; i < ids.size(); i++) {
             if (i == ids.size()-1){
                 sb.append("'").append(ids.get(i)).append("'");
@@ -1062,9 +1071,17 @@ public class GlobalController extends BaseController {
     @RequestMapping(value = "all-statistics-industry")
     public String controlDataIndustry(HttpServletRequest request,Model model) throws Exception {
         User user = getLoginUser(request);
-
         List<Map<String,Object>> list = companyMapper.selectIndustrs();
-        List<Integer> ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询所有的公司
+        List<Integer> ids = null;
+        if (user.getUserType() == 4){ // 村级账户
+            ids = companyMapper.selectCompanyIdVillage(user.getId());
+        }else if (user.getUserType() == 3){ // 镇级账户
+            ids = companyMapper.selectTownCompanyId(user.getId());
+        }else if (user.getUserType() == 6){ // 区级账户
+            ids = companyMapper.selectDistrictCompanyId(user.getId());
+        }else if (user.getUserType() == 10){ // 惠山化工账号
+            ids = companyMapper.selectTidCompanyId(user.getId());
+        }
         StringBuilder sb = new StringBuilder();
 
         if (null == ids || ids.size() == 0){
@@ -4975,8 +4992,16 @@ public class GlobalController extends BaseController {
         }
 
         if (null == lists1 || lists1.size() == 0 || null == lists2 || lists2.size() == 0){
-
-            List<Integer> ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询所有的公司
+            List<Integer> ids = null;
+            if (user.getUserType() == 4){ // 村级账户
+                ids = companyMapper.selectCompanyIdVillage(user.getId());
+            }else if (user.getUserType() == 3){ // 镇级账户
+                ids = companyMapper.selectTownCompanyId(user.getId());
+            }else if (user.getUserType() == 6){ // 区级账户
+                ids = companyMapper.selectDistrictCompanyId(user.getId());
+            }else if (user.getUserType() == 10){ // 惠山化工账号
+                ids = companyMapper.selectTidCompanyId(user.getId());
+            }
 
             DecimalFormat df = new DecimalFormat("0.00");
 
@@ -4996,6 +5021,7 @@ public class GlobalController extends BaseController {
                         sb.append("'").append(ids.get(i)).append("',");
                     }
                 }
+
                 Integer totalCounts = tCheckMapper.dataTotalZhengfu(sb.toString());
                 model.addAttribute("count",totalCounts);
 
@@ -5296,7 +5322,17 @@ public class GlobalController extends BaseController {
 
         if (null == list3 || list3.size() == 0 || list4.size() == 0 || null == list4){
 
-            List<Integer> ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询所有的公司
+            List<Integer> ids = null;
+            if (user.getUserType() == 4){ // 村级账户
+                ids = companyMapper.selectCompanyIdVillage(user.getId());
+            }else if (user.getUserType() == 3){ // 镇级账户
+                ids = companyMapper.selectTownCompanyId(user.getId());
+            }else if (user.getUserType() == 6){ // 区级账户
+                ids = companyMapper.selectDistrictCompanyId(user.getId());
+            }else if (user.getUserType() == 10){ // 惠山化工账号
+                ids = companyMapper.selectTidCompanyId(user.getId());
+            }
+
             DecimalFormat df = new DecimalFormat("0.00");
 
             if (null == ids || ids.size() == 0){
@@ -5684,7 +5720,16 @@ public class GlobalController extends BaseController {
 
         if (null == list5 || list5.size() == 0){
 
-            List<Integer> ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询所有的公司
+            List<Integer> ids = null;
+            if (user.getUserType() == 4){ // 村级账户
+                ids = companyMapper.selectCompanyIdVillage(user.getId());
+            }else if (user.getUserType() == 3){ // 镇级账户
+                ids = companyMapper.selectTownCompanyId(user.getId());
+            }else if (user.getUserType() == 6){ // 区级账户
+                ids = companyMapper.selectDistrictCompanyId(user.getId());
+            }else if (user.getUserType() == 10){ // 惠山化工账号
+                ids = companyMapper.selectTidCompanyId(user.getId());
+            }
             DecimalFormat df = new DecimalFormat("0.00");
 
             if (null == ids || ids.size() == 0){
@@ -6110,8 +6155,12 @@ public class GlobalController extends BaseController {
 
         if ((null == list11 || list11.size() == 0)){
             if (user.getUserType() == 4  || user.getUserType() == 10){ // 如果登录的账户是村级账号
-                // 根据登录账户 ID 查询该区域下的所有公司信息
-                list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+
+                if (user.getUserType() == 4){ // 村级账户
+                    list = companyMapper.selectListsCompanyIdVillage(user.getId());
+                }else if (user.getUserType() == 10){ // 惠山化工账号
+                    list = companyMapper.selectListsTidCompanyId(user.getId());
+                }
 
                 if (null == list || list.size() == 0){// 如果该区域下没有公司
 
@@ -6437,7 +6486,11 @@ public class GlobalController extends BaseController {
 
         if (null == list22 || list22.size() == 0){
             if (user.getUserType() == 4 || user.getUserType() == 10){
-                list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+                if (user.getUserType() == 4){ // 村级账户
+                    list = companyMapper.selectListsCompanyIdVillage(user.getId());
+                }else if (user.getUserType() == 10){ // 惠山化工账号
+                    list = companyMapper.selectListsTidCompanyId(user.getId());
+                }
 
                 if (null == list || list.size() == 0){
 
@@ -6861,7 +6914,11 @@ public class GlobalController extends BaseController {
 
             if (user.getUserType() == 4 || user.getUserType() == 10){
 
-                list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+                if (user.getUserType() == 4){ // 村级账户
+                    list = companyMapper.selectListsCompanyIdVillage(user.getId());
+                }else if (user.getUserType() == 10){ // 惠山化工账号
+                    list = companyMapper.selectListsTidCompanyId(user.getId());
+                }
 
                 if (null == list || list.size() == 0){
 
@@ -7416,7 +7473,11 @@ public class GlobalController extends BaseController {
         if (null == list33 || list33.size() == 0){
             if (user.getUserType() == 4 || user.getUserType() == 10){
 
-                list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+                if (user.getUserType() == 4){ // 村级账户
+                    list = companyMapper.selectListsCompanyIdVillage(user.getId());
+                }else if (user.getUserType() == 10){ // 惠山化工账号
+                    list = companyMapper.selectListsTidCompanyId(user.getId());
+                }
 
                 for (int i = 0; i < list.size(); i++) {
 
@@ -7634,7 +7695,11 @@ public class GlobalController extends BaseController {
 
             if (user.getUserType() == 4 || user.getUserType() == 10){
 
-                list = tCheckItemMapper.findALL(user.getId(), user.getUserType());
+                if (user.getUserType() == 4){ // 村级账户
+                    list = companyMapper.selectListsCompanyIdVillage(user.getId());
+                }else if (user.getUserType() == 10){ // 惠山化工账号
+                    list = companyMapper.selectListsTidCompanyId(user.getId());
+                }
 
                 for (int i = 0; i < list.size(); i++) {
 
@@ -7915,7 +7980,7 @@ public class GlobalController extends BaseController {
 
                 for (int i = 0; i < lists.size(); i++) {
                     // 根据区域 ID 查询该区域下所有的企业 ID
-                    List<Integer> ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 4);
+                    List<Integer> ids = companyMapper.selectTownCompanyId(user.getId());
                     StringBuilder sb = new StringBuilder();
                     for (int j = 0; j < ids.size(); j++) {
                         if (j == ids.size()-1){
@@ -7949,7 +8014,7 @@ public class GlobalController extends BaseController {
 
                 for (int i = 0; i < lists.size(); i++) {
                     // 根据区域 ID 查询该区域下所有的企业 ID
-                    List<Integer> ids = tCheckItemMapper.selectCompanyId(lists.get(i).getUserId(), 3);
+                    List<Integer> ids = companyMapper.selectDistrictCompanyId(user.getId());
                     StringBuilder sb = new StringBuilder();
                     for (int j = 0; j < ids.size(); j++) {
                         if (j == ids.size()-1){
@@ -7986,7 +8051,16 @@ public class GlobalController extends BaseController {
         List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
         String string = "基础管理,设计总图,试生产,装置运行,设备安全,仪表安全,电气安全,应急消防,特殊管控,行为环境,生产现场,公辅工程,特种设备,专项行业,生产工艺,设备设施,危化管理.安全设施,其他";
         DecimalFormat df = new DecimalFormat("0.00");
-        List<Integer> ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询所有的公司
+        List<Integer> ids = null;
+        if (user.getUserType() == 4){ // 村级账户
+            ids = companyMapper.selectCompanyIdVillage(user.getId());
+        }else if (user.getUserType() == 3){ // 镇级账户
+            ids = companyMapper.selectTownCompanyId(user.getId());
+        }else if (user.getUserType() == 6){ // 区级账户
+            ids = companyMapper.selectDistrictCompanyId(user.getId());
+        }else if (user.getUserType() == 10){ // 惠山化工账号
+            ids = companyMapper.selectTidCompanyId(user.getId());
+        }
 
         StringBuilder sb = new StringBuilder();
 
@@ -8189,7 +8263,16 @@ public class GlobalController extends BaseController {
         User user = getLoginUser(request);
         List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
         DecimalFormat df = new DecimalFormat("0.00");
-        List<Integer> ids = tCheckItemMapper.selectCompanyId(user.getId(), user.getUserType());//查询所有的公司
+        List<Integer> ids = null;
+        if (user.getUserType() == 4){ // 村级账户
+            ids = companyMapper.selectCompanyIdVillage(user.getId());
+        }else if (user.getUserType() == 3){ // 镇级账户
+            ids = companyMapper.selectTownCompanyId(user.getId());
+        }else if (user.getUserType() == 6){ // 区级账户
+            ids = companyMapper.selectDistrictCompanyId(user.getId());
+        }else if (user.getUserType() == 10){ // 惠山化工账号
+            ids = companyMapper.selectTidCompanyId(user.getId());
+        }
 
         StringBuilder sb = new StringBuilder();
 

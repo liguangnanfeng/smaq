@@ -18,6 +18,9 @@
     </style>
 </head>
 <body>
+    <script>
+     console.log('opinion-add82')
+    </script>
 <div class="page-container" style="width:150mm;margin:auto;padding:10px 0 0 0;">
     <div class="row cl row_ac">
         <!-- 直接添加文书的可以编辑，从工具来的不能编辑 -->

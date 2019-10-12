@@ -89,7 +89,8 @@
     console.log('hello!')
     $("#spTab").hide();
     $("#text-c").hide();
-
+   $(".x").hide();
+    $(".y").show()
     }
     });
     </script>
@@ -125,7 +126,7 @@
              <span class="l">
 
 
-      <form action="${ly }/village/check-list?flag=${flag}" method="post">
+      <form class="x" action="${ly }/village/check-list?flag=${flag}" method="post">
           <select class="sel_area isShow" id="partNamme"  name="dmName"  style="position:relative;top:3px">
             <option value="">全部</option>
             <c:forEach items="${set }" var="be">
@@ -139,7 +140,8 @@
 
         </span>
         </c:if>
-        <span class="r">检查总次数：<strong>${fn:length(list) }</strong> 条；检查总条数量：<strong>${sum}</strong> 条；合格数量：<strong>${sum1}</strong> 条；隐患数量：<strong>${sum2}</strong> 条；已整改数量：<strong>${sum3}</strong> 条</span>
+    <span class="r x">检查总次数：<strong>${fn:length(list) }</strong> 条；检查总条数量：<strong>${sum4}</strong> 条；合格数量：<strong>${sum1}</strong> 条；隐患数量：<strong>${sum2}</strong> 条；已整改数量：<strong>${sum3}</strong> 条</span>
+    <span class="r y" style="display:none">未排查记录：<strong>${fn:length(list) }</strong> 条</span>
     </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -315,9 +317,13 @@
                         </c:if>
 
                         <c:if test="${flag!=1}">
-
+                            <script>
+                            var searchURL = window.location.search;
+                            searchURL = searchURL.substring(1, searchURL.length);
+                            var f = searchURL.split("&")[0].split("=")[1];
+                            </script>
                             <a style="text-decoration:none"
-                               onClick="location.href = '/village/check-document?checkId=${be.id}'" href="javascript:;">文书详情</a><br>
+                               onClick="location.href = '/village/check-document?checkId=${be.id}&f='+f" href="javascript:;">文书详情</a><br>
                         </c:if>
                         <a style="text-decoration:none"  onClick="del_(${be.id})" href="javascript:;">删除记录</a>
                     </td>

@@ -1599,7 +1599,7 @@
         WHERE
         t2. status = 2
         AND t2.del = 0
-        AND t1. status = #{status}
+        AND t1.status = #{status}
         AND c1.industry like CONCAT('%',#{industry},'%')
         AND t3.flag = #{flag}
         AND t2.user_id in (${user_ids})
@@ -2597,7 +2597,7 @@
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
-        LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
+        LEFT JOIN company_tbl c1 ON t2.user_id = c1.user_id
         WHERE
             t2.status = 2
         AND t2.del = 0
@@ -2613,7 +2613,7 @@
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
-        LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
+        LEFT JOIN company_tbl c1 ON t2.user_id = c1.user_id
         WHERE
             t2.status = 2
         AND t2.del = 0
@@ -2653,7 +2653,7 @@
         FROM
             smaq.t_check_item_tbl t1
         LEFT JOIN smaq.t_check_tbl t2 ON t1.check_id = t2.id
-        LEFT JOIN company_view c1 ON t2.user_id = c1.user_id
+        LEFT JOIN company_tbl c1 ON t2.user_id = c1.user_id
         WHERE
             t2.status = 2
         AND t2.del = 0
@@ -3409,7 +3409,6 @@
     <select id="selectCompanyId" parameterType="Integer" resultType="Integer">
         SELECT user_id FROM company_view
         <where>
-
             <if test="type==6">
                 district_id = #{userId}
             </if>
@@ -3426,7 +3425,6 @@
             </if>
             AND is_del = 0
             AND user_id not IN (789,791,793,795,790,792,794,796)
-
         </where>
     </select>
 

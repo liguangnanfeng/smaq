@@ -18,6 +18,9 @@
 </head>
 
 <body>
+    <script>
+    console.log('opinion-add22')
+    </script>
     <div class="page-container" style="width:150mm;margin:auto;padding:10px 0 0 0;">
         <div class="row cl row_ac">
             <!-- <button onClick="addDan()" class="btn radius" type="button">
@@ -237,9 +240,17 @@
     var searchURL = window.location.search;
     searchURL = searchURL.substring(1, searchURL.length);
     var i1 = searchURL.split("&")[0].split("=")[1];
+    var f2 = searchURL.split("&")[0].split("=")[2];
+    if(f1){
     top.show_tab("整改复查意见书", '/village/check-rectification?flag=' + f1 + '&id=' + i1+'&book');
           //location.reload();
+    }else{
+    top.show_tab("整改复查意见书", '/village/check-rectification?flag=' + f2 + '&id=' + i1+'&book');
+
+
+    }
       })
+
   }
 </script>
 <script type="text/javascript" src="${ly }/js/check/opinion2.js"></script>

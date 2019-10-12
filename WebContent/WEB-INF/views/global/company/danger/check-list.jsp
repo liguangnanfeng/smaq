@@ -91,11 +91,12 @@
     searchURL = searchURL.substring(1, searchURL.length);
     var t = searchURL.split("&")[8].split("=")[1];
     console.log('t:',t)
+    window.onload=()=>{
     if(t==2){
     $(".www").hide()
-    <%--    $("#abtn1").attr("href","${ly }/global/check-list?flag=1&status=2&uid=${uid}&button=2")--%>
-    <%--    $("#abtn2").attr("href","${ly }/global/check-list?flag=2&status=2&uid=${uid}&button=2")--%>
-    <%--    $("#abtn3").attr("href","${ly }/global/check-list?flag=3&status=2&uid=${uid}&button=2")--%>
+    $(".x").hide();
+    $(".y").show()
+    }
     }
     </script>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -119,7 +120,7 @@
              <span class="l">
 
 
-      <form action="${ly }/global/check-list?flag=${flag}" method="post">
+      <form class="x" action="${ly }/global/check-list?flag=${flag}" method="post">
           <select class="sel_area isShow" id="partNamme"  name="dmName"  style="position:relative;top:3px">
             <option value="">全部</option>
             <c:forEach items="${set }" var="be">
@@ -133,7 +134,9 @@
 
         </span>
         </c:if>
-        <span class="r">检查总次数：<strong>${fn:length(list) }</strong> 条；检查总条数量：<strong>${sum}</strong> 条；合格数量：<strong>${sum1}</strong> 条；隐患数量：<strong>${sum2}</strong> 条；已整改数量：<strong>${sum3}</strong> 条</span>
+        <span  class="r x">检查总次数：<strong>${fn:length(list) }</strong> 条；检查总条数量：<strong>${sum}</strong> 条；合格数量：<strong>${sum1}</strong> 条；隐患数量：<strong>${sum2}</strong> 条；已整改数量：<strong>${sum3}</strong> 条</span>
+        <span class=" r y" style="display:none" class="r">未检查记录：<strong>${fn:length(list) }</strong> 条</span>
+
     </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort">

@@ -178,6 +178,7 @@ public class VillageSettingController extends BaseController{
         	model.addAttribute("name", name);
         	model.addAttribute("before", before);
     	}
+
     	
     	if(flag==2){//显示缩略图,如果还是要显示视频就把这段去掉//zhangcl 2019.1.13
     		Map<String, Object> m = new HashMap<String, Object>();

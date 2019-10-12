@@ -233,6 +233,9 @@
      <if test="userId != null">
          and T1.user_id = #{userId} 
      </if>
+     <if test="userIds != null">
+          and T1.user_id in (${userIds})
+     </if>
      <if test="flag2 != null">
          and T1.flag2 = #{flag2}
      </if>

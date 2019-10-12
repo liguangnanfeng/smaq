@@ -504,6 +504,8 @@ public interface TCheckItemMapper {
 
     Integer findAllCounte(@Param("userIds")String userIds);
 
+    Integer findAllCounteByCliqu(@Param("userIds")String userIds);
+
     List<Map<String,Object>> findControlData(@Param("userId")Integer userId, @Param("type")Integer type);
 
     List<Map<String,Object>> zhuChartData781(@Param("control")String control,@Param("user_ids")String user_ids, @Param("departs")String departs);

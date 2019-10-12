@@ -179,7 +179,7 @@ public class SteelController extends BaseController {
             }
         }
         Integer counts = tCheckMapper.findAllCounte(sb.toString(),startTime1,endTime); // 排查数据
-        Integer counts1 = tCheckItemMapper.findAllCounte(String.valueOf(user.getId())); // 治理数据
+        Integer counts1 = tCheckItemMapper.findAllCounteByCliqu(sb.toString()); // 治理数据
 
         m.put("tradeId", null);
         model.addAttribute("name_", tradeMapper.selectByPrimaryKey(user.getId()).getName());
@@ -1145,6 +1145,161 @@ public class SteelController extends BaseController {
      */
     @RequestMapping(value = "hidden-danger-list")
     public String hiddenDangerList(HttpServletRequest request, Model model, Integer flag, Integer status, Integer userId, Integer breaken) {
+        User user=getLoginUser(request);
+        User user1;
+        List<Integer> ids = tradeCliqueMapper.selectCompanyIdsByCqlib(user.getId());
+        ids.add(user.getId());
+        List<Map> list3 = new ArrayList<>();
+        Company company;
+
+        model.addAttribute("flag", flag);
+        model.addAttribute("status", status);
+        model.addAttribute("userId", user.getId());
+        if (null == breaken){
+            breaken = 1;
+        }else {
+            breaken = 2;
+        }
+        List<Map> list = new ArrayList<>();
+        if (flag == 1) {
+            /*if(35346 == user.getId()){
+                list = tCheckItemMapper.selectListBystatus2(user.getId(), flag, breaken);
+            }else {
+                list = tCheckItemMapper.selectListBystatus(user.getId(), flag, breaken);
+            }*/
+            for(Integer id:ids) {
+                list = new ArrayList<>();
+                user1 = userMapper.selectByPrimaryKey(id);
+                company = companyMapper.selectByPrimaryKey(user1.getId());
+                list = tCheckItemMapper.selectListBystatus2(user1.getId(), flag, breaken);
+                for (Map map : list) {
+                    Date realTime = (Date) map.get("realTime");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                    String format = sdf.format(realTime);
+                    String level = (String) map.get("level");
+                    if (null != level && "红色".equals(level)) {
+                        map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
+                    }
+                    map.put("realTimeStr", format);
+
+                    if ("全公司".equals(map.get("depart"))) {
+                        Integer checkId = (Integer) map.get("checkId");
+                        map.put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
+                        Integer industryType = (Integer) map.get("industryType");
+                        if (null != industryType && 1 == industryType) {
+                            map.put("level2", tLevelMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2());
+                        } else if (null != map.get("industryType") && 2 == map.get("industryType")) {
+                            map.put("level2", aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2());
+                        }
+                    }
+
+                    if (null == map.get("fjgkfzr") || "".equals(map.get("fjgkfzr"))) {
+                        String name = "";
+                        TCheck tc = tCheckMapper.selectByPrimaryKey((Integer) map.get("checkId"));
+                        // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
+                        List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId((Integer) map.get("checkItemId"));
+                        if (null != integers && integers.size() > 0) {
+                            // 这里进行名称的获取,进行全部循环,获取数据的方式,在数据库中进行查询
+                            List<String> list1 = new ArrayList<String>();
+                            for (Integer integer : integers) {
+                                if (null != integer) {
+                                    ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(integer);
+                                    if (null != aCompanyManual && null != aCompanyManual.getFjgkfzr()) {
+                                        list1.add(aCompanyManual.getFjgkfzr());
+                                    }
+                                }
+                            }
+                            if (list1.size() == 0) {
+                                name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                                tc.setCheckCompany(name);
+                            } else {
+                                name = list1.get(0);
+                                tc.setCheckCompany(name);
+                            }
+                        } else {
+                            name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                            tc.setCheckCompany(name);
+                        }
+                        map.put("fjgkfzr", name);
+                    }
+
+                }
+                list3.addAll(list);
+            }
+        } else if (flag == 2) {
+            for(Integer id:ids) {
+                list = new ArrayList<>();
+                user1 = userMapper.selectByPrimaryKey(id);
+                company = companyMapper.selectByPrimaryKey(user1.getId());
+                list = tCheckItemMapper.selectListBystatus2(user1.getId(), flag, breaken);
+                // 表示的是行政检查
+                list = tCheckItemMapper.selectXZListBystatus(user1.getId(), flag, breaken);
+                for (Map map : list) {
+                    Date realTime = (Date) map.get("realTime");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                    String format = sdf.format(realTime);
+                    String levelId = "";
+                    if (null != map.get("industryType") && 1 == map.get("industryType")) {
+                        Integer levelId1 = (Integer) map.get("levelId");
+                        if (null != levelId1) {
+                            levelId = tLevelMapper.selectByPrimaryKey(levelId1).getLevel2();
+                        }
+
+                    } else if (null != map.get("industryType") && 2 == map.get("industryType")) {
+                        levelId = aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2();
+                    }
+
+                    if (StringUtils.isBlank(levelId)) {
+                        map.put("level2", levelId);
+                    }
+
+                    map.put("realTimeStr", format);
+                    map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
+                    // 获取
+                }
+                list3.addAll(list);
+            }
+        } else if (flag == 3) {
+            // 表示的是部门抽查
+            for(Integer id:ids) {
+                list = new ArrayList<>();
+                user1 = userMapper.selectByPrimaryKey(id);
+                company = companyMapper.selectByPrimaryKey(user1.getId());
+                list = tCheckItemMapper.selectBMCCListBystatus(user1.getId(), flag, breaken);
+                for (Map map : list) {
+                    Date realTime = (Date) map.get("realTime");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                    String format = sdf.format(realTime);
+                    //  String level = (String) map.get("level");
+                    if (null != map.get("industryType") && 1 == map.get("industryType")) {
+                        map.put("level2", tLevelMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2());
+                    } else if (null != map.get("industryType") && 2 == map.get("industryType")) {
+                        map.put("level2", aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2());
+                    }
+                    map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
+                    map.put("realTimeStr", format);
+                }
+                list3.addAll(list);
+            }
+        }
+        String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("host", host);
+        model.addAttribute("list", list3);
+        //model.addAttribute("userId", user.getId());
+        return "steel/check/hidden-danger-list";
+    }
+    /**
+     * TODO 隐患治理记录, 整改不合格的 新建立的页面
+     * 有三种情况,企业自查 行政检查  部门抽查
+     *
+     * @param request 请求
+     * @param flag    方式
+     * @param status  状态
+     * @return
+     */
+    @RequestMapping(value = "hidden-danger-list2")
+    public String hiddenDangerList2(HttpServletRequest request, Model model, Integer flag, Integer status, Integer userId, Integer breaken) {
         User user;
         if (null == userId) {
             user = getLoginUser(request);
@@ -5373,7 +5528,7 @@ public class SteelController extends BaseController {
                             } else if ("黄色".equals(level)) {
                                 gg3[i] = gg3[i] + 1;
                             } else if ("蓝色".equals(level)) {
-                                gg3[i] = gg3[i] + 1;
+                                gg4[i] = gg4[i] + 1;
                             }
                             break;
                         }
@@ -5401,7 +5556,7 @@ public class SteelController extends BaseController {
         } else if ("黄色".equals(level)) {
             arr[2] = arr[2] + 1;
         } else if ("蓝色".equals(level)) {
-            arr[2] = arr[2] + 1;
+            arr[3] = arr[3] + 1;
         }
     }
 

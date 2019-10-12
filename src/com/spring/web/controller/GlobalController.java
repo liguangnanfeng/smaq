@@ -1134,14 +1134,10 @@ public class GlobalController extends BaseController {
         if(null == control){
             control = 2;
         }
-
-        /*Integer totalzc = companyMapper.findALL(user.getId(), user.getUserType(),0); // 正常
-        Integer totalwyx = companyMapper.findALL(user.getId(), user.getUserType(),1); // 冻结*/
         List<Map<String,Object>> list = tCheckItemMapper.findCompany(user.getId(), user.getUserType(),control);
-
         // 4 村  3 镇  6 区  7 市
         if (null == list || list.size() == 0){
-
+            
         }else {
             addFlag(user, list);
         }

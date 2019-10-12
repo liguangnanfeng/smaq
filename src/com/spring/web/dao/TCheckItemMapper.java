@@ -190,16 +190,18 @@ public interface TCheckItemMapper {
      */
     List<Map> selectListBystatus(@Param("userId") Integer userId,@Param("flag") Integer flag,@Param("breaken") Integer breaken);
 
+
+    List<Map> selectListBystatus2(@Param("userId") Integer userId,@Param("flag") Integer flag,@Param("breaken") Integer breaken);
+
     /**
      * 隐患治理记录之行政检查
-     * @param userId
      * @param flag
      * @return
      */
     List<Map> selectXZListBystatus(@Param("userId") Integer userId,@Param("flag") Integer flag,@Param("breaken") Integer breaken);
     /**
      * 隐患治理记录之部门抽查
-     * @param userId
+     * @param userId     * @param userId
      * @param flag
      * @return
      */

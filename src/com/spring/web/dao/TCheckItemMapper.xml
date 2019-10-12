@@ -944,6 +944,44 @@
           and T2.flag=#{flag}
           order by T2.real_time desc;
     </select>
+
+    <select id="selectListBystatus2" resultType="java.util.Map" parameterType="INTEGER">
+        select T2.type,
+        T2.depart,
+        T1.levels,
+        T1.recheck_time,
+        T2.real_time as realTime ,
+        T1.content,
+        T1.files,
+        T1.recheck_file,
+        T1.file_address,
+        T1.status,
+        T4.level,
+        #T4.fjgkfzr,
+        T4.level2,
+        T1.money,
+        T1.level_id as levelId,
+        T2.industry_type as industryType,
+        T1.id as checkItemId,
+        T2.id as checkId,
+        T4.id as companyManualId,
+        T3.id as checkPartId
+        from smaq.t_check_item_tbl T1
+        left join smaq.t_check_tbl T2 on T1.check_id = T2.id
+        left join smaq.t_check_part_tbl T3 on T1.part_id = T3.id
+        left join smaq.a_danger_manual_tbl T4 on T1.level_id = T4.id
+        where T2.user_id = #{userId}
+        and T2.status = 2
+        <if test="breaken == 1">
+            and T1.status in ('2','3')
+        </if>
+        <if test="breaken == 2">
+            and T1.status in ('2')
+        </if>
+        and T2.del= 0
+        and T2.flag=#{flag}
+        order by T2.real_time desc;
+    </select>
     <!--
     现场
     -->

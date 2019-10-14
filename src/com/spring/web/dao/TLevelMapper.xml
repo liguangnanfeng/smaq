@@ -46,6 +46,11 @@
         select
         <include refid="Base_Column_List" />
         from t_level_tbl
+        <where>
+            <if test="state != 0">
+                industry like concat('%', '化工', '%')
+            </if>
+        </where>
     </select>
 
 

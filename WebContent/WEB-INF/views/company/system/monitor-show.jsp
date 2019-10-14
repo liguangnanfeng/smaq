@@ -112,7 +112,8 @@
   		variable: 'player',//该属性必需设置，值等于下面的new chplayer()的对象
   		autoplay:true,//自动播放
   		live:true,
-  		video:"${code}"//视频地址
+	    video:"${code}"//视频地址
+	    //video:"${ly }/images/test.mp4"
   	};
   	var player2=new ckplayer(videoObject2);
   	

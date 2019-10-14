@@ -723,6 +723,7 @@ public class GlobalController extends BaseController {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
+        System.out.println(m);
         m.put("companyName", companyName);
         model.addAttribute("list", monitorMapper.selectGroupByMap(m));
         model.addAttribute("companyName", companyName);
@@ -1115,6 +1116,8 @@ public class GlobalController extends BaseController {
             ids = companyMapper.selectDistrictCompanyId(user.getId());
         }else if (user.getUserType() == 10){ // 惠山化工账号
             ids = companyMapper.selectTidCompanyId(user.getId());
+        }else if(user.getUserType() == 9){
+            ids = companyMapper.selectAll();
         }
         return ids;
     }
@@ -4160,7 +4163,12 @@ public class GlobalController extends BaseController {
                 model.addAttribute("dL", dL);
 
             } else if (-1 == checkType) {
-                List<TLevel> dL = tLevelMapper.selectAll();
+                int state = 0;
+                if(company.getIndustry().contains("化工"))
+                {
+                    state = 1;
+                }
+                List<TLevel> dL = tLevelMapper.selectAll(state);
                 Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
                 for (TLevel ad : dL) {
                     String l1 = ad.getLevel1();

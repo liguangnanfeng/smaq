@@ -3344,7 +3344,9 @@ public class VillageController extends BaseController {
     @RequestMapping(value = "selectDep3")
     @ResponseBody
     public List selectDep3(Integer depId, String dpName, Integer checkType, HttpServletRequest request) {
+        int state = 0;
         User user = getLoginUser(request);
+
         List<String> list = new ArrayList<String>();
 
         if (-2 == checkType) {                                     //现场
@@ -3365,8 +3367,13 @@ public class VillageController extends BaseController {
                     List<ADangerManual> aDangerManuals = aDangerManualMapper.selectAllDep3();
                     map.put("name", level3);
                     map.put("list", aDangerManuals);
-                } else if (-1 == checkType) {                                //基础
-                    List<TLevel> levels = tLevelMapper.selectAll();
+                } else if (-1 == checkType) {//基础
+                    Company company = companyMapper.selectByPrimaryKey(user.getId());
+                    if(company.getIndustry().contains("化工"))
+                    {
+                        state = 1;
+                    }
+                    List<TLevel> levels = tLevelMapper.selectAll(state);
                     map.put("name", level3);
                     map.put("list", levels);
                 }
@@ -3433,7 +3440,11 @@ public class VillageController extends BaseController {
             model.addAttribute("dL", dL);
 
         } else if (-1 == checkType) {
-            List<TLevel> dL = tLevelMapper.selectAll();
+            int state = 0;
+            if(company.getIndustry().contains("化工")){
+                state = 1;
+            }
+            List<TLevel> dL = tLevelMapper.selectAll(state);
             Map<String, Set<String>> list = new LinkedHashMap<String, Set<String>>();
             for (TLevel ad : dL) {
                 String l1 = ad.getLevel1();

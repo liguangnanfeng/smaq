@@ -239,4 +239,6 @@ public interface CompanyMapper {
 
     List<Map<String, Object>> selectListsTidCompanyId(@Param("tid") Integer tid);
 
+    List<Integer> selectAll();
+
 }

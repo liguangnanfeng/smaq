@@ -101,7 +101,7 @@ public interface TLevelMapper {
      */
     List<Map<String, Object>> checkGaoWei2(Integer industryId);
 
-    List<TLevel> selectAll();
+    List<TLevel> selectAll(@Param("state") int state);
 
     List<TLevel> findIndustry(@Param("industry")String industry);
 

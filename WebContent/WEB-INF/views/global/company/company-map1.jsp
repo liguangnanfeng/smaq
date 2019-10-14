@@ -14,7 +14,7 @@
 <meta name="description" content="风险分级管控   隐患排查治理智能化平台">
 <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css" />
 <script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
-<script src="https://webapi.amap.com/maps?v=1.4.2&key=441462b46b736497a5f2a377aafb5b69&plugin=AMap.PlaceSearch"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.2&key=441462b46b736497a5f2a377aafb5b69&plugin=AMap.PlaceSearch"></script>
 <script src="https://cache.amap.com/lbs/static/PlaceSearchRender.js"></script>
 
 <script src="${ly}/js/angular.js"></script>
@@ -36,8 +36,8 @@
 <body ng-app="app" ng-controller="appCtrl">
 	<nav class="breadcrumb">
 		<i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-		<span class="c-gray en">&gt;</span> <span>企业信息库</span>
-		<span class="c-gray en">&gt;</span> <span>企业分布图</span>
+		<span class="c-gray en">&gt;</span> <span>风险分级管控</span>
+		<span class="c-gray en">&gt;</span> <span>各类风险分布</span>
 		<div class="back" ng-click="back()" ng-hide="backBtn" style="display: inline-block;z-index: 99;position: absolute;right: 100px;cursor: pointer;">
         	<img src="${ly}/images/back.png" alt="" style="width: 20px;height: 20px;line-height: 20px;"> 返回列表页面
         </div>
@@ -245,7 +245,9 @@ app.controller('appCtrl', function($scope, $filter, $compile, $http) {
    	var time = setInterval(function() {
       if (document.querySelector(".mark") != null) {
           $(".mark").each(function(index, element) {
+              console.log(element)
               var data = JSON.stringify($(".mark").eq(index).attr("data"));
+              console.log(data);
               var html = "<div class='mkbt' ng-click='showItemId(" + data + ")'></a>";
               var template = angular.element(html);
               var mobileDialogElement = $compile(template)($scope);
@@ -253,8 +255,26 @@ app.controller('appCtrl', function($scope, $filter, $compile, $http) {
           });
           clearInterval(time);
       }
-  }, 100);
+  }, 10);
   };
+
+
+<%--    var time = setInterval(function() {--%>
+<%--    if (document.querySelector(".mark") != null) {--%>
+<%--    $(".mark").each(function(index, element) {--%>
+<%--    var data = JSON.stringify($(".mark").eq(index).attr("data"));--%>
+<%--    console.log(data);--%>
+<%--    var html = "<div class='mkbt' ng-click='showItemId(" + data + ")'></a>";--%>
+<%--    var template = angular.element(html);--%>
+<%--    var mobileDialogElement = $compile(template)($scope);--%>
+<%--    $(".mark").eq(index).append(mobileDialogElement);--%>
+<%--    });--%>
+<%--    clearInterval(time);--%>
+<%--    }--%>
+<%--    }, 100);--%>
+<%--    };--%>
+
+
 
   $scope.detail = true;
   $scope.backBtn = true;
@@ -441,6 +461,7 @@ $scope.saveLocation = function(userId, cname){
           }
       }, 1000);
   });
+    $scope.searchBtn()
 });
 </script>
 <script src="${ly}/js/myMap.js"></script>

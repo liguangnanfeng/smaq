@@ -54,7 +54,7 @@
 <body>
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-    <span class="c-gray en">&gt;</span> <span>${flag!=2 ? '隐患排查治理系统' : '行政执法系统'}</span>
+    <span class="c-gray en">&gt;</span> <span>${flag!=2 ? '隐患排查治理系统' : '行政执法检查'}</span>
     <c:if test="${flag != 2}">
         <span class="c-gray en">&gt;</span> <span>隐患排查记录</span>
     </c:if>

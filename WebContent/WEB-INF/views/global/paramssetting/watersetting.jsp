@@ -37,8 +37,9 @@ body .dis-ib{margin-right:15px;}
 </head>
 <body>
   <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-    <span class="c-gray en">&gt;</span> <span>环境监测参数设置</span> 
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+    <span class="c-gray en">&gt;</span> <span>系统设置管理</span>
+    <span class="c-gray en">&gt;</span> <span>在线监测</span>
     <span class="c-gray en">&gt;</span> <span>水质五参数设置</span> 
     <!-- 获取风险等级1和2的企业 -->
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">

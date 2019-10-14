@@ -23,7 +23,7 @@ body .cl .l .btn-primary{width:240px}
 <body>
   <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-    <span class="c-gray en">&gt;</span> <span>行政执法系统</span> 
+    <span class="c-gray en">&gt;</span> <span>行政执法检查</span>
     <span class="c-gray en">&gt;</span> <span>执法档案</span> 
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>

@@ -370,7 +370,7 @@ public interface TCheckItemMapper {
 
     List<Map<String,Object>> findNumbers(@Param("userId")Integer userId, @Param("type")Integer type);
 
-    List<Map<String,Object>> findCompany(@Param("userId")Integer userId, @Param("type")Integer type, @Param("control") Integer control);
+    List<Map<String,Object>> findCompany(@Param("userId")Integer userId, @Param("type")Integer type, @Param("is_industrys") Integer is_industrys);
 
     List<Map<String, Object>> selectBasicMessage(@Param("userId") Integer userId, @Param("type") Integer type, @Param("start") Integer start);
 

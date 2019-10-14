@@ -1134,9 +1134,6 @@ public class GlobalController extends BaseController {
 
         User user = getLoginUser(request);
 
-        if(null == control){
-            control = 2;
-        }
         List<Map<String,Object>> list = tCheckItemMapper.findCompany(user.getId(), user.getUserType(),control);
         // 4 村  3 镇  6 区  7 市
         if (null == list || list.size() == 0){
@@ -5726,7 +5723,6 @@ public class GlobalController extends BaseController {
                         sb.append("'").append(ids.get(i)).append("',");
                     }
                 }
-
                 List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();
 
                 HashMap<String, Object> map1 = new HashMap<>();

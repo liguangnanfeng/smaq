@@ -57,7 +57,7 @@
 <body>
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-    <span class="c-gray en">&gt;</span> <span>${flag!=2 ? '隐患排查治理系统' : '行政执法系统'}</span>
+    <span class="c-gray en">&gt;</span> <span>${flag!=2 ? '隐患排查治理' : '行政执法系统'}</span>
     <c:if test="${flag != 2}">
         <span class="c-gray en">&gt;</span> <span>隐患排查记录</span>
     </c:if>
@@ -140,7 +140,7 @@
 
         </span>
         </c:if>
-    <span class="r x">检查总次数：<strong>${fn:length(list) }</strong> 条；检查总条数量：<strong>${sum4}</strong> 条；合格数量：<strong>${sum1}</strong> 条；隐患数量：<strong>${sum2}</strong> 条；已整改数量：<strong>${sum3}</strong> 条</span>
+    <span class="r x">检查总次数：<strong>${fn:length(list) }</strong> 条；检查总条数量：<strong>${sum}</strong> 条；合格数量：<strong>${sum1}</strong> 条；隐患数量：<strong>${sum2}</strong> 条；已整改数量：<strong>${sum3}</strong> 条</span>
     <span class="r y" style="display:none">未排查记录：<strong>${fn:length(list) }</strong> 条</span>
     </div>
     <div class="mt-20">

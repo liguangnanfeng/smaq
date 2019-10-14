@@ -555,7 +555,7 @@
         <%--  <li><a data-href="${ly }/village/reviceMessageList" data-title="信息接收列表" href="javascript:void(0)">信息接收列表</a></li> --%>
         <li><a data-href="${ly }/village/addMessages" data-title="推送编辑" href="javascript:void(0)">推送编辑</a>
         </li>
-        <li><a data-href="${ly }/village/groupIndex" data-title="群组设置" href="javascript:void(0)">群组设置</a>
+<%--        <li><a data-href="${ly }/village/groupIndex" data-title="群组设置" href="javascript:void(0)">群组设置</a>--%>
         </li>
         </ul>
         </dd>

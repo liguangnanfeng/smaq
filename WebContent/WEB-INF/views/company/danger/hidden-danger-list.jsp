@@ -52,7 +52,7 @@
 <body>
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-    <span class="c-gray en">&gt;</span> <span>隐患统计分析系统</span>
+    <span class="c-gray en">&gt;</span> <span>隐患排查治理</span>
     <span class="c-gray en">&gt;</span> <span>隐患治理记录</span>
     <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="/company/welcome" title="返回">首页</a>
 

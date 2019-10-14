@@ -121,7 +121,7 @@
              <span class="l">
 
 
-      <form action="${ly }/steel/check-list?flag=${flag}&userId=${userId}" method="post">
+     <!-- <form action="${ly }/steel/check-list?flag=${flag}&userId=${userId}" method="post">
           <select class="sel_area isShow" id="partNamme"  name="dmName"  style="position:relative;top:3px">
             <option value="">全部</option>
             <c:forEach items="${set }" var="be">
@@ -131,7 +131,7 @@
             <button class="btn btn-success" type="submit">
                 <i class="Hui-iconfont">&#xe665;</i> 查询
             </button>
-        </form>
+        </form>-->
 
         </span>
         </c:if>

@@ -60,21 +60,25 @@
                                 <div class="dis-ib">
                                         <span>本级管控：</span>
                                         <span class="select-box inline">
+    <script>
+     console.log('c:','${control}')
+    </script>
                         <select id="villageId" name="control" class="select" style="width:100px;">
-                                <c:if test="${control==2}">
+                                <c:if test="${control == null}">
                                 <option value="2" selected="selected">全部</option>
-                                <option value="4">是</option>
-                                <option value="0">否</option>
+                                <option value="${userType}">是</option>
+                                <option
+                                    value="0">否</option>
                                 </c:if>
-                                <c:if test="${control==4}">
+                                <c:if test="${control == userType}">
                                         <option value="2">全部</option>
-                                        <option value="4" selected="selected">是</option>
+                                        <option value="${userType}" selected="selected">是</option>
                                         <option value="0">否</option>
                                 </c:if>
 
-                                <c:if test="${control==0}">
+                                <c:if test="${control == 0}">
                                         <option value="2">全部</option>
-                                        <option value="4">是</option>
+                                        <option value="${userType}">是</option>
                                         <option value="0" selected="selected">否</option>
                                 </c:if>
                         </select>
@@ -102,7 +106,7 @@
             onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont" style="font-size:15px;">&#xe600;</i> 添加线下检查记录</a>
         </c:if>  -->
         </span>
-                <span class="r">共有数据：<strong>${fn:length(map) }</strong> 条</span>
+                <span class="r">共有数据：<strong>${fn:length(list) }</strong> 条</span>
         </div>
         <div class="mt-20">
                 <table class="table table-border table-bordered table-bg table-hover table-sort">

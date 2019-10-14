@@ -1206,7 +1206,6 @@ public class VillageController extends BaseController {
         if (user.getUserType() == 6) {//区
             model.addAttribute("townL", townMapper.selectListByDistrict(m));
         }
-
         // 向map集合进行存储
         m.put("type", type);  //
         m.put("flag", flag);  // 1
@@ -1239,7 +1238,6 @@ public class VillageController extends BaseController {
                 m.put("type",2);
                 list = tCheckMapper.findSelectList(m);
             }
-
             Integer sum = 0;
             for (int i = 0; i < list.size(); i++) {
 
@@ -1247,7 +1245,6 @@ public class VillageController extends BaseController {
                 list.get(i).put("listM",id);
                 sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
             }
-
             Integer number1 = tCheckMapper.findDataCounts(user.getId(),flag);
             Integer number2 = tCheckMapper.findDataCountSum(user.getId(),1,flag);
             Integer number3 = tCheckMapper.findDataCountSum(user.getId(),2,flag);

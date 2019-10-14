@@ -2983,13 +2983,9 @@ public class CompanyController_safety extends BaseController {
         model.addAttribute("company", company);
         model.addAttribute("user", userMapper.selectByPrimaryKey(company.getUserId()));
         model.addAttribute("v", userMapper.selectByPrimaryKey(company.getVillageId()));
-
-
-
        /* List<Map<String, Object>> list = aCompanyManualMapper.selectRed(m2);*/
         List<Map<String, Object>> list2 = aCompanyManualMapper.selectByMapTwo(m);
         List<Map<String, Object>> list = aCompanyManualMapper.selectRed(user.getId());
-
 
         model.addAttribute("list", list);
         model.addAttribute("list2", list2);
@@ -2997,23 +2993,16 @@ public class CompanyController_safety extends BaseController {
         Map<String, LinkedHashSet<String>> levmap = new HashMap<String, LinkedHashSet<String>>();
         for (Map<String, Object> m1 : list) {
             String level1 = null == m1.get("level1") ? "" : m1.get("level1").toString();
-            //log.error("level1：-----------start------------"+level1);
             String level2 = null == m1.get("level2") ? "" : m1.get("level2").toString();
-            //log.error("level2："+level2);
             LinkedHashSet<String> l2s = levmap.get(level1);
             if (null == l2s) {
                 l2s = new LinkedHashSet<String>();
-                //log.error("level1："+level1);
                 levmap.put(level1, l2s);
-                //log.error("levmap："+levmap.toString());
             }
             l2s.add(level2);
-            //log.error("l2s：------------end-----------"+l2s.toString());
         }
-        //log.error("levmap："+levmap.toString());
         model.addAttribute("treeMap", levmap);
         model.addAttribute("flag", flag);
-
         /*
          * 添加根据风险等级查询，查询结果可能会受到其他修改风险等级功能的影响	wz_20181116
          */
@@ -3024,7 +3013,6 @@ public class CompanyController_safety extends BaseController {
         m.put("level", "橙色");
         List<Map<String, Object>> list22 = aCompanyManualMapper.selectByMap(m);
         model.addAttribute("list22", list22);
-
 
         m.put("level", "黄色");
         List<Map<String, Object>> list33 = aCompanyManualMapper.selectByMap(m);
@@ -3040,7 +3028,6 @@ public class CompanyController_safety extends BaseController {
 
         Integer number = list11.size() + list22.size() +  list33.size() + list44.size() + list55.size();
 
-
         model.addAttribute("number", number);
         if (flag.equals("2")) {
             //log.error("zhangcl 2018.10.18 controlList3,area_range="+company.getAreaRange());
@@ -3048,7 +3035,6 @@ public class CompanyController_safety extends BaseController {
         } else {
             return "company/safety-system/control-list2";
         }
-
     }
 
     /**

@@ -155,7 +155,7 @@
             $("#iframe").attr("src", "${ly}/company/safety-system/assess7");
             }
             function sub2(){
-            $("#iframe").attr("src", "${ly }/company/safety-system/control-list2?flag=2");
+            $("#iframe").attr("src", "/company/safety-system/control-list2?flag=1");
 
             }
             function sub3(){

@@ -450,18 +450,18 @@
             var template = angular.element(html);
             var mobileDialogElement = $compile(template)($scope);
             $(".mark").eq(index).append(mobileDialogElement);
-            wjj()
-        console.log('页面加载完毕！')
+            console.log('页面加载完毕！')
         });
         clearInterval(time);
         }
         }, 1000);
         });
-        function wjj(){
+        setTimeout(()=>{
         $scope.searchBtn();
         console.log('searchBtn')
-        }
+        },1500);
         });
+
         </script>
         <script src="${ly}/js/myMap.js"></script>
         </body>

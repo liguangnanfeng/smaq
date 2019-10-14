@@ -9,9 +9,9 @@
         <meta content="width=device-width, initial-scale=0, maximum-scale=1.0, user-scalable=yes" name="viewport" />
         <meta content="yes" name="apple-mobile-web-app-capable" />
         <%@ include file="/WEB-INF/inc/back-header.inc" %>
-        <title>安全生产信息智能化管理平台</title>
-        <meta name="keywords" content="风险分级管控 隐患排查治理智能化平台">
-        <meta name="description" content="风险分级管控 隐患排查治理智能化平台">
+        <title>安全生产信息化管理平台</title>
+        <meta name="keywords" content="风险分级管控 隐患排查治理化平台">
+        <meta name="description" content="风险分级管控 隐患排查治理化平台">
         <style type="text/css">
         body {
         margin: 0;
@@ -264,7 +264,7 @@
         <div>
         <img src="${ly }/images/home/logo.png" class="title_img">
         <p class="name"></p>
-        <p class="name2">安全生产信息智能化管理平台</p>
+        <p class="name2">安全生产信息化管理平台</p>
         <span class="right_yuan">
         <span class="yuan" style="background:#00A1E9"></span>
         <span class="yuan" style="background:#FFFF00"></span>

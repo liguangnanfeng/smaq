@@ -21,6 +21,10 @@
 function pr_() {
   $("#div_container").jqprint();
 }
+    var searchURL = window.location.search;
+    searchURL = searchURL.substring(1, searchURL.length);
+    var f = searchURL.split("&")[0].split("=")[1];
+    console.log('document.flag2:${document.flag2}')
 </script>
 </head>
 <body>
@@ -38,6 +42,7 @@ function pr_() {
                   <i class="Hui-iconfont mr-10">&#xe66b;</i>返回文书
                 </button> --%>
                 </c:when>
+
                 <c:otherwise>
                 <button onClick="top.show_tab('检查文书', '${ly }/village/check-list?flag=${document.flag2}')" class="btn radius" type="button" >
                     <i class="Hui-iconfont mr-10">&#xe66b;</i>返回列表
@@ -57,8 +62,8 @@ function pr_() {
             
         </div>
         <script>
-    console.log('document.flag')
-    console.log('${document.flag}')
+    console.log('document.flag: ${document.flag}')
+    console.log('opinion-detail2')
     </script>
         <c:if test="${document.flag == 1 || document.flag == 2 || document.flag == 8}">
         
@@ -66,16 +71,16 @@ function pr_() {
               <div class="tabBar clearfix">
               <c:choose>
                 <c:when test="${document.flag == 8}">
-                  <a class="current" href='/village/check-document?checkId=${document.checkId}&flag=8'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
+                  <a class="current" href='/village/check-document?checkId=${document.checkId}&flag=8&f=${document.flag2}'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
               </c:when>
                   <c:when test="${document.flag == 1}">
 
-                      <a  href='/village/check-document?checkId=${document.checkId}&flag=8'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
+                      <a  href='/village/check-document?checkId=${document.checkId}&flag=8&f=${document.flag2}'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
 
                   </c:when>
                 <c:otherwise>
 
-                    <a href='/village/check-document?checkId=${document.checkId}&flag=8'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
+                    <a href='/village/check-document?checkId=${document.checkId}&flag=8&f=${document.flag2}'><%-- ${document.flag2 == 3 ? '隐患整改意见书' : '现场检查记录'} --%>现场检查记录</a>
 
                 </c:otherwise>
                </c:choose>
@@ -85,7 +90,7 @@ function pr_() {
                     <a href="javascript:void(0)" onclick="layer.alert('本次检查没有隐患，无需整改')">${document.flag2 == 3 ? '隐患整改意见书' : '责令限期整改意见书'}</a>
                     </c:when>
                     <c:otherwise>
-                    <a ${document.flag == 1 ? 'class="current"' : ''} href='/village/check-document?checkId=${document.checkId}&flag=1'>${document.flag2 == 3 ? '隐患整改意见书' : '责令限期整改意见书'}</a>
+                    <a ${document.flag == 1 ? 'class="current"' : ''} href='/village/check-document?checkId=${document.checkId}&flag=1&f=${document.flag2}'>${document.flag2 == 3 ? '隐患整改意见书' : '责令限期整改意见书'}</a>
                     </c:otherwise>
                 </c:choose>
                 <%-- </c:if> --%>
@@ -95,7 +100,7 @@ function pr_() {
                     <a href="javascript:void(0)" onclick="layer.alert('本次检查没有隐患，无需整改')">整改复查意见书</a>
                     </c:when>
                     <c:otherwise>
-                    <a ${document.flag == 2 ? 'class="current"' : ''} href='/village/check-document?checkId=${document.checkId}&flag=2'>整改复查意见书</a>
+                    <a ${document.flag == 2 ? 'class="current"' : ''} href='/village/check-document?checkId=${document.checkId}&flag=2&f=${document.flag2}'>整改复查意见书</a>
                     </c:otherwise>
                 </c:choose>
               </div>

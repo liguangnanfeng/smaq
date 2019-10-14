@@ -19,6 +19,9 @@
 </style>
 </head>
 <body>
+    <script>
+    console.log('opinion-add12')
+    </script>
     <div class="page-container" style="width:150mm;margin:auto;padding:10px 0 0 0;">
         <div class="row cl row_ac" >
             <script type="text/javascript">
@@ -44,10 +47,10 @@
         </div>
         <div class="row cl mb-20">
           <div class="tabBar clearfix">
-            <a href="/village/check-document?checkId=${check.id}&flag=8">现场检查记录</a>
+            <a href="/village/check-document?checkId=${check.id}&flag=8&f="+f>现场检查记录</a>
             <a class="current" href="JavaScript:void(0)">责令限期整改意见书</a>
               <c:if test="${is_fu==1}">
-                  <a  href="/village/check-document?checkId=${check.id}&flag=2">整改复查意见书</a>
+                  <a  href='/village/check-document?checkId=${check.id}&flag=2&f=' +f>整改复查意见书</a>
               </c:if>
               <c:if test="${is_fu==0}">
                   <a href="javascript:void(0)" onclick="layer.msg('请先进行复查');setTimeout(function(){window.location.href='${ly}/company/recheck-add?checkId=${check.id}'},1000)">整改复查意见书</a>
@@ -255,6 +258,7 @@
 var checkId = ${checkId};
 var userId = ${company.userId };
 var rectificationId = '${rectification.id}';
+    console.log('document.flag2:${document.flag2}')
 
 
 $(function () {
@@ -285,10 +289,16 @@ function save_() {
     }, function(reuslt) {
     console.log('--------------------------r----------123------------r2---------------------------')
     var f1=sessionStorage.getItem('flag1');
+    console.log('flag:',f1)
     var searchURL = window.location.search;
     searchURL = searchURL.substring(1, searchURL.length);
     var i1 = searchURL.split("&")[0].split("=")[1];
+    var f2 = searchURL.split("&")[0].split("=")[2];
+    if(f1){
     top.show_tab("整改复查意见书", '/village/check-rectification?flag=' + f1 + '&id=' + i1+'&book');
+    }else{
+    top.show_tab("整改复查意见书", '/village/check-rectification?flag=' + f2 + '&id=' + i1+'&book');
+    }
     })
 }
 var serious_i = ${serList};

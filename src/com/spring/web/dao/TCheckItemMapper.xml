@@ -3513,10 +3513,10 @@
                 #{userId}
                 )
             </if>
-            <if test="is_industrys != null and is_industrys == 10">
+            <if test="is_industrys != null and type == 10">
                 and a1.is_industrys = #{is_industrys}
             </if>
-            <if test="is_industrys != null and is_industrys != 10">
+            <if test="is_industrys != null and type != 10">
                 and a1.is_controls = #{is_industrys}
             </if>
             AND c1.is_del = 0

@@ -153,6 +153,7 @@ public class VillageSettingController extends BaseController{
             //m.put("companyName", company.getName());
             m.put("userId", userId);
             model.addAttribute("list", monitorMapper.selectByMap(m));
+            log.error(monitorMapper.selectByMap(m));
             //if (user.getUserType() == 5) {
             //    return "company/system/monitor-list";
             //}
@@ -185,8 +186,7 @@ public class VillageSettingController extends BaseController{
             m.put("userId", userId);
             model.addAttribute("list", monitorMapper.selectByMap(m));
     		return "company/system/video-monitor-img";
-    	} 
-    	
+    	}
     	return "company/system/video-monitor";
     }
 

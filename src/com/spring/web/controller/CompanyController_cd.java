@@ -9201,6 +9201,7 @@ public class CompanyController_cd extends BaseController {
      */
     @RequestMapping("monitor-show")
     public String monitorShow(Model model, Integer id) throws Exception {
+        model.addAttribute("monitor", monitorMapper.selectByPrimaryKey(id));
         model.addAttribute("code", monitorMapper.selectByPrimaryKey(id).getCode());
         return "company/system/monitor-show";
     }

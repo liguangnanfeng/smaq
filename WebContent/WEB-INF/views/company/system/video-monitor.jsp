@@ -148,20 +148,19 @@ function upload_part() {
         <thead>
           <tr class="text-c">
             <th width="5%">序号</th>
-            <th width="20%">重点部位/关键装置</th>
+            <th width="10%">重点部位/关键装置</th>
             <!-- <th width="50%">视频地址</th> -->
-            <th width="7%">编号</th>
-            <th width="8%">封面</th>
+            <th width="10%">编号</th>
             <th width="10%">操作</th>
           </tr>
         </thead>
         <tbody id="camerainfo">
 
-          <!--<c:forEach items="${list }" varStatus="index" var="be">
+          <c:forEach items="${list }" varStatus="index" var="be">
           <tr class="text-c">
             <td>${index.index+1 }</td>
             <td>${be.name }</td>
-            
+
             <td>${be.memo }</td>
             <td>
               <a style="text-decoration:none" onClick="show_tab('编辑摄像头', '/company/monitor-add?id=${be.id}')" href="javascript:;" title="编辑">查看/编辑</a>
@@ -169,7 +168,7 @@ function upload_part() {
               <a style="text-decoration:none" onClick="show_dialog('${be.name}', '/company/monitor-show?id=${be.id }')" href="javascript:;" title="删除">查看监控</a>
             </td>
           </tr>
-          </c:forEach>-->
+          </c:forEach>
    
         </tbody>
       </table>

@@ -63,18 +63,18 @@
                         <select id="villageId" name="control" class="select" style="width:100px;">
                                 <c:if test="${control==2}">
                                 <option value="2" selected="selected">全部</option>
-                                <option value="1">是</option>
+                                <option value="4">是</option>
                                 <option value="0">否</option>
                                 </c:if>
-                                <c:if test="${control==1}">
+                                <c:if test="${control==4}">
                                         <option value="2">全部</option>
-                                        <option value="1" selected="selected">是</option>
+                                        <option value="4" selected="selected">是</option>
                                         <option value="0">否</option>
                                 </c:if>
 
                                 <c:if test="${control==0}">
                                         <option value="2">全部</option>
-                                        <option value="1">是</option>
+                                        <option value="4">是</option>
                                         <option value="0" selected="selected">否</option>
                                 </c:if>
                         </select>

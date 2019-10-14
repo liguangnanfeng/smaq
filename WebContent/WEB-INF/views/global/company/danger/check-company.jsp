@@ -21,13 +21,15 @@
         <nav class="breadcrumb">
         <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
         <span class="c-gray en">&gt;</span> <span></span>
+        <span class="c-gray en">&gt;</span> <span>隐患排查治理</span>
         <c:if test="${flag != 2}">
             <span class="c-gray en">&gt;</span> <span>隐患排查记录</span>
         </c:if>
         <c:if test="${flag == 2}">
             <span class="c-gray en">&gt;</span> <span>执法记录</span>
         </c:if>
-<%--        <a onclick="back()" class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="#" title="返回">返回</a>--%>
+
+        <%--        <a onclick="back()" class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="#" title="返回">返回</a>--%>
 
         </nav>
         <div class="page-container">

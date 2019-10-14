@@ -58,14 +58,14 @@ $(function(){
 <body>
   <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-    <span class="c-gray en">&gt;</span> <span>${flag!=2 ? '隐患排查治理系统' : '行政执法系统'}</span> 
+    <span class="c-gray en">&gt;</span> <span>${flag!=2 ? '隐患排查治理' : '行政执法检查'}</span>
     <c:if test="${flag != 2}">
-      <span class="c-gray en">&gt;</span> <span>隐患排查记录</span> 
+      <span class="c-gray en">&gt;</span> <span>检查设置实施</span>
     </c:if>
     <c:if test="${flag == 2}">
-      <span class="c-gray en">&gt;</span> <span>执法记录</span> 
+      <span class="c-gray en">&gt;</span> <span>执法检查</span>
     </c:if>
-    
+
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>
     </a>
@@ -95,7 +95,7 @@ $(function(){
         </span>
         </c:if>
       </div>
-    
+
 <%--       <!-- 弹窗选择 -->--%>
 <%--      <div id="win_jian" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">--%>
 <%--        <div class="modal-dialog">--%>
@@ -141,7 +141,7 @@ $(function(){
 <%--            </div>--%>
 <%--        </div>--%>
 <%--      </div>--%>
-    
+
     <div class="mt-20">
       <table class="table table-border table-bordered table-bg table-hover table-sort">
         <thead>
@@ -170,7 +170,7 @@ $(function(){
             <td>${be.c }</td>
             <td>${flag == 1 ? be.depart : be.checkCompany}</td>
             <td>
-              
+
               <!-- 村镇 走这套 -->
               <c:if test="${session_user.userType == 3 || session_user.userType == 4}">
               <!-- 判断能否录入 行政检查 没填过 没过期的 -->
@@ -203,11 +203,11 @@ $(function(){
                 </c:if>
                 </c:otherwise>
               </c:choose>
-              
+
               <a style="text-decoration:none" onClick="show_dialog('检查详情_${be.id }', '${ly}/global/check-document?checkId=${be.id }&flag=8')" href="javascript:;">查看检查记录</a>
               <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除检查记录</a>
               </c:if>
-              
+
               <!-- 区级 市 省 走这套 -->
               <c:if test="${session_user.userType >= 6 || session_user.userName eq '港口'}">
               <!-- 判断能否录入 行政检查 没填过 没过期的 -->
@@ -265,24 +265,24 @@ $(function(){
                    <a style="text-decoration:none" onClick="layer.alert('还未设置整改意见')" href="javascript:;">整改意见</a><br>
                 </c:otherwise>
               </c:choose>
-                
+
                 <c:if test="${be.c3 > 0}">
                   <a style="text-decoration:none" onClick="show_dialog('复查详情_${be.id}', '${ly }/company/recheck-detail?checkId=${be.id }')" href="javascript:;">复查详情</a><br>
                 </c:if>
                 <c:if test="${be.c3 == 0}">
                   <a style="text-decoration:none" onClick="layer.alert('还没有复查记录哦。。。')" href="javascript:;">复查详情</a><br>
                 </c:if>
-                
+
               </c:if>
                <c:if test="${be.flag == 2 || be.flag == 3}">
                 <a style="text-decoration:none" onClick="show_dialog('检查文书-现场检查记录_${be.id }', '${ly}/village/check-document?checkId=${be.id }&flag=8')" href="javascript:;">查看检查文书</a><br>
                </c:if>
-              
+
               <c:if test="${be.flag == 2 || be.flag == 3}">
                 <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除检查记录</a>
               </c:if> --%>
               </c:if>
-              
+
             </td>
             </tr>
           </c:forEach>
@@ -311,6 +311,6 @@ function del_(id){
     })
   })
 }
-</script> 
+</script>
 </body>
 </html>

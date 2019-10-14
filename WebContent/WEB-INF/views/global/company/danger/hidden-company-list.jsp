@@ -20,7 +20,8 @@
 <body>
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-    <span class="c-gray en">&gt;</span> <span></span>
+    <span class="c-gray en">&gt;</span> <span>隐患排查治理</span>
+
     <c:if test="${flag != 2}">
         <span class="c-gray en">&gt;</span> <span>隐患治理记录</span>
     </c:if>

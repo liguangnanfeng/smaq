@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/views/taglibs.jsp" %>
 <!DOCTYPE HTML>
 <html>
@@ -122,8 +122,7 @@
         <%--<strong>第${page+1}页/共${count}页</strong>--%>
         <%--<a href="${ly }/village/recheck-list?flag=${flag}&page=${page+1}">下一页 &gt;</a>--%>
         <%--</p>--%>
-            <select id="selectBranch">
-            </select>
+          
     </div>
     <style>
       #list{
@@ -202,7 +201,7 @@
                         <td>${item[1]}</td>
                     </c:if>
                     <c:if test="${empty list.level2}">
-                        <td>暂无数据2</td>
+                        <td>暂无数据</td>
                     </c:if>
                     <c:if test="${not empty list.level2}">
                         <td>${list.level2 }</td>
@@ -240,14 +239,11 @@
                     </td>
                     <c:if test="${flag==1}">
                         <td>
-                        <script>
-                         console.log("${list}")
-                        </script>
                             <c:choose>
-                                <c:when test="${list.level =='红色'}"><font class="col-a">重大风险</font></c:when>
-                                <c:when test="${list.level == '橙色'}"><font class="col-b">较大风险</font></c:when>
-                                <c:when test="${list.level == '黄色'}"><font class="col-c">一般和较低风险</font></c:when>
-                                <c:when test="${list.level == '蓝色'}"><font class="col-d">低风险</font></c:when>
+                                <c:when test="${list.level =='红色'}">重大风险</c:when>
+                                <c:when test="${list.level == '橙色'}">较大风险</c:when>
+                                <c:when test="${list.level == '黄色'}">一般及较低风险</c:when>
+                                <c:when test="${list.level == '蓝色'}">低风险</c:when>
                             </c:choose>
                         </td>
                     </c:if>

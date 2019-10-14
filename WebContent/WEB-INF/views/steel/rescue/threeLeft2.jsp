@@ -207,7 +207,7 @@
             function sub5(){
             $("#imgd").hide();
             $("#iframe").show();
-            $("#iframe").attr("src","https://sec.dicarl.com/company/evaluate/zheng-list");
+            $("#iframe").attr("src","/company/evaluate/zheng-list");
             }
             function sub6(){
             $("#imgd").hide();

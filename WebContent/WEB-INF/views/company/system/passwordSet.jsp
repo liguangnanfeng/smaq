@@ -60,7 +60,7 @@ function article_save_submit() {
   <i class="Hui-iconfont">&#xe67f;</i>
   <span>首页</span>
   <span class="c-gray en">&gt;</span>
-  <span>系统管理</span>
+  <span>系统设置管理</span>
   <span class="c-gray en">&gt;</span>
   <span>修改密码</span>
   <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">

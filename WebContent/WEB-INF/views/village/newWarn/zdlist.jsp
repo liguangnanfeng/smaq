@@ -34,8 +34,8 @@ body .dis-ib{margin-right:15px;}
 <c:if test="${yzz != 1 }">
   <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-    <span class="c-gray en">&gt;</span> <span>安全监管</span>
-    <span class="c-gray en">&gt;</span> <span>重大危险源</span>
+    <span class="c-gray en">&gt;</span> <span>重大危险源长制</span>
+    <span class="c-gray en">&gt;</span> <span>在线监测</span>
     <%--<c:if test="${not empty from && from == '1' }">--%>
     	<%--<a class="btn btn-success radius r" style="line-height: 1.6em;    margin-left: 10px; margin-top: 3px" href="${ly }/village/company/toZdCompanyList" title="返回">--%>
     		<%--返回--%>

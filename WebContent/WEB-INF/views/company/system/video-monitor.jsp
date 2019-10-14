@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/taglibs.jsp"%>
 <!DOCTYPE HTML>
 <html>
@@ -78,8 +78,9 @@ function upload_part() {
     </c:if>
   </nav>-->
   <nav class="breadcrumb" style="text-align:left;">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-    <span class="c-gray en">&gt;</span> <span>实时监控</span> 
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+	<span class="c-gray en">&gt;</span> <span>系统设置管理</span>
+
     <span class="c-gray en">&gt;</span> <span>${companyName }实时监控</span> 
     <c:if test="${flag != 3}">
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
@@ -156,6 +157,7 @@ function upload_part() {
         </thead>
         <tbody id="camerainfo">
 
+		
           <c:forEach items="${list }" varStatus="index" var="be">
           <tr class="text-c">
             <td>${index.index+1 }</td>

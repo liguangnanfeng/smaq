@@ -122,8 +122,9 @@
 <nav class="breadcrumb">
     <c:set var="x1" value="${fn:split('企业自查/ /第三方检查/行政检查','/') }"/>
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-    <span class="c-gray en">&gt;</span> <span>隐患排查治理系统</span>
-    <span class="c-gray en">&gt;</span> <span>${x1[flag-1] }检查设置 </span>
+    <span class="c-gray en">&gt;</span> <span>隐患排查治理</span>
+    <%--<span class="c-gray en">&gt;</span> <span>${x1[flag-1] }检查设置 </span>--%>
+    <span class="c-gray en">&gt;</span> <span>检查设置实施 </span>
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
        href="javascript:location.replace(location.href);" title="刷新">
         <i class="Hui-iconfont">&#xe68f;</i>
@@ -364,7 +365,7 @@
                             <th colspan="3">定期检查</th>
                             <th colspan="2">季节检查</th>
                             <th colspan="2">其他检查</th>
-                            <th colspan="2">基础检测</th>
+                            <th colspan="2">基础检查</th>
                             <th colspan="2">累计</th>
                         </tr>
                         <tr class="text-c">

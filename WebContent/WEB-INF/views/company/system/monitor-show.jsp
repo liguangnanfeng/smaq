@@ -24,7 +24,7 @@
 </style>
 </head>
 <body id="monitorDetailBody">
-<!-- <script src="https://open.ys7.com/sdk/js/1.3/ezuikit.js"></script> -->
+<%--<<script src="https://open.ys7.com/sdk/js/1.3/ezuikit.js"></script>--%>
 <div class="page-container">
   <div style="display:inline;">
 	 <%--  <video id="myPlayer" style="float:left;height:480px;width:900px;" poster="" controls playsInline webkit-playsinline autoplay>
@@ -85,7 +85,7 @@
 	      </div>
 	      </div>
 	      <div class="desc_class">
-	      <label class="form-label col-xs-4 col-sm-2">事故类型</label>
+	      <label class="form-label col-xs-4 col-sm-2">事故类型${puid}</label>
 	      <div class="formControls col-xs-8 col-sm-9">
 	        <c:out value="${monitor.accidentType }" default="暂无"/>
 	      </div> 

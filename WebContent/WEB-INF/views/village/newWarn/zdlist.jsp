@@ -115,7 +115,7 @@ body .dis-ib{margin-right:15px;}
         </thead>
         <tbody id="showListBody">
           <!-- 循环-->
-          <%-- <c:forEach items="${list }" varStatus="index" var="se">
+          <c:forEach items="${list }" varStatus="index" var="se">
           <tr class="text-c">
             <td>${index.index + 1 }</td>
             <td>${se.name}</td>
@@ -123,7 +123,7 @@ body .dis-ib{margin-right:15px;}
             <td>${se.maximumStorage }</td>
             <td>${se.state }</td>
           </tr>
-          </c:forEach> --%>
+          </c:forEach>
           <!-- 循环结束 -->
         </tbody>
       </table>

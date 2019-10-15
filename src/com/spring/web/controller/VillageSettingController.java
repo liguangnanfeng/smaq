@@ -169,7 +169,6 @@ public class VillageSettingController extends BaseController{
         	log.error("monitorList name1 : "+name.toString());
         	log.error("monitorList before : "+before);
         	List<Map<String, Object>> list = monitorMapper.selectByMap(m);
-        	
         	for (Map<String, Object> map : list) {
             	model.addAttribute("monitor", map);
             	log.error("monitorList name2: "+map.get("name"));

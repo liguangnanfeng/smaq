@@ -3652,6 +3652,7 @@ public class SteelController extends BaseController {
         Map<String, Object> map2 = null;
         List<Map<String, Object>> companylist = new ArrayList<>();
         List<Map<String, Object>> sortlist = new ArrayList<>();
+        Company company = null;
         for(Map<String, Object> map:companyMaps){
             //计数初始化
             danger19 = 0; danger1 =0; danger2 =0; danger3 =0; danger4 =0;
@@ -3660,6 +3661,8 @@ public class SteelController extends BaseController {
             danger15 =0; danger16 =0; danger17 =0; danger18 =0; danger20 =0;
 
              list = zzjgDepartmentMapper.findAllLevel1((Integer) map.get("user_id"));
+
+             company = companyMapper.selectByPrimaryKey((Integer) map.get("user_id"));
             //公司级
             danger19 = danger19 + tCheckItemMapper.zhu123ChartDataBasics((String) map.get("user_name"),(Integer) map.get("user_id"));
 
@@ -3705,43 +3708,47 @@ public class SteelController extends BaseController {
 
             }else if (null != list && list.size() != 0){
                 for (int i = 0; i < list.size(); i++) {
-                    danger19 = danger19 + tCheckItemMapper.zhuChartData123("基础管理",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                    if (list.get(i).get("name").equals(company.getUserId())){
+                        continue;
+                    }else {
+                        danger19 = danger19 + tCheckItemMapper.zhuChartData123("基础管理", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger1 = danger1 + tCheckItemMapper.zhuChartData123("设计总图",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger1 = danger1 + tCheckItemMapper.zhuChartData123("设计总图", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger2 = danger2 + tCheckItemMapper.zhuChartData123("试生产",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger2 = danger2 + tCheckItemMapper.zhuChartData123("试生产", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger3 = danger3 + tCheckItemMapper.zhuChartData123("装置运行",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger3 = danger3 + tCheckItemMapper.zhuChartData123("装置运行", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger4 = danger4 + tCheckItemMapper.zhuChartData123("设备安全",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger4 = danger4 + tCheckItemMapper.zhuChartData123("设备安全", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger5 = danger5 + tCheckItemMapper.zhuChartData123("仪表安全",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger5 = danger5 + tCheckItemMapper.zhuChartData123("仪表安全", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger6 = danger6 + tCheckItemMapper.zhuChartData123("电气安全",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger6 = danger6 + tCheckItemMapper.zhuChartData123("电气安全", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger7 = danger7 + tCheckItemMapper.zhuChartData123("应急消防",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger7 = danger7 + tCheckItemMapper.zhuChartData123("应急消防", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger8 = danger8 + tCheckItemMapper.zhuChartData123("特殊管控",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger8 = danger8 + tCheckItemMapper.zhuChartData123("特殊管控", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger9 = danger9 + tCheckItemMapper.zhuChartData123("行为环境",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger9 = danger9 + tCheckItemMapper.zhuChartData123("行为环境", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger10 = danger10 + tCheckItemMapper.zhuChartData123("生产现场",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger10 = danger10 + tCheckItemMapper.zhuChartData123("生产现场", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger11 = danger11 + tCheckItemMapper.zhuChartData123("公辅工程",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger11 = danger11 + tCheckItemMapper.zhuChartData123("公辅工程", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger12 = danger12 + tCheckItemMapper.zhuChartData123("特种设备",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger12 = danger12 + tCheckItemMapper.zhuChartData123("特种设备", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger13 = danger13 + tCheckItemMapper.zhuChartData123("专项行业",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger13 = danger13 + tCheckItemMapper.zhuChartData123("专项行业", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger14 = danger14 + tCheckItemMapper.zhuChartData123("生产工艺",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger14 = danger14 + tCheckItemMapper.zhuChartData123("生产工艺", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger15 = danger15 + tCheckItemMapper.zhuChartData123("设备设施",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger15 = danger15 + tCheckItemMapper.zhuChartData123("设备设施", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger16 = danger16 + tCheckItemMapper.zhuChartData123("危化管理",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger16 = danger16 + tCheckItemMapper.zhuChartData123("危化管理", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger17 = danger17 + tCheckItemMapper.zhuChartData123("安全设施",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger17 = danger17 + tCheckItemMapper.zhuChartData123("安全设施", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
 
-                    danger18 = danger18 + tCheckItemMapper.zhuChartData123("其他",(String) list.get(i).get("name"),(Integer) map.get("user_id")); // 生产工艺 隐患数据
+                        danger18 = danger18 + tCheckItemMapper.zhuChartData123("其他", (String) list.get(i).get("name"), (Integer) map.get("user_id")); // 生产工艺 隐患数据
+                    }
 
                 }
             }

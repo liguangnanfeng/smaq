@@ -3591,15 +3591,18 @@ public class CompanyController_cd extends BaseController {
         if (null == danger16){
             danger16 = 0;
         }
-
-
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH) + 1;
-        Integer year = 12 - (month+1);
-
+        Integer year = 12 - month;
         // 根据 ID 查询数据信息
         List<HiddenPlan> hiddenPlan2 = hiddenPlanMapper.selectDpid(dpid,user.getId());
         HiddenPlan hiddenPlan1 = new HiddenPlan();
+        sumDatase1(danger1, danger2, danger3, danger4, danger5, danger6, danger7, danger8, danger9, danger10, danger11, danger12, danger13, danger14, danger15, danger16, danger17, danger18, danger20, dpid, user, result, a, b, year, hiddenPlan2, hiddenPlan1);
+        return result;
+    }
+
+    private void sumDatase1(Integer danger1, Integer danger2, String danger3, Integer danger4, Integer danger5, String danger6, Integer danger7, Integer danger8, String danger9, Integer danger10, Integer danger11, String danger12, Integer danger13, Integer danger14, String danger15, Integer danger16, Integer danger17, String danger18, String danger20, Integer dpid, User user, Result result, Integer a, Integer b, Integer year, List<HiddenPlan> hiddenPlan2, HiddenPlan hiddenPlan1) {
+        Integer danger19;
         if (null == hiddenPlan2 || hiddenPlan2.size() == 0) {
             hiddenPlan1.setUid(user.getId());
             hiddenPlan1.setDpid(dpid);
@@ -3621,7 +3624,6 @@ public class CompanyController_cd extends BaseController {
             } else {
                 hiddenPlan1.setSyn_ratio("0:0");
             }
-
             if (null != danger4 && danger4 != 0) {
                 hiddenPlan1.setEve_month(danger4);
                 danger5 = danger4 * year;
@@ -3640,7 +3642,6 @@ public class CompanyController_cd extends BaseController {
             } else {
                 hiddenPlan1.setEve_ratio("0:0");
             }
-
             if (null != danger7 && danger7 != 0) {
                 hiddenPlan1.setReg_month(danger7);
                 danger8 = danger7 * year;
@@ -3659,7 +3660,6 @@ public class CompanyController_cd extends BaseController {
             } else {
                 hiddenPlan1.setReg_ratio("0:0");
             }
-
             if (null != danger10 && danger10 != 0) {
                 hiddenPlan1.setSea_month(danger10);
                 danger11 = danger10 * year;
@@ -3678,7 +3678,6 @@ public class CompanyController_cd extends BaseController {
             } else {
                 hiddenPlan1.setSea_ratio("0:0");
             }
-
             if (null != danger13 && danger13 != 0) {
                 hiddenPlan1.setEls_month(danger13);
                 danger14 = danger13 * year;
@@ -3686,9 +3685,6 @@ public class CompanyController_cd extends BaseController {
             } else {
                 hiddenPlan1.setEls_month(0);
                 hiddenPlan1.setEls_year(0);
-
-
-
             }
             /*if (null != danger14 && danger14 != 0) {
                 hiddenPlan1.setEls_year(danger14);
@@ -3700,7 +3696,6 @@ public class CompanyController_cd extends BaseController {
             } else {
                 hiddenPlan1.setEls_ratio("0:0");
             }
-
             if (null != danger16 && danger16 != 0) {
                 hiddenPlan1.setBas_month(danger16);
                 danger17 = danger16 * year;
@@ -3730,11 +3725,9 @@ public class CompanyController_cd extends BaseController {
             } else {
                 hiddenPlan1.setTotal_ratio("0:0");
             }
-
             hiddenPlan1.setCreate_time(new Date());
             hiddenPlan1.setUpdate_time(new Date());
             a = hiddenPlanMapper.insert(hiddenPlan1);
-
         } else {
             hiddenPlan1.setUid(user.getId());
             hiddenPlan1.setDpid(dpid);
@@ -3758,8 +3751,6 @@ public class CompanyController_cd extends BaseController {
             } else {
                 hiddenPlan1.setSyn_ratio(hiddenPlan2.get(0).getSyn_ratio());
             }
-
-
             if (null != danger4 && danger4 != 0) {
                 hiddenPlan1.setEve_month(danger4);
                 count = danger5 = danger4 * year;
@@ -3778,7 +3769,6 @@ public class CompanyController_cd extends BaseController {
             } else {
                 hiddenPlan1.setEve_ratio(hiddenPlan2.get(0).getEve_ratio());
             }
-
             if (null != danger7 && danger7 != 0) {
                 hiddenPlan1.setReg_month(danger7);
                 count = danger8 = danger7 * year;
@@ -3797,7 +3787,6 @@ public class CompanyController_cd extends BaseController {
             } else {
                 hiddenPlan1.setReg_ratio(hiddenPlan2.get(0).getReg_ratio());
             }
-
             if (null != danger10 && danger10 != 0) {
                 hiddenPlan1.setSea_month(danger10);
             } else {
@@ -3814,7 +3803,6 @@ public class CompanyController_cd extends BaseController {
             } else {
                 hiddenPlan1.setSea_ratio(hiddenPlan2.get(0).getSea_ratio());
             }
-
             if (null != danger13 && danger13 != 0) {
                 hiddenPlan1.setEls_month(danger13);
             } else {
@@ -3831,7 +3819,6 @@ public class CompanyController_cd extends BaseController {
             } else {
                 hiddenPlan1.setEls_ratio(hiddenPlan2.get(0).getEls_ratio());
             }
-
             if (null != danger16 && danger16 != 0) {
                 hiddenPlan1.setBas_month(danger16);
             } else {
@@ -3843,31 +3830,26 @@ public class CompanyController_cd extends BaseController {
             } else {
                 hiddenPlan1.setBas_year(hiddenPlan2.get(0).getBas_year());
             }
-
             if (null != danger18) {
                 hiddenPlan1.setBas_ratio(danger18);
             } else {
                 hiddenPlan1.setBas_ratio(hiddenPlan2.get(0).getBas_ratio());
             }
-            if (null != danger1 && danger1 != 0 && null != hiddenPlan2.get(0).getSyn_month() && hiddenPlan2.get(0).getSyn_month() != 0){
+            if (null != danger1 && danger1 != 0 && null != hiddenPlan2.get(0).getSyn_month() && hiddenPlan2.get(0).getSyn_month() != 0) {
                 number1 = hiddenPlan2.get(0).getSyn_month();
-            }else if (null != danger4 && danger4 != 0 && null != hiddenPlan2.get(0).getEve_month() && hiddenPlan2.get(0).getEve_month() != 0){
+            } else if (null != danger4 && danger4 != 0 && null != hiddenPlan2.get(0).getEve_month() && hiddenPlan2.get(0).getEve_month() != 0) {
                 number1 = hiddenPlan2.get(0).getEve_month();
-            }else if (null != danger7 && danger7 != 0 && null != hiddenPlan2.get(0).getReg_month() && hiddenPlan2.get(0).getReg_month() != 0){
+            } else if (null != danger7 && danger7 != 0 && null != hiddenPlan2.get(0).getReg_month() && hiddenPlan2.get(0).getReg_month() != 0) {
                 number1 = hiddenPlan2.get(0).getReg_month();
-            }else if (null != danger11 && danger11 != 0 && null != hiddenPlan2.get(0).getSea_year() && hiddenPlan2.get(0).getSea_year() != 0){
-                number1 = hiddenPlan2.get(0).getSea_month()/year;
-            }else if (null != danger14 && danger14 != 0 && null != hiddenPlan2.get(0).getEls_year() && hiddenPlan2.get(0).getEls_year() != 0){
-                number1 = hiddenPlan2.get(0).getEls_month()/year;
-            }else if (null != danger17 && danger17 != 0 && null != hiddenPlan2.get(0).getBas_year() && hiddenPlan2.get(0).getBas_year() != 0){
-                number1 = hiddenPlan2.get(0).getBas_month()/year;
+            } else if (null != danger11 && danger11 != 0 && null != hiddenPlan2.get(0).getSea_year() && hiddenPlan2.get(0).getSea_year() != 0) {
+                number1 = hiddenPlan2.get(0).getSea_month() / year;
+            } else if (null != danger14 && danger14 != 0 && null != hiddenPlan2.get(0).getEls_year() && hiddenPlan2.get(0).getEls_year() != 0) {
+                number1 = hiddenPlan2.get(0).getEls_month() / year;
+            } else if (null != danger17 && danger17 != 0 && null != hiddenPlan2.get(0).getBas_year() && hiddenPlan2.get(0).getBas_year() != 0) {
+                number1 = hiddenPlan2.get(0).getBas_month() / year;
             }
-
-
             danger19 = hiddenPlan2.get(0).getSyn_year() + hiddenPlan2.get(0).getEve_year() + hiddenPlan2.get(0).getReg_year() +
-                    hiddenPlan2.get(0).getSea_year() + hiddenPlan2.get(0).getEls_year() + hiddenPlan2.get(0).getBas_year() + count - (number1 * year) ;
-
-
+                    hiddenPlan2.get(0).getSea_year() + hiddenPlan2.get(0).getEls_year() + hiddenPlan2.get(0).getBas_year() + count - (number1 * year);
             if (null != danger19 && danger19 != 0) {
                 hiddenPlan1.setTotal_count(danger19);
             } else {
@@ -3891,7 +3873,6 @@ public class CompanyController_cd extends BaseController {
             result.setStatus("1");
             result.setMess("保存失败，请检查数据！！！");
         }
-        return result;
     }
 
     /**
@@ -3934,299 +3915,12 @@ public class CompanyController_cd extends BaseController {
 
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH) + 1;
-        Integer year = 12 - (month+1);
+        Integer year = 12 - month;
 
         // 根据 ID 查询数据信息
         List<HiddenPlan> hiddenPlan2 = hiddenPlanMapper.selectDpid(dpid,user.getId());
         HiddenPlan hiddenPlan1 = new HiddenPlan();
-        if (null == hiddenPlan2 || hiddenPlan2.size() == 0) {
-            hiddenPlan1.setUid(user.getId());
-            hiddenPlan1.setDpid(dpid);
-            if (null != danger1 && danger1 != 0) {
-                hiddenPlan1.setSyn_month(danger1);
-                danger2 = danger1 * year;
-                hiddenPlan1.setSyn_year(danger2);
-            } else {
-                hiddenPlan1.setSyn_month(0);
-                hiddenPlan1.setSyn_year(0);
-            }
-            /*if (null != danger2 && danger2 != 0) {
-                hiddenPlan1.setSyn_year(danger2);
-            } else {
-                hiddenPlan1.setSyn_year(0);
-            }*/
-            if (null != danger3) {
-                hiddenPlan1.setSyn_ratio(danger3);
-            } else {
-                hiddenPlan1.setSyn_ratio("0:0");
-            }
-
-            if (null != danger4 && danger4 != 0) {
-                hiddenPlan1.setEve_month(danger4);
-                danger5 = danger4 * year;
-                hiddenPlan1.setEve_year(danger5);
-            } else {
-                hiddenPlan1.setEve_month(0);
-                hiddenPlan1.setEve_year(0);
-            }
-           /* if (null != danger5 && danger5 != 0) {
-                hiddenPlan1.setEve_year(danger5);
-            } else {
-                hiddenPlan1.setEve_year(0);
-            }*/
-            if (null != danger6) {
-                hiddenPlan1.setEve_ratio(danger6);
-            } else {
-                hiddenPlan1.setEve_ratio("0:0");
-            }
-
-            if (null != danger7 && danger7 != 0) {
-                hiddenPlan1.setReg_month(danger7);
-                danger8 = danger7 * year;
-                hiddenPlan1.setReg_year(danger8);
-            } else {
-                hiddenPlan1.setReg_month(0);
-                hiddenPlan1.setReg_year(0);
-            }
-            /*if (null != danger8 && danger8 != 0) {
-                hiddenPlan1.setReg_year(danger8);
-            } else {
-                hiddenPlan1.setReg_year(0);
-            }*/
-            if (null != danger9) {
-                hiddenPlan1.setReg_ratio(danger9);
-            } else {
-                hiddenPlan1.setReg_ratio("0:0");
-            }
-
-            if (null != danger10 && danger10 != 0) {
-                hiddenPlan1.setSea_month(danger10);
-                danger11 = danger10 * year;
-                hiddenPlan1.setSea_year(danger11);
-            } else {
-                hiddenPlan1.setSea_month(0);
-                hiddenPlan1.setSea_year(0);
-            }
-            /*if (null != danger11 && danger11 != 0) {
-                hiddenPlan1.setSea_year(danger11);
-            } else {
-                hiddenPlan1.setSea_year(0);
-            }*/
-            if (null != danger12) {
-                hiddenPlan1.setSea_ratio(danger12);
-            } else {
-                hiddenPlan1.setSea_ratio("0:0");
-            }
-
-            if (null != danger13 && danger13 != 0) {
-                hiddenPlan1.setEls_month(danger13);
-                danger14 = danger13 * year;
-                hiddenPlan1.setEls_year(danger14);
-            } else {
-                hiddenPlan1.setEls_month(0);
-                hiddenPlan1.setEls_year(0);
-
-            }
-            /*if (null != danger14 && danger14 != 0) {
-                hiddenPlan1.setEls_year(danger14);
-            } else {
-                hiddenPlan1.setEls_year(0);
-            }*/
-            if (null != danger15) {
-                hiddenPlan1.setEls_ratio(danger15);
-            } else {
-                hiddenPlan1.setEls_ratio("0:0");
-            }
-
-            if (null != danger16 && danger16 != 0) {
-                hiddenPlan1.setBas_month(danger16);
-                danger17 = danger16 * year;
-                hiddenPlan1.setBas_year(danger17);
-            } else {
-                hiddenPlan1.setBas_month(0);
-                hiddenPlan1.setBas_year(0);
-            }
-            /*if (null != danger17 && danger17 != 0) {
-                hiddenPlan1.setBas_year(danger17);
-            } else {
-                hiddenPlan1.setBas_year(0);
-            }*/
-            if (null != danger18) {
-                hiddenPlan1.setBas_ratio(danger18);
-            } else {
-                hiddenPlan1.setBas_ratio("0:0");
-            }
-            danger19 = danger2 + danger5 + danger8 + danger11 + danger14 + danger17;
-            if (null != danger19 && danger19 != 0) {
-                hiddenPlan1.setTotal_count(danger19);
-            } else {
-                hiddenPlan1.setTotal_count(0);
-            }
-            if (null != danger20) {
-                hiddenPlan1.setTotal_ratio(danger20);
-            } else {
-                hiddenPlan1.setTotal_ratio("0:0");
-            }
-
-            hiddenPlan1.setCreate_time(new Date());
-            hiddenPlan1.setUpdate_time(new Date());
-            a = hiddenPlanMapper.insert(hiddenPlan1);
-
-        } else {
-            hiddenPlan1.setUid(user.getId());
-            hiddenPlan1.setDpid(dpid);
-            Integer count = 0;
-            Integer number1 = 0;
-            if (null != danger1 && danger1 != 0) {
-                hiddenPlan1.setSyn_month(danger1);
-                count = danger2 = danger1 * year;
-                hiddenPlan1.setSyn_year(danger2);
-            } else {
-                hiddenPlan1.setSyn_month(hiddenPlan2.get(0).getSyn_month());
-                hiddenPlan1.setSyn_year(hiddenPlan2.get(0).getSyn_year());
-            }
-            /*if (null != danger2 && danger2 != 0) {
-                hiddenPlan1.setSyn_year(danger2);
-            } else {
-                hiddenPlan1.setSyn_year(hiddenPlan2.get(0).getSyn_year());
-            }*/
-            if (null != danger3) {
-                hiddenPlan1.setSyn_ratio(danger3);
-            } else {
-                hiddenPlan1.setSyn_ratio(hiddenPlan2.get(0).getSyn_ratio());
-            }
-
-
-            if (null != danger4 && danger4 != 0) {
-                hiddenPlan1.setEve_month(danger4);
-                count = danger5 = danger4 * year;
-                hiddenPlan1.setEve_year(danger5);
-            } else {
-                hiddenPlan1.setEve_month(hiddenPlan2.get(0).getEve_month());
-                hiddenPlan1.setEve_year(hiddenPlan2.get(0).getEve_year());
-            }
-            /*if (null != danger5 && danger5 != 0) {
-                hiddenPlan1.setEve_year(danger5);
-            } else {
-                hiddenPlan1.setEve_year(hiddenPlan2.get(0).getEve_year());
-            }*/
-            if (null != danger6) {
-                hiddenPlan1.setEve_ratio(danger6);
-            } else {
-                hiddenPlan1.setEve_ratio(hiddenPlan2.get(0).getEve_ratio());
-            }
-
-            if (null != danger7 && danger7 != 0) {
-                hiddenPlan1.setReg_month(danger7);
-                count = danger8 = danger7 * year;
-                hiddenPlan1.setReg_year(danger8);
-            } else {
-                hiddenPlan1.setReg_month(hiddenPlan2.get(0).getReg_month());
-                hiddenPlan1.setReg_year(hiddenPlan2.get(0).getReg_year());
-            }
-            /*if (null != danger8 && danger8 != 0) {
-                hiddenPlan1.setReg_year(danger8);
-            } else {
-                hiddenPlan1.setReg_year(hiddenPlan2.get(0).getReg_year());
-            }*/
-            if (null != danger9) {
-                hiddenPlan1.setReg_ratio(danger9);
-            } else {
-                hiddenPlan1.setReg_ratio(hiddenPlan2.get(0).getReg_ratio());
-            }
-
-            if (null != danger10 && danger10 != 0) {
-                hiddenPlan1.setSea_month(danger10);
-            } else {
-                hiddenPlan1.setSea_month(hiddenPlan2.get(0).getSea_month());
-            }
-            if (null != danger11 && danger11 != 0) {
-                hiddenPlan1.setSea_year(danger11);
-                count = danger11;
-            } else {
-                hiddenPlan1.setSea_year(hiddenPlan2.get(0).getSea_year());
-            }
-            if (null != danger12) {
-                hiddenPlan1.setSea_ratio(danger12);
-            } else {
-                hiddenPlan1.setSea_ratio(hiddenPlan2.get(0).getSea_ratio());
-            }
-
-            if (null != danger13 && danger13 != 0) {
-                hiddenPlan1.setEls_month(danger13);
-            } else {
-                hiddenPlan1.setEls_month(hiddenPlan2.get(0).getEls_month());
-            }
-            if (null != danger14 && danger14 != 0) {
-                hiddenPlan1.setEls_year(danger14);
-                count = danger14;
-            } else {
-                hiddenPlan1.setEls_year(hiddenPlan2.get(0).getEls_year());
-            }
-            if (null != danger15) {
-                hiddenPlan1.setEls_ratio(danger15);
-            } else {
-                hiddenPlan1.setEls_ratio(hiddenPlan2.get(0).getEls_ratio());
-            }
-
-            if (null != danger16 && danger16 != 0) {
-                hiddenPlan1.setBas_month(danger16);
-            } else {
-                hiddenPlan1.setBas_month(hiddenPlan2.get(0).getBas_month());
-            }
-            if (null != danger17 && danger17 != 0) {
-                hiddenPlan1.setBas_year(danger17);
-                count = danger17;
-            } else {
-                hiddenPlan1.setBas_year(hiddenPlan2.get(0).getBas_year());
-            }
-
-            if (null != danger18) {
-                hiddenPlan1.setBas_ratio(danger18);
-            } else {
-                hiddenPlan1.setBas_ratio(hiddenPlan2.get(0).getBas_ratio());
-            }
-            if (null != danger1 && danger1 != 0 && null != hiddenPlan2.get(0).getSyn_month() && hiddenPlan2.get(0).getSyn_month() != 0){
-                number1 = hiddenPlan2.get(0).getSyn_month();
-            }else if (null != danger4 && danger4 != 0 && null != hiddenPlan2.get(0).getEve_month() && hiddenPlan2.get(0).getEve_month() != 0){
-                number1 = hiddenPlan2.get(0).getEve_month();
-            }else if (null != danger7 && danger7 != 0 && null != hiddenPlan2.get(0).getReg_month() && hiddenPlan2.get(0).getReg_month() != 0){
-                number1 = hiddenPlan2.get(0).getReg_month();
-            }else if (null != danger11 && danger11 != 0 && null != hiddenPlan2.get(0).getSea_year() && hiddenPlan2.get(0).getSea_year() != 0){
-                number1 = hiddenPlan2.get(0).getSea_month()/year;
-            }else if (null != danger14 && danger14 != 0 && null != hiddenPlan2.get(0).getEls_year() && hiddenPlan2.get(0).getEls_year() != 0){
-                number1 = hiddenPlan2.get(0).getEls_month()/year;
-            }else if (null != danger17 && danger17 != 0 && null != hiddenPlan2.get(0).getBas_year() && hiddenPlan2.get(0).getBas_year() != 0){
-                number1 = hiddenPlan2.get(0).getBas_month()/year;
-            }
-
-            danger19 = hiddenPlan2.get(0).getSyn_year() + hiddenPlan2.get(0).getEve_year() + hiddenPlan2.get(0).getReg_year() +
-                    hiddenPlan2.get(0).getSea_year() + hiddenPlan2.get(0).getEls_year() + hiddenPlan2.get(0).getBas_year() + count - (number1 * year) ;
-
-
-            if (null != danger19 && danger19 != 0) {
-                hiddenPlan1.setTotal_count(danger19);
-            } else {
-                hiddenPlan1.setTotal_count(hiddenPlan2.get(0).getTotal_count());
-            }
-            if (null != danger20) {
-                hiddenPlan1.setTotal_ratio(danger20);
-            } else {
-                hiddenPlan1.setTotal_ratio(hiddenPlan2.get(0).getTotal_ratio());
-            }
-            hiddenPlan1.setCreate_time(new Date());
-            hiddenPlan1.setUpdate_time(new Date());
-            hiddenPlan1.setId(hiddenPlan2.get(0).getId());
-            b = hiddenPlanMapper.updateByPrimaryKey(hiddenPlan1);
-        }
-
-        if ((null != b && b != 0) || null != a && a != 0) {
-            result.setStatus("0");
-            result.setMess("保存成功");
-        } else {
-            result.setStatus("1");
-            result.setMess("保存失败，请检查数据！！！");
-        }
+        sumDatase1(danger1, danger2, danger3, danger4, danger5, danger6, danger7, danger8, danger9, danger10, danger11, danger12, danger13, danger14, danger15, danger16, danger17, danger18, danger20, dpid, user, result, a, b, year, hiddenPlan2, hiddenPlan1);
         return result;
     }
 

@@ -8485,11 +8485,14 @@ public class CompanyController_cd extends BaseController {
      * 摄像头add
      */
     @RequestMapping(value = "monitor-add")
-    public String monitorList(Integer id, Model model) throws Exception {
-        if (null != id) {
-            model.addAttribute("m", monitorMapper.selectByPrimaryKey(id));
-        }
+    public String monitorList(Model model) throws Exception {
+
         return "company/system/monitor-add";
+    }
+    @RequestMapping(value = "monitor-edit")
+    public String monitorList2(Model model, Integer id) throws Exception {
+        model.addAttribute("m", monitorMapper.selectByPrimaryKey(id));
+        return "company/system/monitor-edit";
     }
 
     /**
@@ -8506,14 +8509,19 @@ public class CompanyController_cd extends BaseController {
     @RequestMapping(value = "monitor-save")
     public @ResponseBody
     Result monitorSave(Monitor m, HttpServletRequest request) {
-        Result result = new ResultImpl();
-        if (null == m.getId()) {
+           Result result = new ResultImpl();
+
             m.setDel(0);
             m.setUserId(getLoginUser(request).getId());
             monitorMapper.insertSelective(m);
-        } else {
-            monitorMapper.updateByPrimaryKeySelective(m);
-        }
+            return result;
+    }
+
+    @RequestMapping(value = "monitor-update")
+    public @ResponseBody
+    Result monitorSave2(Monitor m, HttpServletRequest request) {
+        Result result = new ResultImpl();
+        monitorMapper.updateByPrimaryKeySelective(m);
         return result;
     }
 

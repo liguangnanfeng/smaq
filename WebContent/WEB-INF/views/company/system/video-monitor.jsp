@@ -127,13 +127,13 @@ function upload_part() {
 		
 		<div class="mt-20" style="float:left;margin-left:20px;margin-bottom: 20px;">
 
-        	<button onClick="update_resource()" class="btn btn-primary radius" type="button" style="padding:1px 70px;float:left;">
-          		更新视频源
-        	</button>
+<%--        	<button onClick="update_resource()" class="btn btn-primary radius" type="button" style="padding:1px 70px;float:left;">--%>
+<%--          		更新视频源--%>
+<%--        	</button>--%>
         	<a style="padding:4px 60px;float:right;" class="btn btn-primary radius"  href="${ly}/company/download?filename=视频插件.msi&fileurl=${ly}/upload/iCVS2.0 Plugin.msi">
           		视频插件下载
         	</a>
-
+	<a style="text-decoration:none" onClick="show_tab('添加监控', '/company/monitor-add')" href="javascript:;" title="添加">添加监控</a>
       	</div>
 		
 		
@@ -165,7 +165,7 @@ function upload_part() {
 
             <td>${be.memo }</td>
             <td>
-              <a style="text-decoration:none" onClick="show_tab('编辑摄像头', '/company/monitor-add?id=${be.id}')" href="javascript:;" title="编辑">查看/编辑</a>
+              <a style="text-decoration:none" onClick="show_tab('编辑摄像头', '/company/monitor-edit?id=${be.id}')" href="javascript:;" title="编辑">查看/编辑</a>
               <a style="text-decoration:none" onClick="del(${be.id})" href="javascript:;" title="删除">删除</a>
               <a style="text-decoration:none" onClick="show_dialog('${be.name}', '/company/monitor-show?id=${be.id }')" href="javascript:;" title="删除">查看监控</a>
             </td>

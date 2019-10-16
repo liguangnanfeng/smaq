@@ -3593,7 +3593,7 @@ public class CompanyController_cd extends BaseController {
         }
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH) + 1;
-        Integer year = 12 - month;
+        Integer year = 12 - month + 1;
         // 根据 ID 查询数据信息
         List<HiddenPlan> hiddenPlan2 = hiddenPlanMapper.selectDpid(dpid,user.getId());
         HiddenPlan hiddenPlan1 = new HiddenPlan();
@@ -3915,7 +3915,7 @@ public class CompanyController_cd extends BaseController {
 
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH) + 1;
-        Integer year = 12 - month;
+        Integer year = 12 - month + 1;
 
         // 根据 ID 查询数据信息
         List<HiddenPlan> hiddenPlan2 = hiddenPlanMapper.selectDpid(dpid,user.getId());

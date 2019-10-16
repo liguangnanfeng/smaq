@@ -64,19 +64,19 @@
      console.log('c:','${control}')
     </script>
                         <select id="villageId" name="control" class="select" style="width:100px;">
-                                <c:if test="${control == null}">
+                                <c:if test="${control==null}">
                                 <option value="2" selected="selected">全部</option>
                                 <option value="${userType}">是</option>
                                 <option
                                     value="0">否</option>
                                 </c:if>
-                                <c:if test="${control == userType}">
+                                <c:if test="${control==userType}">
                                         <option value="2">全部</option>
                                         <option value="${userType}" selected="selected">是</option>
                                         <option value="0">否</option>
                                 </c:if>
 
-                                <c:if test="${control == 0}">
+                                <c:if test="${control==0}">
                                         <option value="2">全部</option>
                                         <option value="${userType}">是</option>
                                         <option value="0" selected="selected">否</option>

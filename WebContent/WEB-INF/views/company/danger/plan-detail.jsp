@@ -264,27 +264,13 @@
                         </c:choose>
                     </td>
                     <td class="text-c">${ch.part == "" ? "暂无数据" : ch.part}</td>
-					 <%-- <c:if test="${flag == 1}">
+					  <c:if test="${flag == 1}">
                         <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
                         <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
-                    </c:if>--%>
-                    <c:if test="${ch.part != companyName}">
-
-                        <c:if test="${flag == 1}">
-                            <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
-                            <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
-                        </c:if>
-                        <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
                     </c:if>
 
-
-                    <c:if test="${ch.part == companyName}">
-
-                        <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
-
-                        <td class="text-c">${ch.name == "" ? "暂无数据" : ch.name}</td>
-                    </c:if>
-
+                    <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
+                  
                     <td>
                         <c:choose>
                             <c:when test="${ch.type == 1}">日常</c:when>
@@ -458,8 +444,8 @@
                 <td colspan="5">
                     <div style="float: left; width: 100%; position: relative; min-height: 150px;">
                         <c:if test="${check.flag == 3 && check.checkCompany eq '无锡市安泰安全技术服务有限公司'}">
-                            <img alt="" src="${ly }/images/zhang.png"
-                                 style="position: absolute; bottom: 10px; right: 10px; height: 130px;"/>
+<%--                            <img alt="" src="${ly }/images/zhang.png"--%>
+<%--                                 style="position: absolute; bottom: 10px; right: 10px; height: 130px;"/>--%>
                         </c:if>
                         <c:if test="${check.flag > 1}">
                             <div class="div_pleft  mt-10 mb-10">检查部门/单位：</div>

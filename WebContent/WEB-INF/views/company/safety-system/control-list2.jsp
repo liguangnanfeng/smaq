@@ -39,7 +39,7 @@ function pr_() {
     <span class="c-gray en">&gt;</span> <span>风险分级管控</span>
     <span class="c-gray en">&gt;</span> <span>风险评估</span>
   <c:if test="${flag == 1}">
-    <span class="c-gray en">&gt;</span> <span>评估结果</span>
+    <%--<span class="c-gray en">&gt;</span> <span>评估结果</span>--%>
   </c:if>
   <c:if test="${flag == 3}">
     <span class="c-gray en">&gt;</span> <span>风险分布表</span>

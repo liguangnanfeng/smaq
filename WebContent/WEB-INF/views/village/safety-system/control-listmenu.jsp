@@ -52,8 +52,7 @@ $(function() {
 <body>
   <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-    <span class="c-gray en">&gt;</span> <span>风险分级管控</span> 
-    <span class="c-gray en">&gt;</span> <span>风险控制</span> 
+    <span class="c-gray en">&gt;</span> <span>风险分级管控</span>
     <span class="c-gray en">&gt;</span> <span>重大风险汇总</span> 
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>

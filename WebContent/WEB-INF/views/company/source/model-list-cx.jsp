@@ -60,7 +60,7 @@ $(function(){
     <c:set var="x1" value="${fn:split('企业自查/ /第三方检查/行政检查','/') }"/>
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
     <span class="c-gray en">&gt;</span> <span>重大危险源源长制</span> 
-    	<span class="c-gray en">&gt;</span> <span>隐患排查治理 </span> 
+    	<span class="c-gray en">&gt;</span> <span>隐患排查 </span>
 		<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>
     </a>

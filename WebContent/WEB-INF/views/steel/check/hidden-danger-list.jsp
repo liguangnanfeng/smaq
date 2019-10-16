@@ -67,7 +67,7 @@
 <body>
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
-    <span class="c-gray en">&gt;</span> <span>隐患统计分析系统</span>
+    <span class="c-gray en">&gt;</span> <span>隐患统计分析</span>
     <span class="c-gray en">&gt;</span> <span>隐患治理记录</span>
     <a onclick="back()" class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;margin-right: 10px;" href="javascript:void(0)" title="返回">返回</a>
 

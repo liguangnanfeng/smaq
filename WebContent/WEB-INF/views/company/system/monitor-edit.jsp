@@ -49,13 +49,14 @@
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2"><em style="color:#FF0000;margin-right: 5px;">*</em>重点部位/关键装置：</label>
       <div class="formControls col-xs-8 col-sm-9">
-      	<input type="text" id="name" value="" style="width:350px"  class="input-text required"  >
+        <!--<input type="text" id="name" value="${m.name }" style="width:350px" class="input-text required"  >-->
+      	<input type="text" id="name" value="${m.name}" style="width:350px" readonly="readonly" class="input-text required"  ><!--zhangcl 2018.12.26-->
       </div> 
     </div>
-    <div class="row cl" ><!--zhangcl 2018.12.26-->
+    <div class="row cl" style="display: none;"><!--zhangcl 2018.12.26-->
       <label class="form-label col-xs-4 col-sm-2"><em style="color:#FF0000;margin-right: 5px;">*</em>视频地址：</label>
       <div class="formControls col-xs-8 col-sm-9">
-        <input type="text" id="code" value="" style="width:350px" class="input-text required" placeholder="如：http://www.xxx.m3u8">
+        <input type="text" id="code" value="${m.code }" style="width:350px" class="input-text required" placeholder="如：http://www.xxx.m3u8">
       </div> 
     </div>
     <div class="row cl">
@@ -63,10 +64,10 @@
       <div class="formControls col-xs-8 col-sm-9">
         <%-- <input type="text" id="dangerLevel" value="${m.dangerLevel }" style="width:350px" class="input-text required" > --%>
         <select style="width:350px" class="input-text required" id="dangerLevel">
-        	<option value="1">重大风险</option>
-        	<option value="2">高风险</option>
-        	<option value="3">较大风险</option>
-        	<option value="4">一般风险</option>
+        	<option <c:if test="${(not empty m.dangerLevel) and (m.dangerLevel == '1')}">selected</c:if> value="1">重大风险</option>
+        	<option <c:if test="${(not empty m.dangerLevel) and (m.dangerLevel == '2')}">selected</c:if> value="2">高风险</option>
+        	<option <c:if test="${(not empty m.dangerLevel) and (m.dangerLevel == '3')}">selected</c:if> value="3">较大风险</option>
+        	<option <c:if test="${(not empty m.dangerLevel) and (m.dangerLevel == '4')}">selected</c:if> value="4">一般风险</option>
         </select>
       </div> 
     </div>
@@ -85,32 +86,32 @@
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">事故类型：</label>
       <div class="formControls col-xs-8 col-sm-9">
-        <input type="text" id="accidentType" value="" style="width:350px" class="input-text required" >
+        <input type="text" id="accidentType" value="${m.accidentType }" style="width:350px" class="input-text required" >
       </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">编号：</label>
       <div class="formControls col-xs-8 col-sm-9">
-        <textarea id="memo" class="textarea txtarea_sq"></textarea>
+        <textarea id="memo" class="textarea txtarea_sq">${m.memo }</textarea>
       </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">应急&nbsp;&nbsp;处置方式：</label>
       <div class="formControls col-xs-8 col-sm-9">
-        <textarea id="descr" class="textarea txtarea_sq"></textarea>
+        <textarea id="descr" class="textarea txtarea_sq">${m.descr }</textarea>
       </div> 
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">责任人：</label>
       <div class="formControls col-xs-8 col-sm-9">
-        <input type="text" id="dutyPeople" value="" style="width:350px" class="input-text required" >
+        <input type="text" id="dutyPeople" value="${m.dutyPeople }" style="width:350px" class="input-text required" >
       </div> 
     </div>
     
-    <div class="row cl">
+    <div class="row cl" style="display:none;">
       <label class="form-label col-xs-4 col-sm-2">监控封面上传：</label>
       <div class="formControls col-xs-8 col-sm-9">
-        <input type="text" id="img" disabled  value="585" style="width:300px;margin-top: -24px;" class="input-text required"  ><a href="javascript:void(0);" id="to_uploader">上传</a>
+        <input type="text" id="thumbnail_val" disabled  value="${m.img }" style="width:300px;margin-top: -24px;" class="input-text required" ><a href="javascript:void(0);" id="to_uploader">上传</a>
 		<span style="margin-top: -24px;">*请上传宽高比1.2:1的图片   </span>
 		   
       </div> 
@@ -118,13 +119,13 @@
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">视频设备编号：</label>
       <div class="formControls col-xs-8 col-sm-9">
-        <input type="text" id="puid" value="" style="width:350px" class="input-text required" >
+        <input type="text" id="puid" value="${m.puid}" style="width:350px" class="input-text required" >
       </div>
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">视频通道编号：</label>
       <div class="formControls col-xs-8 col-sm-9">
-        <input type="text" id="channelId" value="" style="width:350px" class="input-text required" >
+        <input type="text" id="channelId" value="${m.channelId}" style="width:350px" class="input-text required" >
       </div>
     </div>
     <div class="row cl">
@@ -141,13 +142,6 @@
   <script type="text/javascript">
   var id_ = '${m.id}';
   function save() {
-    if($("#name").val() == '') {
-      layer.alert("名称不能为空",function(i) {
-        layer.close(i);
-        $("#name").focus();
-      })
-      return false;
-    }
     if($("#code").val() == '') {
       layer.alert("视频地址不能为空",function(i) {
         layer.close(i);
@@ -233,17 +227,17 @@
       return false;
     } */
     
-    $.post(getRootPath() + "/company/monitor-save",{
-         id : id_,
-         name : $("#name").val(),
-         code : $("#code").val(),
-         memo : $("#memo").val(),
-         dangerLevel : $("#dangerLevel").children("option:selected").val(),
-    	descr : $("#descr").val(),
-    	accidentType : $("#accidentType").val(),
-    	dutyPeople : $("#dutyPeople").val(),
-        img : $("#img").val(),
-       puid : $("#puid").val(),
+    $.post(getRootPath() + "/company/monitor-update",{
+      id : id_,
+      name : $("#name").val(),
+      code : $("#code").val(),
+      memo : $("#memo").val(),
+      dangerLevel : $("#dangerLevel").children("option:selected").val(),
+      descr : $("#descr").val(),
+      accidentType : $("#accidentType").val(),
+      dutyPeople : $("#dutyPeople").val(),
+      img : $("#img").val(),
+      puid : $("#puid").val(),
       channelId : $("#channelId").val()
     }, function (result) {
          top.show_tab("实时监控",  getRootPath() +'/village/to_monitor-list?flag=1');//zhangcl 2018.12.26

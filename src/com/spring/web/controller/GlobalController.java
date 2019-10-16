@@ -723,7 +723,6 @@ public class GlobalController extends BaseController {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
-        System.out.println(m);
         m.put("companyName", companyName);
         model.addAttribute("list", monitorMapper.selectGroupByMap(m));
         model.addAttribute("companyName", companyName);

@@ -264,13 +264,25 @@
                         </c:choose>
                     </td>
                     <td class="text-c">${ch.part == "" ? "暂无数据" : ch.part}</td>
-					  <c:if test="${flag == 1}">
-                        <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
-                        <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
+
+
+                    <c:if test="${companyName == ch.part}">
+
+                        <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
+                        <td class="text-c">${ch.name == "" ? "暂无数据" : ch.name}</td>
                     </c:if>
 
-                    <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
-                  
+
+                    <c:if test="${companyName != ch.part}">
+
+                        <c:if test="${flag == 1}">
+                            <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
+                            <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
+                        </c:if>
+
+                        <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
+                    </c:if>
+
                     <td>
                         <c:choose>
                             <c:when test="${ch.type == 1}">日常</c:when>

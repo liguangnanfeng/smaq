@@ -2963,7 +2963,7 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status in ('2','3')
+        AND t1.status in ('3')
         AND t3.control = #{control}
         AND t2.user_id = #{user_id}
     </select>
@@ -2979,7 +2979,7 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status in ('2','3')
+        AND t1.status in ('3')
         AND t3.control = #{control}
         AND t2.user_id = #{user_id}
         AND t2.depart = #{depart}
@@ -2996,7 +2996,7 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status in ('2','3')
+        AND t1.status in ('3')
         AND t2.user_id = #{user_id}
         AND t2.depart = #{depart}
     </select>
@@ -3029,7 +3029,7 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status in ('2','3')
+        AND t1.status in ('3')
         AND t3.control = #{control}
         AND t2.depart = #{depart}
         AND t2.user_id = #{user_id}
@@ -3046,7 +3046,7 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status in ('2','3')
+        AND t1.status in ('3')
         AND t3.control = #{control}
         AND t2.depart = #{depart}
         AND t2.user_id = #{user_id}
@@ -3064,7 +3064,7 @@
         WHERE
             t2.status = 2
         AND t2.del = 0
-        AND t1.status in ('2','3')
+        AND t1.status in ('3')
         AND t2.depart = #{depart}
         AND t2.user_id = #{user_id}
     </select>

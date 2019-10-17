@@ -120,6 +120,15 @@ public class VillageController extends BaseController {
         model.addAttribute("dangerC", tCheckItemMapper.selectCount(m));// 隐患情况汇总
         model.addAttribute("dangerC2", tCheckItemMapper.selectZhongCount(m));// 隐患情况汇总
 
+        Map<String, Object> m1 = new HashMap<String, Object>();
+        setUserId(user, m1);
+        m1.put("d", 1);
+        m1.put("status", 2);
+        List<Map<String, Object>> list = tCheckItemMapper.selectDangerIndexList(m1);
+        m1.put("status", 3);
+        List<Map<String, Object>> list1 = tCheckItemMapper.selectDangerIndexList(m1);
+        model.addAttribute("dangerCount", list.size() + list1.size());
+
         model.addAttribute("count", count);
         model.addAttribute("mc", monitorMapper.selectCount(m));
         if (user.getUserType() == 10) {
@@ -136,7 +145,6 @@ public class VillageController extends BaseController {
             model.addAttribute("moveD", 1);
             model.addAttribute("nameBefore", townMapper.selectByPrimaryKey(moveBeforeUser.getId()).getName());
         }
-
         return "village/welcome";
     }
 
@@ -2541,16 +2549,20 @@ public class VillageController extends BaseController {
         m.put("companyName", companyName);
         m.put("d", 1);
         List<Map<String, Object>> list = tCheckItemMapper.selectDangerIndexList(m);
-        m.put("status", 2);
-        Integer list_s2 = tCheckItemMapper.selectDangerIndexListCount(m);
-        m.put("status", 3);
-        Integer list_s3 = tCheckItemMapper.selectDangerIndexListCount(m);
-        model.addAttribute("list_s2", list_s2);
-        model.addAttribute("list_s3", list_s3);
+        if (null == flag){
+            m.put("status", 2);
+            List<Map<String, Object>> list1 = tCheckItemMapper.selectDangerIndexList(m);
+            model.addAttribute("list_s2", list1.size()); // 未整改
+            m.put("status", 3);
+            List<Map<String, Object>> list2 = tCheckItemMapper.selectDangerIndexList(m);
+            model.addAttribute("list_s3", list2.size()); // 已整改
+        }
+        String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
         model.addAttribute("list", list);
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
-        model.addAttribute("companyName", companyName);
+        model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("host", host);
         return "village/company/danger-index3";
     }
 

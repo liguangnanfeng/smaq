@@ -106,9 +106,7 @@ public class VillageController extends BaseController {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
         setUserId(user, m);
-
         String userIds = (String) m.get("userIds");
-
         CompanyListReqDTO dto = new CompanyListReqDTO();
         dto.setUserIds(userIds);
         List<Integer> count = userService.selectCount(dto, user);
@@ -119,15 +117,6 @@ public class VillageController extends BaseController {
 
         model.addAttribute("dangerC", tCheckItemMapper.selectCount(m));// 隐患情况汇总
         model.addAttribute("dangerC2", tCheckItemMapper.selectZhongCount(m));// 隐患情况汇总
-
-        Map<String, Object> m1 = new HashMap<String, Object>();
-        setUserId(user, m1);
-        m1.put("d", 1);
-        m1.put("status", 2);
-        List<Map<String, Object>> list = tCheckItemMapper.selectDangerIndexList(m1);
-        m1.put("status", 3);
-        List<Map<String, Object>> list1 = tCheckItemMapper.selectDangerIndexList(m1);
-        model.addAttribute("dangerCount", list.size() + list1.size());
 
         model.addAttribute("count", count);
         model.addAttribute("mc", monitorMapper.selectCount(m));
@@ -2266,22 +2255,21 @@ public class VillageController extends BaseController {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String format = sdf.format(realTime);
                 String levelId ="";
-                if(null!=map.get("industryType")&&1==map.get("industryType")){
+                if(null!=map.get("industryType") && 1 == map.get("industryType")){
                     Integer levelId1 = (Integer) map.get("levelId");
                     if(null!=levelId1){
                         levelId=  tLevelMapper.selectByPrimaryKey(levelId1).getLevel2();
                     }
-                }else if (null!=map.get("industryType")&&2==map.get("industryType")){
+                }else if (null!=map.get("industryType") && 1 != map.get("industryType")){
                     if (null == (Integer) map.get("levelId")){
                         continue;
                     }else {
-                        levelId = aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2();
+                        levelId = aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getName();
                     }
                 }
                 if(StringUtils.isBlank(levelId)){
                     map.put("level2",levelId);
                 }
-
                 map.put("realTimeStr", format);
                 map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
                 // 获取
@@ -2293,11 +2281,10 @@ public class VillageController extends BaseController {
                 Date realTime = (Date) map.get("realTime");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String format = sdf.format(realTime);
-              //  String level = (String) map.get("level");
-                if(null!=map.get("industryType")&&1==map.get("industryType")){
-                    map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
-                }else if (null!=map.get("industryType")&&2==map.get("industryType")){
-                    map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getLevel2());
+                if(null != map.get("industryType") && 1 == map.get("industryType")){
+                    map.put("level2",tLevelMapper.selectByPrimaryKey((Integer)map.get("levelId")).getName());
+                }else if (null != map.get("industryType") && 1 != map.get("industryType")){
+                    map.put("level2",aDangerManualMapper.selectByPrimaryKey((Integer)map.get("levelId")).getName());
                 }
                 map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
                 map.put("realTimeStr", format);

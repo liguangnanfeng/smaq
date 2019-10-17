@@ -153,13 +153,13 @@
   <script type="text/javascript">
   var id_ = '${m.id}';
   function save() {
-    if($("#code").val() == '') {
-      layer.alert("视频地址不能为空",function(i) {
-        layer.close(i);
-        $("#code").focus();
-      })
-      return false;
-    }
+    // if($("#code").val() == '') {
+    //   layer.alert("视频地址不能为空",function(i) {
+    //     layer.close(i);
+    //     $("#code").focus();
+    //   })
+    //   return false;
+    // }
     if($("#accidentType").val() == '') {
       layer.alert("事故类型不能为空",function(i) {
         layer.close(i);

@@ -382,7 +382,7 @@ function article_save_submit() {
 <%--  这里区分一下自查和行政和第三方--%>
   var searchURL = window.location.search;
   searchURL = searchURL.substring(1, searchURL.length);
-  var t = searchURL.split("&")[0].split("=")[1];
+  var t = searchURL.split("&")[1].split("=")[1];
   if(t==1){
   top.show_tab("治理意见表_" + checkId, '/village/check-rectification?flag=' + flag + '&id=' + checkId);
   }else{

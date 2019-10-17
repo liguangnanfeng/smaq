@@ -193,6 +193,7 @@
         data: JSON.stringify(dto)
         }).then(function successCallback(response) {
         // 请求成功执行代码
+        console.log('response:',response);
         $scope.companyList = response.data.map.list;
         $scope.totalItems = response.data.map.count;
         $scope.initCompanyList();
@@ -206,10 +207,11 @@
         });
         };
 
-
+        $scope.searchBtn();
+        console.log('searchBtn')
         //企业列表初始化事件
         $scope.initCompanyList = function() {
-
+        console.log('初始化')
         //关闭信息窗体
         map.clearInfoWindow();
 
@@ -238,10 +240,12 @@
 
         $scope.markerList = new Array();
         mapList = $scope.companyList;
-        console.log('data1:',data)
-        for (var i = 0; i < mapList.length; i++) {
-        var marker = new AMap.Marker({
-        content: "<div class='mark "+ mapList[i].dicolorCss +"' data='" + data + "'>" + mapList[i].id + "</div>",
+        let dataStr=null;
+        let marker=null;
+        mapList.map((data,i)=>{
+        dataStr = JSON.stringify(data);
+        marker = new AMap.Marker({
+        content: "<div class='wjj mark "+ mapList[i].dicolorCss +"' data='" + dataStr + "'>" + mapList[i].id + "</div>",
         position: [mapList[i].longitude, mapList[i].latitude],
         extData: mapList[i],
         map: map
@@ -249,22 +253,28 @@
         marker.content = "("+ mapList[i].id +")" + mapList[i].companyName + "<br/>" + "风险等级：" + mapList[i].level + "<br/>" + "安全员手机号：" + mapList[i].safetyContact;
         //marker.on('click', markerClick);
         $scope.markerList.push(marker);
-        }
+        console.log(marker)
+        })
+<%--        for (var i = 0; i < mapList.length; i++) {--%>
+<%--     --%>
+<%--        }--%>
 
-        var time = setInterval(function() {
-        if (document.querySelector(".mark") != null) {
-        $(".mark").each(function(index, element) {
-        var data = JSON.stringify($(".mark").eq(index).attr("data"));
-        console.log('data2:',data);
-
-        var html = "<div class='mkbt' ng-click='showItemId(" + data + ")'></a>";
-        var template = angular.element(html);
-        var mobileDialogElement = $compile(template)($scope);
-        $(".mark").eq(index).append(mobileDialogElement);
+        let time = setInterval(function() {
+        //if (document.querySelector(".mark") != null) {
+        //明明页面上有10个mark，却只能找到4个？？？
+        $(".wjj").each(function(index, element) {
+        console.log(document.querySelector(".wjj"))
+        let data = JSON.stringify($(".wjj").eq(index).attr("data"));
+        let html = "<div class='mkbt' ng-click='showItemId(" + data + ")'></a>";
+        let template = angular.element(html);
+        let mobileDialogElement = $compile(template)($scope);
+        $(".wjj").eq(index).append(mobileDialogElement);
         });
+
+
         clearInterval(time);
-        }
-        }, 100);
+        //}
+        }, 300);
         };
 
         $scope.detail = true;
@@ -278,7 +288,6 @@
         var mapList = $scope.markerList;
         for (var i = 0; i < mapList.length; i++) {
         var data = mapList[i].getExtData();
-        console.log('Data:',data)
         var datastr = JSON.stringify(data);
         //mapList[i].setContent("<div class='mark' data='" + datastr + "'>" + data.id + "</div>");
         }
@@ -291,7 +300,6 @@
         };
         $scope.showItemId = function(item) {
         if (typeof item == "string") {
-        //
         item = JSON.parse(item);
         }
         $scope.detail = false;
@@ -441,25 +449,23 @@
         }
 
         // 页面加载完成后调用
-        $scope.$watch('$viewContentLoaded', function() {
-        var time = setInterval(function() {
-        if (document.querySelector(".mark") != null) {
-            $(".mark").each(function(index, element) {
-            var data = JSON.stringify($(".mark").eq(index).attr("data"));
-            var html = "<div class='mkbt' ng-click='showItemId(" + data + ")'></a>";
-            var template = angular.element(html);
-            var mobileDialogElement = $compile(template)($scope);
-            $(".mark").eq(index).append(mobileDialogElement);
-            console.log('页面加载完毕！')
-        });
-        clearInterval(time);
-        }
-        }, 1000);
-        });
-        setTimeout(()=>{
-        $scope.searchBtn();
-        console.log('searchBtn')
-        },1500);
+<%--        $scope.$watch('$viewContentLoaded', function() {--%>
+<%--        console.log('页面加载完毕！')--%>
+<%--        console.log($(".mark"))--%>
+<%--        var time = setInterval(function() {--%>
+<%--        if (document.querySelector(".mark") != null) {--%>
+<%--            $(".mark").each(function(index, element) {--%>
+<%--            var data = JSON.stringify($(".mark").eq(index).attr("data"));--%>
+<%--            var html = "<div class='mkbt' ng-click='showItemId(" + data + ")'></a>";--%>
+<%--            var template = angular.element(html);--%>
+<%--            var mobileDialogElement = $compile(template)($scope);--%>
+<%--            $(".mark").eq(index).append(mobileDialogElement);--%>
+<%--        });--%>
+<%--        clearInterval(time);--%>
+<%--        }--%>
+<%--        }, 1000);--%>
+<%--        });--%>
+
         });
 
         </script>

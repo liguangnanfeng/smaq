@@ -8492,6 +8492,7 @@ public class CompanyController_cd extends BaseController {
     @RequestMapping(value = "monitor-edit")
     public String monitorList2(Model model, Integer id) throws Exception {
         model.addAttribute("m", monitorMapper.selectByPrimaryKey(id));
+        System.out.println("------------");
         return "company/system/monitor-edit";
     }
 

@@ -268,8 +268,7 @@
       <li><a data-href="${ly }/village/company/zdlist?hazard=1" data-title="在线监测" href="javascript:void(0)">在线监测</a></li>
       <li><a data-href="${ly }/global/source/company-map" data-title="企业分布" href="javascript:void(0)">企业分布</a></li>
       <li><a data-href="${ly }/villageAdd/source/danger-collect" data-title="隐患排查治理" href="javascript:void(0)">隐患排查</a></li>
-<%--      <li><a data-href="${ly }/village/monitor-list-supervise" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>--%>
-          <li><a data-href="${ly }/steel/source/video" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
+      <li><a data-href="${ly }/village/monitor-list-supervise" data-title="实时监控" href="javascript:void(0)">实时监控</a></li>
       <li><a data-href="${ly }/villageAdd/source/danger-chart" data-title="分类统计" href="javascript:void(0)">分类统计</a></li>
       </ul>
       </dd>

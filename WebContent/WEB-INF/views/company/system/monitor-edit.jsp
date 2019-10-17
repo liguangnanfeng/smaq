@@ -39,7 +39,7 @@
   <span class="c-gray en">&gt;</span>
   <span>实时监控</span>
   <span class="c-gray en">&gt;</span>
-  <span>添加摄像头</span>
+  <span>编辑摄像头</span>
   <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
     <i class="Hui-iconfont">&#xe68f;</i>
   </a>
@@ -101,7 +101,18 @@
         <textarea id="descr" class="textarea txtarea_sq">${m.descr }</textarea>
       </div> 
     </div>
-    <div class="row cl">
+
+
+  <div class="row cl">
+  <label class="form-label col-xs-4 col-sm-2">监控封面：</label>
+  <div class="formControls col-xs-8 col-sm-9">
+  <img id="pic3" src="${m.img}" width="350px" height="291px"/>
+
+    <a    href="javascript:void(0);" style="display: block;width:91px;padding:0 5px;border:0;line-height: 30px;" onclick="img_upload('pic3', null)" class="btn btn-primary radius upload-btn mt-10"><i class="Hui-iconfont"></i> 上传图片</a>  </div>
+  </div>
+
+
+  <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">责任人：</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="text" id="dutyPeople" value="${m.dutyPeople }" style="width:350px" class="input-text required" >
@@ -226,7 +237,6 @@
       })
       return false;
     } */
-    
     $.post(getRootPath() + "/company/monitor-update",{
       id : id_,
       name : $("#name").val(),
@@ -236,7 +246,7 @@
       descr : $("#descr").val(),
       accidentType : $("#accidentType").val(),
       dutyPeople : $("#dutyPeople").val(),
-      img : $("#img").val(),
+      img : $("#pic3").attr("src"),
       puid : $("#puid").val(),
       channelId : $("#channelId").val()
     }, function (result) {

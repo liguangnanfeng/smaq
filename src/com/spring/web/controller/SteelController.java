@@ -907,7 +907,6 @@ public class SteelController extends BaseController {
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         List<Map<String, Object>> list = zzjgDepartmentMapper.selectHiddenPlan(user.getId());
-
         List<Map<String, Object>> list1 = hiddenPlanMapper.selectCountAll(user.getId());
 
         List<Map<String, Object>> hiddenPlanList = hiddenPlanMapper.findDpid(0, user.getId());

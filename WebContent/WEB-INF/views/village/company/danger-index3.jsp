@@ -147,7 +147,7 @@ function showpicture(memoImg){
     </c:if>--%>
     <%--                    <td>${item[0]}</td>--%>
     <%--                    <td>${item[1]+item[2] }</td>--%>
-    <td>${list.realTime}</td>
+    <td><fmt:formatDate value="${list.realTime }" pattern="yyyy-MM-dd"/></td>
     <td>${list.content }</td>
     <td >
 

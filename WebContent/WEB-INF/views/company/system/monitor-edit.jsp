@@ -142,53 +142,6 @@
   <script type="text/javascript">
   var id_ = '${m.id}';
   function save() {
-    if($("#code").val() == '') {
-      layer.alert("视频地址不能为空",function(i) {
-        layer.close(i);
-        $("#code").focus();
-      })
-      return false;
-    }
-    if($("#accidentType").val() == '') {
-      layer.alert("事故类型不能为空",function(i) {
-        layer.close(i);
-        $("#accidentType").focus();
-      })
-
-      return false;
-    }
-    if($("#memo").val() == '') {
-      layer.alert("编号不能为空",function(i) {
-        layer.close(i);
-        $("#memo").focus();
-      })
-
-      return false;
-    }
-    if($("#descr").val() == '') {
-      layer.alert("应急处置方式不能为空",function(i) {
-        layer.close(i);
-        $("#descr").focus();
-      })
-
-      return false;
-    }
-    if($("#dutyPeople").val() == '') {
-      layer.alert("责任人不能为空",function(i) {
-        layer.close(i);
-        $("#dutyPeople").focus();
-      })
-
-      return false;
-    }
-    if($("#img").val() == '') {
-      layer.alert("监控封面不能为空",function(i) {
-        layer.close(i);
-        $("#img").focus();
-      })
-
-      return false;
-    }
     if($("#puid").val() == '') {
       layer.alert("视频设备编号不能为空",function(i) {
         layer.close(i);
@@ -205,27 +158,6 @@
 
       return false;
     }
-//  if($("#code").val() == '') {
-//    layer.alert("视频地址不能为空",function(i) {
-//      layer.close(i);
-//      $("#code").focus();
-//    })
-//    return false;
-//  }
-    /* if($("#user").val() == '') {
-      layer.alert("用户名不能为空",function(i) {
-        layer.close(i);
-        $("#user").focus();
-      })
-      return false;
-    } */
-   /*  if($("#psw").val() == '') {
-      layer.alert("密码不能为空",function(i) {
-        layer.close(i);
-        $("#psw").focus();
-      })
-      return false;
-    } */
     
     $.post(getRootPath() + "/company/monitor-update",{
       id : id_,

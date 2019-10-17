@@ -32,8 +32,8 @@
         .div_pdetail {
             width: 100%;
             font-size: 15px;
-    display: flex;
-    justify-content: space-between;
+            display: flex;
+            justify-content: space-between;
         }
 
         .div_pdetail font {
@@ -175,7 +175,12 @@
     <button onClick="pr_()" class="btn btn-primary radius btn_hid" type="button">
     <i class="Hui-iconfont">&#xe652;</i>打印预览
     </button>
-    <button id="back"   onclick="top.show_tab('检查文书', '/village/check-list?flag=2')" class="btn radius" type="button">
+    <script>
+    var searchURL = window.location.search;
+    searchURL = searchURL.substring(1, searchURL.length);
+    var t = searchURL.split("&")[0].split("=")[1];
+    </script>
+    <button id="back"   onclick="top.show_tab('检查文书', '/village/check-list?flag='+t)" class="btn radius" type="button">
     <i class="Hui-iconfont mr-10"></i>返回列表
     </button>
 <%--    <a class="btn btn-success radius r btn_hid" style="line-height: 1.6em; margin-top: 3px" href="${ly }/company/model-list-main?flag=1"--%>

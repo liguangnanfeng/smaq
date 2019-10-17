@@ -97,7 +97,7 @@ body .dis-ib{margin-right:15px;}
                 <c:if test="${be.c!=0}">
 				  <!-- <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('整改详情_${be.id }', '${ly}/village/check-rectification?flag=${flag}&id=${be.id}&number=${be.c}')" href="javascript:;">整改详情</a>
                     <br> -->
-                    <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}')" href="javascript:;">实施复查</a>
+                    <a style="text-decoration:none;margin-top: 2px" onClick="show_dialog('实施复查_${be.id }', '${ly}/company/recheck-add?checkId=${be.id}&flag='+t)" href="javascript:;">实施复查</a>
                     <br>
                   
                 </c:if>
@@ -111,6 +111,9 @@ body .dis-ib{margin-right:15px;}
     </div>
   </div>
 <script type="text/javascript">
+    var searchURL = window.location.search;
+    searchURL = searchURL.substring(1, searchURL.length);
+    var t = searchURL.split("&")[1].split("=")[1];
 $(function() {
   $('.table-sort').dataTable({
     "aaSorting": [[0, "asc"]],//默认第几个排序

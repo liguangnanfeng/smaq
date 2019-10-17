@@ -110,10 +110,11 @@
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">监控封面上传：</label>
       <div class="formControls col-xs-8 col-sm-9">
-        <input type="text" id="img" disabled  value="585" style="width:300px;margin-top: -24px;" class="input-text required"  ><a href="javascript:void(0);" id="to_uploader">上传</a>
-		<span style="margin-top: -24px;">*请上传宽高比1.2:1的图片   </span>
-		   
-      </div> 
+        <input type="text" id="img" disabled  value="" style="width:300px;margin-top: -24px;" class="input-text required"  ><a onclick="img_upload('pic3', null)" href="javascript:void(0);" id="to_uploader2">上传</a>
+
+  <span style="margin-top: -24px;">*请上传宽高比1.2:1的图片   </span>
+      </div>
+  <img id="pic3" src=""/>
     </div>
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-2">视频设备编号：</label>
@@ -148,13 +149,13 @@
       })
       return false;
     }
-    if($("#code").val() == '') {
-      layer.alert("视频地址不能为空",function(i) {
-        layer.close(i);
-        $("#code").focus();
-      })
-      return false;
-    }
+<%--    if($("#code").val() == '') {--%>
+<%--      layer.alert("视频地址不能为空",function(i) {--%>
+<%--        layer.close(i);--%>
+<%--        $("#code").focus();--%>
+<%--      })--%>
+<%--      return false;--%>
+<%--    }--%>
     if($("#accidentType").val() == '') {
       layer.alert("事故类型不能为空",function(i) {
         layer.close(i);
@@ -187,14 +188,14 @@
 
       return false;
     }
-    if($("#img").val() == '') {
-      layer.alert("监控封面不能为空",function(i) {
-        layer.close(i);
-        $("#img").focus();
-      })
+<%--    if($("#img").val() == '') {--%>
+<%--      layer.alert("监控封面不能为空",function(i) {--%>
+<%--        layer.close(i);--%>
+<%--        $("#img").focus();--%>
+<%--      })--%>
 
-      return false;
-    }
+<%--      return false;--%>
+<%--    }--%>
     if($("#puid").val() == '') {
       layer.alert("视频设备编号不能为空",function(i) {
         layer.close(i);

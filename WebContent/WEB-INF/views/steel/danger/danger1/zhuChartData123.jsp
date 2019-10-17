@@ -141,25 +141,25 @@
 			<td rowspan="2">同比</td>
 		</tr>
 		<tr style="background-color: #F5F9FE;    font-weight: bold;">
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
-			<td>频次</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
+			<td>数量</td>
 			<script>
 				console.log('${list}');
 				window.a=0;

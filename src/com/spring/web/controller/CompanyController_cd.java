@@ -4033,7 +4033,7 @@ public class CompanyController_cd extends BaseController {
 
             Integer a = hiddenPlanMapper.insert(hiddenPlan);
 
-            List<Map<String, Object>> hiddenPlanList1 = hiddenPlanMapper.findDpid(0,user.getId());
+            List<Map<String, Object>> hiddenPlanList1 = hiddenPlanMapper.findDpid(0,user.getId());//公司级
 
             model.addAttribute("hiddenPlanList",hiddenPlanList1);
         }else {
@@ -8524,7 +8524,6 @@ public class CompanyController_cd extends BaseController {
         monitorMapper.updateByPrimaryKeySelective(m);
         return result;
     }
-
     /**
      * 摄像头 删除
      */

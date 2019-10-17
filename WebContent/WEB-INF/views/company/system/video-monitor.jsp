@@ -409,7 +409,19 @@ function connect(){
 		/*alert(P_Error.Detail(conn.rv));*/
 	}
 }
-
+function del(id) {
+	$.ajax({
+		type:"GET",
+		url:"${ly}/company/monitor-del?id="+id,
+		success:function () {
+			alert("删除成功");
+			top.show_tab("实时监控",  getRootPath() +'/village/to_monitor-list?flag=1');//zhangcl 2018.12.26
+		},
+		error:function () {
+			alert("删除失败");
+		}
+	})
+}
 
 //创建视频窗口并初始化
 function init_windows(num){

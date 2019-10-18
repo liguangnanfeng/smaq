@@ -191,6 +191,17 @@ public class SteelController extends BaseController {
         model.addAttribute("counts1", counts1);
         model.addAttribute("counts", counts);
         Trade trade = tradeMapper.selectByPrimaryKey(user.getId());
+        m = new HashMap<>();
+        m.put("d", 1);
+        m.put("flag", null);
+        m.put("status", 2);
+        m.put("userIds", sb.toString());
+        m.put("status", 2);
+        Integer count7 = 0;
+        count7 = count7 + tCheckItemMapper.selectDangerIndexListByCliqu(m).size();
+        m.put("status", 3);
+        count7 = count7 + tCheckItemMapper.selectDangerIndexListByCliqu(m).size();
+        model.addAttribute("count7", count7);
         if (trade.getIsClique() == 1) {//行业端集团型企业
             return "steel/clique-welcome";
         }
@@ -7374,6 +7385,7 @@ public class SteelController extends BaseController {
         model.addAttribute("list2", list2);
         return "steel/danger/danger1/zhuChartData44";
     }
+
     @RequestMapping("opinion-show")
     public String opinionShow(Model model, String companyName, HttpServletRequest request, Integer flag, Integer flag2)
             throws Exception {
@@ -7401,4 +7413,44 @@ public class SteelController extends BaseController {
         model.addAttribute("flag2", flag2);
         return "village/danger/opinion-show";
     }
+
+    @RequestMapping(value = "check-item3")
+    public String checkItem3(HttpServletRequest request, Model model, Integer flag, String companyName, Integer status)
+            throws Exception {
+        User user = getLoginUser(request);
+        Map<String, Object> m = new HashMap<String, Object>();
+        setUserId(user, m);
+        m.put("flag", flag);
+        m.put("status", status);
+        m.put("companyName", companyName);
+        m.put("d", 1);
+        StringBuilder sb = new StringBuilder();
+        sb.append("'").append(user.getId()).append("'");
+        List<Integer> ids = tradeCliqueMapper.selectCompanyIdsByCqlib(user.getId());
+        for (int i = 0; i < ids.size(); i++) {
+            if (i == ids.size()-1){
+                sb.append("'").append(ids.get(i)).append("'");
+            }else {
+                sb.append("'").append(ids.get(i)).append("',");
+            }
+        }
+        m.put("userIds", sb.toString());
+        List<Map<String, Object>> list = tCheckItemMapper.selectDangerIndexListByCliqu(m);
+        if (null == flag){
+            m.put("status", 2);
+            List<Map<String, Object>> list1 = tCheckItemMapper.selectDangerIndexListByCliqu(m);
+            model.addAttribute("list_s2", list1.size()); // 未整改
+            m.put("status", 3);
+            List<Map<String, Object>> list2 = tCheckItemMapper.selectDangerIndexListByCliqu(m);
+            model.addAttribute("list_s3", list2.size()); // 已整改
+        }
+        String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        model.addAttribute("list", list);
+        model.addAttribute("flag", flag);
+        model.addAttribute("status", status);
+        //model.addAttribute("companyName", user.getUserName());
+        model.addAttribute("host", host);
+        return "steel/company/danger-index3";
+    }
+
 }

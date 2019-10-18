@@ -4046,4 +4046,58 @@
 			 where userId = #{userId}
 			 GROUP BY userId
     </select>
+
+    <select id="selectDangerIndexListByCliqu" resultType="java.util.Map">
+        select
+        T2.type,
+        T2.depart,
+        T1.levels,
+        T1.recheck_time,
+        T2.real_time as realTime ,
+        T1.content,
+        T1.files,
+        T1.recheck_file,
+        T1.file_address,
+        T1.status,
+        T5.level,
+        T5.fjgkfzr,
+        T5.level2,
+        T1.money,
+        T1.level_id as levelId,
+        T2.industry_type as industryType,
+        T1.id as checkItemId,
+        T2.id as checkId,
+        T5.id as companyManualId,
+        tcp.id as checkPartId,
+        IF(find_in_set(T1.id, T3.item3), 1, 0) AS d
+        from
+        t_check_item_tbl T1
+        left join t_check_tbl T2 on T1.check_id = T2.id
+        left join t_check_part_tbl tcp on T1.part_id = tcp.id
+        left join t_rectification_tbl T3 on T1.check_id = T3.check_id
+        left join company_tbl T4 on T2.user_id = T4.user_id
+        left join a_company_manual_tbl T5 on T1.level_id = T5.id
+        <where>
+            T2.del = 0 and T2.status = 2 and T1.status > 1 and T5.flag = 2
+            <if test="flag != null">
+                and T2.flag = #{flag}
+            </if>
+            <if test="userIds != null">
+                and T4.user_id in (${userIds})
+            </if>
+            <if test="companyName != null and companyName != ''">
+                and T4.name LIKE CONCAT('%', #{companyName},'%')
+            </if>
+            <if test="partName != null and partName != ''">
+                and T1.part_name LIKE CONCAT('%', #{partName},'%')
+            </if>
+            <if test="status != null and status != ''">
+                and T1.status = #{status}
+            </if>
+        </where>
+        <if test="d != null">
+            having d = #{d}
+        </if>
+        order by T1.id desc, T2.real_time desc
+    </select>
 </mapper>

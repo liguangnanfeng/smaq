@@ -548,6 +548,11 @@ public interface TCheckItemMapper {
 
     List<Map<String, Object>> selectDangerIndexListByCliqu(Map<String, Object> m);
 
+    List<Map<String, Object>> selectDangerIndexList1(@Param("userId") String userId, @Param("status") Integer status, @Param("companyName") String companyName);
+
+    List<Map<String, Object>> selectDangerIndexList2(@Param("userId") String userId, @Param("status") Integer status, @Param("companyName") String companyName);
+
+    List<Map<String, Object>> selectDangerIndexList3(@Param("userId") String userId, @Param("status") Integer status, @Param("companyName") String companyName);
 }
 
 

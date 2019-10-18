@@ -1023,7 +1023,7 @@
                T2.depart,
                T1.levels,
                T1.recheck_time,
-               T2.real_time as realTime ,
+               T2.real_time as realTime,
                T1.content,
                T1.files,
                T1.recheck_file,
@@ -4060,7 +4060,7 @@
         T1.file_address,
         T1.status,
         T5.level,
-        T5.fjgkfzr,
+        #T5.fjgkfzr,
         T5.level2,
         T1.money,
         T1.level_id as levelId,
@@ -4076,7 +4076,7 @@
         left join t_check_part_tbl tcp on T1.part_id = tcp.id
         left join t_rectification_tbl T3 on T1.check_id = T3.check_id
         left join company_tbl T4 on T2.user_id = T4.user_id
-        left join a_company_manual_tbl T5 on T1.level_id = T5.id
+        left join a_danger_manual_tbl T5 on T1.level_id = T5.id
         <where>
             T2.del = 0 and T2.status = 2 and T1.status > 1 and T5.flag = 2
             <if test="flag != null">
@@ -4100,4 +4100,132 @@
         </if>
         order by T1.id desc, T2.real_time desc
     </select>
+    <select id="selectDangerIndexList1" resultType="java.util.Map">
+        select T2.type,
+        T2.depart,
+        T1.levels,
+        T1.recheck_time,
+        T2.real_time as realTime ,
+        T1.content,
+        T1.files,
+        T1.recheck_file,
+        T1.file_address,
+        T1.status,
+        T4.level,
+        #T4.fjgkfzr,
+        T4.level2,
+        T1.money,
+        T1.level_id as levelId,
+        T2.industry_type as industryType,
+        T1.id as checkItemId,
+        T2.id as checkId,
+        T4.id as companyManualId,
+        T3.id as checkPartId,
+        T2.user_id as userId
+        from smaq.t_check_item_tbl T1
+        left join smaq.t_check_tbl T2 on T1.check_id = T2.id
+        left join smaq.t_check_part_tbl T3 on T1.part_id = T3.id
+        left join smaq.a_danger_manual_tbl T4 on T1.level_id = T4.id
+        left join smaq.company_tbl T5  on T2.user_id = T5.user_id
+        where T2.user_id in (${userId})
+        and T2.status = 2
+         <if test="status == 1">
+          and T1.status in ('2', '3')
+         </if>
+         <if test="status !=1">
+             and T1.status = #{status}
+         </if>
+         <if test="companyName != null">
+             and T5.name like concat('%','${companyName}','%')
+         </if>
+        and T4.level = '红色'
+        and T2.del= 0
+        and T2.flag=1
+    </select>
+    <select id="selectDangerIndexList2" resultType="java.util.Map">
+        select T2.type,
+               T2.depart,
+               T1.levels,
+               T1.recheck_time,
+               T2.real_time as realTime ,
+               T1.content,
+               T1.files,
+               T1.recheck_file,
+               T1.file_address,
+               T1.status,
+               T4.level,
+               T4.name level2,
+               T1.money,
+               T1.level_id as levelId,
+               T2.industry_type as industryType,
+               T1.id as checkItemId,
+               T2.id as checkId,
+               T4.id as companyManualId,
+               T3.id as checkPartId,
+               T2.user_id as userId
+        from smaq.t_check_item_tbl T1
+        left join smaq.t_check_tbl T2 on T1.check_id = T2.id
+        left join smaq.t_check_part_tbl T3 on T1.part_id = T3.id
+        left join a_danger_manual_tbl T4 on T1.level_id = T4.id
+        left join smaq.company_tbl T5  on T2.user_id = T5.user_id
+        where T2.user_id in(${userId})
+        and T2.status = 2
+        <if test="status == 1">
+            and T1.status in ('2', '3')
+        </if>
+        <if test="status !=1">
+            and T1.status = #{status}
+        </if>
+        <if test="companyName != null">
+            and T5.name like concat('%','${companyName}','%')
+        </if>
+         and T4.level = '红色'
+         and T2.del= 0
+         and T2.flag=2
+         order by T2.real_time desc;
+    </select>
+
+    <select id="selectDangerIndexList3" resultType="java.util.Map">
+           select T2.type,
+               T2.depart,
+               T1.levels,
+               T1.recheck_time,
+               T2.real_time as realTime ,
+               T1.content,
+               T1.files,
+               T1.recheck_file,
+               T1.file_address,
+               T1.status,
+               T4.name level2,
+               T1.money,
+               T1.level_id as levelId,
+               T2.industry_type as industryType,
+               T1.id as checkItemId,
+               T2.id as checkId,
+               T4.id as companyManualId,
+               T3.id as checkPartId,
+               T2.user_id as userId
+             from smaq.t_check_item_tbl T1
+             left join smaq.t_check_tbl T2 on T1.check_id = T2.id
+             left join smaq.t_check_part_tbl T3 on T1.part_id = T3.id
+             left join t_level_tbl T4 on T1.level_id = T4.id
+		     left join a_danger_manual_tbl T5 on T1.level_id = T5.id
+             left join smaq.company_tbl T6  on T2.user_id = T6.user_id
+        where T2.user_id in (${userId})
+        and T2.status = 2
+        <if test="status == 1">
+            and T1.status in ('2', '3')
+        </if>
+        <if test="status !=1">
+            and T1.status = #{status}
+        </if>
+        <if test="companyName != null">
+            and T6.name like concat('%','${companyName}','%')
+        </if>
+        and T2.del= 0
+        and T2.flag= 3
+		and T5.level = '红色'
+        order by T2.real_time desc;
+    </select>
+
 </mapper>

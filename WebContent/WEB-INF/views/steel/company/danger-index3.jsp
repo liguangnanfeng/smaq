@@ -29,7 +29,7 @@ function showpicture(memoImg){
 <body>
   <div class="page-container">
     <div class="text-c">
-      <form action="${ly }/steel/check-item3" method="post">
+      <form action="${ly }/steel/check-item32" method="post">
         <c:if test="${session_user.userType != 5}">
         <div class="dis-ib">
           <span>企业名称：</span>
@@ -39,17 +39,16 @@ function showpicture(memoImg){
         <div class="dis-ib">
           <span>状态：</span>
           <select name="status" class="input-text mb-5 mt-5" style="width:150px;">
-            <option value="">全部</option>
+            <option value="1">全部</option>
             <option value="2" <c:if test="${status == 2}"> selected</c:if>>未整改</option>
             <option value="3" <c:if test="${status == 3}"> selected</c:if>>已整改</option>
           </select>
           <span>来源：</span>
           <select name="flag" class="input-text mb-5 mt-5" style="width:150px;">
-            <option value="">全部</option>
+            <option value="0">全部</option>
             <option value="1" <c:if test="${flag == 1}"> selected</c:if>>企业自查</option>
-            <option value="2" <c:if test="${flag == 2}"> selected</c:if>>行政执法</option>
+            <option value="2" <c:if test="${flag == 2}"> selected</c:if>>行政检查</option>
             <option value="3" <c:if test="${flag == 3}"> selected</c:if>>部门抽查</option>
-            <option value="4" <c:if test="${flag == 4}"> selected</c:if>>行政检查</option>
           </select>
         </div>
         <button class="btn btn-success" type="submit">

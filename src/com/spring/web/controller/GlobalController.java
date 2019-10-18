@@ -283,10 +283,10 @@ public class GlobalController extends BaseController {
             m1.put("d", 1);
             m1.put("status", 2);
             m1.put("userId", sb.toString());
-            List<Map<String, Object>> list = tCheckItemMapper.selectDangerIndexList(m1);
-            m1.put("status", 3);
-            List<Map<String, Object>> list1 = tCheckItemMapper.selectDangerIndexList(m1);
-            model.addAttribute("dangerCount", list.size() + list1.size());
+            List<Map<String, Object>> list11 = tCheckItemMapper.findACompanyAllList(m1);
+            List<Map<String, Object>> list22 = tCheckItemMapper.findDangerAllList(m1);
+            List<Map<String, Object>> list33 = tCheckItemMapper.findLevelAllList(m1);
+            model.addAttribute("dangerCount", list11.size() + list22.size() + list33.size()); // 未整改
             model.addAttribute("counts",counts);
             model.addAttribute("counts1",counts1);
         }
@@ -873,15 +873,34 @@ public class GlobalController extends BaseController {
         }
         m.put("userId", sb.toString());
 
-        List<Map<String, Object>> list = tCheckItemMapper.selectDangerIndexList(m);
+        List<Map<String, Object>> list1 = tCheckItemMapper.findACompanyAllList(m);
+        List<Map<String, Object>> list2 = tCheckItemMapper.findDangerAllList(m);
+        for (int i = 0; i < list2.size(); i++) {
+            Integer checkId = (Integer) list2.get(i).get("checkId");
+            list2.get(i).put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
+        }
+        List<Map<String, Object>> list3= tCheckItemMapper.findLevelAllList(m);
+        for (int i = 0; i < list3.size(); i++) {
+            Integer checkId = (Integer) list3.get(i).get("checkId");
+            list3.get(i).put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
+        }
         m.put("status", 2);
-        List<Map<String, Object>> list1 = tCheckItemMapper.selectDangerIndexList(m);
-        model.addAttribute("list_s2", list1.size()); // 未整改
+        List<Map<String, Object>> list11 = tCheckItemMapper.findACompanyAllList(m);
+        List<Map<String, Object>> list22 = tCheckItemMapper.findDangerAllList(m);
+        List<Map<String, Object>> list33 = tCheckItemMapper.findLevelAllList(m);
+        model.addAttribute("list_s2", list11.size() + list22.size() + list33.size()); // 未整改
+
         m.put("status", 3);
-        List<Map<String, Object>> list2 = tCheckItemMapper.selectDangerIndexList(m);
-        model.addAttribute("list_s3", list2.size()); // 已整改
+        List<Map<String, Object>> list111 = tCheckItemMapper.findACompanyAllList(m);
+        List<Map<String, Object>> list222 = tCheckItemMapper.findDangerAllList(m);
+        List<Map<String, Object>> list333 = tCheckItemMapper.findLevelAllList(m);
+        model.addAttribute("list_s3", list111.size() + list222.size() + list333.size());
+
         String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-        model.addAttribute("list", list);
+        //model.addAttribute("list", list);
+        model.addAttribute("list1", list1);
+        model.addAttribute("list2", list2);
+        model.addAttribute("list3", list3);
         model.addAttribute("flag", flag);
         model.addAttribute("host", host);
         model.addAttribute("status", status);

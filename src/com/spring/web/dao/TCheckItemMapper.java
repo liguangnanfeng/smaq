@@ -548,6 +548,9 @@ public interface TCheckItemMapper {
 
     List<Map<String, Object>> selectDangerIndexListByCliqu(Map<String, Object> m);
 
+    List<Map<String, Object>> findACompanyAllList(Map<String,Object> m);
+    List<Map<String, Object>> findDangerAllList(Map<String,Object> m);
+    List<Map<String, Object>> findLevelAllList(Map<String,Object> m);
 }
 
 

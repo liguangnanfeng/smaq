@@ -166,7 +166,7 @@ function showping(){
               </a>
               <a class="one_tx radius pos-r" href="javascript:;" onclick="show_dialog('重大事故隐患', '${ly }/village/check-item3?status=2')"  style="background:#ea4f21;margin-right:0">
                 <img alt="" src="${ly }/images/httb9.png"/>
-                <font class="font_tx1 pos-a <c:if test="${count[7] >0}">blink</c:if>">${count[7]}</font>
+                <font class="font_tx1 pos-a <c:if test="${dangerCount>0}">blink</c:if>">${dangerCount}</font>
                 <font class="font_tx2 pos-a">重大事故隐患</font>
               </a>
         </div>

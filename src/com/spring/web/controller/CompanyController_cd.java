@@ -131,11 +131,11 @@ public class CompanyController_cd extends BaseController {
         Map<String, Object> m1 = new HashMap<String, Object>();
         setUserId(user, m1);
         m1.put("d", 1);
-        m1.put("status", 2);
-        List<Map<String, Object>> list = tCheckItemMapper.selectDangerIndexList(m1);
-        m1.put("status", 3);
-        List<Map<String, Object>> list1 = tCheckItemMapper.selectDangerIndexList(m1);
-        model.addAttribute("dangerCount", list.size() + list1.size());
+        m.put("status", 2);
+        List<Map<String, Object>> list11 = tCheckItemMapper.findACompanyAllList(m);
+        List<Map<String, Object>> list22 = tCheckItemMapper.findDangerAllList(m);
+        List<Map<String, Object>> list33 = tCheckItemMapper.findLevelAllList(m);
+        model.addAttribute("dangerCount", list11.size() + list22.size() + list33.size()); // 未整改
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String startTime = df.format(new Date().getTime()-15*24*60*60*1000);

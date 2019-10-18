@@ -209,10 +209,9 @@
 
     <a class="one_tx radius pos-r" data-title="重大隐患" data-href="${ly }/village/check-item3?status=2" onclick="Hui_admin_tab(this)" href="javascript:;" style="background:#ea4f21;margin-right:0">
     <img alt="" src="${ly }/images/httb9.png"/>
-    <font class="font_tx1 pos-a <c:if test="${count[7] >0}">blink</c:if>">${count[7]}</font>
+    <font class="font_tx1 pos-a <c:if test="${dangerCount >0}">blink</c:if>">${dangerCount}</font>
     <font class="font_tx2 pos-a">重大隐患</font>
     </a>
-
 
 
 

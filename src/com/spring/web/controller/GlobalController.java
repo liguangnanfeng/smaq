@@ -268,8 +268,8 @@ public class GlobalController extends BaseController {
         if (null == ids || ids.size() == 0){
             model.addAttribute("counts",0);
             model.addAttribute("counts1",0);
+            model.addAttribute("dangerCount",0);
         }else {
-
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             String startTime = df.format(new Date().getTime()-15*24*60*60*1000);
 
@@ -279,6 +279,14 @@ public class GlobalController extends BaseController {
             Integer counts = tCheckMapper.findAllCounte(sb.toString(),startTime1,endTime); // 排查数据
             Integer counts1 = tCheckItemMapper.findAllCounte(sb.toString()); // 治理数据
 
+            Map<String, Object> m1 = new HashMap<String, Object>();
+            m1.put("d", 1);
+            m1.put("status", 2);
+            m1.put("userId", sb.toString());
+            List<Map<String, Object>> list11 = tCheckItemMapper.findACompanyAllList(m1);
+            List<Map<String, Object>> list22 = tCheckItemMapper.findDangerAllList(m1);
+            List<Map<String, Object>> list33 = tCheckItemMapper.findLevelAllList(m1);
+            model.addAttribute("dangerCount", list11.size() + list22.size() + list33.size()); // 未整改
             model.addAttribute("counts",counts);
             model.addAttribute("counts1",counts1);
         }
@@ -848,20 +856,53 @@ public class GlobalController extends BaseController {
             throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
-        setUserId(user, m);
+        //setUserId(user, m);
         m.put("flag", flag);
         m.put("status", status);
         m.put("companyName", companyName);
         m.put("d", 1);
-        List<Map<String, Object>> list = tCheckItemMapper.selectDangerIndexList(m);
+        StringBuilder sb = new StringBuilder();
+        List<Integer> ids = null;
+        ids = basicFindAllIds(user, ids);
+        for (int i = 0; i < ids.size(); i++) {
+            if (i == ids.size()-1){
+                sb.append("'").append(ids.get(i)).append("'");
+            }else {
+                sb.append("'").append(ids.get(i)).append("',");
+            }
+        }
+        m.put("userId", sb.toString());
+
+        List<Map<String, Object>> list1 = tCheckItemMapper.findACompanyAllList(m);
+        List<Map<String, Object>> list2 = tCheckItemMapper.findDangerAllList(m);
+        for (int i = 0; i < list2.size(); i++) {
+            Integer checkId = (Integer) list2.get(i).get("checkId");
+            list2.get(i).put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
+        }
+        List<Map<String, Object>> list3= tCheckItemMapper.findLevelAllList(m);
+        for (int i = 0; i < list3.size(); i++) {
+            Integer checkId = (Integer) list3.get(i).get("checkId");
+            list3.get(i).put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
+        }
         m.put("status", 2);
-        Integer list_s2 = tCheckItemMapper.selectDangerIndexListCount(m);
+        List<Map<String, Object>> list11 = tCheckItemMapper.findACompanyAllList(m);
+        List<Map<String, Object>> list22 = tCheckItemMapper.findDangerAllList(m);
+        List<Map<String, Object>> list33 = tCheckItemMapper.findLevelAllList(m);
+        model.addAttribute("list_s2", list11.size() + list22.size() + list33.size()); // 未整改
+
         m.put("status", 3);
-        Integer list_s3 = tCheckItemMapper.selectDangerIndexListCount(m);
-        model.addAttribute("list_s2", list_s2);
-        model.addAttribute("list_s3", list_s3);
-        model.addAttribute("list", list);
+        List<Map<String, Object>> list111 = tCheckItemMapper.findACompanyAllList(m);
+        List<Map<String, Object>> list222 = tCheckItemMapper.findDangerAllList(m);
+        List<Map<String, Object>> list333 = tCheckItemMapper.findLevelAllList(m);
+        model.addAttribute("list_s3", list111.size() + list222.size() + list333.size());
+
+        String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        //model.addAttribute("list", list);
+        model.addAttribute("list1", list1);
+        model.addAttribute("list2", list2);
+        model.addAttribute("list3", list3);
         model.addAttribute("flag", flag);
+        model.addAttribute("host", host);
         model.addAttribute("status", status);
         model.addAttribute("companyName", companyName);
         return "global/company/danger-index3";

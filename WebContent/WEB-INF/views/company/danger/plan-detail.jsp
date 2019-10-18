@@ -268,7 +268,7 @@
 
                     <c:if test="${companyName == ch.part}">
 
-                        <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
+<%--                        <td class="text-c">2${ch.level2 == "" ? "暂无数据" : ch.level2}</td>--%>
                         <td class="text-c">${ch.name == "" ? "暂无数据" : ch.name}</td>
                     </c:if>
 

@@ -874,14 +874,12 @@ public class GlobalController extends BaseController {
         m.put("userId", sb.toString());
 
         List<Map<String, Object>> list = tCheckItemMapper.selectDangerIndexList(m);
-        if (null == flag){
-            m.put("status", 2);
-            List<Map<String, Object>> list1 = tCheckItemMapper.selectDangerIndexList(m);
-            model.addAttribute("list_s2", list1.size()); // 未整改
-            m.put("status", 3);
-            List<Map<String, Object>> list2 = tCheckItemMapper.selectDangerIndexList(m);
-            model.addAttribute("list_s3", list2.size()); // 已整改
-        }
+        m.put("status", 2);
+        List<Map<String, Object>> list1 = tCheckItemMapper.selectDangerIndexList(m);
+        model.addAttribute("list_s2", list1.size()); // 未整改
+        m.put("status", 3);
+        List<Map<String, Object>> list2 = tCheckItemMapper.selectDangerIndexList(m);
+        model.addAttribute("list_s3", list2.size()); // 已整改
         String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
         model.addAttribute("list", list);
         model.addAttribute("flag", flag);

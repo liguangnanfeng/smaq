@@ -19,7 +19,7 @@ body .dis-ib{margin-right:15px;}
 <script type="text/javascript">
 function showpicture(memoImg){
   //memoImg = "";
-  if (memoImg.length !== 0) { 
+  if (memoImg.length !== 0) {
     $("#memoImg").attr("src",getRootPath()+memoImg);
   }
   $("#modal-plan").modal("show");
@@ -29,7 +29,7 @@ function showpicture(memoImg){
 <body>
   <div class="page-container">
     <div class="text-c">
-      <form action="${ly }/global/check-item3" method="post">
+      <form action="${ly }/village/check-item3" method="post">
         <c:if test="${session_user.userType != 5}">
         <div class="dis-ib">
           <span>企业名称：</span>
@@ -45,11 +45,10 @@ function showpicture(memoImg){
           </select>
           <span>来源：</span>
           <select name="flag" class="input-text mb-5 mt-5" style="width:150px;">
-            <option value="">全部</option>
-            <option value="1" <c:if test="${flag == 1}"> selected</c:if>>企业自查</option>
-            <option value="2" <c:if test="${flag == 2}"> selected</c:if>>行政执法</option>
-            <option value="3" <c:if test="${flag == 3}"> selected</c:if>>部门抽查</option>
-            <option value="4" <c:if test="${flag == 4}"> selected</c:if>>行政检查</option>
+              <option value="">全部</option>
+              <option value="1" <c:if test="${flag == 1}"> selected</c:if>>企业自查</option>
+              <option value="2" <c:if test="${flag == 2}"> selected</c:if>>行政检查</option>
+              <option value="3" <c:if test="${flag == 3}"> selected</c:if>>部门抽查</option>
           </select>
         </div>
         <button class="btn btn-success" type="submit">
@@ -62,7 +61,7 @@ function showpicture(memoImg){
               隐患总数：<strong>${list_s3 + list_s2}</strong> 条,
               已整改数量：<strong>${list_s3 }</strong> 条,
               未整改数量：<strong>${list_s2 }</strong> 条
-      </span> 
+      </span>
     </div>
     <div class="mt-20">
   <table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -121,13 +120,13 @@ function showpicture(memoImg){
     <%--</c:choose>--%>
     <c:set var="idx" value="${fn:split(list.levels,'/') }"/>
     <td>${idx[0]}</td>
-    <%--<c:if test="${flag==1}">--%>
-
-    <%--</c:if>
+    <c:if test="${flag==1}">
+      <td>${list.depart }</td>
+    </c:if>
     <c:if test="${flag!=1}">
       <td>${companyName}</td>
-    </c:if>--%>
-    <td>${list.depart }</td>
+    </c:if>
+
     <c:if test="${list.levels!=null}">
       <c:set var="item" value="${fn:split(list.levels,'/') }"/>
     </c:if>
@@ -325,6 +324,6 @@ $(function() {
     ]
     });
 });
-</script> 
+</script>
 </body>
 </html>

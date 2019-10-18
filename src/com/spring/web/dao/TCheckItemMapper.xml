@@ -718,7 +718,7 @@
                 and T2.flag = #{flag}
             </if>
             <if test="companyName != null and companyName != ''">
-                and T4.name LIKE CONCAT('%', #{companyName},'%')
+                and T5.name LIKE CONCAT('%', #{companyName},'%')
             </if>
             <if test="partName != null and partName != ''">
                 and T1.part_name LIKE CONCAT('%', #{partName},'%')
@@ -772,7 +772,7 @@
                 and T2.flag = #{flag}
             </if>
             <if test="companyName != null and companyName != ''">
-                and T4.name LIKE CONCAT('%', #{companyName},'%')
+                and T5.name LIKE CONCAT('%', #{companyName},'%')
             </if>
             <if test="partName != null and partName != ''">
                 and T1.part_name LIKE CONCAT('%', #{partName},'%')
@@ -827,7 +827,7 @@
                 and T2.flag = #{flag}
             </if>
             <if test="companyName != null and companyName != ''">
-                and T4.name LIKE CONCAT('%', #{companyName},'%')
+                and T5.name LIKE CONCAT('%', #{companyName},'%')
             </if>
             <if test="partName != null and partName != ''">
                 and T1.part_name LIKE CONCAT('%', #{partName},'%')

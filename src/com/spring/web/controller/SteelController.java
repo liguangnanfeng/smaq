@@ -192,17 +192,15 @@ public class SteelController extends BaseController {
         model.addAttribute("counts", counts);
         Trade trade = tradeMapper.selectByPrimaryKey(user.getId());
 
-        m = new HashMap<>();
-        m.put("d", 1);
-        m.put("flag", null);
-        m.put("status", 2);
-        m.put("userIds", sb.toString());
-        System.out.println(m);
-        Integer count7 = 0;
-        count7 = count7 + tCheckItemMapper.selectDangerIndexListByCliqu(m).size();//21
-        m.put("status", 3);
-        count7 = count7 + tCheckItemMapper.selectDangerIndexListByCliqu(m).size();//7
-        model.addAttribute("count7", count7);
+        Map<String, Object> m1 = new HashMap<String, Object>();
+        m1.put("status", 2);
+        m1.put("userId", sb.toString());
+        m1.put("d", 1);
+        System.out.println(m1);
+        List<Map<String, Object>> list11 = tCheckItemMapper.findACompanyAllList(m1);
+        List<Map<String, Object>> list22 = tCheckItemMapper.findDangerAllList(m1);
+        List<Map<String, Object>> list33 = tCheckItemMapper.findLevelAllList(m1);
+        model.addAttribute("count7", list11.size() + list22.size() + list33.size()); // 未整改
         if (trade.getIsClique() == 1) {//行业端集团型企业
             return "steel/clique-welcome";
         }
@@ -7489,20 +7487,10 @@ public class SteelController extends BaseController {
     @RequestMapping(value = "check-item32")
     public String checkItem32(HttpServletRequest request, Model model, Integer flag, String companyName, Integer status)
             throws Exception {
-        if(null == flag){
-            flag = 0;
-        }
-        if(null == status){
-            status = 1;
-        }
         User user = getLoginUser(request);
-        User user1;
-        Company company = null;
-        List<Map<String, Object>> allList = new ArrayList<>();
-        List<Map<String, Object>> list = null;
         List<Integer> ids = tradeCliqueMapper.selectCompanyIdsByCqlib(user.getId());
-        ids.add(user.getId());//获取所有企业id
         StringBuilder sb = new StringBuilder();
+        sb.append("'").append(user.getId()).append("',");
         for (int i = 0; i < ids.size(); i++) {
             if (i == ids.size()-1){
                 sb.append("'").append(ids.get(i)).append("'");
@@ -7510,124 +7498,46 @@ public class SteelController extends BaseController {
                 sb.append("'").append(ids.get(i)).append("',");
             }
         }
-        if(1 == flag || 0 == flag){
-           list = tCheckItemMapper.selectDangerIndexList1(sb.toString(), status, companyName);
-            for (Map map : list) {
-                user1 = userMapper.selectByPrimaryKey((Integer)map.get("userId"));
-                company = companyMapper.selectByPrimaryKey(user1.getId());
-                Date realTime = (Date) map.get("realTime");
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-                String format = sdf.format(realTime);
-                String level = (String) map.get("level");
-                if (null != level && "红色".equals(level)) {
-                    map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
-                }
-                map.put("realTimeStr", format);
+        Map<String, Object> m = new HashMap<>();
+        m.put("flag", flag);
+        m.put("userId", sb.toString());
+        m.put("status", status);
+        m.put("companyName", companyName);
+        m.put("d", 1);
 
-                if ("全公司".equals(map.get("depart"))) {
-                    Integer checkId = (Integer) map.get("checkId");
-                    map.put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
-                    Integer industryType = (Integer) map.get("industryType");
-                    if (null != industryType && 1 == industryType) {
-                        map.put("level2", tLevelMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2());
-                    } else if (null != map.get("industryType") && 2 == map.get("industryType")) {
-                        map.put("level2", aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2());
-                    }
-                }
-
-                if (null == map.get("fjgkfzr") || "".equals(map.get("fjgkfzr"))) {
-                    String name = "";
-                    TCheck tc = tCheckMapper.selectByPrimaryKey((Integer) map.get("checkId"));
-                    // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
-                    List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId((Integer) map.get("checkItemId"));
-                    if (null != integers && integers.size() > 0) {
-                        // 这里进行名称的获取,进行全部循环,获取数据的方式,在数据库中进行查询
-                        List<String> list1 = new ArrayList<String>();
-                        for (Integer integer : integers) {
-                            if (null != integer) {
-                                ACompanyManual aCompanyManual = aCompanyManualMapper.selectByPrimaryKey(integer);
-                                if (null != aCompanyManual && null != aCompanyManual.getFjgkfzr()) {
-                                    list1.add(aCompanyManual.getFjgkfzr());
-                                }
-                            }
-                        }
-                        if (list1.size() == 0) {
-                            name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
-                            tc.setCheckCompany(name);
-                        } else {
-                            name = list1.get(0);
-                            tc.setCheckCompany(name);
-                        }
-                    } else {
-                        name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
-                        tc.setCheckCompany(name);
-                    }
-                    map.put("fjgkfzr", name);
-                }
-            }
-            if(0 == flag){
-                allList.addAll(list);
-            }
-            model.addAttribute("list", list);
+        m.remove("tradeId");
+        m.put("userId", sb.toString());
+        List<Map<String, Object>> list1 = tCheckItemMapper.findACompanyAllList(m);
+        List<Map<String, Object>> list2 = tCheckItemMapper.findDangerAllList(m);
+        for (int i = 0; i < list2.size(); i++) {
+            Integer checkId = (Integer) list2.get(i).get("checkId");
+            list2.get(i).put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
         }
-        if(2 == flag || 0 == flag){
-            list = tCheckItemMapper.selectDangerIndexList2(sb.toString(), status,  companyName);
-            for (Map map : list) {
-                company = companyMapper.selectByPrimaryKey((Integer)map.get("userId"));
-                Date realTime = (Date) map.get("realTime");
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-                String format = sdf.format(realTime);
-                String levelId = "";
-                if (null != map.get("industryType") && 1 == map.get("industryType")) {
-                    Integer levelId1 = (Integer) map.get("levelId");
-                    if (null != levelId1) {
-                        levelId = tLevelMapper.selectByPrimaryKey(levelId1).getLevel2();
-                    }
-
-                } else if (null != map.get("industryType") && 2 == map.get("industryType")) {
-                    levelId = aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2();
-                }
-
-                if (StringUtils.isBlank(levelId)) {
-                    map.put("level2", levelId);
-                }
-
-                map.put("realTimeStr", format);
-                map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
-                // 获取
-            }
-            if(0 == flag){
-                allList.addAll(list);
-            }
-            model.addAttribute("list", list);
+        List<Map<String, Object>> list3= tCheckItemMapper.findLevelAllList(m);
+        for (int i = 0; i < list3.size(); i++) {
+            Integer checkId = (Integer) list3.get(i).get("checkId");
+            list3.get(i).put("fjgkfzr", tCheckMapper.selectByPrimaryKey(checkId).getDapartContact());
         }
-        if(3 == flag || 0 == flag){  //第三方检查
-            list = tCheckItemMapper.selectDangerIndexList3(sb.toString(), status,  companyName);
-            for (Map map : list) {
-                company = companyMapper.selectByPrimaryKey((Integer)map.get("userId"));
-                Date realTime = (Date) map.get("realTime");
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-                String format = sdf.format(realTime);
-                //  String level = (String) map.get("level");
-                if (null != map.get("industryType") && 1 == map.get("industryType")) {
-                    map.put("level2", tLevelMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2());
-                } else if (null != map.get("industryType") && 2 == map.get("industryType")) {
-                    map.put("level2", aDangerManualMapper.selectByPrimaryKey((Integer) map.get("levelId")).getLevel2());
-                }
-                map.put("fjgkfzr", company.getCharge() + company.getChargeContact());
-                map.put("realTimeStr", format);
-            }
-            if(0 == flag){
-                allList.addAll(list);
-            }
-            model.addAttribute("list", list);
+        m.put("status", 2);
+        System.out.println(m);
+        List<Map<String, Object>> list11 = tCheckItemMapper.findACompanyAllList(m);
+        List<Map<String, Object>> list22 = tCheckItemMapper.findDangerAllList(m);
+        List<Map<String, Object>> list33 = tCheckItemMapper.findLevelAllList(m);
+        model.addAttribute("list_s2", list11.size() + list22.size() + list33.size()); // 未整改
 
-        }
-        if(0== flag) {
-            model.addAttribute("list", allList);
-        }
+        m.put("status", 3);
+        List<Map<String, Object>> list111 = tCheckItemMapper.findACompanyAllList(m);
+        List<Map<String, Object>> list222 = tCheckItemMapper.findDangerAllList(m);
+        List<Map<String, Object>> list333 = tCheckItemMapper.findLevelAllList(m);
+        model.addAttribute("list_s3", list111.size() + list222.size() + list333.size());
+        String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        model.addAttribute("list1", list1);
+        model.addAttribute("list2", list2);
+        model.addAttribute("list3", list3);
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
+        model.addAttribute("companyName", companyName);
+        model.addAttribute("host", host);
         return "steel/company/danger-index3";
     }
 

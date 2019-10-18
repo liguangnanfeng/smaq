@@ -163,9 +163,9 @@ function showping(){
   <%--  <c:if test="${zdsgyh >0}">blink</c:if>  这是闪烁的特效--%>
   <%--  onclick="show_dialog('隐患治理', '${ly }/global/check-item3?status=2')"--%>
 
-  <a class="one_tx radius pos-r" data-title="重大隐患" href="javascript:;"   data-href="${ly }/village/check-item3?status=2" onclick="Hui_admin_tab(this)" style="background:#ea4f21;margin-right:0">
+  <a class="one_tx radius pos-r" data-title="重大隐患" href="javascript:;"   data-href="${ly }/steel/check-item3?status=2" onclick="Hui_admin_tab(this)" style="background:#ea4f21;margin-right:0">
   <img alt="" src="${ly }/images/httb9.png"/>
-  <font class="font_tx1 pos-a <c:if test="${zdsgyh >0}">blink</c:if>">${zdsgyh }</font>
+  <font class="font_tx1 pos-a <c:if test="${count7 >0}">blink</c:if>">${count7 }</font>
   <font class="font_tx2 pos-a">重大隐患</font>
   </a>
 

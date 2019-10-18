@@ -546,6 +546,8 @@ public interface TCheckItemMapper {
 
     String  selectLastOperateTimeById(@Param("userId") Integer userId);
 
+    List<Map<String, Object>> selectDangerIndexListByCliqu(Map<String, Object> m);
+
 }
 
 

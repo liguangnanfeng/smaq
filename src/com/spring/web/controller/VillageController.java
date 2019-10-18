@@ -2530,8 +2530,9 @@ public class VillageController extends BaseController {
             throws Exception {
         User user = getLoginUser(request);
         Map<String, Object> m = new HashMap<String, Object>();
-        setUserId(user, m);
+        //setUserId(user, m);
         m.put("flag", flag);
+        m.put("userId", user.getId());
         m.put("status", status);
         m.put("companyName", companyName);
         m.put("d", 1);

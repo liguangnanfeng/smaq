@@ -625,6 +625,8 @@
         GROUP BY time, flag
     </select>
 
+
+
     <select id="selectDangerIndexList" resultType="java.util.Map">
         select
             T2.type,
@@ -656,12 +658,9 @@
             left join company_tbl T4 on T2.user_id = T4.user_id
             left join a_company_manual_tbl T5 on T1.level_id = T5.id
         <where>
-            T2.del = 0 and T2.status = 2 and T1.status > 1 and T5.flag = 2
+            T2.del = 0 and T2.status = 2 and T1.status > 1 and T5.flag = 2  and T4.user_id in (${userId})
             <if test="flag != null">
                 and T2.flag = #{flag}
-            </if>
-            <if test="userId != null">
-                and T4.user_id = ${userId}
             </if>
             <if test="companyName != null and companyName != ''">
                 and T4.name LIKE CONCAT('%', #{companyName},'%')
@@ -678,6 +677,7 @@
         </if>
         order by T1.id desc, T2.real_time desc
     </select>
+
 
     <select id="selectDangerIndexListCount" resultType="java.lang.Integer">
         select

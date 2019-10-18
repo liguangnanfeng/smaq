@@ -29,7 +29,7 @@ function showpicture(memoImg){
 <body>
   <div class="page-container">
     <div class="text-c">
-      <form action="${ly }/village/check-item3" method="post">
+      <form action="${ly }/global/check-item3" method="post">
         <c:if test="${session_user.userType != 5}">
         <div class="dis-ib">
           <span>企业名称：</span>
@@ -95,21 +95,39 @@ function showpicture(memoImg){
   <tbody>
   <!-- 循环开始 -->
   <c:set var="x" value="${fn:split('基础检查/现场检查/高危检查','/') }"/>
-
+<script>
+  console.log('${list}')
+  </script>
   <c:forEach items="${list }" varStatus="index" var="list">
     <tr class="text-c">
     <script>
     </script>
-
+    <%--<c:choose>--%>
+    <%--<c:when test="${list.type == 1}">--%>
+    <%--<td>日常</td>--%>
+    <%--</c:when>--%>
+    <%--<c:when test="${list.type == 2}">--%>
+    <%--<td>定期</td>--%>
+    <%--</c:when>--%>
+    <%--<c:when test="${list.type == 3}">--%>
+    <%--<td>季节</td>--%>
+    <%--</c:when>--%>
+    <%--<c:when test="${list.type == 4}">--%>
+    <%--<td>其他</td>--%>
+    <%--</c:when>--%>
+    <%--<c:when test="${list.type == 5}">--%>
+    <%--<td>综合</td>--%>
+    <%--</c:when>--%>
+    <%--</c:choose>--%>
     <c:set var="idx" value="${fn:split(list.levels,'/') }"/>
     <td>${idx[0]}</td>
-   <%-- <c:if test="${flag==1}">--%>
-      <td>${list.depart }</td>
-   <%-- </c:if>
+    <%--<c:if test="${flag==1}">--%>
+
+    <%--</c:if>
     <c:if test="${flag!=1}">
       <td>${companyName}</td>
-    </c:if>
---%>
+    </c:if>--%>
+    <td>${list.depart }</td>
     <c:if test="${list.levels!=null}">
       <c:set var="item" value="${fn:split(list.levels,'/') }"/>
     </c:if>
@@ -147,7 +165,8 @@ function showpicture(memoImg){
     </c:if>--%>
     <%--                    <td>${item[0]}</td>--%>
     <%--                    <td>${item[1]+item[2] }</td>--%>
-    <td><fmt:formatDate value="${list.realTime }" pattern="yyyy-MM-dd"/></td>
+    <td style="width:72px"><fmt:formatDate value="${list.realTime == null? '' : list.realTime}"
+     pattern="yyyy-MM-dd"/></td>
     <td>${list.content }</td>
     <td >
 
@@ -220,8 +239,8 @@ function showpicture(memoImg){
     </td>
     <td>${list.fjgkfzr}</td>
     <c:if test="${list.money==null}">
-      <td onclick="touru(${list.checkItemId},this)">0</td>
-    </c:if>
+    <td onclick="touru(${list.checkItemId},this)">0</td>
+  </c:if>
     <c:if test="${list.money!=null}">
       <td onclick="touru(${list.checkItemId},this)">${list.money}</td>
     </c:if>

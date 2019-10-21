@@ -267,17 +267,18 @@
 
 
                     <c:if test="${companyName == ch.part}">
-
+                        <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
+                         <td class="text-c">
 <%--                        <td class="text-c">2${ch.level2 == "" ? "暂无数据" : ch.level2}</td>--%>
-                        <td class="text-c">${ch.name == "" ? "暂无数据" : ch.name}</td>
+                             ${ch.name == "" ? "暂无数据" : ch.name}
+                         </td>
+
                     </c:if>
 
-
                     <c:if test="${companyName != ch.part}">
-
                         <c:if test="${flag == 1}">
-                            <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
-                            <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
+                         <td class="text-c"><c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
+                            ${ls[1] != null ? ls[1] : "暂无数据" }</td>
                         </c:if>
 
                         <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
@@ -326,9 +327,9 @@
                         <%--                            ${ch.factors}--%>
                         <%--                        </c:if>--%>
                         <%--                    </td>--%>
-
+                    <td>
                     <c:if test="${flag == 1}">
-                        <td>
+
                             <c:if test="${ch.status != 1}">
                                 <c:choose>
                                     <c:when test="${ch.level eq '红色'}"><font class="col-a">${ch.level}</font></c:when>
@@ -340,9 +341,9 @@
                             <c:if test="${ch.status == 1}">
                                 无
                             </c:if>
-                        </td>
-                    </c:if>
 
+                    </c:if>
+                    </td>
                     <td class="text-c">
                         <button class="btn radius btn-danger size-S ml-20" onClick="showpicture('${ch.files}')">
                             <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 查看图片

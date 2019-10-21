@@ -2857,6 +2857,7 @@ public class GlobalController extends BaseController {
             model.addAttribute("is_re",1);
         }
         model.addAttribute("uid",uid);
+        model.addAttribute("companyName",loginUser.getUserName());
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
 
         return "global/company/checkModel/plan-detail";

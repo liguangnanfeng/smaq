@@ -1569,4 +1569,16 @@
        from user_tbl
        where id = #{id, jdbcType=INTEGER}
     </select>
+    <select id="findALLsssByCliqu" resultType="java.util.Map">
+     select T2.name as name, T1.level3 as level3, T1.level1 as level1, T1.level2 as Level2,T1.level as level, T1.type as type, T1.factors as factors
+     from a_company_manual_tbl T1
+     left join company_tbl T2 on T1.uid = T2.user_id
+     where del = 0
+     and level = #{level}
+     <if test="companyName != null">
+     and name like concat('%', '${companyName}','%')
+     </if>
+     and uid in (${uid})
+     order by id asc;
+    </select>
 </mapper>

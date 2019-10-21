@@ -239,7 +239,7 @@
                         <td><%--${be.sea_year }--%></td>
 
                         <td>${be.bas_year != null ? be.bas_year : 0 }</td>
-                        <td><%--${be.sea_year != null ? be.sea_year : 0 }--%>0</td>
+                        <td><%--${be.sea_year != null ? be.sea_year : 0 }--%>${be.danger6}</td>
                         <td><%--${be.sea_year }--%></td>
 
                         <td>${be.count}</td>

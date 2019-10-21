@@ -2861,12 +2861,37 @@ public class VillageController extends BaseController {
             return "village/safety-system/control-list1";
         }
     }
+    @RequestMapping(value = "safety-system/control-listmenu")
+    public String controlListmenu(HttpServletRequest request, Model model, String companyName, String level) throws Exception {
+        User user =  getLoginUser(request);
+        String level1 = "";
+        if(level.equals("red")){
+            level1 = "红色";
+        }
+        if(level.equals("orange")){
+            level1 = "橙色";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("'").append(user.getId()).append("',");
+        List<Integer> ids = tradeCliqueMapper.selectCompanyIdsByCqlib(user.getId());
+        for (int i = 0; i < ids.size(); i++) {
+            if (i == ids.size()-1){
+                sb.append("'").append(ids.get(i)).append("'");
+            }else {
+                sb.append("'").append(ids.get(i)).append("',");
+            }
+        }
+        List<Map<String, Object>> list = aCompanyManualMapper.findALLsssByCliqu(level1, sb.toString(), companyName);
+        System.out.println(list);
+        model.addAttribute("list", list);
+        return "steel/other/assess5-2";
+    }
 
     /**
      * 安全风险管控-企业列表
      */
-    @RequestMapping(value = "safety-system/control-listmenu")
-    public String controlListmenu(HttpServletRequest request,
+    @RequestMapping(value = "safety-system/control-listmenu2")
+    public String controlListmenu2(HttpServletRequest request,
                                   Integer townId, Integer villageId, Integer userId, Model model,
                                   String companyName, String level) throws Exception {
         User user = getLoginUser(request);
@@ -2896,6 +2921,7 @@ public class VillageController extends BaseController {
         System.out.println(m);
         //model.addAttribute("list", aCompanyManualMapper.selectByMap3(m));
         List<Map<String, Object>> list = aCompanyManualMapper.selectByMap3(m);
+
         model.addAttribute("list", list);
         //log.error("list："+list.toString());
         //统计隐患总数

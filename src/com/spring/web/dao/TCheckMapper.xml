@@ -888,7 +888,21 @@
             del = 0
         AND flag = 1
         AND status = 2
+        and industry_type = 2
         AND depart = #{depart} and user_id in (${user_ids}) and type = #{type}
+    </select>
+
+    <select id="findCountAll2" parameterType="Integer" resultType="Integer">
+        SELECT
+            count(*)
+        FROM
+            t_check_tbl
+        WHERE
+            del = 0
+        AND flag = 1
+        AND status = 2
+        and industry_type = 1
+        AND depart = #{depart} and user_id in (${user_ids})
     </select>
 
     <select id="zfCount" resultType="Integer">
@@ -1020,7 +1034,7 @@
        FROM
        t_check_tbl
        WHERE
-       del = 0 AND status = 1 AND type = 2 AND flag = 1
+       del = 0 AND status = 2 AND type = 2 AND flag = 1
        AND create_time BETWEEN #{startTime} AND #{endTime}
        AND user_id in (${userIds})
     </select>

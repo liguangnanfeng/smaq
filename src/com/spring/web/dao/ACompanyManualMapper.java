@@ -219,5 +219,7 @@ public interface ACompanyManualMapper {
 
     List<Map<String,Object>> findCompanyByCliqu(@Param("id") Integer tid);//显示全部企业
 
+    List<Map<String, Object>> findALLsssByCliqu(@Param("level")String level, @Param("uid")String uid, @Param("companyName") String companyName);
+
 }
 

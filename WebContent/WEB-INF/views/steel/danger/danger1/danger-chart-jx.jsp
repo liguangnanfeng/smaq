@@ -154,7 +154,7 @@
         <th colspan="3">定期检查</th>
         <th colspan="3">季节检查</th>
         <th colspan="3">其他检查</th>
-        <th colspan="3">基础检测</th>
+        <th colspan="3">基础检查</th>
         <th colspan="3">累计</th>
         </tr>
         <tr class="text-c">
@@ -214,11 +214,11 @@
                         <td><%--${be.sea_year }--%></td>
 
                         <td>${be.bas_year != null ? be.bas_year : 0 }</td>
-                        <td><%--${be.sea_year != null ? be.sea_year : 0 }--%>0</td>
+                            <td>${be.danger6 != null ? be.danger6 : 0 }</td>
                         <td><%--${be.sea_year }--%></td>
 
-                        <td>${be.count}</td>
                         <td>${be.counts}</td>
+                        <td>${be.wan}</td>
                         <%--<script>
                         console.log($(".add").text());
                         if(!$(".add").text()){
@@ -255,7 +255,7 @@
                         <td></td>
 
                         <td>${be.number6}</td>
-                        <td><%--${be.count6}--%>0</td>
+                        <td>${be.count6}</td>
                         <td></td>
 
                         <td>${be.sums}</td>
@@ -290,7 +290,7 @@
                         <td></td>
 
                         <td>${be.result66}</td>
-                        <td><%--${be.result6}--%>0%</td>
+                        <td>${be.result6}</td>
                         <td></td>
 
                         <td></td>

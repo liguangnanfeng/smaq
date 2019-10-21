@@ -178,6 +178,7 @@ public class SteelController extends BaseController {
                 sb.append("'").append(ids.get(i)).append("',");
             }
         }
+        System.out.println(sb.toString()+":"+startTime1+":"+endTime+":"+startTime);
         Integer counts = tCheckMapper.findAllCounte(sb.toString(),startTime1,endTime); // 排查数据
         Integer counts1 = tCheckItemMapper.findAllCounte(sb.toString()); // 治理数据
 
@@ -1096,6 +1097,7 @@ public class SteelController extends BaseController {
                 m.put("startTime",startTime);
                 m.put("endTime",endTime);
                 m.put("type",2);
+                m.put("status",1);
                 list = tCheckMapper.findSelectList(m);
             }
             Integer sum = 0;
@@ -2433,8 +2435,8 @@ public class SteelController extends BaseController {
     public String dangerCharJx(HttpServletRequest request, Model model, Integer userId) throws ParseException {
         User user = getLoginUser(request);
         //公司实绩统计          //纵向实绩统计        //排查计划统计        //纵向排查计划统计
-        Integer danger1 = 0;  Integer count1 = 0; Integer plan1 = 0;  Integer number1 = 0;
-        Integer danger2 = 0;  Integer count2 = 0; Integer plan2 = 0;  Integer number2 = 0;
+        Integer danger1 = 0;  Integer count1 = 0; Integer plan1 = 0;  Integer number1 = 0;  Integer danger6 = 0;
+        Integer danger2 = 0;  Integer count2 = 0; Integer plan2 = 0;  Integer number2 = 0;  Integer count6 = 0;
         Integer danger3 = 0;  Integer count3 = 0; Integer plan3 = 0;  Integer number3 = 0;
         Integer danger4 = 0;  Integer count4 = 0; Integer plan4 = 0;  Integer number4 = 0;
         Integer danger5 = 0;  Integer count5 = 0; Integer plan5 = 0;  Integer number5 = 0;
@@ -2450,60 +2452,68 @@ public class SteelController extends BaseController {
         List<Map<String, Object>> list2 = new ArrayList<>();
         List<Map<String, Object>> totalList = new ArrayList<>();
         List<Map<String, Object>> zanlist = new ArrayList<>();
+        Company company = null;
         for(Map<String, Object> map:companyMaps){
-            danger1 = 0; danger2 = 0; danger3 = 0; danger4 = 0; danger5 = 0;
+            danger1 = 0; danger2 = 0; danger3 = 0; danger4 = 0; danger5 = 0; danger6 = 0;
             plan1 = 0; plan2 = 0; plan3 = 0; plan4 = 0; plan5 = 0; plan6 = 0;
 
-            list =  hiddenPlanMapper.selectDpids(String.valueOf((Integer) map.get("user_id")));//查询当前公司的各个车间
+            company = companyMapper.selectByPrimaryKey((Integer)map.get("user_id"));//查询对应的公司
 
+            list =  hiddenPlanMapper.selectDpids(String.valueOf((Integer) map.get("user_id")));//查询当前公司的各个车间
+           //公司级排查计划
             if (null == list || list.size() == 0){
 
             }else if (null != list && list.size() != 0){
 
                 for (int i = 0; i < list.size(); i++) {
-
+                    if(null==list.get(i).get("name")){
+                        list.get(i).put("name", map.get("user_name"));
+                    }
                     if(null !=list.get(i).get("syn_year")){
                         plan1 = plan1 + (Integer) list.get(i).get("syn_year");
                     }
 
-                    danger1 = danger1 + tCheckMapper.findCountAll((String)list.get(i).get("name"),1,String.valueOf((Integer) map.get("user_id")));
+                    danger1 = danger1 + tCheckMapper.findCountAll((String)list.get(i).get("name"),5,String.valueOf((Integer) map.get("user_id")));
 
                     if(null !=list.get(i).get("eve_year")){
                         plan2 = plan2 + (Integer) list.get(i).get("eve_year");
                     }
 
-                    danger2 = danger2 + tCheckMapper.findCountAll((String)list.get(i).get("name"),2,String.valueOf((Integer) map.get("user_id")));
+                    danger2 = danger2 + tCheckMapper.findCountAll((String)list.get(i).get("name"),1,String.valueOf((Integer) map.get("user_id")));
 
                     if(null !=list.get(i).get("reg_year")){
                         plan3 = plan3 + (Integer) list.get(i).get("reg_year");
                     }
 
-                    danger3 = danger3 + tCheckMapper.findCountAll((String)list.get(i).get("name"),3,String.valueOf((Integer) map.get("user_id")));
+                    danger3 = danger3 + tCheckMapper.findCountAll((String)list.get(i).get("name"),2,String.valueOf((Integer) map.get("user_id")));
 
                     if(null !=list.get(i).get("sea_year")){
                         plan4 = plan4 + (Integer) list.get(i).get("sea_year");
                     }
 
-                    danger4 = danger4 + tCheckMapper.findCountAll((String)list.get(i).get("name"),3,String.valueOf((Integer) map.get("user_id")));
+                    danger4 = danger4 + tCheckMapper.findCountAll((String)list.get(i).get("name"),4,String.valueOf((Integer) map.get("user_id")));
 
                     if(null !=list.get(i).get("els_year")){
-                        plan1 = plan1 + (Integer) list.get(i).get("els_year");
+                        plan5 = plan5 + (Integer) list.get(i).get("els_year");
                     }
 
-                    danger5 = danger5 + tCheckMapper.findCountAll((String)list.get(i).get("name"),4,String.valueOf((Integer) map.get("user_id")));
+                    danger5 = danger5 + tCheckMapper.findCountAll((String)list.get(i).get("name"),3,String.valueOf((Integer) map.get("user_id")));
 
-                    if(null !=list.get(i).get("be.bas_year")){
-                        plan1 = plan1 + (Integer) list.get(i).get("be.bas_year");
+                    if(null !=list.get(i).get("bas_year")){
+                        plan6 = plan6 + (Integer) list.get(i).get("bas_year");
                     }
+
+                    danger6 = danger6 + tCheckMapper.findCountAll2((String)list.get(i).get("name"), String.valueOf((Integer) map.get("user_id")));
                 }
             }
-            count11 = danger1 + danger2 + danger3 + danger4 + danger5;
+            count11 = danger1 + danger2 + danger3 + danger4 + danger5+danger6;
             count22 = plan1 + plan2 + plan3 + plan4 + plan5 + plan6;
             count1 = count1 + danger1;
             count2 = count2 + danger2;
             count3 = count3 + danger3;
             count4 = count4 + danger4;
             count5 = count5 + danger5;
+            count6 = count6 + danger6;
             number1 = number1 + plan1;
             number2 = number2 + plan2;
             number3 = number3 + plan3;
@@ -2520,11 +2530,20 @@ public class SteelController extends BaseController {
             map1.put("danger3", danger3);
             map1.put("sea_year", plan4);
             map1.put("danger4", danger4);
-            map1.put("els_year", plan4);
+            map1.put("els_year", plan5);
             map1.put("danger5", danger5);
+            map1.put("danger6", danger6);
             map1.put("bas_year", plan6);
             map1.put("count", count22);
             map1.put("counts", count11);
+            if(count22==0){
+                map1.put("wan", "0%");
+            }else{
+                NumberFormat numberFormat1 = NumberFormat.getInstance();
+                // 设置精确到小数点后2位
+                numberFormat1.setMaximumFractionDigits(2);
+                map1.put("wan", numberFormat1.format((float)count11 / (float)count22 * 100)+"%");
+            }
             list2.add(map1);
         }
         map1 = new HashMap<>();
@@ -2539,10 +2558,11 @@ public class SteelController extends BaseController {
         map1.put("count3", count3);
         map1.put("count4", count4);
         map1.put("count5", count5);
+        map1.put("count6", count6);
 
         DecimalFormat df = new DecimalFormat("0.00");
 
-        Integer sums = count1 + count2 + count3 + count4 + count5;
+        Integer sums = count1 + count2 + count3 + count4 + count5 + count6;
 
         Integer sums1 = number1 + number2 + number3 + number4 + number5 + number6;
 
@@ -2561,7 +2581,7 @@ public class SteelController extends BaseController {
             }
         }
         map1 = new HashMap();
-        Integer sum = count1 + count2 + count3 + count4 + count5;
+        Integer sum = count1 + count2 + count3 + count4 + count5 + count6;
 
         Integer sum1 = number1 + number2 + number3 + number4 + number5 + number6;
 
@@ -2573,6 +2593,7 @@ public class SteelController extends BaseController {
         String result3 = numberFormat.format((float)count3 / (float)sum * 100);
         String result4 = numberFormat.format((float)count4 / (float)sum * 100);
         String result5 = numberFormat.format((float)count5 / (float)sum * 100);
+        String result6 = numberFormat.format((float)count6 / (float)sum * 100);
 
         String result11 = numberFormat.format((float)number1 / (float)sum1 * 100);
         String result22 = numberFormat.format((float)number2 / (float)sum1 * 100);
@@ -2586,6 +2607,7 @@ public class SteelController extends BaseController {
         map1.put("result3",result3+"%");
         map1.put("result4",result4+"%");
         map1.put("result5",result5+"%");
+        map1.put("result6",result5+"%");
 
         map1.put("result11",result11+"%");
         map1.put("result22",result22+"%");

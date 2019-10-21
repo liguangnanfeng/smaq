@@ -169,19 +169,6 @@ function showping(){
   <font class="font_tx2 pos-a">重大隐患</font>
   </a>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   <%--<a class="one_tx radius pos-r" data-title="持证上岗" data-href="${ly }/village/warning/sperson-list?isTime=3&home=1" onclick="Hui_admin_tab(this)" href="javascript:;" style="margin-left:1%;background:#46D1E5;">--%>
                 <%--<img alt="" src="${ly }/images/httb1.png"/>--%>
                 <%--<font class="font_tx1 pos-a <c:if test="${count[0]>0}">blink</c:if>">${count[0]}</font>--%>

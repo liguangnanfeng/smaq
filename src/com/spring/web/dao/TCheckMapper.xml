@@ -328,7 +328,8 @@
         T1.status, T1.create_time createTime, T1.flag, T1.check_company checkCompany, T2.name companyName,
         (select count(0) from t_check_item_tbl where check_id = T1.id and status = 2) c,
         (select count(0) from t_recheck_tbl where check_id = T1.id) c3,
-        (select count(0) from t_rectification_tbl where check_id = T1.id) t
+        (select count(0) from t_rectification_tbl where check_id = T1.id) t,
+        T1.user_id as userId
         from t_check_tbl T1
         left join company_tbl T2 on T1.user_id = T2.user_id
         <where>
@@ -373,7 +374,8 @@
         T1.status, T1.create_time createTime, T1.flag, T1.check_company checkCompany, T2.name companyName,
         (select count(0) from t_check_item_tbl where check_id = T1.id and status = 2) c,
         (select count(0) from t_recheck_tbl where check_id = T1.id) c3,
-        (select count(0) from t_rectification_tbl where check_id = T1.id) t
+        (select count(0) from t_rectification_tbl where check_id = T1.id) t,
+        T1.user_id as userId
         from t_check_tbl T1
         left join company_tbl T2 on T1.user_id = T2.user_id
         <where>

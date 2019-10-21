@@ -7953,8 +7953,12 @@ public class CompanyController_cd extends BaseController {
      * 没有兼容小程序
      */
     @RequestMapping(value = "check-detail")
-    public String checkDetail(Integer id, Model model, Integer jcxq, HttpServletRequest request, Integer flag, Integer number) throws Exception {
+    public String checkDetail(Integer id, Model model, Integer jcxq, HttpServletRequest request, Integer flag, Integer number, Integer uid) throws Exception {
         User loginUser = getLoginUser(request);
+        //如果总部端,特殊处理
+        if(35346==loginUser.getId()){
+            loginUser = userMapper.selectByPrimaryKey(uid);
+        }
         // 根据id查询的是检查表信息
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
         Integer type = tc.getType();//5

@@ -302,7 +302,7 @@
                             <%--              </c:if>--%>
                             <%--              &lt;%&ndash; <a style="text-decoration:none" onClick="del_(${be.id})" href="javascript:;">删除检查记录</a> &ndash;%&gt;--%>
                         <a style="text-decoration:none"
-                           onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }&number=${be.c}')"
+                           onClick="show_dialog('检查详情_${be.id }', '${ly}/company/check-detail?flag=${flag }&id=${be.id }&number=${be.c}&uid=${be.userId}')"
                            href="javascript:;">检查详情</a><br>
                         <c:if test="${be.listM.c3 > 0}">
                             <a style="text-decoration:none"

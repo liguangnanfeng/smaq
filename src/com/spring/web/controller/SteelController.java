@@ -2575,10 +2575,10 @@ public class SteelController extends BaseController {
 
             if (null != sums && 0 != sums) {
                 String str = df.format((float) sums / sums1 * 100);
-                model.addAttribute("sums1",str + "%");
+                model.addAttribute("sums12",str + "%");
 
             } else {
-                model.addAttribute("sums1","0.00%");
+                model.addAttribute("sums12","0.00%");
             }
         }
         map1 = new HashMap();

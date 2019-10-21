@@ -259,7 +259,7 @@
                         <td></td>
 
                         <td>${be.sums}</td>
-                        <td>${be.sums1}</td>
+                        <td>${sums12}</td>
                         <td></td>
                         </tr>
 

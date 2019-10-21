@@ -243,7 +243,7 @@
                 <%--<th width="12%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>--%>
                 <th width="12%">${!empty check.industryId ? '检查内容' : '检查内容'}</th>
                 <th width="4%">检查结果</th>
-                <%--                <th width="15%">隐患内容</th>--%>
+                <%--<th width="15%">隐患内容</th>--%>
                 <%--<c:if test="${flag == 1}">--%>
                 <th width="7%">隐患等级</th>
                 <%--</c:if>--%>

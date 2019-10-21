@@ -275,10 +275,11 @@
                     </c:if>
 
                     <c:if test="${companyName != ch.part}">
-                        <c:if test="${flag == 1}">
-                            <td class="text-c"><c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
-                                    ${ls[1] != null ? ls[1] : "暂无数据" }</td>
-                        </c:if>
+                        <%--<c:if test="${flag == 1}">--%>
+                            <td class="text-c">
+                                <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>${ls[1] != null ? ls[1] : "暂无数据" }
+                            </td>
+                        <%--</c:if>--%>
 
                         <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
                     </c:if>
@@ -341,6 +342,9 @@
                                 无
                             </c:if>
                         </td>
+                    </c:if>
+                    <c:if test="${flag != 1}">
+                        无
                     </c:if>
 
                     <td class="text-c">

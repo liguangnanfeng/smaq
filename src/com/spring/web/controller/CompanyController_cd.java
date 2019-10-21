@@ -8073,7 +8073,6 @@ public class CompanyController_cd extends BaseController {
         }else{
             model.addAttribute("is_re",1);
         }
-        System.out.println(tCheckMapper.selectCompany(id));
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
         model.addAttribute("companyName", loginUser.getUserName());
 

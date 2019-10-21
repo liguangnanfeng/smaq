@@ -267,24 +267,25 @@
 
                     <c:if test="${companyName == ch.part}">
                         <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
-                         <td class="text-c">
-<%--                        <td class="text-c">2${ch.level2 == "" ? "暂无数据" : ch.level2}</td>--%>
-                             ${ch.name == "" ? "暂无数据" : ch.name}
-                         </td>
+                        <td class="text-c">
+                                <%--                        <td class="text-c">2${ch.level2 == "" ? "暂无数据" : ch.level2}</td>--%>
+                                ${ch.name == "" ? "暂无数据" : ch.name}
+                        </td>
 
                     </c:if>
 
                     <c:if test="${companyName != ch.part}">
-                        <c:if test="${flag == 1}">
-                         <td class="text-c"><c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
-                            ${ls[1] != null ? ls[1] : "暂无数据" }</td>
-                        </c:if>
-
+                        <td class="text-c">
+                            <%--<c:if test="${flag == 1}">--%>
+                            <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
+                                ${ls[1] != null ? ls[1] : "暂无数据" }
+                            <%--</c:if>--%>
+                        </td>
                         <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
                     </c:if>
-                    <c:if test="${companyName == ch.part}">
+                    <%--<c:if test="${companyName == ch.part}">
                       <td class="text-c">暂无数据</td>
-                    </c:if>
+                    </c:if>--%>
 
                     <td>
                         <c:choose>
@@ -332,18 +333,22 @@
                     <td>
                     <c:if test="${flag == 1}">
 
-                            <c:if test="${ch.status != 1}">
-                                <c:choose>
-                                    <c:when test="${ch.level eq '红色'}"><font class="col-a">${ch.level}</font></c:when>
-                                    <c:when test="${ch.level eq '橙色'}"><font class="col-b">${ch.level}</font></c:when>
-                                    <c:when test="${ch.level eq '黄色'}"><font class="col-c">${ch.level}</font></c:when>
-                                    <c:when test="${ch.level eq '蓝色'}"><font class="col-d">${ch.level}</font></c:when>
-                                </c:choose>
-                            </c:if>
-                            <c:if test="${ch.status == 1}">
-                                无
-                            </c:if>
+                        <c:if test="${ch.status != 1}">
+                            <c:choose>
+                                <c:when test="${ch.level eq '红色'}"><font class="col-a">${ch.level}</font></c:when>
+                                <c:when test="${ch.level eq '橙色'}"><font class="col-b">${ch.level}</font></c:when>
+                                <c:when test="${ch.level eq '黄色'}"><font class="col-c">${ch.level}</font></c:when>
+                                <c:when test="${ch.level eq '蓝色'}"><font class="col-d">${ch.level}</font></c:when>
+                            </c:choose>
+                        </c:if>
+                        <c:if test="${ch.status == 1}">
+                            无
+                        </c:if>
 
+                    </c:if>
+
+                    <c:if test="${flag != 1}">
+                            无
                     </c:if>
                     </td>
                     <td class="text-c">

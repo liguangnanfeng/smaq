@@ -7965,7 +7965,7 @@ public class CompanyController_cd extends BaseController {
         List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(id);
         String name = tc.getDapartContact();
         //设置名称
-        if (null == tc.getDapartContact() || tc.getDapartContact().matches("[0-9]{1,}") || "".equals(name)) {
+        /*if (null == tc.getDapartContact() || tc.getDapartContact().matches("[0-9]{1,}") || "".equals(name)) {
             // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
             List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId(id);
             if (null != integers && integers.size() > 0) {
@@ -7980,16 +7980,16 @@ public class CompanyController_cd extends BaseController {
                     }
                 }
                 if (list.size() == 0) {
-                    name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                    //name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
                 } else {
                     name = list.get(0);
                     tc.setCheckCompany(name);
                 }
-                name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                //name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
             } else {
-                name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
+                //name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
             }
-        }
+        }*/
         model.addAttribute("partL", partL);
         List<Map<String, Object>> iteml = null;
         if (flag == 1) {
@@ -8047,7 +8047,6 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("flag", tc.getFlag());
         model.addAttribute("itemL", iteml);
         model.addAttribute("user", loginUser);
-
         if(null==number){
             Integer count = tCheckMapper.selectHiddenDangerNumber(id);
             if(null==count){
@@ -8058,10 +8057,9 @@ public class CompanyController_cd extends BaseController {
             model.addAttribute("number", number);
         }
         Integer integer = tCheckMapper.selectHiddenDangerNumber2(id);
-
-        if (null == name || "".equals(name)) {
+        /*if (null == name || "".equals(name)) {
             name = companyMapper.selectByPrimaryKey(loginUser.getId()).getSafety();
-        }
+        }*/
         model.addAttribute("dangerInteger",integer);
         model.addAttribute("name", name);
         // 根据检查记录的id获取详细的信息

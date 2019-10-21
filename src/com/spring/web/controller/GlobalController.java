@@ -2656,8 +2656,9 @@ public class GlobalController extends BaseController {
                 String startTime = df.format(new Date().getTime()-15*24*60*60*1000);
                 Date startTime1 = df.parse(startTime);
                 Date endTime = new Date();
-                m.put("startTime",startTime);
+                m.put("startTime",startTime1);
                 m.put("endTime",endTime);
+                m.put("status",1);
                 m.put("flag",1);
                 m.put("type",2);
                 list = tCheckMapper.findSelectList(m);
@@ -2741,7 +2742,7 @@ public class GlobalController extends BaseController {
         List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(id);
         String name = tc.getDapartContact();
         //设置名称
-        if (null == tc.getDapartContact() || tc.getDapartContact().matches("[0-9]{1,}") || "".equals(name)) {
+        /*if (null == tc.getDapartContact() || tc.getDapartContact().matches("[0-9]{1,}") || "".equals(name)) {
             // 表示没有被检查人员 根据部门名称获取这个部门的被检查人员然后随便抓一个
             List<Integer> integers = tCheckItemMapper.selectLevelIdByCheckId(id);
             if (null != integers && integers.size() > 0) {
@@ -2765,7 +2766,7 @@ public class GlobalController extends BaseController {
             } else {
                 name = companyMapper.selectByPrimaryKey(tc.getUserId()).getSafety();
             }
-        }
+        }*/
         model.addAttribute("partL", partL);
         List<Map<String, Object>> iteml = null;
         if (flag == 1) {
@@ -2835,10 +2836,9 @@ public class GlobalController extends BaseController {
             model.addAttribute("number", number);
         }
         Integer integer = tCheckMapper.selectHiddenDangerNumber2(id);
-
-        if (null == name || "".equals(name)) {
+       /* if (null == name || "".equals(name)) {
             name = companyMapper.selectByPrimaryKey(loginUser.getId()).getSafety();
-        }
+        }*/
         model.addAttribute("dangerInteger",integer);
         model.addAttribute("name", name);
         // 根据检查记录的id获取详细的信息

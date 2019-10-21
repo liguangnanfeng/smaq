@@ -3317,22 +3317,18 @@ public class CompanyController_cd extends BaseController {
         model.addAttribute("template", template);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("flag", flag);
-
         status = status == null ? 2 : status;
         m.put("status", status);
         if (setUserId(user, m)) {
             clearVillageTown(m);
             List<Map<String, Object>> list = tCheckMapper.selectList(m);
-
             model.addAttribute("list", list);
-
             Integer sum = 0;
             for (int i = 0; i < list.size(); i++) {
                 sum += Integer.parseInt(String.valueOf(list.get(i).get("c")));
             }
             model.addAttribute("sum", sum);
         }
-
         return "company/danger/model-list-cx";
     }
 

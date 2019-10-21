@@ -127,7 +127,7 @@
             <li><a data-href="${ly }/village/safety-system/control-listmenu?level=red" data-title="重大风险汇总" href="javascript:void(0)">重大风险汇总</a></li>
       <li><a data-href="${ly }/village/safety-system/control-listmenu?level=orange" data-title="较大风险汇总" href="javascript:void(0)">较大风险汇总</a></li>
       <li><a data-href="${ly }/steel/safety-system/statistics-list" data-title="数据分析" href="javascript:void(0)">数据分析</a></li>
-      <li><a data-href="${ly }/steel/control-list4" data-title="风险分布图" href="javascript:void(0)">风险分布图</a></li>
+      <li><a data-href="${ly }/api/map/control-list4" data-title="风险分布图" href="javascript:void(0)">风险分布图</a></li>
 
       </ul>
             </dd>

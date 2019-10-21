@@ -234,19 +234,19 @@
             <tr class="text-c">
                 <th width="5%">检查类型</th>
                 <th width="7%">车间/场所</th>
-                <c:if test="${flag == 1}">
-                    <th width="3%">系统</th>
-                </c:if>
+                <%--<c:if test="${flag == 1}">--%>
+                <th width="3%">系统</th>
+                <%--</c:if>--%>
                 <th width="10%">环节/部位</th>
                 <th width="5%">检查方式</th>
                 <th width="3%">检查形式</th>
                 <%--<th width="12%">${!empty check.industryId ? '检查内容' : '隐患描述'}</th>--%>
                 <th width="12%">${!empty check.industryId ? '检查内容' : '检查内容'}</th>
                 <th width="4%">检查结果</th>
-                <%--                <th width="15%">隐患内容</th>--%>
-                <c:if test="${flag == 1}">
-                    <th width="7%">隐患等级</th>
-                </c:if>
+                <%--<th width="15%">隐患内容</th>--%>
+                <%--<c:if test="${flag == 1}">--%>
+                <th width="7%">隐患等级</th>
+                <%--</c:if>--%>
                 <th width="9%">隐患图片</th>
             </tr>
             </thead>
@@ -263,12 +263,25 @@
                         </c:choose>
                     </td>
                     <td class="text-c">${ch.part == "" ? "暂无数据" : ch.part}</td>
-					  <c:if test="${flag == 1}">
-                        <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
-                        <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
+
+                    <c:if test="${companyName == ch.part}">
+                        <td class="text-c">
+                            ${ch.level2 == "" ? "暂无数据" : ch.level2}
+                        </td>
+                        <td class="text-c">
+                            ${ch.name == "" ? "暂无数据" : ch.name}
+                        </td>
+
                     </c:if>
 
-                    <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
+                    <c:if test="${companyName != ch.part}">
+                        <c:if test="${flag == 1}">
+                            <td class="text-c"><c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
+                                    ${ls[1] != null ? ls[1] : "暂无数据" }</td>
+                        </c:if>
+
+                        <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
+                    </c:if>
                   
                     <td>
                         <c:choose>

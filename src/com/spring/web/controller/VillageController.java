@@ -1221,7 +1221,6 @@ public class VillageController extends BaseController {
         if (setUserId(user, m)) {
             clearVillageTown(m);
             List<Map<String, Object>> list = null;
-
             if (button == 1){
                 list = tCheckMapper.selectList(m);
             }else if (button != 1) {
@@ -1229,8 +1228,9 @@ public class VillageController extends BaseController {
                 String startTime = df.format(new Date().getTime()-15*24*60*60*1000);
                 Date startTime1 = df.parse(startTime);
                 Date endTime = new Date();
-                m.put("startTime",startTime);
+                m.put("startTime",startTime1);
                 m.put("endTime",endTime);
+                m.put("status",1);
                 m.put("flag",1);
                 m.put("type",2);
                 list = tCheckMapper.findSelectList(m);

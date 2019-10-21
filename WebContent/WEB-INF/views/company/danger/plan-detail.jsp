@@ -234,9 +234,9 @@
             <tr class="text-c">
                 <th width="5%">检查类型</th>
                 <th width="7%">车间/场所</th>
-                <c:if test="${flag == 1}">
-                    <th width="3%">系统</th>
-                </c:if>
+                <%--<c:if test="${flag == 1}">--%>
+                <th width="3%">系统</th>
+                <%--</c:if>--%>
                 <th width="10%">环节/部位</th>
                 <th width="5%">检查方式</th>
                 <th width="3%">检查形式</th>
@@ -244,9 +244,9 @@
                 <th width="12%">${!empty check.industryId ? '检查内容' : '检查内容'}</th>
                 <th width="4%">检查结果</th>
                 <%--                <th width="15%">隐患内容</th>--%>
-                <c:if test="${flag == 1}">
+               <%-- <c:if test="${flag == 1}">--%>
                     <th width="7%">隐患等级</th>
-                </c:if>
+               <%-- </c:if>--%>
                 <th width="9%">隐患图片</th>
             </tr>
             </thead>
@@ -266,17 +266,18 @@
 
 
                     <c:if test="${companyName == ch.part}">
-
+                        <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
+                         <td class="text-c">
 <%--                        <td class="text-c">2${ch.level2 == "" ? "暂无数据" : ch.level2}</td>--%>
-                        <td class="text-c">${ch.name == "" ? "暂无数据" : ch.name}</td>
+                             ${ch.name == "" ? "暂无数据" : ch.name}
+                         </td>
+
                     </c:if>
 
-
                     <c:if test="${companyName != ch.part}">
-
                         <c:if test="${flag == 1}">
-                            <c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
-                            <td class="text-c">${ls[1] != null ? ls[1] : "暂无数据" }</td>
+                         <td class="text-c"><c:set value="${fn:split(ch.sys,'/')}" var="ls"></c:set>
+                            ${ls[1] != null ? ls[1] : "暂无数据" }</td>
                         </c:if>
 
                         <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
@@ -328,9 +329,9 @@
                         <%--                            ${ch.factors}--%>
                         <%--                        </c:if>--%>
                         <%--                    </td>--%>
-
+                    <td>
                     <c:if test="${flag == 1}">
-                        <td>
+
                             <c:if test="${ch.status != 1}">
                                 <c:choose>
                                     <c:when test="${ch.level eq '红色'}"><font class="col-a">${ch.level}</font></c:when>
@@ -342,9 +343,9 @@
                             <c:if test="${ch.status == 1}">
                                 无
                             </c:if>
-                        </td>
-                    </c:if>
 
+                    </c:if>
+                    </td>
                     <td class="text-c">
                         <button class="btn radius btn-danger size-S ml-20" onClick="showpicture('${ch.files}')">
                             <i class="Hui-iconfont" style="font-size: 15px;">&#xe613;</i> 查看图片
@@ -481,9 +482,6 @@
                     <div style="float: left; width: 100%; min-height: 150px;">
                         <div class="div_pleft  mt-10 mb-10">受检负责人签字：</div>
                         <div class="div_pright  mt-10 mb-10">
-                        <script>
-                            console.log("${name}");
-                         </script>
                             <input type="text" style="width: 200px" value="${name}" class="input-text" maxlength="50"
                                    disabled="disabled"/>
                         </div>

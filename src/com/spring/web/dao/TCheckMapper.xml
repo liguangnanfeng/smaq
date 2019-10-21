@@ -377,7 +377,7 @@
         from t_check_tbl T1
         left join company_tbl T2 on T1.user_id = T2.user_id
         <where>
-            T1.del = 0 and T1.status = 1 and create_time BETWEEN #{startTime} and #{endTime}
+            T1.del = 0 and create_time BETWEEN #{startTime} and #{endTime}
             <if test="title != null and title != ''">
                 and T1.title LIKE CONCAT('%', #{title},'%')
             </if>

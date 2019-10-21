@@ -117,7 +117,7 @@
     <div class="panel-body">
     <div class="div_tx">
     <div class="div_img">
-    <img alt="" src="${ly }/images/mrqy.jpg"/>
+      <img alt="" src="/images/companyImg/newimg/logo.png"/>
     </div>
     <div class="div_company">
     <p>

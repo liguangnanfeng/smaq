@@ -36,8 +36,8 @@ body .check-box label{margin-left:5px;}
 </head>
 <body>
 		<nav class="breadcrumb">
-	    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-	    <span class="c-gray en">&gt;</span> <span>风险研判与承诺公告</span> 
+	    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+	    <span class="c-gray en">&gt;</span> <span>风险研判与承诺公告</span>
 	    <span class="c-gray en">&gt;</span> <span>流程管理提示</span>
 	<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px;" href="javascript:history.back(-1)" title="返回">返回</a>
 	    <%--<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:void(0);" title="返回" onclick="parent.close_tab(function(){})">返回</a>--%>
@@ -47,14 +47,14 @@ body .check-box label{margin-left:5px;}
     	<table>
           <tr>
 		     <td class="text-c" style="width:60px;height: 90px;text-align:center;">
-                <button class="btn btn-primary radius" onClick="parent.close_tab(function(){})">如有需要请先填写流程管理中的表格信息</button>
+                <button class="btn btn-primary radius" onClick="back()">如有需要请先填写流程管理中的表格信息</button>
             </td>
           </tr>
 
      </table>
   </div>
 
-  
+
 </body>
 <script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset.js"></script>
 </html>

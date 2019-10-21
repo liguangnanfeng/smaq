@@ -5,7 +5,6 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 		<title>安泰大讲堂</title>
 		<style>
 			body {

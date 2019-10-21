@@ -30,10 +30,10 @@ body .dis-ib{margin-right:15px;}
 </head>
 <body>
  <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span> 
-    <span class="c-gray en">&gt;</span> <span>风险研判与承诺公告</span> 
-    <span class="c-gray en">&gt;</span> <span>运行管理</span> 
-    <span class="c-gray en">&gt;</span> <span>临时风险研判</span> 
+    <i class="Hui-iconfont">&#xe67f;</i> <span>首页</span>
+    <span class="c-gray en">&gt;</span> <span>风险研判与承诺公告</span>
+    <span class="c-gray en">&gt;</span> <span>运行管理</span>
+    <span class="c-gray en">&gt;</span> <span>临时风险研判</span>
     <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新">
       <i class="Hui-iconfont">&#xe68f;</i>
     </a>
@@ -42,7 +42,7 @@ body .dis-ib{margin-right:15px;}
   <div class="page-container" id="div_container" >
     <div class="div-print">
      <h3 class="text-c">${company.name}临时风险研判表</h3>
-      <table class="table table-border table-bordered table-bg table-hover table-sort">  
+      <table class="table table-border table-bordered table-bg table-hover table-sort">
         <thead>
           <tr class="text-c">
             <th style="width:15%">流程名称</th>
@@ -75,7 +75,7 @@ body .dis-ib{margin-right:15px;}
           </c:forEach>
         </tbody>
       </table>
-     <table class="table table-border table-bordered table-bg table-hover table-sort" cellspacing="0" cellpadding="0"> 
+     <table class="table table-border table-bordered table-bg table-hover table-sort" cellspacing="0" cellpadding="0">
     	<tr>
     		<td class="text-c">检查人员签字：</td>
     		<td class="text-c"><input id="jcry" style="text-align:center;width:100%; height:100%;border:none" type="text" value="${checker }"/></td>
@@ -94,7 +94,7 @@ body .dis-ib{margin-right:15px;}
 <script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset.js"></script>
 <script type="text/javascript">
 function setYes() {
-	$("input[id='pj_s'][value='1']").attr("checked","checked");	
+	$("input[id='pj_s'][value='1']").attr("checked","checked");
 }
 function save() {
 	if(!$("#jcry").val()){
@@ -107,7 +107,7 @@ function save() {
   study.checker = $("#jcry").val();
   obj.study = study;
   //alert("study.uid:"+study.uid+",study.checker:"+study.checker);
-  
+
   var list = new Array();
   $("td[data-n='xxx']").each(function() {
     var it = new Object();
@@ -117,7 +117,7 @@ function save() {
     //alert("it.Tdangerid:"+it.tdangerid+",it.checkret:"+it.checkret);
   })
   obj.list = list;
-  
+
   var ind = layer.load();
   $.ajax({
     type : "POST",

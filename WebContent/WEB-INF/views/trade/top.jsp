@@ -7,7 +7,7 @@
     <div class="navbar navbar-fixed-top">
       <div class="container-fluid cl">
       	<c:if test="${userId == 35346 }">
-      	<a class="logo navbar-logo f-l mr-10 hidden-xs" href="javascript:void(0)">无锡新三洲特钢有限公司   应急管理信息系统</a>
+      	<a class="logo navbar-logo f-l mr-10 hidden-xs" href="javascript:void(0)">无锡新三洲特钢有限公司   安全生产信息化管理平台</a>
       	</c:if>
       	<c:if test="${userId != 35346 }">
         <a class="logo navbar-logo f-l mr-10 hidden-xs" href="javascript:void(0)">${name_ }风险分级管控   隐患排查治理平台</a>

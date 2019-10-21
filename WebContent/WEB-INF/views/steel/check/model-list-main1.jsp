@@ -358,7 +358,7 @@
     </style>
 			           <div class="tabCon tabCon1">
                 <div class="text-c mt-20">
-                    <h3>${companyName}隐患排查计划表</h3>
+                    <h3>${companyName}${year}隐患排查计划表</h3>
                 <button onClick="pr_()" class="btn btn-primary radius" type="button">
                 <i class="Hui-iconfont">&#xe652;</i>打印
                 </button>

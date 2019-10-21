@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/taglibs.jsp"%>
 <!DOCTYPE HTML>
 <html>
@@ -17,7 +17,6 @@
     .col-b,.col-a,.col-c,.col-d{margin:0;padding:0 15px;height:25px;line-height:25px;}
   </style>
 
-    <script type="text/javascript" src="/js/fxgk/tbl-rowspan-reset.js"></script>
   <script type="text/javascript">
       $(function() {
       })
@@ -123,7 +122,7 @@
       </tr>
       </thead>
       <tbody>
-      ${list}
+      
       <c:forEach items="${list }" var="be" varStatus="index">
         <tr>
           <th class="text-c">${be.name}</th>

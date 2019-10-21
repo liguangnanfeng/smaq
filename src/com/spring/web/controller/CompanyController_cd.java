@@ -7961,7 +7961,7 @@ public class CompanyController_cd extends BaseController {
         User loginUser = getLoginUser(request);
         // 根据id查询的是检查表信息
         TCheck tc = tCheckMapper.selectByPrimaryKey(id);
-        Integer type = tc.getType();
+        Integer type = tc.getType();//5
         List<TCheckPart> partL = tCheckPartMapper.selectByCheckId(id);
         String name = tc.getDapartContact();
         //设置名称
@@ -8079,6 +8079,7 @@ public class CompanyController_cd extends BaseController {
         }else{
             model.addAttribute("is_re",1);
         }
+        System.out.println(tCheckMapper.selectCompany(id));
         model.addAttribute("listM", tCheckMapper.selectCompany(id));
         model.addAttribute("companyName", loginUser.getUserName());
 

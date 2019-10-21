@@ -384,9 +384,9 @@
             <if test="type != null and type != ''">
                 and T1.type = 2
             </if>
-            <if test="status != null">
-                and T1.status = #{status}
-            </if>
+<!--            <if test="status != null">-->
+<!--                and T1.status = #{status}-->
+<!--            </if>-->
             <if test="flag != null">
                 and T1.flag = #{flag}
             </if>
@@ -1034,7 +1034,7 @@
        FROM
        t_check_tbl
        WHERE
-       del = 0 AND status = 2 AND type = 2 AND flag = 1
+       del = 0 AND status = 1 AND type = 2 AND flag = 1
        AND create_time BETWEEN #{startTime} AND #{endTime}
        AND user_id in (${userIds})
     </select>

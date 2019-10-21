@@ -178,7 +178,6 @@ public class SteelController extends BaseController {
                 sb.append("'").append(ids.get(i)).append("',");
             }
         }
-        System.out.println(sb.toString()+":"+startTime1+":"+endTime+":"+startTime);
         Integer counts = tCheckMapper.findAllCounte(sb.toString(),startTime1,endTime); // 排查数据
         Integer counts1 = tCheckItemMapper.findAllCounte(sb.toString()); // 治理数据
 
@@ -197,7 +196,6 @@ public class SteelController extends BaseController {
         m1.put("status", 2);
         m1.put("userId", sb.toString());
         m1.put("d", 1);
-        System.out.println(m1);
         List<Map<String, Object>> list11 = tCheckItemMapper.findACompanyAllList(m1);
         List<Map<String, Object>> list22 = tCheckItemMapper.findDangerAllList(m1);
         List<Map<String, Object>> list33 = tCheckItemMapper.findLevelAllList(m1);
@@ -958,8 +956,10 @@ public class SteelController extends BaseController {
 
             model.addAttribute("hiddenPlanList", hiddenPlanList);
         }
-
+        Calendar date = Calendar.getInstance();
+        String year = String.valueOf(date.get(Calendar.YEAR));
         model.addAttribute("data", sdf.format(new Date()));
+        model.addAttribute("year",  year);
         model.addAttribute("list", list);
         model.addAttribute("flag", flag);
         model.addAttribute("status", status);
@@ -1087,6 +1087,7 @@ public class SteelController extends BaseController {
             clearVillageTown(m);
             if(1 == button) {
                 list = tCheckMapper.selectList(m);
+                System.out.println(list);
                 //List<Map<String, Object>> list = tCheckMapper.selectList3(m);
             }else{
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -7561,6 +7562,17 @@ public class SteelController extends BaseController {
         model.addAttribute("companyName", companyName);
         model.addAttribute("host", host);
         return "steel/company/danger-index3";
+    }
+
+    /**
+     * 跳转到地图的截图页面
+     */
+    @RequestMapping(value = "control-list4")
+    public String jumpHtml(HttpServletRequest request, Model model) {
+        User user = getLoginUser(request);
+        Company company = companyMapper.selectByPrimaryKey(user.getId());
+        model.addAttribute("company", company);
+        return "steel/safety-system/control-list4";
     }
 
 

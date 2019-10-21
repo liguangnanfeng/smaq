@@ -209,8 +209,7 @@
 </div>
 <div id="div_container">
     <div class="div-print">
-
-<%--    <c:if test="${listM.c3 > 0}">--%>
+    <%--    <c:if test="${listM.c3 > 0}">--%>
 <%--    <h2 class="text-c mb-10">检查详情</h2>--%>
 <%--    </c:if>--%>
 <%--    <c:if test="${listM.c3 == 0}">--%>
@@ -281,6 +280,9 @@
                         </c:if>
 
                         <td class="text-c">${ch.level2 == "" ? "暂无数据" : ch.level2}</td>
+                    </c:if>
+                    <c:if test="${companyName == ch.part}">
+                      <td class="text-c">暂无数据</td>
                     </c:if>
 
                     <td>

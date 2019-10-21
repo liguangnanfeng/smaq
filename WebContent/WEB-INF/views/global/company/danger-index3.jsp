@@ -154,7 +154,7 @@ function showpicture(memoImg){
     </c:if>--%>
     <%--                    <td>${item[0]}</td>--%>
     <%--                    <td>${item[1]+item[2] }</td>--%>
-    <td style="width: 91px;">   <fmt:formatDate value="${list.recheck_time == null? '' : list.recheck_time}"
+    <td style="width: 91px;">   <fmt:formatDate value="${list.real_time == null? '' : list.real_time}"
                            pattern="yyyy-MM-dd"/></td>
     <td>${list.content }</td>
     <td >
@@ -209,7 +209,7 @@ function showpicture(memoImg){
     href="javascript:void(0);">上传文件</a>
     </td>
 
-    <td>
+    <td style="width: 91px;">
     <fmt:formatDate value="${list.recheck_time == null? '' : list.recheck_time}"
                     pattern="yyyy-MM-dd"/>
 
@@ -300,7 +300,7 @@ function showpicture(memoImg){
     </c:if>--%>
     <%--                    <td>${item[0]}</td>--%>
     <%--                    <td>${item[1]+item[2] }</td>--%>
-    <td style="width: 91px;">   <fmt:formatDate value="${list.recheck_time == null? '' : list.recheck_time}"
+    <td style="width: 91px;">   <fmt:formatDate value="${list.real_time == null? '' : list.real_time}"
                                                 pattern="yyyy-MM-dd"/></td>
     <td>${list.content }</td>
     <td >
@@ -355,7 +355,7 @@ function showpicture(memoImg){
     href="javascript:void(0);">上传文件</a>
     </td>
 
-    <td>
+    <td style="width: 91px;">
     <fmt:formatDate value="${list.recheck_time == null? '' : list.recheck_time}"
                     pattern="yyyy-MM-dd"/>
 
@@ -446,7 +446,7 @@ function showpicture(memoImg){
     </c:if>--%>
     <%--                    <td>${item[0]}</td>--%>
     <%--                    <td>${item[1]+item[2] }</td>--%>
-    <td style="width: 91px;">   <fmt:formatDate value="${list.recheck_time == null? '' : list.recheck_time}"
+    <td style="width: 91px;">   <fmt:formatDate value="${list.real_time == null? '' : list.real_time}"
                                                 pattern="yyyy-MM-dd"/></td>
     <td>${list.content }</td>
     <td >
@@ -501,7 +501,7 @@ function showpicture(memoImg){
     href="javascript:void(0);">上传文件</a>
     </td>
 
-    <td>
+  <td style="width: 91px;">
     <fmt:formatDate value="${list.recheck_time == null? '' : list.recheck_time}"
                     pattern="yyyy-MM-dd"/>
 
@@ -535,51 +535,6 @@ function showpicture(memoImg){
 
   </tbody>
   </table>
-
-  <%--      <table class="table table-border table-bordered table-bg table-hover table-sort">--%>
-<%--        <thead>--%>
-<%--          <tr class="text-c">--%>
-<%--            <th width="5%">编号</th>--%>
-<%--            <th width="10%">企业名称</th>--%>
-<%--            <th width="8%">检查部位</th>--%>
-<%--            <th width="10%">检查项目</th>--%>
-<%--            <th width="15%">检查内容</th>--%>
-<%--            <th width="10%">隐患描述</th>--%>
-<%--            <th width="8%">检查结果</th>--%>
-<%--            <th width="7%">检查日期</th>--%>
-<%--            <th width="10%">${flag == 1 ? '受检部门' : '检查单位'}</th>--%>
-<%--            <th width="10%">隐患图片</th>--%>
-<%--          </tr>--%>
-<%--        </thead>--%>
-<%--        <tbody>--%>
-<%--          <!-- 循环开始 -->--%>
-<%--          <c:forEach items="${list }" varStatus="index" var="list">--%>
-<%--            <tr class="text-c">--%>
-<%--            <td>${index.index + 1}</td>--%>
-<%--            <td>${list.companyName }</td>--%>
-<%--            <td>${list.partName }</td>--%>
-<%--            <td>${list.levels }</td>--%>
-<%--            <td>${list.content }</td>--%>
-<%--            <td>--%>
-<%--              ${list.memo }--%>
-<%--               </td>--%>
-<%--            <td>--%>
-<%--                <c:if test="${list.status == '1'}">合格</c:if>--%>
-<%--                <c:if test="${list.status == '2'}">未整改</c:if>--%>
-<%--                <c:if test="${list.status == '3'}">已整改</c:if>--%>
-<%--               </td>--%>
-<%--            <td><fmt:formatDate value="${list.realTime }"/></td>--%>
-<%--               <td>${flag != 1 ? list.checkCompany : list.depart}</td>--%>
-<%--            <td>--%>
-<%--              <c:if test="${!empty list.files}">--%>
-<%--                <img alt="" src="${ly }${list.files }" style="max-width: 200px;cursor:pointer;" onclick="showpicture('${list.files}')">--%>
-<%--              </c:if>--%>
-<%--            </td>--%>
-<%--            </tr>--%>
-<%--        </c:forEach>--%>
-<%--        <!-- 循环结束 -->--%>
-<%--        </tbody>--%>
-<%--      </table>--%>
     </div>
     <!-- 弹窗图片 -->
   <div id="modal-plan" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

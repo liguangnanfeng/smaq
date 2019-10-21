@@ -109,7 +109,7 @@ function showping(){
     <div class="panel-body">
       <div class="div_tx">
         <div class="div_img">
-          <img alt="" src="${ly }/images/mrqy.jpg"/>
+          <img alt="" src="/images/companyImg/newimg/logo.png"/>
         </div>
         <div class="div_company">
           <c:if test="${userId == 35346 }"><p style="margin-top:10px">无锡新三洲特钢集团</p></c:if>
@@ -168,6 +168,19 @@ function showping(){
   <font class="font_tx1 pos-a <c:if test="${count7 >0}">blink</c:if>">${count7 }</font>
   <font class="font_tx2 pos-a">重大隐患</font>
   </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <%--<a class="one_tx radius pos-r" data-title="持证上岗" data-href="${ly }/village/warning/sperson-list?isTime=3&home=1" onclick="Hui_admin_tab(this)" href="javascript:;" style="margin-left:1%;background:#46D1E5;">--%>
                 <%--<img alt="" src="${ly }/images/httb1.png"/>--%>
@@ -239,7 +252,7 @@ function showping(){
                     <img alt="" src="${ly }/images/httb6.png"/>
                     <font class="font_tx1 pos-a <c:if test="${count[5] >0}">blink</c:if>">${count[5] }</font>
                     <font class="font_tx2 pos-a">各类许可证</font>
-                  </a> 
+                  </a>
                   <a class="one_tx radius pos-r" data-dismiss="modal" aria-hidden="true" data-title="应急预案" data-href="${ly }/company/tables/tab-yjlist?isTime=6" onclick="Hui_admin_tab(this)" href="javascript:;" style="margin-right:0;background:#ff8048;">
                     <img alt="" src="${ly }/images/httb10.png"/>
                     <font class="font_tx1 pos-a <c:if test="${count[8] >0}">blink</c:if>">${count[8] }</font>
@@ -372,7 +385,7 @@ function showping(){
               <img alt="" src="${ly }/images/fore/atpx4.jpg"/>
               <font class="font_txs2">普天防雷检测</font>
             </a>
-          
+
           </div>
           <div class="tabCon">
              <a class="one_tx2 radius" style="width:23%;margin-left:1%"  data-title="行政许可" data-href="http://www.wxaj.net/safe/" onclick="Hui_admin_tab(this)" href="javascript:;" style="margin-left:1%">
@@ -394,7 +407,7 @@ function showping(){
           </div>
         </div>
       </div>
-<%--     
+<%--
       <div class="div_tx mt-15 div-chart" style="padding:25px 0">
         <div class="title_xw" style="padding:0 20px 5px 20px">企业分类统计</div>
         <div style="display: inline-block;width:100%;text-align:center;">
@@ -411,7 +424,7 @@ function showping(){
       </div>
 --%>
   <div style="position: fixed;right:10px;top:0px;width:15%">
-   <%-- 
+   <%--
   <div class="panel panel-default" style="width:100%;margin-right:10px;float:right;margin-top:15px;">
     <div class="panel-body" style="padding:8px">
       <a class="title_xw div_xinw pos-r" data-href="http://safety.wuxi.gov.cn/" data-title="上级数据分享"  onclick="Hui_admin_tab(this)" href="javascript:;">
@@ -428,7 +441,7 @@ function showping(){
       </a>
     </div>
   </div>
-  
+
  <div class="panel panel-default" style="width:100%;margin-right:10px;float:right;margin-top:15px;">
     <div class="panel-body" style="padding:8px">
       <a class="title_xw div_xinw" data-href="${ly }/fore/notice-list1"  data-title="法律法规标准规范" onclick="Hui_admin_tab(this)" href="javascript:;">
@@ -580,10 +593,10 @@ function showping(){
   </div>
   </div>
   </div>
-  
-  
-  
-   
+
+
+
+
 </body>
 <script type="text/javascript" src="${ly }/js/c-chart.js"></script>
 <script type="text/javascript">
